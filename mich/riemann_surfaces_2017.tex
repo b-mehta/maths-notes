@@ -1,0 +1,71 @@
+\documentclass{article}
+
+\input{header}
+\usepackage{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{hypcap}
+\usepackage{geometry}
+
+\title{Riemann Surfaces}
+
+\begin{document}
+\maketitle
+
+\section{Complex analysis and complex log}
+
+Sketch of equivalence:
+1 => 2 Use CIF to construct $a_n$, and convergence.
+
+2 => 1 Show directly term-by-term derivative exists, and agrees with limit definition.
+
+Note that a power series tells you about local behaviour. If $f(z)$ is not identically zero near $a \in U$, there exists some minimal $n_0$ such that $a_{n_0} \neq 0$.  We can write $f$ locally as
+\begin{equation}
+    f(z) = a_{n_0} (z-a)^(n_0) + \sum_{n \ge n_0} a_n (z-a)^n = a_{n_0} (z-a)^n_0 \left(1 + \sum_{n>n_0} \frac{a_n}{a_{n_0}} (z-a)^{n-n_0}\right)
+\end{equation}
+As $z \to a$, the sum $\to 0$ so the quantity in the brackets tends to 1.  So, $f(z) = a_{n_0} (z-a)^{n_0} g(z)$, where $g$ is analytic and nonzero on a neighbourhood of $a$.
+Consequently, we have the \emph{principle of isolated zeros}: for $f$ analytic on domain $U$, then for all $a \in U$ such that $f(a) = 0$, either $f$ is identically $0$ on a neighbourhood of $a$, or $f$ is never $0$ on a punctured disk centred at $a$.  But recall a domain refers to an open \emph{and connected} set.  So, if $f$ is identically $0$ (improve this writing) on a neighbourhood of $a$, call it $D_a$.  If $f \ne 0$ on a punctured disk about $a$, call it $P_a^*$. Construct
+\begin{align}
+V = \cup_{a \in U such that f equiv 0 on a neighbourhood of a} D_a
+W = \cup_{a \in U such that f \ne 0 on a punctured neighbourhood of a} P_a^*
+\end{align}
+
+$V$ and $W$ are open, disjoint and $V \cup W = U$. Since $U$ is connected, $U=V$ or $U=W$. So either $f \equiv 0$ on $U$, or $f$ has only isolated zeros.
+This will both be referred to as the principle of isolated zeros.
+
+(corollary) (identity principle)
+If $f$ and $g$ are analytic on $U$, then either $f \equiv g$ on $U$, or ${z \in U : f(z) = g(z)}$ consists of isolated points.
+Proof (clear)
+
+(definition)
+If f is analytic on a punctured disk $\mathbb{D}^*(a,r)$, then we say $a$ is an isolated singularity of $f$.
+If so, then there exists a Laurent expansion $\sum_{n=-\infty}^{\infty} a_n (z-a)^n$ near $a$, which come in three types.
+
+I. Removable singularity. $f$ extends to an analytic function on $\mathbb{D}^*{a, r}$. Phrased in terms of Laurent expansions, $a_n = 0 \forall n < 0$.
+(thm) (Removable singularities theorem) $f$ has a removable singularity at $a$ if and only if $f$ is bounded on a punctured neighbourhood about $a$.
+(proof sketch) (=>) follows from continuity of analytic functions
+(<=) Cauchy's theorem and integral formula still hold for punctured neighbourhoods so long as $f(z) (z-a) \to 0$ as $z \to a$.  With a small circle about $a$, we can show directly that $a_n = 0$ for $n < 0$.
+
+II. Poles: $f$ has a pole at $a$ if $a_n = 0$ for all $n < n_0$ for some $n_0$. Locally, this occurs if and only if $|f(z)| \to \infty$ as $z \to a$ (using the Laurent series).
+
+III. Essential singularity: $a_n \neq 0$ for finitely many $n < 0$, f has an essential singularity at $a$.
+thm [Casorati-Weierstrass] If $f$ has an essential singularity at $a$, then the image of $f$ on any punctured neighbourhood of $a$ is dense in $\mathbb{C}$.
+(proof sketch) Examine $\frac1{f(z) - \gamma}$ if the image of $f$ misses a neighbourhood of $\gamma$.
+
+\paragraph{Examples}
+$f(z) = \frac1{e^z - 1}$ has poles wherever $e^z = 1$.
+At $\infty$, we also have an isolated singularity, recalling that punctured neighbourhoods of $\infty$ are $\mathbb{C}\\ \mathbb{D}(0, R)$. Since $e^z$ takes all nonzero values or strips of $\mathbb{C}$, we cannot have $e^z \to 1$ as $z \to \infty$, hence $f$ cannot have a pole.  On the other hand, there exists arbitrarily large solutions (in modulus) to $e^z = 1$, and $f$ cannot have a removable singularity at $\infty$.  Hence, this singularity is essential.
+
+\subsection{Complex logarithm}
+The complex logarithm is an example of a multivalued function, which arises as the inverse of an analytic function. Given nonzero $z$, if $e^w = z$, $z = r e^{i \theta}$, then $w = \log r + (2 \pi n + \theta i)$ for some $n \in \mathbb{Z}$.  We cannot make a continuous choice of $n$ on all of $\mathbb{C}$, so we define the complex log on domains like $\mathbb{C} \\ \mathbb{R}_{\leq 0} =: U$. We have for each $n$, a choice of logarithm which can be analytically defined on $U$.  Recall a \emph{continuous} inverse of an analytic function is analytic.
+
+
+\end{document}

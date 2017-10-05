@@ -1,0 +1,82 @@
+\documentclass{article}
+
+\usepackage{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{mathtools}
+% \usepackage{graphicsx}
+\usepackage{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{hypcap}
+\usepackage{geometry}
+
+\title{Graph Theory}
+\author{Russell, notes taken by Bhavik Mehta}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\subsection{Preliminary}
+This course has no prerequistes, being the first course in the tripos in this field.  However, introductory facts about, say, eigenvalues and limits will be used.
+As usual, books are not required, but the most relevant is Modern Graph Theory, B. Bollobas
+
+
+This course consists of six chapters: corresponding to paragraphs 2 to 7 in the schedules but in a different order
+Paragraph 1: Introductory - split between chapters
+
+\subsection{Informal definitions}
+A \emph{graph} consists of `vertices' with some pairs of vertices joined by `edges'. 
+(drawing goes here)
+% do the tikz bs later
+
+In this course, we make the following assumptions:
+the number of vertices is finite
+no `multiple edges' - every pair of vertices is connected by at most one edge
+no `loops' - no vertex can be joined to itself - edges have to go between different vertices
+
+\subsection{Where do such structures arise?}
+konigsberg (insert thing here)
+
+Problem: can we walk across each bridge precisely once, returning to our starting point?
+
+(Multigraph) The vertices of this graph are the four bits of the city, while the edges are the seven bridges
+(insert other thing here)
+In terms of this graph, the problem becomes to walk around the edges of this graph precisely once, and return to the starting vertex
+
+example two
+Map colouring problem (1850s)
+How many colours are required to colour a map such that neighbouring countries get different colours?
+(picture)
+Here, the vertices are countries, and the edges are neighbouring pairs.
+If we can draw a graph with no crossing edges, how many colours are needed to colour vertices with all edges having two different colours?
+
+example three
+Cosets of finite subgroups of finite groups
+
+Let $G$ be a finite group, $H \leq G$, $|G : H| = n$.  By Lagrange, $\exists a_1, \dots, a_n \in G$ such that the left cosets of $H$ are $a_1 H, \dots a_n H$.  Similarly, $\exists b_1, \dots, b_n \in G$ such that the right cosets of $H$ are $H a_1, \dots, H a_n$.  
+Can we do this simultaneously? In particular, are there $a_1, \dots, a_n \in G$ such that $a_1 H, \dots, a_n H \in G$ are the left cosets, and $a_1, \dots, a_n \in G$ are the right cosets? 
+
+In the case where $H \tri G$, this is easy. We have $a H = H a \forall a \in G$.  However it is less obvious if $H \notri G$.  Let $L$ be the set of left cosets, and let $R$ be the set of right cosets. We can create a graph where the vertices are $L \cup R$.  Join $X \in L$ to $Y \in R$ by an edge if we can find some $a$ such that $X = aH$ and $Y = Ha$, that is, if $X$ and $Y$ have a commmon element.  Ideally, we would like a graph like this
+(insert bipartite graph here)
+
+Formally, we ask: In this graph, can we find a set of edges meeting each vertex precisely once?
+
+example four
+Fermat equation mod p
+Consider the equation $x^n + y^n = z^n$. Does this have solutions mod $p$ for $p$ a prime?  Rule out trivial solutions such as $x = 0, y = z$, in particular we such for solutions in $\mathbb{Z}_p$ where $xyz \ne 0$.
+Let $G = \mathbb{Z} \\ {0}$ under multiplication, and $H = \{g^n : g \in G\}$.  We can check that $H \leq G$, and that $|G : H| \leq n$, by considering the number of $n$th roots an element can have.  So, $G$ can be partitioned into $g_1 H, g_2 H, \dots, g_mH$ for some $g_1, g_2, \dots, g_m$ and $m \leq n$.  Suppose in some $g_i H$, we have $a, b, c$ with $a + b = c$.  Then $a = g_i x^n, b = g_i y^n, c = g_i z^n$ for some $x, y, z \in G$.  Then
+\begin{align}
+  g_i x^n + g_i y^n = g_i z^n 
+  x^n + y^n = z^n
+\end{align}
+
+It finally remains to show Schur's Theorem:
+(thm) Let $n$ be a positive integer. Then if $p$ is a sufficiently large positive integer, whenever $\{1, 2, \dots, p\}$ is parititioned into $n$ parts, we can solve $a + b = c$ with $a, b, c$ all in some part.
+
+\end{document}
