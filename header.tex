@@ -1,0 +1,61 @@
+\ifx \nauthor\undefined
+  \def\nauthor{Bhavik Mehta}
+\else
+\fi
+
+\author{Based on lectures by \nlecturer \\\small Notes taken by \nauthor}
+\date{\nterm\ \nyear}
+\title{Part \npart\ -- \ncourse}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+\usepackage[all]{hypcap}
+\usepackage[margin=1.5in]{geometry}
+
+% Theorems
+\theoremstyle{definition}
+\newtheorem*{aim}{Aim}
+\newtheorem*{axiom}{Axiom}
+\newtheorem*{claim}{Claim}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem*{defi}{Definition}
+\newtheorem*{eg}{Example}
+\newtheorem*{ex}{Exercise}
+\newtheorem*{fact}{Fact}
+\newtheorem*{law}{Law}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{notation}{Notation}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{question}{Question}
+\newtheorem*{rrule}{Rule}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{assumption}{Assumption}
+
+\newtheorem*{remark}{Remark}
+\newtheorem*{warning}{Warning}
+\newtheorem*{exercise}{Exercise}
+
+\newtheorem{nthm}{Theorem}[section]
+\newtheorem{nlemma}[nthm]{Lemma}
+\newtheorem{nprop}[nthm]{Proposition}
+\newtheorem{ncor}[nthm]{Corollary}
+
+% Special sets
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
