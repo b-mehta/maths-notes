@@ -1,0 +1,88 @@
+\documentclass{article}
+
+\def\npart {II}
+\def\nyear {2017}
+\def\nterm {Michaelmas}
+\def\nlecturer{Dr H.\ Wilton}
+\def\ncourse{Algebraic Topology}
+\input{header}
+% preamble
+
+% and here we go!
+
+% hjrw2
+% orw notes
+% hatchers book
+\begin{document}
+\maketitle
+\section{Introduction}
+% trefoil picture goes here (trefoil ~> unknot)
+
+\paragraph{Question 1} Is the trefoil really a knot?
+How do we make this precise?
+
+We can think of the trefoil and the unknot as continuous embeddings:
+\begin{equation}
+    S^1 \to \R^3
+\end{equation}
+
+\paragraph{Question 1 (precise)} Is there a continuous map
+\begin{equation}
+    F:S^1 \times [0, 1] \to \R^3
+\end{equation}
+such that
+\begin{itemize}
+    \item $F(\theta, 0) = f_0(\theta)$, $F(\theta, 1) = f_1(\theta)$ $\forall \theta \in S^1$
+    \item $F(\cdot, t_0): S^1 \to \R^3$ is injective, $\forall t_0 \in [0, 1]$
+\end{itemize}
+
+We phrased unknotting as an ``extension problem''.  We can think about other, easier to state extension problems.
+
+\paragraph{Question 2} Consider $S^2 = \{\vec{x} \in \R^3 \mid ||x|| = 1\}$, and $D^3 = \{\vec{x} \in \R^3 \mid ||x|| \leq 1\}$ along with the natural inclusion $i: S^2 \to D^3$.  Does there exist a continuous $f: D^3 \to S^2$ such that $f \circ i = id_{S^2}$?
+% picture if i can be bothered
+This seems like a hard question!  So, let's instead consider this analogous question in algebra.  We take $S^2$ analogous to $\Z$, and $D^3$ analogous to $0$, the trivial group. From here, we get
+\paragraph{Question 3} Does there exist a group homomorphism $f: 0 \to \Z$ such that $id_\Z = f \circ 0$?
+
+This question seems much easier to solve! This is the essence of algebraic topology - we turn difficult questions in topology into easy questions about algebra.
+
+\subsection{Examples and conventions}
+Zoo of examples
+
+\begin{itemize}
+    \item Point $*$
+    \item Circle $S^1$
+    \item The circle generalises to the $n$-sphere, $S^{n-1} = \{x \in \R^n \mid ||x|| = 1\}$
+    \item But also can be used to produce the torus $T^2 = S^1 \times S^1$.
+        % more damn pictures
+    \item Which itself generalises into the ``genus-g surface'', $\Sigma_g$
+    \item $K$ Klein bottle
+    \item $\R P^2$, the real projective plane
+\end{itemize}
+
+In this course, the term map always refers to a continuous map.
+To check that a map is continuous, we'll almost always use
+\begin{lemma}[The Gluing Lemma]
+    If $X = C_1 \cup C_2$, with $C_i$ closed, and $f: X \to Y$ is a function such that $f\mid_{C_1}$ and $f\vert_{C_2}$ are both continuous, then $f$ is continuous.
+\end{lemma}
+\begin{proof}
+    Let $D \subseteq Y$ be closed.  Then
+    \begin{equation}
+        f^{-1}(D) = (f\vert_{C_1})^{-1} (D) \cup (f\vert_{C_2})^{-1} (D)
+    \end{equation}
+    is a finite union of closed sets, hence is closed.  Therefore, $f$ is continuous.
+\end{proof}
+\subsection{Cell complexes}
+There are the spaces we can build by gluing.  The \textbf{basic operation} we use is to attach an $n$-dimensional disc, as shown in the non-existent diagram.
+Formally, if $f: S^{n-1} \to X$ is a continuous map, then we produce
+\begin{equation}
+    (X \sqcup D^n) / \sim
+\end{equation}
+where $\sim$ is an equivalence relation: $Y \sim f(y)$, for $y \in S^{n-1}$ and $f(y) \in X$.
+\begin{defi}[Cell complexes]
+    We define cell complexes by induction:
+    \begin{enumerate}[(i)] %roman lower
+        \item A zero-dimensional cell complex is a finite discrete topological space
+        \item An $n$-dimensional cell complex is constructed from an $(n-1)$ dimensional cell complex $X$ by attaching finitely many $n$-dimensional discs to $X$
+    \end{enumerate}
+\end{defi}
+\end{document}
