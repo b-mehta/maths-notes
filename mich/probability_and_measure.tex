@@ -1,0 +1,94 @@
+\documentclass{article}
+
+\def\npart {II}
+\def\nyear {2017}
+\def\nterm {Michaelmas}
+\def\nlecturer{E.\ Brieuillard}
+\def\ncourse{Probability and Measure}
+\input{header}
+% efjb2@cam.ac.uk
+% preamble
+\setcounter{section}{-1}
+% and here we go!
+
+\begin{document}
+\maketitle
+\section{Introduction}
+\subsection{Course structure}
+\begin{itemize}
+    \item Week 1: Lebesgue measure
+    \item Week 2: Abstract measure theory
+    \item Week 3: Integration
+    \item Week 4: Foundations of probability theory
+    \item Week 5: $L^p$ spaces
+    \item Week 6: Modes of convergence
+    \item Week 7: Fourier transform and gaussians
+   \item Week 8: Ergodic Theory
+\end{itemize}
+\subsection{Historical motivation}
+Suppose we have a subset $E \subset \R^d$.
+\begin{enumerate}
+    \item What does it mean to measure this subset?
+
+        In one dimension, we have some intuition of length, and in two and three dimensions we are familiar with the notions of surface area and volumne
+
+    \item Does it make sense to measure every subset?
+
+        This seems reasonable, but it turns out that assigning a measure to every subset can lead to logical contradictions.
+        What is a measure? It should be a function defined on subsets, in particular some assignment $E \to m(E) \in \R$.  It should satisfy some properties:
+        \begin{itemize}
+            \item Non-negativity: $m(E) \geq 0$ for all $E$
+            \item Empty set: $m(\varnothing) = 0$
+            \item Additivity: $m(E \sqcup F) = m(E) + m(F)$ for any two disjoint sets $E$ and $F$
+            \item Normalisation: $m([0, 1]^d) = 1$
+            \item Translation invariant: $m(E + x) = m(E)$ for all $E$ and all $x \in \R^d$
+        \end{itemize}
+        It's possible to construct pathological `measures' satisfying all these axioms and defined \emph{on all} subsets of $\R^d$, but they won't be `nice'
+        When mathematicians construct such measures, they usually do so on a restricted class of sets. Otherwise this leads to contradictions.
+        If $d \geq 3$, it can be shown that there is no $m: P(\R^d) \to [0, \infty)$ that are also rotation invariant.  This is referred to as the Hausdorff-Banach-Tarski paradox.
+        Namely, if we take $B = B(0, 1) = \{\vec{x} \in \R^d: x_1^2 + \dots x_d^2 \leq 1\}$, then there is a partition (fill in later)
+
+    \item Jordan Measure
+
+        Consider a box $B \subset \R^d$, given by $B = \prod_{i=1}^d I_i$, where $I_i = [a_i, b_i]$ are intervals in $\R$
+        From here, we can define the Jordan Measure $m(B) := \prod_{i=1}^d |b_i - a_i|$.
+
+        \begin{defi}
+            An \textbf{elementary subset} of $\R^d$ is a finite union of boxes.
+        \end{defi}
+        \begin{remark}
+            Every elementary set can be written as a finite union of disjoint boxes
+            The family of elementary sets is stable under finite unions, finite intersections and difference.
+            If E = $\sqcup_{i=1}^N B_i = \sqcup_{j=1}^M B'_j$, that is $E$ is a disjoint union of boxes in two different ways, then
+            $\sum_{i=1}^N m(B_i) = \sum_{j=1}^M m(B'_j)$
+            This says that \emph{makes sense} to define $m(E) as \sum_1^N m(B_i)$, for elementary subsets.
+        \end{remark}
+\end{enumerate}
+
+\begin{defi}
+    A subset $E \in \R^d$ is \textbf{Jordan measurable} if $\forall \epsilon > 0 \exists$ elementary sets $A, B$ such that $A \subset E \subset B$ and $m(B\setminus A) < \epsilon$.
+\end{defi}
+\begin{remark}
+    If $E$ is Jordan measurable, then
+    \begin{equation}
+        \inf\{m(B): E \subset B, B \mathrm{elementary}\} = \sup\{m(A): A \subset E, A \mathrm{elementary}\}
+    \end{equation}
+    (exercise: check)
+\end{remark}
+\begin{defi}
+    We define the \textbf{Jordan measure} of $E$ as this supremum or infimum.
+\end{defi}
+\begin{exercise}
+    $m$ so defined satisfies all the axioms defined earlier.
+\end{exercise}
+However the Jordan measure is not perfect. For instance, the complement of a Jordan measurable set is not Jordan measurable.  Similarly, we can take an (infinite) union of Jordan measurable sets and produce a set which is not Jordan measurable.
+
+\begin{defi}[Riemann integrable function]
+    A function $f:[a, b] \to \R$ is Riemann integrable if all its Riemann sums converge.
+    Formally, the integral $I(f) \in \R$, exists, if $\forall \epsilon > 0$, $\exists \delta > 0$ for every partition $P$ of $[a, b]$ of width $\tau(P) < \delta$,
+    $|S(f, P) - I(f)| < \epsilon$.
+$P$ a partition $a = t_0 < t_1 < \dots < t_n = b$ width $\tau(P) = \max_{0 \leq 1 \leq N_1} |t_{i+1} - t_i|$
+$S(f, P) = \sum_{i=1}^{N-1} P$
+% sort this out you slow idiot
+\end{defi}
+\end{document}
