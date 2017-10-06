@@ -80,4 +80,11 @@ Recall that if $n > 1$, then $n$ is \textbf{prime} if its only positive divisors
     Therefore, $b = (ab) r + p(bs)$, and hence $p \mid b$.
 \end{proof}
 
+This lets us prove the \textbf{fundamental theorem of arithmetic}
+\begin{thm}
+    Every integer $n > 1$ can be written as a product of primes, and this repreestnation is \emph{unique} up to order.
+\end{thm}
+\begin{proof}
+    Existence is trivial. Uniqueness: suppose $n = p_1 \dots p_r = q_1 \dots q_s$. $p_1 \mid n$, so $p_1 \mid $ some $q_j \implies p_i = q_j$. SO we can cancel $p_1$ and $q_j$ from the relation, and repeat for $\frac{n}{p_1}$.
+\end{proof}
 \end{document}
