@@ -19,8 +19,65 @@ Number theory is concerned with the (non-obvious, sometimes mysterious) properti
     \item $\Z = \{0, \pm 1, \pm 2, \dots\}$
     \item $\Q = \{\frac{m}{n} : m, n \in \Z, n \ne 0\}$
 \end{itemize}
-This can be seen as an experimental science.  Experimental data leads to conjectures, which can turn out to be very hard to prove.
+It can be seen as an experimental science, in which experimental data leads to conjectures which can turn out to be very hard to prove, for instance:
 \begin{enumerate}
     \item Congruent number problem: Let $N \geq 1$ be an integer of the form $8n + 5$, $8n+6$ or $8n + 7$. Does there exist a right-angled triangle with sides of rational length, and area equal to $N$.
+    \item Twin prime conjecture: Does there exist infinitely many primes $p$ such that $p+2$ is also prime? Very recently, we know there are infinitely many primes $p$ such that $\{p+2, p+4, \dots, p+246\}$ contains a prime.
+    \item $\pi(x) = $ ``prime counting function'', the number of prime numbers $p \leq x$.
+        The prime number theorem says that $\pi(x) \sim li(x) = \int_2^x \frac{dt}{\log t}$. It is not known whether or not $|\pi(x) - li(x)| \leq \sqrt{x} \log(x)$, which is equivalent to the Riemann hypothesis - a statement about a certain complex analytic function.
 \end{enumerate}
+Problem 1 follows from the ``Birch-(Swinnerton-Dyer)'' conjecture, related to algebraic geometry.
+Often the proofs require sophisticated theorems, beyond the statement of the problem.
+\section{Euclid's algorithm and factoring}
+\paragraph{Division algorithm} Given $a, b \in \Z$, with $b > 0$, $\exists q, r \in \Z$ with $0 \leq r \leq b$ and $a = b q + r$.
+\begin{proof}
+    Let $S = \{a - n b \mid n \in \Z\}$, which contains some non-negative integers. Let $r$ be the least integer in $S$ which is $\geq 0$, which exists by the well ordering property of the non-negative integers.  Claim $r < b$, since if not, then $r - b \in S$, and $r - b \geq 0$, contradicting the choice of $r$.
+\end{proof}
+\begin{notation}
+    If $r = 0$ (that is, $a = bq$ for some $q \in \Z$), write $b \mid a$ (read as `$b$ divides $a$'), otherwise write $b \not \mid a$.
+\end{notation}
+Given $a_1, \dots, a_n \in \Z$, not all zero, let
+\begin{equation}
+    I = \{\lambda_1 a_1 + \dots + \lambda_n a_n \mid \lambda_i \in \Z\}
+\end{equation}
+Note if $a, b \in I$, $l, m \in \Z$ then $l a + m b \in I$.
+\begin{nlemma}
+    $I = d \Z = \{\lambda d \mid \lambda \in \Z\}$ for some $d \leq 1$, clearly unique.
+\end{nlemma}
+\begin{proof}
+    As not all of $a_i$ are $0$, $I$ contains some positive integer, let $d$ be the least of them.  So, $d \Z \subset I$.  Let $a \in I$, so by the division algorithm, $a = qd + r$ with $0 \leq r \le d$. But then, $r = a - dq \in I$ so by minimality of $d$ $r = 0$, and so $a \in d \Z$.
+\end{proof}
+\begin{remark}
+    $a_i \in I = d \Z$ so $d \mid a_i$, and if $\forall i, e \mid a_i$, then $e$ divides every element of $I$, so $e \mid d$.
+    Write $d = \gcd(a_1, \dots, a_n) = (a_1, \dots, a_n)$, the greatest common divisor.
+\end{remark}
+
+The study of \textbf{Diophantine equations} involves solving equations with \emph{integer} solutions, and may have more variables than equations.  The simplest case is is linear in two variables.
+\begin{cor}
+    Let $a, b, c \in \Z$ with not both $a, b$ equal to $0$.  Then $\exists x, y \in \Z$ such that $a x + by = c \equiv (a, b) \mid c$.
+\end{cor}
+This definition given is non-constructive, but \textbf{Euclid's algorithm} is an efficient way to compute $(a, b)$.
+\paragraph{Euclid's algorithm} Assume $a > b > 0$. Apply successively the division algorithm:
+\begin{align*}
+    a &= q_1 b + r_1 & 0 \leq r_1 \le b\\
+    b &= q_2 r_1 + r_2 & 0 \leq r_1 \le b\\
+    r_1 &= q_3 r_2 + r_3 & 0 \leq r_1 \le b\\
+    \vdots \\
+    r_{k-2} &= q_k r_{k-1} + r_k & 0 \leq r_1 \le b\\
+    r_{k-1} &= q_{k+1} r_k + 0
+\end{align*}
+for some k, so $r_k \mid r_{k-1}$
+We claim $r_k = (a, b)$. Indeed, $(a, b) = (a - q_1 b, b) = (b, r_1) = (r_1, r_2) = \dots = (r_{k-1}, r_k) = r_k$.
+\begin{remark}
+    By lemma (ref), (a, b) = $r a + s b$ for some integers $r, s$. Euclid's algorithm give such $r, s$.
+\end{remark}
+Recall that if $n > 1$, then $n$ is \textbf{prime} if its only positive divisors are $\{1, \dots, n\}$, otherwise n is \textbf{composite}.
+\begin{nlemma}
+    Let $p$ be prime, $a, b \in \Z$.  Then $p \mid ab \implies p \mid a$ or $p \mid b$.
+\end{nlemma}
+\begin{proof}
+    Suppose $p \mid ab$, $p \not \mid a$. Then $\gcd(a, b) \ne p$, so it must be $1$. So $\exists r, s \in \Z$ such that $ar + ps = 1$.
+    Therefore, $b = (ab) r + p(bs)$, and hence $p \mid b$.
+\end{proof}
+
 \end{document}
