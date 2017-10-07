@@ -24,25 +24,25 @@ As much as possible, examples of applications will be given briefly.
 \section{Normed vector spaces}
 Unless stated, vector spaces will be either over the real numbers or the complex numbers, denoted by $\K$ to represent $\R$ or $\C$.
 
-\begin{defi}[Normed vector space]\label{def:normed_vector_space}
+\begin{defi}[\hypertarget{def:normed-vector-space}{Normed vector space}]
     A \textbf{normed vector space} is a vector space $V$ with a norm $\norm{\cdot}: V \to \R$ satisfying
     \begin{enumerate}[i.]
-        \item Positive definite: $\norm{v} \geq 0$ for all $v \in V$ and $\norm{v} = 0$ if $v=0$
-        \item Positive homogeneous: $\norm{\lambda v} = \abs{\lambda} \norm{v}$ for every $v \in V$ and $\lambda \in K$
-        \item Triangle inequality: $\norm{v + w} \leq \norm{v} + \norm{w}$ for all $v, w \in V$
+        \item $\norm{v} \geq 0$ for all $v \in V$ and $\norm{v} = 0$ if $v=0$. (Positive definite)
+        \item $\norm{\lambda v} = \abs{\lambda} \norm{v}$ for every $v \in V$ and $\lambda \in K$. (Positive homogeneous)
+        \item $\norm{v + w} \leq \norm{v} + \norm{w}$ for all $v, w \in V$. (Triangle inequality)
     \end{enumerate}
 \end{defi}
-In particular, a metric on $V$ is defined by $d(v, w) = \norm{v - w}$
+In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $d(v, w) = \norm{v - w}$.
 
 \begin{fact}
     The vector space operations of scalar multiplication and vector addition are continuous.
-    \begin{align}
+    \begin{align*}
         K \times V &\to V & (\lambda, v) &\mapsto \lambda v \\
         V \times V &\to V & (v, w) &\mapsto v + w
-    \end{align}
+    \end{align*}
 \end{fact}
 \begin{proof}
-    We only check that scalar multiplication is continuous. Since $K$ and $V$ are metric spaces, it suffices to show that $\lambda_j \to \lambda$ and $v_j \to v$ implies $\lambda_j v_j \to \lambda v$. But
+    We only check that scalar multiplication is continuous. Since $K$ and $V$ are \hyperlink{def:metric-on-vector-space}{metric spaces}, it suffices to show that $\lambda_j \to \lambda$ and $v_j \to v$ implies $\lambda_j v_j \to \lambda v$. But
     \begin{align*}
         \norm{\lambda_j v_j - \lambda v} &= \norm{(\lambda_j - \lambda) v_j + \lambda(v_j - v)} \\
                                          &\leq \underbrace{\abs{\lambda_j - \lambda}}_\text{$\to 0$} \underbrace{\norm{v_j}}_\text{bounded} + \abs{\lambda} \underbrace{\norm{v_j - v}}_\text{$\to 0$}
@@ -53,7 +53,7 @@ In particular, a metric on $V$ is defined by $d(v, w) = \norm{v - w}$
     Translations $(v \mapsto v + v_0)$ and dilations $(v \mapsto \lambda v, \lambda \ne 0)$ are homomorphisms.
 \end{cor}
 
-\begin{defi}[Topological vector space]\label{def:topological_vector_space}
+\begin{defi}[\hypertarget{def:topological-vector-space}{Topological vector space}]
     A \textbf{topological vector space} is a vector space together with a topology that makes the vector space operations continuous and in which points are closed.
 \end{defi}
 % (Prop: A topological vector space is Hausdorff)
@@ -61,64 +61,83 @@ In particular, a metric on $V$ is defined by $d(v, w) = \norm{v - w}$
 \begin{notation}
     For a subset $C$ of a vector space $V$ over $\K$ and $t \in \K$, we write $t C$ for the following subset:
     \begin{equation*}
-        t C \coloneqq \{t v \mid v \in C\}
+        t C \coloneqq \Set{t v | v \in C}
     \end{equation*}
 \end{notation}
-\begin{defi}[Convex subset]\label{def:convex_subset}
+\begin{defi}[\hypertarget{def:convex-subset}{Convex subset}]
     Let $V$ be a vector space and $C \subset V$ a subset.  We say that $C$ is \textbf{convex} iff $t C + (1-t) C \subset C$ for all $t \in [0, 1]$. Specifically, this means $t v + (1-t) w \in C$ for all $v, w \in C$ and $t \in [0, 1]$.
 \end{defi}
 
 \begin{fact}
-    Let $V$ be a \hyperref[def:normed_vector_space]{normed vector space}. Then $B_1(0)$ is \hyperref[def:convex_subset]{convex}.
+    Let $V$ be a \hyperlink{def:normed-vector-space}{normed vector space}. Then $B_1(0)$ is \hyperlink{def:convex-subset}{convex}.
 \end{fact}
 
 \begin{fact}
-    If $C$ is \hyperref[def:convex_subset]{convex}, then $v + \lambda C$ is convex for all $\lambda \in K$ and $v \in V$.
+    If $C$ is \hyperlink{def:convex-subset}{convex}, then $v + \lambda C$ is convex for all $\lambda \in K$ and $v \in V$.
 \end{fact}
-\begin{defi}[Locally convex]\label{def:locally_convex}
-    A \hyperref[def:topological_vector_space]{topological vector space} is \textbf{locally convex} if its topology has a basis of convex sets.
-\end{defi}
-\begin{defi}[Bounded]\label{def:bounded}
-    Let $V$ be a \hyperref[def:topological_vector_space]{topological vector space} and $B \subset V$. We say that $B$ is \textbf{bounded} if for \textit{every} open neighbourhood $U$ of $0$, there exists $t > 0$ such that $s U \supset B$ for all $s \geq t$.
+
+\begin{defi}[\hypertarget{def:locally-convex}{Locally convex}]
+    A \hyperlink{def:topological-vector-space}{topological vector space} is \textbf{locally convex} if its topology has a basis of \hyperlink{def:convex-subset}{convex} sets.
 \end{defi}
 
-\begin{prop}
-    Let $V$ be a topological vector space and $C \subset V$ be a \emph{bounded}, \emph{convex} neighbourhood of $0$. Then the topology on $V$ is induced by a norm.
-\end{prop}
-% define balanced
+\begin{defi}[\hypertarget{def:bounded}{Bounded}]
+    Let $V$ be a \hyperlink{def:topological-vector-space}{topological vector space} and $B \subset V$. We say that $B$ is \textbf{bounded} if for every open neighbourhood $U$ of $0$, there exists $t > 0$ such that $s U \supset B$ for all $s \geq t$.
+\end{defi}
+
+\begin{defi}[\hypertarget{def:balanced}{Balanced}]
+    Let $V$ be a vector space, and $C \subset V$ a subset. Call $C$ \textbf{balanced} if for all $\abs{\lambda} \leq 1$, we have $\lambda C \subset C$.
+\end{defi}
+
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}[(i)]
+        \item Balanced sets in $\R$ are sets of the form $[-t, t]$, $(-t, t)$, or $\{0\}$ and all of $\R$, and $\Q$ is not balanced in $\R$.
+        \item In $\C$, the only balanced sets are $\{0\}$, $\C$, and the open or closed balls centred at $0$.
+        \item There are more interesting examples of balanced sets in $\R^2$, for instance the open disk, but also any ellipse centred at $0$, as in [figure]. (BM todo $x^2 - xy + y^2 = 1$).
+    \end{enumerate}
+\end{eg}
+
 \begin{lemma}
-    If $C$ is as in the proposition, then there exists a \emph{bounded}, \emph{balanced}, \emph{convex} neighbourhood $\tilde C$ of $0$, ie $\lambda \tilde C \subseteq \tilde C$ for all $\abs{\lambda} \leq 1$
+    Let $V$ be a \hyperlink{def:topological-vector-space}{topological vector space} and $C \subset V$ be a \hyperlink{def:bounded}{bounded}, \hyperlink{def:convex-subset}{convex} neighbourhood of $0$. Then there exists a bounded, \hyperlink{def:balanced}{balanced}, {convex} neighbourhood $\widetilde C$ of $0$.
 \end{lemma}
+
 \begin{proof}
-    (Exercise)
+    Exercise (on example sheet).
 \end{proof}
-We now use this lemma to prove the proposition.
+
+\begin{prop}
+    Let $V$ be a \hyperlink{def:topological-vector-space}{topological vector space} and $C \subset V$ be a \hyperlink{def:bounded}{bounded}, \hyperlink{def:convex-subset}{convex} neighbourhood of $0$. Then the topology on $V$ is induced by a norm.
+\end{prop}
+
 \begin{proof}
-    Let
-    \begin{equation}
-        \mu_{\tilde C}(v) = \inf{t > 0 : v \in t \tilde C}
-    \end{equation}
-    referred to as the Minkowski functional of $\tilde C$.
-    We claim that $\norm{v} = \mu_{\tilde C}(v)$ is a norm on $V$ and that the topology induced by it is the same as the original topology.
-    \begin{enumerate} % roman lowercase
-        \item We clearly have positivity, and $\mu_{tilde C}(v) = 0$ iff $v = 0$ since $\tilde C$ is bounded.
-        \item Since $\tilde C$ is balanced,
-            \begin{align}
-                \mu_{\tilde C} (\lambda v) = \inf\{t > 0 : \lambda v \in t \tilde C\} \\
-                &= \inf\{t > 0: v \in \frac{t}{\lambda|} \tilde C\} \\
-                &= \inf\{\abs{\lambda} \frac{t}{\abs{\lambda}} > 0 : v \in \frac{t}{\abs{\lambda}} \tilde C\}
-                &= \abs{\lambda} \mu_{\tilde C}(v)
-            \end{align}
-        \item Given $v, w \in V$, write $v = \lambda v_0$ and $w = \mu w_0$ with $\lambda, \mu > 0$, $v_0, w_0 \in \tilde C$.
-            Since $\tilde C$ is convex,
-            \begin{equation}
-                \frac{\lambda v_0 + \mu w_0}{\lambda + \mu} \in \tilde C
-            \end{equation}
-            Also $\mu_{\tilde C}(\frac{\lambda v_0 + \mu w_0}{\lambda + \mu} \in \tilde C) \leq 1$
+    Use the previous lemma to construct $\widetilde C$. Let
+    \begin{equation*}
+        \mu_{\widetilde C}(v) = \inf\set{t > 0 | v \in t \widetilde C}
+    \end{equation*}
+    referred to as the Minkowski functional of $\widetilde C$.
+    We claim that $\norm{v} = \mu_{\widetilde C}(v)$ is a norm on $V$ and that the topology induced by it is the same as the original topology.
+    Check the \hyperlink{def:normed-vector-space}{norm axioms} in turn:
+    \begin{enumerate}[i.]
+        \item We clearly have positivity, and $\mu_{\widetilde C}(v) = 0$ iff $v = 0$ since $\widetilde C$ is \hyperlink{def:bounded}{bounded}.
+        \item Since $\widetilde C$ is \hyperlink{def:balanced}{balanced},
+            \begin{align*}
+                \mu_{\widetilde C} (\lambda v) &= \inf\Set{t > 0 | \lambda v \in t \widetilde C} \\
+                &= \inf\Set{t > 0 | v \in \frac{t}{\abs{\lambda}} \widetilde C} \\
+                &= \inf\Set{\abs{\lambda} \frac{t}{\abs{\lambda}} > 0 | v \in \frac{t}{\abs{\lambda}} \widetilde C} \\
+                &= \abs{\lambda} \mu_{\widetilde C}(v)
+            \end{align*}
+        \item Given $v, w \in V$, write $v = \lambda v_0$ and $w = \mu w_0$ with $\lambda, \mu > 0$, $v_0, w_0 \in \widetilde C$.
+            Since $\widetilde C$ is \hyperlink{def:convex-subset}{convex},
+            \begin{align*}
+                &\frac{\lambda v_0 + \mu w_0}{\lambda + \mu} \in \widetilde C \\
+                \implies \mu_{\widetilde C} \bigg(&\frac{\lambda v_0 + \mu w_0}{\lambda + \mu}\bigg) \leq 1
+            \end{align*}
             Therefore,
-            \begin{align}
-                \mu_{\tilde C} (v + w) = (\lambda + \mu) \mu_{\tilde C} (\frac{\lambda v_0 + \mu w_0}{\lambda + \mu}) \leq \lambda + \mu \\
-            \end{align}
+            \begin{align*}
+                \mu_{\widetilde C} (v + w) &= (\lambda + \mu) \ \mu_{\widetilde C} \left(\frac{\lambda v_0 + \mu w_0}{\lambda + \mu}\right) \\
+                &\leq \lambda + \mu \\
+                &\leq \mu_{\widetilde C}(v) + \mu_{\widetilde C}(w)
+            \end{align*}
     \end{enumerate}
 \end{proof}
 \end{document}
