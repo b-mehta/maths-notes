@@ -9,6 +9,7 @@
 
 % preamble
 \setcounter{section}{-1}
+\newcommand{\K}{\mathbb{K}}
 % and here we go!
 
 \begin{document}
@@ -16,65 +17,77 @@
 
 % statslab.cam.ac.uk/~rb812/teaching/la2017
 \section{Introduction}
-As the name suggests, Linear Analysis is the study of linear spaces, mostly infinite dimensional. In particular, propertiers like convexity, completeness, closedness are of interest here.  Like any pure course, we start with a lot of definitions, and then clear htem up.  That said, linear analysis has many applications, largely in the field of differential equations both ordinary and partial.  Markov processes can also be seen using a transition operator, and dynamical processes are given by a measure preserving map, all fitting into the realm of linear maps.  Quantum mechanics studies .. functional analysis.  As much as possible, examples of applications will be given briefly.
-\section{Normed vector spaces}
-Unless stated, vector spaces will be real or complex, typically denoted by $K$, to represent $\R$ or $\C$.
+As the name suggests, Linear Analysis is the study of linear spaces of functions, mostly infinite dimensional. In particular, properties like convexity, completeness, closedness are of interest here.
+Like any pure course, we start with a lot of definitions which come out of nowhere, and then clear them up, but functional analysis is not devoid of functional analysis. In particular, in the field of differential equations both ordinary and partial it is often useful to view the differential operators as a linear operator on a space of functions. Markov processes can also be seen using a transition operator, and dynamical processes are given by a measure preserving map, all fitting into the realm of linear maps.  Quantum mechanics to a certain extent is the study of the spectrum of certain self-adjoint linear operators on a Hilbert space, and so requires functional analysis.
+As much as possible, examples of applications will be given briefly.
 
-\begin{defi}
-    A \textbf{normed vector space} is a vector space $V$ with a norm $||.|| : V \to \R$ satisfying
-    \begin{enumerate} % roman lowercase
-        \item Positive definite: $||v|| \geq 0$ for all $v \in V$ and $||v|| = 0$ if $v= 0 $
-        \item Positive homogeneous: $||\lambda v|| = |lambda| ||v||$ for every $v \in V$ and $\lambda \in K$
-        \item Triangle inequality: $||v + w|| \leq ||v|| + ||w||$ for all $v, w \in V$
+\section{Normed vector spaces}
+Unless stated, vector spaces will be either over the real numbers or the complex numbers, denoted by $\K$ to represent $\R$ or $\C$.
+
+\begin{defi}[Normed vector space]\label{def:normed_vector_space}
+    A \textbf{normed vector space} is a vector space $V$ with a norm $\norm{\cdot}: V \to \R$ satisfying
+    \begin{enumerate}[i.]
+        \item Positive definite: $\norm{v} \geq 0$ for all $v \in V$ and $\norm{v} = 0$ if $v=0$
+        \item Positive homogeneous: $\norm{\lambda v} = \abs{\lambda} \norm{v}$ for every $v \in V$ and $\lambda \in K$
+        \item Triangle inequality: $\norm{v + w} \leq \norm{v} + \norm{w}$ for all $v, w \in V$
     \end{enumerate}
 \end{defi}
-In particular, a metric on $V$ is defined by $d(v, w) = ||v - w||$
+In particular, a metric on $V$ is defined by $d(v, w) = \norm{v - w}$
 
 \begin{fact}
-    The vector space operations are continuous.
+    The vector space operations of scalar multiplication and vector addition are continuous.
     \begin{align}
-        K \times V \to V & (\lambda, v) \mapsto \lambda v \\
-        V \times V \to V & (v, w) \mapsto v + w
+        K \times V &\to V & (\lambda, v) &\mapsto \lambda v \\
+        V \times V &\to V & (v, w) &\mapsto v + w
     \end{align}
 \end{fact}
 \begin{proof}
-    We only check that scalar multiplication is continuous. Since $K$ and $V$ are metric spaces, it suffices that $\lambda_j \to \lambda$, and $v_j \to v$ implies $\lambda_j v_j \to \lambda v$. But
-    \begin{equation}
-        ||\lambda_j v_j - \lambda v|| = ||(\lambda_j - \lambda) v_j + \lambda(v_j - v)|| \leq |\lambda_j - \lambda| ||v_j|| + |\lambda| ||v_j - v||
-    \end{equation}
-    In turn, $|\lambda_j - \lambda \to 0$, and $||v_j||$ is bounded since it converges, and $||v_j - v|| \to 0$, hence $||\lambda_j v_j - \lambda v|| \to 0$, as required.
+    We only check that scalar multiplication is continuous. Since $K$ and $V$ are metric spaces, it suffices to show that $\lambda_j \to \lambda$ and $v_j \to v$ implies $\lambda_j v_j \to \lambda v$. But
+    \begin{align*}
+        \norm{\lambda_j v_j - \lambda v} &= \norm{(\lambda_j - \lambda) v_j + \lambda(v_j - v)} \\
+                                         &\leq \underbrace{\abs{\lambda_j - \lambda}}_\text{$\to 0$} \underbrace{\norm{v_j}}_\text{bounded} + \abs{\lambda} \underbrace{\norm{v_j - v}}_\text{$\to 0$}
+    \end{align*}
+    as required.
 \end{proof}
 \begin{cor}
     Translations $(v \mapsto v + v_0)$ and dilations $(v \mapsto \lambda v, \lambda \ne 0)$ are homomorphisms.
 \end{cor}
 
-\begin{defi}
-    A \textbf{topological vector space} is a vector space together with a topology that makes the vector space operations conitnuous and points are closed.
+\begin{defi}[Topological vector space]\label{def:topological_vector_space}
+    A \textbf{topological vector space} is a vector space together with a topology that makes the vector space operations continuous and in which points are closed.
 \end{defi}
 % (Prop: A topological vector space is Hausdorff)
 
-\begin{defi}
-    Let $V$ be a vector space and $C \subset V$ a subset.  We say that $C$ is \textbf{convex} iff $t C + (1-t) C \subset C$ for all $t \in [0, 1]$, ie $t v + (1-t) w \in C$ for all $v, w \in C$, $t \in [0, 1]$.
-    % might be worth clarifying the notation
+\begin{notation}
+    For a subset $C$ of a vector space $V$ over $\K$ and $t \in \K$, we write $t C$ for the following subset:
+    \begin{equation*}
+        t C \coloneqq \{t v \mid v \in C\}
+    \end{equation*}
+\end{notation}
+\begin{defi}[Convex subset]\label{def:convex_subset}
+    Let $V$ be a vector space and $C \subset V$ a subset.  We say that $C$ is \textbf{convex} iff $t C + (1-t) C \subset C$ for all $t \in [0, 1]$. Specifically, this means $t v + (1-t) w \in C$ for all $v, w \in C$ and $t \in [0, 1]$.
 \end{defi}
+
 \begin{fact}
-    Let $V$ be a normed vector space. Then $B_1(0)$ is convex.
+    Let $V$ be a \hyperref[def:normed_vector_space]{normed vector space}. Then $B_1(0)$ is \hyperref[def:convex_subset]{convex}.
 \end{fact}
+
 \begin{fact}
-    If $C$ is convex, then $v + \lambda C$ is convex for all $\lambda \in K$ and $v \in V$.
+    If $C$ is \hyperref[def:convex_subset]{convex}, then $v + \lambda C$ is convex for all $\lambda \in K$ and $v \in V$.
 \end{fact}
-\begin{defi}
-    A topological vector space is \textbf{locally convex} if its topology has a basis of convex sets.
+\begin{defi}[Locally convex]\label{def:locally_convex}
+    A \hyperref[def:topological_vector_space]{topological vector space} is \textbf{locally convex} if its topology has a basis of convex sets.
 \end{defi}
-\begin{defi}
-    Let $V$ be a topological vectror space and $B \subset V$. We say that $B$ is \textbf{bounded} if for \textit{every} open neighbourhood $U$ of $0$, there exists $t > 0$ such that $s U \supset B$ for all $s \geq t$.
+\begin{defi}[Bounded]\label{def:bounded}
+    Let $V$ be a \hyperref[def:topological_vector_space]{topological vector space} and $B \subset V$. We say that $B$ is \textbf{bounded} if for \textit{every} open neighbourhood $U$ of $0$, there exists $t > 0$ such that $s U \supset B$ for all $s \geq t$.
 \end{defi}
+
 \begin{prop}
     Let $V$ be a topological vector space and $C \subset V$ be a \emph{bounded}, \emph{convex} neighbourhood of $0$. Then the topology on $V$ is induced by a norm.
 \end{prop}
 % define balanced
 \begin{lemma}
-    If $C$ is as in the proposition, then there exists a \emph{bounded}, \emph{balanced}, \emph{convex} neighbourhood $\tilde C$ of $0$, ie $\lambda \tilde C \subseteq \tilde C$ for all $|\lambda| \leq 1$
+    If $C$ is as in the proposition, then there exists a \emph{bounded}, \emph{balanced}, \emph{convex} neighbourhood $\tilde C$ of $0$, ie $\lambda \tilde C \subseteq \tilde C$ for all $\abs{\lambda} \leq 1$
 \end{lemma}
 \begin{proof}
     (Exercise)
@@ -86,15 +99,15 @@ We now use this lemma to prove the proposition.
         \mu_{\tilde C}(v) = \inf{t > 0 : v \in t \tilde C}
     \end{equation}
     referred to as the Minkowski functional of $\tilde C$.
-    We claim that $||v|| = \mu_{\tilde C}(v)$ is a norm on $V$ and that the topology induced by it is the same as the original topology.
+    We claim that $\norm{v} = \mu_{\tilde C}(v)$ is a norm on $V$ and that the topology induced by it is the same as the original topology.
     \begin{enumerate} % roman lowercase
         \item We clearly have positivity, and $\mu_{tilde C}(v) = 0$ iff $v = 0$ since $\tilde C$ is bounded.
         \item Since $\tilde C$ is balanced,
             \begin{align}
                 \mu_{\tilde C} (\lambda v) = \inf\{t > 0 : \lambda v \in t \tilde C\} \\
                 &= \inf\{t > 0: v \in \frac{t}{\lambda|} \tilde C\} \\
-                &= \inf\{|\lambda| \frac{t}{|\lambda|} > 0 : v \in \frac{t}{|\lambda|} \tilde C\}
-                &= |\lambda| \mu_{\tilde C}(v)
+                &= \inf\{\abs{\lambda} \frac{t}{\abs{\lambda}} > 0 : v \in \frac{t}{\abs{\lambda}} \tilde C\}
+                &= \abs{\lambda} \mu_{\tilde C}(v)
             \end{align}
         \item Given $v, w \in V$, write $v = \lambda v_0$ and $w = \mu w_0$ with $\lambda, \mu > 0$, $v_0, w_0 \in \tilde C$.
             Since $\tilde C$ is convex,
