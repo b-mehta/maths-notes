@@ -1,21 +1,15 @@
 \documentclass{article}
 
-\usepackage{inputenc}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{mathtools}
-% \usepackage{graphicsx}
-\usepackage{xcolor}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{hyperref}
-\usepackage{hypcap}
-\usepackage{geometry}
+\def\npart {II}
+\def\nyear {2017}
+\def\nterm {Michaelmas}
+\def\nlecturer{Prof. P. Russell}
+\def\ncourse{Graph Theory}
+\input{header}
 
-\title{Graph Theory}
-\author{Russell, notes taken by Bhavik Mehta}
+% preamble
+\setcounter{section}{-1}
+% and here we go!
 
 \begin{document}
 \maketitle
@@ -31,7 +25,7 @@ This course consists of six chapters: corresponding to paragraphs 2 to 7 in the 
 Paragraph 1: Introductory - split between chapters
 
 \subsection{Informal definitions}
-A \emph{graph} consists of `vertices' with some pairs of vertices joined by `edges'. 
+A \emph{graph} consists of `vertices' with some pairs of vertices joined by `edges'.
 (drawing goes here)
 % do the tikz bs later
 
@@ -59,10 +53,10 @@ If we can draw a graph with no crossing edges, how many colours are needed to co
 example three
 Cosets of finite subgroups of finite groups
 
-Let $G$ be a finite group, $H \leq G$, $|G : H| = n$.  By Lagrange, $\exists a_1, \dots, a_n \in G$ such that the left cosets of $H$ are $a_1 H, \dots a_n H$.  Similarly, $\exists b_1, \dots, b_n \in G$ such that the right cosets of $H$ are $H a_1, \dots, H a_n$.  
-Can we do this simultaneously? In particular, are there $a_1, \dots, a_n \in G$ such that $a_1 H, \dots, a_n H \in G$ are the left cosets, and $a_1, \dots, a_n \in G$ are the right cosets? 
+Let $G$ be a finite group, $H \leq G$, $|G : H| = n$.  By Lagrange, $\exists a_1, \dots, a_n \in G$ such that the left cosets of $H$ are $a_1 H, \dots a_n H$.  Similarly, $\exists b_1, \dots, b_n \in G$ such that the right cosets of $H$ are $H a_1, \dots, H a_n$.
+Can we do this simultaneously? In particular, are there $a_1, \dots, a_n \in G$ such that $a_1 H, \dots, a_n H \in G$ are the left cosets, and $a_1, \dots, a_n \in G$ are the right cosets?
 
-In the case where $H \tri G$, this is easy. We have $a H = H a \forall a \in G$.  However it is less obvious if $H \notri G$.  Let $L$ be the set of left cosets, and let $R$ be the set of right cosets. We can create a graph where the vertices are $L \cup R$.  Join $X \in L$ to $Y \in R$ by an edge if we can find some $a$ such that $X = aH$ and $Y = Ha$, that is, if $X$ and $Y$ have a commmon element.  Ideally, we would like a graph like this
+% In the case where $H < G$, (normal subgroup) this is easy. We have $a H = H a \forall a \in G$.  However it is less obvious if $H \notri G$.  Let $L$ be the set of left cosets, and let $R$ be the set of right cosets. We can create a graph where the vertices are $L \cup R$.  Join $X \in L$ to $Y \in R$ by an edge if we can find some $a$ such that $X = aH$ and $Y = Ha$, that is, if $X$ and $Y$ have a commmon element.  Ideally, we would like a graph like this
 (insert bipartite graph here)
 
 Formally, we ask: In this graph, can we find a set of edges meeting each vertex precisely once?
@@ -72,11 +66,78 @@ Fermat equation mod p
 Consider the equation $x^n + y^n = z^n$. Does this have solutions mod $p$ for $p$ a prime?  Rule out trivial solutions such as $x = 0, y = z$, in particular we such for solutions in $\mathbb{Z}_p$ where $xyz \ne 0$.
 Let $G = \mathbb{Z} \\ {0}$ under multiplication, and $H = \{g^n : g \in G\}$.  We can check that $H \leq G$, and that $|G : H| \leq n$, by considering the number of $n$th roots an element can have.  So, $G$ can be partitioned into $g_1 H, g_2 H, \dots, g_mH$ for some $g_1, g_2, \dots, g_m$ and $m \leq n$.  Suppose in some $g_i H$, we have $a, b, c$ with $a + b = c$.  Then $a = g_i x^n, b = g_i y^n, c = g_i z^n$ for some $x, y, z \in G$.  Then
 \begin{align}
-  g_i x^n + g_i y^n = g_i z^n 
+  g_i x^n + g_i y^n = g_i z^n
   x^n + y^n = z^n
 \end{align}
 
 It finally remains to show Schur's Theorem:
 (thm) Let $n$ be a positive integer. Then if $p$ is a sufficiently large positive integer, whenever $\{1, 2, \dots, p\}$ is parititioned into $n$ parts, we can solve $a + b = c$ with $a, b, c$ all in some part.
 
+\section{Ramsey Theory}
+
+\begin{defi}[Graph]\label{def:graph}\label{def:vertex}\label{def:edge}
+    A \textbf{graph} is an ordered pair $(V, E) = G$ where $V$ is a finite set and $E$ is a set of unordered pairs of distinct elements of $V$.  We call elements of $V$ \textbf{vertices} of $G$ and elements of $E$ \textbf{edges}.  We often write $v \in G$ to mean $v \in V$ and sometimes, where clear, $e \in G$ to mean $e \in E$.  Often denote $\{u, v\} \in E$ by $uv$. Note $uv = vu$.
+\end{defi}
+
+\begin{eg}
+    Here's an example of a \hyperref{def:graph}[graph] $G = (\{1, 2, 3, 4, 5, 6, 7\}, \{12, 23, 13, 14, 67\})$, but it's often easier to represent a graph by a drawing: take a point for each vertex, join two vertices if they are in an edge.
+    (Insert drawing here).
+\end{eg}
+
+\begin{defi}[Graph isomorphism]\label{def:g_iso}
+    Let $G = (V, E)$ and $G' = (V', E')$ be \hyperref{def:graph}[graphs]. An \textbf{isomorphism} from $G$ to $G'$ is a bijection $\phi: V \to V'$ such that for all $u, v \in V$, we have $\phi(u) \phi(v) \in E'$ if and only if $u v \in E$.  If such an isomorphism exists, we say $G$ is isomorphic to $G'$.
+\end{defi}
+
+\begin{defi}[Subgraph]\label{def:subgraph}
+    Suppose also $H = (W, F)$ is a graph. We say $H$ is a \textbf{subgraph} of $G$ and write $H \subset G$ if $W \subset V$ and $F \subset E$.  Often, we say `$H$ is a subgraph of $G$' to mean `$H$ is isomorphic to a subgraph of $G$'.
+\end{defi}
+
+\begin{defi}[Complete graph of order $n$]\label{def:K_n}
+    The \textbf{complete graph of order n}, $K_n$ has $n$ vertices with every pair forming an edge.
+\end{defi}
+
+% add pictures of K1, K3, K5
+
+Looking at (fig), we see $K_3$ looks like a triangle, and we will often just refer to $K_3$ as a \textbf{triangle}\label{def:triangle}.  In addition, note that if $m \leq n$, then $K_m \subset K_n$.
+
+Recall \hyperref{thm:schur}[Schur's Theorem]:
+\begin{thm}[Schur's Theorem reformulated]
+    Let $k$ be a positive integer. Then there is a positive integer $n$ such that if the set $[n] = \{1, 2, \dots, n\}$ is coloured with $k$ colours, we can find $a, b, c$ with $a + b = c$ and $a,b,c$ the same colour.
+\end{thm}
+
+Can we prove this directly? First try $k=1$, where $n=2$ immediately works because $1+1=2$.
+
+For $k=2$, (add stuff here). (blue 1, yellow 2, yellow 3, blue 4, any 5)
+This case analysis worked for $k=2$, but is likely to get a lot more fiddly for larger $k$. Even for $k=3$ this case analysis turns out to be a lot harder, so can we come up with a `better' proof for the $k=2$ case, that is `more likely to generalise'?
+
+\begin{proof}[$k=2$ of Schur's Theorem, improved]
+    Suppose $[5]$ are coloured blue/yellow.  Then some three are the same colour, and without loss of generality $i < j < k$ are blue. If $j-i$ is blue we are done, since $i + (j-i) = j$.
+    Similarly if $k-i$ or $k-j$ is blue, we are done.  If not, all of $j-i$, $k-i$, $k-j$ are all yellow, but then $k-i = (j-i) + (k-j)$, and we are done.
+\end{proof}
+
+Let's try a similar approach for $k=3$, and I claim $n=16$ works.
+
+\begin{proof}(Schur's theorem, $k=3$)
+
+    Suppose $[16]$ are coloured blue, yellow and green.  By the pigeonhole principle, some six numbers are the same colour, without loss of generality $x_1 < x_2 < \dots < x_6$ are blue.
+    If $x_j - x_i$ is blue for any $i<j$ then we are done: $x_i + (x_j - x_i) = x_j$.  So assume all $x_j - x_i$ are green or yellow.
+    Consider the five numbers $x_2 - x_1$, $x_3 - x_1$, $x_4 - x_1$, $x_5 - x_1$, $x_6 - x_1$.  By the $k=2$ case, some three of these are the same colour: say $x_i - x_1$, $x_j - x_1$, $x_k - x_1$ are yellow, for $i < j < k$.
+    % (begin star)
+    If $x_j - x_i$ is yellow, we are done: $(x_i - x_1) + (x_j - x_i) = x_j - x_1$, similarly if $x_k - x_i$ or $x_k - x_j$ is yellow.
+    Otherwise, all of $x_j - x_i$, $x_k - x_i$, $x_k - x_j$ are all green, and we have $(x_j - x_i) + (x_k - x_j) = x_k - x_i$, so we are done.
+    % (end star)
+\end{proof}
+
+This (star) looks very similar to the proof of the $k=2$ case, so can we use induction? It's unclear, because it wasn't exactly the previous case.  But notice how we always seem to be interested in differences of two numbers, yet we never seem to use facts like $7-3 = 9-5$.
+So, consider a graph where the vertices are numbers, and the edges refer to the difference between two vertices, and we colour edges.
+Suppose the edges of a complete graph $K_6$ are coloured blue and yellow. Then we can find a monochromatic \hyperref[def:triangle]{triangle}.
+\begin{proof}
+    Pick $v \in K_6$. $v$ is in five edges, so some three are the same colour, without loss of generality call them $vx, vy, vz$. If any of $xy, xz, yz$ is blue, we have a blue $triangle$ with $v$. If not, $xyz$ is a yellow triangle.
+\end{proof}
+
+\begin{remark}
+    Schur for $k=2$ now follows: Suppose $[5]$ are coloured blue/yellow. Take a $K_6$ with vertices $\{0, 1, \dots, 5\}$. Colour edge $ij$, $(i<j)$ with the colour of $j-i$. By (ref), we have a monochromatic triangle $abc$ ($a<b<c$). Then $(c-b) + (b-a) = c-a$, and $c-b, b-a, c-a$ are all the same colour.
+    We cannot find a monochromatic triangle in $K_5$ instead (picture)
+    In this graph form, the statement for more colours is now amenable to an induction proof.
+\end{remark}
 \end{document}
