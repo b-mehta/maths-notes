@@ -72,7 +72,7 @@ Assume $a > b > 0$. Apply successively the division algorithm:
 for some $k$, so $r_k \mid r_{k-1}$
 We claim $r_k = (a, b)$. Indeed, $(a, b) = (a - q_1 b, b) = (b, r_1) = (r_1, r_2) = \dots = (r_{k-1}, r_k) = r_k$.
 \begin{remark}
-    By lemma \ref{lem:pid_lemma}, $(a, b) = r a + s b$ for some integers $r, s$. Euclid's algorithm give such $r, s$.
+     By lemma \ref{lem:pid_lemma}, $(a, b) = r a + s b$ for some integers $r, s$. Euclid's algorithm give such $r, s$.
 \end{remark}
 Recall that if $n > 1$ then $n$ is \textbf{prime} if its only positive divisors are $\{1, \dots, n\}$, otherwise n is \textbf{composite}.
 \begin{nlemma}
@@ -85,9 +85,90 @@ Recall that if $n > 1$ then $n$ is \textbf{prime} if its only positive divisors 
 
 This lets us prove the fundamental theorem of arithmetic.
 \begin{thm}[Fundamental theorem of arithmetic]
-    Every integer $n > 1$ can be written as a product of primes, and this repreestnation is \emph{unique} up to ordering.
+    Every integer $n > 1$ can be written as a product of primes, and this representation is \emph{unique} up to ordering.
 \end{thm}
 \begin{proof}
     Existence is trivial. Uniqueness: suppose $n = p_1 \dots p_r = q_1 \dots q_s$. $p_1 \mid n$, so $p_1$ divides some $q_j$. Hence $p_1 = q_j$ and so we can cancel $p_1$ and $q_j$ from the relation, and repeat the process for $\frac{n}{p_1}$, eventually giving that the $\{p_1, \dots, p_r\}$ are the same as the $\{q_1, \dots, q_s\}$, up to ordering.
 \end{proof}
+
+If we know $a = \prod_{i=1}^k p_i^{\alpha_i}$, $b = \prod_{i=1}^k p_i^{\beta_i}$ for $\alpha_i, \beta_i \geq 0$ and $p_i$ are distinct primes, then by uniqueness of prime factorisation,
+\begin{equation*}
+    (a, b) = \prod_{i=1}^k p_i^{\gamma_i} \, , \quad \gamma_i = \min(\alpha_i, \beta_i)
+\end{equation*}
+However if $a, b$ are large, this is an inefficient way to compute GCDs.
+\begin{defi}
+    An algorithm with input an integer $N> 0$ is \textbf{polynomial time} if $\exists b, c > 0$ for which the algorithm completes after less than $c (\log N)^b$ `elementary operations'.
+    Examples of elementary operations include adding or multiplying digits in some fixed base.
+    If there are $k$ inputs, we require less than $c (\max_k(\log N_i))^b$
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{itemize}
+        \item Adding, multiplying integers (usual method)
+        \item Computing GCDs by Euclid's algorithm
+        \item Testing if $N$ is prime (recent discovery, 2002)
+    \end{itemize}
+\end{eg}
+
+\paragraph{Factoring} What about factoring $N$? The obvious method is trial division by integers $\leq \sqrt{N}$. If $N = pq$, then $p, q \sim \sqrt{N}$ this will take $\sqrt{N}$ divisions - asymptotically larger than any power of $\log N$.
+For instance, if $N$ has $100$ digits, and we can do $2^9$ divisions every second, this will take around $10^{50} / 2^9$ seconds, which is about $6 \times 10^{39}$ years.  However, Euclid's algorithm will compute the GCD of two such numbers in a few milliseconds.
+However, there are better algorithms for factoring which we will see later, but so far no polynomial-time algorithm is known (important for security of encryption algorithms like RSA).
+These are practical for numbers with fewer than 200 digits (for a large computer - the record is 232 digits using thousands of computers and several months)
+
+We will study the distribution of primes and the counting function later.  For now,
+
+\begin{thm}[Euclid]
+    There are infinitely many primes
+\end{thm}
+\begin{proof}
+    It is enough to show that given $N$, there is a prime $p > N$. Let $q$ be the largest prime $\leq N$, and set $M = (2 \times 3 \times 5 \times \dots \times q) + 1$. If $p$ is any prime factor of $M$, then $p \notin \set{2, 3, \dotsc, q}$ so $p > N$.
+\end{proof}
+
+\begin{remark}
+    This is constructive, in that it gives a way to find a prime greater than any $N$, but is is not efficient. For instance, if $N=1000$, $M$ has over $400$ digits.
+\end{remark}
+
+\paragraph{Finding large primes} For reasonable size numbers (fewer than 1000 digits), it is reasonable to pick numbers at random and test for primality. For very large primes, there are special (faster) tests for primality of numbers of the form $N = 2^q - 1$, called Mersenne numbers. Using these, peole have shown that that $2^q - 1$ is prime when $q = 74207281$.
+
+\section{Congruences}
+Fix $n \geq 1$ (the modulus).  Typically we will use $n > 1$.
+\begin{defi}
+    $ a \equiv b \pmod{n}$ if $n \mid a-b$, and we say `$a$ is congruent to $b$ mod $n$'
+\end{defi}
+
+This defines an equivalence relation on $\Z$. Write $\Z / n\Z$ for the set of equivalence classes $\set{a + n \Z}$, where $a + n \Z = b + n \Z \iff a \equiv b \pmod{n}$.  It is easy to see that the operations of addition and multiplication in $\set{a + n \Z}$ are well defined.  [In other words, $n \Z$ is an ideal in the ring $\Z$, and $\Z / n\Z$ is the quotient ring]
+
+\begin{nlemma}\label{lem:2_1}
+    Let $a \in \Z$. The following are equivalent:
+    \begin{enumerate}[i)]
+        \item $(a, n) = 1$
+        \item $\exists b \in \Z$ with $ab \equiv 1 \pmod{n}$
+        \item (The equivalence class of) $a$ is a generator of the group $(\Z/n\Z, +)$.
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    $i) \implies ii)$. If $(a, n) = 1$, $\exists b, c \in \Z$ with $ab+nc=1$ so $ab \equiv 1 \pmod{n}$
+    $ii) \implies i)$. $ab \equiv 1 \pmod{n} \iff ab+kn=1$, for some $k \in \Z \implies (a, n)= 1$
+    $ii) \iff iii)$. $ab \equiv 1 \pmod{n}$ for some $b \iff 1$ belongs to the subgroup of $\Z / n \Z$ generated by $a \iff$ the subgroup generated by $a$ is $\Z / n \Z$
+\end{proof}
+
+\begin{notation}
+    For $n > 1$, we write $(\Z / n \Z)^*$ to denote the set of units (invertible elements) of $\Z / n \Z$. By lemma \ref{lem:2_1}, this is the set of classes $a + n \Z$ where $(a, n) = 1$.
+    We can then define $\phi(n) =\# (\Z / n \Z)^* = \set{a \in \Z | 1 \leq a \leq n, \, (a, n) = 1}$, the \textbf{Euler $\phi$-function}.
+\end{notation}
+
+\begin{remark}
+    For $n>1$, $\Z/n\Z$ is a field $\iff$ every non-zero element has an inverse under $X$ $\iff$ $n$ is prime, $\iff$ $\phi(n) = n-1$.
+\end{remark}
+
+\begin{thm}[Euler-Fermat Theorem]
+    If $(a, n) = 1$, then $a^{\phi(n)} \equiv 1 \pmod{n}$
+\end{thm}
+
+\begin{proof}
+    $(n>1)$ Apply Lagrange's theorem to the group $G = (\Z/n\Z)^*$ which has order $\phi(n)$. Then $a \in \Z$ with $(a, n) = 1$ defines an element of $G$ whose order divides $\phi(n)$. So $a^{\phi(n)} \equiv 1 \pmod{n}$.
+\end{proof}
+
+This has an important special case, called Fermat's Little Theorem.
 \end{document}
