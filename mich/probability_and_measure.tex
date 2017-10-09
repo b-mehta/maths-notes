@@ -53,17 +53,17 @@ Suppose we have a subset $E \subset \R^d$.
         Consider a box $B \subset \R^d$, given by $B = \prod_{i=1}^d I_i$, where $I_i = [a_i, b_i]$ are intervals in $\R$
         From here, we can define the Jordan Measure $m(B) := \prod_{i=1}^d |b_i - a_i|$.
 
-        \begin{defi}
-            An \textbf{elementary subset} of $\R^d$ is a finite union of boxes.
-        \end{defi}
-        \begin{remark}
-            Every elementary set can be written as a finite union of disjoint boxes
-            The family of elementary sets is stable under finite unions, finite intersections and difference.
-            If E = $\sqcup_{i=1}^N B_i = \sqcup_{j=1}^M B'_j$, that is $E$ is a disjoint union of boxes in two different ways, then
-            $\sum_{i=1}^N m(B_i) = \sum_{j=1}^M m(B'_j)$
-            This says that \emph{makes sense} to define $m(E) as \sum_1^N m(B_i)$, for elementary subsets.
-        \end{remark}
 \end{enumerate}
+\begin{defi}
+    An \textbf{elementary subset} of $\R^d$ is a finite union of boxes.
+\end{defi}
+\begin{remark}
+    Every elementary set can be written as a finite union of disjoint boxes
+    The family of elementary sets is stable under finite unions, finite intersections and difference.
+    If E = $\sqcup_{i=1}^N B_i = \sqcup_{j=1}^M B'_j$, that is $E$ is a disjoint union of boxes in two different ways, then
+    $\sum_{i=1}^N m(B_i) = \sum_{j=1}^M m(B'_j)$
+    This says that \emph{makes sense} to define $m(E) as \sum_1^N m(B_i)$, for elementary subsets.
+\end{remark}
 
 \begin{defi}
     A subset $E \in \R^d$ is \textbf{Jordan measurable} if $\forall \epsilon > 0 \exists$ elementary sets $A, B$ such that $A \subset E \subset B$ and $m(B\setminus A) < \epsilon$.
@@ -91,4 +91,76 @@ $P$ a partition $a = t_0 < t_1 < \dots < t_n = b$ width $\tau(P) = \max_{0 \leq 
 $S(f, P) = \sum_{i=1}^{N-1} P$
 % sort this out you slow idiot
 \end{defi}
+
+The Jordan measure has problems, for instance there are simple sets that are not Jordan measurable, and simple functions that are not Riemann integrable.
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}
+        \item
+            \begin{equation*}
+                \mathbb{1}_\Q(x) = \begin{cases}
+                    1 & \text{if} x \in \Q \\
+                    0 & \text{otherwise}
+                \end{cases}
+             \end{equation*}
+            This is not Riemann integrable
+        \item $\Q$ or even $\Q \cup [0, 1]$ is not a Jordan measurable subset of $\R$. In fact no dense countable subset of an interval in $\R$ is Jordan measurable.
+        \item Another problem is with limits of functions: a pointwise limit of Riemann integrable functions is not always Riemann integrable.
+            % Example: indicator(1/n! Z intersect [0, 1]) is Riemann integrable and for all x in R, f(X) defined as lim n->0 f_n (x) = 1_{Q cap [0, 1]} is not Riemann integrable
+    \end{enumerate}
+\end{eg}
+
+The ideas of Lebesgue were to remove the containment $A \subset E$, and to allow a countable union of boxes instead of just a finite one.
+\begin{defi}
+    A set $E \subseteq A$ is called \textbf{Lebesgue measurable} if $\forall \epsilon > 0$ there exist a countable family of boxes $(B_i)_{i \geq 1}$ such that $E \subseteq \bigcup_{i \geq 1} B_i$ and $m^* (\bigcup B_i \setminus E) < \epsilon$
+\end{defi}
+
+Here, we use $m^*$ the \emph{Lebesgue outer measure}, defined as follows.
+\begin{equation*}
+    m^*(F) = \inf\Set{\sum_{n \geq 1} m(B_n) | F \subset \bigcup_{n \geq 1} B_n, \; B_n \textrm{are boxes}}
+\end{equation*}
+This is defined for all subsets of $\R^d$, but it is not additive on all subsets.
+\begin{remark}
+    \leavevmode
+    \begin{enumerate}
+        \item If you let $m^{*, J}(F)$ be defined similarly, but for finitely many boxes $B_n$ instead of countably many (called the Jordan outer measure), then $m^*(F) \leq m^{*, J}(F)$.
+        \item But sometimes, the inequality is strict, for instance if $F = \Q \cap [0, 1]$ then we can check $m^*(F) = 0$ but $m^{*, J}(F) = 1$.
+    \end{enumerate}
+    The outer measure satisfies
+    \begin{enumerate}
+        \item $m^*(\emptyset) = 0$
+        \item $m^*(E) \leq m^*(F)$ if $E \leq F$ (monotone)
+        \item $m^*(\bigcup_{i \geq 1}) \leq \sum_{i \geq 1} m^* (E_i)$ (countable subadditivity)
+    \end{enumerate}
+\end{remark}
+
+\begin{eg}[Vitali's example]
+    Let $E$ be a set of representations of the cosets of the subgroup $(\Q, +) \subset (\R, +)$. We can choose $E \subset [0, 1]$, such that
+    \begin{equation}
+        \forall x \in \R \; \exists! e \in E \; \text{such that} \; x - e \in \Q
+    \end{equation}
+    So the family $\{E + r\}_r \in \Q$ is a disjoint family of subsets of $\R$, a partition.
+    By translational invariance, $m^*(E + r) = m^*(E) \,\forall r \in \Q$
+    For any distinct $r_1, \dotsc, r_n \in \Q \cap [0, 1]$, if $m^*$ were additive, $m^*(\bigcup_{i=1}^N r_i + E) = N m^*(E)$ but $\bigcup_{1}^N r_i + E \subseteq [0, 2]$ so $m^*(\bigcup r_i + E) \leq m^*([0, 2]) \leq 2$
+    So, $\forall N \in \N \quad N m^*(E) \leq 2$, hence $m^*(E) = 0$.
+    But $[0, 1] \subseteq \bigcup_{r \in \Q} E + r$, so by countable subadditivity $m^*([0, 1]) \subseteq \sum_{r \in \Q} m^*(E + r) = 0$ but $m^*([0, 1]) = 1$, so we have a contradiction.
+    This shows that $m^*$ is not additive.
+\end{eg}
+
+\begin{remark} \leavevmode
+    \begin{itemize}
+        \item This contruction uses the axiom of choice to define $E$.
+        \item Next time we will define the Lebesgue measure of a Lebesgue measurable set as the outer measure of that set, and this will be additive on Lebesgue measurable sets.  This means Vitali's set $E$ was \emph{not} Lebesgue measurable.
+    \end{itemize}
+\end{remark}
+
+\begin{eg} [Middle-thirds Cantor set]
+    It is a compact subset $C$ of $[0, 1]$.  Start with the interval $I_0 = [0, 1]$ and remove the middle third $(\frac13, \frac23)$, leaving $I_1 = [0, \frac13] \cup [\frac23, 1]$.  Then remove the middle third of each interval here, giving $I_2 = [0, \frac19] \cup [\frac29, \frac13] \cup [\frac23, \frac79] \cup [\frac89, 1]$.  Repeat, then define $C = \bigcap_{n \geq 0} I_n$.  Alternatively, take a ternary expansion of $x \in [0, 1]$, and define $C$ as the set of $x$ which has \emph{none} of its digits equal to $2$.
+\end{eg}
+
+\begin{remark}
+    $I_n$ is a finite union of intervals, so it is an elementary set (link). In particular, $m(I_n) = 2^n / 3^n \to 0$, as $n \to \infty$ so $C$ is Jordan measurable with measure $0$.
+    Every Jordan measurable set is Lebesgue measurable (clear from the definition).
+\end{remark}
+We can define a 'fat' Cantor set which is Jordan measurable but not Lebesgue measurable.
 \end{document}
