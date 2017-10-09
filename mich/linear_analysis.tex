@@ -24,9 +24,10 @@ As much as possible, examples of applications will be given briefly.
 \section{Normed vector spaces}
 Unless stated, vector spaces will be either over the real numbers or the complex numbers, denoted by $\K$ to represent $\R$ or $\C$.
 
+\subsection{Topology of vector spaces}
 \begin{defi}[\hypertarget{def:normedVectorSpace}{Normed vector space}]
     A \textbf{normed vector space} is a vector space $V$ with a norm $\norm{\cdot}: V \to \R$ satisfying
-    \begin{enumerate}[i.]
+    \begin{enumerate}[label=\roman*.]
         \item $\norm{v} \geq 0$ for all $v \in V$ and $\norm{v} = 0$ if $v=0$. (Positive definite)
         \item $\norm{\lambda v} = \abs{\lambda} \norm{v}$ for every $v \in V$ and $\lambda \in K$. (Positive homogeneous)
         \item $\norm{v + w} \leq \norm{v} + \norm{w}$ for all $v, w \in V$. (Triangle inequality)
@@ -41,6 +42,7 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
         V \times V &\to V & (v, w) &\mapsto v + w
     \end{align*}
 \end{fact}
+
 \begin{proof}
     We only check that scalar multiplication is continuous. Since $K$ and $V$ are \hyperlink{def:metric-on-vector-space}{metric spaces}, it suffices to show that $\lambda_j \to \lambda$ and $v_j \to v$ implies $\lambda_j v_j \to \lambda v$. But
     \begin{align*}
@@ -49,6 +51,7 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
     \end{align*}
     as required.
 \end{proof}
+
 \begin{cor}
     Translations $(v \mapsto v + v_0)$ and dilations $(v \mapsto \lambda v, \lambda \ne 0)$ are homomorphisms.
 \end{cor}
@@ -64,6 +67,7 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
         t C \coloneqq \Set{t v | v \in C}
     \end{equation*}
 \end{notation}
+
 \begin{defi}[\hypertarget{def:convexSubs}{Convex subset}]
     Let $V$ be a vector space and $C \subset V$ a subset.  We say that $C$ is \textbf{convex} iff $t C + (1-t) C \subset C$ for all $t \in [0, 1]$. Specifically, this means $t v + (1-t) w \in C$ for all $v, w \in C$ and $t \in [0, 1]$.
 \end{defi}
@@ -76,21 +80,21 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
     If $C$ is \hyperlink{def:convexSubs}{convex}, then $v + \lambda C$ is convex for all $\lambda \in K$ and $v \in V$.
 \end{fact}
 
-\begin{defi}[\hypertarget{def:locallyConvex}{Locally convex}]
+\begin{defi}[\hypertarget{def:locallyConvex}{Locally convex space}]
     A \hyperlink{def:topologicalVectorSpace}{topological vector space} is \textbf{locally convex} if its topology has a basis of \hyperlink{def:convexSubs}{convex} sets.
 \end{defi}
 
-\begin{defi}[\hypertarget{def:bounded}{Bounded}]
+\begin{defi}[\hypertarget{def:boundedSubs}{Bounded subset}]
     Let $V$ be a \hyperlink{def:topologicalVectorSpace}{topological vector space} and $B \subset V$. We say that $B$ is \textbf{bounded} if for every open neighbourhood $U$ of $0$, there exists $t > 0$ such that $s U \supset B$ for all $s \geq t$.
 \end{defi}
 
-\begin{defi}[\hypertarget{def:balanced}{Balanced}]
+\begin{defi}[\hypertarget{def:balancedSubs}{Balanced subset}]
     Let $V$ be a vector space, and $C \subset V$ a subset. Call $C$ \textbf{balanced} if for all $\abs{\lambda} \leq 1$, we have $\lambda C \subset C$.
 \end{defi}
 
 \begin{eg}
     \leavevmode
-    \begin{enumerate}[(i)]
+    \begin{enumerate}[label=(\roman*)]
         \item Balanced sets in $\R$ are sets of the form $[-t, t]$, $(-t, t)$, or $\{0\}$ and all of $\R$, and $\Q$ is not balanced in $\R$.
         \item In $\C$, the only balanced sets are $\{0\}$, $\C$, and the open or closed balls centred at $0$.
         \item There are more interesting examples of balanced sets in $\R^2$, for instance the open disk or any ellipse centred at $0$.
@@ -98,8 +102,8 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
 \end{eg}
 
 \begin{lemma}
-    Let $V$ be a \hyperlink{def:topologicalVectorSpace}{topological vector space} and $C \subset V$ be a \hyperlink{def:bounded}{bounded}, \hyperlink{def:convexSubs}{convex} neighbourhood of $0$.
-    Then there exists a bounded, \hyperlink{def:balanced}{balanced}, {convex} neighbourhood $\widetilde C$ of $0$.
+    Let $V$ be a \hyperlink{def:topologicalVectorSpace}{topological vector space} and $C \subset V$ be a \hyperlink{def:boundedSubs}{bounded}, \hyperlink{def:convexSubs}{convex} neighbourhood of $0$.
+    Then there exists a bounded, \hyperlink{def:balancedSubs}{balanced}, {convex} neighbourhood $\widetilde C$ of $0$.
 \end{lemma}
 
 \begin{proof}
@@ -107,7 +111,7 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
 \end{proof}
 
 \begin{prop}
-    Let $V$ be a \hyperlink{def:topologicalVectorSpace}{topological vector space} and $C \subset V$ be a \hyperlink{def:bounded}{bounded}, \hyperlink{def:convexSubs}{convex} neighbourhood of $0$. Then the topology on $V$ is induced by a norm.
+    Let $V$ be a \hyperlink{def:topologicalVectorSpace}{topological vector space} and $C \subset V$ be a \hyperlink{def:boundedSubs}{bounded}, \hyperlink{def:convexSubs}{convex} neighbourhood of $0$. Then the topology on $V$ is induced by a norm.
 \end{prop}
 
 \begin{proof}
@@ -118,9 +122,9 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
     referred to as the Minkowski functional of $\widetilde C$.
     We claim that $\norm{v} = \mu_{\widetilde C}(v)$ is a norm on $V$ and that the topology induced by it is the same as the original topology.
     Check the \hyperlink{def:normedVectorSpace}{norm axioms} in turn:
-    \begin{enumerate}[i.]
-        \item We clearly have positivity, and $\mu_{\widetilde C}(v) = 0$ iff $v = 0$ since $\widetilde C$ is \hyperlink{def:bounded}{bounded}.
-        \item Since $\widetilde C$ is \hyperlink{def:balanced}{balanced},
+    \begin{enumerate}[label=\roman*.]
+        \item We clearly have positivity, and $\mu_{\widetilde C}(v) = 0$ iff $v = 0$ since $\widetilde C$ is \hyperlink{def:boundedSubs}{bounded}.
+        \item Since $\widetilde C$ is \hyperlink{def:balancedSubs}{balanced},
             \begin{align*}
                 \mu_{\widetilde C} (\lambda v) &= \inf\Set{t > 0 | \lambda v \in t \widetilde C} \\
                 &= \inf\Set{t > 0 | v \in \frac{t}{\abs{\lambda}} \widetilde C} \\
@@ -143,17 +147,18 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
 \end{proof}
 
 \begin{cor}
-    A \hyperlink{def:topologicalVectorSpace}{topological vector space} is normable iff it is \hyperlink{def:locallyConvex}{locally convex} and locally bounded (ie there exists a bounded convex neighbourhood of $0$).
+    A \hyperlink{def:topologicalVectorSpace}{topological vector space} is normable iff it is \hyperlink{def:locallyConvex}{locally convex} and locally bounded (that is, there exists a bounded convex neighbourhood of $0$).
 \end{cor}
 
-\begin{defi}\hypertarget{def:banach}
-    A \textbf{Banach space} is a normed vector space that is \emph{complete} as a metric space, that is, any Cauchy sequence converges.
+\begin{defi}[\hypertarget{def:banach}{Banach space}]
+    A \textbf{Banach} space is a normed vector space that is \emph{complete} as a metric space, that is, any Cauchy sequence converges.
 \end{defi}
 
 \begin{eg} \leavevmode
-    \begin{enumerate}[(i)]
-        \item Any finite dimensional vector space is a Banach space (with any norm).
-        \item Let $X$ be a set, and $\mathcal{B}(X)$ the set of bounded $\K$-valued functions on $X$.  Then $\mathcal{B}(X)$ is a Banach space with norm
+    \begin{enumerate}[label=(\roman*)]
+        \item Any finite dimensional vector space is a \hyperlink{def:banach}{Banach space} (with any norm).
+        \item Let $X$ be a set, and $\mathcal{B}(X)$ the set of bounded $\K$-valued functions on $X$.
+            Then $\mathcal{B}(X)$ is a Banach space with norm
             \begin{equation*}
                 \norm{f}_\infty = \sup_{x \in X} \abs{f(x)} \, , \quad f \in \mathcal{B}(X)
             \end{equation*}
@@ -172,16 +177,20 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
             \begin{equation*}
                 \norm{x}_p = \left(\sum_{i=1}^\infty \abs{x_i}^p\right)^{1/p}
             \end{equation*}
-            for $p \in [1, \infty)$, and $\norm{x}_\infty = \sup_i \abs{x_i}$.  Then $\mathcal{l}^p = \set{x | \norm{x} < \infty}$ for $p \in [1, \infty]$ is a Banach space.  Note for $p<1$, this does not generate a norm.
+            for $p \in [1, \infty)$, and $\norm{x}_\infty = \sup_i \abs{x_i}$.  Then $\ell^p = \set{x | \norm{x} < \infty}$ for $p \in [1, \infty]$ is a Banach space.  Note for $p<1$, this does not generate a norm.
         \item Let $U \subset \R^n$ be open (not necessarily bounded) and denote by $\mathcal{C}(U)$ the space of continuous functions on $U$ (not necessarily bounded). Then $\mathcal{C}(U)$ is a topological vector space with topology generated as follows.
+
             Let $K_i \subset U$ be compact subsets such that $K_i \subset K_{i+1}$ and $\bigcup_{i=1}^\infty K_i = U$.
-            Let $V(i, n) = \Set{f : \norm{f}_{\mathcal{C}(K_i)} < \frac1n}$ where we use $\norm{f}_{\mathcal{C}(K_i)}$ to denote $\sup_{x \in K_i} \abs{f(x)}$.
-            Then the topology generated by the $V(i, n)$ and their translates makes $\mathcal{C}(U)$ a locally convex topological vector space, and the topology on $\mathcal{C}(U)$ is generated by the metric
+
+            Let $V(i, n) = \Set{f | \norm{f}_{\mathcal{C}(K_i)} < \frac1n}$ where we use $\norm{f}_{\mathcal{C}(K_i)}$ to denote $\sup_{x \in K_i} \abs{f(x)}$.
+
+            Then the topology generated by the $V(i, n)$ and their translates makes $\mathcal{C}(U)$ a \hyperlink{def:locallyConvex}{locally convex} \hyperlink{def:topologicalVectorSpace}{topological vector space}, and the topology on $\mathcal{C}(U)$ is generated by the metric
             \begin{equation*}
                 d(f, g) = \sum_{i=1}^\infty 2^{-i} \frac{\norm{f-g}_{\mathcal{C}(K_i)}}{1 + \norm{f-g}_{\mathcal{C}(K_i)}}
             \end{equation*}
             This is not a Banach space, but it is a Frechet space.
-        \item Let $X = \set{f : [0, 1] \to \K \text{continuous}}$. Then
+
+        \item Let $X = \set{f : [0, 1] \to \K \; \text{continuous}}$. Then
             \begin{equation*}
                 \norm{f}_p = \left(\int_0^1 \abs{f(x)}^p dx\right)^\frac1p
             \end{equation*}
@@ -191,29 +200,31 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
 
 % this should be 1.2
 \subsection{Bounded linear maps and the dual space}
+
 \begin{fact}
-    In any \hyperlink{def:topologicalVectorSpace}{topological vector spaces} $V$, $W$, a \emph{linear} map $T: V \to W$ is continuous if and only if it is continuous at $0$.
+    In any \hyperlink{def:topologicalVectorSpace}{topological vector spaces} $V$, $W$, a linear map $T: V \to W$ is continuous if and only if it is continuous at $0$.
 \end{fact}
+
 \begin{proof}
-    Let $T$ be continuous at $0$ and $v \in V$. Let $w = Tv$ and $U \subset W$ and open neighbourhood of $w$. Then $U - w$ is an open neighbourhood of $0 \in W$. Since $T$ is continuous at $0$, $T^{-1}(U - w)$ contains an open neighbourhood $U' \subset V$ of $0$.
+    Let $T$ be continuous at $0$ and $v \in V$. Let $w = Tv$ and $U \subset W$ an open neighbourhood of $w$. Then $U - w$ is an open neighbourhood of $0 \in W$. Since $T$ is continuous at $0$, $T^{-1}(U - w)$ contains an open neighbourhood $U' \subset V$ of $0$.
     By linearity, $T(v + U') = Tv + T(U') \subset Tv + U - w = U$.  Since $v + U'$ is an open neighbourhood of $v$ this means that $T$ is continuous at $v$.
 \end{proof}
 
-\begin{defi}\hypertarget{def:boundedLinearMap}
+\begin{defi}[\hypertarget{def:boundedLinearMap}{Bounded linear map}]
     Let $V, W$ be \hyperlink{def:topologicalVectorSpace}{topological vector spaces} and $T: V \to W$ a linear map. Then $T$ is \textbf{bounded} if $T(B)$ is bounded for any bounded $B \subset V$.
 \end{defi}
 
 \begin{fact}
-    If $V, W$ are \hyperlink{def:normedVectorSpace}{normed vector spaces}, a linear map $T: V \to W$ is bounded iff there is $\lambda > 0$ such that
+    If $V, W$ are \hyperlink{def:normedVectorSpace}{normed vector spaces}, a linear map $T: V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} iff there is $\lambda > 0$ such that
     \begin{equation*}
-        T(B_1(0) \subset B_\lambda(0) \quad \text{i.e.} \quad \norm{Tv} < \lambda \; \text{if} \; \norm{v} \le 1
+        T(B_1(0)) \subset B_\lambda(0) \quad \text{i.e.} \quad \norm{Tv} < \lambda \; \text{if} \; \norm{v} \le 1
     \end{equation*}
 \end{fact}
 
-\begin{defi}
+\begin{defi}[\hypertarget{def:opNorm}{Operator norm}]
     Let $V, W$ be \hyperlink{def:normedVectorSpace}{normed vector spaces}. The \textbf{operator norm} of a linear map $T: V \to W$ is
     \begin{equation*}
-        \norm{T} = \sup_{\norm{v} = 1} \norm{T v} =\sup_{\norm{v} \leq 1} \norm{T v} = \sup_{\norm{v} < 1} \norm{T v}
+        \norm{T} = \sup_{\norm{v} = 1} \norm{T v} =\sup_{\norm{v} \leq 1} \norm{T v}
     \end{equation*}
 \end{defi}
 \end{document}
