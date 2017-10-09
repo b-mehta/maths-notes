@@ -11,6 +11,7 @@
 
 % preamble
 \newcommand{\id}{\mathrm{id}}
+\numberwithin{nthm}{subsection}
 % and here we go!
 
 % hjrw2
@@ -110,4 +111,90 @@ where $\sim$ is an equivalence relation: $Y \sim f(y)$, for $y \in S^{n-1}$ and 
         \item An $n$-dimensional cell complex is constructed from an $(n-1)$ dimensional cell complex $X$ by attaching finitely many $n$-dimensional discs to $X$
     \end{enumerate}
 \end{defi}
+
+\section{Homotopy and the Fundamental Group}
+\paragraph{Basic question} How can we prove that $X \ncong Y$?
+The basic idea is to associate algebraic objects (for instance groups) to $X, Y$.
+\clearpage
+\subsection{Homotopy}
+Throughout, we will denote $I = [0, 1] \subseteq \R$.
+
+% def 2.1.1
+\begin{ndef}\hypertarget{def:homotopy}
+    Let $f, g: X \to Y$ be maps. A \textbf{homotopy} from $f$ to $g$ is a continuous map $H: X \times I \to Y$ such that $H(x, 0) = f(x)$ and $H(x, 1) = g(x) \; \forall x \in X$.
+    We say that $f$ and $g$ are \textbf{homotopic}, and write $f \simeq g$ (or $f \simeq_H g$).
+\end{ndef}
+
+\begin{ndef}\hypertarget{def:homotopyRel}
+    If $A \subseteq X$ and $\forall a \in A, \forall t \in I$, $H(a, t) = f(a) = g(a)$, then we say \emph{$f$ is homotopic to $g$ relative to $A$} and we write $f \simeq g \, \mathrm{rel} A$.
+\end{ndef}
+
+% prop 2.1.2
+\begin{nprop}
+    The relation $\simeq$  (rel $A$) is an equivalence relation.
+\end{nprop}
+
+\begin{proof}
+    Reflexivity and symmetry are easy exercises, so they are omitted.  Transitivity: we have $f, g, h: X \to Y$, where $f \simeq_H g$ and $g \simeq_H' h$, and our goal is to build a homotopy $f \simeq h$.
+
+    colourful pictures go here
+
+    From the diagram, it's clear that the required homotopy is given by
+    \begin{align*}
+        H'' : X \times I &\to Y \\
+        (x, t) &\mapsto
+        \begin{cases}
+            H(x, 2t) & 0 \leq t \leq \frac12 \\
+            H'(x, 2t-1) & \frac12 \leq t \leq 1
+        \end{cases}
+    \end{align*}
+    This is continuous from the gluing lemma.
+\end{proof}
+
+\begin{ndef}\hypertarget{def:homotopyEq}
+    If we have $f: X \to Y$ and $g: Y \to X$ (diagram) with $g \circ f \simeq \id_X$ and $f \circ g \simeq \id_Y$, then we say that $X$ and $Y$ are \textbf{homotopy equivalent}, and $f, g$ are \textbf{homotopy equivalences}, and we write $X \simeq Y$.
+\end{ndef}
+
+\begin{eg}
+    Take $X = \R^n$ and $Y = *$. Consider the trivial map $r: \R^n \to *$ and $i: * \to \R^n$, $i(*) = 0$. Then $r \circ i = \id_*$ and $i \circ r = 0: \R^n \to \R^n$
+    Let $H: R^n \times I \to \R^n$ $(x, t) \mapsto tx$, so for $t=0$, H(., 0) = 0 and for $t=1$, $H(., 1) = \id_{\R^n}$.
+\end{eg}
+
+\begin{eg}
+    This time, consider the spaces $\R^2 \setminus {0}$ and $S^1$, and the maps $r(x) = \frac{x}{\norm{x}}$  and inclusion $i$.  Then $r \circ i = \id_{S^1}$ and we can use the homotopy $H(x, t) = tx + (1-t) \frac{x}{\norm{x}}$ to show $i \circ r \simeq \id_{\R^2 \setminus {0}}$.  So, $\R^2 \setminus \{0\}$ and $S^1$ are homotopy equivalent.
+\end{eg}
+
+\begin{ndef}
+    If $X$ is homotopy equivalent to a point, we say that $X$ is \textbf{contractible}.
+\end{ndef}
+
+% def 2.1.7
+\begin{nlemma}
+    If
+    [diagram]
+    are maps with $f_0 \simeq_H f_1$ and $g_0 \simeq_H'$ then $g_0 \circ f_0 \simeq g_1 \circ f_1$.
+\end{nlemma}
+
+\begin{proof}
+    We show that both are homotopic to $g_0 \circ f_1$.  $g_0 \circ f_0 \simeq g_0 \circ f_1$ via $g_0 \circ H$ and $g_0 \circ f_1 \simeq g_1 \circ f_1$ via $H'(f_1(\cdot), \cdot)$.
+\end{proof}
+
+% prop 2.1.8
+\begin{prop}
+    Homotopy equivalence is an equivalence relation of spaces.
+\end{prop}
+
+\begin{proof}
+    Symmetry and reflexivity are trivial. Transitivity [diagram]
+    Suppose these are homotopy equivalences. We need to show $g \circ g' \circ f' \circ f \simeq \id_X$ and $f' \circ f \circ g \circ g' \simeq \id_Z$.
+    Now,
+    \begin{equation*}
+        g \circ (g' \circ f') \circ f \simeq g \circ \id_Y \circ f \simeq g \circ f \simeq \id_X \\
+    \end{equation*}
+    and
+    \begin{equation*}
+        f' \circ (f \circ g) \circ g' \simeq f' \circ \id_Y \circ g' \simeq f' \circ g' \simeq \id_Z \\
+    \end{equation*}
+\end{proof}
 \end{document}
+
