@@ -9,6 +9,7 @@
 
 % preamble
 \setcounter{section}{-1}
+\tikzset{circ/.style = {fill, circle, inner sep = 0, minimum size = 3}}
 % and here we go!
 
 \begin{document}
@@ -26,6 +27,20 @@ Paragraph 1: Introductory - split between chapters
 
 \subsection{Informal definitions}
 A \emph{graph} consists of `vertices' with some pairs of vertices joined by `edges'.
+\begin{center}
+    \begin{tikzpicture}
+        \node [circ] (1) at (0,2) {};
+        \node [circ] (2) at (2,2) {};
+        \node [circ] (3) at (0,0) {};
+        \node [circ] (4) at (2,0) {};
+        \node [circ] (5) at (3,1) {};
+
+        \node [circle]
+        \draw (1) -- (4) -- (5) -- (2) -- (3);
+        \draw (2) -- (4);
+    \end{tikzpicture}
+\end{center}
+
 (drawing goes here)
 % do the tikz bs later
 
