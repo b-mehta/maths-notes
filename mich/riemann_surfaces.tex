@@ -1,41 +1,53 @@
 \documentclass{article}
 
+\def\npart {II}
+\def\nyear {2017}
+\def\nterm {Michaelmas}
+\def\nlecturer{Dr H.\ Krieger}
+\def\ncourse{Riemann Surfaces}
 \input{header}
-\usepackage{inputenc}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amssymb}
-\usepackage{enumerate}
-\usepackage{mathtools}
-\usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{hyperref}
-\usepackage{hypcap}
-\usepackage{geometry}
 
-\title{Riemann Surfaces}
+% preamble
+\setcounter{section}{-1}
+% and here we go!
 
 \begin{document}
 \maketitle
 
 \section{Complex analysis and complex log}
 
-Sketch of equivalence:
-1 => 2 Use CIF to construct $a_n$, and convergence.
+\begin{defi}
+    A smooth function $f: U \to \C$ (where $U$ is a domain in $\C$) is \textbf{holomorphic} or \textbf{analytic} if either of the following equivalent statements hold:
+    \begin{enumerate}[(1)]
+        \item $f$ is differentiable at all points of $U$, where differentiability is defined by limits, and checked by the Cauchy-Riemann equations
+        \item $\forall a \in U$, $f$ has a power series expansion on a neighbourhood of $a$:
+            \begin{equation*}
+                f(z) = \sum_{n \geq 0} a_n (z - a)^n
+            \end{equation*}
+            and the series converges on some disk about $a$ with positive radius.
+    \end{enumerate}
+\end{defi}
+\begin{proof}[Sketch of proof of equivalence]
 
-2 => 1 Show directly term-by-term derivative exists, and agrees with limit definition.
+    \leavevmode
 
-Note that a power series tells you about local behaviour. If $f(z)$ is not identically zero near $a \in U$, there exists some minimal $n_0$ such that $a_{n_0} \neq 0$.  We can write $f$ locally as
-\begin{equation}
-    f(z) = a_{n_0} (z-a)^(n_0) + \sum_{n \ge n_0} a_n (z-a)^n = a_{n_0} (z-a)^n_0 \left(1 + \sum_{n>n_0} \frac{a_n}{a_{n_0}} (z-a)^{n-n_0}\right)
-\end{equation}
+    $(\Rightarrow)$ Use the Cauchy Integral Formula to construct $a_n$, and convergence.
+
+    $(\Leftarrow)$ Show directly that the term-by-term derivative exists, and that it agrees with the limit definition of the derivative.
+\end{proof}
+
+Note that a power series tells you about local behaviour.
+If $f(z)$ is not identically zero near $a \in U$, there exists some minimal $n_0$ such that $a_{n_0} \neq 0$.
+We can write $f$ locally as
+\begin{align*}
+    f(z) &= a_{n_0} (z-a)^{n_0} + \sum_{n \ge n_0} a_n (z-a)^n \\
+         &= a_{n_0} (z-a)^{n_0} \left(1 + \sum_{n>n_0} \frac{a_n}{a_{n_0}} (z-a)^{n-n_0}\right)
+\end{align*}
 As $z \to a$, the sum $\to 0$ so the quantity in the brackets tends to 1.  So, $f(z) = a_{n_0} (z-a)^{n_0} g(z)$, where $g$ is analytic and nonzero on a neighbourhood of $a$.
 Consequently, we have the \emph{principle of isolated zeros}: for $f$ analytic on domain $U$, then for all $a \in U$ such that $f(a) = 0$, either $f$ is identically $0$ on a neighbourhood of $a$, or $f$ is never $0$ on a punctured disk centred at $a$.  But recall a domain refers to an open \emph{and connected} set.  So, if $f$ is identically $0$ (improve this writing) on a neighbourhood of $a$, call it $D_a$.  If $f \ne 0$ on a punctured disk about $a$, call it $P_a^*$. Construct
 \begin{align}
-V = \cup_{a \in U such that f equiv 0 on a neighbourhood of a} D_a
-W = \cup_{a \in U such that f \ne 0 on a punctured neighbourhood of a} P_a^*
+    V = \bigcup_{\substack{a \in U \text{such that} \\ f \equiv 0 \text{on a neighbourhood of} a}} D_a
+    % W = \cup_{a \in U such that f \ne 0 on a punctured neighbourhood of a} P_a^*
 \end{align}
 
 $V$ and $W$ are open, disjoint and $V \cup W = U$. Since $U$ is connected, $U=V$ or $U=W$. So either $f \equiv 0$ on $U$, or $f$ has only isolated zeros.
@@ -67,5 +79,91 @@ At $\infty$, we also have an isolated singularity, recalling that punctured neig
 \subsection{Complex logarithm}
 The complex logarithm is an example of a multivalued function, which arises as the inverse of an analytic function. Given nonzero $z$, if $e^w = z$, $z = r e^{i \theta}$, then $w = \log r + (2 \pi n + \theta i)$ for some $n \in \mathbb{Z}$.  We cannot make a continuous choice of $n$ on all of $\mathbb{C}$, so we define the complex log on domains like $\mathbb{C} \\ \mathbb{R}_{\leq 0} =: U$. We have for each $n$, a choice of logarithm which can be analytically defined on $U$.  Recall a \emph{continuous} inverse of an analytic function is analytic.
 
+% Lecture 2
 
+Let $U_1 = \C \setminus \R_{\geq 0}$.
+
+\begin{prop}
+    For $n \in \Z$, define $h(z)$ on $U$, by
+    \begin{equation*}
+        h(z) = \int_{-1}^z \frac{dw}{w} + (2n+1) \pi i
+    \end{equation*}
+    with integral along straight line joining $-1$ and $z$.
+
+    Then $h$ is analytic on $U_1$ and is the inverse to the exponential function on $U_1$.
+\end{prop}
+
+\begin{proof}
+    Let $z \in U_1$. $\tau \in \C$ with $\abs{\tau}$ sufficiently small, such that the triangle is entirely in the domain.
+
+    Then claim $\frac{h(z + \tau) - h(z)}{\tau} = \frac1{\tau} \int_z^{z+\tau} \frac{dw}{w} \to \frac1z$.
+    The first equality follows from Cauchy's theorem, since $h$ is continuous in the triangle.
+
+    \begin{align*}
+        \abs{\frac{1}{\tau} \int_z^{z + \tau} \frac{dw}{w} - \frac12} &= \abs{\frac1{\tau} \int_z^{z+\tau} \frac{z-w}{zw} dw} \\
+        &\leq C \tau \to 0
+    \end{align*}
+
+
+    Thus $h$ is analytic on $U_1$, with $h'(z) = \frac{1}{z}$.
+
+    Look at $g(z) = \frac{e^{h(z)}}{z}$, so $g'(z) = \frac{z h'(z) e^{h(z)} - e^{h(z)}}{z^2} = 0$, thus $g$ is constant. But, we still need to find out what it's value us, so consider $g(-1)$. $g(-1) = \frac{e^{h(-1)}}{-1} = -e^{(2n+1) \pi i} = 1$.
+    Thus, $e^{h(z)} \equiv z$ on $U_1$, so $h$ is the inverse to the exponential.
+\end{proof}
+
+\begin{remark}
+    We can't extend the function $H$ continuously across the positive real axis.
+\end{remark}
+
+\subsection{Analytic continuation}
+Fix a domain $U \in \C$ which is path connected.
+
+\begin{defi}[\hypertarget{def:directAnalCont}{Direct Analytic Continuation}]
+    A \textbf{function element} (or \textbf{function germ}) on $U$ is a pair, $(f, D)$ where $f$ is analytic on the domain $D \subseteq U$.
+
+    Two function elements $(f, D)$ and $g, E)$ are \textbf{equivalent} if $D \cap E \neq \emptyset$ and $f = g$ on $D \cap E$. In this case, we say $(g, E)$ is a \textbf{direct analytic continuation} of $(f, D)$.
+\end{defi}
+
+\begin{remark}
+    This is not an equivalence relation.  In the diagram, $(f_1, D_1)$ and $(f_3, D_3)$ are not equivalent since $D_1 \cap D_3 = \emptyset$.
+\end{remark}
+% why do they do this to me :(
+
+\begin{defi}[\hypertarget{def:pathAnalCont}{Analytic continuation along a path}]
+    We say $(g, E)$ is an analytic continuation of $(f, D)$ along a path $\gamma: [0, 1] \to U$, written as $(f, D) \sim_\gamma (g, E)$.  If there exists $(f_1, D_1), \dotsc, (f_n, D_n)$ and $0 = t_0 < t_1 < \dots < t_n = 1$ with $\gamma([t_{i-1}, t_i]) \subseteq D_i$ for $1 \leq i \leq n$ and $(f_1, D_1) = (f, D)$, $(f_n, D_n) = (g, E)$ and $(F_{i-1}, D_{i-1}) \sim (F_i, D_i)$, that is $(f_i, D_i)$ is a \hyperlink{def:directAnalCont}{direct analytic continuation} of $f_{i-1}, D_{i-1}$.
+\end{defi}
+
+
+\begin{defi}[\hypertarget{def:analCont}{Analytic continuation}]
+    We say $(g, E)$ is an analytic continuation of $(f, D)$ if there exists a path $\gamma$ with $(f, D) \sim_\gamma (g, E)$.  We write $(f, D) \approx (g, E)$.
+\end{defi}
+
+\begin{remark}
+    $\approx$ is an equivalence relation.  Reflexivity and symmetry are easy, and transitivity can be seen from the diagram.
+\end{remark}
+
+
+\begin{defi}
+    An equivalence class $\mathcal{F}$ under $\approx$ is a \textbf{complete analytic function}.
+\end{defi}
+
+\begin{eg}
+    Set $U = \C^* = \C \setminus {0}$.  Fix $(\alpha, \beta) \subseteq \R$, with $\abs{\beta-\alpha} \leq 2 \pi$, and define
+    \begin{equation*}E_{\alpha, \beta} = \set{z = r e^{i \theta} | \alpha < \theta < \beta \, , \; r > 0}\end{equation*}
+    So we can see $U_1 = E_(0, 2 \pi)$.
+    Define $f_{(\alpha, \beta)} : E_{(\alpha, \beta)} \to \C$ by $f_{(\alpha, \beta)} (r e^{i \theta}) = \log r + i \theta$, $\theta \in (\alpha, \beta)$.
+
+    Write $L_{(\alpha, \beta)}$ for the function element $(f_{(\alpha, \beta)}, E_{(\alpha, \beta)})$.
+
+    Consider the three function elements $L_{-\frac\pi2, \frac\pi2}$, $L_{\frac\pi6, \frac{7\pi}6}$, $L_{\frac{5\pi}6, \frac{11\pi}{6}}$
+    We can see the direct analytic continuations, but we do not have direct analytic continuation (), but ().
+\end{eg}
+
+\begin{goal}
+    Construct a surface on which $\log$ is well-defined by gluing together a bunch of domains on which it is well-defined.
+\end{goal}
+
+FOr each $n \in \Z$, take a copy of $U_1 = E_{(0, 2\pi)}$.  Each has a well-defined choice of logarithm: $f_{(2\pi n, 2\pi (n+1))}$, $r e^{i \theta} \mapsto \log r + (\theta + 2 \pi n) i$, for $\theta \in (0, 2\pi)$.
+
+We can glue together these copies of $U$, so that the functions $f_{(2\pi n, 2\pi (n+1))}$ glue to give a continuous function $L : \tilde{U} \to \C$.
 \end{document}
