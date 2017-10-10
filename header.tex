@@ -19,9 +19,10 @@
 \usepackage{wrapfig}
 \usepackage{float}
 \usepackage{braket}
+\usepackage[hypcap=true]{caption}
 \usepackage{enumitem}
 \usepackage[colorlinks=true, linkcolor=mblue]{hyperref}
-\usepackage[all]{hypcap}
+\usepackage[nameinlink,noabbrev]{cleveref}
 \usepackage[margin=1.5in]{geometry}
 
 % Theorems
@@ -48,6 +49,8 @@
 \newtheorem*{warning}{Warning}
 \newtheorem*{exercise}{Exercise}
 
+\newcommand{\nthmautorefname}{Theorem}
+
 \newtheorem{nthm}{Theorem}[section]
 \newtheorem{nlemma}[nthm]{Lemma}
 \newtheorem{nprop}[nthm]{Proposition}
@@ -64,5 +67,11 @@
 \newcommand{\abs}[1]{\left\lvert #1\right\rvert}
 \newcommand{\norm}[1]{\left\lVert #1\right\rVert}
 \renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+
+\let\Im\relax
+\let\Re\relax
+
+\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\Re}{Re}
 
 \definecolor{mblue}{rgb}{0., 0.05, 0.6}
