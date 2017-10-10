@@ -140,4 +140,93 @@ Suppose the edges of a complete graph $K_6$ are coloured blue and yellow. Then w
     We cannot find a monochromatic triangle in $K_5$ instead (picture)
     In this graph form, the statement for more colours is now amenable to an induction proof.
 \end{remark}
+
+% prop 1
+\begin{nprop}
+    Let $k$ be a positive integer. THen there is a postiive integer $n$ such that whenever the edges of $K_n$ are coloured with $k$ colours we can find a monochromatic triangle.
+\end{nprop}
+
+\begin{proof}
+    Induction on $k$. For $k=1$, $n=3$ works.
+    $k>1$. By the induction hypothesis, we can find $m$ such that if $K_m$ is $(k-1)$--coloured, then there is a monochromatic triangle.  Let $n = k(m-1) + 2$.
+
+    Now $k$--colour the edges of $K_n$.  Pick vertex $v$.  The number of edges containing $v$ is $n-1 = k(m-1)+1$.  So some $m$ of them are the same colour, without loss of generality blue.  Let $H$ be a $K_m$ joined to $v$ by blue edges. If $H$ contains a blue edge, it makes a blue triangle with $v$. If not, $H$ is a $(k-1)$--coloured $K_m$ so by definition of $m$, it contains a monochromatic triangle.
+\end{proof}
+
+\begin{remark}
+    \leavevmode
+    \begin{enumerate}
+        \item Can think in terms of the following picture. Eventually, we will run out of colours and get a monochromatic triangle.
+        \item How big do we need to take $n$ to be?  Let $f(k)$ be the smallest $n$ that works with $k$ colours. Clearly $f(1) = 3$. Our proof says for $k>1$, $f(k) \leq k \left(f(k-1)-1\right) + 2 \leq k f(k-1)$.  So by induction, $f(k) < 3 k!$.
+        \item Schur's theorem (add link) follows immediately in the same way as for the $k=2$ case.
+    \end{enumerate}
+\end{remark}
+
+Can we find larger monochromatic subgraphs, for instance a monochromatic $K_4$?  Think about two colours at first for simplicity.  Yes, but need an intermediate step first.
+
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}
+        \item Let $K_{10}$ have edges coloured blue/yellow.
+            Then there is a blue triangle or a yellow $K_4$.
+            \begin{proof}
+                Take a vertex $v$. It's in $9$ edges so either $v$ is in $4$ blue edges, or in $6$ yellow edges.
+                $v$ is in $4$ blue edges
+                If any edge between $w, x, y, z$ is blue, we have a blue triangle.
+                If not, there are all yellow and we have a yellow $K_4$.
+
+                $v$ is in $6$ yellow edges We know $H$ contains a monochromatic triangle. If it is blue, we are done.  If it is yellow, then it makes a $K_4$ with $v$ as required.
+            \end{proof}
+        \item Let $K_{20}$ be coloured blue/yellow. Then $\exists$ a monochromatic $K_4$.
+            \begin{proof}
+                Pick a vertex $v$. It's in $19$ edges, so some $10$ of them are the same colour, without loss of generality blue.
+                Let $H$ be a $K_{10}$ joined to $v$ by blue edges.
+                Either $H$ has a blue triangle, making a blue $K_4$ with $v$
+                Or $H$ contains a yellow $K_4$
+            \end{proof}
+    \end{enumerate}
+\end{eg}
+
+\begin{defi}[\hypertarget{def:ramseyNum}{Ramsey number}]
+    Let $s, t \geq 2$. The Ramsey number $R(s, t)$ is the least $n$ such that whenever $K_n$ has edges coloured blue/yellow there must be a blue $K_s$ or a yellow $K_t$ (if such an $n$ exists).
+    We also write $R(s) = R(s, s)$.
+\end{defi}
+
+We have seen $R(3) = 6$; $R(3, 4) \leq 10$; $R(4) \leq 20$.
+
+\begin{nthm}[\hypertarget{thm:ramsey}{Ramsey's Theorem}]
+    $R(s, t)$ exists for all $s, t \geq 2$.  Moreover, if $s, t \geq 2$ then $R(s, t) \leq R(s-1, t) + R(s, t-1)$.
+\end{nthm}
+
+\begin{proof}
+    Induction on $s+t$.
+
+    For $s=2$, we have $R(2, t) = t$, because reasons.  Similarly $R(s, 2) = s$.
+    In the case $s, t > 2$, let $a = R(s-1, t)$ and $b = R(s, t-1)$ which exist by the induction hypothesis.  Let $n = a+b$. Suppose $K_n$ has edges coloured blue/yellow.
+    Pick $v \in K_n$, which is in $a+b-1$ edges, so either $v$ is in $a$ blue edges, or it is in $b$ yellow edges.
+    \begin{enumerate}
+        \item If it is in $a$ blue edges, let $H$ be the $K_a$ joined to $v$ be blue edges.  Now $a = R(s-1, t)$, so either $H$ has a blue $K_{s-1}$, making a blue $K_s$ with $v$, or $H$ has a yellow $K_t$, so done.
+        \item $v$ is in $b$ yellow edges, and we can make the same argument with colours reversed.
+    \end{enumerate}
+\end{proof}
+
+% cor 3
+\begin{cor}
+    For all $s, t \geq 2$, $R(s, t) \leq 2^{s+t}$, so $R(s) \leq 4^s$.
+\end{cor}
+
+\begin{proof}
+    Induction on $s + t$.  Base cases $s=2$, $R(2, t) = t \leq 2^{2+t}$ and similar for $t=2$.
+    For $s, t \geq 2$
+    \begin{align}
+        R(s, t) &\leq R(s-1, t) + R(s, t-1) \\
+                &\leq 2^{s-1+t} + 2^{s+1-t} \\
+                &= 2^{s+t}
+    \end{align}
+\end{proof}
+
+A more careful version of the same proof gives $R(s) = \mathcal{O} (\frac{4^s}{\sqrt{s}})$ (Erdos-Szekeres 1935)
+A harder proof gives an improvement to $R(s) = \mathcal{O}(\frac{4^s}{s})$ (Thomason 1988)
+An even harder proof gives $R(s) = \mathcal{O}(\frac{4^s}{s^k})$ for any $k$ (Conlon 2009)
+Is $R(s) = \mathcal{O}((3.999999999)^s)$? Unknown.
 \end{document}
