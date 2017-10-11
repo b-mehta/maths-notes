@@ -159,7 +159,7 @@ In comparison to the \hyperlink{def:jMeasure}{Jordan measure}, the ideas of Lebe
 
 Here, we use $m^*$, the \emph{Lebesgue outer measure}, defined as follows.
 \begin{equation*}
-    m^*(F) = \inf\Set{\sum_{n \geq 1} m(B_n) | F \subset \bigcup_{n \geq 1} B_n, \; B_n \textrm{are boxes}}
+    m^*(F) = \inf\Set{\sum_{n \geq 1} m(B_n) | F \subset \bigcup_{n \geq 1} B_n, \; B_n \; \text{are boxes}}
 \end{equation*}
 
 This is defined for all subsets of $\R^d$, but it is not additive on all subsets.
@@ -174,7 +174,7 @@ This outer measure satisfies
 \begin{enumerate}
     \item $m^*(\emptyset) = 0$
     \item $m^*(E) \leq m^*(F)$ if $E \subseteq F$ (monotone)
-    \item $m^*(\bigcup_{i \geq 1}) \leq \sum_{i \geq 1} m^* (E_i)$ (countable subadditivity)
+    \item $m^*\left(\bigcup_{i \geq 1} E_i\right) \leq \sum_{i \geq 1} m^* (E_i)$ (countable subadditivity)
 \end{enumerate}
 
 \begin{eg}[Vitali's example]
@@ -219,4 +219,100 @@ This outer measure satisfies
 \end{remark}
 
 We can define a `fat' Cantor set which is Jordan measurable but not Lebesgue measurable.
+
+\begin{remark}
+    What is the outer measure of a Vitali set?
+    $m^*(E) > 0$ by the argument given above, but we can create $E \subseteq [0, \frac1n]$, or inside any interval. So, $m^*(E)$ depends on the choice of $E$ and could be arbitrarily small, but must be positive.
+\end{remark}
+
+\begin{remark}
+    In the definition of the Lebesgue outer measure, we used closed boxes, but open or half-open boxes would not change the definition. (same for Lebesgue)
+\end{remark}
+
+\begin{defi}[\hypertarget{def:lMeasure}{Leb}]
+    $E \subseteq \R^d$ is \textbf{Lebesgue measurable} if $\forall \epsilon > 0$, $\exists C \coloneqq \bigcap_{n} B_n$, a countable union of boxes such that $m^*(C \setminus E) < \epsilon$ and $E \subseteq C$.
+\end{defi}
+
+\begin{remark}
+    Every null set is \hyperlink{def:lebMAble}{lebesgue measurable}.
+\end{remark}
+
+\begin{defi}
+    A \textbf{null set} $E \subseteq \R^d$ is a subset $E$ such that $m^*(E) = 0$.
+\end{defi}
+
+% prop 1
+\begin{prop}
+    The family $\mathcal{L}$ of Lebesgue measurable subsets of $\R^d$ is stable under
+    \begin{enumerate}[label=\alph*)]
+        \item countable unions: if $E_n \in \mathcal{L}$ for all $n \in \N$, then $\bigcup_{n \geq 1} E_n \in \mathcal{L}$.
+        \item complementation: if $E \in \mathcal{L}$, then $E^c \in \mathcal{L}$.
+        \item countable intersections: if $E_n \in \mathcal{L}$ for all $n \in \N$, then $\bigcap_{n \geq 1} E_n \in \mathcal{L}$.
+    \end{enumerate}
+\end{prop}
+
+% prop 2
+\begin{prop}
+    Every closed (open) subset of $\R^d$ is Lebesgue measurable.
+\end{prop}
+
+\begin{proof} % of prop 1
+    First note part c) follows from parts a) and b), since $(\bigcap_n E_n)^c = \bigcup_n E_n^c$. We'll first show a).
+    Let $(E_n)_{n \geq 1}$ be a countable family in $\mathcal{L}$, and pick $\epsilon > 0$.  By definition, $\exists C_n \coloneqq \bigcup_{i \geq 1} B_i^{(n)}$ such that $m^*(C_n \setminus E_n) < \frac{\epsilon}{2^n}$.
+    Then $\bigcup E_n \subseteq \bigcup C_n = \bigcup_{n, i} B_i^{(n)}$ is still a countable union of boxes.
+
+    Finally,
+    \begin{align*}
+        m^*\left(\bigcup B_i^{(n)} \setminus \bigcup E_n\right) \leq \sum_n m^*(C_n \setminus E_n) \leq \sum_{n \geq 1} \frac{\epsilon}{2^n} \leq \epsilon
+    \end{align*}
+    by countable subadditivity of $m^*$, proving a).
+
+    For b), We start with $E \in \mathcal{L}$.  By definition, $\forall n$, there is a $C_n$ countable family of boxes with $E \subseteq C_n$ and $m^* (C_n \setminus E) < \frac1n$.
+
+    Taking complements, we see $C_n^c \subseteq E^c$ and $C_n \setminus E = E^c \setminus C_n^c$.  We take $C_n$ a union of \textit{open boxes}, then $C_n$ is open and $C_n^c$ is closed.
+
+    By (Prop 2), $C_n^c$ is Lebesgue measurable, and by part a) of Prop 1, so is $\bigcup_n C_n^c$. But $\bigcup_n C_n^c \subseteq E^c$ and $m^*(E^c \setminus \bigcup_i C_n^c) \leq m^*(E^c \setminus C_n^c) = m^* (C_n \setminus E) < \frac1n$.
+
+    Hence $m^* (E^c \setminus \bigcup_n C_n^c) = 0$, so
+    \begin{equation*}
+        E^c = \underbrace{\bigcup_n C_n^c}_{\in \mathcal{L}} \cup \underbrace{E^c \setminus \bigcup_n C_n^c}_{\text{is null hence is in} \; \mathcal{L}}
+    \end{equation*}
+    so by a) $E \in \mathcal{L}$.
+
+    This shows Prop 1.b modulo prop 2
+\end{proof}
+
+\begin{lemma}
+    Every open subset of $\R^d$ is a countable union of open boxes.
+\end{lemma}
+
+\begin{proof}
+    For $r \in \Q_{\geq 0}$ and $s \in \Q^d$, let $B_{s, r} = \set{x \in \R^d | \abs{x_i - s_i} \frac1r \ \text{for} \ i=1,\dotsc,d}$
+    $(B_{s,r})_{s,r}$ form a countable family and any open set $U \subseteq \R^d$ is the union of those $B_{s,n}$'s it contains.
+\end{proof}
+
+\begin{proof} % of prop 2
+    By point a) of Prop 1, we get that every open set in $\R^d$ is Lebesgue measurable. Now, let's show that closed sets are Lebesgue measurable.
+
+    It's enough to show that \emph{compact} subsets of $R^d$ are in $\mathcal{L}$ because every closed subset $F \subseteq \R^d$ is a countable union of compact sets:
+    Observe $\R^d = \bigcup_{n \geq 1} A_n$, where $A_n = \text{annulus} = \set{x \in \R^d \mid n-1 \leq \norm{x} \leq n}$, so $F = \bigcup_{n \geq 1} (A_n \cap F)$, and $A_n \cap F$ is compact.
+
+    So, let $F \subseteq \R^d$ be a compact subset. By definition of $m^*(F)$, $\forall k \geq 1$, $\exists \bigcup_n B_n^{(k)}$ a countable union of open boxes such that $F \subseteq \bigcup_n B_n^{(k)}$ and $m^*(F) + \frac{1}{2^k} \geq \sum_n m(B_n^{(k)})$.
+
+    Note: Up to subdividing each $B_n^{(k)}$ into a finite number of smaller boxes, we can assume that each $B_n^{(k)}$ has diameter less than $\frac{1}{2^k}$.
+    Without loss of generality we can assume that each box meets $F$.
+    Finally, since $F$ is compact, there is a finite subcover, ie I can assume that there are only finite many boxes at each step, ie $F \subseteq \bigcup_{n=1}^{N_k} B_n^{(k)}$ for $N_k \in \N$.
+
+    Let $U_k = \bigcup_{n=1}^{N_k} B_n^{(k)}$, $F \subseteq U_k$ for all $K$ and $F$ meets each box $B_n^{(k)}$ then we must have $F = \bigcap_{k \geq 1} U_k$ (because if $x \in \bigcap U_k$, $\forall k$, $\exists x_k \in F$, $x$ and $x_k$ lie in the same box $B_n^{(k)}$ so $\norm{x - x_k}_\infty \geq \frac1{2^k}$.  $F$ is compact, and $x_k \in F$ has a limit point, so $x \in F$.)
+
+    We need to show that $m^*(U_k \setminus F)$ tends to $0$, because this implies that $F$ is Lebesgue measurable.
+
+    Claim: If $A, B$ are two disjoint compact subsets of $\R^d$ then $m^*(A \cup B) = m^*(A) + m^*(B)$. Proof: Clear from definition as we can choose disjoint covers by open boxes.
+
+    Apply this to $A = F$ and $B = \overline{U_k} \setminus U_{k+1}$ to get $m^*(\overline{U_k} \setminus U_{k+1}) + m^*(F) \leq m^*(\overline{U_k} \setminus U_{k+1} \cup F) \leq m^*(\overline{U_k}) = m^*(U_k) \leq m^*(F) + \frac1{2^k}$, so $m^*(U_{k+1} \setminus U_k) \leq \frac12 k$
+    Since $F = \bigcap_k U_k$ by countable subadditivity of $m^*$, you get
+    \begin{align}
+        m^*(U_k \setminus F) \leq \sum_{i \geq k} m^*
+    \end{align}
+\end{proof}
 \end{document}

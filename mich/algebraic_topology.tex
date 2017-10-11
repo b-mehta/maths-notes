@@ -196,5 +196,111 @@ Throughout, we will denote $I = [0, 1] \subseteq \R$.
         f' \circ (f \circ g) \circ g' \simeq f' \circ \id_Y \circ g' \simeq f' \circ g' \simeq \id_Z \\
     \end{equation*}
 \end{proof}
-\end{document}
 
+% defi 2.1.9
+\begin{ndef}[\hypertarget{def:defRet}{Deformation retraction}]
+    If $i: A \hookrightarrow X$ is an inclusion, $r: X \to A$ is a continuous map such that $r \circ i = \id_A$ and $i \circ r \simeq \id_X$ rel $A$ then $A$ is called a \textbf{deformation retract} of $X$, and $r$ is a \textbf{deformation retraction}.
+\end{ndef}
+
+\begin{ndef}
+    If $r: X \to A$ is a map such that $ r \circ i = \id_A$, then $A$ is a \textbf{retract} and $r$ is a retraction.
+\end{ndef}
+
+\begin{eg}
+    If $X \neq \emptyset$, then for any $x \in X$, $r: X \to \{x\}$ is a retraction.
+\end{eg}
+
+Recall our basic goal was to prove that $X \not\simeq Y$ or that $X \not \cong Y$, and we will develop tools to do this.  For instance we can think about the spaces $X = *$ and $Y = * \sqcup *$.
+
+% 2.2
+\subsection{Paths}
+
+% 2.2.1
+\begin{ndef}
+    A \textbf{path} in a space $X$ is a map $\gamma: I \to X$.
+    A \textbf{path from $x_0$ to $x_1$} is such a map with $\gamma(0) = x_0$ and $\gamma(1) = x_1$, which we can denote by $\gamma: x_0 \snake x_1$.
+    If $x_0 = x_1$, we say that $\gamma$ is a \textbf{loop}.
+\end{ndef}
+
+If $\gamma_0: x_0 \snake x_1$ and $\gamma_1: x_1 \snake x_2$ then the contraction of $\gamma_0$ and $\gamma_1$ is
+\begin{equation*}
+    (\gamma_0 \cdot \gamma_1) (t) =
+    \begin{cases}
+        \gamma_0(2t) & 0 \leq t \leq \frac12 \\
+        \gamma_1(2t-1) & \frac12 \leq t \leq 1
+    \end{cases}
+\end{equation*}
+
+If $\gamma: I \to X$ is a path, the inverse path $\gamma^{-1} = \bar{\gamma}$, given by $\bar{\gamma}(t) = \gamma(1-t)$.
+For any $x_0 \in X$, the constant path
+\begin{align*}
+    C_{x_0}: I &\to X \\
+             t &\mapsto x_0
+\end{align*}
+
+% defi 2.2.2
+\begin{ndef}\hypertarget{def:pathComp}{Path components}
+    If there is a path $\gamma:x_0 \snake x_1$, then we write $x_0 \sim x_1$.  By the above, this is an equivalence relation on $X$.  We write
+    \begin{equation*}
+        \pi_0(X) = X/\sim
+    \end{equation*}
+    and call the equivalence classes $[x]$ the \textbf{path components} of X.
+    If there is only one path component, we say $X$ is path connected.
+\end{ndef}
+
+What's more, if $f: X \to Y$ is a map, we can define
+\begin{align*}
+    \pi_0(f): \pi_0(X) &\to \pi_0(Y)
+    [x] &\mapsto [f(x)]
+\end{align*}
+It's easy to see that this is well-defined.
+
+\begin{nprop}
+    For [diagram] continuous maps.
+    \begin{enumerate}[label=(\roman*)]
+        \item if $f_0 \simeq f_1$, then $\pi_0(f_0) = \pi_0(f_1)$
+        \item $\pi_0(f \circ f_0) = \pi_0(g) \circ \pi_0(f_0)$
+        \item $\pi_0(\id_X) = \id_{\pi_0(X)}$
+    \end{enumerate}
+\end{nprop}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item Let $f_0 \simeq_H f_1$. For any $x \in X$, $H(x, \cdot): I \to Y$ is a path from $f_0(x) to f_1(x)$, hence $[f_0(x)] = [f_1(x)]$, and therefore $\pi_0(f_0)([x]) = \pi_0(f_1)([x])$.
+    \end{enumerate}
+    (ii) and (iii) are immediate.
+\end{proof}
+
+\begin{eg}[Toy example]
+    We try to show $* \not \simeq * \sqcup *$.  First, see that $1 = \abs{\pi_0(*)}$ and $\abs{\pi_0(* \sqcup *)} = 2$. Suppose we have a pair of homotopy equivalences between $X$ and $Y$ called $f, g$.  Then $\pi_0(f) \circ \pi_0(g) = \pi_0(f \circ g) = \pi_0(\id_*) = \id_{\pi_0(*)}$. Likewise, $\pi_0(g) \circ \pi_0(f) = \Id_{\pi_0(* \sqcup *)}$ hence $\pi_0(f)$ is a bijection, $\implies 1=2$.
+\end{eg}
+
+Our next goal is to fix up the group axioms for paths. We could allow unrestricted homotopies of paths, but then all paths would be homotopic. Instead we fix the endpoints.
+
+% defi 2.2.7
+Paths $\gamma, \gamma': I \to X$ are \textbf{homotopic as paths} if $\gamma \simeq \gamma'$ rel $\{0, 1\}$.
+
+Homotopy of paths and concatenations interact nicely.
+
+% lemma 2.2.8
+\begin{nlemma}
+    If $\gamma_0, \gamma_0': x_0 \snake x_1$, (vert) $\gamma_1, \gamma_1': x_1 \snake x_2$ and $\gamma_0 \simeq \gamma_0'$, $\gamma_1 \simeq \gamma_1'$ as paths then $\gamma_0 \cdot \gamma_1 \simeq \gamma_0' \cdot \gamma_1'$.
+\end{nlemma}
+
+\begin{proof}[Sketch]
+    Suppose $\gamma_0 \simeq_{H_0} \gamma_0'$ and $\gamma_1 \simeq_{H_1} \gamma_1'$.
+    The diagram shows the homotopy of paths we are looking for.
+\end{proof}
+
+% prop 2.2.9
+\begin{nprop}
+    Let $\gamma_0:x_0 \snake x_1$, $\gamma_1: x_1 \snake x_2$, $\gamma_2: x_2 \snake x_3$.
+    Then
+    \begin{enumerate}[label=(\roman*)]
+        \item $(\gamma_0 \cdot \gamma_1) \cdot \gamma_2 \simeq \gamma_0 \cdot (\gamma_1 \cdot \gamma_2)$
+        \item $\gamma_0 \cdot c_{x_1} \simeq \gamma_0 \simeq c_{x_0} \cdot \gamma_0$
+        \item $\gamma_0 \cdot \overline{\gamma_0} \simeq c_{x_0}
+    \end{enumerate}
+\end{nprop}
+\end{document}
