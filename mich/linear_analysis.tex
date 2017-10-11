@@ -227,4 +227,122 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
         \norm{T} = \sup_{\norm{v} = 1} \norm{T v} =\sup_{\norm{v} \leq 1} \norm{T v}
     \end{equation*}
 \end{defi}
+
+Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal{B}(V, W)$ the space of \hyperlink{def:boundedLinearMap}{bounded linear maps} $V \to W$.
+
+\begin{fact}
+    The \hyperlink{def:opNorm}{operator norm} $\norm{\cdot}$ is a norm on $\mathcal{B}(V, W)$.
+\end{fact}
+
+
+\begin{prop}
+    Let $V, W$ be \hyperlink{def:normedVectorSpace}{normed vector spaces}. Then a linear map $T: V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} if and only if it is continuous.
+\end{prop}
+
+\begin{proof}
+    \leavevmode
+    \begin{itemize}
+        \item $T$ bounded $\implies T$ continuous
+
+            Assume $\norm{v_k - v} \to 0$. Then
+            \begin{equation}
+                \norm{T v_k - T v} \leq \underbrace{\norm{T}}_{< \infty} \underbrace{\norm{v_k - v}}_{\to 0} \to 0
+            \end{equation}
+        \item $T$ continuous $\implies$ $T$ bounded
+
+            Since $T$ is continuous, $T^{-1} (B_1(0))$ contains an open ball $B_\epsilon(0) \subset V$. Thus
+            \begin{equation}
+                T(B_1(0)) = \epsilon^{-1} T(B_\epsilon(0)) \subset \epsilon^{-1} B_1(0) = B_{\epsilon^{-1}}(0)
+            \end{equation}
+            so $T$ is bounded.
+    \end{itemize}
+\end{proof}
+
+\begin{defi}[\hypertarget{def:dualSpace}{Dual space}]
+    Let $V$ be a \hyperlink{def:topologicalVectorSpace}{topological vector space}. The (topological) \textbf{dual space} of $V$ is the space of continuous linear maps $V \to \K$. Denote it by $V^*$. In a \hyperlink{def:normedVectorSpace}{normed space}, $V^* = \mathcal{B}(V, \K)$. (We call $\mathcal{L}(V, \K)$ the algebraic dual of $V$.)
+\end{defi}
+
+\begin{prop}
+    Let $V$ be a \hyperlink{def:normedVectorSpace}{normed vector space} and $W$ a \hyperlink{def:banach}{Banach space}. Then $\mathcal{B}(V, W)$ is a Banach space.
+\end{prop}
+
+\begin{proof}
+    Let $(T_i) \subset \mathcal(V, W)$ be a Cauchy sequence.  Then for any vector $v \in V$, the sequence $(T_i v) \subset W$ is Cauchy:
+    \begin{equation}
+        \norm{T_i v - T_j v} \leq \underbrace{\norm{T_i - T_j}}_{\leq \epsilon} \cdot \norm{v}
+    \end{equation}
+    Since $W$ is complete, there is $Tv \in W$ such that $T_i v \to T v$.
+    \begin{itemize}
+        \item $T$ is linear:
+            \begin{align*}
+                T(\lambda v + \mu w) &= \lim_{i \to \infty} T_i (\lambda v + \mu w) \\
+                                     &= \lambda \lim_{i \to \infty} T_i v + \mu \lim_{i \to \infty} T_i w \\
+                                     &= \lambda T v + \mu T w
+            \end{align*}
+        \item $T$ is bounded:
+            For $\norm{v} \leq 1$,
+            \begin{align*}
+                \norm{Tv} &\leq \underbrace{\norm{T_i v}}_{\leq \norm{T_i}} + \underbrace{\norm{T_i v - T v}}_{<1 \; \text{for} \; i > N(v)} \\
+                &\leq \sup_i \norm{T_i} + 1\\
+                &\leq \infty
+            \end{align*}
+
+        \item $T_i \to T$ in norm:
+            \begin{align*}
+                \norm{T_i v - T v} &\leq \underbrace{\norm{T_i v - T_j v}}_{\leq \norm{T_i - T_j}} + \underbrace{\norm{T_j v - T v}}_{< \epsilon \; \text{for} \; j > N(\epsilon, v),\, j \geq i} \\
+                \implies \norm{T_i - T} &\to 0 \; \text{as} \; i \to \infty
+            \end{align*}
+    \end{itemize}
+\end{proof}
+
+\begin{cor}
+    Let $V$ be a \hyperlink{def:normedVectorSpace}{normed vector space}. Then $V^*$ is a \hyperlink{def:banach}{Banach space}
+\end{cor}
+
+\begin{defi}[\hypertarget{def:dualMap}{Dual map}]
+    Let $V, W$ be \hyperlink{def:normedVectorSpace}{normed vector space} and $T \in \mathcal{B}(V, W)$. Then the \textbf{adjoint} or \textbf{dual map} $T^*: W^* \to V^*$ is defined by
+    \begin{equation}
+        [T^* f] v = f(T v) \quad f \in W^*, \, v \in V
+    \end{equation}
+\end{defi}
+
+\begin{fact}
+    $T^* f$ is indeed in $V^* = \mathcal{B}(V, K)$ and $\norm{T^*} \leq \norm{T}$
+\end{fact}
+
+\begin{proof}
+    \begin{align*}
+        \norm{(T^* f) v} &= \norm{f(T v)} \\
+                         &\leq \norm{f} \norm{Tv} \\
+                         &\leq \norm{f} \norm{T} \norm{v} \\
+        \implies \norm{T^* f} &\leq \norm{f} \norm{T} \\
+        \implies \norm{T^*} &\leq \norm{T} \\
+    \end{align*}
+    Later we will see this last inequality is in fact equality.
+\end{proof}
+
+
+\begin{defi}
+    Let $V$ be a normed vector space. The \textbf{double dual} of $V$ is the dual space of $V^*$, that is $V^{**} = (V^*)^*$.
+\end{defi}
+
+\begin{fact}
+    The map $\phi: V \to V^{**}, v \mapsto \widetilde v$ where $\widetilde v(f) = f(v)$, $f \in V^*$ is \hyperlink{def:boundedLinearMap}{bounded} and linear.
+\end{fact}
+
+\begin{remark}
+    The Hahn-Banach Theorem implies that $\phi$ is isometric (injective), so $V$ can be considered a subspace of $V^{**}$. In general, $\phi$ is not surjective.
+\end{remark}
+
+\begin{defi}[\hypertarget{def:reflexive}{Reflexive space}]
+    A Banach space is \textbf{reflexive} if $\phi$ is a bijection.
+\end{defi}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item Let $V, W$ be finite-dimensional vector spaces. Then any linear map $T:V \to W$ is bounded with respect to any norms on $V, W$, $T$ can be represented by a matrix and $T^*$ is represented by the transpose of $T$. Finite dimensional \hyperlink{def:normedVectorSpace}{normed vector spaces} are \hyperlink{def:reflexive}{reflexive}.
+        \item The map $T : \ell^p \to \ell^p, \; (x_1, x_2, \dotsc) \mapsto (0, x_1, x_2, \dotsc)$ is bounded, $\norm{T} = 1$, injective but not surjective.
+    \end{itemize}
+\end{eg}
 \end{document}
