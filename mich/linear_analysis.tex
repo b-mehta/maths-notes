@@ -245,21 +245,21 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
         \item $T$ bounded $\implies T$ continuous
 
             Assume $\norm{v_k - v} \to 0$. Then
-            \begin{equation}
+            \begin{equation*}
                 \norm{T v_k - T v} \leq \underbrace{\norm{T}}_{< \infty} \underbrace{\norm{v_k - v}}_{\to 0} \to 0
-            \end{equation}
+            \end{equation*}
         \item $T$ continuous $\implies$ $T$ bounded
 
             Since $T$ is continuous, $T^{-1} (B_1(0))$ contains an open ball $B_\epsilon(0) \subset V$. Thus
-            \begin{equation}
+            \begin{equation*}
                 T(B_1(0)) = \epsilon^{-1} T(B_\epsilon(0)) \subset \epsilon^{-1} B_1(0) = B_{\epsilon^{-1}}(0)
-            \end{equation}
+            \end{equation*}
             so $T$ is bounded.
     \end{itemize}
 \end{proof}
 
 \begin{defi}[\hypertarget{def:dualSpace}{Dual space}]
-    Let $V$ be a \hyperlink{def:topologicalVectorSpace}{topological vector space}. The (topological) \textbf{dual space} of $V$ is the space of continuous linear maps $V \to \K$. Denote it by $V^*$. In a \hyperlink{def:normedVectorSpace}{normed space}, $V^* = \mathcal{B}(V, \K)$. (We call $\mathcal{L}(V, \K)$ the algebraic dual of $V$.)
+    Let $V$ be a \hyperlink{def:topologicalVectorSpace}{topological vector space}. The (topological) \textbf{dual space} of $V$ is the space of continuous linear maps $V \to \K$, denoted by $V^*$. In a \hyperlink{def:normedVectorSpace}{normed space}, $V^* = \mathcal{B}(V, \K)$. (We call $\mathcal{L}(V, \K)$ the algebraic dual of $V$.)
 \end{defi}
 
 \begin{prop}
@@ -267,11 +267,12 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
 \end{prop}
 
 \begin{proof}
-    Let $(T_i) \subset \mathcal(V, W)$ be a Cauchy sequence.  Then for any vector $v \in V$, the sequence $(T_i v) \subset W$ is Cauchy:
-    \begin{equation}
+    Let $(T_i) \subset \mathcal{B}(V, W)$ be a Cauchy sequence.  We aim to show that there is some $T \in \mathcal{B}(V, W)$ such that $T_i \to T$.
+    For any vector $v \in V$, the sequence $(T_i v) \subset W$ is Cauchy:
+    \begin{equation*}
         \norm{T_i v - T_j v} \leq \underbrace{\norm{T_i - T_j}}_{\leq \epsilon} \cdot \norm{v}
-    \end{equation}
-    Since $W$ is complete, there is $Tv \in W$ such that $T_i v \to T v$.
+    \end{equation*}
+    Since $W$ is complete, $T_i v$ converges, and define $T v$ as this pointwise limit.
     \begin{itemize}
         \item $T$ is linear:
             \begin{align*}
@@ -296,18 +297,18 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
 \end{proof}
 
 \begin{cor}
-    Let $V$ be a \hyperlink{def:normedVectorSpace}{normed vector space}. Then $V^*$ is a \hyperlink{def:banach}{Banach space}
+    Let $V$ be a \hyperlink{def:normedVectorSpace}{normed vector space}. Then $V^*$ is a \hyperlink{def:banach}{Banach space}.
 \end{cor}
 
 \begin{defi}[\hypertarget{def:dualMap}{Dual map}]
     Let $V, W$ be \hyperlink{def:normedVectorSpace}{normed vector space} and $T \in \mathcal{B}(V, W)$. Then the \textbf{adjoint} or \textbf{dual map} $T^*: W^* \to V^*$ is defined by
-    \begin{equation}
+    \begin{equation*}
         [T^* f] v = f(T v) \quad f \in W^*, \, v \in V
-    \end{equation}
+    \end{equation*}
 \end{defi}
 
 \begin{fact}
-    $T^* f$ is indeed in $V^* = \mathcal{B}(V, K)$ and $\norm{T^*} \leq \norm{T}$
+    We can easily see $T^* f$ is in $V^* = \mathcal{B}(V, K)$ and we can check $\norm{T^*} \leq \norm{T}$:
 \end{fact}
 
 \begin{proof}
@@ -323,7 +324,7 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
 
 
 \begin{defi}
-    Let $V$ be a normed vector space. The \textbf{double dual} of $V$ is the dual space of $V^*$, that is $V^{**} = (V^*)^*$.
+    Let $V$ be a \hyperlink{def:normedVectorSpace}{normed vector space}. The \textbf{double dual} of $V$ is the \hyperlink{def:dualSpace}{dual space} of $V^*$, that is $V^{**} = (V^*)^*$.
 \end{defi}
 
 \begin{fact}
@@ -341,7 +342,8 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
 \begin{eg}
     \leavevmode
     \begin{itemize}
-        \item Let $V, W$ be finite-dimensional vector spaces. Then any linear map $T:V \to W$ is bounded with respect to any norms on $V, W$, $T$ can be represented by a matrix and $T^*$ is represented by the transpose of $T$. Finite dimensional \hyperlink{def:normedVectorSpace}{normed vector spaces} are \hyperlink{def:reflexive}{reflexive}.
+        \item Let $V, W$ be finite-dimensional vector spaces. Then any linear map $T:V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} with respect to any \hyperlink{def:normedVectorSpace}{norms} on $V, W$, and $T$ can be represented by a matrix while $T^*$ is represented by the transpose of $T$.
+            Finite dimensional normed vector spaces are \hyperlink{def:reflexive}{reflexive}.
         \item The map $T : \ell^p \to \ell^p, \; (x_1, x_2, \dotsc) \mapsto (0, x_1, x_2, \dotsc)$ is bounded, $\norm{T} = 1$, injective but not surjective.
     \end{itemize}
 \end{eg}
