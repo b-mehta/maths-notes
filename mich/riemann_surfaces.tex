@@ -18,7 +18,7 @@
 
 \begin{defi}
     A smooth function $f: U \to \C$ (where $U$ is a domain in $\C$) is \textbf{holomorphic} or \textbf{analytic} if either of the following equivalent statements hold:
-    \begin{enumerate}[(1)]
+    \begin{enumerate}[label=(\arabic*)]
         \item $f$ is differentiable at all points of $U$, where differentiability is defined by limits, and checked by the Cauchy-Riemann equations
         \item $\forall a \in U$, $f$ has a power series expansion on a neighbourhood of $a$:
             \begin{equation*}
@@ -75,6 +75,8 @@ thm [Casorati-Weierstrass] If $f$ has an essential singularity at $a$, then the 
 \paragraph{Examples}
 $f(z) = \frac1{e^z - 1}$ has poles wherever $e^z = 1$.
 At $\infty$, we also have an isolated singularity, recalling that punctured neighbourhoods of $\infty$ are $\mathbb{C}\\ \mathbb{D}(0, R)$. Since $e^z$ takes all nonzero values or strips of $\mathbb{C}$, we cannot have $e^z \to 1$ as $z \to \infty$, hence $f$ cannot have a pole.  On the other hand, there exists arbitrarily large solutions (in modulus) to $e^z = 1$, and $f$ cannot have a removable singularity at $\infty$.  Hence, this singularity is essential.
+
+(edit: not isolated as every neighbourhood of infinity contains a singularity)
 
 \subsection{Complex logarithm}
 The complex logarithm is an example of a multivalued function, which arises as the inverse of an analytic function. Given nonzero $z$, if $e^w = z$, $z = r e^{i \theta}$, then $w = \log r + (2 \pi n + \theta i)$ for some $n \in \mathbb{Z}$.  We cannot make a continuous choice of $n$ on all of $\mathbb{C}$, so we define the complex log on domains like $\mathbb{C} \\ \mathbb{R}_{\leq 0} =: U$. We have for each $n$, a choice of logarithm which can be analytically defined on $U$.  Recall a \emph{continuous} inverse of an analytic function is analytic.
@@ -159,11 +161,88 @@ Fix a domain $U \in \C$ which is path connected.
     We can see the direct analytic continuations, but we do not have direct analytic continuation (), but ().
 \end{eg}
 
-\begin{goal}
+\begin{aim}
     Construct a surface on which $\log$ is well-defined by gluing together a bunch of domains on which it is well-defined.
-\end{goal}
+\end{aim}
 
-FOr each $n \in \Z$, take a copy of $U_1 = E_{(0, 2\pi)}$.  Each has a well-defined choice of logarithm: $f_{(2\pi n, 2\pi (n+1))}$, $r e^{i \theta} \mapsto \log r + (\theta + 2 \pi n) i$, for $\theta \in (0, 2\pi)$.
+For each $n \in \Z$, take a copy of $U_1 = E_{(0, 2\pi)}$.  Each has a well-defined choice of logarithm: $f_{(2\pi n, 2\pi (n+1))}$, $r e^{i \theta} \mapsto \log r + (\theta + 2 \pi n) i$, for $\theta \in (0, 2\pi)$.
 
 We can glue together these copies of $U$, so that the functions $f_{(2\pi n, 2\pi (n+1))}$ glue to give a continuous function $L : \tilde{U} \to \C$.
+
+\begin{defi}[{Covering map}\hypertarget{def:coverMap}]
+    A \textbf{covering map} of a topological space $X$ is is (sic) a continuous map $\pi: \widetilde X \to X$, where $\widetilde X$ and $X$ are Hausdorff and path connected, and $\pi$ is a local homeomorphism.  Specifically, $\forall \widetilde x \in \widetilde X$, $\exists$ an open neighbourhood $\widetilde N$ of $\widetilde{x}$ on which $\pi$ restricts to a homeomorphism.
+    We say that $X$ is the \textbf{base space} of $\pi$.
+\end{defi}
+Note that this is likely weaker than the definition used in Algebraic Topology, which requires that $\forall x \in X$, $\exists$ an open neighbourhood $N$ of $x$ such that $\pi^{-1}(N)$ is a disjoint union of open sets which are mapped homeomorphically by $\pi$ to $N$.  We will call this a \textbf{regular} covering map.
+
+\begin{eg}
+    Non-regular covering map: Consider $\pi(z) = e^z$ on the domain
+    \begin{equation}
+        \set{z | 0 < \Im(z) < 4\pi}
+    \end{equation}
+
+    Let $x = 1$.  From the diagram, we have a disjoint union of open neighbourhoods, but $\pi$ does not map them homeomorphically.
+\end{eg}
+
+Define $R \coloneqq \sqcup_{n\in \Z} \C^* \times {n}$, and equip $R$ with the topology from basis with elements of the two forms:
+\begin{enumerate}
+    \item for $(\eta, n) \in R$ with $\eta \notin \R_{\leq 0}$ and any $r>0$, such that $\mathbb{D}(\eta, r) \cap \mathbb{R}_{\leq 0} = \emptyset$, define an open set $D((\eta, n), r)$ to be the disk of radius $r$ about $\eta$ in the $n$th sheet:
+        \begin{equation}
+            D((\eta, n), r) \coloneqq \set{(z, n) | \abs{z - \eta} < r}
+        \end{equation}
+
+    \item For $(\eta, n)$ with $\eta \in \R_{\leq 0}$, define
+        \begin{equation}
+            A((\eta, n), r) \coloneqq \set{(z, n) | \abs{z - \eta} < r, \ \Im{z} \geq 0} \sqcup {(z, n-1) | \abs{z - \eta} < r, \ \Im{z} < 0}
+        \end{equation}
+        where $r < \abs{\eta}$
+\end{enumerate}
+
+This defines a path-connected, Hausdorff topology on $R$. The map $\pi: \R \to \C^*$ given by $\pi((z, n)) = z$ is a (regular) covering map. Define $f:R \to \C$ by $f(r e^{i \theta}, n) = \log r + i (2 \pi n + \theta)$ where $\theta \in [0, 2\pi)$. By construction, $f$ is continuous, $f$ is also a bijection, and (diagram).
+In this sense, $f$ is a logarithm.
+
+Note we can similarly construct a gluing spae for $z^{1/n}$ as a multivalued function, $z^{1/n} = r^{1/n} e^{i \theta/n} e^{2 \pi k i/n}$ so the $n$th sheet glues to the first.
+This is a regular covering map, but only because $0$ is not included.
+
+\subsection{Power series and continuation}
+Recall a power series is absolutely and uniformly convergent on any closed disk inside its radius of convergence. If that radius of convergence is not $\infty$, what can we say about how far the series can be analytically continued? Without loss of generality assume we are working on the unit disk $\mathbb{D}$, that is a series about zero and radius of convergence $1$.  We denote $\mathbb{T} \coloneqq \partial \mathbb{D}$ and write $f(z) = \sum_{k \geq 0} a_k z^k$.
+
+\begin{defi}
+    We say that $z \in \mathbb{T}$ is \textbf{regular} if $\exists$ an open disk $N$ about $z$ and an analytic function $g$ on $N$ such that $f = g$ on $N \cap \mathbb{D}$. If $z$ is not regular, it is \textbf{singular}.
+\end{defi}
+
+Note the collection of regular points is open, and the collection of singular points is closed.
+
+Warning: regularity is independent of series convergence!
+\begin{enumerate}[label=(\arabic*)]
+    \item $f(z) \coloneqq \sum_{k \geq 0} z^k$. This doesn't converge anywhere on $\mathbb{T}$, but as it agrees with $\frac1{1-z}$, all points except $z=1$ are regular.
+    \item
+        \begin{equation}
+            g(z) \coloneqq \sum_{k=2}^\infty \frac{z^k}{k(k-1)}
+        \end{equation}
+        converges on $\mathbb{T}$ but $1$ is a singular point, as if $g$ extends analytically to a neighbourhood of $1$, so $g''$ does also, a contradiction.
+\end{enumerate}
+
+\begin{prop}
+    If $f(z) = \sum a_k z^k$ has radius of convergence $1$, then $\exists$ singular point on $\mathbb{T}$.
+\end{prop}
+
+\begin{proof}
+    Suppose not, then for each $z \in \mathbb{T}$, $\exists D_z$ and analytic $g_z$ on $D_z$ with $f = g_z$ on $D_z \cap \mathbb{D}$. Given $z_1 \neq z_2$ on $\mathbb{T}$ with $D_{z_!} \cap D_{z_2} \neq \emptyset$, then since these are disks centered at points of $\mathbb{T}$, $D_{z_1} \cap D_{z_2} \cap \mathbb{D} \neq \emptyset$, so $f = g_{z_1} = g_{z_2}$ on $\mathbb{D} \cap D_{z_1} \cap D_{z_2}$. By the identity principle $g_{z_1} = g_{z_2}$ on $D_{z_1} \cap D_{z_2}$, as $\mathbb{T}$ is compact, it many be covered by finitely many of these disks, so $f$ can be extended to the union $\mathbb{D}$ with this finite colelction of $D_z$, and that union contains $\mathbb{D}(0, 1 + \delta)$ for some $\delta > 0$, contradiction.
+\end{proof}
+
+\begin{defi}
+    We say $\mathbb{T}$ is a \textbf{natural boundary} of $f$ if every point $z \in \mathbb{T}$ is singular.
+\end{defi}
+
+\begin{eg}
+    $f(z) \coloneqq \sum_{k=0}^\infty z^{k!}$. Let $\omega$ be a root of unity, $\omega = e^{2 \pi i p/q}$.
+    Then
+    \begin{align*}
+        f(r e^{2\pi i p/q}) &= \sum_{k=0}^\infty r^{k!} (e^{2 \pi i p/q})^{k!} \\
+                            &= \underbracket{\sum_{k=0}^{q-1} r^{k!} (e^{2 \pi i p/q})^{k!}}_{\text{bounded as} \; r \to 1} + \underbracket{\sum_{k=q}^\infty r^{k!}}_{\text{approaches} \; \infty \; \text{as} \; r \to 1}
+    \end{align*}
+
+    But
+\end{eg}
 \end{document}
