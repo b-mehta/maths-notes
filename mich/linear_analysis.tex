@@ -345,6 +345,114 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
         \item Let $V, W$ be finite-dimensional vector spaces. Then any linear map $T:V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} with respect to any \hyperlink{def:normedVectorSpace}{norms} on $V, W$, and $T$ can be represented by a matrix while $T^*$ is represented by the transpose of $T$.
             Finite dimensional normed vector spaces are \hyperlink{def:reflexive}{reflexive}.
         \item The map $T : \ell^p \to \ell^p, \; (x_1, x_2, \dotsc) \mapsto (0, x_1, x_2, \dotsc)$ is bounded, $\norm{T} = 1$, injective but not surjective.
+        \item The derivative map $D: C^1 [0, 1] \to C^0 [0, 1]$ is
+            \begin{itemize}[label={}]
+                \item bounded as a map $C^1 [0, 1], \; \norm{f}_\infty + \norm{f'}_\infty$ to $C^0[0, 1] \; \norm{f}_\infty$
+                \item unbounded as a map $C^1 [0, 1], \; \norm{f}_\infty$ to $C^0[0, 1], \; \norm{f}_\infty$
+            \end{itemize}
+        % \item The map $\id: C^1[0, 1], \; \norm{\cdot}_\infty \to C^1[0, 1], \; \norm{\cdot}_\infty + \norm{\cdot'}_\infty$ is unbounded.
     \end{itemize}
 \end{eg}
+
+\subsection{Finite-dimensional normed spaces}
+\begin{fact}
+    Any finite dimensional vector space can be identified with $\K^n$ for some $n$ by choosing a basis.
+\end{fact}
+
+\begin{defi}[\hypertarget{def:eqNorms}{Norm equivalence}]
+    Two norms $\norm{\cdot}_1$ and $\norm{\cdot}_2$ on a vector space $V$ are \textbf{equivalent} if there exists $C > 0$ such that
+    \begin{equation*}
+        C^{-1} \norm{v}_2 \leq \norm{v} \leq C \norm{v}_2
+    \end{equation*}
+    for $v \in V$.
+\end{defi}
+
+\begin{prop}
+    All norms on a finite dimensional space are \hyperlink{def:eqNorm}{equivalent}.
+\end{prop}
+
+\begin{proof}
+    If suffices to check that any norm $\norm{\cdot}$ on $\K^n$ is equivalent to $\norm{\cdot}_1$ where
+    \begin{equation}
+        \norm{v}_1 = \sum_{i=1}^n \abs{v_i}
+    \end{equation}
+
+    \begin{itemize}
+        \item $\norm{v} \leq C \norm{v}_1$: Let $e_i = (0, \dotsc, 0, 1, 0, \dotsc) \in \K^n$. Then
+            \begin{equation*}
+                \norm{v} = \norm{\sum_{i=1}^n v_i e_i} \leq \sum_{i=1}^n \norm{v_i} \norm{e_i} \leq \left(\max_{i=1,\dotsc,n} \norm{e_i}\right) \norm{v}_1
+            \end{equation*}
+
+        \item $\norm{v}_1 \leq \norm{v}$: Let $S = \set{v \in \K^n | \norm{v}_1 = 1}$ and $f = S \to \R$, given by $v \mapsto \norm{v}$.
+            \begin{enumerate}
+                \item $f$ is continuous with respect to $\norm{\cdot}_1$ topology:
+                    \begin{equation*}
+                        \abs{f(v) - f(w)} = \abs{\norm{v} - \norm{w}} \leq \norm{v - w} \leq C \norm{v-w}_1
+                    \end{equation*}
+                \item $S$ is compact with respect to $\norm{\cdot}_1$ topology:
+                    It is closed as the inverse image of $\{1\}$ under $\norm{\cdot}_1$, and it is bounded by definition.
+            \end{enumerate}
+            So, f is a continuous function on a compact set, and hence attains its minimum.
+            Since $\norm{\cdot}$ and $\norm{\cdot}_1$ are norms (positive definite), this minimum must be strictly positive.
+            So, \begin{equation*}\norm{v} = f(v) \geq f(v_0) = c\end{equation*} for all $\norm{v}_1 = 1$.
+            For arbitrary $v \in \K^n$, we have
+            \begin{equation*}
+                \norm{v} = \norm{v}_1 \norm{\frac{v}{\norm{v}_1}} = \norm{v_1} f\left(\frac{v}{\norm{v}_1}\right) \geq c \norm{v}_1
+            \end{equation*}
+    \end{itemize}
+\end{proof}
+
+\begin{cor}
+    In any finite-dimensional \hyperlink{def:normedVectorSpace}{normed space}, the closed unit ball is compact.
+\end{cor}
+
+\begin{cor}
+    Every finite-dimensional normed space is a \hyperlink{def:banach}{Banach space}.
+\end{cor}
+
+\begin{proof}
+    Let $(v_i)$ be Cauchy, then $(v_i)$ is bounded, that is $(v_i) \subset \overline{B_R(0)}$ for some $R > 0$. But then $\overline{B_R(0)}$ is compact, so $(v_i)$ converges.
+\end{proof}
+
+\begin{cor}
+    Let $V$ be a normed space, $W \subset V$ a finite-dimensional subspace. Then $W$ is closed.
+\end{cor}
+
+\begin{cor}
+    Let $V$ be a normed space, $W$ be a finite-dimensional normed space and $T: W \to V$ is linear, then $T$ is bounded.
+\end{cor}
+
+\begin{proof}
+    Since $\Im T$ is finite dimensional, we can assume without loss of generality that $V$ is finite dimensional.
+    Moreover, we can assume $V = \K^m, \norm{\cdot}_\infty$ and $W = \K^n, \norm{\cdot}_1$.
+    Let $(T_{ij})$ be the matrix associated to $T$.
+
+    \begin{equation*}
+        T(w_1, \dotsc, w_n)= \left(\sum_{i=1}^n T_{1i} w_i, \dotsc, \sum_{i=1}^n T_{mi} w_i\right) \in V \\
+    \end{equation*}
+    \begin{align*}
+        \implies \norm{Tw}_\infty &= \max_{j = 1, \dotsc, m} \abs{(Tw)_j} \\
+                                  &= \max_{j = 1, \dotsc, m} \abs{\sum_{i=1}^n T_{ji} w_i} \\
+                                  &\leq \max_{i,j} \abs{T_{ji}} \sum_{i=1}^n \abs{w_i} \\
+                                  &= C(T) \norm{w}_1
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $V$ be a \hyperlink{def:normedVectorSpace}{normed vector space} such that $\overline{B_1(0)}$ is compact. Then $V$ is finite-dimensional.
+\end{thm}
+
+\begin{proof}
+    Since $\overline{B_1(0)}$ is compact, there are $w_1, \dotsc, w_n \in V$ such that
+    \begin{equation}
+        \overline{B_1(0)} \subset \bigcup_{i=1}^n B_{\frac12} (w_i)
+    \end{equation}
+    Let $W = \mathrm{span}\set{w_1, \dotsc, w_n}$. Note that $dim W \leq n$. Our goal is to show $W = V$.
+    \begin{align*}
+        B_1(0) &\subset W + B_{\frac{1}{2}} (0) \\
+        B_1(0) &\subset W + \frac{1}{2}\left(W + B_{\frac{1}{2}} (0)\right) = W + B_{\frac{1}{4}}(0) \\
+    \end{align*}
+    By induction, $B_1(0) \subset W + B_{2^{-i}}(0)$ for any $i \in \N$, hence $B_1(0) \subset \overline{W} - W$. Since $V$ is a vector space, $V \subset W$, and so $\dim V \leq n$.
+     % missing stuff
+\end{proof}
 \end{document}
