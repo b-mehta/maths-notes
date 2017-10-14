@@ -341,6 +341,152 @@ Finally, we show that the complement of a set in $\mathcal{L}$ is in $\mathcal{L
     \begin{equation*}
         E^c = \underbrace{\bigcup_n C_n^c}_{\in \mathcal{L}} \cup \underbrace{E^c \setminus \bigcup_n C_n^c}_{\text{is null hence is in} \; \mathcal{L}}
     \end{equation*}
-    so by \cref{prop:bigProp} a), $E \in \mathcal{L}$.
+    so by \cref{prop:bigProp} part a), $E \in \mathcal{L}$.
 \end{proof}
+
+\clearpage
+
+\section{Abstract Measure Theory}
+
+\begin{defi}[\hypertarget{def:sigAlg}{$\sigma$-algebra}]
+    Let $X$ be a set. A family $\mathcal{A}$ of subsets of $X$ which contains the empty set $\emptyset$ and is stable under countable unions and complementation
+    is called a \textbf{$\sigma$-algebra}.
+\end{defi}
+
+\begin{remark}
+    \leavevmode
+    \begin{enumerate}
+        \item $\sigma$ stands for `countable'
+        \item \hyperlink{def:sigAlg}{$\sigma$-algebras} are a special type of \emph{Boolean algebras}.
+
+            If $X$ is a set, a Boolean algebra of subsets of $X$ is a family $\mathcal{B}$ of subsets of $X$ which contains $\emptyset$ and is stable under finite union and complementation.
+    \end{enumerate}
+\end{remark}
+
+\begin{eg}
+    \leavevmode
+    Examples of Boolean algebras:
+    \begin{itemize}
+        \item $\mathcal{B} = \mathcal{P}(X)$, the set of all subsets of $X$.
+        \item $\mathcal{B} = \set{\emptyset, X}$, the trivial Boolean algebra.
+        \item take a partition $X$ into finitely many pieces $X = \bigsqcup_{i=1}^N P_i$.
+            \begin{equation*}
+                \mathcal{B} \coloneqq \Set{A \subseteq X \mid \exists I \subseteq \set{1, \dotsc, N}, \; A = \bigcup_{i\in I} P_i}
+            \end{equation*}
+    \end{itemize}
+\end{eg}
+
+\begin{exercise}
+    Show that every \emph{finite} Boolean algebra of subsets of $X$ is of this form.
+\end{exercise}
+
+\begin{defi}[Measurable space\hypertarget{def:measurableSpace}]
+    A \textbf{measurable space} is a couple $(X, \mathcal{A})$ where $X$ is a set and $\mathcal{A}$ is a \hyperlink{def:sigAlg}{$\sigma$-algebra} of subsets of $X$.
+\end{defi}
+
+\begin{defi}[Measure\hypertarget{def:measure}]
+    A \textbf{measure} on $(X, \mathcal{A})$ is a function $\mu: \mathcal{A} \to [0, \infty]$ such that $\mu(\emptyset) = 0$ and $\mu$ is countably additive.
+    That is, if $\{A_n\}$ is a pairwise disjoint countable family of subsets from $\mathcal{A}$, then \begin{equation*}\mu\left(\bigsqcup_{n \geq 1} A_n\right) = \sum_{n \geq 1} \mu(A_n)\end{equation*}
+\end{defi}
+
+% \begin{remark}
+%     Sometimes people call a set function a function $\mu$ from a family of subsets of $X$ to $[0, \infty]$ such that $\mu(\emptyset) = 0$.
+% \end{remark}
+
+\begin{defi}[Measure space\hypertarget{def:measureSpace}]
+    If $X$ is a set, $\mathcal{A}$ a \hyperlink{def:sigAlg}{$\sigma$-algebra} on $X$ and $\mu$ a \hyperlink{def:measure}{measure} on $\mathcal{A}$ then $(X, \mathcal{A}, \mu)$ is called a \textbf{measure space}.
+\end{defi}
+
+\begin{defi}[Lebesgue measure\hypertarget{def:lebMeas}]
+    If $E \in \mathcal{L}$ ($E$ is \hyperlink{def:lebMAble}{Lebesgue measurable}), we define the \textbf{Lebesgue measure} of $E$ as $m(E) = m^*(E)$, the \hyperlink{def:lebOutMeas}{outer measure} of $E$.
+\end{defi}
+
+We've already shown $(\R^d, \mathcal{L})$ is a \hyperlink{def:measurableSpace}{measurable space}, but we would like to show that $(\R^d, \mathcal{L}, m)$ is a \hyperlink{def:measureSpace}{measure space}.
+To do this, it only remains to show countable additivity of the \hyperlink{def:lebMeas}{Lebesgue measure} on \hyperlink{def:lebMAble}{Lebesgue measurable sets}, so it would be useful to know a little more about them.  So, let's prove a small lemma which helps with this.
+
+\begin{lemma}
+    If $E$ is a \hyperlink{def:lebMAble}{Lebesgue measurable} subset of $\R^d$ then
+    \begin{enumerate}[label=(\arabic*)]
+        \item $\forall \epsilon > 0$, $\exists U \subseteq \R^d$ an open set with $E \subseteq U$ and $m^*(U \setminus E) < \epsilon$
+        \item $\forall \epsilon > 0$, $\exists F \subseteq E$ a closed set with $m^*(E \setminus F) < \epsilon$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    Note (2) follows from (1) applied to $E^c$: we get $E^c \subseteq U$ and $m^*(U \setminus E^c) \leq \epsilon$.
+    So, set $F = U^c$ and direct calculation gives $U \setminus E^c = E \setminus F$.
+
+    So let's prove (1). Since $E$ is \hyperlink{def:lebMAble}{Lebesgue measurable}, $\forall \epsilon > 0$, $\exists\bigcup B_n$ with $E \subseteq \bigcup B_n$ such that $m^*(\bigcup B_n \setminus E) < \epsilon$.
+    Recall we can take the $B_n$ to be open boxes, then just set $U  = \bigcup_n B_n$.
+\end{proof}
+
+With that done, let's state and prove our proposition.
+
+\begin{prop}
+    $m$ is countably additive on $\mathcal{L}$, hence $(\R^d, \mathcal{L}, m)$ is a \hyperlink{def:measureSpace}{measure space}.
+\end{prop}
+
+\begin{proof}
+    Recall we need to show additivity for a countable family of pairwise disjoint \hyperlink{def:lebMAble}{Lebesgue measurable} subsets.
+    We do this by proving a series of special cases, getting more general each time.
+
+    In turn, we prove additivity for
+    \begin{enumerate}[label=(\roman*)]
+        \item Two compact subsets
+        \item Countably many compact subsets
+        \item Countably many bounded subsets
+        \item Countably many measurable subsets
+    \end{enumerate}
+    In each case we can take the sets pairwise disjoint.
+
+    \begin{enumerate}[label=(\roman*)]
+        \item For two disjoint compact subsets $A, B \subseteq \R^d$, we've seen $m^*(A) + m^*(B) = m^*(A \cup B)$, as required.
+
+        \item Suppose now $\{E_n\}_n$ is a family of pairwise disjoint compact subsets of $\R^d$. By iterating (i),
+            \begin{equation*}
+                m^*\left(\bigcup_{i=1}^N E_i\right) = \sum_{i=1}^N m^* (E_i)
+            \end{equation*}
+            so,
+            \begin{equation*}
+                \sum_{i=1}^N m^*(E_i) \leq m^*\left(\bigcup_{i=1}^\infty E_i\right) \leq \sum_{i=1}^\infty m^*(E_i)
+            \end{equation*}
+            Let $N \to \infty$, and therefore
+            \begin{equation*}
+                \sum_{i=1}^\infty m^*(E_i) = m^*\left(\bigcup_{i=1}^\infty E_i\right)
+            \end{equation*}
+
+        \item By (2) of the lemma, $\exists F_n \subseteq E_n$ with $m^*(E_n \setminus F_n) < \epsilon/2^n$ and $F_n$ closed.
+            But $E_n$ is bounded by assumption, so $F_n$ is closed and bounded, hence compact.  $E_n$'s are pairwise disjoint, so the $F_n$'s are also.
+            Then $m^*(E_n) \leq m^*(F_n) + m^*(E_n \setminus F_n)$ and
+            \begin{align*}
+                \sum_{n = 1}^\infty m^*(E_n) &\leq \sum_{n=1}^\infty m^*(F_n) + \epsilon \sum_{n = 1}^\infty \frac{1}{2^n} \\
+                                             &= m^*\left(\bigcup_{n = 1}^\infty F_n\right) + \epsilon \\
+                                             &\leq m^*\left(\bigcup_{n = 1}^\infty E_n\right) + \epsilon
+            \end{align*}
+            This holds $\forall \epsilon > 0$, so $\sum_{n \geq 1} m^* (E_n) \leq m^*(\bigcup_1^\infty E_n)$
+            and equality follows because the other inequality holds by countable subadditivity.
+
+        \item In the general case, we reduce to the bounded case:
+            $\R^d = \bigcup_{m \geq 1} A_m$, with $A_m$ compact. Apply the previous case to the countable family $(A_m \cup E_n)_{n, m}$.
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    \leavevmode
+    \begin{itemize}
+        \item Of course there are many other measures on $(\R^d, \mathcal{L})$, for example $f \in C_c(\R^d)$, $f \geq 0$, $\mu_f(E) \coloneqq \int_{\R^d} f(x) \1{E}(x) dx$.
+    \end{itemize}
+\end{remark}
+
+\begin{prop}
+    On $(\R^d, \mathcal{L})$, there is a unique measure $\mu$ which is
+    \begin{itemize}
+        \item Translation invariant: $\forall E \in \mathcal{L}, \ \forall x \in \R^d, \; \mu(E + x) = \mu(E)$
+        \item $\mu([0, 1]^d) = 1$.
+    \end{itemize}
+\end{prop}
+
+\begin{remark}
+    The countable additivity here is crucial. There are lots of finitely additive measures of $(\R^d, \mathcal{L})$ which are translation invariant and unrelated to $m$.  There are even such $\mu$ with $\mu(\R^d) < \infty$.
+\end{remark}
 \end{document}
