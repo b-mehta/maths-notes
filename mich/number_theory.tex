@@ -477,7 +477,7 @@ The additive group $(\Z / n\Z, +)$ is cyclic. What about $((\Z/n\Z)^*, \times)$?
     Consider $n=7$, then we can check $3$ is a generator of $(\Z / n \Z)^*$ and hence the group is cyclic.
 \end{eg}
 
-\begin{nthm}
+\begin{nthm}\label{thm:2.8}
     If $p$ is prime, then $G = (\Z / p \Z)^*$ is cyclic of order $p-1$.
 \end{nthm}
 
@@ -492,4 +492,124 @@ The additive group $(\Z / n\Z, +)$ is cyclic. What about $((\Z/n\Z)^*, \times)$?
     Then $1, \alpha, \alpha^{d-1}, \beta$ are $(d+1)$ roots of the polynomial $X^d - 1$, contradicting \cref{thm:2.7}.
     So, $G$ must be cyclic.
 \end{proof}
+
+\begin{defi}[Primitive root\hypertarget{def:primRoot}]
+    If $g$ is a generator of $(\Z / p \Z)^*$ then $g$ is said to be a \textbf{primitive root mod $p$}.
+\end{defi}
+
+By \cref{thm:2.8}, \hyperlink{def:primRoot}{primitive roots} exist.
+
+\begin{eg}
+    Take $p = 19$, and let $d$ be the order of $2$ inside $(\Z/19\Z)^*$, then $d \mid p-1$ = 18.  We have $2^6 \equiv 7 \not\equiv 1 \pmod{19}$, so $d \nmid 6$.
+    Similarly, $2^9 \equiv -1 \pmod{19}$ so $d \nmid 9$.  Hence, $d=18$ and $2$ is a \hyperlink{def:primRoot}{primitive root} mod $19$.
+\end{eg}
+
+There are many unsolved problems about \hyperlink{def:primRoot}{primitive roots}:
+\begin{enumerate}
+    \item Artin's Primitive Root conjecture:
+
+        Fix $g \geq 2$. Then there eixst infinitely many $p$ for which $g$ is a primitive root mod $p$ (say $g$ is prime). Even the case $g=2$ is unknown. From analytic number theory, it is known there are infinitely many $p$ for which one of $2, 3, 5$ is a primitive root.
+    \item How large is the smallest primitive root mod $p$?
+
+        We can show that this goes to $\infty$ as $p$ grows.  It is known that is is bounded above by $c p^{1/4 + \epsilon}$ for any $\epsilon > 0$, but expected to be smaller (bounded by $c (\log p)^2$).
+\end{enumerate}
+
+Now let's consider the more general case of $(\Z / p^n \Z)^*$ for $n > 1$, and ask if it is cyclic.
+$(\Z / 8 \Z)^* = \{\pm 1, \pm 3\}$, which all have order $1$ or $2$, so the group is not cyclic.  If $n \geq 3$, the map $(\Z/2^n \Z)^* \to (\Z/8 \Z)^*$ is surjective:
+\begin{equation*}\forall n \geq 1, \quad (x, 8) = 1 \iff x \text{ odd } \iff (x, 2^n) = 1 \end{equation*}
+
+So, $(\Z/2^n \Z)^*$ is not cyclic for $n \geq 3$ since a generator would map to a generator of $(\Z / 8 \Z)^*$.
+
+\begin{nthm}\label{thm:2.9}
+    If $p > 2$ and $n \geq 1$ then $(\Z/p^n \Z)^*$ is cyclic.
+\end{nthm}
+
+\begin{proof}
+    The proof is deferred until \cpageref{pf:2.9}
+\end{proof}
+
+\begin{nlemma}\label{lem:2_10}
+    Take $p$ an odd prime, and let $y \in \Z$ and $k \geq 1$. Then,
+    \begin{enumerate}[label=(\roman*)]
+        \item If $x \equiv 1 + p^k y \pmod{p^{k+1}}$ then $x^p \equiv 1 + p^{k+1} y \pmod{p^{k+2}}$
+        \item $(1 + p y)^{p^k} \equiv 1 + p^{k+1} y \pmod{p^{k+2}}$
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item We may as well assume (by replacing $y$ with $y + pz$) that $x = 1 + p^k y$. Then,
+            \begin{align*}
+                x^p &= \sum_{j=0}^p \binom{p}{j} (p^k y)^j \\
+                    &= 1 + p^{k+1} y + \sum_{j=2}^{p-1} \binom{p}{j} p^{kj} y^j + p^{p^k} y^p.
+            \end{align*}
+            For $2 \leq j \leq p-1$, we have $\binom{p}{j} \equiv 0 \pmod{p}$ and hence $\binom{p}{j} p^{kj} \equiv 0 \pmod{p^{2k+1}}$ and $2k+1 \geq k+2$.
+            Since $p > 2$, we have $p^k \geq k+2$ so the last term is also $\equiv 0 \pmod{p^{k+2}}$, hence we are done.
+
+        \item Apply part (i) $k$ times to $1 + py$.
+    \end{enumerate}
+\end{proof}
+
+\begin{nlemma}\label{lem:2_11}
+    If $g \in \Z$, $(g, p) = 1$, $g$ is a primitive root mod $p$, and $g^{p-1} \not\equiv 1 \pmod{p^2}$, then $g$ is a generator of $(\Z/p^n \Z)^* = G$.
+\end{nlemma}
+
+\begin{proof}
+    Let $d$ be the order of $g$ in $G$. We know $d \mid \#G = p^{n-1}(p-1)$, so if $g$ is not a generator, one of the following two cases must hold:
+
+    \begin{enumerate}[label=(\roman*)]
+        \item $d \mid p^{n-2} (p-1)$, so $g^{p^{n-2}(p-1)} \equiv 1 \pmod{p^n}$.
+        \item $d = p^{n-1} e$, with $1 \leq e < p-1$ and $e \mid p-1$, and so $g^{p^{n-1} e} \equiv 1 \pmod{p^n}$.
+    \end{enumerate}
+    Deal with these cases in turn:
+
+    \begin{enumerate}[label=(\roman*)]
+        \item Let $x = g^{p-1} = 1+py$ with $y \not\equiv 0 \pmod{p}$, because $g^{p-1} \not\equiv 1 \pmod{p^2}$.
+            Then by \cref{lem:2_10} part (ii), we have $x^{p^{n-2}} \equiv 1 + p^{n-1} y \pmod{p^n}$, so $g^{p^{n-2}(p-1)} \not\equiv 1 \pmod{p^n}$.
+
+        \item $g^{p^{n-1}e} \equiv g^e \pmod{p}$ by Fermat-Euler, and this is not congruent to $1 \pmod{p}$ as $g$ is a primitive root mod $p$.
+    \end{enumerate}
+
+    So neither (i) nor (ii) can hold, and hence $g$ has order $p^{n-1}(p-1)$.
+\end{proof}
+
+We can return and prove \cref{thm:2.9}.
+
+\begin{proof}[Proof of \cref{thm:2.9}\label{pf:2.9}]
+    Let $g \in \Z$ be a primitive root mod $p$. If $g^{p-1} \not\equiv 1 \pmod{p^2}$, then by \cref{lem:2_11}, $g$ generates $(\Z/p^n \Z)^*$.
+    If not, $g^p \equiv g \pmod{p^2}$. Let $g_1 = g(1 + p)$.
+    Then, $g_1^p = g^p (1+p)^p$ and $(1+p)^p \equiv 1 \pmod{p^2}$ by \cref{lem:2_10}.
+
+    So, $g_1^p \equiv g^p \pmod{p^2} \equiv g \pmod{p^2} \not\equiv g_1 \pmod{p^2}$, so by \cref{lem:2_11}, $g_1$ generates $(\Z/p^n \Z)^*$.
+\end{proof}
+
+\begin{remark}
+    \leavevmode
+    \begin{enumerate}
+        \item Our proof gives an easy way to find a generator for $(\Z / p^n \Z)^*$, independent of $n \geq 2$.
+        \item What happens when $p=2$? \Cref{lem:2_10}(i) fails to hold for $p=2$, $k=1$: $(1+2)^2 \equiv 1 \pmod{8}$.  It does hold for $p=2$ and $k \geq 2$ however. Part (ii) becomes $(1+4)^{k-1} \equiv 1 + 2^{k+1} \pmod{2^{k+2}}$.
+            We can then show (following the argument for $p$ odd), that $(\Z/2^n \Z)^*$ for $n \geq 3$ is generated by $-1$ and $5$ which have orders $2$ and $2^{n-2}$ respectively.
+            So, we have that
+            \begin{equation*}
+                (\Z/2^n \Z)^* \cong \Z/2\Z \times \Z/2^{n-2} \Z
+            \end{equation*}
+        \item If $N = \prod_{1 \leq i \leq r} p_i^{k_i}$, then
+            \begin{equation*}
+                (\Z/N \Z)^* \cong (\Z/{p_1}^{k_1} \Z)^* \times \dotsm \times (\Z/{p_r}^{k_r} \Z)^*
+            \end{equation*}
+            by the \hyperlink{thm:crt}{Chinese Remainder Theorem}.
+    \end{enumerate}
+\end{remark}
+
+\section{Quadratic residues}
+Take $p > 2$ an odd prime. If $a \in \Z$, we know $x^2 \equiv a \pmod{p}$ has $\leq 2$ solutions mod $p$.
+
+For $a \equiv 0 \pmod{p}$, then there is one solution, $x \equiv 0 \pmod{p}$.
+
+For $a \not \equiv 0 \pmod{p}$, if $x$ is a solution then so is $-x$, and $-x \equiv x \pmod{p} \Leftrightarrow 2x \equiv 0 \pmod{p}$ but $a \not\equiv 0 \Rightarrow x \not\equiv 0 \pmod{p}$ so we have either $0$ or $2$ solutions.
+
+\begin{defi}
+    $a \equiv 0 \pmod{p}$ is a \textbf{quadratic residue} mod $p$ if $x^2 \equiv a \pmod{p}$ is soluble, and a \textbf{quadratic non-residue} if not.
+\end{defi}
 \end{document}
