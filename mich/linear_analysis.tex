@@ -455,4 +455,142 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
     By induction, $B_1(0) \subset W + B_{2^{-i}}(0)$ for any $i \in \N$, hence $B_1(0) \subset \overline{W} - W$. Since $V$ is a vector space, $V \subset W$, and so $\dim V \leq n$.
      % missing stuff
 \end{proof}
+
+\clearpage
+
+\section{The Hahn-Banach Theorem}
+
+\begin{defi}[Extends\hypertarget{def:extend}]
+    Given vector spaces $W \subset V$, and linear maps $g: W \to \K$, $f: V \to \K$, we say that $f$ \textbf{extends} $g$ if $f \mid_W = g$, that is $f(v) = g(v)$ for every $v \in W$.
+\end{defi}
+
+When can one \hyperlink{def:extend}{extend} a linear map in a continuous way?
+
+\subsection{Finite codimension}
+
+Let $V$ be a \emph{real} vector space.
+
+\begin{defi}[Extends\hypertarget{def:sublinear}]
+    A map $p: V \to \R$ is \textbf{sublinear} if
+    \begin{enumerate}
+        \item $p(\alpha v) = \alpha p(v)$ for all $v \in V$, $\alpha \geq 0$
+        \item $p(v + w) \leq p(v) + p(w)$ for all $v, w \in V$.
+    \end{enumerate}
+\end{defi}
+
+\begin{eg}
+    Any norm is \hyperlink{def:sublinear}{sublinear}.
+\end{eg}
+
+\begin{lemma}[Codimension $1$ case of the Hahn-Banach Theorem]
+    Let $W \subset V$ be a subspace of codimension 1, that is, there exists $v_1 \in V \setminus W$ such that
+    \begin{equation*}
+        V = \set{v + t v_1 | v \in W, \, t \in \R}
+    \end{equation*}
+    Let $p: V \to \R$ be \hyperlink{def:sublinear}{sublinear}, and $g: W \to \R$ linear with $ g(v) \leq p(v) $ for all $v \in W$.
+    Then there exists a linear map $f: V \to \R$ that \hyperlink{def:extend}{extends} $g$ and $f(v) \leq p(v)$ for all $v \in V$.
+\end{lemma}
+
+\begin{proof}
+    We will find $\alpha \in \R$ such that $f_\alpha: V \to \R$ defined by
+    \begin{equation*}
+        f_\alpha(v + tv_1) = g(v) + t\alpha
+    \end{equation*}
+    for all $v \in W$, $t \in \R$ is the asserted linear extension of $g$. Let
+    \begin{equation*}
+        \alpha = \sup_{v \in W} (g(v) - p(v - v_1))
+    \end{equation*}
+
+    We proceed with a sequence of claims which will complete the proof.
+
+    \paragraph{Claim} $\alpha < \infty$.
+    By linearity of $g$ and \hyperlink{def:sublinear}{sublinearity} of $p$,
+    \begin{equation*}
+        g(v) + g(w) = g(v + w) \leq p(v + w) \leq p(v - v_1) + p(w + v_1)
+    \end{equation*}
+    for all $v, w \in W$. % (*)
+
+    So, $g(v) - p(v - v_1) \leq p(w + v_1) - g(w)$ and hence $\alpha \leq p(w + v_1) - g(w) < \infty$.
+
+    \paragraph{Claim} $f_\alpha(v - v_1) \leq p(v - v_1)$ for all $v \in W$.
+    \begin{align*}
+        f_\alpha(v - v_1) &= g(v) - \alpha \\
+                          &= \underbrace{g(v) - p(v - v_1)}_{\leq \alpha} - \alpha + p(v - v_1) \\
+                          &\leq p(v - v_1)
+    \end{align*}
+
+    \paragraph{Claim} $f_\alpha(w + v_1) \leq p(w + v_1)$ for all $w \in W$.
+    By (*),
+    \begin{align*}
+        f_\alpha(w + v_1) &= g(w) + \alpha \\
+                          &\leq \alpha - \underbrace{(g(v) - p(v-v_1))}_{\sup = 0} + p(w + v_1) \\
+        \implies f_\alpha(w + v_1) &\leq p(w + v_1)
+    \end{align*}
+
+    \paragraph{Claim} $f_\alpha(v + t v_1) \leq p(v + t v_1)$ for all $v \in W$, $t \in \R$.
+    By linearity of $f$ and positive homogeneity of $p$, for any $t > 0$,
+    \begin{align*}
+        f(v \pm t v_1) &= t f\left(\frac vt \pm v_1\right) \\
+                       &\leq t p\left(\frac vt \pm v_1\right) \\
+                       &= p(v \pm t v_1)
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    The same statement holds if $W \subset V$ is a subspace of \emph{finite} codimension.
+\end{cor}
+
+\begin{proof}
+    By induction.
+\end{proof}
+
+\subsection{Zorn's Lemma}
+
+\begin{defi}\hypertarget{def:poset}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item A partially ordered set (\textbf{poset}) is a set $p$ with a binary relation $\leq$ such that for all $x, y \in P$ either $x \leq y$ or $x \nleq y$, and
+            \begin{align*}
+                x &\leq x & \text{(reflexive)} \\
+                x &\leq y, \, y \leq z \implies x \leq z & \text{(transitive)} \\
+                x &\leq y, \, y \leq x \implies x = y & \text{(antisymmetric)}
+            \end{align*}
+
+        \item Let $P$ be a poset. A subset $T \subset P$ is called \textbf{totally ordered} (or a chain) if $x \nleq y \implies y \leq x$, that is, at least one of $x \leq y$ or $y \leq x$ must hold.
+
+        \item Let $P$ be a poset and $U \subseteq$ a subset. Then
+            \begin{itemize}
+                \item $b \in P$ is an \textbf{upper bound} for $U$ if $x \leq b$ for all $x \in U$
+                \item $l \in P$ is a \textbf{least upper bound} for $U$ if $l$ is an upper bound and any other upper bound $b$ for $U$ satisfies $l \leq b$.
+            \end{itemize}
+
+        \item Let $P$ be a poset. An element $m \in P$ is \textbf{maximal} if $m \leq x \implies m = x$.
+    \end{enumerate}
+\end{defi}
+
+\begin{lemma}[Zorn's Lemma\hypertarget{lem:zorn}]
+    Let $P$ be a \hyperlink{def:poset}{poset} with the property that every non-empty \hyperlink{def:poset}{totally ordered} subset has a \hyperlink{def:poset}{least upper bound}.
+    Then $P$ has at least one \hyperlink{def:poset}{maximal element}.
+\end{lemma}
+
+\begin{remark}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item \hyperlink{lem:zorn}{Zorn's Lemma} is trivial if $P$ is finite.
+        \item In infinite \hyperlink{def:poset}{posets}, it is equivalent to the Axiom of Choice (assuming the usual other axioms of set theory).
+    \end{enumerate}
+\end{remark}
+
+Recall that in a vector space $V$, elements $v_1, \dotsc, v_k$ are linearly independent if
+\begin{equation*}
+    \sum_{i=1}^k \alpha_i v_i = 0 \implies \alpha_1 = \alpha_2 = \dotsb \alpha_k = 0
+\end{equation*}
+
+A set $S \subset V$ is linearly independent if any \emph{finite} subset is.
+
+A basis of $V$ is a set $B \subset V$ that is linearly independent and such that every element of $V$ is a \emph{finite} linear combination of elements of $B$.
+
+\begin{prop}
+    Let $V \neq \{0\}$ be a vector space and $S \subset V$ linearly independent. Then $V$ has a basis $B$ containing $S$.
+\end{prop}
 \end{document}
