@@ -15,6 +15,7 @@
 \DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\Hom}{Hom}
 \DeclareMathOperator{\Root}{Root}
+\DeclareMathOperator{\chara}{char}
 \newtheorem{nexample}[nthm]{Example}
 \newcommand{\F}{\mathbb{F}}
 % and here we go!
@@ -625,7 +626,7 @@ We can use this final construction to produce splitting fields in general.
     \begin{equation*}
         M'[t] / (\gamma(t)) \to M'(\alpha')
     \end{equation*}
-    and so we have a $K$-isomorphism $M(\alpha) \to M'(\alpha')$. This contradicts the maximality of $M$, since $M \nleq M(\alpha)$.
+    and so we have a $K$-isomorphism $M(\alpha) \to M'(\alpha')$. This contradicts the maximality of $M$, since $M \lneqq M(\alpha)$.
 \end{proof}
 
 \begin{ndef}[\hypertarget{def:normal}Normal]
@@ -655,7 +656,7 @@ We can use this final construction to produce splitting fields in general.
 \end{nthm}
 
 \begin{proof}
-    Let $\abs{G} = n$. By the structure theorem of finite abelian groups from GRM.
+    Let $\abs{G} = n$. By the structure theorem of finite abelian groups from GRM,
     \begin{equation*}
         G \cong C_{q_1^{m_1}} \times C_{q_2^{m_2}} \times \dotsm \times C_{q_r^{m_r}}
     \end{equation*}
@@ -669,10 +670,127 @@ We can use this final construction to produce splitting fields in general.
 
 \section{Separable, normal and Galois extensions}
 
-\begin{ndef}
+\begin{ndef}[Separable polynomial]\hypertarget{def:separablePoly}
     Let $K$ be a field and $f(t) \in K[t]$. Suppose $f(t)$ is irreducible in $K[t]$ and $L$ is a splitting field for $f(t)$ over $K$.
-    Then $f(t)$ is \textbf{separable} over $K$ if $f(t)$ has no repeated roots in $L$. For general $f(t)$ we say $f(t)$ is separable over $K$ if every irreducible factor in $K[t]$ is separable over $K$.
+    Then $f(t)$ is \textbf{separable} over $K$ if $f(t)$ has no repeated roots in $L$.
+
+    For general $f(t)$ we say $f(t)$ is separable over $K$ if every irreducible factor in $K[t]$ is separable over $K$.
 
     All constant polynomials are separable.
 \end{ndef}
+
+\begin{ndef}[Formal differentiation]\hypertarget{def:diff}
+    If $K$ is a field then \textbf{formal differentiation} $D: K[t] \to K[t]$ is a $K$-linear map with $D(t^n) = n t^{n-1}$.
+    We denote this by $D(f(t)) = f'(t)$.
+\end{ndef}
+
+\begin{nlemma}\label{lem:2.3}
+    Let $K$ be a field and $f(t), g(t) \in K[t]$. Then:
+    \begin{enumerate}[label=(\alph*)]
+        \item $D(f(t) g(t)) = f'(t) g(t) + f(t) g'(t)$ (Leibniz' rule)
+        \item Assume $f(t) \neq 0$. Then $f(t)$ has a repeated root in a splitting field $L$ if and only if $f(t)$ and $f'(t)$ have a common irreducible factor in $K[t]$.
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\alph*)]
+        \item $D$ is a $K$-linear map and so we only need to check for $f(t) = t^n$, $g(t) = t^m$. Left as an exercise.
+        \item Let $\alpha$ be a repeated root in a splitting field $L$, then
+            \begin{align*}
+                f(t) &= (t-\alpha)^2 g(t) \in L[t] \\
+                f'(t) &= (t-\alpha)^2 g'(t) + 2(t-\alpha) g(t)
+            \end{align*}
+            and so $f'(\alpha) = 0$.
+            Therefore the minimal polynomial $f_\alpha(t)$ of $\alpha$ in $K[t]$ divides both $f(t)$ and $f'(t)$ and thus $f_\alpha(t)$ is a common irreducible factor of $f(t)$ and $f'(t)$.
+
+
+            Conversely, let $h(t)$ be a common irreducible factor of $f(t)$ and $f'(t)$ in $K[t]$.
+            Pick a root $\alpha$ in $L$ of $h(t)$.
+
+            So $f(\alpha) = 0 = f'(\alpha)$, Thus $f(t) = (t-a) g(t)$ in $L[t]$, and $f'(t) = (t-a) g'(t) + g(t)$.
+
+            Since $f'(\alpha)  = 0$ we have $(t-a) \mid f'(t)$. and so $(t-a) \mid g(t)$. Hence $(t-a)^2 \mid f(t)$ and we have a repeated root.
+    \end{enumerate}
+\end{proof}
+
+\begin{ncor}\label{cor:2.4}
+    If $K$ is a field and $f(t) \in K[t]$ is irreducible:
+    \begin{enumerate}[label=(\roman*)]
+        \item If the characteristic of $K$ is 0, then $f(t)$ is separable over $K$.
+        \item If the characteristic of $K$ is greater than 0, then $f(t)$ is not separable if and only if $f(t) \in K[t^p]$.
+    \end{enumerate}
+\end{ncor}
+
+\begin{proof}
+    By \cref{lem:2.3}, $f(t)$ is not separable over $K$ if and only if $f(t)$ and $f'(t)$ have a common ireeducible factor.
+    Since we're assuming $f(t)$ is irreducible, this is equivalent to saying $f'(t) = 0$.
+
+    \begin{align*}
+        f(t) &= a_n t^n + a_{n-1} t^{n-1} + \dotsb + a_0 \\
+        f'(t) &= n a_n t^{n-1} + \dotsb + a_1
+    \end{align*}
+    Thus $f'(t) = 0 \iff i a_i = 0$ for all $i > 0$.
+
+    \begin{enumerate}[label=(\roman*)]
+        \item If $\chara K = 0$ then $f'(t) \neq 0$ for non-constant polynomials, so $f(t)$ is separable over $K$.
+        \item If $\chara K = p > 0$ then if $f'(t) = 0$ we have $i a_i = 0$ for all $i > 0$, so $f(t)$ is not separable $\iff f(t) \in K[t^p]$.
+    \end{enumerate}
+\end{proof}
+
+\begin{ndef}[Separable extension]\hypertarget{def:separableExt}
+
+    We say \textbf{$\alpha \in L$ is separable over $K$} if its \hyperlink{def:minimalPoly}{minimal polynomial} is \hyperlink{def:separablePoly}{separable} over $K$.
+
+    \textbf{$L$ is separable over $K$} if all $\alpha \in L$ are separable over $K$.
+
+    If $f_\alpha(t) = (t-\alpha)^n = t^n - \alpha^n$ where $n$ is a power of $p (=\chara K)$, we say that $\alpha$ is \textbf{purely inseparable over $K$}.
+\end{ndef}
+
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item Let $\Q \subseteq L$ be an \hyperlink{def:algebraic}{algebraic} \hyperlink{def:fieldExt}{field extension}. Then $L$ is \hyperlink{def:separablePoly}{separable} over $K$.
+        \item Let $L = \F_p(X)$ be the rational functions in $X$ over $\F_p$, and $K = \F_p(X^p)$.
+            Then $K \leq L$ is not separable. Observe that if $f(t) = t^p - X^p \in K[t]$ then $f'(t) = 0$. But $t^p - X^p = (t-X)^p$ in $L[t]$ since the binomial expansion other terms divisible by $p$ and hence $0$ since the characteristic is $p$.
+
+            However $f(t)$ is irreducible in $K[t]$:
+
+            Suppose $f(t) = g(t) h(t)$ in $K[t]$ and hence in $L[t]$. So we get $g(t) = (t-X)^r$ for some $0 \leq r < p$ if the factorisation is non-trivial.
+            But this could mean $X^r$ was in $K$. However, $\exists$integers $a, b$ such that $ar + bp = 1$.
+            So $(X^r)^a (X^p)^b \in K$ and so $X \in K$, thus we'd have $X = \frac{u(X^p)}{v(X^p)}$, a contradiction.
+
+            Thus $f(t) = t^p - X^p$ is the \hyperlink{def:minimalPoly}{minimal polynomial} of $X$ over $K$, thus $X$ is \hyperlink{def:separableExt}{purely inseparable} over $K$ and $K \leq L$ is not separable.
+        \item Take $\F$ a finite field with order $m$, a power of $p$ where $\chara \F = p$. Consider $f(t) = t^n - 1$ where $n = m-1$. This is separable over $\F_p$ since we saw that $f(t)$ has distinct linear factors in $\F[t]$.
+\end{eg}
+
+\begin{remark}
+    It's useful to have an alternative approach to \hyperlink{def:separableExt}{separability of field extensions} without having to check \hyperlink{def:separablePoly}{separability} of \hyperlink{def:minimalPoly}{minimal polynomials} for all elements of the larger field.
+    This is where we start thinking about $K$-homomorphisms.
+\end{remark}
+
+\begin{nlemma}\label{lem:2.6}
+    Let $M = K(\alpha)$, where $\alpha$ is \hyperlink{def:algebraic}{algebraic} over $K$ and let $f_\alpha(t)$ be the \hyperlink{def:minimalPoly}{minimal polynomial} of $\alpha$ over $K$.
+    For any \hyperlink{def:fieldExt}{field extension} $K \leq L$ the number of $K$-homomorphisms of $M$ to $L$ is equal to the number of distinct roots of $f_\alpha(t)$ in $L$.
+    Thus this number is $\leq \deg f_\alpha(t) = \abs{K(\alpha):K} = \abs{M:K}$.
+\end{nlemma}
+
+\begin{proof}
+    We saw in \cref{lem:1.21} that any $K$-homomorphism $M$ to $L$ is injective.
+    \begin{equation*}
+        K(\alpha) \cong \frac{K[t]}{(f_\alpha(t))}
+    \end{equation*}
+    For any root $\beta$ of $f_\alpha(t)$ in $L$ we can define a $K$-homomorphism
+    \begin{align*}
+        \frac{K[t]}{(f_\alpha(t))} &\to L \\
+        t + (f_\alpha(t)) &\mapsto \beta
+    \end{align*}
+
+    Thus we get a $K$-homomorphism $M \to L$.
+    Conversely for any $K$-homomorphism $\phi:M \to L$ the image $\phi(\alpha)$ must satisfy $f_\alpha(\phi(\alpha)) = 0$. These processes are inverse to each other.
+    There is a 1-1 correspondence
+    \begin{equation*}
+        \{K \text{ homomorphisms } M \to L\} \longleftrightarrow \{\text{roots of } f_\alpha(t) \in L\}
+    \end{equation*}
+\end{proof}
 \end{document}
