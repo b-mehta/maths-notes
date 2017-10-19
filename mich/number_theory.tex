@@ -192,7 +192,7 @@ This defines an equivalence relation on $\Z$. Write $\Z / n\Z$ for the set of eq
 \end{proof}
 
 This has an important special case, called Fermat's Little Theorem.
-\begin{thm}[Fermat's Little Theorem]
+\begin{thm}[Fermat's Little Theorem\hypertarget{thm:fermatLittle}]
     If $p$ is prime and $a \in \Z$, then $a^p \equiv a \pmod{p}$.
 \end{thm}
 
@@ -323,7 +323,7 @@ Algebraic aside: We can write thus in terms of the rings $R_i = \Z / m_i \Z$.
 \end{eg}
 
 \begin{nlemma}\label{lem:2_4}
-    Let $f$ be a multiplicative function. Then so is $g$, defined by \begin{equation} g(n) = \sum_{d \mid n} f(d) \end{equation}
+    Let $f$ be a multiplicative function. Then so is $g$, defined by \begin{equation*} g(n) = \sum_{d \mid n} f(d) \end{equation*}
 \end{nlemma}
 
 \begin{proof}
@@ -508,10 +508,13 @@ There are many unsolved problems about \hyperlink{def:primRoot}{primitive roots}
 \begin{enumerate}
     \item Artin's Primitive Root conjecture:
 
-        Fix $g \geq 2$. Then there eixst infinitely many $p$ for which $g$ is a primitive root mod $p$ (say $g$ is prime). Even the case $g=2$ is unknown. From analytic number theory, it is known there are infinitely many $p$ for which one of $2, 3, 5$ is a primitive root.
+        Fix $g \geq 2$. Then there eixst infinitely many $p$ for which $g$ is a primitive root mod $p$ (say $g$ is prime).
+        Even the case $g=2$ is unknown.
+        From analytic number theory, it is known there are infinitely many $p$ for which one of $2, 3, 5$ is a primitive root.
     \item How large is the smallest primitive root mod $p$?
 
-        We can show that this goes to $\infty$ as $p$ grows.  It is known that is is bounded above by $c p^{1/4 + \epsilon}$ for any $\epsilon > 0$, but expected to be smaller (bounded by $c (\log p)^2$).
+        We can show that this goes to $\infty$ as $p$ grows.
+        It is known that is is bounded above by $c p^{1/4 + \epsilon}$ for any $\epsilon > 0$, but expected to be smaller (bounded by $c (\log p)^2$).
 \end{enumerate}
 
 Now let's consider the more general case of $(\Z / p^n \Z)^*$ for $n > 1$, and ask if it is cyclic.
@@ -612,4 +615,149 @@ For $a \not \equiv 0 \pmod{p}$, if $x$ is a solution then so is $-x$, and $-x \e
 \begin{defi}
     $a \equiv 0 \pmod{p}$ is a \textbf{quadratic residue} mod $p$ if $x^2 \equiv a \pmod{p}$ is soluble, and a \textbf{quadratic non-residue} if not.
 \end{defi}
+
+So $a$ is a quadratic residue mod $p$ iff its class in $(\Z / p \Z)^*$ is a square.
+
+% TODO table
+% 1 4 2 2 4 1
+
+We can check directly that % get rid of this line
+the quadratic resides mod $7$ are $\{1, 2, 4\}$.
+
+\begin{nlemma}\label{lem:3.1}
+    Let $p$ be an odd prime. There are exactly $\frac{p-1}{2}$ quadratic residues mod $p$.
+\end{nlemma}
+
+\begin{proof}[Proof 1]
+    Consider
+    \begin{align*}
+        (\Z / p \Z)^* &\xrightarrow{\sigma} (\Z/p\Z)^* \\
+        x &\mapsto x^2 \pmod{p}
+    \end{align*}
+    $\sigma(x) = \sigma(y) \iff x^2 \equiv y^2 \pmod{p} \iff (x-y)(x+y) \equiv 0 \pmod{p} \iff x \equiv \pm y \pmod{p}$.
+    Since $p$ is odd, if $(x, p) = 1$ then $x \not\equiv -x \pmod{p}$. So, $\sigma$ is $2$-to-$1$, hence the image of $\sigma$ has $\frac{p-1}{2}$ elements.
+\end{proof}
+
+\begin{proof}[Proof 2]
+    Let $g$ be a primitive root mod $p$. Then $(\Z / p \Z)^* = \{1, g, g^2, \dotsc, g^{p-2}\}$ as $g^{p-1} = 1$.
+    So,
+    \begin{align*}
+        \set{x^2 | x \in (\Z / p\Z)^*} &= \{1, g^2, g^4, \dotsc, g^{p-3}, g^{p-1}, g^{p+1}, \dotsc, g^{2p-4}\} \\
+                                      &= \{1, g^2, g^4, \dotsc, g^{p-3}\}
+    \end{align*}
+    since $g^{p-1} = 1$ and $g^{p+1} = g^2$, and so on, hence there are $\frac{p-1}{2}$ elements.
+\end{proof}
+
+\newcommand{\legendre}[2]{\genfrac{(}{)}{}{}{#1}{#2}}
+
+\begin{defi}
+    The \textbf{Legendre symbol} of $a \pmod{p}$ ($p$ an odd prime, $a \in \Z$) is
+    \begin{equation*}
+        \legendre{a}{p} =
+        \begin{cases}
+            0 & \text{if } p \mid a \\
+            +1 & \text{if $a$ is a quadratic residue mod $p$} \\
+            -1 & \text{if $a$ is a quadratic non-residue mod $p$}
+        \end{cases}
+    \end{equation*}
+\end{defi}
+
+\begin{lemma}[Euler's Criterion\hypertarget{lem:eulerCriterion}]
+    \begin{equation*}
+        \legendre{a}{p} \equiv a^{\frac{p-1}{2}} \pmod{p}
+    \end{equation*}
+\end{lemma}
+
+\begin{remark}
+    $\legendre{a}{p} \in \{0, \pm 1\}$ which is a set of $3$ \emph{distinct} integers mod $p$ as $p > 2$. So the congruence in the lemma determines $\legendre{a}{p}$ completely.
+\end{remark}
+
+\begin{proof}
+    If $p \mid a$, obvious. Suppose $(a, p) = 1$. Then $a^{p-1} = (a^{\frac{p-1}{2}})^2 \equiv 1 \pmod{p}$.
+    Hence $a^{\frac{p-1}{2}} \equiv \pm 1 \pmod{p}$. If $a \equiv x^2 \pmod{p}$, then $a^{\frac{p-1}{2}} \equiv x^{p-1} \equiv +1 \pmod{p}$.
+    By \cref{lem:3.1}, this gives $\frac{p-1}{2}$ solutions of $a^{\frac{p-1}{2}} \equiv 1 \pmod{p}$.
+    So there are no more solutions, ie if $\legendre{a}{p} = -1$, then $a^{\frac{p-1}{2}} \equiv -1 \pmod{p}$.
+\end{proof}
+
+\begin{ncor}\label{cor:3.2}
+    Take $a, b \in \Z$ where $p$ is an odd prime. Then
+    \begin{equation*}
+        \legendre{ab}{p} = \legendre{a}{p} \legendre{b}{p}
+    \end{equation*}
+\end{ncor}
+
+\begin{proof}
+    \begin{equation*}
+        \legendre{ab}{p} \equiv (ab)^{\frac{p-1}{2}} \equiv a^{\frac{p-1}{2}} b^{\frac{p-1}{2}} \equiv \legendre{a}{p} \legendre{b}{p} \pmod{p}
+    \end{equation*}
+    By the previous remark, we have $\legendre{ab}{p} = \legendre{a}{p} \legendre{b}{p}$.
+\end{proof}
+
+\begin{remark}
+    We have the following equivalent statements
+    \begin{itemize}
+        \item The map $(\Z/ p\Z)^* \to \{+1\}$ given by $a \mapsto \legendre{a}{p}$ is a homomorphism of groups.
+        \item The product of residues is a residue; the product of a residue and non-residue is a non-residue, and the product of non-residues is a residue.
+    \end{itemize}
+\end{remark}
+
+Another consequence of \hyperlink{lem:eulerCriterion}{Euler's Criterion} allows equivalent computation of $\legendre{a}{p}$ because there is a polynomial time algorithm to compute $a^n \pmod{N}$.
+\begin{itemize}
+    \item write $n = n_0 + 2 n_1 + 4 n_2 + \dotsb + 2^k n_k$ in binary, $n_i \in \{0, 1\}$
+    \item compute $a^2, \, a^4 = (a^2)^2, \, a^8 = (a^4)^2, \dotsc, a^{2^k} \pmod{N}$.
+    \item $a^n \equiv \prod_{i: n_i = 1} a^{2^i} \pmod{N}$
+\end{itemize}
+
+\begin{ncor}\label{cor:3.3}
+    For $p$ an odd prime,
+    \begin{equation*}
+        \legendre{-1}{p} =
+        \begin{cases}
+            +1 & p \equiv 1 \pmod{4} \\
+            -1 & p \equiv 3 \pmod{4}
+        \end{cases}
+    \end{equation*}
+\end{ncor}
+
+\begin{proof}
+    By \hyperlink{lem:eulerCriterion}{Euler's criterion}, if $p = 4k + l$, with $l = 1 $ or $3$,
+    \begin{equation*}
+        \legendre{-1}{p} = (-1)^{\frac{p-1}{2}} = (-1)^{2k + \frac{l-1}{2}} =
+        \begin{cases}
+            +1 & l = 1 \\
+            -1 & l = 3
+        \end{cases}
+    \end{equation*}
+\end{proof}
+
+What about $\legendre{2}{p}$? So what is $2^{\frac{p-1}{2}} \pmod{p}$?
+Recall the proof of \hyperlink{thm:fermatLittle}{Fermat's Little Theorem}, and imitate this using $\left(\frac{p-1}{2}\right)!$ instead.
+This will prove
+
+\begin{lemma}[Gauss's Lemma]\hypertarget{lem:gausssLemma}
+    Take $p$ an odd prime and $(a, p) = 1$. Then $\legendre{a}{p} = (-1)^\mu$ where $\mu$ is the number of $j \in \{1, \dotsc, \frac{p-1}{2}\}$ such that $aj \equiv k \pmod{p}$ where $\frac{p+1}{2} \leq k \leq p-1$.
+\end{lemma}
+
+\begin{proof}
+    $1 \leq j \leq \frac{p-1}{2}$. Write $aj \equiv \epsilon_j c_j \pmod{p}$ with $1 \leq c_j \leq \frac{p-1}{2}$ and $\epsilon_j \in \{\pm 1\}$ (by reducing $a_j$ mod $p$ into the interval $(-\frac{p}{2}, \frac{p}{2})$).
+
+    Now claim that if $j \neq k$ with $1 \leq j, k \leq \frac{p-1}{2}$ then $c_j \neq c_k$. Indeed if $c_j = c_k$ then $\epsilon_j aj \equiv e_k ak \pmod{p}$, that is, $j \equiv \pm k \pmod{p}$.
+    As $1 \leq j, k \leq \frac{p-1}{2}$, $j + k \not\equiv 0 \pmod{p}$ so $j = k$.
+
+    So, $\{c_1, \dotsc, c_{\frac{p-1}{2}}\} = \{1, 2, \dotsc, \frac{p-1}{2}\}$ in some order.
+
+    Now, $\mu = \#\set{j \in \{1, \dotsc, \frac{p-1}{2}\} | aj \equiv k \pmod{p}, \frac{p+1}{2} \leq k \leq p-1} = \#\set{j | \epsilon_j = -1}$
+    So,
+    \begin{equation*}
+        a^{\frac{p-1}{2}} \cdot \left(\frac{p-1}{2}\right)!
+        = \prod_{j=1}^{\frac{p-1}{2}} (a_j)
+        \equiv \prod_{j=1}^{\frac{p-1}{2}} \epsilon_j c_j
+        \equiv \left(\prod_{j=1}^{\frac{k-1}{2}} \epsilon_j \right) \left(\prod_{j=1}^{\frac{k-1}{2}} c_j \right)
+        \equiv (-1)^\mu \cdot \frac{p-1}{2}!
+    \end{equation*}
+    This gives
+    \begin{equation*}
+        \legendre{a}{p} \equiv a^{\frac{p-1}{2}} \equiv (-1)^\mu
+    \end{equation*}
+\end{proof}
 \end{document}

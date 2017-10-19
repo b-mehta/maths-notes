@@ -15,6 +15,8 @@
 \begin{document}
 \maketitle
 
+\tableofcontents
+
 % statslab.cam.ac.uk/~rb812/teaching/la2017
 \section{Introduction}
 As the name suggests, Linear Analysis is the study of linear spaces of functions, mostly infinite dimensional. In particular, properties like convexity, completeness, closedness are of interest here.
@@ -373,9 +375,9 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
 
 \begin{proof}
     If suffices to check that any norm $\norm{\cdot}$ on $\K^n$ is equivalent to $\norm{\cdot}_1$ where
-    \begin{equation}
+    \begin{equation*}
         \norm{v}_1 = \sum_{i=1}^n \abs{v_i}
-    \end{equation}
+    \end{equation*}
 
     \begin{itemize}
         \item $\norm{v} \leq C \norm{v}_1$: Let $e_i = (0, \dotsc, 0, 1, 0, \dotsc) \in \K^n$. Then
@@ -444,10 +446,10 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
 
 \begin{proof}
     Since $\overline{B_1(0)}$ is compact, there are $w_1, \dotsc, w_n \in V$ such that
-    \begin{equation}
+    \begin{equation*}
         \overline{B_1(0)} \subset \bigcup_{i=1}^n B_{\frac12} (w_i)
-    \end{equation}
-    Let $W = \mathrm{span}\set{w_1, \dotsc, w_n}$. Note that $dim W \leq n$. Our goal is to show $W = V$.
+    \end{equation*}
+    Let $W = \mathrm{span}\set{w_1, \dotsc, w_n}$. Note that $\dim W \leq n$. Our goal is to show $W = V$.
     \begin{align*}
         B_1(0) &\subset W + B_{\frac{1}{2}} (0) \\
         B_1(0) &\subset W + \frac{1}{2}\left(W + B_{\frac{1}{2}} (0)\right) = W + B_{\frac{1}{4}}(0) \\
@@ -482,7 +484,7 @@ Let $V$ be a \emph{real} vector space.
     Any norm is \hyperlink{def:sublinear}{sublinear}.
 \end{eg}
 
-\begin{lemma}[Codimension $1$ case of the Hahn-Banach Theorem]
+\begin{lemma}[Codimension $1$ case of the Hahn-Banach Theorem]\hypertarget{lem:smallHahn}
     Let $W \subset V$ be a subspace of codimension 1, that is, there exists $v_1 \in V \setminus W$ such that
     \begin{equation*}
         V = \set{v + t v_1 | v \in W, \, t \in \R}
@@ -568,7 +570,7 @@ Let $V$ be a \emph{real} vector space.
     \end{enumerate}
 \end{defi}
 
-\begin{lemma}[Zorn's Lemma\hypertarget{lem:zorn}]
+\begin{lemma}[Zorn's Lemma]\hypertarget{lem:zorn}
     Let $P$ be a \hyperlink{def:poset}{poset} with the property that every non-empty \hyperlink{def:poset}{totally ordered} subset has a \hyperlink{def:poset}{least upper bound}.
     Then $P$ has at least one \hyperlink{def:poset}{maximal element}.
 \end{lemma}
@@ -593,4 +595,113 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 \begin{prop}
     Let $V \neq \{0\}$ be a vector space and $S \subset V$ linearly independent. Then $V$ has a basis $B$ containing $S$.
 \end{prop}
+
+\begin{proof}
+    Let $P = \set{T \subset V | T \supset S, T \text{ linearly independent}}$. Then $P$ is a poset with partial order $\subseteq$, ie $T_1 \leq T_2$ if and only if $T_1 \subseteq T_2$. For any $L \subseteq P$ that is totally ordered, set $T_b = \bigcup_{T \in L} T$.
+
+    We claim $T_b \in P$ and $T_b$ is a least upper bound for $L$. Clearly, $S \subseteq T_b$.
+    Let $\alpha_i \in K$ and $v_i \in T_b$ such that $\sum_{i=1}^m \alpha_i v_i = 0$. Since $L$ % ???
+    is totally ordered and $m < \infty$, there must be $T \in L$ such that $v_1, \dotsc, v_m \in T$.
+    Since $T$ is linearly independent, we have $\alpha_1 = \dotsb = \alpha_m = 0$. Thus $T_b$ is linearly independent.
+    Thus, $T_b \in P$ and clearly a least upper bound for $L$.
+
+    By \hyperlink{lem:zorn}{Zorn's Lemma}, there exists a maximal element $B$ in $P$.
+
+    Claim: $B$ is a basis for $V$. By definition of $P$, $B$ is linearly independent. We need to check that $B$ spans $V$.
+    Suppose otherwise. Then there exists $v \in V \setminus \span{B}$ and $B \cup \{v\}$ is linearly independent.
+    This contradicts the maximality of $B$, so $B$ is a basis for $V$.
+\end{proof}
+
+\subsection{The Hahn-Banach Theorem}
+
+\begin{thm}[Hahn-Banach]\hypertarget{thm:hahnBanach}
+    Let $V$ be a \emph{real} vector space, $W \subset V$ a subspace, $p: V \to \R$ sublinear, and $g: W \to \R$ linear such that $g(v) \leq p(v)$ for all $v \in W$.
+
+    Then there exists $f: V \to \R$ linear such that $f|_W = g$ and $f(v) \leq p(v)$ for all $v \in V$.
+\end{thm}
+
+\begin{proof}
+    Let
+    \begin{equation*}
+        P = \set{(N, h) | N \subset V \text{ subspace}, \, W \subset N, h: N \to \R \text{ linear}, \, h(v) \leq p(v) \, \forall v \in N}
+    \end{equation*}
+
+    For $(N, h), \, (N', h') \in P$, set $(N, h) \leq (N', h')$ iff $N \subset N'$ and $h' |_N = h$.
+    Then $P$ is a poset, $P \neq \emptyset$ because $(W, g) \in P$. We want to apply \hyperlink{lem:zorn}{Zorn's Lemma}.
+
+    Let $(N_i, h_i)_{i \in I} \subseteq P$ be a totally ordered subset of $P$. Set
+    \begin{equation*}
+        N = \bigcup_{i \in I} N_i, \quad h(v) = h_i(v) \; \text{if } v \in N_i
+    \end{equation*}
+
+    This is well-defined since $(N_i, h_i)_{i \in I}$ is totally ordered. Moreover, $N \subseteq V$ is a subspace and $h: N \to \R$ is linear. Also $h(v) \leq p(v)$ for all $v \in \N$. Thus, $(N, h) \in P$. Clearly, $(N, h)$ is a least upper bound for $(N_i, h_i)_{i \in I}$.
+
+    By Zorn's Lemma, there is a maximal element $(M, f)$ in $P$.
+
+    Claim: $M=V$. Suppose not, then the \hyperlink{lem:smallHahn}{codimension $1$ case} gives $(M', f')$ with $(M, f) \nleq (M', f')$, a contradiction by maximality of $(M, f)$.
+\end{proof}
+
+\begin{cor}
+    Let $V$ be a normed vector space (real or complex), $W \subseteq V$ a subspace.
+    For any $g \in W^*$, there exists $f \in V^*$ such that $f |_W = G$, $\norm{f} \leq \norm{g}$.
+\end{cor}
+
+\begin{proof}
+    Asume that $V$ is real. The complex case is treated on an example sheet. Then $p(v) = \norm{v}$ is sublinear and the claim follows directly from the \hyperlink{thm:hahnBanach}{general Hahn-Banach Theorem}.
+\end{proof}
+
+\begin{cor}
+    Let $V$ be a normed vector space, and $v \in V$. Then there exists $f_v \in V^*$ such that $\norm{f_v} = 1$ and $f_v(v) = \norm{v}$.
+    Such an $f_v$ is called a \textbf{support functional} for $v$.
+\end{cor}
+
+\begin{proof}
+    Let $W = \set{t v | t \in K}$. Define $g \in W^*$ by $g(tv) = t \norm{v}$. Then $\norm{g} = 1$ and $g(v) = \norm{v}$. By \hyperlink{thm:hahnBanach}{Hahn-Banach}, there is $f = f_v$ as desired.
+\end{proof}
+
+\begin{remark}
+    In concrete examples, one can often construct $f_v$ by hand.
+\end{remark}
+
+\begin{cor}
+    Let $V$ be a normed vector space and $v \in V$. THen $v =0 \iff f(v) = 0$ for all $f \in V^*$.  In particular, $V^* \neq \{0\}$.
+\end{cor}
+
+\begin{cor}
+    Let $V$ be a normed space, $v, w \in V$, $v \neq w$. Then $\exists f \in V^*$ such that $f(v) \neq f(w)$.
+\end{cor}
+
+\begin{proof}
+    Take $f = f_{v - w}$.
+\end{proof}
+
+\begin{cor}
+    The map $\phi: V \to V^{**}$ given by $\phi(v) f = f(v)$ is an isometry:
+    \begin{equation*}
+        \forall v \in V, \, \norm{\phi(v)} = \norm{v}
+    \end{equation*}
+\end{cor}
+
+\begin{proof}
+    We have seen $\norm{\phi(v)} \leq \norm{v}$. Now
+    \begin{equation*}
+        \abs{\phi(v) f_v} = \abs{f_v(v)} = \norm{v} \implies \norm{\phi(v)} \geq \norm{v}
+    \end{equation*}
+\end{proof}
+
+\begin{cor}
+    Let $V, W$ be normed spaces.
+    For any $T \in \mathcal{B}(V, W)$, the dual map $T^* \in \mathcal{B}(W^*, V^*)$ satisfies $\norm{T^*} = \norm{T}$.
+\end{cor}
+
+\begin{proof}
+    We have already seen $\norm{T^*} \leq \norm{T}$. Now, with $f = f_{T_v} \in W^*$, $ [T^* f] v = f(T v) = \norm{Tv} $ so
+    \begin{align*}
+        \norm{T^*} &= \sup_{\norm{f} \leq 1} \norm{T^* f} \\
+                   &\geq \norm{T^* f_{T_v}} \\
+                   &= \sup_{\norm{v} \leq 1} \norm{[T^* f_{T_v}] v} \\
+                   &\geq \sup_{\norm{v} \leq 1} \norm{T v} \\
+                   &= \norm{T}
+    \end{align*}
+\end{proof}
 \end{document}
