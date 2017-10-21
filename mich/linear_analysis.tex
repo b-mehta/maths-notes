@@ -704,4 +704,108 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
                    &= \norm{T}
     \end{align*}
 \end{proof}
+
+\clearpage
+
+\section{Completeness and the Baire Category Theorem}
+\subsection{Baire Category}
+
+\begin{defi}[Dense]\hypertarget{def:dense}
+    Recall that if $X$ is a metric space, a subset $Y \subset X$ is \textbf{dense} if $\overline{Y} = X$.
+    Equivalently $Y \cap B_r(X) \neq \emptyset$ for any $x \in X$, $r > 0$.
+\end{defi}
+
+\begin{thm}[Baire Category Theorem]\hypertarget{thm:baireCategory}
+    Let $X$ be a complete metric space.
+    For any sequence of open and \hyperlink{def:dense}{dense sets} $U_j \subset X$, $\bigcap_j U_j$ is dense in $X$.
+\end{thm}
+
+\begin{proof}
+    Let $U = \bigcap_j U_j$. Given any $x \in X$, $r > 0$, we need to show that $B_r(x) \cap U = \emptyset$.
+    Since $U$ is dense and open, there exists $x_1 \in X$, $r_1 \in (0, 1)$ such that
+    \begin{equation*}
+        B_r(x) \cap U_1 \supset B_{2r_1}(x_1) \supset \overline{B_{r_1}(x_1)}
+    \end{equation*}
+    Likewise, choose $x_2 \in X$, $r_2 \in (0, \frac{1}{2})$ such that
+    \begin{equation*}
+        \overline{B_{r_2}(x_2)} \subset B_{r_1}(x_1) \cap U_2
+    \end{equation*}
+    and in general $x_n \in (X)$, $r_n \in (0, 2^{-n})$ such that
+    \begin{equation*}
+        \overline{B_{r_n}(x_n)} \subset B_{r_{n-1}}(x_{n-1}) \cap U_n
+    \end{equation*}
+
+    Then $r_n \to 0$ and $B_{r_1}(x_1) \supset B_{r_2}(x_2) \supset \dotsb$ so $d(x_n, x_m) < r_n \ \forall m \geq n$.
+    So, $(x_n)$ is a Cauchy sequence, and since $X$ is complete $\exists x \in X$ such that $x_n \to x$.
+
+    Note that $y \in \overline{B_{r_k}(x_k)} \cap U_{k+1}$ for all $k \implies y \in \bigcap_k U_k$ and $y \in B_r(x)$.
+\end{proof}
+
+\begin{cor}
+    Let $X$ be a complete metric space.
+    Let $A_j \subset X$ be a sequence of closed subsets of such that $\bigcup_j A_j$ has nonempty interior, that is, contains some ball.
+    Then at least one of the $A_j$ has nonempty interior.
+\end{cor}
+
+\begin{proof}
+    Let $U_j = X \setminus A_j$.
+    Since $\bigcup_j A_j$ has nonempty interior, $X \setminus \bigcup_j A_j = \bigcap_j U_j$ is not \hyperlink{def:dense}{dense}.
+
+    Since the $U_j$ are open, the \hyperlink{thm:baireCategory}{Baire Category Theorem} implies that there must be at least one $U_j$ that is not dense.
+    Thus $A_j = X \setminus U_j$ has nonempty interior.
+\end{proof}
+
+\begin{defi}[Meagre sets]\hypertarget{def:meagre}
+    Let $X$ be a metric space.
+    \begin{enumerate}[label=(\roman*)]
+        \item A subset $Y \subset X$ is \textbf{nowhere dense} if $\interior(\overline{Y}) = \emptyset$, equivalently $Y$ is not dense in any ball.
+        \item A subset $Z \subset X$ is \textbf{meagre} or of the \textbf{first category} if there are countably many sets $Y_j \subset X$ that are nowhere dense and $Z = \bigcup_j Y_j$.
+        \item A subset $U \subset X$ is \textbf{nonmeagre} or of the \textbf{second category} if it is not meagre.
+        \item A subset $R \subset X$ is \textbf{residual} if $X \setminus R$ is meagre.
+    \end{enumerate}
+\end{defi}
+
+\begin{fact}
+    $Y \subset X$ is \hyperlink{def:meagre}{nowhere dense} $\iff \overline{Y}$ is nowhere dense $\iff X \setminus \overline{Y}$ is open and dense.
+\end{fact}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item $\Q$ is \hyperlink{def:meagre}{meagre} in $\R$
+        \item Any countable union of meagre sets is meagre.
+    \end{itemize}
+\end{eg}
+
+\begin{remark}
+    There is similarity between the concepts of \hyperlink{def:measure}{meagre}, nonmeagre, residual with those of null sets, sets of positive measure and sets of full measure in measure theory.
+    For metric spaces that are also measure spaces (for instance $\R$ with the Lebesgue measure), one could ask if there is a closer correspondence.
+    The answer is negative in general.
+    There exists a meagre set $A$ in $\R$ and a Lebesgue measurable set $B$ such that $\R = A \cup B$.
+\end{remark}
+
+\begin{cor}
+    Let $X$ be a complete metric space. Then $X$ is of the \hyperlink{def:meagre}{second category}.
+\end{cor}
+
+\begin{proof}
+    Let $Y_j \subset X$ be \hyperlink{def:meagre}{nowhere dense} sets. It suffices to show that $X \neq \bigcup_j \overline{Y_j}$.
+    But $U_j = X \setminus \overline{Y_j}$ is open dense.
+    So $\bigcap_j U_j = X \setminus \bigcup_j \overline{Y_j}$ is dense by the \hyperlink{thm:baireCategory}{Baire Category Theorem}.
+    So in particular, $\bigcap_j U_j \neq \emptyset$, that is, $\bigcup_j Y_j \neq X$.
+\end{proof}
+
+\begin{cor}
+    Let $X$ be a complete metric space. Then \hyperlink{def:meagre}{residual sets} are nonmeagre and dense.
+\end{cor}
+
+\begin{proof}
+    Let $Z \subset X$ \hyperlink{def:meagre}{meagre} and suppose that $R = X \setminus Z$. Assume $R$ was meagre.
+    Then $X = R \cup Z$ would be the union of two meagre sets, so meagre.
+    But since $X$ is complete, it is not meagre, a contradiction.
+
+    To show $R$ is dense, we can suppose that $Z = \bigcup_j Y_j$ with $Y_j$ nowhere dense.
+    Then $U_j = X \setminus \overline{Y_j}$ is dense and open. So, $\bigcap_j U_j$ is dense. But $R \supset \bigcap_j U_j$.
+\end{proof}
+
 \end{document}
