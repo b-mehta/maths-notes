@@ -300,7 +300,304 @@ Homotopy of paths and concatenations interact nicely.
     \begin{enumerate}[label=(\roman*)]
         \item $(\gamma_0 \cdot \gamma_1) \cdot \gamma_2 \simeq \gamma_0 \cdot (\gamma_1 \cdot \gamma_2)$
         \item $\gamma_0 \cdot c_{x_1} \simeq \gamma_0 \simeq c_{x_0} \cdot \gamma_0$
-        \item $\gamma_0 \cdot \overline{\gamma_0} \simeq c_{x_0}
+        \item $\gamma_0 \cdot \overline{\gamma_0} \simeq c_{x_0}$, $\overline{\gamma_0} \cdot \gamma_0 \simeq c_{x_1}$
     \end{enumerate}
 \end{nprop}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item
+                \begin{tikzpicture}[{baseline=(current bounding box.north)}]
+                    \draw (0, 0) rectangle (4, 4);
+                    \draw (1, 0) -- (2, 4);
+                    \draw (2, 0) -- (3, 4);
+
+                    % \node[below] at (1, 0) {$x_1$};
+                    % \node[below] at (2, 0) {$x_2$};
+                    % \node[above] at (2, 4) {$x_1$};
+
+                    \node[below] at (0.5, 0) {$\gamma_0$};
+                    \node[below] at (1.5, 0) {$\gamma_1$};
+                    \node[below] at (3, 0) {$\gamma_2$};
+                \end{tikzpicture}
+
+        \item
+        \item We prove the first only, since they are clearly equivalent.
+    \end{enumerate}
+\end{proof}
+
+\subsection{The Fundamental Group}
+
+\begin{nthm}
+    For $X$ a space, $x_0 \in X$, if $\pi_1 (X, x_0)$ denotes the set of homotopy classes of loops starting and ending at $x_0$, then concatenation defines a group structure on $\pi_1(X, x_0)$.
+\end{nthm}
+
+\begin{proof}
+    Lemma 2.2.8 gives us that multiplication is well defined, and proposition 2.2.9 shows that the group axioms hold.
+\end{proof}
+
+\begin{defi}
+    A \textbf{based space} is a pair $(X, x_0)$, where $X$ is a space and $x_0 \in X$. A \textbf{map of based spaces} $f:(X, x_0) \to (Y, y_0)$ is a map $f:X \to Y$ such that $f(x_0) = y_0$. A \textbf{based homotopy} is a homotopy $H:X \times I \to Y$ rel $\{x_0\}$.
+\end{defi}
+
+\begin{defi}
+    If $f(X, x_0) \to (Y, y_0)$ is a map of based spaces, we get a natural map
+    \begin{align*}
+        \pi_1(f) : \pi(X, x_0) &\to \pi(Y, y_0)
+        [\gamma] &\mapsto [f \circ \gamma]
+    \end{align*}
+    and it's easy to see that this is well defined.
+\end{defi}
+
+\begin{nprop}
+    Let $f: (X, x_0) \to (Y, y_0)$ be a map of based spaces.
+    \begin{enumerate}[label=(\roman*)]
+        \item $\pi_1(f)$ is a group homomorphism
+        \item If $f \simeq f'$ rel $\{x_0\}$ then $\pi_1(f) = \pi_1(f')$.
+        \item If $g: (Y, y_0) \to (Z, z_0)$ is a based map then $\pi_1(g \circ f) = \pi_1(g) \circ \pi_1(f)$
+        \item $\pi_1(\id_{X, x_0}) = \id_{\pi(X, x_0)}$
+    \end{enumerate}
+\end{nprop}
+
+\begin{proof}
+    Easy exercise.
+\end{proof}
+
+\begin{cor}
+    If $(X, x_0)$ and $(Y, y_0)$ are \emph{based} homotopy equivalent, then \begin{equation*}\pi_1(X, x_0) \cong \pi_1(Y, Y_0)\end{equation*}.
+\end{cor}
+
+Let's investigate the effect of our choice of basepoint.
+
+If we have a space $X$ which is not path connected, then the groups $\pi_1(X, x_0)$ and $\pi_1(X, x_1)$ can be completely unrelated if $x_0$ and $x_1$ are in different path components.
+
+$\pi_1(X, x_0) \to \pi_1(X, x_1)$
+$[\gamma] \mapsto [\overline{u} \cdot \gamma \cdot u]$
+This is well-defined by lemma 2.2.8
+
+% 2.3.4
+\begin{prop}
+    Let $u: x_0 \leadsto x_1$ be a path in $X$.
+    \begin{enumerate}[label=(\roman*)]
+        \setcounter{enumi}{0}
+        \item If $u \simeq u'$ as paths then $u_{\#} = u_{\#}'$
+        \item $(c_{x_0})_{\#} = \id_{\pi_1(X, x_0)}$
+        \item If $v: x_1 \leadsto x_2$, thus
+            \begin{equation*}
+                (u \cdot v)_{\#} = v_{\#} \circ u_{\#}
+            \end{equation*}
+
+        \item Suppose $f:X \to Y$ is a continuous map with $f(x_1) = y_1$
+                Then the diagram commutes.
+        \item If $u$ is a loop, then $u_{\#}: \pi_1(X, x_0) \to \pi_1(X, x_0)$ is the automorphism of $\pi_1(X, x_0)$ given by conjugation by $[u]$.
+    \end{enumerate}
+\end{prop}
+
+\begin{proof}
+    Immediate applications of lemma (2.2.8) and prop (2.2.9).
+\end{proof}
+
+\begin{cor}
+    If $X$ is path connected then $\forall x_0, x_1 \in X$,
+    \begin{equation*}
+        \pi(X, x_0) \cong \pi(X, x_1)
+    \end{equation*}
+\end{cor}
+
+\begin{warning}
+    This isomorphism is not canonical. In general, different choices of path change our isomorphism by a conjugation.
+\end{warning}
+
+The goal is to show that the fundamental group is an invariant of \emph{homotopy equivalence}.
+% TODO diagram
+
+Let $f, g: X \to Y$ be maps, $x_0 \in X$ and suppose $f \not\simeq_{H} g$. Then, $u(t) = H(x_0, t)$ is a path in $Y$ from $f(x_0) \leadsto g(x_0)$.
+
+\begin{equation*}
+    \begin{tikzcd}
+        & \pi_1(Y, f(x_0)) \arrow[dd, "u_{\#}"]\\
+        \pi_1(X, x_0) \arrow[ur, "f_*"] \arrow[dr, "g_*"] & \\
+                                                          & \pi_1(Y, g(x_0))
+    \end{tikzcd}
+\end{equation*}
+
+% lemma 2.3.6
+\begin{lemma}
+    For $f, g, u$ as above, $g_* = u_{\#} \circ f_*$ (the diagram commutes).
+\end{lemma}
+
+\begin{proof}
+    Let $\gamma$ be a loop in $X$ based at $x_0$. We need to prove that
+    \begin{equation*}
+        (g \circ \gamma) \simeq \overline{u} \cdot (f \circ \gamma) \cdot u
+    \end{equation*}
+    as paths.
+
+    Consider
+    \begin{align*}
+        I &\times I & &\to & X &\times I & &\xrightarrow{H} & Y \\
+        (s&, t) & &\mapsto & (\gamma(s)&, t)
+    \end{align*}
+
+    Together, this gives $F(s, t) = H(\gamma(s), t)$.
+    % TODO: picture
+
+    We can see that
+    \begin{align*}
+        F(s, 0) &= f \circ \gamma(s)\\
+        F(s, 1) &= g \circ \gamma(s) \\
+        F(0, t) &= H(\gamma(0), t) = H(x_0, t) = u(t) \\
+        F(1, t) &= H(\gamma(1), t) = H(x_0, t) = u(t)
+    \end{align*}
+
+    Consider the two paths in the square $I \times I$ illustrated:
+    \begin{align*}
+        l_+ : I \to I \times I \\
+        l_- : I \to I \times I
+    \end{align*}
+    and note that $g \circ \gamma = F \circ l_+$ while $\overline{u} \cdot (f \circ \gamma) \cdot u = F \circ l_-$.
+
+    So, we can let
+    \begin{align*}
+        L: I \times I &\to I \times I \\
+        (s, t) &\mapsto t l_+(s) + (1-t) l_-(s)
+    \end{align*}
+
+    This is a homotopy of paths $l_+ \simeq l_-$.
+
+    Therefore, $F \circ L$ is a homotopy of paths from $g \circ \gamma$ to $\overline{u} \cdot (f \circ \gamma) \cdot u$ as required.
+\end{proof}
+
+% thm 2.3.7
+\begin{thm}
+    If
+        \begin{tikzcd}
+            X \arrow[r, bend left, "f"] & Y \arrow[l, bend left, "g"]
+        \end{tikzcd}
+    is a pair of homotopy equivalences, then for any $x_0 \in X$
+    \begin{equation*}
+        f_*: \pi(X, x_0) \to \pi(Y, f(x_1))
+    \end{equation*}
+    is an isomorphism.
+\end{thm}
+
+\begin{proof}
+    Let $g \circ f \simeq_H \id_X$ and let $u(t) = H(x_0, t)$. By lemma (2.3.6),
+    \begin{align*}
+        g_* \circ f_* &= (g \circ f)_* \\
+                      &= u_{\#} \circ (\id_X)_* \\
+                      &= u_{\#}
+    \end{align*}
+    an isomorphism, so $f_*$ is injective.
+
+    Likewise, using the other homotopy, we get that $f_* \circ g_*$ is an isomorphism and so $f_*$ is surjective.
+\end{proof}
+
+\begin{eg}
+    Take $X = * = \{x_0\}$. Then $\pi_1(X, x_0) \cong 1$, the trivial group.  By the Theorem, this holds for \textbf{any} contractible space X.
+\end{eg}
+
+\begin{defi}[Simply connected\hypertarget{def:simplyConnected}]
+    If $X$ is path-connected and $\pi_1(X, x_0) \cong 1$ then we say that $X$ is \textbf{simply connected}.
+\end{defi}
+
+We have many examples of spaces with trivial fundamental group, but can we find a space $X$ such that $\pi_1 X \ncong 1$?
+
+\clearpage
+\section{Covering Spaces}
+
+\subsection{Covering spaces}
+
+% defi 3.1.1
+\begin{ndef}
+    A \textbf{covering map} $P: \widetilde{X} \to X$ is a map such that any point $x \in X$ has a neighbourhood $U$ such that
+    \begin{equation*}
+        p^{-1}(U) = \bigsqcup_{\alpha \in \Lambda} V_\alpha
+    \end{equation*}
+    such that $p|_{V_\alpha}: V_\alpha \to U$ are homeomorphisms. Our covering maps will always be surjective.
+
+    We will often just say $\widetilde{X}$ is a \textbf{covering space}.
+
+    We say that $U$ is \textbf{evenly covered}.
+\end{ndef}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item Homeomorphisms
+        \item Products of covering maps are covering maps
+        \item Take $X = S^1 \subseteq \C$, and $\widetilde{X} = \R$. Then consider
+            \begin{align*}
+                p: \R &\to S^1 \\ t &\mapsto \exp(2 \pi i t)
+            \end{align*}
+
+            For any $x \in S^1$, on a small neighbourhood of $x$, for any $\widetilde{x} \in p^{-1}(x)$, we can write down an inverse of $p$ using $\sin^{-1}, \cos^{-1}$.
+        \item Take $\widetilde{X} = S^1,\, X = S^1$ as subsets of $\C$. Consider
+            \begin{align*}
+                p_n: S^1 &\to S^1 \\
+                z &\mapsto z^n
+            \end{align*}
+        \item Let $\widetilde{X} = S^2$, and let $x \sim y \iff x = \pm y$. Then, use $X = \widetilde{X}/\sim$, the real projective plane, $\R P^2$ be the quotient map, which is a covering map.
+
+            \begin{center}
+                \begin{tikzpicture}
+                    \draw (0, 0) circle[radius=3];
+                    \draw[opacity=0.7] (3,0) arc [x radius=3, y radius=1, start angle=0, end angle=-180];
+                    \draw[dashed, opacity=0.3, very thin] (3,0) arc [x radius=3, y radius=1, start angle=0, end angle=180];
+                    \draw (1.7, 1.7) ellipse [rotate=-45, x radius=0.7, y radius=0.3];
+                    \draw[dashed, opacity=0.6] (-1.7, -1.7) ellipse [rotate=-45, x radius=0.7, y radius=0.3];
+                \end{tikzpicture}
+            \end{center}
+    \end{itemize}
+\end{eg}
+
+% def 3.1.7
+\begin{defi}
+    If $f: Y \to X$ is a map and $p: \widetilde{X} \to X$ is a covering map. The \textbf{lift} of $f$ along $p$ is a map $\widetilde{f}: Y \to \widetilde{X}$ such that $p \circ \widetilde{f} = f$.
+\end{defi}
+
+% lem 3.1.8
+\begin{lemma}[Uniqueness for lifts]
+    Let $f: Y \to X$ be a map, $\widetilde{X} \to X$ a covering map. SUppose $\widetilde{f_0}, \widetilde{f_1}$ are both lifts of $f$. Then
+    \begin{equation*}
+        S = \set{y \in Y \mid \widetilde{f_0}(y) = \widetilde{f_1}(y)}
+    \end{equation*}
+    is both open and closed. So, if $Y$ is connected, $\widetilde{f_0}$ and $\widetilde{f_1}$ agree everywhere or nowhere. In particular, any lift $\widetilde{f}$ is determined by its value at \emph{one} point of $Y$.
+\end{lemma}
+
+\begin{proof}
+    First show $S$ is open. Let $y \in S$, so $\widetilde{f_0}(y) = \widetilde{f_1}(y)$.
+    We need to find a neighbourhood of $y$ contained in $S$.
+    Let $U$ be an evenly covered neighbourhood of $f(y)$.
+    Then $\phi^{-1}(U) = \bigsqcup_{\beta \in \Lambda} V_\beta$.
+    Let $\beta_0$ be such that $\widetilde{f_0}(y) = \widetilde{f_1}(y) \in V_{\beta_0}$.
+
+    Consider $\widetilde{f_0}^{-1}(V_{\beta_0}), \widetilde{f_1}^{-1}(V_{\beta_0})$ neighbourhoods of $y$.
+    Let $N = \widetilde{f_0}^{-1}(V_{\beta_0}) \cap \widetilde{f_1}^{-1}(V_{\beta_0})$.
+    Now, $\widetilde{f_0}^{-1}(N), \widetilde{f_1}^{-1}(N) \subseteq V_{\beta_0}$, so
+    \begin{equation*}
+        p |_{V_{\beta_0}} \circ \widetilde{f_0}(N), p |_{V_{\beta_0}} \circ \widetilde{f_1}(N) \subseteq U
+    \end{equation*}
+
+    Therefore, $\widetilde{f_0}|_N = (p |_{V_{\beta_0}})^{-1} \circ f = \widetilde{f_1}|_N$, so $N \subseteq S$.
+
+
+    Next we must show $S$ is closed.  Let $y \notin S$, so $\widetilde{f_0}(y) \neq \widetilde{f_1}(y)$.
+    Let $U$ be an evenly covered neighbourhood of $f(y)$.
+    Then $\phi^{-1}(U) = \bigsqcup_{\beta \in \Lambda} V_\beta$.
+
+    Since $\widetilde{f_0}(y) \neq \widetilde{f_1}(y)$, $\exists \beta \neq \gamma$ such that $\widetilde{f_0}(y) \in V_{\beta}, \, \widetilde{f_1}(y) \in V_{\gamma}$.
+
+    Again, let $N = \widetilde{f_0}^{-1}(V_{\beta}) \cap \widetilde{f_1}^{-1}(V_{\gamma})$.
+    Since $\widetilde{f_0}(N) \subseteq V_\beta$ is disjoint from $\widetilde{f_1}(N) \subseteq V_\gamma$ we see that $N \subseteq S^c$.
+\end{proof}
+
+Having proved uniqueness, we next turn to existence in the case $Y = I$, the case of paths.
+
+% lem 3.1.10
+\begin{lemma}[Path lifting lemma]
+    Let $P: \widetilde{X} \to X$ be a covering map with $\gamma:I \to X$ a path, and $\widetilde{x_0} \in \widetilde{X}$ such that $p(\widetilde{x_0}) = x_0 = \gamma(0)$.
+    Then there is a unique lift $\widetilde{\gamma}$ such that $\widetilde{\gamma}(0) = \widetilde{x_0}$.
+\end{lemma}
 \end{document}
