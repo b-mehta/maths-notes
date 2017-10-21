@@ -8,12 +8,22 @@
 \input{header}
 
 % preamble
+\usepackage{subcaption}
 \setcounter{section}{-1}
+\usetikzlibrary{graphs,graphs.standard,positioning,decorations.pathmorphing, calc}
 \tikzset{node/.style = {circle, draw=black}}
+\renewcommand{\thenthm}{\arabic{nthm}}
+\DeclareMathOperator{\ext}{ex}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 % and here we go!
+
+% TODO stop theorem numbering from restarting
 
 \begin{document}
 \maketitle
+
+\tableofcontents
 
 \section{Introduction}
 
@@ -53,7 +63,7 @@ In this course, we make the following assumptions:
 \end{itemize}
 
 \subsection{Where do such structures arise?}
-(Insert Konigsberg picture here)
+% TODO Konigsberg picture
 
 \begin{eg}
     \leavevmode
@@ -103,10 +113,11 @@ In this course, we make the following assumptions:
 \clearpage
 \section{Ramsey Theory}
 
-\begin{defi}[Graph\hypertarget{def:graph}]
+\begin{defi}[Graph]\hypertarget{def:graph}
     A \textbf{graph} is an ordered pair $(V, E) = G$ where $V$ is a finite set and $E$ is a set of unordered pairs of distinct elements of $V$.
     We call elements of $V$ \textbf{vertices} of $G$ and elements of $E$ \textbf{edges}.
-    We often write $v \in G$ to mean $v \in V$ and sometimes, where clear, $e \in G$ to mean $e \in E$.  Often denote $\{u, v\} \in E$ by $uv$. Note $uv = vu$.
+    We often write $v \in G$ to mean $v \in V$ and sometimes, where clear, $e \in G$ to mean $e \in E$.
+    Often denote $\{u, v\} \in E$ by $uv$. Note $uv = vu$.
 \end{defi}
 
 \begin{eg}
@@ -128,34 +139,39 @@ In this course, we make the following assumptions:
     \end{center}
 \end{eg}
 
-\begin{defi}[Graph isomorphism]\hypertarget{def:gIso}
-    Let $G = (V, E)$ and $G' = (V', E')$ be \hyperref{def:graph}{graphs}. An \textbf{isomorphism} from $G$ to $G'$ is a bijection $\phi: V \to V'$ such that for all $u, v \in V$, we have $\phi(u) \phi(v) \in E'$ if and only if $u v \in E$.  If such an isomorphism exists, we say $G$ is isomorphic to $G'$.
+\begin{defi}[Isomorphism]\hypertarget{def:gIso}
+    Let $G = (V, E)$ and $G' = (V', E')$ be \hyperlink{def:graph}{graphs}.
+    An \textbf{isomorphism} from $G$ to $G'$ is a bijection $\phi: V \to V'$ such that for all $u, v \in V$, we have $\phi(u) \phi(v) \in E'$ if and only if $u v \in E$.
+    If such an isomorphism exists, we say $G$ is \textbf{isomorphic} to $G'$.
 \end{defi}
 
 \begin{defi}[Subgraph]\hypertarget{def:subgraph}
-    Suppose also $H = (W, F)$ is a graph. We say $H$ is a \textbf{subgraph} of $G$ and write $H \subset G$ if $W \subset V$ and $F \subset E$.  Often, we say `$H$ is a subgraph of $G$' to mean `$H$ is isomorphic to a subgraph of $G$'.
+    Suppose also $H = (W, F)$ is a \hyperlink{def:graph}{graph}.
+    We say $H$ is a \textbf{subgraph} of $G$ and write $H \subset G$ if $W \subset V$ and $F \subset E$.
+    Often, we say `$H$ is a subgraph of $G$' to mean `$H$ is \hyperlink{def:gIso}{isomorphic} to a subgraph of $G$'.
 \end{defi}
 
 \begin{defi}[Complete graph of order $n$]\hypertarget{def:Kn}
     The \textbf{complete graph of order n}, $K_n$ has $n$ vertices with every pair forming an edge.
 \end{defi}
 
-% add pictures of K1, K3, K5
 \begin{center}
     \begin{tikzpicture}
         \begin{scope}
             \node [node] (A) at (0, 0) {};
+            \node at (0, -1.5) {$K_1$};
         \end{scope}
 
-        \begin{scope}[xshift=3cm]
+        \begin{scope}[xshift=4cm]
             \node [node] (A) at (  90:1)  {};
             \node [node] (B) at (-150:1)  {};
             \node [node] (C) at ( -30:1)  {};
 
             \draw (A) -- (B) -- (C) -- (A);
+            \node at (0, -1.5) {$K_3$};
         \end{scope}
 
-        \begin{scope}[xshift=7cm]
+        \begin{scope}[xshift=8cm]
             \node [node] (A) at (  90:1)  {};
             \node [node] (B) at ( 162:1)  {};
             \node [node] (C) at (-126:1)  {};
@@ -164,11 +180,12 @@ In this course, we make the following assumptions:
 
             \draw (A) -- (B) -- (C) -- (D) -- (E) -- (A);
             \draw (A) -- (C) -- (E) -- (B) -- (D) -- (A);
+            \node at (0, -1.5) {$K_5$};
         \end{scope}
     \end{tikzpicture}
 \end{center}
 
-Looking at (fig), we see $K_3$ looks like a triangle, and we will often just refer to $K_3$ as a \textbf{triangle}\label{def:triangle}.  In addition, note that if $m \leq n$, then $K_m \subset K_n$.
+Looking at the diagram, we see $K_3$ looks like a triangle, and we will often just refer to $K_3$ as a \textbf{triangle}\label{def:triangle}.  In addition, note that if $m \leq n$, then $K_m \subset K_n$.
 
 Recall \nameref{thm:schur}:
 \begin{thm}[Schur's Theorem reformulated]
@@ -177,56 +194,150 @@ Recall \nameref{thm:schur}:
 
 Can we prove this directly? First try $k=1$, where $n=2$ immediately works because $1+1=2$.
 
-For $k=2$, (add stuff here). (blue 1, yellow 2, yellow 3, blue 4, any 5)
-This case analysis worked for $k=2$, but is likely to get a lot more fiddly for larger $k$. Even for $k=3$ this case analysis turns out to be a lot harder, so can we come up with a `better' proof for the $k=2$ case, that is `more likely to generalise'?
+\newcommand{\red}[1]{\textcolor{bred}{#1}}
+\newcommand{\green}[1]{\textcolor{bgreen}{#1}}
+\newcommand{\blue}[1]{\textcolor{bblue}{#1}}
+\newcommand{\yellow}[1]{\textcolor{byellow}{#1}}
 
-\begin{proof}[$k=2$ of Schur's Theorem, improved]
-    Suppose $[5]$ are coloured blue/yellow.  Then some three are the same colour, and without loss of generality $i < j < k$ are blue. If $j-i$ is blue we are done, since $i + (j-i) = j$.
-    Similarly if $k-i$ or $k-j$ is blue, we are done.  If not, all of $j-i$, $k-i$, $k-j$ are all yellow, but then $k-i = (j-i) + (k-j)$, and we are done.
+For $k=2$, use colours \red{red} and \green{green}, wlog we can take \red{$1$ red}.
+As $\red{1}+\red{1}=2$, we must have a \green{green $2$}.
+Similarly, \red{$4$} must be \red{red} otherwise $\green{2}+\green{2}=\green{4}$.
+Next, we have $\red{1} + 3 = \red{4}$, so \green{$3$} must be \green{green}.
+Finally, notice that $\red{1} + \red{4} = \green{2} + \green{3}$ so $n = 5$ suffices.
+
+This case analysis worked for $k=2$, but is likely to get a lot more fiddly for larger $k$.
+Even for $k=3$ this case analysis turns out to be a lot harder, so can we come up with a `better' proof for the $k=2$ case, that is `more likely to generalise'?
+
+\begin{proof}($k=2$ of Schur's Theorem, improved)
+    Suppose $[5] = \{1, 2, 3, 4, 5\}$ are coloured \red{red} and \green{green}.
+    Then some three of these are the same colour, and without loss of generality $\red{i} < \red{j} < \red{k}$ are \red{red}.
+    If $j-i$ is \red{red} we are done, since $\red{i} + \red{(j-i)} = \red{j}$.
+    Similarly if $k-i$ or $k-j$ is \red{red}, we are done.
+    If not, all of $j-i$, $k-i$, $k-j$ are \green{green}, but then $\green{k-i} = \green{(j-i)} + \green{(k-j)}$, and we are done.
 \end{proof}
 
 Let's try a similar approach for $k=3$, and I claim $n=16$ works.
 
 \begin{proof}(Schur's theorem, $k=3$)
+    Suppose $[16]$ are coloured \red{red}, \green{green} and \blue{blue}.
+    By the pigeonhole principle, some six numbers are the same colour, without loss of generality $\red{x_1} < \red{x_2} < \dots < \red{x_6}$ are \red{red}.
+    If $x_j - x_i$ is \red{red} for any $i<j$ then we are done: $\red{x_i} + \red{(x_j - x_i)} = \red{x_j}$.
+    So assume all $x_j - x_i$ are \blue{blue} or \green{green}.
+    Consider the five numbers $x_2 - x_1$, $x_3 - x_1$, $x_4 - x_1$, $x_5 - x_1$, $x_6 - x_1$.
+    By the pigeonhole principle, some three of these are the same colour: say $\green{x_i - x_1}$, $\green{x_j - x_1}$, $\green{x_k - x_1}$ are green, for $i < j < k$.
 
-    Suppose $[16]$ are coloured blue, yellow and green.  By the pigeonhole principle, some six numbers are the same colour, without loss of generality $x_1 < x_2 < \dots < x_6$ are blue.
-    If $x_j - x_i$ is blue for any $i<j$ then we are done: $x_i + (x_j - x_i) = x_j$.  So assume all $x_j - x_i$ are green or yellow.
-    Consider the five numbers $x_2 - x_1$, $x_3 - x_1$, $x_4 - x_1$, $x_5 - x_1$, $x_6 - x_1$.  By the $k=2$ case, some three of these are the same colour: say $x_i - x_1$, $x_j - x_1$, $x_k - x_1$ are yellow, for $i < j < k$.
-    % (begin star)
-    If $x_j - x_i$ is yellow, we are done: $(x_i - x_1) + (x_j - x_i) = x_j - x_1$, similarly if $x_k - x_i$ or $x_k - x_j$ is yellow.
-    Otherwise, all of $x_j - x_i$, $x_k - x_i$, $x_k - x_j$ are all green, and we have $(x_j - x_i) + (x_k - x_j) = x_k - x_i$, so we are done.
-    % (end star)
+    If $x_j - x_i$ is \green{green}, we are done: $\green{(x_i - x_1)} + \green{(x_j - x_i)} = \green{x_j - x_1}$, similarly if $x_k - x_i$ or $x_k - x_j$ is \green{green}.
+    Otherwise, all of $\blue{x_j - x_i}$, $\blue{x_k - x_i}$, $\blue{x_k - x_j}$ are \blue{blue}, and we have $\blue{(x_j - x_i)} + \blue{(x_k - x_j)} = \blue{x_k - x_i}$, so we are done.
 \end{proof}
 
-This (star) looks very similar to the proof of the $k=2$ case, so can we use induction? It's unclear, because it wasn't exactly the previous case.  But notice how we always seem to be interested in differences of two numbers, yet we never seem to use facts like $7-3 = 9-5$.
+This last paragraph looks very similar to the proof of the $k=2$ case, so can we use induction? It's unclear, because it wasn't exactly the previous case.  But notice how we always seem to be interested in differences of two numbers, yet we never seem to use facts like $7-3 = 9-5$.
 So, consider a graph where the vertices are numbers, and the edges refer to the difference between two vertices, and we colour edges.
+
 Suppose the edges of a complete graph $K_6$ are coloured blue and yellow. Then we can find a monochromatic \hyperref[def:triangle]{triangle}.
 \begin{proof}
-    Pick $v \in K_6$. $v$ is in five edges, so some three are the same colour, without loss of generality call them $vx, vy, vz$. If any of $xy, xz, yz$ is blue, we have a blue $triangle$ with $v$. If not, $xyz$ is a yellow triangle.
+    Pick $v \in K_6$. $v$ is in five edges, so some three are the same colour, without loss of generality call them $vx, vy, vz$ and say they are \red{red}.
+    If any of $xy, xz, yz$ is \red{red}, we have a \red{red} $triangle$ with $v$.
+    If not, $xyz$ is a \green{green} triangle.
+    \begin{center}
+        \begin{tikzpicture}[scale=1.5]
+            \begin{scope}
+                \node[node] (v) at ( -0.5, 0) {$v$};
+                \node[node] (x) at (60: 1)    {$x$};
+                \node[node] (y) at ( 1, 0)    {$y$};
+                \node[node] (z) at (-60:1)    {$z$};
+
+                \draw[bgreen, very thick] (x) -- (y) -- (z) -- (x);
+                \begin{scope}[bred]
+                    \draw (v) -- (x);
+                    \draw (v) -- (y);
+                    \draw (v) -- (z);
+                \end{scope}
+            \end{scope}
+            \begin{scope}[xshift=-3cm]
+                \node[node] (v) at ( -0.5, 0) {$v$};
+                \node[node] (x) at (60: 1)    {$x$};
+                \node[node] (y) at ( 1, 0)    {$y$};
+                \node[node] (z) at (-60:1)    {$z$};
+
+                \draw[bgreen] (y) -- (z) -- (x);
+                \begin{scope}[bred]
+                    \draw (v) -- (z);
+                    \draw[very thick] (x) -- (y) -- (v) -- (x);
+                \end{scope}
+            \end{scope}
+        \end{tikzpicture}
+    \end{center}
 \end{proof}
 
 \begin{remark}
-    Schur for $k=2$ now follows: Suppose $[5]$ are coloured blue/yellow. Take a $K_6$ with vertices $\{0, 1, \dots, 5\}$. Colour edge $ij$, $(i<j)$ with the colour of $j-i$. By (ref), we have a monochromatic triangle $abc$ ($a<b<c$). Then $(c-b) + (b-a) = c-a$, and $c-b, b-a, c-a$ are all the same colour.
-    We cannot find a monochromatic triangle in $K_5$ instead (picture)
+    Schur for $k=2$ now follows: Suppose $[5]$ are coloured \red{red}/\green{green}. Take a $K_6$ with vertices $\{0, 1, \dots, 5\}$. Colour edge $ij$, $(i<j)$ with the colour of $j-i$.
+    By the above proof, we have a monochromatic triangle $abc$ ($a<b<c$). Then $(c-b) + (b-a) = c-a$, and $c-b, b-a, c-a$ are all the same colour.
+    We cannot necessarily find a monochromatic triangle in $K_5$, so 6 vertices are necessary.
+
+    \begin{center}
+        \begin{tikzpicture}[scale=2]
+            \node [node] (A) at (  90:1)  {};
+            \node [node] (B) at ( 162:1)  {};
+            \node [node] (C) at (-126:1)  {};
+            \node [node] (D) at ( -54:1)  {};
+            \node [node] (E) at (  18:1)  {};
+
+            \draw[bred] (A) -- (B) -- (C) -- (D) -- (E) -- (A);
+            \draw[bgreen] (A) -- (C) -- (E) -- (B) -- (D) -- (A);
+        \end{tikzpicture}
+    \end{center}
+
     In this graph form, the statement for more colours is now amenable to an induction proof.
 \end{remark}
 
 % prop 1
 \begin{nprop}
-    Let $k$ be a positive integer. THen there is a postiive integer $n$ such that whenever the edges of $K_n$ are coloured with $k$ colours we can find a monochromatic triangle.
+    Let $k$ be a positive integer. Then there is a positive integer $n$ such that whenever the edges of $K_n$ are coloured with $k$ colours we can find a monochromatic triangle.
 \end{nprop}
 
-\begin{proof}
-    Induction on $k$. For $k=1$, $n=3$ works.
-    $k>1$. By the induction hypothesis, we can find $m$ such that if $K_m$ is $(k-1)$--coloured, then there is a monochromatic triangle.  Let $n = k(m-1) + 2$.
+\pgfmathsetseed{1}
 
-    Now $k$--colour the edges of $K_n$.  Pick vertex $v$.  The number of edges containing $v$ is $n-1 = k(m-1)+1$.  So some $m$ of them are the same colour, without loss of generality blue.  Let $H$ be a $K_m$ joined to $v$ by blue edges. If $H$ contains a blue edge, it makes a blue triangle with $v$. If not, $H$ is a $(k-1)$--coloured $K_m$ so by definition of $m$, it contains a monochromatic triangle.
+\begin{proof}
+    Induction on $k$. For $k=1$, $n=3$ works, so consider $k>1$.
+
+    By the induction hypothesis, there exists $m$ such that if $K_m$ is $(k-1)$-coloured, then there is a monochromatic triangle.  Let $n = k(m-1) + 2$.
+
+    Now $k$-colour the edges of $K_n$.  Pick vertex $v$.
+    The number of edges containing $v$ is $n-1 = k(m-1)+1$.  So some $m$ of them are the same colour, without loss of generality blue.
+    Let $H$ be a $K_m$ joined to $v$ by blue edges. If $H$ contains a blue edge, it makes a blue triangle with $v$.
+    If not, $H$ is a $(k-1)$-coloured $K_m$ so by definition of $m$, it contains a monochromatic triangle.
+    \begin{center}
+        \begin{tikzpicture}[scale=0.5]
+            \node[node] (v) at (0, 0) {$v$};
+
+            \foreach \theta in {25, 15, ..., -25}
+                \draw[bred] (v) -- (\theta+rand*3:6+rand*0.2);
+
+            \begin{scope}[xshift=6.5cm, scale=3]
+                \draw plot [smooth cycle, tension=0.8] coordinates {(-180:1) (-120:1.2) (-60:0.8) (0:0.9) (60:1.1) (120:1.3)};
+                \node at (0.4, 0.6) {$H$};
+            \end{scope}
+        \end{tikzpicture}
+    \end{center}
 \end{proof}
 
 \begin{remark}
     \leavevmode
     \begin{enumerate}
         \item Can think in terms of the following picture. Eventually, we will run out of colours and get a monochromatic triangle.
+            \begin{center}
+                \begin{tikzpicture}[scale=0.6]
+                    \draw [help lines] (-10, -5) grid (10, 5);
+                    \node[node, label={$v$}] (v) at (-8, 0) {};
+
+                    \foreach \theta in {24, 22, ..., -22}
+                        % \draw[bred] (v) -- ($(\theta:6+rand*0.2) + (-8, 0) $);
+                        \draw[bred] (v) -- ++(\theta+rand*0.01:4+rand*0.1);
+
+                    \draw plot [smooth cycle, tension=0.8, xshift=2cm, xscale=2.5, scale=3] coordinates {(-180:1) (-120:1.2) (-60:0.8) (0:0.9) (60:1.1) (120:1.3)};
+                \end{tikzpicture}
+            \end{center}
+
         \item How big do we need to take $n$ to be?  Let $f(k)$ be the smallest $n$ that works with $k$ colours. Clearly $f(1) = 3$. Our proof says for $k>1$, $f(k) \leq k \left(f(k-1)-1\right) + 2 \leq k f(k-1)$.  So by induction, $f(k) < 3 k!$.
         \item Schur's theorem (add link) follows immediately in the same way as for the $k=2$ case.
     \end{enumerate}
@@ -307,7 +418,8 @@ Is $R(s) = \mathcal{O}((3.999999999)^s)$? Unknown.
 \begin{proof}
     Induction on $k$. For the base case $k=1$, we can take $n=s$.
 
-    For $k>1$, by the induction hypothesis we can find $M$ such that if $K_m$ is $(k-1)$-coloured, then there is a monochromatic $K_s$. Let $n = R(s, m)$ and colour $K_n$ with $k$ colours, including blue but not yellow. Re-colour by turning all non-blue edges yellow. By definition, of $n$, we have either
+    For $k>1$, by the induction hypothesis we can find $M$ such that if $K_m$ is $(k-1)$-coloured, then there is a monochromatic $K_s$.
+    Let $n = R(s, m)$ and colour $K_n$ with $k$ colours, including blue but not yellow. Re-colour by turning all non-blue edges yellow. By definition, of $n$, we have either
     \begin{itemize}
         \item A blue $K_s$, so done
         \item A yellow $K_m$. Then in the original colouring, this $K_m$ was $(k-1)$-coloured, so by definitin of $m$, it contains a monochromatic $K_s$.
@@ -364,4 +476,318 @@ In the diagram, we see that for any finite $s$ we have a blue $K_s$ but no blue 
 \begin{remark}
     This is often called a `two-pass proof'. On the first pass, we found a sequence of colours, and on the second pass we found infinitely many colours the same.
 \end{remark}
+
+\begin{ncor}
+    Any bounded sequence has a convergenet subsequence.
+\end{ncor}
+
+\begin{proof}
+    Any bounded monotone seuqence converges, so it is enough to show that any real sequence $(x_n)_{n \geq 1}$ has a monotone subseuqence.
+    Let $G$ be a $K_\infty$ with vertex set $\set{1, 2, 3, \dotsc}$. Colour $ij$, with $i<j$ blue if $x_i < x_j$ and yellow if not.
+
+    By infinite Ramsey, there is a monochromatic subgraph $H \cong K_\infty$. Let the vertices of $H$ be $n_1 < n_2 < n_3 < \dots$.
+    If $H$ is blue, then $(x_{n_j})_{j \geq 1}$ is decreasing, whereas if $H$ is yellow then $(x_{n_j})_{j \geq 1}$ is increasing.
+\end{proof}
+
+\clearpage
+
+\subsection{Basic Terminology}
+
+Let $G = (V, E)$ be a graph. Sometimes write $V(G) = V$, and $E(G) = E$.
+The \textbf{order} of $G$ is $\abs{G} = \abs{V(G)}$. We denote the number of edges of $G$ by $e(G) = |E(G)|$, sometimes called the size of $G$.
+
+Note that the \hyperlink{def:Kn}{complete graph of order $n$} has order $n$.
+
+\begin{defi}[Neighbourhood\hypertarget{def:neighbour}]
+    Let $v \in G$. Then \textbf{neighbourhood} of $v$ is the set
+    \begin{equation}
+        \Gamma(v) = \set{w \in G | vw \in E(G)}
+    \end{equation}
+
+    If $w \in \Gamma(v)$, then $w$ is a \textbf{neighbour} of $v$, or $w$ is \textbf{adjacent} to $v$, we write $w \sim v$.
+\end{defi}
+
+\begin{defi}[Degree\hypertarget{def:degree}]
+    The \textbf{degree} of $v$ is $d(v) = \abs{\Gamma(v)}$, the number of vertices \hyperlink{def:neighbour}{adjacent} to $v$.
+
+    The \textbf{maximum degree} of $G$ is $\Delta(G) = \max_{v \in G} d(v)$
+
+    The \textbf{minimum degree} of $G$ is $\delta(G) = \min_{v \in G} d(v)$
+
+    The \textbf{average degree} of $G$ is $\frac{1}{\abs{G}} \sum_{v \in G} d(v)$
+\end{defi}
+
+Clearly $\delta(G) \leq \text{average degree of} G \leq \Delta(G)$.
+
+\begin{defi}[Regular\hypertarget{def:regular}]
+    If every vertex in $G$ has the same degree, we say $G$ is \textbf{regular}.
+
+    If this degree is $r$, say $G$ is \textbf{$r$-regular}.
+\end{defi}
+
+\begin{eg}
+    How do vertex-degrees relate to $e(G)$?  We can count `ends of edges' in two different ways. In particular, each edge has two ends, so there are $2 e(G)$ ends. A vertex $v$ is in $d(v)$ ends, so there are $\sum_{v \in G} d(v)$ ends, and hence  $\sum_{v \in G} d(v)= 2 e(G)$.
+
+    Hence also the average degree of $G$ is $\frac{2e(G)}{\abs{G}}$.
+\end{eg}
+
+\begin{defi}[Path\hypertarget{def:path}]
+    Let $G$ be a graph. A \textbf{path} in $G$ is a finite sequence $v_0, v_1, \dotsc, v_l$ of distinct vertices of $G$ with $v_{i-1} \sim v_i$ for $1 \leq i \leq l$.
+
+    \begin{tikzpicture}
+        \node [node] (0) {$v_0$};
+        \node [node] [right=of 0] {$v_1$};
+    \end{tikzpicture}
+
+    We say this path has length $l$ and goes from $v_0$ to $v_l$.
+
+    If $v, w \in G$ we write $v \to w$ to mean there is a path from $v$ to $w$.
+\end{defi}
+
+The relation $\to$ is an equivalence relation (Exercise.) % TODO thing about transitivity
+
+\begin{defi}[Components\hypertarget{def:components}]
+    The equivalence classes of $\to$ are called the \textbf{components} of $G$. If $G$ has only one component, we say $G$ is \textbf{connected}.
+    % TODO diagram of components
+\end{defi}
+
+\begin{defi}[Cycle\hypertarget{def:cycle}]
+    A \textbf{cycle} is a sequence $v_0, v_1, \dotsc, v_l$ of vertices of $G$ with $v_0, \dots, v_{l-1}$ distinct, $v_l = v_0$, $v_{i-1} \hypertarget{def:path}{\sim} v_i$ for $1 \leq i \leq l$ and $l \leq 3$.
+    We say that the length of the cycle is $l$.
+    % TODO cycle diagram
+\end{defi}
+
+\begin{defi}[Forest\hypertarget{def:tree}]
+    % TODO forest diagram
+    A graph with no cycles is called a \textbf{forest}.  A \textbf{tree} is a connected forest. Each component of a forest is a tree.
+\end{defi}
+
+\begin{defi}[Disjoint union\hypertarget{def:disUnion}]
+    Suppose $G$, $H$ are graphs with $V(G) \cap V(H) = \emptyset$. The \textbf{disjoint union} of $G, H$ is the graph $G \cup H$ with $V(G \cup H) = V(G) \cup V(H)$ and $E(G \cup H) = E(G) \cup E(H)$.
+
+    We often write $G \cup H$ even if $V(G) \cap V(H) \neq \emptyset$, this means take graphs $G', H'$ with $G' \cong G$, $H' \cong H$, $V(G') \cap V(H') = \emptyset$ then take $G' \cup H'$.
+\end{defi}
+
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}
+        \item $K_3 \cup K_5$ % TODO diagram here
+        \item Any graph is the disjoint union of its components $(G_1 \cup \dots \cup G_k)$.
+            For instance, a forest is a \hyperlink{def:disUnion}{disjoint union} of trees.
+    \end{enumerate}
+\end{eg}
+
+\begin{defi}[Induced subgraph\hypertarget{def:indSubgraph}]
+    Let $G = (V, E)$ be a graph, and let $W \subset V$. The \textbf{induced subgraph} on $W$ is the graph $G[W]$ with $V(G[W]) = W$ and, for $x,y \in W$, $xy \in E(G[W]) \iff xy \in G$.
+\end{defi}
+
+\begin{defi}[Complement\hypertarget{def:complement}]
+    Let $G = (V, E)$ be a graph. The \textbf{complement} of $G$ is the graph $\overline{G}$ with $V(\overline{G}) = V$, and for distinct $x, y \in V$, $xy \in E(\overline{G}) \iff xy \notin E$.
+\end{defi}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item Suppose edges of $K_n$ are coloured blue/yellow. We can think about the `blue subgraph' with $n$ verties and blue edges only. The complement is the yellow subgraph.
+        \item % TODO self complement
+    \end{itemize}
+\end{eg}
+
+\begin{notation}
+    Let $f, g: \N \to (0, \infty)$.
+    We say
+    \begin{itemize}[label={--}]
+        \item $f = \mathcal{O}(g)$ if $f < A g$ for some constant $A$.
+        \item $f = \Omega(g)$ if $g = \mathcal{O}(f)$
+        \item $f = \Theta(g)$ if $f = \mathcal{O}(g)$ and $f = \Omega(g)$.
+
+        \item $f = o(g)$ means $f/g \to 0$ (as $n \to \infty$)
+        \item $f = \omega(g)$ means $f/g \to \infty$
+        \item $f \sim g$ means $f/g \to 1$.
+    \end{itemize}
+\end{notation}
+
+\section{Extremal Graph Theory}
+
+\paragraph{Problem} (from (link) section 1): How large must $n$ be so that if edges of $K_n$ are coloured blue/yellow then always get a monochromatic $K_s$?
+
+Let $G$ be a `blue subgraph' of $K_n$, consisting of all vertices, and only the blue edges.
+$K_n$ has a blue $K_s \iff K_s \subset G$, and $K_n$ has a yellow $K_s \iff G$ has an induced $\overline{K_s}$ subgraph.
+
+\paragraph{rephrase}
+How large must $n$ be to force every graph of order $n$ to have $K_s$ or $\overline{K_s}$ as an induced subgraph?
+
+This is a typical example of an \textbf{extremal problem}: How large must some parameter of $G$ be to force $G$ to have a certain property?
+
+Alternatively, how big can the parameter be with $G$ not having the property?
+
+\subsection{Forbidding Subgraph Problem}
+Fix a graph $H$ with at least one edge. Let $n \geq \abs{H}$. Clearly $H \subset K_n$ but $H \not\subset \overline{K_n}$.
+
+How many edges must a graph $G$ of order $n$ have to force $H \subset G$? Alternatively, if $\abs{G} = n$ and $H \subset G$, how large can $e(G)$ be?
+
+\begin{defi}
+    Define
+    \begin{equation*}
+        \ext(n; H) = \max\set{e(G) | \abs{G} = n, H \not\subset G}
+    \end{equation*}
+\end{defi}
+
+\paragraph{Problem} Can we determine $\ext(n; H)$?
+
+\subsubsection{Triangles}
+Let $H = K_3$. The goal is to find $G$ with $\abs{G} = n$, $e(G)$ large and $\Delta \not\subset G$.
+
+The idea is to partition $V(G) = X \cup Y$ with all edges going from $X$ to $Y$.
+
+\begin{defi}
+    A grpah $G$ is \textbf{bipartite} (with bipartition $(X, Y)$) if $V(G)$ can be partitioned as $X \cup Y$ in such a way that if $e \in E(G)$ then $e = xy$ for some $x \in X$, $y \in Y$.
+\end{defi}
+
+Bipartite graphs have no $\Delta$s (and indeed no cycles of odd length). In fact the converse is also true:
+% thm 7
+\begin{nthm}
+    A graph is bipartite iff it contains no odd cycles.
+\end{nthm}
+
+\begin{proof}
+    May return to this later, an exercise for now.
+\end{proof}
+
+Which bipartite graph is best?
+
+Clearly it is a good idea to include all possible edges from $X$ to $Y$.
+
+\begin{defi}
+    Let $s, t \geq 1$. The \textbf{complete bipartite graph} $K_{s, t}$ has bipartition (X, Y) with $\abs{X} = s$, $\abs{Y} = t$ and $xy \in E(K_{s, t})$ $\forall x \in X, y \in Y$.
+\end{defi}
+
+We have $\abs{K_{s, t}} = s + t$ and $e(K_{s, t}) = st$, and aim to maximise $st$ subject to $s + t = n$, that is, maximise $s(n-s)$.
+So, the best bipartite graph is $K_{\ceil{\frac{n}{2}}, \floor{\frac{n}{2}}}$
+
+But what if some non-bipartite graph is better?
+In fact, the bipartite graph always wins:
+
+% thm 8
+\begin{nthm}[Mantel's Theorem]
+    Let $n \geq 3$. Suppose $\abs{G} = n$, $e(g) \geq \floor{\frac{n^2}{4}}$ and $\Delta \not\subset G$.
+    Then $G \cong K_{\ceil{\frac{n}{2}}, \floor{\frac{n}{2}}}$
+\end{nthm}
+
+\begin{proof}
+    Induction on $n$. Start with the $n=3$ case:
+    \paragraph{$n=3$}: Consider $K_{2, 1}$, it satisfies $\abs{G} = 3$, $e(G) \geq 2$, $\Delta \subset G$, as required.
+    \paragraph{$n>3$}: Let $\abs{G} = n$, $e(G) \geq \floor{\frac{n^2}{4}}$, $\Delta \subset G$.
+
+    First, remove edges from $G$ if necessary to get $H$ with $\abs{H} = n$, $e(H) = \floor{\frac{n^2}{4}}$. Clearly $\Delta \not\subset H$.
+
+    Let $v \in H$ with $d(v) = \delta(H)$ and let $K = H - v$ (ie $H$ with vertex $v$ and all edges including $v$ removed). Now, $\abs{K} = n-1$, $\Delta \not\subset K$ and $e(K) = \floor{\frac{n^2}{4}} - \delta(H)$.
+
+    Suppose $n$ is even. Then $\delta(H) \leq \text{average degree of H } = \frac{2 e(H)}{H} = \frac{n^2/2}{n} = \frac{n}{2}$.
+    Hence $e(K) \geq \frac{n^2}{4} - \frac{n}{2} = \frac{n^2 - 2n}{4} = \frac{n^2 - 2n + 1}{4} - \frac{1}{4} = \frac{(n-1)^2}{4} - \frac{1}{4} = \floor{\frac{(n-1)^2}{4}}$
+    Similarly if $n$ odd, also get $e(K) \geq \floor{\frac{(n-1)^2}{4}}$. Hence by the induction hypothesis, $K \cong K_{\ceil{\frac{n-1}{2}, \floor{\frac{n-1}{2}}}}$.
+
+    Also $d(v) = e(H) - e(K)$.
+    If $n$ even, $d(v) = \frac{n^2}{4} - \frac{n^2 - 2n}{4} = \frac{n}{2}$.
+    $H$ is formed by adding a vertex $v$ to $K \cong K_{\frac{n}{2}, \frac{n-2}{2}}$ and joining $v$ to $\frac{n}{2}$ vertices of $K$, without creating a $\Delta$.
+
+    If $K$ has bipartition $(X, Y)$, $v$ cannot be joined both to a vertex in $X$ and a vertex in $Y$. So $v$ must be joined to all vertices in the larger of $X$, $Y$.
+
+    Thus $H \cong K_{\ceil{\frac{n}{2}}, \floor{\frac{n}{2}}}$ and similarly if $n$ is odd.
+
+    We recover $G$ by adding edges to $H$ without making a $\Delta$. But any new edge creates a $\Delta$, so $G \cong H$.
+\end{proof}
+
+Hence if $\abs{G} = n$, $e(G) > \floor{\frac{n^2}{4}}$ then $\Delta \subset G$. Therefore $\ext(n; \Delta) = \floor{\frac{n^2}{4}}$.
+
+\subsubsection{Complete graphs}
+% what about K4? try a tri-partite
+
+% def r-partite
+\begin{defi}
+    A graph $G$ \textbf{$r$-partite}  if we can partition $V(G) = X_1 \cup \dotsb \cup X_r$ in such a way that if $xy \in E(G)$ then $x \in X_i, y \in X_j$ for some $i \neq j$.
+    We say $G$ is \textbf{complete $r$-partite} if whenever $x \in X_i$, $y \in X_j$ with $i \neq j$ then $x y \in E(G)$.
+\end{defi}
+
+% def turan graph finish!!
+\begin{defi}
+    The \textbf{Tur\'{a}n graph} $T_r(n)$ is the complete $r$-partite graph with $n$ vertices and vertex-calsses as equal as possible. Write $t_r(n) = e(T_r(n))$.
+\end{defi}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item $T_2(n) = K_{\floor{\frac{n}{2}}, \ceil{\frac{n}{2}}}$
+        \item The diagram shows $T_3(7)$.
+    \end{itemize}
+\end{eg}
+
+Properties of the Tur\'{a}n graph
+\begin{enumerate}
+    \item $K_{r+1} \not\subset T_r(n)$. If we add an edge to $T_r(n)$ we create a $K_{r+1}$.
+    \item $T_r(n)$ has more edges than any other $r$-partite graph on $n$ vertices. Suppose $G$ is a complete $r$-partite graph with some two vertex classes $X, Y$ with $\abs{Y} > \abs{X}+1$.
+        Moving a vertex from $Y$ to $X$ loses $\abs{X}$ edges but gains $\abs{Y}-1 > \abs{X}$ edges.
+    \item If $r \mid n$ then all classes of $T_r(n)$ are same.
+        If $r \nmid n$ then we have `small' classes, with $k$ vertices, say, and `big' classes with $k+1$ vertices.
+    \item If $r \mid n$ then $T_r(n)$ is regular.
+        If $r \nmid n$ then if $v$ in big class, $d(v) = \delta(T_r(n))$ and if $v$ is in the small class $d(v) = \Delta(T_r(n)) = \delta(T_r(n)) + 1$
+        So in general, vertex degrees in $T_r(n)$ differ by at most 1.
+    \item Deleting a vertex of minimal degree from $T_r(n)$ removes a vertex from a big class, thus making $T_r$ (n-1).
+        So $t_r(n-1) = t_r(n) - \delta(T_r(n))$.
+    \item Suppose we have $T_r(n-1)$. Add a vertex $v$. How many edges can we add without creating a $K_{r+1}$? We can't join $v$ to a vertex in every class so must miss some class.
+        So the best is to join $v$ to all vertices except those in a particular small class $X$.
+        Same as adding $v$ to class $X$, so we've made $T_r(n)$. So \# of edges we can add is at most $t_r(n) - t_r(n-1)$ and only way to achieve this makes $T_r(n)$.
+\end{enumerate}
+
+% thm 9
+\begin{nthm}[Tur\'{a}n's Theorem]
+    Let $r \geq 2$ and $\abs{G} = n \geq r+1$. If $e(G) \geq t_r(n)$ and $K_{r+1} \not\subset G$ then $G \cong T_r(n)$.
+\end{nthm}
+
+\begin{proof}
+    Induction on $n$.
+    $n = r+1$. $T_r(r+1)$ has one class of 2 vertices, rest with 1 vertex each. So $T_r(r+1)$ is $K_{r+1}$ with 1 edge removed. So $G \cong T_r(r+1)$.
+    % diagram
+
+    $n > r+1$. First delete edges from $G$ to form subgraph $H$ with $\abs{H} = n$, $e(H) = t_r(n)$ and $K_{r+1} \not \subset H$. Let $v \in H$ have minimal degree and let $K = H- v$.
+    We know $\abs{H} = \abs{T_r(n)}$ and $e(H) = e(T_r(n))$ so $H$ and $T_r(n)$ have same average degree. But degrees in $T_r(n)$ are as equal as possible by (4).
+
+    So $\delta(H) \leq \delta(T_r(n))$. Thus $\abs{K} = n-1$, $K_{r+1} \not\subset K$ and $e(K) = e(H) - \delta (H) \geq e(H) - \delta(T_r(n)) = t_r(n) - \delta(T_r(n)) = t_r(n-1)$ by 5.
+
+    So by induction hypothesis, $K \cong T_r(n-1)$. And $d(v) = e(H) - e(K) = t_r(n) - t_r(n-1)$.
+    To recover $H$, we must add a vertex and $t_r(n) - t_r(n-1)$ edges to $K$ without creating a $K_{r+1}$. So by 6, $H \cong T_r(n)$.
+    To recover $G$, add edges to $H$ without creating a $K_{r+1}$. But by (1) we can't add any edges. So, $G \cong T_r(n)$.
+\end{proof}
+
+So if $r \geq 2$, $n \geq r+1$, $\ext(n, K_{r+1}) = t_r(n)$.
+
+How big is $t_r(n)$ approximately?
+Each vertex is joined to a proportion approximately $1 - \frac{1}{r}$ of all vertices, so we have a proportion approx $1 - \frac{1}{r}$ of all possible edges. So $\ext(n; K_{r+1}) \approx (1-\frac{1}{r}) \binom{n}{2}$.
+More precisely,
+
+% cor 10
+\begin{ncor}
+    Let $r \geq 2$. As $n \to \infty$, $\ext(n; K_{r+1}) \sim (1 - \frac{1}{r}) \binom{r}{2}$
+\end{ncor}
+
+% 2.1.3
+\subsubsection{Bipartite graph}
+Can think of cycles and paths as graphs (ignore direction and start point). The graph $C_n$ is cycle of length $n$ eg $C_5$.
+
+\begin{defi}
+    The \textbf{cyclic graph of order $n$}, is the cycle of length $n$, called $C_n$.
+    % draw C_5
+\end{defi}
+
+\begin{defi}
+    The \textbf{path graph} of order $n$ is the path of length $n$, called $P_n$.
+    % draw P_3
+\end{defi}
+
+So $\abs{C_n = n}$, $\abs{P_n} = n+1$, and $e(C_n) = e(P_n) = n$.
+
+\begin{eg}
+    What can we say about $\ext(n; C_4)$? Note $C_4 \cong K_{2, 2}$.
+    % TODO draw K2 2
+\end{eg}
 \end{document}
