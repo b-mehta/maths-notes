@@ -6,13 +6,17 @@
 \def\nlecturer{Prof. A. Scholl}
 \def\ncourse{Number Theory}
 \input{header}
-
 % preamble
 \setcounter{section}{-1}
-% and here we go!
+\newcommand{\legendre}[2]{\genfrac{(}{)}{}{}{#1}{#2}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+% and here We go!
 
 \begin{document}
 \maketitle
+\tableofcontents
+
 \section{Introduction}
 Number theory is concerned with the (non-obvious, sometimes mysterious) properties of the integers, $\Z = \{0, \pm 1, \pm 2, \dots\}$ and the rationals, $\Q = \{\frac{m}{n} \mid m, n \in \Z, n \ne 0\}$.
 It has been around for thousands of years, and has always been an experimental science where one can conduct experiments with numbers to spot their properties. Experimental data leads to conjectures which can turn out to be very hard to prove, for instance:
@@ -23,7 +27,7 @@ It has been around for thousands of years, and has always been an experimental s
         Very recently, we know there are infinitely many primes $p$ such that $\{p+2, p+4, \dots, p+246\}$ contains a prime.
     \item $\pi(x)$ refers to the prime counting function, the number of prime numbers $p \leq x$.
         The prime number theorem says that $\pi(x) \sim \mathrm{li}(x) \coloneqq \int_2^x \frac{dt}{\log t}$.
-        t is not known whether or not $\abs{\pi(x) - \mathrm{li}(x)} \leq \sqrt{x} \log(x)$, which is equivalent to the Riemann hypothesis - a statement about a certain complex analytic function.
+        It is not known whether or not $\abs{\pi(x) - \mathrm{li}(x)} \leq \sqrt{x} \log(x)$, which is equivalent to the Riemann hypothesis - a statement about a certain complex analytic function.
 \end{enumerate}
 Problem 1 follows from the Birch-Swinnerton-Dyer conjecture, related to algebraic geometry.
 Often these proofs can require sophisticated theorems, well beyond the statement of the problem.
@@ -87,7 +91,7 @@ We claim $r_k = (a, b)$. Indeed, $(a, b) = (a - q_1 b, b) = (b, r_1) = (r_1, r_2
      By lemma \ref{lem:pid_lemma}, $(a, b) = r a + s b$ for some integers $r, s$. Euclid's algorithm gives such $r, s$.
 \end{remark}
 
-Recall that if $n > 1$ then $n$ is \textbf{prime} if its only positive divisors are $\{1, \dots, n\}$, otherwise n is \textbf{composite}.
+Recall that if $n > 1$ then $n$ is \textbf{prime} if its only positive divisors are $\{1, \dots, n\}$, otherwise $n$ is \textbf{composite}.
 \begin{nlemma}
     Let $p$ be prime, $a, b \in \Z$.  Then $p \mid ab \implies p \mid a$ or $p \mid b$.
 \end{nlemma}
@@ -175,7 +179,7 @@ This defines an equivalence relation on $\Z$. Write $\Z / n\Z$ for the set of eq
 \end{proof}
 
 \begin{notation}
-    For $n > 1$, we write $(\Z / n \Z)^*$ to denote the set of units (invertible elements) of $\Z / n \Z$. By lemma \ref{lem:2_1}, this is the set of classes $a + n \Z$ where $(a, n) = 1$.
+    For $n > 1$, we write $(\Z / n \Z)^*$ to denote the set of units (invertible elements) of $\Z / n \Z$. By \cref{lem:2_1}, this is the set of classes $a + n \Z$ where $(a, n) = 1$.
     We can then define $\phi(n) =\# (\Z / n \Z)^* = \# \set{a \in \Z | 1 \leq a \leq n, \, (a, n) = 1}$, the \textbf{Euler $\phi$-function}.
 \end{notation}
 
@@ -197,7 +201,7 @@ This has an important special case, called Fermat's Little Theorem.
 \end{thm}
 
 \begin{proof}
-    Trivial if $p \mid q$.  If not, $(a, p) = 1$ so $a^{\phi(p)} \equiv 1 \pmod{p} \implies a^p \equiv a \pmod{p}$
+    Trivial if $p \mid a$.  If not, $(a, p) = 1$ so $a^{\phi(p)} \equiv 1 \pmod{p} \implies a^p \equiv a \pmod{p}$
 \end{proof}
 
 % start of missing things
@@ -211,13 +215,13 @@ This has an important special case, called Fermat's Little Theorem.
 \end{nlemma}
 
 \begin{proof}
-    We may assume $G = \Z/ n \Z$, in which case this is just $(2.1)$
+    We may assume $G = \Z/ n \Z$, in which case this is just \cref{lem:2_1}
 \end{proof}
 
 \subsection{Simultaneous Congruences}
 
 \begin{eg}
-    We would like to find all $x \in \Z$ such that $x \equiv 7 \pmod{10}$ and $x \equiv 3 \pmod{10}$.
+    We would like to find all $x \in \Z$ such that $x \equiv 7 \pmod{10}$ and $x \equiv 3 \pmod{13}$.
     One way might be to try $7, 17, 27, \dotsc$ in turn.
 
     A better way: suppose we have $u, v \in \Z$ such that
@@ -228,7 +232,8 @@ This has an important special case, called Fermat's Little Theorem.
 
     Then $x = 7u + 3v$ is a solution.
 
-    To find $u, v$: $(10, 13) = 1$ so $\exists r, s$ with $10r + 13s = 1$, so setting $u=13s$ and $v=10r$ ensures the above congruences are satified.  From the Euclidean algorithm, we see $r=4$ and $s=-3$ work, so $u=-39$ and $v=40$.
+    To find $u, v$: $(10, 13) = 1$ so $\exists r, s$ with $10r + 13s = 1$, so setting $u=13s$ and $v=10r$ ensures the above congruences are satisfied.
+    From the Euclidean algorithm, we see $r=4$ and $s=-3$ work, so $u=-39$ and $v=40$.
 
     We can confirm  $x = 7(-39) + 3(40) \equiv 107 \pmod{130}$ is a solution.
     In fact, the set of all solutions is $ \set{ x | x \equiv 107 \pmod {130}} $.
@@ -271,7 +276,7 @@ Note we find the $c_i$ by Euclid's algorithm, so this is constructive.
 \end{cor}
 
 \begin{proof}
-    $(a, M) = 1 \Leftrightarrow \forall i, (a, m_i)=1$. So by \hyperlink{thm:crt}{Chinese Remainder Theorem}, we have a bijection
+    $(a, M) = 1 \Leftrightarrow \forall i, (a, m_i)=1$. So by the \hyperlink{thm:crt}{Chinese Remainder Theorem}, we have a bijection
     \begin{equation*}
         \set{ 1 \leq x \leq M | (x, M) = 1} \stackrel{\sim}{\longleftrightarrow} \set{ (a_1, \dotsc, a_k | 1 \leq a_i \leq m_i, (a_i, m_i) = 1 }
     \end{equation*} So
@@ -281,7 +286,7 @@ Note we find the $c_i$ by Euclid's algorithm, so this is constructive.
 
 Algebraic aside: We can write thus in terms of the rings $R_i = \Z / m_i \Z$.
 
-\begin{defi}[Product Ring]
+\begin{defi}[Product ring]
     The \textbf{product ring} is
     \begin{equation*}
         R_1 \times \dotsb \times R_k = \set{(r_1, \dotsc, r_k) | r_i \in R_i }
@@ -293,8 +298,8 @@ Algebraic aside: We can write thus in terms of the rings $R_i = \Z / m_i \Z$.
     Take $M = \prod m_i$, with $ m_i$ pairwise coprime.
     The map
     \begin{align*}
-       \Theta : \Z/M\Z &\to \Z/m_1\Z \times \cdots \times \Z / m_k \Z \\
-                       a + M \Z &\mapsto (a + m_1 \Z, \dotsc , a + m_k \Z )
+        \Theta : \Z/M\Z &\longrightarrow \Z/m_1\Z \times \cdots \times \Z / m_k \Z \\
+                       a + M \Z &\longmapsto (a + m_1 \Z, \dotsc , a + m_k \Z )
     \end{align*}
     is an isomorphism of rings.
 \end{nthm}
@@ -362,7 +367,7 @@ Algebraic aside: We can write thus in terms of the rings $R_i = \Z / m_i \Z$.
                             &= \prod_i p_i^{k_i} \left(1 - \frac{1}{p_i}\right) \\
                             &= n \prod_i \left(1 - \frac{1}{p_i} \right)
             \end{align*}
-        \item By the previous \cref{lem:2_4}, the left hand side is multiplicative. The right hand side is obviously multiplicative, so it is enough to prove for $n = p^k$.
+        \item By \cref{lem:2_4}, the left hand side is multiplicative. The right hand side is obviously multiplicative, so it is enough to prove for $n = p^k$.
             \begin{align*}
                 \sum_{d \mid n} \varphi(d) &= \varphi(1) + \varphi(p) + \dotsb + \varphi(p^k) \\
                                        &= 1 + (p - 1) + (p^2 - p) + \dotsb + (p^k - p^{k-1}) \\
@@ -508,7 +513,7 @@ There are many unsolved problems about \hyperlink{def:primRoot}{primitive roots}
 \begin{enumerate}
     \item Artin's Primitive Root conjecture:
 
-        Fix $g \geq 2$. Then there eixst infinitely many $p$ for which $g$ is a primitive root mod $p$ (say $g$ is prime).
+        Fix $g \geq 2$. Then there exist infinitely many $p$ for which $g$ is a primitive root mod $p$ (say $g$ is prime).
         Even the case $g=2$ is unknown.
         From analytic number theory, it is known there are infinitely many $p$ for which one of $2, 3, 5$ is a primitive root.
     \item How large is the smallest primitive root mod $p$?
@@ -528,7 +533,7 @@ So, $(\Z/2^n \Z)^*$ is not cyclic for $n \geq 3$ since a generator would map to 
 \end{nthm}
 
 \begin{proof}
-    The proof is deferred until \cpageref{pf:2.9}
+    The proof is deferred until \cpageref{pf:2.9}.
 \end{proof}
 
 \begin{nlemma}\label{lem:2_10}
@@ -605,6 +610,8 @@ We can return and prove \cref{thm:2.9}.
     \end{enumerate}
 \end{remark}
 
+\clearpage
+
 \section{Quadratic residues}
 Take $p > 2$ an odd prime. If $a \in \Z$, we know $x^2 \equiv a \pmod{p}$ has $\leq 2$ solutions mod $p$.
 
@@ -631,7 +638,7 @@ the quadratic resides mod $7$ are $\{1, 2, 4\}$.
 \begin{proof}[Proof 1]
     Consider
     \begin{align*}
-        (\Z / p \Z)^* &\xrightarrow{\sigma} (\Z/p\Z)^* \\
+        (\Z / p \Z)^* \xrightarrow{\sigma} (\Z/p\Z)^* \\
         x &\mapsto x^2 \pmod{p}
     \end{align*}
     $\sigma(x) = \sigma(y) \iff x^2 \equiv y^2 \pmod{p} \iff (x-y)(x+y) \equiv 0 \pmod{p} \iff x \equiv \pm y \pmod{p}$.
@@ -647,8 +654,6 @@ the quadratic resides mod $7$ are $\{1, 2, 4\}$.
     \end{align*}
     since $g^{p-1} = 1$ and $g^{p+1} = g^2$, and so on, hence there are $\frac{p-1}{2}$ elements.
 \end{proof}
-
-\newcommand{\legendre}[2]{\genfrac{(}{)}{}{}{#1}{#2}}
 
 \begin{defi}
     The \textbf{Legendre symbol} of $a \pmod{p}$ ($p$ an odd prime, $a \in \Z$) is
@@ -669,14 +674,14 @@ the quadratic resides mod $7$ are $\{1, 2, 4\}$.
 \end{lemma}
 
 \begin{remark}
-    $\legendre{a}{p} \in \{0, \pm 1\}$ which is a set of $3$ \emph{distinct} integers mod $p$ as $p > 2$. So the congruence in the lemma determines $\legendre{a}{p}$ completely.
+    $\legendre{a}{p} \in \{0, \pm 1\}$ which is a set of $3$ distinct integers mod $p$ as $p > 2$. So the congruence in the lemma determines $\legendre{a}{p}$ completely.
 \end{remark}
 
 \begin{proof}
-    If $p \mid a$, obvious. Suppose $(a, p) = 1$. Then $a^{p-1} = (a^{\frac{p-1}{2}})^2 \equiv 1 \pmod{p}$.
+    If $p \mid a$, obvious. Suppose $(a, p) = 1$. Then $a^{p-1} = \left(a^{\frac{p-1}{2}}\right)^2 \equiv 1 \pmod{p}$.
     Hence $a^{\frac{p-1}{2}} \equiv \pm 1 \pmod{p}$. If $a \equiv x^2 \pmod{p}$, then $a^{\frac{p-1}{2}} \equiv x^{p-1} \equiv +1 \pmod{p}$.
     By \cref{lem:3.1}, this gives $\frac{p-1}{2}$ solutions of $a^{\frac{p-1}{2}} \equiv 1 \pmod{p}$.
-    So there are no more solutions, ie if $\legendre{a}{p} = -1$, then $a^{\frac{p-1}{2}} \equiv -1 \pmod{p}$.
+    So there are no more solutions, that is if $\legendre{a}{p} = -1$, then $a^{\frac{p-1}{2}} \equiv -1 \pmod{p}$.
 \end{proof}
 
 \begin{ncor}\label{cor:3.2}
@@ -739,7 +744,7 @@ This will prove
 \end{lemma}
 
 \begin{proof}
-    $1 \leq j \leq \frac{p-1}{2}$. Write $aj \equiv \epsilon_j c_j \pmod{p}$ with $1 \leq c_j \leq \frac{p-1}{2}$ and $\epsilon_j \in \{\pm 1\}$ (by reducing $a_j$ mod $p$ into the interval $(-\frac{p}{2}, \frac{p}{2})$).
+    $1 \leq j \leq \frac{p-1}{2}$. Write $aj \equiv \epsilon_j c_j \pmod{p}$ with $1 \leq c_j \leq \frac{p-1}{2}$ and $\epsilon_j \in \{\pm 1\}$ (by reducing $aj$ mod $p$ into the interval $(-\frac{p}{2}, \frac{p}{2})$).
 
     Now claim that if $j \neq k$ with $1 \leq j, k \leq \frac{p-1}{2}$ then $c_j \neq c_k$. Indeed if $c_j = c_k$ then $\epsilon_j aj \equiv e_k ak \pmod{p}$, that is, $j \equiv \pm k \pmod{p}$.
     As $1 \leq j, k \leq \frac{p-1}{2}$, $j + k \not\equiv 0 \pmod{p}$ so $j = k$.
@@ -750,9 +755,9 @@ This will prove
     So,
     \begin{equation*}
         a^{\frac{p-1}{2}} \cdot \left(\frac{p-1}{2}\right)!
-        = \prod_{j=1}^{\frac{p-1}{2}} (a_j)
+        = \prod_{j=1}^{\frac{p-1}{2}} (aj)
         \equiv \prod_{j=1}^{\frac{p-1}{2}} \epsilon_j c_j
-        \equiv \left(\prod_{j=1}^{\frac{k-1}{2}} \epsilon_j \right) \left(\prod_{j=1}^{\frac{k-1}{2}} c_j \right)
+        \equiv \left(\prod_{j=1}^{\frac{p-1}{2}} \epsilon_j \right) \left(\prod_{j=1}^{\frac{p-1}{2}} c_j \right)
         \equiv (-1)^\mu \cdot \frac{p-1}{2}!
     \end{equation*}
     This gives
@@ -760,4 +765,197 @@ This will prove
         \legendre{a}{p} \equiv a^{\frac{p-1}{2}} \equiv (-1)^\mu
     \end{equation*}
 \end{proof}
+
+\begin{eg}
+    Take the (trivial) special case of $a = -1$, then $-j \in (-\frac{p}{2}, 0)$ so $\epsilon_j = -1$ and $c_j = j$ for any $j$.
+    So, $\mu = \frac{p-1}{2}$ and $\legendre{-1}{p} = (-1)^\frac{p-1}{2}$.
+
+    Now consider the case of $n=2$.  Then
+    \begin{equation*}
+        \set{2j | 1 \leq j \leq \frac{p-1}{2}} = \{2, 4, \dotsc, p-3, p-1\}
+    \end{equation*}
+    If $0 < j < \frac{p}{4}$ then $2j \in \{1, \dotsc, \frac{p-1}{2}\}$ while if $\frac{p}{4} < j < \frac{p}{2}$ then $\frac{p}{2} < 2j < p$.
+    So,
+    \begin{align*}
+        \mu &= \# \set{j \in \Z | \frac{p}{4} < j < \frac{q}{2}} \\
+            &= \floor*{\frac{p}{2}} - \floor*{\frac{p}{4}}
+    \end{align*}
+
+    Split into cases:
+    \begin{align*}
+        p &= 8k+1 &&\implies &&\mu = 4k - 2k = 2k &\implies (-1)^\mu &= 1 \\
+        p &= 8k+3 &&\implies &&\mu = (4k+1) - 2k = 2k+1 &\implies (-1)^\mu &= -1 \\
+        p &= 8k+5 &&\implies &&\mu = (4k+2) - (2k+1) = 2k+1 &\implies (-1)^\mu &= -1 \\
+        p &= 8k+7 &&\implies &&\mu = (4k+3) - (2k+1) = 2k+2 &\implies (-1)^\mu &= 1 \\
+    \end{align*}
+
+    Note that $8 \mid p^2 - 1$ and that $16 \mid p^2 - 1 \iff p = 8k \pm 1$, both easy to check.
+\end{eg}
+
+\begin{ncor}\label{cor:3.4}
+    \begin{equation*}
+        \legendre{2}{p} =
+        \begin{cases}
+            +1 & p \equiv \pm 1 \pmod{8} \\
+            -1 & p \equiv \pm 3 \pmod{8}
+        \end{cases}
+        = (-1)^\frac{p^2 - 1}{8}
+    \end{equation*}
+\end{ncor}
+
+What about $a = 3, 5, \dotsc$?  For $p > 3$, consider $\set{3j | 1 \leq j \leq \frac{p-1}{2}}$.
+\begin{itemize}[label={}]
+    \item $0 < j < \frac{p}{6} \implies 0 < 3j < \frac{p}{2}$
+    \item $\frac{p}{6} < j < \frac{p}{3} \implies \frac{p}{2} < 3j < p$
+    \item $\frac{p}{3} < j < \frac{p}{2} \implies 0 < 3j - p < \frac{p}{2}$
+\end{itemize}
+So, $\mu = \#\set{j | \frac{p}{6} < j < \frac{p}{3}}$ which we can work out from looking at $p$ mod 12.
+
+For general $1 \leq a \leq p-1$, look at $\set{aj | 1 \leq j \leq \frac{p-1}{2}}$.
+Then for $k \in \Z$,
+\begin{align*}
+    kp < aj < \left(k+ \frac{1}{2}\right) p &\implies 0 < aj - kp < \frac{p}{2} & &\text{does not contribute to $\mu$} \\
+    \left(k-\frac{1}{2}\right)p < aj < kp &\implies -\frac{p}{2} < aj - kp < 0 & &\text{contributes to $\mu$}
+\end{align*}
+
+So $\mu = \sum_{k \in \Z} \#\set{j | 1 \leq j \leq \frac{p-1}{2}, (k-\frac{1}{2}) \frac{p}{a} < j < \frac{kp}{a}}$, that is $\frac{p}{2} < aj - kp < 0$.
+Note also that $0 < k < \frac{1}{2} + \frac{a j}{p} < \frac{a+1}{2}$.
+
+\begin{thm}
+    For $(p, q)$ distinct odd primes,
+    \begin{align*}
+        \legendre{p}{q} \legendre{q}{p} &= (-1)^{\frac{p-1}{2} \frac{q-1}{2}} \\
+                        \legendre{q}{p} &=
+                        \begin{cases}
+                            -\legendre{p}{q} & \text{if } p \equiv q \equiv 3 \pmod{4} \\
+                            \legendre{p}{q} & \text{otherwise}
+                        \end{cases}
+    \end{align*}
+\end{thm}
+
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $\legendre{3}{p} = (-1)^\frac{p-1}{2} \legendre{p}{3}$, but
+            \begin{align*}
+                (-1)^\frac{p-1}{2} &=
+                \begin{cases}
+                    +1 & p \equiv 1 \pmod{4} \\
+                    -1 & p \equiv 3 \pmod{4}
+                \end{cases}
+                \\
+                \legendre{p}{3} &=
+                \begin{cases}
+                    +1 & p \equiv 1 \pmod{3} \\
+                    -1 & p \equiv 2 \pmod{3}
+                \end{cases}
+                \\
+                \therefore \legendre{3}{p} &=
+                \begin{cases}
+                    +1 & p \equiv \pm 1 \pmod{12} \\
+                    -1 & p \equiv \pm 5 \pmod{12}
+                \end{cases}
+            \end{align*}
+        \item
+            \begin{equation*}
+                \legendre{19}{73} = \legendre{73}{19} = \legendre{16}{19} = \legendre{4^2}{19} = 1
+            \end{equation*}
+        \item
+            \begin{equation*}
+                \legendre{34}{97} = \legendre{2}{97} \legendre{17}{97}
+                = (+1) \times \legendre{97}{17}
+                = \legendre{12}{17}
+                = \legendre{3}{17} \legendre{2^2}{17}
+                \equiv -1
+            \end{equation*}
+            since $17 \equiv 5 \pmod{12}$.
+    \end{enumerate}
+\end{eg}
+
+\begin{proof}[Proof of Quadratic Reciprocity]
+    By the previous calculation from Gauss' Lemma, $\legendre{q}{p} = (-1)^\mu$
+    where
+    \begin{equation*}
+        \mu =\#\Set{(j, k) \in S | 0 < kp - jq < \frac{p}{2}}
+    \end{equation*}
+    and
+    \begin{equation*}
+        S = \Set{(j, k) | 1 \leq j \leq \frac{p-1}{2}, 1 \leq k \leq \frac{q-1}{2}}
+    \end{equation*}
+
+    By symmetry, $\legendre{p}{q} = (-1)^\nu$ where
+    \begin{equation*}
+        \nu =\#\Set{(j, k) \in S | 0 < jp - kq < \frac{p}{2}}
+    \end{equation*}
+
+    Now, $\#S = \frac{p-1}{2} \frac{q-1}{2} = \mu + \nu + \#A + \#B$ where
+    \begin{align*}
+        A = \Set{(j, k) \in S | kp - jq > \frac{p}{2}} \\
+        B = \Set{(j, k) \in S | jp - kq > \frac{p}{2}}
+    \end{align*}
+
+    If $(j, k) \in S$, write $j' = \frac{p+1}{2} - j$, $k' = \frac{q+1}{2} - k$.
+    Then $(j', k') \in S$, and
+    \begin{equation*}
+        j'q - k'p = \left(\frac{p+1}{2} - j\right) q - \left(\frac{q+1}{2} - k\right) p = \left(kp - jq - \frac{p}{2}\right) + \frac{q}{2}
+    \end{equation*}
+
+    So $(j, k) \in A \iff (j', k') \in B$, so $\#A = \#B$.
+    Hence $\frac{p-1}{2} \frac{q-1}{2} = \mu + \nu + 2 \#A$ and
+    \begin{equation*}
+        (-1)^{\frac{p-1}{2} \frac{q-1}{2}} = (-1)^{u+v} = \legendre{q}{p} \legendre{p}{q}\qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{eg}
+    \begin{align*}
+        \legendre{7411}{9283} &= -\legendre{9283}{7411} \\
+                              &= -\legendre{1872}{7411} \\
+                              &= -\legendre{2^4 \cdot 3^2 \cdot 13}{7411} \\
+                              &= -\legendre{13}{7411} \\
+                              &= -\legendre{7411}{13} \\
+                              &= -\legendre{1}{13} = -1
+    \end{align*}
+
+    The problem here is that we needed to know that 7411 was prime and factor 1872.
+    To avoid this, we will generalise the Legendre symbol to the Jacobi symbol.
+\end{eg}
+
+\begin{defi}
+    Let $n \geq 1$ be odd, and $n = p_1 \dotsm p_k$ with $p_i$ primes, not necessarily distinct.
+    The \textbf{Jacobi symbol} is
+    \begin{equation*}
+        \legendre{a}{n} = \prod_{j=1}^k \legendre{a}{p_j} \quad \text{for } a \in \Z
+    \end{equation*}
+
+    Note if $(a, n) > 1$ then $\legendre{a}{n} = 0$, and if $n=1$ then $\legendre{a}{1} = 1$.
+\end{defi}
+
+% prop 3.5
+\begin{nprop}\label{prop:3.5}
+    \begin{enumerate}[label=(\roman*)]
+        \item
+            \begin{equation*}
+                \legendre{a}{n} = \legendre{b}{n} \ \text{if} \ a \equiv b \pmod{n}
+            \end{equation*}
+        \item
+            \begin{equation*}
+                \legendre{ab}{n} = \legendre{a}{n} \legendre{b}{n}, \; \legendre{a}{mn} = \legendre{a}{m} \legendre{a}{n}
+            \end{equation*}
+    \end{enumerate}
+\end{nprop}
+
+\begin{proof}
+    \begin{enumerate}[label=(\roman*)]
+        \item
+            \begin{equation*}
+                a \equiv b \pmod{n} \implies a \equiv b \pmod{p_j} \; \forall j \implies \legendre{a}{p_j} \legendre{b}{p_j}
+            \end{equation*}
+        \item
+            \begin{equation*}
+                \legendre{ab}{p_j} = \legendre{a}{p_j} \legendre{b}{p_j} \; \forall j
+            \end{equation*}
+            This proves the first equation, while the second follows by definition.
+\end{proof}
+
 \end{document}
