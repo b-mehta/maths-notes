@@ -821,7 +821,7 @@ Then for $k \in \Z$,
 So $\mu = \sum_{k \in \Z} \#\set{j | 1 \leq j \leq \frac{p-1}{2}, (k-\frac{1}{2}) \frac{p}{a} < j < \frac{kp}{a}}$, that is $\frac{p}{2} < aj - kp < 0$.
 Note also that $0 < k < \frac{1}{2} + \frac{a j}{p} < \frac{a+1}{2}$.
 
-\begin{thm}
+\begin{thm}[Quadratic Reciprocity]\label{thm:qr}
     For $(p, q)$ distinct odd primes,
     \begin{align*}
         \legendre{p}{q} \legendre{q}{p} &= (-1)^{\frac{p-1}{2} \frac{q-1}{2}} \\
@@ -921,7 +921,7 @@ Note also that $0 < k < \frac{1}{2} + \frac{a j}{p} < \frac{a+1}{2}$.
     To avoid this, we will generalise the Legendre symbol to the Jacobi symbol.
 \end{eg}
 
-\begin{defi}
+\begin{defi}[Jacobi symbol]\hypertarget{def:jacobi}
     Let $n \geq 1$ be odd, and $n = p_1 \dotsm p_k$ with $p_i$ primes, not necessarily distinct.
     The \textbf{Jacobi symbol} is
     \begin{equation*}
@@ -942,6 +942,14 @@ Note also that $0 < k < \frac{1}{2} + \frac{a j}{p} < \frac{a+1}{2}$.
             \begin{equation*}
                 \legendre{ab}{n} = \legendre{a}{n} \legendre{b}{n}, \; \legendre{a}{mn} = \legendre{a}{m} \legendre{a}{n}
             \end{equation*}
+        \item
+            \begin{equation*}
+                \legendre{-1}{n} = (-1)^\frac{n-1}{2}
+            \end{equation*}
+        \item
+            \begin{equation*}
+                \legendre{2}{n} = (-1)^\frac{n^2-1}{8}
+            \end{equation*}
     \end{enumerate}
 \end{nprop}
 
@@ -956,12 +964,157 @@ Note also that $0 < k < \frac{1}{2} + \frac{a j}{p} < \frac{a+1}{2}$.
                 \legendre{ab}{p_j} = \legendre{a}{p_j} \legendre{b}{p_j} \; \forall j
             \end{equation*}
             This proves the first equation, while the second follows by definition.
+        \item This is true if $n$ is prime, so by part (ii) it is enough to show that if $m, n \geq 1$ are odd then
+            \begin{equation*}
+                (-1)^\frac{m-1}{2} \cdot (-1)^\frac{n-1}{2} = (-1)^\frac{mn-1}{2}.
+            \end{equation*}
+            Indeed, $(m-1)(n-1) \equiv 0 \pmod{4}$, so $mn-1 \equiv m+n-2 \pmod{4}$ and hence
+            \begin{equation*}
+                \frac{mn-1}{2} \equiv \frac{m-1}{2} + \frac{n-1}{2} \pmod{2}
+            \end{equation*}
+        \item Similarly to (iii), only need to show that for $m, n \geq 1$ odd
+            \begin{equation*}
+                (-1)^\frac{m-1}{2} \cdot (-1)^\frac{n-1}{2} = (-1)^\frac{mn-1}{2}.
+            \end{equation*}
+            Indeed, $(m^2 - 1)(n^2 - 1) \equiv 0 \pmod{16}$ so $m^2 n^2 - 1 \equiv m^2 + n^2 - 2 \pmod{16}$, hence
+            \begin{equation*}
+                \frac{m^2n^2-1}{8} \equiv \frac{m^2-1}{8} + \frac{n^2-1}{8} \pmod{2}
+            \end{equation*}
     \end{enumerate}
 \end{proof}
 
-% missing things!!
+\begin{nthm}[Quadratic Reciprocity for Jacobi symbol]\label{thm:3.6}
+    Let $m, n \geq 1$ odd. Then
+    \begin{equation*}
+        \legendre{m}{n} = (-1)^{\frac{m-1}{2} \frac{n-1}{2}} \legendre{n}{m}
+    \end{equation*}
+    and if $(m, n) = 1$,
+    \begin{equation*}
+        \legendre{m}{n} \legendre{n}{m} = (-1)^{\frac{m-1}{2} \frac{n-1}{2}}
+    \end{equation*}
+\end{nthm}
 
-% §4
+\begin{proof}
+    If $(m, n) > 1$, trivial since both sides are 0.
+
+    Assume that $(m, n) = 1$, with
+    \begin{equation*}
+        m = \prod_{i=1}^k p_i \ , \; n = \prod_{j=1}^l q_j \quad \text{no} \ p_i = q_j
+    \end{equation*}
+
+    Let
+    \begin{align*}
+        r &= \# \set{i | p_i \equiv 3 \pmod{4}} \\
+        s &= \# \set{j | q_j \equiv 3 \pmod{4}}
+    \end{align*}
+
+    (rest of the proof coming soon)
+    % TODO this
+\end{proof}
+
+For $p$ prime and $(a, p) = 1$, $\legendre{a}{p} = 1 \iff a$ is a square mod $p$.
+
+Generalising to the Jacobi symbol, for $n \geq 1$ odd and $(a, n) = 1$, if $a \equiv x^2 \pmod{n}$, then
+\begin{equation*}
+    \legendre{a}{n} = \legendre{x^2}{n} = \legendre{x}{n}^2 = +1
+\end{equation*}
+but the converse does not hold! For instance
+\begin{equation*}
+    \legendre{2}{15} = \legendre{2}{3} \legendre{2}{5} = (-1) (-1) = +1.
+\end{equation*}
+But $2$ is not a square mod $15$ as it is not a square mod $3$ or mod $5$.
+
+Let $n = pq$, $p \neq q$ odd primes. Then by the \hyperlink{thm:crt}{CRT} for $(a, pq) = 1$,
+\begin{equation*}
+    a \ \text{is square mod} \ pq \iff a \ \text{is a square mod $p$ and mod $q$} \iff \legendre{a}{p} = \legendre{a}{q} = 1
+\end{equation*}
+but of course
+\begin{align*}
+    \legendre{a}{pq} = 1 \iff \ &\text{either} \legendre{a}{p} = \legendre{a}{q} = +1 \\
+    & \text{or} \legendre{a}{p} = \legendre{a}{q} = +1
+\end{align*}
+
+If we know $\legendre{a}{pq} = 1$, to determine whether or not $a$ is a square mod $pq$, it is at least plausible that we need to know $p$ and $q$, i.e. we need to factor $n$.
+(This is generally believed to be true - there are cryptographic protocols which rely on the difficulty of finding out whether $a$ is a square mod $pq=n$, without knowing the factorisation of $n$.)
+
+In computing Legendre symbols, need to factor the numerator to apply \namecref{thm:qr}.
+Using \namecref{thm:3.6}, this can be avoided. For instance,
+\begin{equation*}
+    \legendre{33}{73} = \legendre{73}{33} = \legendre{7}{33} = \legendre{33}{7} = \legendre{5}{7} = -1
+\end{equation*}
+where the fact that $33 \equiv 1 \pmod{4}$ was used.
+
+At worst, we have to take out factors of 2 (since \nameref*{thm:qr} requires $m, n$ odd):
+\begin{equation*}
+    \legendre{66}{73} = \legendre{2}{73} \legendre{33}{73} = -1.
+\end{equation*}
+So, it is very similar to Euclid's algorithm.
+
+What about higher reciprocity laws?
+\begin{itemize}
+    \item Higher powers, for instance cubes mod $p$.
+        If $p \equiv 2 \pmod{3}$ then $3 \nmid p-1$, and we can easily see that everything is a cube mod $p$, since $x \mapsto x^3$ is a bijection $(\Z/p\Z)^* \to (\Z/p\Z)^*$.
+        For $p \equiv 1 \pmod{3}$, we can define a `cubic Legendre symbol' taking values in $\{0\} \cup \{1, \omega, \omega^2\}$ where $\omega$ is a cube root of unity.
+        There is a cubic reciprocity law.
+        A big success of 19\textsuperscript{th} century number theory was a proof of a reciprocity law for $n$\textsuperscript{th}, for any $n \geq 2$.
+    \item A highlight of the (early) 20\textsuperscript{th} century:
+        Recall that for $p$ odd,
+        \begin{align*}
+            \legendre{-1}{p} = 1 \iff p \equiv 1 \pmod{4} &\iff p = x^2 + y^2 \; \text{for some} x, y \in \Z \\
+            &\iff p = (x+iy)(x-iy) \in \Z[i]
+        \end{align*}
+        This can be hugely generalised to Artin's Reciprocity Law (in Algebraic Number Theory), and tells us how primes factor in more general number fields.
+\end{itemize}
+
+\begin{proof}[Another proof of infinitude of $p \equiv 3 \pmod{4}$]
+    \begin{equation*}
+        \legendre{-1}{n} =
+        \begin{cases}
+            0 & n \ \text{even} \\
+            1 & n \equiv 1 \pmod{4} \\
+            -1 & n \equiv 3 \pmod{4}
+        \end{cases}
+    \end{equation*}
+    and we know
+    \begin{equation*}
+        \legendre{-1}{n} = \prod_i \legendre{-1}{p_i} \; \text{if} \; n = \prod_i p_i
+    \end{equation*}
+
+    The series
+    \begin{equation*}
+        \sum_{n \geq 1} \legendre{-1}{n} \frac{1}{n} = \frac{1}{1} - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} \dots
+    \end{equation*}
+    is convergent as it is an alternating series.
+
+    Suppose $p \equiv 3 \pmod{4}$. Then
+    \begin{align*}
+        (1 + \frac{1}{p}) \sum_{n \geq 1} \legendre{-1}{n} \frac{1}{n}
+        &= \sum_{n \geq 1} \legendre{-1}{n} \frac{1}{n} + \sum_{m \geq 1} \legendre{-1}{m} \frac{1}{mp} \\
+        &= \sum_{n \geq 1} \legendre{-1}{n} \frac{1}{n} - \sum_{m \geq 1} \legendre{-1}{mp} \frac{1}{mp} \\
+        &= \sum_{\substack{(n, p) = 1 \\ n \geq 1}} \legendre{-1}{n} \frac{1}{n}
+    \end{align*}
+    must also be convergent.
+
+    If there are only a finite set $\{p_1, \dotsc, p_k\}$ of primes $\equiv 3 \pmod{4}$, then
+    \begin{equation}\label{eq:series}
+        \left(1 + \frac{1}{p_1}\right) \left(1 + \frac{1}{p_2}\right) \dotsm \left(1 + \frac{1}{p_k}\right) = \sum_{(n, p_1 \dotsm p_k)=1} \legendre{-1}{n} \frac{1}{n} \tag{$*$}
+    \end{equation}
+    is also convergent.
+
+    But $(n, p_1 \dots p_k) = 1$ means that every odd prime dividing $n$ is $\equiv 1 \pmod{4}$ so
+    \begin{align*}
+        \legendre{-1}{n} =
+        \begin{cases}
+            0 & n \; \text{even} \\
+            1 & n \; \text{odd}
+        \end{cases} \\
+        \implies \text{\eqref{eq:series}} = \sum_{(n, 2p_1 \dotsm p_k) = 1} \frac{1}{n}
+    \end{align*}
+    but this is divergent.
+\end{proof}
+
+\clearpage
+
 \section{Binary quadratic forms}
 Motivating problem: Which $n \geq 1$ can be written as a sum of 2 integer squares?
 
