@@ -88,7 +88,7 @@ Assume $a > b > 0$. Apply successively the \hyperlink{def:divisionAlg}{division 
 for some $k$, so $r_k \mid r_{k-1}$
 We claim $r_k = (a, b)$. Indeed, $(a, b) = (a - q_1 b, b) = (b, r_1) = (r_1, r_2) = \dots = (r_{k-1}, r_k) = r_k$.
 \begin{remark}
-     By lemma \ref{lem:pid_lemma}, $(a, b) = r a + s b$ for some integers $r, s$. Euclid's algorithm gives such $r, s$.
+     By \cref{lem:pid_lemma}, $(a, b) = r a + s b$ for some integers $r, s$. Euclid's algorithm gives such $r, s$.
 \end{remark}
 
 Recall that if $n > 1$ then $n$ is \textbf{prime} if its only positive divisors are $\{1, \dots, n\}$, otherwise $n$ is \textbf{composite}.
@@ -956,6 +956,174 @@ Note also that $0 < k < \frac{1}{2} + \frac{a j}{p} < \frac{a+1}{2}$.
                 \legendre{ab}{p_j} = \legendre{a}{p_j} \legendre{b}{p_j} \; \forall j
             \end{equation*}
             This proves the first equation, while the second follows by definition.
+    \end{enumerate}
 \end{proof}
+
+% missing things!!
+
+% §4
+\section{Binary quadratic forms}
+Motivating problem: Which $n \geq 1$ can be written as a sum of 2 integer squares?
+
+\begin{nthm}
+    Take $N \geq 1$ an integer. Then $N$ is a sum of two integer squares $\iff$ every prime factor $p \equiv 3 \pmod{4}$ if $N$ divides it to an even power.
+\end{nthm}
+
+\begin{proof}
+    ($\implies$) Suppose $N = x^2 + y^2$. Let $p \mid N$, $p \equiv 3 \pmod{4}$.
+    Then $x^2 \equiv -y^2 \pmod{p}$, so $x \equiv 0 \equiv y \pmod{p}$, since otherwise $\exists z \in \Z$ with $y z \equiv 1 \pmod{p}$ and $(xz)^1 \equiv 1 \pmod{p}$, but $\legendre{-1}{p} = -1$.
+    So $p^2 \mid N$ and $N/p^2 = (x / p)^2 + (y / p)^2$, then repeat until no prime factor $p \equiv 3 \pmod{4}$ remains.
+
+    ($\impliedby$) Write $N = M^2 N_1$, where $N_1$ is a product of distinct primes, each either 2 or $\equiv1 \pmod{4}$.
+    It suffices to show $N_1 = x^2 + y^2$.
+
+    As $(x^2 + y^2)(z^2 + t^2) = (xz - yt)^2 + (xt + yz)^2$ and $2 = 1^2 + 1^2$, it's enough to show if $p \equiv 1 \pmod{4}$ then $p = x^2 + y^2$, which is done later.
+\end{proof}
+
+There are similar results (Euler) for $x^2 + 2y^2$ and $x^2 + 3y^2$.  Meanwhile, $x^2 + 6y^2$ is complicated, we'll see why.
+
+The general problem is to consider \textbf{binary quadratic forms} with integer coefficients
+\begin{equation*}
+    f(x, y) = a x^2 + b x y + c y^2 \quad a,b,c \in \Z
+\end{equation*}
+
+What are possible sets $\set{f(x, y) | x, y \in \Z}$? Say $f$ \textbf{represents} $n \in \Z$ if $\exists x, y \in \Z$ with $f(x, y) = n$.
+
+We use the convenient shorthand $(a,b,c)$ for the form $a x^2 + b x y + c y^2$.
+A BQF is a binary quadratic form with coefficients in $\Z$, and $f$ can be written in matrix form:
+\begin{equation*}
+    a x^2 + b x y + c y^2 =
+    \begin{pmatrix}
+        x & y
+    \end{pmatrix}
+    \begin{pmatrix}
+        a & \frac{b}{2} \\
+        \frac{b}{2} & c
+    \end{pmatrix}
+    \begin{pmatrix}
+        x \\ y
+    \end{pmatrix}
+\end{equation*}
+
+\begin{eg}
+    \begin{itemize}
+        \item $f(x, y) = x^2 + y^2$ or $(1, 0, 1)$ has matrix
+            $\begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}$.
+        \item $g(x, y) = 4 x^2 + 12 xy + 10y^2$ or $(4, 12, 10)$ has matrix
+            $\begin{pmatrix}4 & 6 \\ 6 & 10\end{pmatrix}$.
+
+    \end{itemize}
+    Note $g(x, y) = (2 x + 3 y)^2 + y^2 = X^2 + Y^2 = f(X, Y)$, so $f, g$ are related by an integer change of variables.
+    But they don't represent the same set of integers - $g$ only represents even integers.
+    \begin{equation*}
+        \begin{pmatrix}
+            X \\ Y
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+        2 & 3 \\ 0 & 1
+        \end{pmatrix}
+        \begin{pmatrix}
+            x \\ y
+        \end{pmatrix}
+        \iff
+        \begin{pmatrix}
+            x \\ y
+        \end{pmatrix}
+        = \frac{1}{2}
+        \begin{pmatrix}
+            1 & -3 \\ 0 & 2
+        \end{pmatrix}
+        \begin{pmatrix}
+            X \\ Y
+        \end{pmatrix}.
+    \end{equation*}
+\end{eg}
+
+\begin{defi}
+    \leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item A \textbf{unimodular substitution} is one of the form
+            \begin{gather*}
+                X = \alpha x + \gamma y, \; Y = \beta x + \delta y, \; \alpha, \beta, \gamma, \delta \in \Z, \; \alpha \delta - \beta \gamma = 1 \\
+                \text{so} \;
+                \begin{pmatrix}
+                    X \\ Y
+                \end{pmatrix}
+                =
+                \begin{pmatrix}
+                    \alpha & \gamma \\ \beta & \delta
+                \end{pmatrix}
+                \begin{pmatrix}
+                    x \\ y
+                \end{pmatrix}
+                = A^T
+                \begin{pmatrix}
+                    x \\ y
+                \end{pmatrix}
+                \, , \;
+                A =
+                \begin{pmatrix}
+                    \alpha & \beta \\ \gamma & \delta
+                \end{pmatrix}
+            \end{gather*}
+        \item BQFs $f, g$ are \textbf{equivalent} if $f(X, Y) = g(x, y)$ for a unimodular substitution.
+    \end{enumerate}
+\end{defi}
+
+\begin{remark}
+    \leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item As $A^{-1}$ has integer entries, if $f, g$ are equivalent then they represent the same integers.
+        \item (Exercise) This is an equivalence relation
+    \end{enumerate}
+\end{remark}
+ % optional stuff
+
+\begin{defi}
+    The discriminant of $f = ax^2 + b x y + c y^2$ is $\mathrm{disc}(f) = b^2 - 4ac$.
+    Observe $\mathrm{disc}(f) = -4 \times \det\begin{pmatrix}a & \frac{b}{2} \\ \frac{b}{2} & c\end{pmatrix}$.
+\end{defi}
+
+\begin{eg}
+    \begin{align*}
+        \mathrm{disc}(1, 0, 1) &= -4 \\
+        \mathrm{disc}(4, 12, 10) &= -16
+    \end{align*}
+\end{eg}
+
+\begin{nlemma}
+    Equivalent forms have the same discriminant (so the discriminant is an invariant of BQFs under equivalence).
+\end{nlemma}
+
+\begin{proof}
+    Take identity (*):
+    \begin{align*}
+        \begin{pmatrix}
+            a' & \frac{b'}{2} \\ \frac{b'}{2} & c
+        \end{pmatrix}
+        &=
+        A
+        \begin{pmatrix}
+            a & \frac{b}{2} \\ \frac{b}{2} & c
+        \end{pmatrix}
+        A^T \\
+        \implies \mathrm{disc}(a', b', c') &= \mathrm{disc}(a, b, c) \det A \det A^T \\
+                                           &= \mathrm{disc}(a, b, c) \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{remark}
+    The converse is false: forms of the same discriminant need not be equivalent:
+    \begin{equation*}
+        f = (1, 0, 0) = x^2 + 6y^2, \; g = (2, 0, 3) = 2x^2 + 3y^2
+    \end{equation*}
+    and $\mathrm{disc}(f) = -24 = \mathrm{disc}(g)$, but $f$ represents 1 and $g$ doesn't.
+\end{remark}
+
+\begin{nlemma}
+    $\exists$ BQF $f$ with $\mathrm{disc}(f) = d \iff d \equiv 0 \ \text{or}\ 1 \pmod{4}$.
+\end{nlemma}
+ %finish!!
 
 \end{document}
