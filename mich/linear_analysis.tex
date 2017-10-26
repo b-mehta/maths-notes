@@ -805,7 +805,275 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
     But since $X$ is complete, it is not meagre, a contradiction.
 
     To show $R$ is dense, we can suppose that $Z = \bigcup_j Y_j$ with $Y_j$ nowhere dense.
-    Then $U_j = X \setminus \overline{Y_j}$ is dense and open. So, $\bigcap_j U_j$ is dense. But $R \supset \bigcap_j U_j$.
+    Then $U_j = X \setminus \overline{Y_j}$ is dense and open.
+    So, $\bigcap_j U_j$ is dense.
+    But $R \supset \bigcap_j U_j$, so $R$ is dense.
+\end{proof}
+
+\begin{cor}
+    Let $X$ be a complete metric space and $U \subset X$ open. Then $U = \emptyset$ or $U$ is of the \hyperlink{def:meagre}{second category}.
+\end{cor}
+
+\begin{proof}
+    Assume that $U$ is open and \hyperlink{def:meagre}{meagre}.  Then $X \setminus U$ is closed and residual, so dense, so $X \setminus U = X$, so $U = \emptyset$.
+\end{proof}
+
+\subsection{Principle of Uniform Boundedness}
+% is it really a subsection?
+
+\begin{thm}
+    Let $X$ be a complete metric space and let $(f_\lambda)_{\lambda \in \Lambda}$ be a family of continuous functions, $f_\lambda:X \to \R$.
+    If $(f_\lambda)_{\lambda \in \Lambda}$ is pointwise bounded:
+    \begin{equation*}
+        \forall x \in X: \; \sup_{\lambda \in \Lambda} \abs{f_\lambda(x)} < \infty
+    \end{equation*}
+    then there is a ball $B_r(x_0) \subset X$ such that $(f_\lambda)$ is uniformly bounded on $B_r(x_0)$:
+    \begin{equation*}
+        \sup_{\lambda \in \Lambda} \sup_{x \in B_r(x_0)} \abs{f_\lambda(x)} < \infty
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let
+    \begin{align*}
+        A_k &= \set{x \in X | abs{f_\lambda(x)} \leq k \ \text{for every} \ \lambda \in \Lambda} \\
+            &= \bigcap{\lambda \in \Lambda} \set{x \in X | \abs{f_\lambda(x)} \leq k}
+    \end{align*}
+    Since the $f_\lambda$ are continuous, $A_k$ is closed as the intersection of closed sets.
+    Since $(f_\lambda)$ is pointwise bounded,
+    \begin{equation*}
+        \bigcup_{n \in \N} A_n = X
+    \end{equation*}
+
+    By the \nameref{thm:baireCategory}, at least one of the $A_\lambda$ must contain a ball $B_r(x_0)$.
+    Therefore, $(f_\lambda)$ is uniformly bounded (by $K$) on that ball.
+\end{proof}
+
+\begin{thm}[Banach-Steinhaus]\label{thm:banachSteinhaus}
+
+    Let $V$ be a \hyperlink{def:banach}{Banach} space, and $W$ a \hyperlink{def:normedVectorSpace}{normed space}.
+    Let $(T_\lambda)_{\lambda \in \Lambda} \subset \mathcal{B}(V, W)$ be pointwise bounded:
+    \begin{equation*}
+        \sup_{\lambda \in \Lambda} \norm{T_\lambda v} < \infty \; \forall v \in V
+    \end{equation*}
+
+    Then $(T_\lambda)$ is uniformly bounded:
+    \begin{equation*}
+        \sup_{\lambda \in \Lambda} \norm{T_\lambda} < \infty
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let $f_\lambda: V \to \R$, $v \mapsto \norm{T_\lambda v}$.
+    Then $f_\lambda$ is continuous and $(f_\lambda)$ is pointwise bounded.
+    By the principle of uniform boundedness, ther eis a ball $B_r(v_0) \subset V$ such that $(f_\lambda)$ is uniformly bounded on $B_r(v_0)$, i.e.
+    \begin{equation*}
+        \sup_{\lambda \in \Lambda} \sup_{\norm{v - v_0} < r} \norm{T_\lambda v} < \infty
+    \end{equation*}
+    Since the $T_\lambda$ are linear, for any $v \in V$ with $\norm{v} = 1$,
+    \begin{align*}
+        \norm{T_\lambda v} &= \norm{T_\lambda(v_0 + v) - T_\lambda v_0} \\
+                           &\leq \frac{1}{r} \sup_{\lambda \in \Lambda} \sup_{\norm{v - v_0} < r} \norm{T_\lambda v} + \frac{1}{r} \sup_{\lambda} \norm{T_\lambda v_0} \\
+                           &\eqqcolon M < \infty \\
+                           & \text{independent of $v$, $\norm{v} = 1$ and $\lambda$} \\
+        \implies \sup_{\lambda \in \Lambda} \norm{T_k} \leq M
+    \end{align*}
+\end{proof}
+
+\subsection{Open Mapping Theorem}
+\begin{defi}[Open map]\hypertarget{def:openMap}
+    A map between topological spaces is \textbf{open} iff it maps open sets to open sets.
+\end{defi}
+
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $f:\R \to \R$, $x \mapsto x^2$ is continuous but not open, as e.g. $f((-1, 1)) = [0, 1)$ is not open.
+        \item $f:\R^2 \to \R$, $(x, y) \mapsto x + \mathrm{sgn}(y)$ is open but not continuous.
+    \end{enumerate}
+\end{eg}
+
+\begin{thm}[Open Mapping Theorem]\label{thm:omt}
+    Let $V, W$ be \hyperlink{def:banach}{Banach} spaces and $T \in \mathcal{B}(V, W)$.
+    \begin{enumerate}[label=(\roman*)]
+        \item If $T$ is surjective, then $T$ is open.
+        \item If $T$ is bijective, then $T^{-1} \in \mathcal{B}(W, V)$.
+    \end{enumerate}
+\end{thm}
+
+\begin{lemma}
+    Let $V$, $W$ be \hyperlink{def:normedVectorSpace}{normed spaces}. Then $T: V \to W$ is open if $T(B_1(0)) \supset B_r(0)$ for $r > 0$.
+\end{lemma}
+
+\begin{proof}
+    Let $U \subset V$ be open and $v \in U$. Using that $U$ is open, choose $\delta > 0$ such that $B_\delta(v) \subset U$. Then
+    \begin{align*}
+        T(U) &\supset T(v + B_\delta(0)) \\
+             &=Tv + \delta T(B_1(0)) \\
+             &\supset T v + \delta r B_1(0) \\
+    \end{align*}
+    Therefore $T(U)$ contains a ball around any element $Tv$, so $T$ is open.
+\end{proof}
+
+\begin{lemma}
+    Let $V$ be a \hyperlink{def:banach}{Banach space}, $W$ a \hyperlink{def:normedVectorSpace}{normed space}, $T \in \mathcal{B}(V, W)$. Then
+    \begin{equation*}
+        \overline{T(\underbrace{B_1(0)}_{\subset V})} \supset \underbrace{B_1(0)}_{\subset W} \implies T(B_1(0)) \supset B_1(0)
+    \end{equation*}
+\end{lemma}
+
+\begin{proof}
+    Let $w_0 \in B_1(0) \subset W$. We need to find $v \in B_1(0) \subset V$ such that $T v = w_0$. We construct $v$ as the limit of a Cauchy sequence.
+    Let $v_1 \in B_{\frac{1}{2}}(0) \subset V$ such that
+    \begin{equation*}\norm{Tv_1 - w_0} < \frac{1}{2}.\end{equation*}
+    This is possible since there is $\widetilde{w}_0 \in B_{\frac{1}{2}}(0)$ with $\norm{w_0 - \widetilde{w}_0} < \frac{1}{2}$ and we can find $v_1 \in B_\frac{1}{2}(0)$ such that $\norm{Tv_1 - \widetilde{w}_0}$ arbitrarily small by $\overline{T(B_\frac{1}{2}(0))} \supset B_\frac{1}{2}(0)$ (assumption rescaled).
+
+    Set $w_1 = w_0 - T v \in B_\frac{1}{2}(0)$. By induction, if $w_1, \dotsc, w_k$ and $v_1, \dotsc, v_k$ are given such that $\norm{v_i} < 2^{-i}$,
+    \begin{equation*}
+        w_i = w_{i-1} - T v_i \in B_{2^{-i}}(0) \subset W, \; 1 \leq i \leq k
+    \end{equation*}
+    then choose $v_{k+1} \in B_{2^{-k-1}}(0) \subset V$ such that
+    \begin{gather*}
+        w_{k+1} = w_k - T v_{k+1} \in B_{2^{-k-1}}(0) \\
+        \implies \sum_{k=1}^\infty \norm{v_k} < 1 \; \text{and} \; v \coloneqq \sum_{k=1}^\infty v_k \in B_1(0) \; \text{exists since $V$ is complete}
+    \end{gather*}
+    \begin{align*}
+        \implies w_0 - Tv &= \lim_{n \to \infty} (w_0 - \sum_{k=1}^n T v_k) \\
+                          &= \lim_{n \to \infty} (w_1 - \sum_{k=2}^n T v_k) \\
+                          &\vdots \\
+                          &= \lim_{n \to \infty} w_n = 0
+    \end{align*}
+    \begin{gather*}
+        \implies w_0 \in T(B_1(0)) \; \text{for any} w_0 \in B_1(0) \implies T(B_1(0)) \supset B_1(0).
+    \end{gather*}
+\end{proof}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item By the previous two lemmas, it suffices to prove that $\overline{T(B_1(0))} \supset B_r(0)$ for some $r > 0$. We use BCT to do this. Since $T$ is surjective,
+            \begin{equation*}
+                W = \bigcup_{k=1}^\infty \overline{T(B_k(0))}.
+            \end{equation*}
+
+            Since $W$ is complete, the BCT implies that there is a $k_0 \in \N$ such that $\overline{T(B_{k_0}(0))}$ has nonempty interior, ie there is $r_0 > 0$, $w_0 = T v_0$ such that
+            \begin{equation*}
+                B_{r_0}(w_0) \subset \overline{T(B_{k_0}(0))}
+            \end{equation*}
+
+            By linearity,
+            \begin{align*}
+                B_{r_0}(0) &= B_{r_0}(w_0) - T v_0 \\
+                           &\subset \overline{T(B_{r_0}(0))} - T v_0 \\
+                           &= \overline{T(B_{r_0}(-v_0))} \\
+                           &\subset \overline{T(B_{k_0 + l_0}(0))} \\
+                           &= (k_0 + l_0) \overline{T(B_1(0))} \quad \text{(if $l_0 \geq \norm{v_0}$)}
+            \end{align*}
+            \begin{equation*}
+                \implies B_r(0) \subset \overline{T(B_r(0))} \; \text{for} \; r = \frac{r_0}{k_0 + l_0}
+            \end{equation*}
+
+        \item If $T$ is bijective, that $T$ is open means that $T^{-1}$ is continuous, that is, $T^{-1} \in \mathcal{B}(W, V)$.
+    \end{enumerate}
+\end{proof}
+% more missing things
+
+\begin{eg}
+    Let $c_c = \set{(x_n) | x_n = 0 \text{ except for finitely many } n}$, with norm $\norm{x}_\infty = \max_n \abs{x_n}$.
+    Define $T: c_c \to c_c$ by $(T x)_n = \frac{x_n}{n}$.
+    Then $T$ is bounded and bijective, but $(T^{-1} x)_n = n x_n$ is unbounded.
+\end{eg}
+
+\begin{remark}
+    The basic problem in linear PDEs is the following one.
+    Given $f \in W$, $W = L^2 (\Omega)$ for some bounded nice domain $\Omega \subset \R^n$, and linear partial differential operator $L: V \to W$, say $V = H_0^2(\Omega)$ and $L = \Delta$, is there a unique solution to $Lu = f$?
+    The typical procedure is to show that for $f$ `nice', say $f \in C^\infty(\overline{\Omega})$, spanning a dense subspace of $U$, there exists a unique solution with
+    \begin{equation*}\norm{u} \leq C \norm{f}\end{equation*}
+
+    Such an a priori bound allows to solve $L u = f$ for general $f \in W$ by approximation. This implies that $L$ is surjective. The OMT (link) guarantees that this strategy works, provided that $L$ is surjective.
+\end{remark}
+
+% 3.4
+\subsection{Closed Graph Theorem}
+\begin{thm}
+    Let $V, W$ be \hyperlink{def:banach}{Banach} spaces, $T:V\to W$ linear. Then $T$ is bounded iff the graph $\Gamma = \set{(v, Tv) | v \in V} \subset V \times W$ is closed.
+\end{thm}
+
+\begin{proof}
+    Let $T$ be bounded and $(v_k, w_k) \subset \Gamma$ be a sequence such that
+    \begin{equation*}
+        v_k \to v \ , \quad w_k = Tv_k \to w.
+    \end{equation*}
+
+    Since $T$ is continuous, then $w = Tv$ so $(v, w) \in \Gamma$, so $\Gamma$ is closed.
+
+    Conversely, assume that $\Gamma$ is closed.
+    Since $V \times W$ is a Banach space with norm $\norm{(v, w)} = \norm{v} + \norm{w}$, and since $\Gamma$ is a closed subspace, $\Gamma$ itself is also a Banach space with induced norm.
+    The projections
+    \begin{align*}
+        \pi_v: \Gamma &\to V, & (v, Tv) &\mapsto v \\
+        \pi_w: \Gamma &\to W, & (v, Tv) &\mapsto Tv \\
+    \end{align*}
+    are continuous, and $\pi_v$ is a bijection. By the OMT (link), therefore $\pi_v^{-1} \in \mathcal{B}(V, \Gamma)$.
+    Thus $T = \pi_w \circ \pi_v^{-1} \in \mathcal{B}(V, W)$.
+\end{proof}
+
+\begin{remark}
+    As a consequence of the CGT, to prove that $T: V \to W$ is bounded, if $V, W$ are Banach spaces, it suffices to check
+    \begin{align*}
+        \begin{rcases}
+            v_k \to v \\
+            Tv_k \to w
+        \end{rcases}
+        \implies Tv = w
+    \end{align*}
+    instead of
+    \begin{equation*}
+        v_k \to v \implies
+        \begin{cases}
+            T v_k \to w \\
+            Tv = w.
+        \end{cases}
+    \end{equation*}
+\end{remark}
+
+\clearpage
+\section{The space of continuous functions on a compact space}
+
+\subsection{Normal topological space}
+Recall that a topological space is \textbf{Hausdorff} iff for any $x, y \in X$, $x \neq y$, there exist open neighbourhoods $U$ of $x$ and $V$ of $y$ such that $U \cap V = \emptyset$.
+
+\begin{prop}
+    Let $X$ be Hausdorff and $K_1, K_2 \subset X$ compact sets with $K_1 \cap K_2 = \emptyset$.
+    Then there exist open $U_1 \supset K_1$ and $U_2 \supset K_2$ such that $U_1 \cap U_2 = \emptyset$.
+\end{prop}
+
+\begin{proof}
+    For any $x \in K_1$ and $y \in K_2$, let $U_{xy}$ and $V_{xy}$ be open neighbourhoods such that $x \in U_{xy}$, $y \in V_{xy}$ and $U_{xy} \cap V_{xy} = \emptyset$ (using that $X$ is Hausdorff).
+
+    Then $\bigcup_{x \in K_1} U_{xy} \supset K_1$. Since $K_1$ is compact, there are finitely many points $x_1, \dotsc, x_n \in K_1$ such that $\bigcup_{i=1}^n U_{x_i y} \supset K_1$. Set
+    \begin{equation*}
+        U_y = \bigcup_{i=1}^n U_{x_i y} \; \text{and} \; V_y = \bigcap_{i=1}^n V_{x_i y}
+    \end{equation*}
+    Then $U_y \cap V_y = \emptyset$ and $U_y \supset K_1$ and $y \in V_y$. Thus $\bigcup_{y \in K_2} V_y \supset K_2$.
+
+    Again by compactness, there are $y_1, \dotsc, y_n \in K_2$ such that $\bigcup_{i=1}^n V_{y_i} \supset K_2$. Set
+    \begin{equation*}
+        V = \bigcup_{i=1}^n V_{y_i} \; \text{and} \; U = \bigcap_{i=1}^n U_{y_i}
+    \end{equation*}
+    These sets are open, $V \cap U = \emptyset$ and $U \supset K_1$ and $V \supset K_2$.
+\end{proof}
+
+\begin{defi}
+    A Hausdorff topological space is \textbf{normal} if for any closed sets $A_1, A_2 \subset X$ such that $A_1 \cap A_2 = \emptyset$, there exist open sets $U_1 \supset A_1$, $U_2 \supset A_2$ such that $U_1 \cap U_2 =\emptyset$.
+\end{defi}
+
+\begin{cor}
+    Any compact Hausdorff space is normal.
+\end{cor}
+
+\begin{proof}
+    Closed subsets of a compact space are compact.
 \end{proof}
 
 \end{document}
