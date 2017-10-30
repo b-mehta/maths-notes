@@ -1195,4 +1195,83 @@ When is a subset of $C(K)$ compact?
     \end{enumerate}
 \end{prop}
 
+\begin{proof}
+    The first two are equivalent from Analysis II and Metric and Topological spaces. It is easy to check (i) and (ii) give (iii), so we only check (iii) $\Rightarrow$ (ii).
+
+    Let $(x_n) \subset X$ be a sequence. We need to find a convergent subsequence. Let $M_n$ be a finite $\frac{1}{n}$-net for $X$.
+    Let $m_1 \in M_1$ be such that $B_1(m_1)$ contains infinitely many of the $(x_n)$. Let $n_1$ be the first $n$ such that $x_n \in B_1(m_1)$.
+    Given $m_1 \in M_1, \dotsc, m_k \in M_k$, $n_1, \dotsc, n_k$ such that $B_\frac{1}{k}(M_i)$ contains infinitely many points from $(x_n) \cap B_\frac{1}{i}(m_i)$ for all $i \leq j$ and $x_{n_l} \in \bigcap_{j=1}^l B_\frac{1}{j}(m_j)$ $\forall l < k$.
+    \begin{equation*}
+        \begin{cases}
+            m_{k+1} \text{ be such that } B_\frac{1}{k+1}(m_{k+1}) \text{ contains infinitely many points from } (x_n) \cap \bigcap_{j=1}^n B_\frac{1}{j} (m_j) \\
+            n_{k+1} \text{ be the first } n > n_k \text{ such that } x_{n_{k+1}} \in \bigcap_{i=1}^{k+1} B_{v_j} (m_j)
+        \end{cases}
+    \end{equation*}
+
+    It follows that
+    \begin{equation*}
+        d(x_{n_k}, x_{n_l}) \leq d(x_{n_k}, m_k) + d(x_{n_l}, m_k) \leq \frac{1}{k} + \frac{1}{k} \; \text{for} \; l \geq k
+    \end{equation*}
+    so $(x_{n_k})$ is a Cauchy sequence. $X$ is complete, so $(x_{n_k})_k$ converges.
+\end{proof}
+
+\begin{cor}
+    Let $X$ be a complete metric space. Then $Y \subset X$ is relatively compact (i.e. has compact closure in $X$) iff $Y$ is totally bounded.
+\end{cor}
+
+For $K$ compact, we always assume that $C(K)$ has $\norm{\cdot}_\infty$-norm, making it a Banach space.
+
+\begin{thm}[Arzel\'a-Ascoli]\hypertarget{thm:aa}
+    Let $K$ be compact Hausdorff and $\mathcal{F} \subset C(K)$. Then the following are equivalent:
+    \begin{enumerate}[label=(\roman*)]
+        \item $\mathcal{F}$ is relatively compact
+        \item $\mathcal{F}$ is bounded and equicontinuous, i.e. $\sup_{f \in \mathcal{F}} \norm{f}_\infty < \infty$ and $\forall \epsilon > 0 \; \forall x \in K$, $\exists U$ a neighbourhood of $x$ such that
+            \begin{equation*}
+                \forall f \in \mathcal{F}, \; \abs{f(x) - f(y)} < \epsilon \quad \text{for all } y \in U.
+            \end{equation*}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    % (i) -> (ii)
+    Let $\mathcal{F}$ be relatively compact, i.e. totally bounded.
+    Thus for any $\epsilon > 0$, there is $f_1, \dotsc, f_n \in \mathcal{F}$ such that $\forall f \in \mathcal{F}$
+    \begin{equation*}
+        \min_{i=1, \dotsc, n} \norm{f - f_i}_\infty < \epsilon.
+    \end{equation*}
+    Thus $\norm{f}_\infty \leq \epsilon + \max_{i = 1, \dotsc, n} \norm{f_i}_\infty = M$ for all $f \in \mathcal{F}$, so $\mathcal{F}$ is bounded.
+    Let $\epsilon > 0$ and $x \in K$. Since the $f_i$ are continuous, there exist neighbourhoods $U_i$ of $x$ such that $\abs{f_i(x) - f_i(y)} < \epsilon$ for $y \in U_i$. Let $U = \bigcap_{i=1}^k$. Then $U$ is a neighbourhood of $x$ and for $y \in U$,
+    \begin{equation*}
+        \abs{f(x) - f(y)} \leq \min_i(\abs{f(x) - f(y)} + \abs{f_i(x) - f_i(y)} + \abs{f(y) - f_i(y)}) < 3\epsilon \quad \text{for all } f \in \mathcal{F}.
+    \end{equation*}
+    Thus $f$ is equicontinuous.
+
+    % (ii) -> (i)
+    Let $\mathcal{F}$ be bounded and equicontinuous. For every $\epsilon > 0$, we construct a finite $\epsilon$-net for $\mathcal{F}$. Let $\epsilon > 0$.
+    For $x \in K$, let $U_x$ be an open neighbourhood of $x$ such that $\abs{f(x) - f(y)} < \epsilon$ if $f \in \mathcal{F}$, $y \in U_x$ (by equicontinuity). Since $K$ is compact, there are $x_1, \dotsc x_n \in K$ such that
+    \begin{equation*}
+        K = \bigcup_{i=1}^n U_{x_i}.
+    \end{equation*}
+    Since $\mathcal{F}$ is uniformly bounded, the vectors $(f(x_1), \dotsc, f(x_n)) \in \K^n$, $f \in \mathcal{F}$ are bounded in any norm on $\K^n$. We take the $\norm{\cdot}_\infty$ on $\K^n$. Thus
+    \begin{equation*}
+        F = \set{(f(x_1), f(x_2), \dotsc, f(x_n)) | f \in \mathcal{F}}
+    \end{equation*}
+    is relatively compact in $\K^n$.
+    Thus there are $f_1, \dotsc f_m \in \mathcal{F}$ such that
+    \begin{equation*}
+        \set{(f_i(x_1), \dotsc, f_i(x_n)) | 1 \leq i \leq m} \subset \K^n
+    \end{equation*}
+    is a finite $\epsilon$-net for $F$.
+
+    Now claim $f_1, \dotsc, f_m$ are a finite $3\epsilon$-net for $\mathcal{F}$.
+
+    \begin{align*}
+        \abs{f(x) - f_i(x)} &\leq \underbrace{\abs{f(x) - f(x_j)}}_{< \epsilon \text{ if } x \in U_{x_j}} +
+        \underbrace{\abs{f(x_j) - f_i(x_j)}}_{< \epsilon \text{ for some } i \in \{1, \dotsc, m\}} +
+        \underbrace{\abs{f_i(x_i) - f_i(x)}}_{< \epsilon \text{ if } U_{x_i} \ni x} \\
+            &< 3 \epsilon
+    \end{align*}
+    for some choice of $j$.
+\end{proof}
+
 \end{document}
