@@ -10,6 +10,10 @@
 % preamble
 \setcounter{section}{-1}
 \newcommand{\K}{\mathbb{K}}
+\renewcommand{\emptyset}{\varnothing}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\interior}{int}
+\usepackage{xfrac}
 % and here we go!
 
 \begin{document}
@@ -18,9 +22,13 @@
 \tableofcontents
 
 % statslab.cam.ac.uk/~rb812/teaching/la2017
+\clearpage
 \section{Introduction}
 As the name suggests, Linear Analysis is the study of linear spaces of functions, mostly infinite dimensional. In particular, properties like convexity, completeness, closedness are of interest here.
-Like any pure course, we start with a lot of definitions which come out of nowhere, and then clear them up, but functional analysis is not devoid of functional analysis. In particular, in the field of differential equations both ordinary and partial it is often useful to view the differential operators as a linear operator on a space of functions. Markov processes can also be seen using a transition operator, and dynamical processes are given by a measure preserving map, all fitting into the realm of linear maps.  Quantum mechanics to a certain extent is the study of the spectrum of certain self-adjoint linear operators on a Hilbert space, and so requires functional analysis.
+Like any pure course, we start with a lot of definitions which come out of nowhere, and then clear them up, but functional analysis is not devoid of interesting theorems.
+In particular, in the field of differential equations both ordinary and partial it is often useful to view the differential operators as a linear operator on a space of functions.
+Markov processes can also be seen using a transition operator, and dynamical processes are given by a measure preserving map, all fitting into the realm of linear maps.
+Quantum mechanics to a certain extent is the study of the spectrum of certain self-adjoint linear operators on a Hilbert space, and so requires functional analysis.
 As much as possible, examples of applications will be given briefly.
 
 \section{Normed vector spaces}
@@ -71,7 +79,7 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
 \end{notation}
 
 \begin{defi}[\hypertarget{def:convexSubs}{Convex subset}]
-    Let $V$ be a vector space and $C \subset V$ a subset.  We say that $C$ is \textbf{convex} iff $t C + (1-t) C \subset C$ for all $t \in [0, 1]$. Specifically, this means $t v + (1-t) w \in C$ for all $v, w \in C$ and $t \in [0, 1]$.
+    Let $V$ be a vector space and $C \subset V$ a subset.  We say that $C$ is \textbf{convex} if and only if $t C + (1-t) C \subset C$ for all $t \in [0, 1]$. Specifically, this means $t v + (1-t) w \in C$ for all $v, w \in C$ and $t \in [0, 1]$.
 \end{defi}
 
 \begin{fact}
@@ -125,7 +133,7 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
     We claim that $\norm{v} = \mu_{\widetilde C}(v)$ is a norm on $V$ and that the topology induced by it is the same as the original topology.
     Check the \hyperlink{def:normedVectorSpace}{norm axioms} in turn:
     \begin{enumerate}[label=\roman*.]
-        \item We clearly have positivity, and $\mu_{\widetilde C}(v) = 0$ iff $v = 0$ since $\widetilde C$ is \hyperlink{def:boundedSubs}{bounded}.
+        \item We clearly have positivity, and $\mu_{\widetilde C}(v) = 0$ if and only if $v = 0$ since $\widetilde C$ is \hyperlink{def:boundedSubs}{bounded}.
         \item Since $\widetilde C$ is \hyperlink{def:balancedSubs}{balanced},
             \begin{align*}
                 \mu_{\widetilde C} (\lambda v) &= \inf\Set{t > 0 | \lambda v \in t \widetilde C} \\
@@ -149,7 +157,7 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
 \end{proof}
 
 \begin{cor}
-    A \hyperlink{def:topologicalVectorSpace}{topological vector space} is normable iff it is \hyperlink{def:locallyConvex}{locally convex} and locally bounded (that is, there exists a bounded convex neighbourhood of $0$).
+    A \hyperlink{def:topologicalVectorSpace}{topological vector space} is normable if and only if it is \hyperlink{def:locallyConvex}{locally convex} and locally bounded (that is, there exists a bounded convex neighbourhood of $0$).
 \end{cor}
 
 \begin{defi}[\hypertarget{def:banach}{Banach space}]
@@ -164,9 +172,9 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
             \begin{equation*}
                 \norm{f}_\infty = \sup_{x \in X} \abs{f(x)} \, , \quad f \in \mathcal{B}(X)
             \end{equation*}
-        \item Let $X$ be a \emph{compact} Hausdorff space (eg. $X = [0, 1]$) and $\mathcal{C}(X)$ be the space of continuous functions on $X$. Then $\mathcal{C}(X) \subset \mathcal{B}(X)$ since every continuous function on a compact space is bounded.
+        \item Let $X$ be a \emph{compact} Hausdorff space (e.g. $X = [0, 1]$) and $\mathcal{C}(X)$ be the space of continuous functions on $X$. Then $\mathcal{C}(X) \subset \mathcal{B}(X)$ since every continuous function on a compact space is bounded.
             In addition, $\mathcal{C}(X)$ is a Banach space, as the uniform limit of a sequence of continuous functions is continuous.
-        \item Let $U \subset \R^n$ be an open, bounded subset, and let $\C^\K(\bar{U})$ be the space of $k$--times contiuously differentiable functions $f: \bar{U} \to \K$ with norm defined as follows:
+        \item Let $U \subset \R^n$ be an open, bounded subset, and let $\C^\K(\bar{U})$ be the space of $k$--times continuously differentiable functions $f: \bar{U} \to \K$ with norm defined as follows:
             \begin{equation*}
                 D^\alpha f(x) = \frac{\partial^{\abs{\alpha}}}{\partial x_1^{\alpha_1} \dots \partial x_n^{\alpha_n}} f(x)
             \end{equation*}
@@ -217,7 +225,7 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
 \end{defi}
 
 \begin{fact}
-    If $V, W$ are \hyperlink{def:normedVectorSpace}{normed vector spaces}, a linear map $T: V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} iff there is $\lambda > 0$ such that
+    If $V, W$ are \hyperlink{def:normedVectorSpace}{normed vector spaces}, a linear map $T: V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} if and only if there is $\lambda > 0$ such that
     \begin{equation*}
         T(B_1(0)) \subset B_\lambda(0) \quad \text{i.e.} \quad \norm{Tv} < \lambda \; \text{if} \; \norm{v} \le 1
     \end{equation*}
@@ -302,7 +310,7 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
     Let $V$ be a \hyperlink{def:normedVectorSpace}{normed vector space}. Then $V^*$ is a \hyperlink{def:banach}{Banach space}.
 \end{cor}
 
-\begin{defi}[\hypertarget{def:dualMap}{Dual map}]
+\begin{defi}[Dual Map]\hypertarget{def:dualMap}
     Let $V, W$ be \hyperlink{def:normedVectorSpace}{normed vector space} and $T \in \mathcal{B}(V, W)$. Then the \textbf{adjoint} or \textbf{dual map} $T^*: W^* \to V^*$ is defined by
     \begin{equation*}
         [T^* f] v = f(T v) \quad f \in W^*, \, v \in V
@@ -321,23 +329,23 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
         \implies \norm{T^* f} &\leq \norm{f} \norm{T} \\
         \implies \norm{T^*} &\leq \norm{T} \\
     \end{align*}
-    Later we will see this last inequality is in fact equality.
+    \hypertarget{pf:dualMapNorm}{Later} we will see this last inequality is in fact equality.
 \end{proof}
 
 
-\begin{defi}
+\begin{defi}[Double dual]\hypertarget{def:doubleDual}
     Let $V$ be a \hyperlink{def:normedVectorSpace}{normed vector space}. The \textbf{double dual} of $V$ is the \hyperlink{def:dualSpace}{dual space} of $V^*$, that is $V^{**} = (V^*)^*$.
 \end{defi}
 
 \begin{fact}
-    The map $\phi: V \to V^{**}, v \mapsto \widetilde v$ where $\widetilde v(f) = f(v)$, $f \in V^*$ is \hyperlink{def:boundedLinearMap}{bounded} and linear.
+    The map $\phi: V \to \hyperlink{def:doubleDual}{V^{**}}, v \mapsto \widetilde v$ where $\widetilde v(f) = f(v)$, $f \in V^*$ is \hyperlink{def:boundedLinearMap}{bounded} and linear.
 \end{fact}
 
 \begin{remark}
     The Hahn-Banach Theorem implies that $\phi$ is isometric (injective), so $V$ can be considered a subspace of $V^{**}$. In general, $\phi$ is not surjective.
 \end{remark}
 
-\begin{defi}[\hypertarget{def:reflexive}{Reflexive space}]
+\begin{defi}[Reflexive space]\hypertarget{def:reflexive}
     A Banach space is \textbf{reflexive} if $\phi$ is a bijection.
 \end{defi}
 
@@ -352,7 +360,7 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
                 \item bounded as a map $C^1 [0, 1], \; \norm{f}_\infty + \norm{f'}_\infty$ to $C^0[0, 1] \; \norm{f}_\infty$
                 \item unbounded as a map $C^1 [0, 1], \; \norm{f}_\infty$ to $C^0[0, 1], \; \norm{f}_\infty$
             \end{itemize}
-        % \item The map $\id: C^1[0, 1], \; \norm{\cdot}_\infty \to C^1[0, 1], \; \norm{\cdot}_\infty + \norm{\cdot'}_\infty$ is unbounded.
+        \item The map $\id: C^1[0, 1], \; \norm{\cdot}_\infty \to C^1[0, 1], \; \norm{\cdot}_\infty + \norm{\cdot}'_\infty$ is unbounded.
     \end{itemize}
 \end{eg}
 
@@ -394,7 +402,7 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
                 \item $S$ is compact with respect to $\norm{\cdot}_1$ topology:
                     It is closed as the inverse image of $\{1\}$ under $\norm{\cdot}_1$, and it is bounded by definition.
             \end{enumerate}
-            So, f is a continuous function on a compact set, and hence attains its minimum.
+            So, $f$ is a continuous function on a compact set, and hence attains its minimum.
             Since $\norm{\cdot}$ and $\norm{\cdot}_1$ are norms (positive definite), this minimum must be strictly positive.
             So, \begin{equation*}\norm{v} = f(v) \geq f(v_0) = c\end{equation*} for all $\norm{v}_1 = 1$.
             For arbitrary $v \in \K^n$, we have
@@ -534,7 +542,7 @@ Let $V$ be a \emph{real} vector space.
     \begin{align*}
         f(v \pm t v_1) &= t f\left(\frac vt \pm v_1\right) \\
                        &\leq t p\left(\frac vt \pm v_1\right) \\
-                       &= p(v \pm t v_1)
+                       &= p(v \pm t v_1)\qedhere
     \end{align*}
 \end{proof}
 
@@ -548,7 +556,7 @@ Let $V$ be a \emph{real} vector space.
 
 \subsection{Zorn's Lemma}
 
-\begin{defi}\hypertarget{def:poset}
+\begin{defi}[Poset]\hypertarget{def:poset}
     \leavevmode
     \begin{enumerate}[label=(\roman*)]
         \item A partially ordered set (\textbf{poset}) is a set $p$ with a binary relation $\leq$ such that for all $x, y \in P$ either $x \leq y$ or $x \nleq y$, and
@@ -589,7 +597,6 @@ Recall that in a vector space $V$, elements $v_1, \dotsc, v_k$ are linearly inde
 \end{equation*}
 
 A set $S \subset V$ is linearly independent if any \emph{finite} subset is.
-
 A basis of $V$ is a set $B \subset V$ that is linearly independent and such that every element of $V$ is a \emph{finite} linear combination of elements of $B$.
 
 \begin{prop}
@@ -608,7 +615,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
     By \hyperlink{lem:zorn}{Zorn's Lemma}, there exists a maximal element $B$ in $P$.
 
     Claim: $B$ is a basis for $V$. By definition of $P$, $B$ is linearly independent. We need to check that $B$ spans $V$.
-    Suppose otherwise. Then there exists $v \in V \setminus \span{B}$ and $B \cup \{v\}$ is linearly independent.
+    Suppose otherwise. Then there exists $v \in V \setminus \spn{B}$ and $B \cup \{v\}$ is linearly independent.
     This contradicts the maximality of $B$, so $B$ is a basis for $V$.
 \end{proof}
 
@@ -626,7 +633,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
         P = \set{(N, h) | N \subset V \text{ subspace}, \, W \subset N, h: N \to \R \text{ linear}, \, h(v) \leq p(v) \, \forall v \in N}
     \end{equation*}
 
-    For $(N, h), \, (N', h') \in P$, set $(N, h) \leq (N', h')$ iff $N \subset N'$ and $h' |_N = h$.
+    For $(N, h), \, (N', h') \in P$, set $(N, h) \leq (N', h')$ if and only if $N \subset N'$ and $h' |_N = h$.
     Then $P$ is a poset, $P \neq \emptyset$ because $(W, g) \in P$. We want to apply \hyperlink{lem:zorn}{Zorn's Lemma}.
 
     Let $(N_i, h_i)_{i \in I} \subseteq P$ be a totally ordered subset of $P$. Set
@@ -638,7 +645,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 
     By Zorn's Lemma, there is a maximal element $(M, f)$ in $P$.
 
-    Claim: $M=V$. Suppose not, then the \hyperlink{lem:smallHahn}{codimension $1$ case} gives $(M', f')$ with $(M, f) \nleq (M', f')$, a contradiction by maximality of $(M, f)$.
+    Claim: $M=V$. Suppose not, then the \hyperlink{lem:smallHahn}{codimension $1$ case} gives $(M', f')$ with $(M, f) \lneq (M', f')$, a contradiction of maximality of $(M, f)$.
 \end{proof}
 
 \begin{cor}
@@ -647,16 +654,20 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 \end{cor}
 
 \begin{proof}
-    Asume that $V$ is real. The complex case is treated on an example sheet. Then $p(v) = \norm{v}$ is sublinear and the claim follows directly from the \hyperlink{thm:hahnBanach}{general Hahn-Banach Theorem}.
+    Assume that $V$ is real. The complex case is treated on an example sheet.
+    Then $p(v) = \norm{v} \norm{g}$ is sublinear and the claim follows directly from the \hyperlink{thm:hahnBanach}{general Hahn-Banach Theorem}.
 \end{proof}
 
 \begin{cor}
-    Let $V$ be a normed vector space, and $v \in V$. Then there exists $f_v \in V^*$ such that $\norm{f_v} = 1$ and $f_v(v) = \norm{v}$.
+    Let $V$ be a normed vector space, and $v \in V$.
+    Then there exists $f_v \in V^*$ such that $\norm{f_v} = 1$ and $f_v(v) = \norm{v}$.
     Such an $f_v$ is called a \textbf{support functional} for $v$.
 \end{cor}
 
 \begin{proof}
-    Let $W = \set{t v | t \in K}$. Define $g \in W^*$ by $g(tv) = t \norm{v}$. Then $\norm{g} = 1$ and $g(v) = \norm{v}$. By \hyperlink{thm:hahnBanach}{Hahn-Banach}, there is $f = f_v$ as desired.
+    Let $W = \set{t v | t \in K}$.
+    Define $g \in W^*$ by $g(tv) = t \norm{v}$. Then $\norm{g} = 1$ and $g(v) = \norm{v}$.
+    By \hyperlink{thm:hahnBanach}{Hahn-Banach}, there is $f = f_v$ as desired.
 \end{proof}
 
 \begin{remark}
@@ -664,7 +675,9 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 \end{remark}
 
 \begin{cor}
-    Let $V$ be a normed vector space and $v \in V$. THen $v =0 \iff f(v) = 0$ for all $f \in V^*$.  In particular, $V^* \neq \{0\}$.
+    Let $V$ be a normed vector space and $v \in V$.
+    Then $v = 0 \iff f(v) = 0$ for all $f \in V^*$.
+    In particular, $V^* \neq \{0\}$.
 \end{cor}
 
 \begin{cor}
@@ -683,25 +696,31 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 \end{cor}
 
 \begin{proof}
-    We have seen $\norm{\phi(v)} \leq \norm{v}$. Now
+    First check $\norm{\phi(v)} \leq \norm{v}$:
+    \begin{align*}
+        \norm{\phi(v)} &= \sup_{\norm{f} = 1} \abs{\phi(v) f} \\
+                       &= \sup_{\norm{f} = 1} \abs{f(v)} \\
+                       &\leq \norm{v}.
+    \end{align*}
+    On the other hand,
     \begin{equation*}
-        \abs{\phi(v) f_v} = \abs{f_v(v)} = \norm{v} \implies \norm{\phi(v)} \geq \norm{v}
+        \abs{\phi(v) f_v} = \abs{f_v(v)} = \norm{v} \implies \norm{\phi(v)} \geq \norm{v}.\qedhere
     \end{equation*}
 \end{proof}
 
 \begin{cor}
     Let $V, W$ be normed spaces.
-    For any $T \in \mathcal{B}(V, W)$, the dual map $T^* \in \mathcal{B}(W^*, V^*)$ satisfies $\norm{T^*} = \norm{T}$.
+    For any $T \in \mathcal{B}(V, W)$, the \hyperlink{def:dualMap}{dual map} $T^* \in \mathcal{B}(W^*, V^*)$ satisfies $\norm{T^*} = \norm{T}$.
 \end{cor}
 
 \begin{proof}
-    We have already seen $\norm{T^*} \leq \norm{T}$. Now, with $f = f_{T_v} \in W^*$, $ [T^* f] v = f(T v) = \norm{Tv} $ so
+    We have \hyperlink{pf:dualMapNorm}{already seen} $\norm{T^*} \leq \norm{T}$. Now, with $f = f_{T_v} \in W^*$, $[T^* f] v = f(T v) = \norm{Tv} $ so
     \begin{align*}
         \norm{T^*} &= \sup_{\norm{f} \leq 1} \norm{T^* f} \\
                    &\geq \norm{T^* f_{T_v}} \\
                    &= \sup_{\norm{v} \leq 1} \norm{[T^* f_{T_v}] v} \\
                    &\geq \sup_{\norm{v} \leq 1} \norm{T v} \\
-                   &= \norm{T}
+                   &= \norm{T} \qedhere
     \end{align*}
 \end{proof}
 
@@ -717,12 +736,12 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 
 \begin{thm}[Baire Category Theorem]\hypertarget{thm:baireCategory}
     Let $X$ be a complete metric space.
-    For any sequence of open and \hyperlink{def:dense}{dense sets} $U_j \subset X$, $\bigcap_j U_j$ is dense in $X$.
+    For any sequence of open and \hyperlink{def:dense}{dense} sets $U_j \subset X$, $\bigcap_j U_j$ is dense in $X$.
 \end{thm}
 
 \begin{proof}
-    Let $U = \bigcap_j U_j$. Given any $x \in X$, $r > 0$, we need to show that $B_r(x) \cap U = \emptyset$.
-    Since $U$ is dense and open, there exists $x_1 \in X$, $r_1 \in (0, 1)$ such that
+    Let $U = \bigcap_j U_j$. Given any $x \in X$, $r > 0$, we need to show that $B_r(x) \cap U \neq \emptyset$.
+    Since $U_1$ is dense and open, there exists $x_1 \in X$, $r_1 \in (0, 1)$ such that
     \begin{equation*}
         B_r(x) \cap U_1 \supset B_{2r_1}(x_1) \supset \overline{B_{r_1}(x_1)}
     \end{equation*}
@@ -730,13 +749,13 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
     \begin{equation*}
         \overline{B_{r_2}(x_2)} \subset B_{r_1}(x_1) \cap U_2
     \end{equation*}
-    and in general $x_n \in (X)$, $r_n \in (0, 2^{-n})$ such that
+    and in general $x_n \in X$, $r_n \in (0, 2^{-n})$ such that
     \begin{equation*}
         \overline{B_{r_n}(x_n)} \subset B_{r_{n-1}}(x_{n-1}) \cap U_n
     \end{equation*}
 
     Then $r_n \to 0$ and $B_{r_1}(x_1) \supset B_{r_2}(x_2) \supset \dotsb$ so $d(x_n, x_m) < r_n \ \forall m \geq n$.
-    So, $(x_n)$ is a Cauchy sequence, and since $X$ is complete $\exists x \in X$ such that $x_n \to x$.
+    So, $(x_n)$ is a Cauchy sequence, and since $X$ is complete, $\exists y \in X$ such that $x_n \to y$.
 
     Note that $y \in \overline{B_{r_k}(x_k)} \cap U_{k+1}$ for all $k \implies y \in \bigcap_k U_k$ and $y \in B_r(x)$.
 \end{proof}
@@ -758,7 +777,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 \begin{defi}[Meagre sets]\hypertarget{def:meagre}
     Let $X$ be a metric space.
     \begin{enumerate}[label=(\roman*)]
-        \item A subset $Y \subset X$ is \textbf{nowhere dense} if $\interior(\overline{Y}) = \emptyset$, equivalently $Y$ is not dense in any ball.
+        \item A subset $Y \subset X$ is \textbf{nowhere dense} if $\interior(\overline{Y}) = \emptyset$, equivalently $Y$ is not \hyperlink{def:dense}{dense} in any ball.
         \item A subset $Z \subset X$ is \textbf{meagre} or of the \textbf{first category} if there are countably many sets $Y_j \subset X$ that are nowhere dense and $Z = \bigcup_j Y_j$.
         \item A subset $U \subset X$ is \textbf{nonmeagre} or of the \textbf{second category} if it is not meagre.
         \item A subset $R \subset X$ is \textbf{residual} if $X \setminus R$ is meagre.
@@ -781,7 +800,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
     There is similarity between the concepts of \hyperlink{def:measure}{meagre}, nonmeagre, residual with those of null sets, sets of positive measure and sets of full measure in measure theory.
     For metric spaces that are also measure spaces (for instance $\R$ with the Lebesgue measure), one could ask if there is a closer correspondence.
     The answer is negative in general.
-    There exists a meagre set $A$ in $\R$ and a Lebesgue measurable set $B$ such that $\R = A \cup B$.
+    There exists a meagre set $A$ in $\R$ and a Lebesgue null set $B$ such that $\R = A \cup B$.
 \end{remark}
 
 \begin{cor}
@@ -819,56 +838,54 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 \end{proof}
 
 \subsection{Principle of Uniform Boundedness}
-% is it really a subsection?
 
 \begin{thm}
     Let $X$ be a complete metric space and let $(f_\lambda)_{\lambda \in \Lambda}$ be a family of continuous functions, $f_\lambda:X \to \R$.
     If $(f_\lambda)_{\lambda \in \Lambda}$ is pointwise bounded:
     \begin{equation*}
-        \forall x \in X: \; \sup_{\lambda \in \Lambda} \abs{f_\lambda(x)} < \infty
+        \forall x \in X \; \sup_{\lambda \in \Lambda} \abs{f_\lambda(x)} < \infty
     \end{equation*}
     then there is a ball $B_r(x_0) \subset X$ such that $(f_\lambda)$ is uniformly bounded on $B_r(x_0)$:
     \begin{equation*}
-        \sup_{\lambda \in \Lambda} \sup_{x \in B_r(x_0)} \abs{f_\lambda(x)} < \infty
+        \sup_{\lambda \in \Lambda} \sup_{x \in B_r(x_0)} \abs{f_\lambda(x)} < \infty.
     \end{equation*}
 \end{thm}
 
 \begin{proof}
     Let
     \begin{align*}
-        A_k &= \set{x \in X | abs{f_\lambda(x)} \leq k \ \text{for every} \ \lambda \in \Lambda} \\
-            &= \bigcap{\lambda \in \Lambda} \set{x \in X | \abs{f_\lambda(x)} \leq k}
+        A_k &= \Set{x \in X | \abs{f_\lambda(x)} \leq k \ \text{for every} \ \lambda \in \Lambda} \\
+            &= \bigcap_{\lambda \in \Lambda} \Set{x \in X | \abs{f_\lambda(x)} \leq k}.
     \end{align*}
     Since the $f_\lambda$ are continuous, $A_k$ is closed as the intersection of closed sets.
     Since $(f_\lambda)$ is pointwise bounded,
     \begin{equation*}
-        \bigcup_{n \in \N} A_n = X
+        \bigcup_{n \in \N} A_n = X.
     \end{equation*}
 
-    By the \nameref{thm:baireCategory}, at least one of the $A_\lambda$ must contain a ball $B_r(x_0)$.
-    Therefore, $(f_\lambda)$ is uniformly bounded (by $K$) on that ball.
+    By the \hyperlink{thm:baireCategory}{Baire Category Theorem}, at least one of the $A_\lambda$ must contain a ball $B_r(x_0)$.
+    Therefore, $(f_\lambda)$ is uniformly bounded (by $k$) on that ball.
 \end{proof}
 
-\begin{thm}[Banach-Steinhaus]\label{thm:banachSteinhaus}
-
+\begin{thm}[Banach-Steinhaus]\hypertarget{thm:banachSteinhaus}
     Let $V$ be a \hyperlink{def:banach}{Banach} space, and $W$ a \hyperlink{def:normedVectorSpace}{normed space}.
     Let $(T_\lambda)_{\lambda \in \Lambda} \subset \mathcal{B}(V, W)$ be pointwise bounded:
     \begin{equation*}
-        \sup_{\lambda \in \Lambda} \norm{T_\lambda v} < \infty \; \forall v \in V
+        \sup_{\lambda \in \Lambda} \norm{T_\lambda v} < \infty \quad \forall v \in V.
     \end{equation*}
 
     Then $(T_\lambda)$ is uniformly bounded:
     \begin{equation*}
-        \sup_{\lambda \in \Lambda} \norm{T_\lambda} < \infty
+        \sup_{\lambda \in \Lambda} \norm{T_\lambda} < \infty.
     \end{equation*}
 \end{thm}
 
 \begin{proof}
-    Let $f_\lambda: V \to \R$, $v \mapsto \norm{T_\lambda v}$.
+    Let $f_\lambda: V \to \R$, given by $v \mapsto \norm{T_\lambda v}$.
     Then $f_\lambda$ is continuous and $(f_\lambda)$ is pointwise bounded.
-    By the principle of uniform boundedness, ther eis a ball $B_r(v_0) \subset V$ such that $(f_\lambda)$ is uniformly bounded on $B_r(v_0)$, i.e.
+    By the principle of uniform boundedness, there is a ball $B_r(v_0) \subset V$ such that $(f_\lambda)$ is uniformly bounded on $B_r(v_0)$, i.e.
     \begin{equation*}
-        \sup_{\lambda \in \Lambda} \sup_{\norm{v - v_0} < r} \norm{T_\lambda v} < \infty
+        \sup_{\lambda \in \Lambda} \sup_{\norm{v - v_0} < r} \norm{T_\lambda v} < \infty.
     \end{equation*}
     Since the $T_\lambda$ are linear, for any $v \in V$ with $\norm{v} = 1$,
     \begin{align*}
@@ -876,13 +893,13 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
                            &\leq \frac{1}{r} \sup_{\lambda \in \Lambda} \sup_{\norm{v - v_0} < r} \norm{T_\lambda v} + \frac{1}{r} \sup_{\lambda} \norm{T_\lambda v_0} \\
                            &\eqqcolon M < \infty \\
                            & \text{independent of $v$, $\norm{v} = 1$ and $\lambda$} \\
-        \implies \sup_{\lambda \in \Lambda} \norm{T_k} \leq M
+        \implies \sup_{\lambda \in \Lambda} \norm{T_k} &\leq M \qedhere
     \end{align*}
 \end{proof}
 
 \subsection{Open Mapping Theorem}
 \begin{defi}[Open map]\hypertarget{def:openMap}
-    A map between topological spaces is \textbf{open} iff it maps open sets to open sets.
+    A map between topological spaces is \textbf{open} if and only if it maps open sets to open sets.
 \end{defi}
 
 \begin{eg}
@@ -893,7 +910,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
     \end{enumerate}
 \end{eg}
 
-\begin{thm}[Open Mapping Theorem]\label{thm:omt}
+\begin{thm}[Open Mapping Theorem]\hypertarget{thm:omt}
     Let $V, W$ be \hyperlink{def:banach}{Banach} spaces and $T \in \mathcal{B}(V, W)$.
     \begin{enumerate}[label=(\roman*)]
         \item If $T$ is surjective, then $T$ is open.
@@ -902,7 +919,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 \end{thm}
 
 \begin{lemma}
-    Let $V$, $W$ be \hyperlink{def:normedVectorSpace}{normed spaces}. Then $T: V \to W$ is open if $T(B_1(0)) \supset B_r(0)$ for $r > 0$.
+    Let $V$, $W$ be \hyperlink{def:normedVectorSpace}{normed spaces}. Then $T: V \to W$ is \hyperlink{def:openMap}{open} if $T(B_1(0)) \supset B_r(0)$ for $r > 0$.
 \end{lemma}
 
 \begin{proof}
@@ -910,7 +927,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
     \begin{align*}
         T(U) &\supset T(v + B_\delta(0)) \\
              &=Tv + \delta T(B_1(0)) \\
-             &\supset T v + \delta r B_1(0) \\
+             &\supset T v + \delta r B_1(0).
     \end{align*}
     Therefore $T(U)$ contains a ball around any element $Tv$, so $T$ is open.
 \end{proof}
@@ -918,7 +935,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 \begin{lemma}
     Let $V$ be a \hyperlink{def:banach}{Banach space}, $W$ a \hyperlink{def:normedVectorSpace}{normed space}, $T \in \mathcal{B}(V, W)$. Then
     \begin{equation*}
-        \overline{T(\underbrace{B_1(0)}_{\subset V})} \supset \underbrace{B_1(0)}_{\subset W} \implies T(B_1(0)) \supset B_1(0)
+        \overline{T(\underbrace{B_1(0)}_{\subset V})} \supset \underbrace{B_1(0)}_{\subset W} \implies T(B_1(0)) \supset B_1(0).
     \end{equation*}
 \end{lemma}
 
@@ -933,32 +950,37 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
         w_i = w_{i-1} - T v_i \in B_{2^{-i}}(0) \subset W, \; 1 \leq i \leq k
     \end{equation*}
     then choose $v_{k+1} \in B_{2^{-k-1}}(0) \subset V$ such that
-    \begin{gather*}
-        w_{k+1} = w_k - T v_{k+1} \in B_{2^{-k-1}}(0) \\
-        \implies \sum_{k=1}^\infty \norm{v_k} < 1 \; \text{and} \; v \coloneqq \sum_{k=1}^\infty v_k \in B_1(0) \; \text{exists since $V$ is complete}
-    \end{gather*}
+    \begin{equation*}
+        w_{k+1} = w_k - T v_{k+1} \in B_{2^{-k-1}}(0).
+    \end{equation*}
+
+    This gives
+    \begin{equation*}
+    \sum_{k=1}^\infty \norm{v_k} < 1 \; \text{and} \; v \coloneqq \sum_{k=1}^\infty v_k \in B_1(0) \text{ exists}
+    \end{equation*}
+    since $V$ is complete.
     \begin{align*}
-        \implies w_0 - Tv &= \lim_{n \to \infty} (w_0 - \sum_{k=1}^n T v_k) \\
-                          &= \lim_{n \to \infty} (w_1 - \sum_{k=2}^n T v_k) \\
+        \implies w_0 - Tv &= \lim_{n \to \infty} \left(w_0 - \sum_{k=1}^n T v_k\right) \\
+                          &= \lim_{n \to \infty} \left(w_1 - \sum_{k=2}^n T v_k\right) \\
                           &\vdots \\
-                          &= \lim_{n \to \infty} w_n = 0
+                          &= \lim_{n \to \infty} w_n = 0 \\
+        \implies w_0 \in T(B_1(0)) &\text{ for any } w_0 \in B_1(0) \\
+        \implies T(B_1(0)) &\supset B_1(0). \qedhere
     \end{align*}
-    \begin{gather*}
-        \implies w_0 \in T(B_1(0)) \; \text{for any} w_0 \in B_1(0) \implies T(B_1(0)) \supset B_1(0).
-    \end{gather*}
 \end{proof}
 
+We now return to prove the \hyperlink{thm:omt}{Open Mapping Theorem}.
 \begin{proof}
     \leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item By the previous two lemmas, it suffices to prove that $\overline{T(B_1(0))} \supset B_r(0)$ for some $r > 0$. We use BCT to do this. Since $T$ is surjective,
+        \item By the previous two lemmas, it suffices to prove that $\overline{T(B_1(0))} \supset B_r(0)$ for some $r > 0$. We use the \hyperlink{thm:baireCategory}{Baire Category Theorem} to do this. Since $T$ is surjective,
             \begin{equation*}
                 W = \bigcup_{k=1}^\infty \overline{T(B_k(0))}.
             \end{equation*}
 
-            Since $W$ is complete, the BCT implies that there is a $k_0 \in \N$ such that $\overline{T(B_{k_0}(0))}$ has nonempty interior, ie there is $r_0 > 0$, $w_0 = T v_0$ such that
+            Since $W$ is complete, the Baire Category Theorem implies that there is a $k_0 \in \N$ such that $\overline{T(B_{k_0}(0))}$ has nonempty interior, i.e. there is $r_0 > 0$, $w_0 = T v_0$ such that
             \begin{equation*}
-                B_{r_0}(w_0) \subset \overline{T(B_{k_0}(0))}
+                B_{r_0}(w_0) \subset \overline{T(B_{k_0}(0))}.
             \end{equation*}
 
             By linearity,
@@ -970,33 +992,34 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
                            &= (k_0 + l_0) \overline{T(B_1(0))} \quad \text{(if $l_0 \geq \norm{v_0}$)}
             \end{align*}
             \begin{equation*}
-                \implies B_r(0) \subset \overline{T(B_r(0))} \; \text{for} \; r = \frac{r_0}{k_0 + l_0}
+                \implies B_r(0) \subset \overline{T(B_r(0))} \; \text{for} \; r = \frac{r_0}{k_0 + l_0}.
             \end{equation*}
 
-        \item If $T$ is bijective, that $T$ is open means that $T^{-1}$ is continuous, that is, $T^{-1} \in \mathcal{B}(W, V)$.
+        \item If $T$ is bijective, that $T$ is \hyperlink{def:openMap}{open} means that $T^{-1}$ is continuous, that is, $T^{-1} \in \mathcal{B}(W, V)$.
     \end{enumerate}
 \end{proof}
-% more missing things
 
 \begin{eg}
-    Let $c_c = \set{(x_n) | x_n = 0 \text{ except for finitely many } n}$, with norm $\norm{x}_\infty = \max_n \abs{x_n}$.
+    Let \begin{equation*}c_c = \set{(x_n) | x_n = 0 \text{ except for finitely many } n},\end{equation*} with norm $\norm{x}_\infty = \max_n \abs{x_n}$.
     Define $T: c_c \to c_c$ by $(T x)_n = \frac{x_n}{n}$.
     Then $T$ is bounded and bijective, but $(T^{-1} x)_n = n x_n$ is unbounded.
 \end{eg}
 
 \begin{remark}
     The basic problem in linear PDEs is the following one.
-    Given $f \in W$, $W = L^2 (\Omega)$ for some bounded nice domain $\Omega \subset \R^n$, and linear partial differential operator $L: V \to W$, say $V = H_0^2(\Omega)$ and $L = \Delta$, is there a unique solution to $Lu = f$?
+    Given $f \in W = L^2 (\Omega)$ for some bounded nice domain $\Omega \subset \R^n$, and a linear partial differential operator $L: V \to W$, say $V = H_0^2(\Omega)$ and $L = \Delta$, is there a unique solution to $Lu = f$?
     The typical procedure is to show that for $f$ `nice', say $f \in C^\infty(\overline{\Omega})$, spanning a dense subspace of $U$, there exists a unique solution with
-    \begin{equation*}\norm{u} \leq C \norm{f}\end{equation*}
+    \begin{equation*}\norm{u} \leq C \norm{f}.\end{equation*}
 
-    Such an a priori bound allows to solve $L u = f$ for general $f \in W$ by approximation. This implies that $L$ is surjective. The OMT (link) guarantees that this strategy works, provided that $L$ is surjective.
+    Such an \emph{a priori} bound allows to solve $L u = f$ for general $f \in W$ by approximation.
+    This implies that $L$ is surjective.
+    The \hyperlink{thm:omt}{Open Mapping Theorem} guarantees that this strategy works, provided that $L$ is surjective.
 \end{remark}
 
 % 3.4
 \subsection{Closed Graph Theorem}
-\begin{thm}
-    Let $V, W$ be \hyperlink{def:banach}{Banach} spaces, $T:V\to W$ linear. Then $T$ is bounded iff the graph $\Gamma = \set{(v, Tv) | v \in V} \subset V \times W$ is closed.
+\begin{thm}\hypertarget{thm:cgt}[Closed Graph Theorem]
+    Let $V, W$ be \hyperlink{def:banach}{Banach} spaces, $T:V\to W$ linear. Then $T$ is bounded if and only if the graph $\Gamma = \set{(v, Tv) | v \in V} \subset V \times W$ is closed.
 \end{thm}
 
 \begin{proof}
@@ -1005,21 +1028,21 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
         v_k \to v \ , \quad w_k = Tv_k \to w.
     \end{equation*}
 
-    Since $T$ is continuous, then $w = Tv$ so $(v, w) \in \Gamma$, so $\Gamma$ is closed.
+    Since $T$ is continuous, $w = Tv$ so $(v, w) \in \Gamma$, so $\Gamma$ is closed.
 
     Conversely, assume that $\Gamma$ is closed.
     Since $V \times W$ is a Banach space with norm $\norm{(v, w)} = \norm{v} + \norm{w}$, and since $\Gamma$ is a closed subspace, $\Gamma$ itself is also a Banach space with induced norm.
     The projections
     \begin{align*}
         \pi_v: \Gamma &\to V, & (v, Tv) &\mapsto v \\
-        \pi_w: \Gamma &\to W, & (v, Tv) &\mapsto Tv \\
+        \pi_w: \Gamma &\to W, & (v, Tv) &\mapsto Tv
     \end{align*}
-    are continuous, and $\pi_v$ is a bijection. By the OMT (link), therefore $\pi_v^{-1} \in \mathcal{B}(V, \Gamma)$.
+    are continuous, and $\pi_v$ is a bijection. By the \hyperlink{thm:omt}{Open Mapping Theorem}, $\pi_v^{-1} \in \mathcal{B}(V, \Gamma)$.
     Thus $T = \pi_w \circ \pi_v^{-1} \in \mathcal{B}(V, W)$.
 \end{proof}
 
 \begin{remark}
-    As a consequence of the CGT, to prove that $T: V \to W$ is bounded, if $V, W$ are Banach spaces, it suffices to check
+    As a consequence of the \hyperlink{thm:cgt}{Closed Graph Theorem}, to prove that $T: V \to W$ is bounded, if $V, W$ are Banach spaces, it suffices to check
     \begin{align*}
         \begin{rcases}
             v_k \to v \\
@@ -1041,10 +1064,10 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 \section{The space of continuous functions on a compact space}
 
 \subsection{Normal topological space}
-Recall that a topological space is \textbf{Hausdorff} iff for any $x, y \in X$, $x \neq y$, there exist open neighbourhoods $U$ of $x$ and $V$ of $y$ such that $U \cap V = \emptyset$.
+Recall that a topological space is \hypertarget{def:Hausdorff}{\textbf{Hausdorff}} if and only if for any $x, y \in X$, $x \neq y$, there exist open neighbourhoods $U$ of $x$ and $V$ of $y$ such that $U \cap V = \emptyset$.
 
 \begin{prop}
-    Let $X$ be Hausdorff and $K_1, K_2 \subset X$ compact sets with $K_1 \cap K_2 = \emptyset$.
+    Let $X$ be \hyperlink{def:Hausdorff}{Hausdorff} and $K_1, K_2 \subset X$ compact sets with $K_1 \cap K_2 = \emptyset$.
     Then there exist open $U_1 \supset K_1$ and $U_2 \supset K_2$ such that $U_1 \cap U_2 = \emptyset$.
 \end{prop}
 
@@ -1053,23 +1076,23 @@ Recall that a topological space is \textbf{Hausdorff} iff for any $x, y \in X$, 
 
     Then $\bigcup_{x \in K_1} U_{xy} \supset K_1$. Since $K_1$ is compact, there are finitely many points $x_1, \dotsc, x_n \in K_1$ such that $\bigcup_{i=1}^n U_{x_i y} \supset K_1$. Set
     \begin{equation*}
-        U_y = \bigcup_{i=1}^n U_{x_i y} \; \text{and} \; V_y = \bigcap_{i=1}^n V_{x_i y}
+        U_y = \bigcup_{i=1}^n U_{x_i y} \; \text{and} \; V_y = \bigcap_{i=1}^n V_{x_i y}.
     \end{equation*}
     Then $U_y \cap V_y = \emptyset$ and $U_y \supset K_1$ and $y \in V_y$. Thus $\bigcup_{y \in K_2} V_y \supset K_2$.
 
     Again by compactness, there are $y_1, \dotsc, y_n \in K_2$ such that $\bigcup_{i=1}^n V_{y_i} \supset K_2$. Set
     \begin{equation*}
-        V = \bigcup_{i=1}^n V_{y_i} \; \text{and} \; U = \bigcap_{i=1}^n U_{y_i}
+        V = \bigcup_{i=1}^n V_{y_i} \; \text{and} \; U = \bigcap_{i=1}^n U_{y_i}.
     \end{equation*}
     These sets are open, $V \cap U = \emptyset$ and $U \supset K_1$ and $V \supset K_2$.
 \end{proof}
 
-\begin{defi}
+\begin{defi}[Normal space]\hypertarget{def:normal}
     A Hausdorff topological space is \textbf{normal} if for any closed sets $A_1, A_2 \subset X$ such that $A_1 \cap A_2 = \emptyset$, there exist open sets $U_1 \supset A_1$, $U_2 \supset A_2$ such that $U_1 \cap U_2 =\emptyset$.
 \end{defi}
 
 \begin{cor}
-    Any compact Hausdorff space is normal.
+    Any compact \hyperlink{def:Hausdorff}{Hausdorff} space is \hyperlink{def:normal}{normal}.
 \end{cor}
 
 \begin{proof}
@@ -1080,9 +1103,10 @@ Recall that a topological space is \textbf{Hausdorff} iff for any $x, y \in X$, 
     Let $X$ be \hyperlink{def:normal}{normal}. Then for every closed $A \subset X$ and open $U \supset A$, there exist an open set $V$ and a closed set $B$ such that $A \subset V \subset B \subset U$.
 \end{fact}
 
-\begin{proof}Set $A' = X\setminus U$. Then $A$ and $A'$ are disjoint. So, since $X$ is \hyperlink{def:normal}{normal}, there are open sets $V, V' \subset X$ such that
+\begin{proof}
+    Set $A' = X\setminus U$. Then $A$ and $A'$ are disjoint. So, since $X$ is \hyperlink{def:normal}{normal}, there are open sets $V, V' \subset X$ such that
     \begin{equation*}
-        V \supset A \ , \; V' \supset A' \ , \quad V \cap V' = \emptyset.
+        V \supset A, \; V' \supset A', \; V \cap V' = \emptyset.
     \end{equation*}
     Take $B = X \setminus V'$. Then $A \subset V \subset B \subset U$.
 \end{proof}
@@ -1093,7 +1117,7 @@ Recall that a topological space is \textbf{Hausdorff} iff for any $x, y \in X$, 
         f(x) =
         \begin{cases}
             1 & x \in A \\
-            0 & x \notin U
+            0 & x \notin U.
         \end{cases}
     \end{equation*}
     % TODO diagram
@@ -1104,20 +1128,18 @@ Recall that a topological space is \textbf{Hausdorff} iff for any $x, y \in X$, 
     \begin{equation*}
         A_1 \subset U_\frac{1}{2} \subset A_\frac{1}{2} \subset U_0.
     \end{equation*}
-
     Applying this procedure again with $A_1 \subset U_\frac{1}{2}$ and with $A_\frac{1}{2} \subset U_0$,
     \begin{equation*}
         A_1 \subset U_\frac{3}{4} \subset A_\frac{3}{4} \subset U_\frac{1}{2} \subset A_\frac{1}{2} \subset U_\frac{1}{4} \subset A_\frac{1}{4} \subset U_0.
     \end{equation*}
-
     Iterating this procedure, there are open sets $U_q$ and $A_q$ for
     \begin{equation*}
         q \in \set{m 2^{-n} | n, m \in \N_0, 0 < m < 2^n} = D
     \end{equation*}
     such that
     \begin{gather*}
-        U_q \supset U_q' \ \text{and} \ A_q \supset A_q' \text{ for } q' > q \\
-        U_q \subset A_q \text{ for all } q \in D \\
+        U_q \supset U_q' \ \text{and} \ A_q \supset A_q' \text{ for } q' > q, \\
+        U_q \subset A_q \text{ for all } q \in D, \\
         A_q' \subset U_q \text{ for } q' > q.
     \end{gather*}
 
@@ -1126,8 +1148,8 @@ Recall that a topological space is \textbf{Hausdorff} iff for any $x, y \in X$, 
     Clearly $0 \leq f \leq 1$. If $x \notin U = U_0$ then $f(x) = 0$. If $x \in A = A_1$, then also $x \in U_q$ for $q \in D$ and $f(x) = 1$.
     To show continuity, note that, for $t \in R$,
     \begin{align*}
-        \set{x | f(x) > t} = \bigcup_{q > t} U_q \text{ is open} \\
-        \set{x | f(x) < t} = \bigcup_{q > t} X \setminus A_q \text{ is open}.
+        \set{x | f(x) > t} &= \bigcup_{q > t} U_q \text{ is open} \\
+        \set{x | f(x) < t} &= \bigcup_{q > t} X \setminus A_q \text{ is open}.
     \end{align*}
     Thus, the preimage of any open interval is open. Thus $f$ is continuous.
 \end{proof}
@@ -1145,11 +1167,13 @@ Recall that a topological space is \textbf{Hausdorff} iff for any $x, y \in X$, 
 \end{proof}
 
 \begin{cor}
-    Let $K$ be a compact Hausdorff space. Then $C(K)$ separates points, i.e., for all $x, y \in K \, , \; x \equiv y$, there is $f \in C(K)$ such that $f(x) \neq f(y)$.
+    Let $K$ be a compact \hyperlink{def:Hausdorff}{Hausdorff} space.
+    Then $C(K)$ separates points, i.e., for all $x, y \in K, \; x \neq y$, there is $f \in C(K)$ such that $f(x) \neq f(y)$.
 \end{cor}
 
 \begin{thm}[Tietze-Urysohn Extension Theorem]\hypertarget{thm:urysohnExt}
-    Let $X$ be normal, $A \subset X$ be closed. $g: A \to \K$ continuous. Then there exists a continuous extension $f: X \to \K$ such that $f|_A = g$ and $\norm{f}_\infty \leq \norm{g}_\infty$ (if $\norm{g} < \infty$)
+    Let $X$ be \hyperlink{def:normal}{normal}, $A \subset X$ be closed, $g: A \to \K$ continuous.
+    Then there exists a continuous extension $f: X \to \K$ such that $f|_A = g$ and $\norm{f}_\infty \leq \norm{g}_\infty$ (if $\norm{g} < \infty$)
 \end{thm}
 
 \begin{proof}We first assume that $g$ takes values in $[0, 1]$. Let $g_0 = g$.
@@ -1161,22 +1185,22 @@ Recall that a topological space is \textbf{Hausdorff} iff for any $x, y \in X$, 
     Let $g_1 = g_0 - h_0|_A$. Then $g_1(x) \in [0, \frac{2}{3}]$ for $x \in A$.
     By induction, assume that $g_i: A \to [0, (\frac{2}{3})^i]$ is given and set
     \begin{equation*}
-        A_i = g_i^{-1} ([0, (\frac{2}{3})^8 \frac{1}{3}]) \quad B_i = g_i^{-1} ([(\frac{2}{3})^i \frac{2}{3}, (\frac{2}{3})^i ])
+        A_i = g_i^{-1} \left(\left[0, \left(\tfrac{2}{3}\right)^i \tfrac{1}{3}\right]\right) \quad B_i = g_i^{-1} \left(\left[\left(\tfrac{2}{3}\right)^i \tfrac{2}{3}, \left(\tfrac{2}{3}\right)^i \right]\right)
     \end{equation*}
-    and a continuous function $h_i|A_i = 0$ and $h_i|B_i = \frac{1}{3} (\frac{2}{3})^i$. Set $g_{i+1} = g_i - h_i|A$, so
+    and a continuous function $h_i|A_i = 0$ and $h_i|B_i = \frac{1}{3} (\frac{2}{3})^i$. Set $g_{i+1} = g_i - h_i|_A$, so
     \begin{equation*}
-        g = g_0 = \sum_{i=0}^\infty h_i|A \text{ uniformly on } A.
+        g = g_0 = \sum_{i=0}^\infty h_i|_A \text{ uniformly on } A.
     \end{equation*}
     Set $\widetilde{f} = \sum_{i=0}^\infty h_i$ uniformly on X, so $\widetilde{f}$ is continuous and $\norm{f}_\infty \leq 1$.
 
     If $g$ takes values in $\R$ but is not bounded, we can apply the above to $\frac{1}{2} + \frac{1}{\pi} \arctan \circ g$ which does take values in $[0, 1]$ to obtain an extension $\widetilde{f}$.
 
-    If $g$ gakes values in $\C$, we apply this seaprately to the real and imagineary parts to obtain an extension $\widetilde{f}: X \to \C$, we apply this separately to the real and imaginary parts to obtain an extension $\widetilde{f}:X \to \C$.
+    If $g$ takes values in $\C$, we apply this separately to the real and imaginary parts to obtain an extension $\widetilde{f}:X \to \C$.
     Finally, define
     \begin{equation*}
         \begin{cases}
             \widetilde{f}(x) & \text{if } \abs{\widetilde{f}(x)} \leq \norm{g}_\infty \\
-            e^{i \arg \widetilde{f(x)}} \norm{g}_\infty & \text{otherwise}
+            e^{i \arg \widetilde{f(x)}} \norm{g}_\infty & \text{otherwise.}
         \end{cases}
     \end{equation*}
 
@@ -1195,83 +1219,85 @@ When is a subset of $C(K)$ compact?
     \end{enumerate}
 \end{prop}
 
-\begin{proof}
-    The first two are equivalent from Analysis II and Metric and Topological spaces. It is easy to check (i) and (ii) give (iii), so we only check (iii) $\Rightarrow$ (ii).
+% to be fixed up
 
-    Let $(x_n) \subset X$ be a sequence. We need to find a convergent subsequence. Let $M_n$ be a finite $\frac{1}{n}$-net for $X$.
-    Let $m_1 \in M_1$ be such that $B_1(m_1)$ contains infinitely many of the $(x_n)$. Let $n_1$ be the first $n$ such that $x_n \in B_1(m_1)$.
-    Given $m_1 \in M_1, \dotsc, m_k \in M_k$, $n_1, \dotsc, n_k$ such that $B_\frac{1}{k}(M_i)$ contains infinitely many points from $(x_n) \cap B_\frac{1}{i}(m_i)$ for all $i \leq j$ and $x_{n_l} \in \bigcap_{j=1}^l B_\frac{1}{j}(m_j)$ $\forall l < k$.
-    \begin{equation*}
-        \begin{cases}
-            m_{k+1} \text{ be such that } B_\frac{1}{k+1}(m_{k+1}) \text{ contains infinitely many points from } (x_n) \cap \bigcap_{j=1}^n B_\frac{1}{j} (m_j) \\
-            n_{k+1} \text{ be the first } n > n_k \text{ such that } x_{n_{k+1}} \in \bigcap_{i=1}^{k+1} B_{v_j} (m_j)
-        \end{cases}
-    \end{equation*}
-
-    It follows that
-    \begin{equation*}
-        d(x_{n_k}, x_{n_l}) \leq d(x_{n_k}, m_k) + d(x_{n_l}, m_k) \leq \frac{1}{k} + \frac{1}{k} \; \text{for} \; l \geq k
-    \end{equation*}
-    so $(x_{n_k})$ is a Cauchy sequence. $X$ is complete, so $(x_{n_k})_k$ converges.
-\end{proof}
-
-\begin{cor}
-    Let $X$ be a complete metric space. Then $Y \subset X$ is relatively compact (i.e. has compact closure in $X$) iff $Y$ is totally bounded.
-\end{cor}
-
-For $K$ compact, we always assume that $C(K)$ has $\norm{\cdot}_\infty$-norm, making it a Banach space.
-
-\begin{thm}[Arzel\'a-Ascoli]\hypertarget{thm:aa}
-    Let $K$ be compact Hausdorff and $\mathcal{F} \subset C(K)$. Then the following are equivalent:
-    \begin{enumerate}[label=(\roman*)]
-        \item $\mathcal{F}$ is relatively compact
-        \item $\mathcal{F}$ is bounded and equicontinuous, i.e. $\sup_{f \in \mathcal{F}} \norm{f}_\infty < \infty$ and $\forall \epsilon > 0 \; \forall x \in K$, $\exists U$ a neighbourhood of $x$ such that
-            \begin{equation*}
-                \forall f \in \mathcal{F}, \; \abs{f(x) - f(y)} < \epsilon \quad \text{for all } y \in U.
-            \end{equation*}
-    \end{enumerate}
-\end{thm}
-
-\begin{proof}
-    % (i) -> (ii)
-    Let $\mathcal{F}$ be relatively compact, i.e. totally bounded.
-    Thus for any $\epsilon > 0$, there is $f_1, \dotsc, f_n \in \mathcal{F}$ such that $\forall f \in \mathcal{F}$
-    \begin{equation*}
-        \min_{i=1, \dotsc, n} \norm{f - f_i}_\infty < \epsilon.
-    \end{equation*}
-    Thus $\norm{f}_\infty \leq \epsilon + \max_{i = 1, \dotsc, n} \norm{f_i}_\infty = M$ for all $f \in \mathcal{F}$, so $\mathcal{F}$ is bounded.
-    Let $\epsilon > 0$ and $x \in K$. Since the $f_i$ are continuous, there exist neighbourhoods $U_i$ of $x$ such that $\abs{f_i(x) - f_i(y)} < \epsilon$ for $y \in U_i$. Let $U = \bigcap_{i=1}^k$. Then $U$ is a neighbourhood of $x$ and for $y \in U$,
-    \begin{equation*}
-        \abs{f(x) - f(y)} \leq \min_i(\abs{f(x) - f(y)} + \abs{f_i(x) - f_i(y)} + \abs{f(y) - f_i(y)}) < 3\epsilon \quad \text{for all } f \in \mathcal{F}.
-    \end{equation*}
-    Thus $f$ is equicontinuous.
-
-    % (ii) -> (i)
-    Let $\mathcal{F}$ be bounded and equicontinuous. For every $\epsilon > 0$, we construct a finite $\epsilon$-net for $\mathcal{F}$. Let $\epsilon > 0$.
-    For $x \in K$, let $U_x$ be an open neighbourhood of $x$ such that $\abs{f(x) - f(y)} < \epsilon$ if $f \in \mathcal{F}$, $y \in U_x$ (by equicontinuity). Since $K$ is compact, there are $x_1, \dotsc x_n \in K$ such that
-    \begin{equation*}
-        K = \bigcup_{i=1}^n U_{x_i}.
-    \end{equation*}
-    Since $\mathcal{F}$ is uniformly bounded, the vectors $(f(x_1), \dotsc, f(x_n)) \in \K^n$, $f \in \mathcal{F}$ are bounded in any norm on $\K^n$. We take the $\norm{\cdot}_\infty$ on $\K^n$. Thus
-    \begin{equation*}
-        F = \set{(f(x_1), f(x_2), \dotsc, f(x_n)) | f \in \mathcal{F}}
-    \end{equation*}
-    is relatively compact in $\K^n$.
-    Thus there are $f_1, \dotsc f_m \in \mathcal{F}$ such that
-    \begin{equation*}
-        \set{(f_i(x_1), \dotsc, f_i(x_n)) | 1 \leq i \leq m} \subset \K^n
-    \end{equation*}
-    is a finite $\epsilon$-net for $F$.
-
-    Now claim $f_1, \dotsc, f_m$ are a finite $3\epsilon$-net for $\mathcal{F}$.
-
-    \begin{align*}
-        \abs{f(x) - f_i(x)} &\leq \underbrace{\abs{f(x) - f(x_j)}}_{< \epsilon \text{ if } x \in U_{x_j}} +
-        \underbrace{\abs{f(x_j) - f_i(x_j)}}_{< \epsilon \text{ for some } i \in \{1, \dotsc, m\}} +
-        \underbrace{\abs{f_i(x_i) - f_i(x)}}_{< \epsilon \text{ if } U_{x_i} \ni x} \\
-            &< 3 \epsilon
-    \end{align*}
-    for some choice of $j$.
-\end{proof}
+% \begin{proof}
+%     The first two are equivalent from Analysis II and Metric and Topological spaces. It is easy to check (i) and (ii) give (iii), so we only check (iii) $\Rightarrow$ (ii).
+%
+%     Let $(x_n) \subset X$ be a sequence. We need to find a convergent subsequence. Let $M_n$ be a finite $\frac{1}{n}$-net for $X$.
+%     Let $m_1 \in M_1$ be such that $B_1(m_1)$ contains infinitely many of the $(x_n)$. Let $n_1$ be the first $n$ such that $x_n \in B_1(m_1)$.
+%     Given $m_1 \in M_1, \dotsc, m_k \in M_k$, $n_1, \dotsc, n_k$ such that $B_\frac{1}{k}(M_i)$ contains infinitely many points from $(x_n) \cap B_\frac{1}{i}(m_i)$ for all $i \leq j$ and $x_{n_l} \in \bigcap_{j=1}^l B_\frac{1}{j}(m_j)$ $\forall l < k$.
+%     \begin{equation*}
+%         \begin{cases}
+%             m_{k+1} \text{ be such that } B_\frac{1}{k+1}(m_{k+1}) \text{ contains infinitely many points from } (x_n) \cap \bigcap_{j=1}^n B_\frac{1}{j} (m_j) \\
+%             n_{k+1} \text{ be the first } n > n_k \text{ such that } x_{n_{k+1}} \in \bigcap_{i=1}^{k+1} B_{v_j} (m_j)
+%         \end{cases}
+%     \end{equation*}
+%
+%     It follows that
+%     \begin{equation*}
+%         d(x_{n_k}, x_{n_l}) \leq d(x_{n_k}, m_k) + d(x_{n_l}, m_k) \leq \frac{1}{k} + \frac{1}{k} \; \text{for} \; l \geq k
+%     \end{equation*}
+%     so $(x_{n_k})$ is a Cauchy sequence. $X$ is complete, so $(x_{n_k})_k$ converges.
+% \end{proof}
+%
+% \begin{cor}
+%     Let $X$ be a complete metric space. Then $Y \subset X$ is relatively compact (i.e. has compact closure in $X$) if and only if $Y$ is totally bounded.
+% \end{cor}
+%
+% For $K$ compact, we always assume that $C(K)$ has $\norm{\cdot}_\infty$-norm, making it a Banach space.
+%
+% \begin{thm}[Arzel\'a-Ascoli]\hypertarget{thm:aa}
+%     Let $K$ be compact Hausdorff and $\mathcal{F} \subset C(K)$. Then the following are equivalent:
+%     \begin{enumerate}[label=(\roman*)]
+%         \item $\mathcal{F}$ is relatively compact
+%         \item $\mathcal{F}$ is bounded and equicontinuous, i.e. $\sup_{f \in \mathcal{F}} \norm{f}_\infty < \infty$ and $\forall \epsilon > 0 \; \forall x \in K$, $\exists U$ a neighbourhood of $x$ such that
+%             \begin{equation*}
+%                 \forall f \in \mathcal{F}, \; \abs{f(x) - f(y)} < \epsilon \quad \text{for all } y \in U.
+%             \end{equation*}
+%     \end{enumerate}
+% \end{thm}
+%
+% \begin{proof}
+%     % (i) -> (ii)
+%     Let $\mathcal{F}$ be relatively compact, i.e. totally bounded.
+%     Thus for any $\epsilon > 0$, there is $f_1, \dotsc, f_n \in \mathcal{F}$ such that $\forall f \in \mathcal{F}$
+%     \begin{equation*}
+%         \min_{i=1, \dotsc, n} \norm{f - f_i}_\infty < \epsilon.
+%     \end{equation*}
+%     Thus $\norm{f}_\infty \leq \epsilon + \max_{i = 1, \dotsc, n} \norm{f_i}_\infty = M$ for all $f \in \mathcal{F}$, so $\mathcal{F}$ is bounded.
+%     Let $\epsilon > 0$ and $x \in K$. Since the $f_i$ are continuous, there exist neighbourhoods $U_i$ of $x$ such that $\abs{f_i(x) - f_i(y)} < \epsilon$ for $y \in U_i$. Let $U = \bigcap_{i=1}^k$. Then $U$ is a neighbourhood of $x$ and for $y \in U$,
+%     \begin{equation*}
+%         \abs{f(x) - f(y)} \leq \min_i(\abs{f(x) - f(y)} + \abs{f_i(x) - f_i(y)} + \abs{f(y) - f_i(y)}) < 3\epsilon \quad \text{for all } f \in \mathcal{F}.
+%     \end{equation*}
+%     Thus $f$ is equicontinuous.
+%
+%     % (ii) -> (i)
+%     Let $\mathcal{F}$ be bounded and equicontinuous. For every $\epsilon > 0$, we construct a finite $\epsilon$-net for $\mathcal{F}$. Let $\epsilon > 0$.
+%     For $x \in K$, let $U_x$ be an open neighbourhood of $x$ such that $\abs{f(x) - f(y)} < \epsilon$ if $f \in \mathcal{F}$, $y \in U_x$ (by equicontinuity). Since $K$ is compact, there are $x_1, \dotsc x_n \in K$ such that
+%     \begin{equation*}
+%         K = \bigcup_{i=1}^n U_{x_i}.
+%     \end{equation*}
+%     Since $\mathcal{F}$ is uniformly bounded, the vectors $(f(x_1), \dotsc, f(x_n)) \in \K^n$, $f \in \mathcal{F}$ are bounded in any norm on $\K^n$. We take the $\norm{\cdot}_\infty$ on $\K^n$. Thus
+%     \begin{equation*}
+%         F = \set{(f(x_1), f(x_2), \dotsc, f(x_n)) | f \in \mathcal{F}}
+%     \end{equation*}
+%     is relatively compact in $\K^n$.
+%     Thus there are $f_1, \dotsc f_m \in \mathcal{F}$ such that
+%     \begin{equation*}
+%         \set{(f_i(x_1), \dotsc, f_i(x_n)) | 1 \leq i \leq m} \subset \K^n
+%     \end{equation*}
+%     is a finite $\epsilon$-net for $F$.
+%
+%     Now claim $f_1, \dotsc, f_m$ are a finite $3\epsilon$-net for $\mathcal{F}$.
+%
+%     \begin{align*}
+%         \abs{f(x) - f_i(x)} &\leq \underbrace{\abs{f(x) - f(x_j)}}_{< \epsilon \text{ if } x \in U_{x_j}} +
+%         \underbrace{\abs{f(x_j) - f_i(x_j)}}_{< \epsilon \text{ for some } i \in \{1, \dotsc, m\}} +
+%         \underbrace{\abs{f_i(x_i) - f_i(x)}}_{< \epsilon \text{ if } U_{x_i} \ni x} \\
+%             &< 3 \epsilon
+%     \end{align*}
+%     for some choice of $j$.
+% \end{proof}
 
 \end{document}
