@@ -950,4 +950,121 @@ We can use this final construction to produce splitting fields in general.
     Observe this has distinct roots, which are all of $\F \setminus \{0\}$ since $\alpha^n = 1$.
     So the minimal polynomial of $\alpha$ is \hyperlink{def:separablePoly}{separable}, and $\F = \F_p(\alpha)$ is separable over $\F_p$.
 \end{nexample}
+
+% 24/10
+
+\begin{nthm}\label{thm:2.17}
+    Any finite separable extension $K \leq M$ is a simple extension, that is, $M = K(\alpha)$ for some $\alpha$ a primitive element.
+\end{nthm}
+
+\begin{proof}
+    \paragraph{If $K$ is a finite field} then so $M$ is also finite and we can take $\alpha$ to be a generator of the multiplicative group of $M$, which is cyclic.
+
+    \paragraph{Assume $K$ is an infinite field} Since $K\leq M$ is a finite extension $M = K(\alpha_1, \alpha_2, \dotsc, \alpha_n)$ for some $\alpha_i$.
+    It's enough to show that any field $M = K(\alpha, \beta)$ with $\beta$ separable over $K$ is of the form $K(\gamma)$.
+    Take $f(t)$ and $g(t)$ to be the minimal polynomials of $\alpha$ and $\beta$ over $K$.
+    Let $L$ be the splitting field for $f(t) g(t)$ over $K(\alpha, \beta)$.
+    The distinct zeros of $f(t)$ in $L$ are $\alpha = \{\alpha_1, \dotsc, \alpha_a\}$ and of $g(t)$ are $\beta = \beta_1, \dotsc, \beta_b$.
+    By separability, $b = \deg g(t)$.
+    Choose $\lambda \in K$ such that all $\alpha_i + \lambda + \beta_j$ are distinct, which is possible since $K$ is infinite.
+    Set $\gamma = \alpha + \lambda \beta$.
+
+    Let $F(t) = f(\gamma - \lambda t) \in K(\gamma)[t]$. We have $g(\beta) = 0$ and $F(\beta) = f(\alpha) = 0$. Thus $F(t)$ and $g(t)$ have a common zero.
+
+    Any other common zero would have to be $\beta_j$ for some $j > 1$. But then $F(\beta_j) = f(\alpha + \lambda(\beta - \beta_j))$.
+    By assumption, $\alpha + \lambda(\beta - \beta_j)$ is never an $\alpha_i$ and so $F(\beta_j) \neq 0$.
+    Separability of $g(t)$ says its linear factors are all distinct, so $(t-\beta)$ is a highest common factor of $F(t)$ and $g(t)$ in $L[t]$.
+    % stuff
+
+    However the minimal polynomial $h(t)$ of $\beta$ over $K(\gamma)$ then divides $F(t)$ and $g(t)$ in $K(\gamma)[t]$ and hence in $L[t]$. This implies $h(t) = t - \beta$ and so $\beta \in K(\gamma)$.
+    Therefore $\alpha - \gamma - \lambda \beta \in K(\gamma)$ and so $K(\alpha, \beta) \subset K(\gamma)$ and equality holds since $\gamma \in K(\alpha, \beta)$.
+\end{proof}
+
+\begin{eg}
+    From our example in (link) chapter 1, $\Q \leq \Q(\sqrt{2}, i)$, we had intermediate subfields.
+    \begin{center}
+        \begin{tikzpicture}[node distance=2cm]
+            \node (Q)                  {$\mathbb{Q}$};
+            \node (Qi)  [above of=Q]   {$\mathbb{Q}(i)$};
+            \node (Qi2) [right of=Qi]  {$\mathbb{Q}\left(i\sqrt{2}\right)$};
+            \node (Q2)  [left of=Qi]   {$\mathbb{Q}\left(\sqrt{2}\right)$};
+            \node (Q2i) [above of=Qi]  {$\mathbb{Q}\left(i, \sqrt{2}\right)$};
+            \draw (Q)   -- (Qi2);
+            \draw (Q)   -- (Q2);
+            \draw (Q)   -- (Qi);
+            \draw (Qi2) -- (Q2i);
+            \draw (Q2)  -- (Q2i);
+            \draw (Qi)  -- (Q2i);
+        \end{tikzpicture}
+    \end{center}
+    If we follow the procedure of the proof of (2.17), $\alpha = \sqrt{2}$, $\beta = i$, $f(t) = t^2 - 2$, $g(t) = t^2 + 1$. Consider $\sqrt{2} + \lambda i$ where $\pm \sqrt{2} \pm \lambda i$ are distinct.
+    For instance $\lambda = 1$, so $\Q(\sqrt{2}, i) = \Q(\sqrt{2}+i)$.
+\end{eg}
+
+\subsection{Trace and Norm}
+
+\begin{ndef}[Trace and norm]\label{def:2.18}\hypertarget{def:trNorm}
+    Let $K \leq M$ be a finite field extension, and $\alpha \in M$. Multiplication by $\alpha$ gives a $K$-linear map $\theta_\alpha: M \to M$.
+
+    Then we define
+    \begin{itemize}[label={}]
+        \item \textbf{Trace of $\alpha$ over $K$} is given by $\Tr_{M/K}(\alpha) =$ trace of $\theta_\alpha$  $\in K$.
+        \item \textbf{Norm of $\alpha$ over $K$} is given by $\N_{M/K}(\alpha) =$ determinant of $\theta_\alpha$  $\in K$.
+    \end{itemize}
+
+    Note these are dependent on the field extension.
+\end{ndef}
+
+\begin{nthm}\label{thm:2.19}
+    With the above notation, suppose $f_\alpha(t) = t^s + a_{s-1} t^{s-1} + \dotsb + a_0$ is the minimal polynomial for $\alpha$ over $K$.
+    Let $r = \abs{M:K(\alpha)}$, then the characteristic polynomial of $\theta_\alpha$ is $(f_\alpha(t))^r$.
+
+    Note $\abs{M:K} = \abs{M:K(\alpha)} |K(\alpha) : K| = rs$.
+    Then $\Tr_{M/K} (\alpha) = -r a_{s-1}$ and $N_{M/K} = ((-1)^s a_0)^r$.
+\end{nthm}
+
+\begin{proof}
+    Regard $M$ as a $K(\alpha)$-vector space with basis $1 = \beta_1, \dotsc, \beta_r$.
+    Now take the $K$-vector space basis $1, \alpha, \alpha^2, \dotsc, \alpha^{s-1}$ of $K(\alpha)$.
+    So, $1, \alpha, \alpha^2, \dotsc, \alpha^{s-1}, \beta_2, \beta_2 \alpha, \dotsc, \beta_2 \alpha^{s-1}, \beta_3, \dotsc$ is a $K$-vector space basis for $M$.
+    Multiplication by $\alpha$ in $K(\alpha)$ is represented by matrix
+    \begin{equation*}
+        A = % stuff
+    \end{equation*}
+    an $s \times s$ matrix whose characteristic polynomial is $f_\alpha(t)$.
+
+    Multiplication by $\alpha$ in $M$ is represented by the $rs \times rs$ matrix
+    \begin{equation*}
+        10 %stuff
+    \end{equation*}
+    whose characteristic polynomial is $(f_\alpha(t))^r$.
+
+    Look at the terms of this characteristic polynomial to get the trace and norm.
+\end{proof}
+
+\begin{nthm}\label{thm:2.20}
+    Let $K \leq M$ be a finite separable field extension and $|M:K| = n$, $\alpha \in M$.
+    Let $K \leq L$ be large enough so that there are $n$ distinct $K$-homomorphisms $\sigma_1, \sigma_2, \dotsc, \sigma_n: M \to L$.
+    Then the characteristic polynomial of $\theta_\alpha:M \to M_\alpha$ (the multiplication map) is
+    $\prod_{i=1}^n (t-\sigma_i(\alpha))$ and so $\Tr_{M/K} (\alpha) = \sum_{i=1}^n \sigma_i(\alpha)$ and $N_{M/K}(\alpha) = \prod_{i=1}^n \sigma_i(\alpha)$.
+\end{nthm}
+
+\begin{proof}
+    $f_\alpha(t) = (t-\alpha_1) \dotsc (t-\alpha_s)$ in $L[t]$
+    $ = t^s + a_{s-1} t^{s-1} + \dotsc + a_0$
+    minimal polynomial of $\alpha$ over $K$.
+    (where $L$ large enough implies $f_\alpha(t)$ splits in $L$).
+    There are $s$ $K$-homomorphisms $K[\alpha] \to L$ corresponding to maps sending $\alpha$ to $\alpha_i$.
+
+    Each of these extends in $\abs{M:K(\alpha)}$ ways to give $K$-homomorphisms $M \to L$. (by separability and 2.9).
+
+
+    However each such extension of a map sending $\alpha \to \alpha_i$ still sends $\alpha \to \alpha_i$.
+    Set $r = |L:K(\alpha)|$. Thus there are $r$ maps sending $\alpha \to \alpha_i$ for each $i$.
+    Thus if the $n (=rs)$ distinct $K$-homomorphisms $M \to L$ are $\sigma_1, \dotsc, \sigma_n$, then
+    \begin{align*}
+        \sum_{i=1}^n \sigma_i(\alpha) &= r(\alpha_1 + \alpha_2 + \dotsb + \alpha_s) = -r a_{s-1} = \Tr_{M/K}(\alpha) \\
+        \prod_{i=1}^n \sigma_i(\alpha) &= ((-1)^s a_0)^n = N_{M/K}(\alpha)
+    \end{align*}
+\end{proof}
 \end{document}
