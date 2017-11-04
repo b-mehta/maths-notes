@@ -12,7 +12,7 @@
 \usepackage{ifthen}
 
 \setcounter{section}{-1}
-\usetikzlibrary{graphs,graphs.standard,positioning,decorations.pathmorphing, calc}
+\usetikzlibrary{graphs,graphs.standard,positioning,decorations.pathmorphing, calc, backgrounds, fadings}
 \tikzset{node/.style = {circle, draw=black}}
 
 \counterwithout{nthm}{section}
@@ -20,6 +20,9 @@
 \DeclareMathOperator{\ext}{ex}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\tikzfading[name=fade right,
+  left color=transparent!0, right color=transparent!100]
 % and here we go!
 
 \begin{document}
@@ -30,7 +33,7 @@
 \section{Introduction}
 
 \subsection{Preliminary}
-This course has no prerequistes, being the first course in the tripos in this field.  However, introductory facts about, say, eigenvalues and limits will be used.
+This course has no prerequisites, being the first course in the tripos in this field.  However, introductory facts about, say, eigenvalues and limits will be used.
 As usual, books are not required, but the most relevant is Modern Graph Theory, B. Bollobas.
 
 This course consists of six chapters: corresponding to paragraphs 2 to 7 in the schedules but in a different order. Paragraph 1 is introductory, and hence is split between chapters.
@@ -94,20 +97,20 @@ In this course, we make the following assumptions:
 
             Formally, we ask: In this graph, can we find a set of edges meeting each vertex precisely once?
 
-        \item Fermat equation mod p
+        \item Fermat equation mod $p$
 
             Consider the equation $x^n + y^n = z^n$. Does this have solutions mod $p$ for $p$ a prime?  Rule out trivial solutions such as $x = 0, y = z$, in particular we search for solutions in $\mathbb{Z}_p$ where $xyz \ne 0$.
             Let $G = \mathbb{Z} \setminus \{0\}$ under multiplication, and $H = \{g^n : g \in G\}$.  We can check that $H \leq G$, and that $|G : H| \leq n$, by considering the number of $n$th roots an element can have.
             So, $G$ can be partitioned into $g_1 H, g_2 H, \dots, g_mH$ for some $g_1, g_2, \dots, g_m$ and $m \leq n$.  Suppose in some $g_i H$, we have $a, b, c$ with $a + b = c$.  Then $a = g_i x^n, b = g_i y^n, c = g_i z^n$ for some $x, y, z \in G$.  Then
             \begin{align*}
-              g_i x^n + g_i y^n = g_i z^n \\
-              x^n + y^n = z^n
+              g_i x^n + g_i y^n &= g_i z^n \\
+              x^n + y^n &= z^n
             \end{align*}
 
             It finally remains to show Schur's Theorem:
 
-            \begin{thm}[Schur's Theorem\label{thm:schur}]
-                Let $n$ be a positive integer. Then if $p$ is a sufficiently large positive integer, whenever $\{1, 2, \dots, p\}$ is parititioned into $n$ parts, we can solve $a + b = c$ with $a, b, c$ all in some part.
+            \begin{thm}[Schur's Theorem]\hypertarget{thm:schur}
+                Let $n$ be a positive integer. Then if $p$ is a sufficiently large positive integer, whenever $\{1, 2, \dots, p\}$ is partitioned into $n$ parts, we can solve $a + b = c$ with $a, b, c$ all in some part.
             \end{thm}
     \end{enumerate}
 \end{eg}
@@ -123,17 +126,17 @@ In this course, we make the following assumptions:
 \end{defi}
 
 \begin{eg}
-    Here's an example of a \hyperlink{def:graph}{graph} $G = (\{1, 2, 3, 4, 5, 6, 7\}, \{12, 23, 13, 14, 67\})$, but it's often easier to represent a graph by a drawing: take a point for each vertex, join two vertices if they are in an edge.
+    Here's an example of a \hyperlink{def:graph}{graph} $G = (\{1, 2, 3, 4, 5, 6, 7\}, \{12, 23, 13, 14, 67\})$, but it's often easier to represent a graph by a drawing: take a point for each \hyperlink{def:graph}{vertex}, join two vertices if they are in an \hyperlink{def:graph}{edge}.
     \begin{center}
-        \begin{tikzpicture}
-            \node [node] (1) at (-1, 0) {1};
-            \node [node] (2) at (0, 1) {2};
-            \node [node] (3) at (0, -1) {3};
-            \node [node] (4) at (1, 0) {4};
+        \begin{tikzpicture}[every node/.style = node]
+            \node [label=left:$1$]  (1) at ( -1,  0)  {};
+            \node [label=above:$2$] (2) at (  0,  1)  {};
+            \node [label=below:$3$] (3) at (  0, -1)  {};
+            \node [label=right:$4$] (4) at (  1,  0)  {};
 
-            \node [node] (5) at (2.25, 0) {5};
-            \node [node] (6) at (3.5, 0) {6};
-            \node [node] (7) at (4.75, 0) {7};
+            \node [label=above:$5$] (5) at (2.5,  0)  {};
+            \node [label=above:$6$] (6) at (  4,  0)  {};
+            \node [label=above:$7$] (7) at (5.5,  0)  {};
 
             \draw (4) -- (1) -- (2) -- (3) -- (1);
             \draw (6) -- (7);
@@ -154,7 +157,7 @@ In this course, we make the following assumptions:
 \end{defi}
 
 \begin{defi}[Complete graph of order $n$]\hypertarget{def:Kn}
-    The \textbf{complete graph of order n}, $K_n$ has $n$ vertices with every pair forming an edge.
+    The \textbf{complete graph of order $n$}, $K_n$ has $n$ vertices with every pair forming an edge.
 \end{defi}
 
 \begin{center}
@@ -189,7 +192,7 @@ In this course, we make the following assumptions:
 
 Looking at the diagram, we see $K_3$ looks like a triangle, and we will often just refer to $K_3$ as a \textbf{triangle}\label{def:triangle}.  In addition, note that if $m \leq n$, then $K_m \subset K_n$.
 
-Recall \nameref{thm:schur}:
+Recall \hyperlink{thm:schur}{Schur's Theorem}:
 \begin{thm}[Schur's Theorem reformulated\label{thm:schur2}]
     Let $k$ be a positive integer. Then there is a positive integer $n$ such that if the set $[n] = \{1, 2, \dots, n\}$ is coloured with $k$ colours, we can find $a, b, c$ with $a + b = c$ and $a,b,c$ the same colour.
 \end{thm}
@@ -235,7 +238,7 @@ Let's try a similar approach for $k=3$, and I claim $n=16$ works.
 This last paragraph looks very similar to the proof of the $k=2$ case, so can we use induction? It's unclear, because it wasn't exactly the previous case.  But notice how we always seem to be interested in differences of two numbers, yet we never seem to use facts like $7-3 = 9-5$.
 So, consider a graph where the vertices are numbers, and the edges refer to the difference between two vertices, and we colour edges.
 
-Suppose the edges of a complete graph $K_6$ are coloured blue and yellow. Then we can find a monochromatic \hyperref[def:triangle]{triangle}.
+Suppose the edges of a \hyperlink{def:Kn}{complete graph} $K_6$ are coloured blue and yellow. Then we can find a monochromatic \hyperref[def:triangle]{triangle}.
 \begin{proof}
     Pick $v \in K_6$. $v$ is in five edges, so some three are the same colour, without loss of generality call them $vx, vy, vz$ and say they are \red{red}.
     If any of $xy, xz, yz$ is \red{red}, we have a \red{red triangle} with $v$.
@@ -328,23 +331,32 @@ Suppose the edges of a complete graph $K_6$ are coloured blue and yellow. Then w
     \begin{enumerate}
         \item Can think in terms of the following picture (WIP). Eventually, we will run out of colours and get a monochromatic triangle.
             \begin{center}
-                \begin{tikzpicture}[scale=0.6]
-                    \draw [help lines] (-10, -5) grid (10, 5);
-                    \node[node, label={$v$}] (v) at (-8, 0) {};
-                    \node[node, label={$w$}] (w) at (-4, 1) {};
+                \begin{tikzpicture}[scale=0.6, inner sep=0.05cm]
+                    \node [node] (a) at ( -7,  0) {};
+                    \node [node] (b) at ( -4,  1) {};
+                    \node [node] (c) at ( -1, -1) {};
+                    \node [node] (d) at (1.7,  0) {};
 
-                    \foreach \theta in {24, 22, ..., -24}{
-                        \pgfmathsetmacro\radius{3.5+rand*0.5}
-                        \pgfmathsetmacro\angle{\theta-rand*0.6}
+                    \foreach \theta in {38, 36, ..., -36}{
+                        \pgfmathsetmacro\randa{rand}
+                        \pgfmathsetmacro\randb{rand}
+                        \pgfmathsetmacro\randc{rand}
+                        \pgfmathsetmacro\randd{rand}
 
-                        \ifthenelse{\theta = 14}
-                            { \draw[bred] (v) -- (w) }
-                            { \draw[bred] (v) -- ++(\angle: \radius) };
-                        \draw[bgreen] (w) -- ++(\angle: \radius);
+                        \draw [bred]    (a) -- ++(\theta     + \randb*1.4      : 3   + \randb*0.5);
+                        \draw [bgreen]  (b) -- ++(\theta     + \randd*1.3 - 10 : 3   + \randd*0.5);
+                        \draw [borange] (c) -- ++(\theta     + \randc*1.2 + 20 : 2.5 + \randc*0.5);
+                        \draw [bblue]   (d) -- ++(\theta*0.7 + \randa*1.2 +  5 : 2.3 + \randa*0.5);
+
+                        \draw [bred]    (a) -- (b);
+                        \draw [bgreen]  (b) -- (c);
+                        \draw [borange] (c) -- (d);
                     }
 
-                    % TODO finish
-                    \draw plot [smooth cycle, tension=0.8, xshift=2cm, xscale=2.5, scale=3] coordinates {(-180:1) (-120:1.2) (-60:0.8) (0:0.9) (60:1.1) (120:1.3)};
+                    \draw plot [smooth cycle, tension=0.8, xshift=2.0cm, xscale=2.5, scale=3.0] coordinates {(-180:1.0) (-120:1.2) (-60:0.8) (0:0.9) (60:1.1) (120:1.3)};
+                    \draw plot [smooth cycle, tension=0.8, xshift=2.8cm, xscale=2.0, scale=2.6] coordinates {(-180:1.0) (-120:1.2) (-60:0.7) (0:0.9) (60:0.9) (120:1.3)};
+                    \draw plot [smooth cycle, tension=0.8, xshift=2.9cm, xscale=1.7, scale=1.8] coordinates {(-180:1.0) (-120:1.3) (-60:0.8) (0:0.9) (60:1.1) (120:1.2)};
+                    \draw plot [smooth cycle, tension=0.8, xshift=3.9cm, xscale=1.2, scale=1.0] coordinates {(-180:0.9) (-120:0.9) (-60:0.8) (0:1.1) (60:1.4) (120:1.4)};
                 \end{tikzpicture}
             \end{center}
 
@@ -353,7 +365,7 @@ Suppose the edges of a complete graph $K_6$ are coloured blue and yellow. Then w
     \end{enumerate}
 \end{remark}
 
-Can we find larger monochromatic subgraphs, for instance a monochromatic $K_4$?  Think about two colours at first for simplicity.  Yes, but need an intermediate step first.
+Can we find larger monochromatic subgraphs, for instance a monochromatic $K_4$?  Think about two colours at first for simplicity.  Yes, but we need an intermediate step first.
 
 \begin{eg}
     \leavevmode
@@ -396,8 +408,7 @@ Can we find larger monochromatic subgraphs, for instance a monochromatic $K_4$? 
 
                     \item $v$ is in \green{$6$ green} edges
                         \begin{center}
-                            \begin{tikzpicture}[scale=0.4]
-                                % TODO think about the scale here after the big diagram above is done
+                            \begin{tikzpicture}[scale=0.6]
                                 \node [node, label=left:$v$] (v) at (0, 0) {};
 
                                 \foreach \theta in {25, 15, ..., -25}
@@ -410,7 +421,7 @@ Can we find larger monochromatic subgraphs, for instance a monochromatic $K_4$? 
                             \end{tikzpicture}
                         \end{center}
 
-                        We know $H$ contains a monochromatic triangle. If it is \red{red}, we are done.  If it is \green{green}, then it makes a \green{green $K_4$} with $v$ as required.
+                        We know $H$ contains a monochromatic triangle. If it is \red{red}, we are done.  If it is \green{green}, then it makes a \green{green $K_4$} with $v$ as required. \qedhere
                 \end{itemize}
             \end{proof}
         \item Let $K_{20}$ be coloured \red{red}/\green{green}. Then $\exists$ a monochromatic $K_4$.
@@ -431,7 +442,7 @@ Can we find larger monochromatic subgraphs, for instance a monochromatic $K_4$? 
 
 We have seen $R(3) = 6$; $R(3, 4) \leq 10$; $R(4) \leq 20$.
 
-\begin{nthm}[Ramsey's Theorem\label{thm:ramsey}]
+\begin{nthm}[Ramsey's Theorem]\label{thm:ramsey}
     $R(s, t)$ exists for all $s, t \geq 2$.  Moreover, if $s, t \geq 2$ then $R(s, t) \leq R(s-1, t) + R(s, t-1)$.
 \end{nthm}
 
@@ -459,42 +470,45 @@ We have seen $R(3) = 6$; $R(3, 4) \leq 10$; $R(4) \leq 20$.
     \begin{align*}
         R(s, t) &\leq R(s-1, t) + R(s, t-1) \\
                 &\leq 2^{s-1+t} + 2^{s+1-t} \\
-                &= 2^{s+t} \qedhere
+                &= 2^{s+t}. \qedhere
     \end{align*}
 \end{proof}
 
 \begin{remark}
     \leavevmode
     \begin{itemize}
-        \item A more careful version of the same proof gives $R(s) = \mathcal{O} (\frac{4^s}{\sqrt{s}})$ (Erdos-Szekeres 1935)
-        \item A harder proof gives an improvement to $R(s) = \mathcal{O}(\frac{4^s}{s})$ (Thomason 1988)
-        \item An even harder proof gives $R(s) = \mathcal{O}(\frac{4^s}{s^k})$ for any $k$ (Conlon 2009)
-        \item Is $R(s) = \mathcal{O}((3.999999999)^s)$? Unknown.
+        \item A more careful version of the same proof gives $R(s) = \mathcal{O} \left(\frac{4^s}{\sqrt{s}}\right)$ (Erd\H{o}s-Szekeres 1935)
+        \item A harder proof gives an improvement to $R(s) = \mathcal{O}\left(\frac{4^s}{s}\right)$ (Thomason 1988)
+        \item An even harder proof gives $R(s) = \mathcal{O}\left(\frac{4^s}{s^k}\right)$ for any $k$ (Conlon 2009)
+        \item Is $R(s) = \mathcal{O}\left((3.999999999)^s\right)$? Unknown.
     \end{itemize}
 \end{remark}
 
-\begin{nthm}[Multicolour Ramsey Theorem\label{thm:multiRamsey}]
+\begin{nthm}[Multicolour Ramsey Theorem]\label{thm:multiRamsey}
     Let $k \geq 1$ and $s \geq 2$. Then there exists some $n$ such that whenever the edges of $K_n$ are coloured with $k$ colours, we can find a monochromatic $K_s$.
 \end{nthm}
 
 \begin{proof}
     Induction on $k$. For the base case $k=1$, we can take $n=s$.
 
-    For $k>1$, by the induction hypothesis we can find $M$ such that if $K_m$ is $(k-1)$-coloured, then there is a monochromatic $K_s$.
-    Let $n = R(s, m)$ and colour $K_n$ with $k$ colours, including \red{red} but not green. Re-colour by turning all non-\red{red} edges \green{green}. By definition, of $n$, we have either
+    For $k>1$, by the induction hypothesis we can find $m$ such that if $K_m$ is $(k-1)$-coloured, then there is a monochromatic $K_s$.
+    Let $n = R(s, m)$ and colour $K_n$ with $k$ colours, including \red{red} but not green.
+    Re-colour by turning all non-red edges \green{green}.
+    By definition of $n$, we have either
     \begin{itemize}
-        \item A blue $K_s$, so done
-        \item A yellow $K_m$. Then in the original colouring, this $K_m$ was $(k-1)$-coloured, so by definitin of $m$, it contains a monochromatic $K_s$.
+        \item A \red{red $K_s$}, so done
+        \item A \green{green $K_m$}. Then in the original colouring, this $K_m$ was $(k-1)$-coloured, so by definition of $m$, it contains a monochromatic $K_s$.
     \end{itemize}
 \end{proof}
 
 \begin{remark}
+    \leavevmode
     \begin{enumerate} % 1.
         \item We write $R_k(s)$ for the smallest $n$ that works. In particular $R_1(s) = s$ and $R_2(s) = R(s)$.
             Proof of theorem 4 will give $R_k(s) \leq 4^{s^{k-1}}$.
         \item What do we really mean by colouring?
-            We have informally talked about `yellow edges' etc. More formally, we have a colouring of the edges of $G = (V, E)$ with $k$ colours is a function $c: E:[k]$. We mostly refer to the colours as `blue', `yellow' and so on.
-            We say $H = (W, F)$ is monochromatic if $c \mid_F$ is constant.
+            We have informally talked about `red edges' etc. More formally, we colouring of the edges of $G = (V, E)$ with $k$ colours is a function $c: E \to [k]$. We mostly refer to the colours as `red', `green' and so on.
+            We say $H = (W, F)$ is monochromatic if $c |_F$ is constant.
     \end{enumerate}
 \end{remark}
 
@@ -513,8 +527,52 @@ With any number of colours, we can find arbitrarily large monochromatic subgraph
 \end{defi}
 
 Where it makes sense to do so, we carry terminology over from graphs to infinite graphs.
+Suppose edges of $K_\infty$ are coloured blue/yellow. What can we find? By \nameref{thm:ramsey}, we can find a monochromatic $K_s$ for every finite $s = 1, 2, 3, \dotsc$. Note this doesn't immediately give a monochromatic $K_\infty$:
+% \begin{center}
+%     \begin{tikzpicture}[inner sep=0.05cm, every node/.style = node, scale=0.6]
+%         \begin{scope}
+%             \path [scope fading=east] (18, -3) rectangle (25.5, 3);
+%             \node (11) at (3, 0) {};
+%             \foreach \n in {2,...,9} {
+%                 \begin{scope}[xshift=3*\n cm]
+%                     \foreach \m in {1,...,\n}{
+%                         \node (\n\m) at (360/\n*\m+90: 1) {};
+%                     }
+%                     \foreach \x in {1,...,\n}{
+%                         \foreach \y in {1,...,\x} {
+%                             \draw[bred] (\n\x) -- (\n\y);
+%                         }
+%                     }
+%                 \end{scope}
+%             }
+%             \begin{scope}[on background layer]
+%                 \foreach \a in {3,...,9} {
+%                     \pgfmathsetmacro\biggest{\a-1}
+%                     \foreach \b in {2,...,\biggest} {
+%                         \foreach \c in {1,...,\a} {
+%                             \foreach \d in {1,...,\b} {
+%                                 \pgfmathsetmacro\adist{cos(360/\a*\c)}
+%                                 \pgfmathsetmacro\bdist{cos(360/\b*\d)}
+%                                 \pgfmathsetmacro\atop{\adist>0.2?1:0}
+%                                 \pgfmathsetmacro\abot{\adist<-0.2?1:0}
+%                                 \pgfmathsetmacro\btop{\bdist>0.2?1:0}
+%                                 \pgfmathsetmacro\bbot{\bdist<-0.2?1:0}
+%                                 \pgfmathsetmacro\top{\atop+\btop==2?1:0}
+%                                 \pgfmathsetmacro\bot{\abot+\bbot==2?1:0}
+%                                 \ifthenelse{\top=1}{\draw [bgreen, opacity=0.1] (\a\c) to [bend right] (\b\d)}
+%                                 {
+%                                     \ifthenelse{\bot=1}{\draw [bgreen, opacity=0.1] (\a\c) to [bend left] (\b\d)}
+%                                     {\draw [bgreen, opacity=0.05] (\a\c) to (\b\d)};
+%                                 };
+%                             }
+%                         }
+%                     }
+%                 }
+%             \end{scope}
+%         \end{scope}
+%     \end{tikzpicture}
+% \end{center}
 
-Suppose edges of $K_\infty$ are coloured blue/yellow. What can we find? By Ramsey, we can find a monochromatic $K_s$ for every finite $s = 1, 2, 3, \dotsc$. Note this doesn't immediately give a monochromatic $K_\infty$:
 In the diagram, we see that for any finite $s$ we have a blue $K_s$ but no blue $K_\infty$.  (However in this example, there is a yellow $K_\infty$)
 
 \begin{nthm}[Infinite Ramsey Theorem]\label{thm:infRamsey}
@@ -577,7 +635,7 @@ Note that the \hyperlink{def:Kn}{complete graph of order $n$} has order $n$.
     The \textbf{average degree} of $G$ is $\frac{1}{\abs{G}} \sum_{v \in G} d(v)$
 \end{defi}
 
-Clearly $\delta(G) \leq \text{average degree of} G \leq \Delta(G)$.
+Clearly $\delta(G) \leq \text{average degree of } G \leq \Delta(G)$.
 
 \begin{defi}[Regular\hypertarget{def:regular}]
     If every vertex in $G$ has the same degree, we say $G$ is \textbf{regular}.
@@ -648,7 +706,7 @@ The relation $\to$ is an equivalence relation (Exercise.) % TODO thing about tra
 \begin{eg}
     \leavevmode
     \begin{itemize}
-        \item Suppose edges of $K_n$ are coloured blue/yellow. We can think about the `blue subgraph' with $n$ verties and blue edges only. The complement is the yellow subgraph.
+        \item Suppose edges of $K_n$ are coloured blue/yellow. We can think about the `blue subgraph' with $n$ vertices and blue edges only. The complement is the yellow subgraph.
         \item % TODO self complement
     \end{itemize}
 \end{eg}
@@ -831,7 +889,7 @@ More precisely,
 \end{ncor}
 
 % 2.1.3
-\subsubsection{Bipartite graph}
+\subsubsection{Bipartite graphs}
 Can think of cycles and paths as graphs (ignore direction and start point). The graph $C_n$ is cycle of length $n$ eg $C_5$.
 
 \begin{defi}
@@ -898,13 +956,12 @@ So $\abs{C_n = n}$, $\abs{P_n} = n+1$, and $e(C_n) = e(P_n) = n$.
                     \node (2\y) at (2, \y) {};
                 };
                 \foreach \y in {1,2,3} {
-                    \draw[bred] (2\y) -- (11);
-                    \draw[bgreen] (2\y) -- (12);
-                    \draw[bblue] (2\y) -- (13);
+                    \draw[bgreen] (2\y) -- (11);
+                    \draw[bred]   (2\y) -- (12);
+                    \draw[bblue]  (2\y) -- (13);
                 };
 
             \end{scope}
-
         \end{tikzpicture}
     \end{center}
 \end{eg}
@@ -936,7 +993,8 @@ So $\abs{C_n = n}$, $\abs{P_n} = n+1$, and $e(C_n) = e(P_n) = n$.
 
     So $\frac{n^t}{t!} (t-1) \geq \frac{n}{t!} (\frac{2m}{n} - t)^t$ so $n^t (t-1) \geq n (\frac{2m}{n} - t)^t$.
 
-    If $n$ is sufficiently large (as we may assume) then $m \geq n t$ and so $\frac{m}{n} \geq t$ and so $\frac{2m}{n} - t \geq \frac{m}{n}$.  Thus $n^t (t-1) \geq n (\frac{m}{n})^t$ so $m^t \leq n^{2t-1} (t-1)$ so $m \leq (t-1)^\frac{1}{t} n^{2-\frac{1}{t}} = \mathcal{O}(n^{2-\frac{1}{t}})$.
+    If $n$ is sufficiently large (as we may assume) then $m \geq n t$ and so $\frac{m}{n} \geq t$ and so $\frac{2m}{n} - t \geq \frac{m}{n}$.
+    Thus $n^t (t-1) \geq n (\frac{m}{n})^t$ so $m^t \leq n^{2t-1} (t-1)$ so $m \leq (t-1)^\frac{1}{t} n^{2-\frac{1}{t}} = \mathcal{O}(n^{2-\frac{1}{t}})$.
 \end{proof}
 
 We will see lower bounds later.
@@ -961,7 +1019,7 @@ Closely related is the \textbf{Problem of Zarankiewicz}. Let $z(n, t)$ be the la
 % 2.1.4
 \subsubsection{General graphs}
 
-What is $\ext(n; H)$? This is a hard question, and we could not even find an exact answer for $C_4$, so instead consider some asymptotics.
+What is $\ext(n; H)$? This is a hard question, and we could not even find an exact answer for $H = C_4$, so instead consider some asymptotics.
 Usually $\ext(n; H) \to \infty$ as $n \to \infty$.
 
 Instead what about $\lim_{n \to \infty} \frac{\ext(n; H)}{\binom{n}{2}}$? Does it even exist?
@@ -971,8 +1029,11 @@ Instead what about $\lim_{n \to \infty} \frac{\ext(n; H)}{\binom{n}{2}}$? Does i
 \end{nprop}
 
 \begin{proof}
-    Let $n > \abs{H}$, let $\abs{G} = n$, $e(G) = \ext(n; H) = x_n \binom{n}{2}$ and $H \not\subset G$. For any $v \in G$, $\abs{G - v} = n-1$ and $H \not\subset G - v$, so $e(G-v) \leq \ext(n-1; H) \ x_{n-1} \binom{n-1}{2}$.
-    Each edge $xy \in E(G)$ in $G-v$ for all $v \neq x, y$. Hence $(n-2) x_n \binom{n}{2} = (n-2) e(G) = \sum_{v \in G} e(G-v) \leq n x_{n-1} \binom{n-1}{2}$. So $x_n \leq x_{n-1}$, so $(x_n)$ is decreasing and bounded below by zero.
+    Let $n > \abs{H}$, let $\abs{G} = n$, $e(G) = \ext(n; H) = x_n \binom{n}{2}$ and $H \not\subset G$.
+    For any $v \in G$, $\abs{G - v} = n-1$ and $H \not\subset G - v$, so $e(G-v) \leq \ext(n-1; H) \ x_{n-1} \binom{n-1}{2}$.
+    Each edge $xy \in E(G)$ in $G-v$ for all $v \neq x, y$.
+    Hence $(n-2) x_n \binom{n}{2} = (n-2) e(G) = \sum_{v \in G} e(G-v) \leq n x_{n-1} \binom{n-1}{2}$.
+    So $x_n \leq x_{n-1}$, so $(x_n)$ is decreasing and bounded below by zero.
 \end{proof}
 
 \end{document}
