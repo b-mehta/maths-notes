@@ -17,6 +17,7 @@
 \DeclareMathOperator{\Root}{Root}
 \DeclareMathOperator{\chara}{char}
 \newtheorem{nexample}[nthm]{Example}
+\newtheorem{nremark}[nthm]{Remark}
 \newcommand{\F}{\mathbb{F}}
 % and here we go!
 
@@ -85,7 +86,7 @@ Suppose $K \leq L$ is a \hyperlink{def:fieldExt}{field extension}. Then $L$ is a
     \end{enumerate}
 \end{eg}
 
-\begin{nthm}[Tower law\label{thm:towerLaw}]
+\begin{nthm}[Tower law]\label{thm:towerLaw}
     Suppose $K \leq L \leq M$ are field extensions. Then $\abs{M:K}$ = $\abs{M:L}\abs{L:K}$.
 \end{nthm}
 \begin{proof}
@@ -175,7 +176,7 @@ We'll also prove the Primitive Element Theorem, which in the context of finite e
 \begin{ndef}\hypertarget{def:algebraic}
     Suppose $K \leq L$ is a field extension. Take $\alpha \in L$ and define
     \begin{equation*}
-        I_\alpha = \set{f \in K(t) | f(\alpha) = 0}
+        I_\alpha = \set{f \in K[t] | f(\alpha) = 0}
     \end{equation*}
     We say $\alpha$ is \textbf{algebraic} over $K$ if $I_\alpha \ne 0$.  Otherwise $\alpha$ is \textbf{transcendental}.
     We say $L$ is algebraic over $K$ if $\alpha$ is algebraic over $K$ for all $\alpha \in L$.
@@ -386,7 +387,7 @@ To use this for proofs about non-constructibility we need to be reasonably exper
     \begin{enumerate}[label=(\roman*)]
         \item $p \nmid a_n$
         \item $p \mid a_{n-1}, \, p \mid a_{n-2}, \dotsc, p \mid a_0$
-        \item $p^2 \mid a_0$
+        \item $p^2 \nmid a_0$
     \end{enumerate}
     Then $f(t)$ is irreducible in $\Z[t]$
 \end{nthm}
@@ -739,7 +740,6 @@ We can use this final construction to produce splitting fields in general.
 \end{proof}
 
 \begin{ndef}[Separable extension]\hypertarget{def:separableExt}
-
     We say \textbf{$\alpha \in L$ is separable over $K$} if its \hyperlink{def:minimalPoly}{minimal polynomial} is \hyperlink{def:separablePoly}{separable} over $K$.
 
     \textbf{$L$ is separable over $K$} if all $\alpha \in L$ are separable over $K$.
@@ -757,38 +757,52 @@ We can use this final construction to produce splitting fields in general.
             However $f(t)$ is irreducible in $K[t]$:
 
             Suppose $f(t) = g(t) h(t)$ in $K[t]$ and hence in $L[t]$. So we get $g(t) = (t-X)^r$ for some $0 \leq r < p$ if the factorisation is non-trivial.
-            But this could mean $X^r$ was in $K$. However, $\exists$integers $a, b$ such that $ar + bp = 1$.
+            But this would mean $X^r$ was in $K$. However, $\exists$integers $a, b$ such that $ar + bp = 1$.
             So $(X^r)^a (X^p)^b \in K$ and so $X \in K$, thus we'd have $X = \frac{u(X^p)}{v(X^p)}$, a contradiction.
 
             Thus $f(t) = t^p - X^p$ is the \hyperlink{def:minimalPoly}{minimal polynomial} of $X$ over $K$, thus $X$ is \hyperlink{def:separableExt}{purely inseparable} over $K$ and $K \leq L$ is not separable.
         \item Take $\F$ a finite field with order $m$, a power of $p$ where $\chara \F = p$. Consider $f(t) = t^n - 1$ where $n = m-1$. This is separable over $\F_p$ since we saw that $f(t)$ has distinct linear factors in $\F[t]$.
+    \end{enumerate}
 \end{eg}
 
 \begin{remark}
-    It's useful to have an alternative approach to \hyperlink{def:separableExt}{separability of field extensions} without having to check \hyperlink{def:separablePoly}{separability} of \hyperlink{def:minimalPoly}{minimal polynomials} for all elements of the larger field.
-    This is where we start thinking about $K$-homomorphisms.
+    It's useful to have an alternative approach to \hyperlink{def:separableExt}{separability of field extensions} without having to check \hyperlink{def:separablePoly}{separability}
+    of \hyperlink{def:minimalPoly}{minimal polynomials} for all elements of the larger field.
+    This is where we start thinking about \hyperlink{def:homo}{$K$-homomorphisms}.
 \end{remark}
 
 \begin{nlemma}\label{lem:2.6}
     Let $M = K(\alpha)$, where $\alpha$ is \hyperlink{def:algebraic}{algebraic} over $K$ and let $f_\alpha(t)$ be the \hyperlink{def:minimalPoly}{minimal polynomial} of $\alpha$ over $K$.
-    For any \hyperlink{def:fieldExt}{field extension} $K \leq L$ the number of $K$-homomorphisms of $M$ to $L$ is equal to the number of distinct roots of $f_\alpha(t)$ in $L$.
+
+    Then, for any \hyperlink{def:fieldExt}{field extension} $K \leq L$, the number of \hyperlink{def:homo}{$K$-homomorphisms} of $M$ to $L$ is equal to the number of distinct roots of $f_\alpha(t)$ in $L$.
     Thus this number is $\leq \deg f_\alpha(t) = \abs{K(\alpha):K} = \abs{M:K}$.
+
+    \begin{center}
+        \begin{tikzpicture}[scale=0.8]
+            \node (K) at ( 0,-2)    {$K$};
+            \node (L) at ( 2, 2)    {$L$};
+            \node (M) at (-2, 0)    {$M = K(\alpha)$};
+
+            \draw (M) -- (K) -- (L);
+        \end{tikzpicture}
+    \end{center}
 \end{nlemma}
 
 \begin{proof}
-    We saw in \cref{lem:1.21} that any $K$-homomorphism $M$ to $L$ is injective.
+    We saw in \cref{lem:1.21} that any $K$-homomorphism $M \to L$ is injective, and we have
     \begin{equation*}
-        K(\alpha) \cong \frac{K[t]}{(f_\alpha(t))}
+        K(\alpha) \cong \frac{K[t]}{(f_\alpha(t))}.
     \end{equation*}
     For any root $\beta$ of $f_\alpha(t)$ in $L$ we can define a $K$-homomorphism
     \begin{align*}
         \frac{K[t]}{(f_\alpha(t))} &\to L \\
         t + (f_\alpha(t)) &\mapsto \beta
     \end{align*}
-
     Thus we get a $K$-homomorphism $M \to L$.
-    Conversely for any $K$-homomorphism $\phi:M \to L$ the image $\phi(\alpha)$ must satisfy $f_\alpha(\phi(\alpha)) = 0$. These processes are inverse to each other.
-    There is a 1-1 correspondence
+
+    Conversely, for any $K$-homomorphism $\phi:M \to L$ the image $\phi(\alpha)$ must satisfy
+    \begin{equation*}f_\alpha(\phi(\alpha)) = 0\end{equation*}
+    These processes are inverse to each other, giving a 1-1 correspondence
     \begin{equation*}
         \{K \text{ homomorphisms } M \to L\} \longleftrightarrow \{\text{roots of } f_\alpha(t) \in L\}
     \end{equation*}

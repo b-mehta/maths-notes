@@ -369,7 +369,7 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
     Any finite dimensional vector space can be identified with $\K^n$ for some $n$ by choosing a basis.
 \end{fact}
 
-\begin{defi}[\hypertarget{def:eqNorms}{Norm equivalence}]
+\begin{defi}[Norm equivalence]\hypertarget{def:eqNorms}
     Two norms $\norm{\cdot}_1$ and $\norm{\cdot}_2$ on a vector space $V$ are \textbf{equivalent} if there exists $C > 0$ such that
     \begin{equation*}
         C^{-1} \norm{v}_2 \leq \norm{v} \leq C \norm{v}_2
@@ -470,7 +470,7 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
 
 \section{The Hahn-Banach Theorem}
 
-\begin{defi}[Extends\hypertarget{def:extend}]
+\begin{defi}[Extends]\hypertarget{def:extend}
     Given vector spaces $W \subset V$, and linear maps $g: W \to \K$, $f: V \to \K$, we say that $f$ \textbf{extends} $g$ if $f \mid_W = g$, that is $f(v) = g(v)$ for every $v \in W$.
 \end{defi}
 
@@ -480,7 +480,7 @@ When can one \hyperlink{def:extend}{extend} a linear map in a continuous way?
 
 Let $V$ be a \emph{real} vector space.
 
-\begin{defi}[Extends\hypertarget{def:sublinear}]
+\begin{defi}[Sublinear]\hypertarget{def:sublinear}
     A map $p: V \to \R$ is \textbf{sublinear} if
     \begin{enumerate}
         \item $p(\alpha v) = \alpha p(v)$ for all $v \in V$, $\alpha \geq 0$
@@ -604,7 +604,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 \end{prop}
 
 \begin{proof}
-    Let $P = \set{T \subset V | T \supset S, T \text{ linearly independent}}$. Then $P$ is a poset with partial order $\subseteq$, ie $T_1 \leq T_2$ if and only if $T_1 \subseteq T_2$. For any $L \subseteq P$ that is totally ordered, set $T_b = \bigcup_{T \in L} T$.
+    Let $P = \set{T \subset V | T \supset S, T \text{ linearly independent}}$. Then $P$ is a poset with partial order $\subseteq$, i.e. $T_1 \leq T_2$ if and only if $T_1 \subseteq T_2$. For any $L \subseteq P$ that is totally ordered, set $T_b = \bigcup_{T \in L} T$.
 
     We claim $T_b \in P$ and $T_b$ is a least upper bound for $L$. Clearly, $S \subseteq T_b$.
     Let $\alpha_i \in K$ and $v_i \in T_b$ such that $\sum_{i=1}^m \alpha_i v_i = 0$. Since $L$ % ???
@@ -650,7 +650,7 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 
 \begin{cor}
     Let $V$ be a normed vector space (real or complex), $W \subseteq V$ a subspace.
-    For any $g \in W^*$, there exists $f \in V^*$ such that $f |_W = G$, $\norm{f} \leq \norm{g}$.
+    For any $g \in W^*$, there exists $f \in V^*$ such that $f |_W = g$, $\norm{f} \leq \norm{g}$.
 \end{cor}
 
 \begin{proof}
