@@ -807,4 +807,147 @@ We can use this final construction to produce splitting fields in general.
         \{K \text{ homomorphisms } M \to L\} \longleftrightarrow \{\text{roots of } f_\alpha(t) \in L\}
     \end{equation*}
 \end{proof}
+
+\begin{eg}
+    Take $K = \Q$, $L = \Q(\sqrt[3]{2})$, and use $\alpha = \sqrt[3]{2}$, with \hyperlink{def:minimalPoly}{minimal polynomial} $f_\alpha(t) = t^3 - 2$.
+
+    Then, there is only one \hyperlink{def:homo}{$K$-homomorphism} $M = K(\sqrt[3]{2})  =L \to L$, the identity map.
+\end{eg}
+
+\begin{ncor}\label{cor:2.7}
+    % TODO understand this corollary
+    The number of $K$-homomorphisms $K(\alpha) \to L = \deg f_\alpha(t) \iff L$ is large enough, in particular $L$ contains a splitting field for $f_\alpha(t)$ and $\alpha$ is separable over $K$.
+\end{ncor}
+
+\begin{proof}
+    Immediate from \cref{lem:2.6}.
+\end{proof}
+
+\begin{nlemma}\label{lem:2.8}
+    Let $K \leq M$ be a field extension and $M_1 = M(\alpha_1)$ (where $\alpha_1$ is algebraic over $M$).
+    Let $f(t)$ be the minimal polynomial of $\alpha$ over $M$ and let $K \leq L$.
+    Let $\phi: M \to L$ be a $K$-homomorphism. Then there is a correspondence
+    \begin{equation*}
+        \{\text{Extensions } \phi_1:M_1 \to L \text{ of } \phi\} \longleftrightarrow \{\text{roots of} \ \phi(f(t)) \in L\}
+    \end{equation*}
+    \begin{center}
+        \begin{tikzpicture}
+            \node (K)  at ( 0,-2)    {$K$};
+            \node (M)  at (-1, -0.5)    {$M$};
+            \node (M1) at (-2, 1)    {$M_1$};
+            \node (L)  at ( 2, 2)    {$L$};
+
+            \draw (M1) -- (M) -- (K) -- (L);
+        \end{tikzpicture}
+    \end{center}
+\end{nlemma}
+
+\begin{remark}
+    \Cref{lem:2.6} is the special case $M=K$ and $\phi =$ inclusion of $K$ in $L$.
+\end{remark}
+
+\begin{proof}
+    $f(t)$ is irreducible in $M[t]$, so $\phi(f(t))$ is irreducible in $\phi(M)[t]$.
+    Any extension $\phi_1: M \to L$ of $\phi$ produces a root $\phi_1(\alpha_1)$ of $\phi(f(t))$.
+
+    Conversely, given a root $\gamma$ of $\phi(f(t))$ in $L$,
+    \begin{equation*}
+        M_1 - M(\alpha_1) \cong \frac{M[t]}{(f(t))} \cong \frac{\phi(M)[t]}{(\phi(f(t)))} \cong \phi(M)(\phi) \leq L
+    \end{equation*}
+    Thus we get an extension $\phi_1$ of $\phi$ as required.
+\end{proof}
+
+\begin{ncor}\label{cor:2.9}
+    If $L$ is large enough, the number of $\phi_1$ which extend $\phi$ is equal to the number of distinct roots of $f(t)$ in $L$. This is equal to $|M_i:M| \iff \alpha$ is separable over $M$.
+\end{ncor}
+
+\begin{proof}
+    Immediate from \cref{lem:2.8}.
+\end{proof}
+
+\begin{ncor}\label{cor:2.10}
+    Let $K \leq M \leq N$ be finite field extensions, $K \leq L$. Let $\phi: M \to L$ be a $K$-homomorphism.
+    Then the number of extensions of $\phi$ to maps $\theta:N \to L$ is $\leq \abs{N:M}$.
+    Moreover, such a $\theta$ exists if $L$ is large enough.
+\end{ncor}
+
+\begin{proof}
+    Pick $\alpha_1, \dotsc, \alpha_r$ so that $N = M(\alpha_1, \dotsc, \alpha_r)$ and set $M_i = M(\alpha_1, \dotsc,\alpha_i)$. Then we've got
+    \begin{equation*}
+        M \leq M_1 \leq M_2 \leq \dotsb \leq M_r = N.
+    \end{equation*}
+
+    Using \cref{lem:2.8}, there are
+    \begin{align*}
+        \leq& \abs{M_1:M} \text{ extensions } \phi_1 : M_1 \to L \text{ of } \phi \\
+        \leq& \abs{M_2:M_1} \text{ extensions } \phi_2 : M_2 \to L \text{ of } \phi \\
+        &\vdots \\
+        \leq& \abs{M_r:M_{r-1}} \text{ extensions } \phi_r : M_r \to L \text{ of } \phi
+    \end{align*}
+    By the \nameref{thm:towerLaw}, the number of extensions $\theta: N \to L$ (recall $N=M_r$) of $\phi:M \to L$ is
+    \begin{equation*}
+        \leq \abs{M_r:M_{r-1}} \abs{M_{r-1}:M_{r-2}} \cdots \abs{M_1:M} = \abs{N:M}
+    \end{equation*}
+    where the last part comes from the proof of \cref{lem:2.8} - we need $L$ to contain roots.
+\end{proof}
+
+\begin{nremark}\label{rem:2.11}
+    This proof together with \cref{cor:2.9} shows that the number of extensions $\theta$ of $\phi$ is equal to $\abs{N:M}$ iff $L$ is large enough (so that everything splits) and $\alpha_i$ is separable over $M(\alpha_1, \dotsc, \alpha_{i-1})$.
+\end{nremark}
+
+\begin{nlemma}\label{lem:2.12}
+    Let $K \leq N$ be a field extension with $\abs{N:K} = n$ and $N = K(\alpha_1, \dotsc, \alpha_r)$ say.
+    Then the following are equivalent:
+    \begin{enumerate}[label=(\roman*)]
+        \item $N$ is separable over $K$.
+        \item Each $\alpha_i$ is separable over $K(\alpha_1, \dotsc, \alpha_n)$.
+        \item If $K \leq L$ is large enough there are exactly $n$ distinct $K$-homomorphisms $N \to L$.
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    (i) $\Rightarrow$ (ii).
+    $N$ is separable over $K \implies  \alpha_i$ is separable over $K$.
+    The \hyperlink{def:minPoly}{minimal polynomial} of $\alpha_i$ over $K(\alpha_1, \dotsc, \alpha_{i-1})$ divides the minimal polynomial of $\alpha_i$ over $K$ (in $K(\alpha_1, \dotsc, \alpha_{i-1})[t]$).
+
+    So if the latter has distinct roots in a splitting field then the former does.
+    So $\alpha_i$ separable over $K \implies \alpha_i$ separable over $K(\alpha_1, \dotsc, \alpha_{i-1})$.
+
+    (ii) $\Rightarrow$ (iii) follows from \cref{rem:2.11}.
+
+    (iii) $\Rightarrow$ (i). Assume (iii) is false and (i) true, aiming for a contradiction.
+    So, $\exists \beta \in N$ that is not \hyperlink{def:separableExt}{separable} over $K$, so there are $\lneqq\abs{K(\beta):K}$ $K$-homomorphisms $\phi:K(\beta) \to L$ by \cref{cor:2.7}.
+
+    By \cref{cor:2.10}, $\phi$ extends to $\leq \abs{N:K(\beta)}$ extensions $\theta: N \to L$, and so there are $\lneqq\abs{N:K(\beta)}\abs{K(\beta):K}$ $K$-homomorphisms $N\to L$, contradiction.
+\end{proof}
+
+\begin{ndef}[Separably generated]\label{def:2.13}\hypertarget{def:separableGen}
+    We say $M = K(\alpha_1, \dotsc, \alpha_r)$ is \textbf{separably generated} by $\alpha_1, \dotsc, \alpha_r$ over $K$ if each $\alpha_i$ is separable over $K$.
+\end{ndef}
+
+\begin{ncor}\label{cor:2.14}
+    A finite extension is \hyperlink{def:separableExt}{separable} $\iff$ it is \hyperlink{def:separableGen}{separably generated}.
+\end{ncor}
+
+\begin{proof}
+    As already observed, $\alpha_i$ is separable over $K \implies  \alpha_i$ separable over $K(\alpha_1, \dotsc, \alpha_{i-1})$.
+\end{proof}
+
+\begin{nlemma}\label{lem:2.15}
+    If $K \leq M \leq L$ \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:fieldExt}{field extensions}, $M \leq L$, then
+    \begin{equation*}
+        K \leq M, \; \; M \leq L \text{ are both separable } \iff K \leq L \text{ is separable}
+    \end{equation*}
+\end{nlemma}
+
+\begin{proof}
+    Example sheet.
+\end{proof}
+
+\begin{nexample}
+    Take $\F$ a finite field, $\abs{\F} = m$. Multiplicative group of order $n = m - 1$ is cyclic.
+    Take a generated $\alpha$, then $\F = \F_p(\alpha)$, and so the \hyperlink{def:minimalPoly}{minimal polynomial} of $\alpha$ divides $t^n - 1$.
+    Observe this has distinct roots, which are all of $\F \setminus \{0\}$ since $\alpha^n = 1$.
+    So the minimal polynomial of $\alpha$ is \hyperlink{def:separablePoly}{separable}, and $\F = \F_p(\alpha)$ is separable over $\F_p$.
+\end{nexample}
 \end{document}
