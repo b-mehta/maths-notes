@@ -1309,4 +1309,179 @@ The Konigsberg bridge problem (link) seems superficially similar, but in fact mu
 \clearpage
 \section{Graph Colouring}
 %TODO missing stuff
+
+% new lec
+
+\subsection{Planar Graphs}
+\begin{defi}[Graph drawing]
+    A \textbf{drawing} of $G$ is an ordered pair $(f, \gamma)$ where $f: V \to \R^2$ is an injection and $\gamma: E \to C([0, 1], \R^2)$ such that
+    \begin{enumerate}[label=(\roman*)]
+        \item If $uv \in E$ then $\{\gamma(uv)(0), \gamma(uv)(1)\} = \{f(u), f(v)\}$.
+        \item If $e, e' \in E$ with $e \neq e'$ then $\gamma(e)((0, 1)) \cap \gamma(e')((0,1)) = \emptyset$.
+        \item If $e \in E$ then $\gamma(e)$ is injective.
+        \item If $e \in E$ and $v \in V$ then $f(v) \notin \gamma(e)((0, 1))$
+    \end{enumerate}
+    That is, vertices $\leftrightarrow$ points and edges $\leftrightarrow$ continuous curves between end vertices, with no unnecessary intersections.
+    If $G$ has a drawing, we say $G$ is \textbf{planar}.
+\end{defi}
+
+Are there topological problems? Perhaps an edge is represented by a space-filling curve.
+But,
+\begin{fact}
+    Any planar graph can be drawn with piecewise linear edges - i.e. each edge is finitely many line segments.
+    Henceforth, assume all drawings satisfy this.
+\end{fact}
+
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}[label=\arabic*.]
+        \item $K_3$ is planar % picture
+        \item $K_4$ % pictures
+        \item $K_5$ % picture
+            Suppose we have a drawing of $K_5$. It must contain a closed curve, say through vertices $u, v, w, x, y$ in that order.
+            The curve divides the plane into inside and outside.
+            % picture
+            Suppose edge $vy$ is inside. Then $ux, uw$ are outside.
+            So $yu$, $vx$ inside, so they intersect, a contradiction.
+            Similarly, $vy$ cannot be outside, hence $K_5$ is not planar.
+        \item $K_{3,3}$ is not planar by similar argument (exercise).
+    \end{enumerate}
+\end{eg}
+
+Clearly if $K_5 \subset G$ or $K_{3,3} \subset G$ then $G$ is not planar.
+Remarkably, these are the only obstacles to planarity.
+Also, eg
+% picture
+
+\begin{defi}[Subdivision]
+    Let $G$ be a graph. A \textbf{subdivision} of $G$ is a graph formed by repeatedly selecting $vw \in E(G)$, removing $vw$ and adding vertex $u$ and edges $uv, uw$.
+\end{defi}
+
+\begin{nthm}[Kuratowski's Theorem]\label{thm:19}
+    Let $G$ be a graph. Then $G$ planar iff $G$ contains no subdivision of $K_5$ or $K_{3,3}$.
+\end{nthm}
+
+Recall that a tree is a connected acyclic graph.
+\begin{defi}
+    A \textbf{leaf} of a tree is a vertex of order 1.
+\end{defi}
+
+\begin{nprop}\label{prop:20}
+    Every tree of order at least $2$ has a leaf.
+\end{nprop}
+
+\begin{proof}
+    Let $T$ be a tree $\abs{T} \geq 2$ and let $v_0 v_1 \dotsc v_k$ be a path of maximum length $T$.
+    Now $v_k \sim v_{k-1}$, but $v_k$ has no other neighbours in path (as $T$ acyclic) and $v_k$ has no neighbours outside path (by maximality).
+    Hence $v_k$ is a leaf.
+\end{proof}
+
+Why do we care? If $T$ is a tree, $\abs{T} \geq 2$, then $T$ has a leaf $v$ and $T-v$ is a tree of smaller order.
+This is particularly useful for induction, for instance
+
+\begin{nprop}\label{prop:21}
+    Let $T$ be a tree, $\abs{T} = n \geq 1$. Then $e(T) = n-1$.
+\end{nprop}
+
+\begin{proof}
+    Use induction on $n$. For $n=1$, $e(T) = 0$ as required.
+
+    For $n > 1$, let $v$ be a leaf. Then $T - v$ is a tree with $\abs{T - v} = n-1$ so by the induction hypothesis, $e(T-v) = n-2$, so $e(T) = n-1$.
+\end{proof}
+
+\begin{nprop}\label{prop:22}
+    Every tree is planar.
+\end{nprop}
+
+\begin{proof}
+    Let $T$ be a tree, $\abs{T} = n$ and use induction on $n$.  For $n=0,1$ we are done immediately.
+
+    For $n > 1$, let $v \in T$ be a leaf. By the induction hypothesis, $T-v$ can be drawn.
+    Let $u \in T$ be the neighbour of $v$.
+    Take a small circle around $u$ in the drawing; so the circle contains only the centre and some radii in the drawing.
+    Hence, we can easily add $v$ and $uv$ to the drawing.
+\end{proof}
+
+\begin{defi}[Faces]
+    If we have a drawing of a graph, it divides the plane into connected regions called \textbf{faces}. Precisely one of these regions, the \textbf{infinite face} is unbounded.
+\end{defi}
+\begin{remark}
+    Important warning: Graphs don't have faces, drawings have faces.
+\end{remark}
+
+\begin{nthm}[Euler's Formula]\label{thm:23}
+    $G$ connected and planar. Take $\abs{G} = n \geq 1$, $e(G) = m$ with $l$ faces. Then $n - m + l = 2$.
+\end{nthm}
+
+\begin{proof}
+    Induction on $m$. If $G$ is a tree: $m = n-1$, $l = 1$, and we are done.
+
+    Otherwise, $G$ has a cycle. Pick an edge $e$ in the cycle and consider $G-e$. Then $\abs{G - e} = n$, $e(G-e) = m-1$.
+    Moreover, in our drawing, removing $e$ combines two faces so we have drawn $G-e$ with $l-1$ faces.
+    So, by the induction hypothesis $n - (m-1) + (l-1) = 2$, so $n - m + l = 2$.
+\end{proof}
+
+\begin{ncor}\label{cor:24}
+    Let $G$ be planar, $\abs{G} = n \geq 3$. Then $e(G) \leq 3n-6$.
+\end{ncor}
+
+\begin{proof}
+    Let $e(G) = m$. Draw $G$ with $l$ faces. Without loss of generality, $G$ is connected (if not, add edges to make it so).
+    % missing end of proof
+\end{proof}
+
+\begin{nprop}[Six colour theorem]\label{prop:25}
+    Any planar graph is 6-colourable.
+\end{nprop}
+
+\begin{proof}
+    Let $G$ be planar, $\abs{G} = n$. Induction on $n$.
+    For $n \leq 6$, give every vertex a different colour, as required.
+
+    For $n > 6$, by \cref{cor:24}, $e(G) \leq 3n - 6$. Hence,
+    \begin{equation*}
+        \delta(G) \leq \frac{2 e(G)}{\abs{G}} \leq \frac{6n-12}{n} = 6 - \frac{12}{n} < 6.
+    \end{equation*}
+    So, $\delta(G) \leq 5$.
+
+    Pick $v \in G$ with $d(v) \leq 5$. By inductive hypothesis, $G- v$ can be 6-coloured. Some colour is missing from $\Gamma(v)$, use this colour to colour $v$.
+\end{proof}
+
+A lot more work gives:
+\begin{nthm}[Five colour theorem]\label{thm:26}
+    Any planar graph is 5-colourable.
+\end{nthm}
+\begin{proof}
+    Let $G$ be planar, $\abs{G} = n$. Use induction on $n$. The base case $n=5$ is trivial, so take $n > 5$.
+    As in \cref{prop:25}, we can find $v \in G$ with $\delta(v) \leq 5$ and 5-colour $G-v$.
+    If there is a colour missing from $\Gamma(v)$, use that colour at $v$.
+    Otherwise, draw $G$; wlog $v$ has neighbours $x_1, \dotsc, x_5$ in clockwise order around $v$ with colours $1, \dotsc, 5$ respectively.
+
+    Call a path in $G-v$ an $ij$-path if all its vertices have colour $i$ or $j$.
+    Given $x \in G-v$, the $i-j$ component of $x$ consists of those vertices reachable from $x$ along $ij$-paths.
+
+    If $x_1, x_3$ are in different $13$ components, then swap the colours of $1$, $3$ on the $13$ component of $x$ and give $v$ colour $1$.
+    % picture
+    If not, then $x_2, x_4$ are in different $24$ components as we see in the diagram, so swap colours $2$, $4$ on $24$ component of $x_2$ and give $v$ colour $2$.
+\end{proof}
+
+\begin{thm}[Four colour theorem]\label{thm:27}
+    Any planar graph is 4-colourable.
+\end{thm}
+
+\begin{proof}
+    Let $G$ be planar, $\abs{G} = n$ and use induction on $n$. For $n=4$, we are immediately done.
+
+    FOr $n > 4$, pick $v \in G$ with $d(v) \leq 5$, then draw $G$ and 4-colour $G-v$.
+    If some colour is missing on $\Gamma(v)$ then we are done.
+    If not, there are three cases.
+
+    Case 1: $d(v) = 4$. There cannot be both a $13$-path from $x_1$ to $x_3$ and a $24$ path from $x_2$ to $x_4$, so done as in the proof of \cref{thm:26}.
+    % diagram
+
+    Case 2: $d(v) = 5$, $v$ has neighbours $x_1, \dotsc, x_5$ clockwise with (wlog) colours $1,2,3,4,1$.
+    Then there is either no $24$ path from $x_2$ to $x_4$ or no $13$ path from $x_3$ to $x_1$, so again we are done.
+
+    Case 3: $d(v) = 5$, % finish this
+\end{proof}
 \end{document}
