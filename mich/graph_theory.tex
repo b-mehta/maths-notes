@@ -18,11 +18,18 @@
 \counterwithout{nthm}{section}
 
 \DeclareMathOperator{\ext}{ex}
+\DeclareMathOperator{\ud}{ud}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \tikzfading[name=fade right,
   left color=transparent!0, right color=transparent!100]
+
+\newtheorem{manualtheoreminner}{Theorem}
+\newenvironment{manualtheorem}[1]{%
+    \renewcommand\themanualtheoreminner{#1}%
+    \manualtheoreminner
+}{\endmanualtheoreminner}
 % and here we go!
 
 \begin{document}
@@ -590,7 +597,7 @@ In the diagram, we see that for any finite $s$ we have a blue $K_s$ but no blue 
     \end{itemize}
     In particular, if $i < j$ then $v_i v_j$ has colour $c_i$. Now, infinitely many of the $c_i$ are the same.
     Say $i_1 < i_2 < i_3 < \dots$ such that $c_{i_1} = c_{i_2} = c_{i_3} = \dotsc$.
-    Consider $v_{i_1}, v_{i_2}, v_{i_3}, \dotsc$. Any edge between two of these vertices hasc colour $c_{i_1}$. So we have a monochromatic $K_\infty$.
+    Consider $v_{i_1}, v_{i_2}, v_{i_3}, \dotsc$. Any edge between two of these vertices has colour $c_{i_1}$. So we have a monochromatic $K_\infty$.
 \end{proof}
 
 \begin{remark}
@@ -1034,6 +1041,131 @@ Instead what about $\lim_{n \to \infty} \frac{\ext(n; H)}{\binom{n}{2}}$? Does i
     Each edge $xy \in E(G)$ in $G-v$ for all $v \neq x, y$.
     Hence $(n-2) x_n \binom{n}{2} = (n-2) e(G) = \sum_{v \in G} e(G-v) \leq n x_{n-1} \binom{n-1}{2}$.
     So $x_n \leq x_{n-1}$, so $(x_n)$ is decreasing and bounded below by zero.
+\end{proof}
+
+% new lecture
+
+Write $\ext(H) = \lim_{n \to \infty} \frac{\ext(n; H)}{\binom{n}{2}}$ which exists by \cref{prop:13}.
+We have seen $\ext(K_{r+1}) = 1 - \frac{1}{r}$, by \cref{cor:10}.
+From \cref{thm:11}, $\ext(n, K_{t, t}) = \mathcal{O}(n^{2 - \frac{1}{t}}) = o(n^2) = o(\binom{n}{2})$, so $\ext(K_{t, t}) = 0$.
+
+\begin{fact}
+    Tur\'an says that a proportion $1 - \frac{1}{r}$ of edges is enough to guarantee a $K_{r+1}$.
+    Increasing this proportion by a tiny amount gives \emph{much} more.
+    % draw example
+\end{fact}
+
+\begin{defi}
+    Write $K_r(t)$ for the complete $r$-partite graph with $t$ vertices in each class (so $K_r(t) = T_r(rt)$).
+\end{defi}
+
+\begin{nthm}[Erd\H{o}s-Stone Theorem]\label{thm:14}
+    Let $r, t \geq 1$ be integers, and let $\epsilon > 0$ be real.
+    Then $\exists n_0$ such that $\forall n \geq n_0$, $\abs{G} = n$, $e(G) \geq (1 - \frac{1}{r} + \epsilon) \binom{n}{2} \implies K_{r+1}(t) \subset G$.
+\end{nthm}
+
+\begin{proof}
+    % TODO
+    Coming soon.
+\end{proof}
+
+This is enough to determine $\ext(H)$ for all $H$.
+
+\begin{defi}[Chromatic number]\hypertarget{def:chromNum}
+    If $H$ is a graph, the \textbf{chromatic number} of $H$, denoted $\chi(H)$, is the least $r$ such that $H$ is $r$-partite.
+\end{defi}
+
+\begin{eg}
+    $\Psi(K_r(t)) = r$.
+\end{eg}
+
+\begin{ncor}\label{cor:15}
+    Let $H$ be a graph with at least one edge. Then
+    \begin{equation*}
+        \ext(H) = 1 - \frac{1}{\chi(H) - 1}.
+    \end{equation*}
+\end{ncor}
+
+\begin{proof}
+    Let $r = \chi(H) - 1$.
+    Then $H$ is $(r+1)$-partite so we can find $t$ such that $H \subset K_{r+1}(t)$ (for instance $t = \abs{H}$ suffices).
+    Let $\epsilon > 0$, and take $n_0$ as in \cref{thm:14}.
+    Then for all $n \geq n_0$,
+    \begin{align*}
+        \abs{G} = n, \ e(G) \geq (1 - \frac{1}{r} + \epsilon) \binom{n}{2} &\implies K_{r+1}(t) \subset G \\
+                                                                           &\implies H \subset G.
+    \end{align*}
+    So, for all $n \geq n_0$, $\ext(n; H) < (1 + \frac{1}{r} + \epsilon) \binom{n}{2}$. Hence
+    \begin{equation*}
+        \ext(H) = \lim_{n \to \infty} \frac{\ext(n; H)}{\binom{n}{2}} \leq 1 - \frac{1}{r} + \epsilon.
+    \end{equation*}
+    But $\epsilon>0$ was arbitrary, so $\ext(H) \leq 1 - \frac{1}{r}$.
+
+    On the other hand, for all $n$, $H \not\subset T_r(n)$ as $H$ is not $r$-partite. So $\ext(n, H) \geq t_r(n)$, and
+    \begin{align*}
+        \frac{t_r(n)}{\binom{n}{2}} \to 1 - \frac{1}{r} \quad \text{so} \quad \ext(H) \geq 1 - \frac{1}{r}.
+    \end{align*}
+\end{proof}
+
+So if $H$ not bipartite, $\ext(H) = 1 - \frac{1}{\chi(H) - 1} \neq 0$, and $\ext(n; H) \sim (1 - \frac{1}{\chi(H) - 1}) \binom{n}{2}$.
+This essentially solves the forbidden subgraph problem for non-bipartite $H$.
+What about for $H$ bipartite?
+\Cref{cor:15} just says $\ext(H) = 0$, i.e. $\ext(n; H) = o(n^2)$, but doesn't tell us for instance that $\ext(n; H)$ grows like a certain power of $n$.
+We do however have upper bounds from \cref{thm:11}: $\ext(n, K_{t, t}) = \mathcal{O}(n^{2 - \frac{1}{t}})$.
+
+Another application:
+\begin{defi}[Density]\hypertarget{def:density}
+    We can define the \textbf{density} of a graph $G$ to be
+    \begin{equation*}
+        D(G) = \frac{e(G)}{\binom{\abs{G}}{2}} \in [0, 1]
+    \end{equation*}
+\end{defi}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item $D(T_r(n)) \to 1 - \frac{1}{r}$ as $n \to \infty$
+        \item If $\alpha > \ext(H)$ then if $\abs{G}$ is sufficiently large and $D(G) = \alpha$, we have $H \subset G$.
+    \end{itemize}
+\end{eg}
+
+Could we define the \hyperlink{def:density}{density} of an infinite graph?
+We cannot take the same definition, as we would get $\frac{\infty}{\infty}$.
+Instead try something like the `limit of densities of large finite subgraphs'.
+
+\begin{defi}
+    The upper density of an infinite graph $G$ is
+    \begin{equation*}
+        \ud(G) = \lim_{n \to \infty} \sup\set{D(H) | H \subset G, \abs{H} = n}.
+    \end{equation*}
+\end{defi}
+
+\begin{remark}
+    \leavevmode
+    \begin{itemize}
+        \item Again $\ud(G) \in [0, 1]$.
+        \item If $\alpha < \ud(G)$ then for sufficiently large $n$, $G$ has subgraphs of order $n$ and density $\geq \alpha$.
+        \item If $\alpha > \ud(G)$ then for sufficiently large $n$, $G$ has no subgraphs of order $n$ and density $\geq \alpha$.
+        \item A priori, it seems like $\ud(G)$ could take any value in $[0, 1]$. But surprisingly:
+    \end{itemize}
+\end{remark}
+
+\begin{ncor}
+    For any infinite graph $G$,
+    \begin{equation*}
+        \ud(G) \in \{0, 1, \frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \dotsc\}.
+    \end{equation*}
+\end{ncor}
+
+\begin{proof}
+    It is enough to show that for $r = 1, 2, 3, \dotsc$,
+    \begin{equation*}
+        \ud(G) > 1 - \frac{1}{r} \implies \ud(G) \geq 1 - \frac{1}{r+1}.
+    \end{equation*}
+    Suppose $\ud(G) > 1 - \frac{1}{r}$.  Pick $\alpha$ such that $\ud(G) > \alpha > 1 - \frac{1}{r}$ and fix $n$.
+    For sufficiently large $N$, $G$ has subgraphs of order $N$ and density $\geq \alpha > 1 - \frac{1}{r} = \ext(T_{r+1}(n))$.
+    So $T_{r+1}(n) \subset G$, but $D(T_{r+1}(n)) \to 1 - \frac{1}{r+1}$ as $n \to \infty$.
+    We can do this for every $n$, hence $\ud(G) \geq 1 - \frac{1}{r+1}$.
 \end{proof}
 
 \end{document}
