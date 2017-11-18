@@ -43,7 +43,7 @@ Unless stated, vector spaces will be either over the real numbers or the complex
         \item $\norm{v + w} \leq \norm{v} + \norm{w}$ for all $v, w \in V$. (Triangle inequality)
     \end{enumerate}
 \end{defi}
-In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $d(v, w) = \norm{v - w}$.
+In particular, a metric on $V$ is defined by $d(v, w) = \norm{v - w}$.
 
 \begin{fact}
     The vector space operations of scalar multiplication and vector addition are continuous.
@@ -156,6 +156,8 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
     \end{enumerate}
 \end{proof}
 
+% new lec (2)
+
 \begin{cor}
     A \hyperlink{def:topologicalVectorSpace}{topological vector space} is normable if and only if it is \hyperlink{def:locallyConvex}{locally convex} and locally bounded (that is, there exists a bounded convex neighbourhood of $0$).
 \end{cor}
@@ -231,6 +233,8 @@ In particular, a metric\label{def:metric-on-vector-space} on $V$ is defined by $
     \end{equation*}
 \end{fact}
 
+% new lec (3)
+
 \begin{defi}[\hypertarget{def:opNorm}{Operator norm}]
     Let $V, W$ be \hyperlink{def:normedVectorSpace}{normed vector spaces}. The \textbf{operator norm} of a linear map $T: V \to W$ is
     \begin{equation*}
@@ -243,7 +247,6 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
 \begin{fact}
     The \hyperlink{def:opNorm}{operator norm} $\norm{\cdot}$ is a norm on $\mathcal{B}(V, W)$.
 \end{fact}
-
 
 \begin{prop}
     Let $V, W$ be \hyperlink{def:normedVectorSpace}{normed vector spaces}. Then a linear map $T: V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} if and only if it is continuous.
@@ -355,6 +358,7 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
         \item Let $V, W$ be finite-dimensional vector spaces. Then any linear map $T:V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} with respect to any \hyperlink{def:normedVectorSpace}{norms} on $V, W$, and $T$ can be represented by a matrix while $T^*$ is represented by the transpose of $T$.
             Finite dimensional normed vector spaces are \hyperlink{def:reflexive}{reflexive}.
         \item The map $T : \ell^p \to \ell^p, \; (x_1, x_2, \dotsc) \mapsto (0, x_1, x_2, \dotsc)$ is bounded, $\norm{T} = 1$, injective but not surjective.
+            % new lec (4)
         \item The derivative map $D: C^1 [0, 1] \to C^0 [0, 1]$ is
             \begin{itemize}[label={}]
                 \item bounded as a map $C^1 [0, 1], \; \norm{f}_\infty + \norm{f'}_\infty$ to $C^0[0, 1] \; \norm{f}_\infty$
@@ -467,6 +471,8 @@ Denote by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal
 \end{proof}
 
 \clearpage
+
+% new lec (5)
 
 \section{The Hahn-Banach Theorem}
 
@@ -599,6 +605,7 @@ Recall that in a vector space $V$, elements $v_1, \dotsc, v_k$ are linearly inde
 A set $S \subset V$ is linearly independent if any \emph{finite} subset is.
 A basis of $V$ is a set $B \subset V$ that is linearly independent and such that every element of $V$ is a \emph{finite} linear combination of elements of $B$.
 
+% new lec (6)
 \begin{prop}
     Let $V \neq \{0\}$ be a vector space and $S \subset V$ linearly independent. Then $V$ has a basis $B$ containing $S$.
 \end{prop}
@@ -726,6 +733,8 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
 
 \clearpage
 
+% new lec (7)
+
 \section{Completeness and the Baire Category Theorem}
 \subsection{Baire Category}
 
@@ -828,6 +837,8 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
     So, $\bigcap_j U_j$ is dense.
     But $R \supset \bigcap_j U_j$, so $R$ is dense.
 \end{proof}
+
+% new lec (8)
 
 \begin{cor}
     Let $X$ be a complete metric space and $U \subset X$ open. Then $U = \emptyset$ or $U$ is of the \hyperlink{def:meagre}{second category}.
@@ -969,6 +980,8 @@ A basis of $V$ is a set $B \subset V$ that is linearly independent and such that
     \end{align*}
 \end{proof}
 
+%new lec (9)
+
 We now return to prove the \hyperlink{thm:omt}{Open Mapping Theorem}.
 \begin{proof}
     \leavevmode
@@ -1016,7 +1029,6 @@ We now return to prove the \hyperlink{thm:omt}{Open Mapping Theorem}.
     The \hyperlink{thm:omt}{Open Mapping Theorem} guarantees that this strategy works, provided that $L$ is surjective.
 \end{remark}
 
-% 3.4
 \subsection{Closed Graph Theorem}
 \begin{thm}\hypertarget{thm:cgt}[Closed Graph Theorem]
     Let $V, W$ be \hyperlink{def:banach}{Banach} spaces, $T:V\to W$ linear. Then $T$ is bounded if and only if the graph $\Gamma = \set{(v, Tv) | v \in V} \subset V \times W$ is closed.
@@ -1098,6 +1110,8 @@ Recall that a topological space is \hypertarget{def:Hausdorff}{\textbf{Hausdorff
 \begin{proof}
     Closed subsets of a compact space are compact.
 \end{proof}
+
+% new lec (10)
 
 \begin{fact}
     Let $X$ be \hyperlink{def:normal}{normal}. Then for every closed $A \subset X$ and open $U \supset A$, there exist an open set $V$ and a closed set $B$ such that $A \subset V \subset B \subset U$.
@@ -1219,78 +1233,169 @@ When is a subset of $C(K)$ compact?
     \end{enumerate}
 \end{prop}
 
-% to be fixed up
+% new lec (11)
 
+\begin{proof}
+    The first two are equivalent from Analysis II and Metric and Topological spaces. It is easy to check (i) and (ii) give (iii), so we only check (iii) $\Rightarrow$ (ii).
+
+    Let $(x_n) \subset X$ be a sequence. We need to find a convergent subsequence. Let $M_n$ be a finite $\frac{1}{n}$-net for $X$.
+    Let $m_1 \in M_1$ be such that $B_1(m_1)$ contains infinitely many of the $(x_n)$. Let $n_1$ be the first $n$ such that $x_n \in B_1(m_1)$.
+    Given $m_1 \in M_1, \dotsc, m_k \in M_k$, $n_1, \dotsc, n_k$ such that $B_\frac{1}{k}(M_i)$ contains infinitely many points from $(x_n) \cap B_\frac{1}{i}(m_i)$ for all $i \leq j$ and $x_{n_l} \in \bigcap_{j=1}^l B_\frac{1}{j}(m_j)$ $\forall l < k$.
+
+    Let $m_{k+1}$ be such that $B_\frac{1}{k+1}(m_{k+1})$ contains infinitely many points from $(x_n) \cap \bigcap_{j=1}^n B_\frac{1}{j} (m_j)$ and $n_{k+1}$ be the first $n > n_k$ such that $x_{n_{k+1}} \in \bigcap_{i=1}^{k+1} B_{v_j} (m_j)$.
+
+    It follows that
+    \begin{equation*}
+        d(x_{n_k}, x_{n_l}) \leq d(x_{n_k}, m_k) + d(x_{n_l}, m_k) \leq \frac{1}{k} + \frac{1}{k} \; \text{for} \; l \geq k
+    \end{equation*}
+    so $(x_{n_k})$ is a Cauchy sequence. $X$ is complete, so $(x_{n_k})_k$ converges.
+\end{proof}
+
+\begin{cor}
+    Let $X$ be a complete metric space. Then $Y \subset X$ is relatively compact (i.e. has compact closure in $X$) if and only if $Y$ is totally bounded.
+\end{cor}
+
+For $K$ compact, we always assume that $C(K)$ has $\norm{\cdot}_\infty$-norm, making it a Banach space.
+
+\begin{thm}[Arzel\'a-Ascoli]\hypertarget{thm:aa}
+    Let $K$ be compact Hausdorff and $\mathcal{F} \subset C(K)$. Then the following are equivalent:
+    \begin{enumerate}[label=(\roman*)]
+        \item $\mathcal{F}$ is relatively compact
+        \item $\mathcal{F}$ is bounded and equicontinuous, i.e. $\sup_{f \in \mathcal{F}} \norm{f}_\infty < \infty$ and $\forall \epsilon > 0 \; \forall x \in K$, $\exists U$ a neighbourhood of $x$ such that
+            \begin{equation*}
+                \forall f \in \mathcal{F}, \; \abs{f(x) - f(y)} < \epsilon \quad \text{for all } y \in U.
+            \end{equation*}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    (i) $\implies$ (ii):
+    Let $\mathcal{F}$ be relatively compact, i.e. totally bounded.
+    Thus for any $\epsilon > 0$, there is $f_1, \dotsc, f_n \in \mathcal{F}$ such that $\forall f \in \mathcal{F}$
+    \begin{equation*}
+        \min_{i=1, \dotsc, n} \norm{f - f_i}_\infty < \epsilon.
+    \end{equation*}
+    Thus $\norm{f}_\infty \leq \epsilon + \max_{i = 1, \dotsc, n} \norm{f_i}_\infty = M$ for all $f \in \mathcal{F}$, so $\mathcal{F}$ is bounded.
+    Let $\epsilon > 0$ and $x \in K$. Since the $f_i$ are continuous, there exist neighbourhoods $U_i$ of $x$ such that $\abs{f_i(x) - f_i(y)} < \epsilon$ for $y \in U_i$. Let $U = \bigcap_{i=1}^k$. Then $U$ is a neighbourhood of $x$ and for $y \in U$,
+    \begin{equation*}
+        \abs{f(x) - f(y)} \leq \min_i(\abs{f(x) - f(y)} + \abs{f_i(x) - f_i(y)} + \abs{f(y) - f_i(y)}) < 3\epsilon \quad \text{for all } f \in \mathcal{F}.
+    \end{equation*}
+    Thus $f$ is equicontinuous.
+
+    (ii) $\implies$  (i):
+    Let $\mathcal{F}$ be bounded and equicontinuous. For every $\epsilon > 0$, we construct a finite $\epsilon$-net for $\mathcal{F}$. Let $\epsilon > 0$.
+    For $x \in K$, let $U_x$ be an open neighbourhood of $x$ such that $\abs{f(x) - f(y)} < \epsilon$ if $f \in \mathcal{F}$, $y \in U_x$ (by equicontinuity). Since $K$ is compact, there are $x_1, \dotsc x_n \in K$ such that
+    \begin{equation*}
+        K = \bigcup_{i=1}^n U_{x_i}.
+    \end{equation*}
+    Since $\mathcal{F}$ is uniformly bounded, the vectors $(f(x_1), \dotsc, f(x_n)) \in \K^n$, $f \in \mathcal{F}$ are bounded in any norm on $\K^n$. We take the $\norm{\cdot}_\infty$ on $\K^n$. Thus
+    \begin{equation*}
+        F = \set{(f(x_1), f(x_2), \dotsc, f(x_n)) | f \in \mathcal{F}}
+    \end{equation*}
+    is relatively compact in $\K^n$.
+    Thus there are $f_1, \dotsc f_m \in \mathcal{F}$ such that
+    \begin{equation*}
+        \set{(f_i(x_1), \dotsc, f_i(x_n)) | 1 \leq i \leq m} \subset \K^n
+    \end{equation*}
+    is a finite $\epsilon$-net for $F$.
+
+    Now claim $f_1, \dotsc, f_m$ are a finite $3\epsilon$-net for $\mathcal{F}$.
+
+    \begin{align*}
+        \abs{f(x) - f_i(x)} &\leq \underbrace{\abs{f(x) - f(x_j)}}_{< \epsilon \text{ if } x \in U_{x_j}} +
+        \underbrace{\abs{f(x_j) - f_i(x_j)}}_{< \epsilon \text{ for some } i \in \{1, \dotsc, m\}} +
+        \underbrace{\abs{f_i(x_i) - f_i(x)}}_{< \epsilon \text{ if } U_{x_i} \ni x} \\
+            &< 3 \epsilon
+    \end{align*}
+    for some choice of $j$.
+\end{proof}
+
+% new lec (12)
+
+\begin{eg}
+    Let $K = [0, 1]$ and $\mathcal{F} = \set{f \in C^1[0, 1]|\norm{f}_\infty + \norm{f'}_\infty < 1}$.
+    Then $\mathcal{F}$ is relatively compact in $C^0[0, 1]$.
+    Indeed $\mathcal{F}$ is bounded (in $C^0$) and
+    \begin{equation*}
+        \abs{f(x) - f(y)} \leq \norm{f'}_\infty \abs{x - y} \leq \abs{x-y} \leq \epsilon \quad \text{whenever} \abs{x - y} \leq \epsilon
+    \end{equation*}
+    for any $f \in \mathcal{F}$.
+
+    Since $\mathcal{F}$ is the unit ball of $C^1[0, 1]$, this means that the identity map $C^1[0, 1] \to C^0[0, 1]$, is a compact embedding: it is continuous and maps bounded sets to relatively compact sets.
+\end{eg}
+
+\subsection{Application: Peano Existence Theorem}
+\begin{thm}[Picard-Lindel{\"o}f]
+    Let $f: \R \to \R$ be locally Lipschitz continous. Then for any $x_0 \in R$ there exists a maximal interval $(T_1, T_2) \subset \R$ with $T_1 = -\infty$ and $T_2 = +\infty$ allowed such that
+    \begin{equation*}
+        \begin{cases}
+            x'(t) = f(x(t)) \\
+            x(0) = x_0
+        \end{cases}
+        \tag{$*$} \label{eq:diffEq}
+    \end{equation*}
+    has a unique $C^1$ solution $x:(T_1, T_2) \to \R$ (that is not the restriction of such a solution to a larger interval).
+    Moreover, if $T_2 \neq +\infty$, for any bounded $K \subset \R$ there exists $t < T_2$ such that $x([t, T_2)) \cap K = \emptyset$ and similarly if $T_1 \neq -\infty$.
+\end{thm}
+
+\begin{thm}[Peano]
+    Let $f: \R \to \R$ be continuous. Then for any $x_0 \in \R$, $\exists T > 0$ and a solution $x : (-T, T) \to \R$ for \eqref{eq:diffEq}.
+\end{thm}
+
+\begin{remark}
+    The solution is not necessarily unique, e.g. $f(x) = \sqrt{\abs{x}}$.
+\end{remark}
+
+\begin{lemma}
+    Assume that $b > 0$, $m > 0$ such that
+    \begin{equation*}
+        \abs{f(x)} \leq M \quad \text{for } \abs{x - x_0} \leq b. \tag{$@$} \label{eq:2}
+    \end{equation*}
+    Then if $T \leq \frac{b}{M}$, and $x$ is any $C^1$ solution to \eqref{eq:diffEq} for $\abs{t} \leq T$, it follows that $\abs{x(t) - x_0} \leq b$ and $\abs{x'(t)} \leq M$.
+\end{lemma}
+
+\begin{proof}
+    Assume that $x$ is a $C^1$ solution to \eqref{eq:diffEq} for $\abs{t} \leq T' < T$ such that $\abs{x(t) - x_0} \leq b$.
+    \begin{equation*}
+        \abs{x'(t)} = \abs{f(x(t))} \leq M, \ \abs{x(t) - x_0} = \abs{\int_0^t f(x(s)) \, ds} \leq Mt \lneqq b \text{ for } \abs{t} \leq T'. \tag{$\dagger$} \label{eq:3}
+    \end{equation*}
+
+    This allows us to extend the solution beyond $T'$ by `continuous induction':
+    Let $I = \set{T' \in [0, T] | \abs{x(t) - x_0} \leq b \text{ for } \abs{t} \leq T'}$. Note $I \neq \emptyset$ and that $I$ is closed (both by continuity of $x$).
+
+    We now claim that $\sup I = T$.
+    Otherwise, $\abs{x(t) - x_0} < b$ by \eqref{eq:3} for $\abs{t} \leq \sup I$.
+    But by continuity, a neighbourhood of $\sup I$ must also then be in $T$, a contradiction.
+    Then, $I = [0, T]$.
+\end{proof}
+
+\begin{proof}[Proof of Peano's Theorem]
+    Let $B = \set{f + \tilde{g} | \tilde{g} \in C^0, \norm{\tilde{g}} \leq 1}$ and choose $M, b > 0$ such that \eqref{eq:2} holds for all $g \in B$.
+    For any $f \in B \cap C^1$ there is a local solution to \eqref{eq:diffEq} by the Picard-Lindel\"of Theorem.
+    The lemma implies that these solutions are defined on $[-T,T]$ with $T$ as in the lemma.
+    Define
+    \begin{align*}
+        S:B \cap C^1 \longrightarrow C^1[-T, T] \\
+        f \longmapsto x \quad \text{where $x$ is the solution to \eqref{eq:diffEq}.}
+    \end{align*}
+
+    By the lemma, $S(B \cap C^1)$ is bounded in $C^1[-T, T]$ with norm $\norm{x}_\infty + \norm{x'}_\infty$.
+
+    By Arzel\`a-Ascoli, the embedding $C^1[-T, T] \to C^0 [-T, T]$ is compact so $S(B \cap C^1)$ is relatively compact in $C^0[-T, T]$.
+    Let $g_i \in B \cap C^1$ be such that $g_i \to f$ is $C^0$, i.e. $\norm{f - g_i}_\infty \to 0$.
+    (The existence of such $g_i$ follows from the Weierstrass approximation theorem in the next section.)
+
+    By relative compactness of $S(B \cap C')$ in $C^0$ there is a subsequence such that $x_i = S g_i$ converges to some $x \in C^0[-T, T]$.
+
+    Claim: $x \in C^1[-T, T]$ and \eqref{eq:diffEq} holds.
+
+    Since $g_i \xrightarrow{C^0} f$ and $x_i \xrightarrow{C^0} x$ (along the subsequence), also $g_i \circ x_i \xrightarrow{C^0} f \circ x$
+    \begin{equation*}
+        \implies x_i' = g_i \circ x_i \to f \circ x \text{ uniformly in } \abs{t} \leq T \\
+        \implies x \in C^1 \text{ and } x' = f \circ x.
+    \end{equation*}
+\end{proof}
 % \begin{proof}
-%     The first two are equivalent from Analysis II and Metric and Topological spaces. It is easy to check (i) and (ii) give (iii), so we only check (iii) $\Rightarrow$ (ii).
-%
-%     Let $(x_n) \subset X$ be a sequence. We need to find a convergent subsequence. Let $M_n$ be a finite $\frac{1}{n}$-net for $X$.
-%     Let $m_1 \in M_1$ be such that $B_1(m_1)$ contains infinitely many of the $(x_n)$. Let $n_1$ be the first $n$ such that $x_n \in B_1(m_1)$.
-%     Given $m_1 \in M_1, \dotsc, m_k \in M_k$, $n_1, \dotsc, n_k$ such that $B_\frac{1}{k}(M_i)$ contains infinitely many points from $(x_n) \cap B_\frac{1}{i}(m_i)$ for all $i \leq j$ and $x_{n_l} \in \bigcap_{j=1}^l B_\frac{1}{j}(m_j)$ $\forall l < k$.
-%     \begin{equation*}
-%         \begin{cases}
-%             m_{k+1} \text{ be such that } B_\frac{1}{k+1}(m_{k+1}) \text{ contains infinitely many points from } (x_n) \cap \bigcap_{j=1}^n B_\frac{1}{j} (m_j) \\
-%             n_{k+1} \text{ be the first } n > n_k \text{ such that } x_{n_{k+1}} \in \bigcap_{i=1}^{k+1} B_{v_j} (m_j)
-%         \end{cases}
-%     \end{equation*}
-%
-%     It follows that
-%     \begin{equation*}
-%         d(x_{n_k}, x_{n_l}) \leq d(x_{n_k}, m_k) + d(x_{n_l}, m_k) \leq \frac{1}{k} + \frac{1}{k} \; \text{for} \; l \geq k
-%     \end{equation*}
-%     so $(x_{n_k})$ is a Cauchy sequence. $X$ is complete, so $(x_{n_k})_k$ converges.
-% \end{proof}
-%
-% \begin{cor}
-%     Let $X$ be a complete metric space. Then $Y \subset X$ is relatively compact (i.e. has compact closure in $X$) if and only if $Y$ is totally bounded.
-% \end{cor}
-%
-% For $K$ compact, we always assume that $C(K)$ has $\norm{\cdot}_\infty$-norm, making it a Banach space.
-%
-% \begin{thm}[Arzel\'a-Ascoli]\hypertarget{thm:aa}
-%     Let $K$ be compact Hausdorff and $\mathcal{F} \subset C(K)$. Then the following are equivalent:
-%     \begin{enumerate}[label=(\roman*)]
-%         \item $\mathcal{F}$ is relatively compact
-%         \item $\mathcal{F}$ is bounded and equicontinuous, i.e. $\sup_{f \in \mathcal{F}} \norm{f}_\infty < \infty$ and $\forall \epsilon > 0 \; \forall x \in K$, $\exists U$ a neighbourhood of $x$ such that
-%             \begin{equation*}
-%                 \forall f \in \mathcal{F}, \; \abs{f(x) - f(y)} < \epsilon \quad \text{for all } y \in U.
-%             \end{equation*}
-%     \end{enumerate}
-% \end{thm}
-%
-% \begin{proof}
-%     % (i) -> (ii)
-%     Let $\mathcal{F}$ be relatively compact, i.e. totally bounded.
-%     Thus for any $\epsilon > 0$, there is $f_1, \dotsc, f_n \in \mathcal{F}$ such that $\forall f \in \mathcal{F}$
-%     \begin{equation*}
-%         \min_{i=1, \dotsc, n} \norm{f - f_i}_\infty < \epsilon.
-%     \end{equation*}
-%     Thus $\norm{f}_\infty \leq \epsilon + \max_{i = 1, \dotsc, n} \norm{f_i}_\infty = M$ for all $f \in \mathcal{F}$, so $\mathcal{F}$ is bounded.
-%     Let $\epsilon > 0$ and $x \in K$. Since the $f_i$ are continuous, there exist neighbourhoods $U_i$ of $x$ such that $\abs{f_i(x) - f_i(y)} < \epsilon$ for $y \in U_i$. Let $U = \bigcap_{i=1}^k$. Then $U$ is a neighbourhood of $x$ and for $y \in U$,
-%     \begin{equation*}
-%         \abs{f(x) - f(y)} \leq \min_i(\abs{f(x) - f(y)} + \abs{f_i(x) - f_i(y)} + \abs{f(y) - f_i(y)}) < 3\epsilon \quad \text{for all } f \in \mathcal{F}.
-%     \end{equation*}
-%     Thus $f$ is equicontinuous.
-%
-%     % (ii) -> (i)
-%     Let $\mathcal{F}$ be bounded and equicontinuous. For every $\epsilon > 0$, we construct a finite $\epsilon$-net for $\mathcal{F}$. Let $\epsilon > 0$.
-%     For $x \in K$, let $U_x$ be an open neighbourhood of $x$ such that $\abs{f(x) - f(y)} < \epsilon$ if $f \in \mathcal{F}$, $y \in U_x$ (by equicontinuity). Since $K$ is compact, there are $x_1, \dotsc x_n \in K$ such that
-%     \begin{equation*}
-%         K = \bigcup_{i=1}^n U_{x_i}.
-%     \end{equation*}
-%     Since $\mathcal{F}$ is uniformly bounded, the vectors $(f(x_1), \dotsc, f(x_n)) \in \K^n$, $f \in \mathcal{F}$ are bounded in any norm on $\K^n$. We take the $\norm{\cdot}_\infty$ on $\K^n$. Thus
-%     \begin{equation*}
-%         F = \set{(f(x_1), f(x_2), \dotsc, f(x_n)) | f \in \mathcal{F}}
-%     \end{equation*}
-%     is relatively compact in $\K^n$.
-%     Thus there are $f_1, \dotsc f_m \in \mathcal{F}$ such that
-%     \begin{equation*}
-%         \set{(f_i(x_1), \dotsc, f_i(x_n)) | 1 \leq i \leq m} \subset \K^n
-%     \end{equation*}
-%     is a finite $\epsilon$-net for $F$.
-%
-%     Now claim $f_1, \dotsc, f_m$ are a finite $3\epsilon$-net for $\mathcal{F}$.
-%
 %     \begin{align*}
 %         \abs{f(x) - f_i(x)} &\leq \underbrace{\abs{f(x) - f(x_j)}}_{< \epsilon \text{ if } x \in U_{x_j}} +
 %         \underbrace{\abs{f(x_j) - f_i(x_j)}}_{< \epsilon \text{ for some } i \in \{1, \dotsc, m\}} +
