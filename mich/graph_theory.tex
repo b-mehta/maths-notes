@@ -1168,4 +1168,145 @@ Instead try something like the `limit of densities of large finite subgraphs'.
     We can do this for every $n$, hence $\ud(G) \geq 1 - \frac{1}{r+1}$.
 \end{proof}
 
+\subsubsection{Proof of Erd\H{o}s-Stone}
+\Cref{thm:14} says that if a graph $G$ has enough edges, then $K_{r+1}(t) \subset G$.
+
+This condition on $e(G)$ is equivalent to a condition on the average degree.
+However, given $d$ and $\delta > 0$ then it turns out that any large graph of average degree $\geq d$ has a large subgraph of minimum degree $\geq d - \delta$.
+If $G$ has average degree $d$ and $\abs{G} = n$ large, we can find $\abs{H} = \Omega(n)$ and $\delta(H) \geq d - \delta$ (not proved here. Delete vertices of minimum degree and it works).
+So, we have an equivalent version of Erd\H{o}s-Stone with minimum degree condition:
+
+\begin{manualtheorem}{14a}\label{thm:14a}
+    Let $r, t \geq 1$ be integers and $\epsilon > 0$ be real. Then $\exists n_0 \; \forall n \geq n_0$,
+    \begin{equation*}
+        \abs{G} = n, \quad \delta(G) \geq (1 - \frac{1}{r} + \epsilon) n \implies K_{r+1}(t) \subset G.
+    \end{equation*}
+\end{manualtheorem}
+
+\begin{proof}
+    Induction on $r$. Fix $T$ such that
+
+    Then choose $n_0$ such that for all $n \geq n_0$,
+    \begin{equation}
+        \abs{G} = n, \quad \delta(G) \geq (1 - \frac{1}{r} + \epsilon) n \implies K_{r+1}(t) \subset G.
+    \end{equation}
+    How? For $r=1$, $K_1(T) \subset G \iff \abs{G} \geq T$. For $r > 1$, $1 - \frac{1}{r} > 1 - \frac{1}{r-1}$ so it follows by inductive hypothesis.
+
+    Suppose the result is not true.
+    Then we can find arbitrarily large $n$ and graphs $G$ with $\abs{G} = n$ and $\delta(G) \geq (1 - \frac{1}{r} + \epsilon) n$, $K_{r+1} \not\subset G$.
+    Pick such an $n$, $G$ with $n \geq n_0$ and also
+
+    Then we can find $K_r(T) \subset G$, say with vertex classes $X_1, \dotsc, X_r$.
+    Let
+    \begin{align*}
+        A = \set{(W, v_1, \dotsc, v_r) | \abs{W} = t, W \subset V(G), \forall i v_i \in X_i, \forall i, \forall w \in W, v_i \sim W}
+    \end{align*}
+    % todo picture
+
+    What can we say about $\abs{A}$?
+    First, given $v_1 \in X, \dotsc, v_r \in X_r$, we can check from the minimum degree condition that
+    \begin{equation*}
+        \abs{\Gamma(v_1) \cap \dotsc \cap \Gamma(v_r)} \geq r \epsilon n
+    \end{equation*}
+    So there are at least $\binom{r \epsilon n}{t}$ choices for $W$. Hence $\abs{A} \geq T^r \binom{r \epsilon n}{t}$.
+
+    On the other hand, given the set $W$, as $K_{r+1}(t) \not\subset G$, we know that there is some $Y_i$ containing at most $t-1$ vertices joined to all of $W$.
+    Hence $\abs{A} \leq \binom{n}{t} (t-1) T^{r-1}$, thus
+    \begin{equation*}
+        T^r \binom{r \epsilon n}{t} \leq \binom{n}{t} (t-1) T^{r-1}.
+    \end{equation*}
+    Now,
+    \begin{equation*}
+        \text{RHS} \leq \frac{n^t}{t!} (t-1) T^{r-1}
+    \end{equation*}
+    while
+    \begin{equation*}
+        \text{LHS} \geq T^r \frac{1}{t!} (r \epsilon n - t)^t \geq T^r \frac{1}{t!} (\frac{r \epsilon n}{2})^t.
+    \end{equation*}
+    Combining, we get
+    \begin{equation*}
+        T^r (\frac{r \epsilon n}{2})^t \leq n^t (t-1) T^{r-1}
+    \end{equation*}
+    hence $T \leq (\frac{2}{r \epsilon})^t (t-1)$, a contradiction.
+\end{proof}
+
+\subsection{Hamiltonian graphs}
+\begin{defi}[Hamiltonian]\hypertarget{def:hamil}
+    A \textbf{Hamiltonian cycle} in a graph $G$ is a cycle of length $G$, i.e., going through all vertices of $G$.
+    If $G$ has a Hamiltonian cycle, we say $G$ is \textbf{Hamiltonian}.
+\end{defi}
+If $\abs{G} = n$, how big does $e(G)$ need to be to force $G$ \hyperlink{def:hamil}{Hamiltonian}?
+This turns out to be uninteresting, we can have $e(G)$ almost $\binom{n}{2}$ and have no Hamiltonian cycle. % add pic
+
+More interestingly, is there a condition on $\delta(G)$?
+
+\begin{nthm}[Dirac's Theorem]\label{thm:17}
+    Let $\abs{G} = n \geq 3$ and $\delta(G) \geq \frac{n}{2}$. Then $G$ is Hamiltonian.
+\end{nthm}
+
+\begin{remark}
+    \leavevmode
+    \begin{enumerate}[label=\arabic*.]
+        \item This result is best possible:
+            % pictures
+        \item Of course there are Hamiltonian graphs of smaller minimum degree:
+            % picture
+        \item In general, given a graph $G$ it is hard computationally to determine if $G$ has a Hamiltonian cycle.
+    \end{enumerate}
+\end{remark}
+
+\begin{proof}
+    First, observe $G$ is connected. Indeed, if $x \neq y$, $x \nsim y$, then $\abs{\Gamma(x) \cup \Gamma(y)} \leq n-2$, but $\abs{\Gamma(x)} + \abs{\Gamma(y)} \geq \frac{n}{2} + \frac{n}{2} = n$ so $\Gamma(x) \cap \Gamma(y) \neq \emptyset$.
+    Let $v_0, v_1, \dotsc, v_n$ be a path of maximal length in $G$, say length $k \leq n-1$.
+    By maximality, $\Gamma(v_0) \subset \{v_1, \dotsc, v_n\}$. Similarly, $\Gamma(v_k) \subset \{v_0, \dotsc, v_{k-1}\}$.
+    If we have some situation like in the % diagram
+    diagram, we get a cycle. To be more precise, if
+    \begin{equation*}
+        A = \set{i \in [k] | v_0 \sim v_i} \quad \text{and} \quad B = \set{i \in [k] | v_k \sim v_{i-1}}
+    \end{equation*}
+    then $A \cap B \neq \emptyset \implies$ we have a cycle. But $\abs{A \cup B} \leq k < n$ while $\abs{A} + \abs{B} \geq \frac{n}{2} + \frac{n}{2} = n$.
+    Hence $\exists i \in A \cap B$ so we have a cycle $C = v_0 v_1 \dotsc v_{i-1} v_k v_{k-1} \dotsc v_i v_0$ of length $k+1$.
+
+    If $k = n-1$, we have a Hamiltonian cycle as required.
+
+    If $k < n-1$, relabel the cycle $C = u_0 u_1 \dotsc u_k u_0$.
+    By connectedness, we have some $u_i \in C$ and $w \notin C$ with $w \sim u_i$.
+    Then $w u_i u_{i+1} \dotsc u_k u_0 \dotsc u_{i-1}$ is a path of length $k+1$, contradicting maximality.
+\end{proof}
+
+\begin{remark}
+    The same proof gives the following:
+    Let $n > k \geq 3$ and let $G$ be a connected graph $\abs{G} = n$ with $\delta(G) \geq \frac{k}{2}$. Then $G$ contains a path of length $k$ and a cycle of length at least $\frac{k+2}{2}$.
+\end{remark}
+
+The Konigsberg bridge problem (link) seems superficially similar, but in fact much less interesting.
+\begin{defi}[Euler circuit]\hypertarget{def:euler}
+    A \textbf{circuit} of a graph $G$ is a sequence $v_0 v_1 \dotsc v_n$ of vertices of $G$, not necessarily distinct with $v_0 = v_n$, where is $1 \leq i \leq k$ then $v_{i-1} \sim v_i$ and if $1 \leq i < j \leq k$ then edges $v_{i-1} v_i$ and $v_{j-1} v_j$ are distinct.
+    It is an \textbf{Euler circuit} if for every $e \in E(G)$, there is some $i$ with $e = v_{i-1} v_i$.
+    If $G$ has an Euler circuit we say $G$ is \textbf{Eulerian}.
+\end{defi}
+% connectedness thing?
+
+\begin{nprop}\label{thm:18}
+    Let $G$ be a connected graph. Then $G$ Eulerian $\iff \forall v \in G$, $d(v)$ is even.
+\end{nprop}
+
+\begin{proof}
+    $\implies$ is obvious: an \hyperlink{def:euler}{Eulerian circuit} must go in and out of a given vertex the same number of times.
+
+    $\impliedby$: use induction on $e(G)$. For $e(G) = 0$ it is clearly true.
+
+    Consider $e(G) > 0$. Let $v_0 v_1 \dotsc v_k = C$ be a circuit in $G$ of maximal length. If $C$ uses all edges of $G$ then we are done.
+    If not, delete all edges used in $C$ from $G$ to form $H$.
+    In $H$, every vertex still has even degree. Let $H_1$ be a component of $H$ with at least one edge.
+
+    By induction hypothesis, $H_1$ has an Euler circuit $D$.
+    Certainly $C, D$ meet at some vertex $v$.
+    Join them at $v$ to produce a longer circuit in $G$, a contradiction.
+    (Walk along $C$ until we get to $v$, then walk all round $D$ starting/ending at $v$, then walk along the rest of $C$).
+\end{proof}
+
+\clearpage
+\section{Graph Colouring}
+%TODO missing stuff
 \end{document}
