@@ -1439,10 +1439,10 @@ For $K$ compact, we always assume that $C(K)$ has $\norm{\cdot}_\infty$-norm, ma
     \end{align*}
 
     Let $m \to \infty$:
-    \begin{equation*}
+    \begin{align*}
         0 \leq 1 - \sqrt{1 - t^2} - Q_n(t) &\leq 1 - Q_n(1) \\
-        \implies \norm{1 - Q_n - \sqrt{1-t}}_\infty \leq 1 - Q_n(1) \to 0.
-    \end{equation*}
+        \implies \norm{1 - Q_n - \sqrt{1-t}}_\infty &\leq 1 - Q_n(1) \to 0.
+    \end{align*}
     Set $P_n(t) = 1 - Q(1-t^2)$. Then $\norm{P_n - \abs{\cdot}}_\infty \to 0$.
 \end{proof}
 
@@ -1530,14 +1530,111 @@ For $K$ compact, we always assume that $C(K)$ has $\norm{\cdot}_\infty$-norm, ma
     Since $P \circ f \in \overline{A}$ and since $\overline{A}$ is closed therefore $\abs{f} \in \overline{A}$.
 \end{proof}
 
-% \begin{proof}
-%     \begin{align*}
-%         \abs{f(x) - f_i(x)} &\leq \underbrace{\abs{f(x) - f(x_j)}}_{< \epsilon \text{ if } x \in U_{x_j}} +
-%         \underbrace{\abs{f(x_j) - f_i(x_j)}}_{< \epsilon \text{ for some } i \in \{1, \dotsc, m\}} +
-%         \underbrace{\abs{f_i(x_i) - f_i(x)}}_{< \epsilon \text{ if } U_{x_i} \ni x} \\
-%             &< 3 \epsilon
-%     \end{align*}
-%     for some choice of $j$.
-% \end{proof}
+% new lec (14)
+
+\begin{lemma}
+    Let $L \subset C(K, \R)$ be a sublattice, i.e. $f,g \in L \implies f \wedge g, f \vee g \in L$.
+    Let $g \in C(K, \R)$ such that
+    \begin{equation*}
+        \forall \epsilon > 0: \forall x, y \in K: \exists f_{xy} \in L, \text{ such that } \abs{f_{xy}(x) - g(x)} < \epsilon \text{ and } \abs{f_{xy}(y) - g(y)} < \epsilon. \label{eq:14star} \tag{$*$}
+    \end{equation*}
+
+    Then $g \in \overline{L}$. In particular, if \eqref{eq:14star} holds for all $g \in C(K, \R)$, Then $\overline{L} = C(K, \R)$.
+\end{lemma}
+
+\begin{proof}
+    Let $g \in C(K, \R)$ be as in the assumption $\epsilon > 0$.
+    We will construct $f \in L$ such that $\norm{f-g} < \epsilon$.
+
+    For $x, y \in K$, let $f_{xy}$ be as in \eqref{eq:14star}.
+    By continuity, there is some open $U_{xy}$ containing $y$ such that $\abs{f_{xy}(z) - g(z)} < \epsilon$ $\forall z \in U_{xy}$.
+
+    Then for fixed $x$, these form an open cover of $K$ so $\exists y_1, \dotsc, y_n$ such that $\bigcup_{i=1}^n U_{x, y_i} \supseteq K$.
+
+    Now let $f_x = f_{xy_1} \wedge f_{xy_2} \wedge \dotsb \wedge f_{xy_n}$.
+    Since $f_{xy_i}(z) < g(z) + \epsilon \forall z$, we have $f_x(z) < g(z) + \epsilon$.
+
+    On the other hand, $\abs{f_x(x) - g(x)} < \epsilon$.
+    By continuity of $f_x$, $\exists V_x \ni x$ open such that $\abs{f_x(w) - g(w)} < \epsilon \quad \forall w \in V_x$.
+    Then $(V_x)$ is an open cover of $K$ so
+    \begin{equation*}
+        x_1, \dotsc, x_m \text{ such that } \bigcup_{j=1}^m V_{x_j} \supseteq K.
+    \end{equation*}
+
+    Then if $f = f_{x_1} \vee f_{x_2} \vee \dotsb \vee f_{x_m}$, we have $f(z) > g(z) - \epsilon \quad \forall z$, and our first bound $f(z) < g(z) + \epsilon$ still holds, so $\norm{f - g} < \epsilon$. % check the norm here
+\end{proof}
+
+\begin{proof}[Proof of Stone-Weierstra{\ss} Theorem]
+    By continuous of addition and multiplication, the closure $\overline{A}$ is a sublattice of $C(K, \R)$.
+    We apply the last lemma.
+    Let $g \in C(K, \R)$, $x, y \in K$. We will find $f \in A$ such that $f(x) = g(x)$ and $f(y) = g(y)$.
+    In particular, \eqref{eq:14star} holds.
+
+    By assumption, $A$ vanishes nowhere and separates points:
+    \begin{align*}
+        \forall x \in K \quad \exists f_x \in A \text{ s.t. } f_x(x) \neq 0
+        \forall x, y \in K, \; x \neq y, \; f_{xy} \in A \text{ s.t. } f_{xy}(x) \neq f_{xy}(y).
+    \end{align*}
+
+    If $x = y$, we can take $f = \frac{g(x)}{f_x(x)} f_x \in A$.
+    Thus assume $x \neq y$.
+
+    Claim: There are $\alpha, \beta, \gamma \in \R$ such that
+    \begin{equation*}
+        h = \alpha f_x + \beta f_y + \gamma f_{xy} \label{eq:14dagger} \tag{$\dagger$}
+    \end{equation*}
+    satisfies
+    \begin{equation*}
+        h(x) \neq 0, \quad h(y) \neq 0, \quad h(x) \neq h(y).
+    \end{equation*}
+
+    Indeed, if $f_{xy}(x) \neq 0$ and $f_{xy}(y) \neq 0$, we can take $h = f_{xy}$.
+    Otherwise, without loss of generality $f_{xy}(y) = 0$, and by rescaling assume that
+    \begin{align*}
+        f_{xy}(x) &= 1 & f_y(x) &= C \\
+        f_{xy}(y) &= 0 & f_y(y) &= 1.
+    \end{align*}
+
+    Take $\alpha = 0$, $\beta=1$, $\gamma=2-C$ in \eqref{eq:14dagger}.
+    This gives the claim since
+    \begin{equation*}
+        h(x) = C + \gamma = 2, h(y) = 1.
+    \end{equation*}
+
+    The claim implies that $(h(x), h(y))$ and $(h(x)^2, h(y)^2)$ are linearly independent in $\R^2$.
+    Thus there exist $t, s \in \R$ such that
+    \begin{equation*}
+        (g(x), g(y)) = t(h(x), h(y)) + s(h(x)^2, h(y)^2) = (f(x), f(y))
+    \end{equation*}
+    with $f = th + sh^2 \in A$.
+
+    Thus \eqref{eq:14star} holds for all $g \in C(K, \R)$.
+    So we have shown $\overline{A} = C(K, \R)$.
+\end{proof}
+
+\begin{cor}
+    Let $U \subset \R^n$ be a bounded open domain. Then $C(\overline{U})$ is separable, i.e. there is a countable dense subset.
+\end{cor}
+
+\begin{proof}
+    By the Weierstra{\ss} approximation theorem, the set of polynomials with real coefficients is dense in $C(U)$.
+    But every polynomial with real coefficients can be approximated by one with rational coefficients.
+    These are countable.
+\end{proof}
+
+\begin{remark}
+    For $p \in [1, \infty)$, $\ell^p$ is separable, but $\ell^\infty$ is not separable.
+\end{remark}
+
+\begin{proof}[Proof that $l^\infty$ is not separable.]
+    Let $X = \set{(x_n) \in \ell^\infty | x_n \in \{0, 1\} \text{ for all } n}$.
+    Then $X$ is not countable.
+
+    Note that $\abs{x - y}_\infty = 1, \; \forall x \neq y$, $x, y \in X$.
+    Assume $\ell^\infty$ was separable, i.e. there is a dense countable subset $(y^k)_{k \in \N}$.
+    Then for any $x \in X$, there is $k \in \N$ such that $\norm{x - y^k} \leq \frac{1}{2}$ and $\norm{y - y^k} \geq \frac{1}{2}$ for all $y \in X$, $y \neq x$.
+    This gives a bijection $\N \to X$, a contradiction. % the bijection might be the other way around
+\end{proof}
+
 
 \end{document}
