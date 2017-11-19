@@ -1395,6 +1395,141 @@ For $K$ compact, we always assume that $C(K)$ has $\norm{\cdot}_\infty$-norm, ma
         \implies x \in C^1 \text{ and } x' = f \circ x.
     \end{equation*}
 \end{proof}
+
+% new lec (13)
+
+\subsection{Stone-Weierstra{\ss} Theorem}
+
+\begin{thm}[Stone-Weierstra{\ss} Approximation Theorem]
+    The set of polynomials with real coefficients is dense in $C([a,b], \R)$, in the uniform topology.
+\end{thm}
+\begin{lemma}
+    There is a sequence of polynomials $P_n:[-1, 1] \to [0, 1]$ such that $P_n(s) \to \abs{s}$ uniformly in $s \in [-1, 1]$ as $n \to \infty$.
+\end{lemma}
+
+\begin{proof}
+    We use the Babylonian method to construct square roots.
+    Note that if $q : [0, 1] \to [0, 1]$ is a function that satisfies
+    \begin{align*}
+        q(t) &= \frac{1}{2}(t + q(t)^2) \tag{$*$} \label{eq:13-1} \\
+        \implies (1-q(t))^2 &= 1-t \\
+        \implies 1 - q(t) &= \sqrt{1 - t} \\
+        \implies \abs{t} = 1 - q(1-t^2).
+    \end{align*}
+
+    To approximate $q$, define polynomials $Q_n : [0, 1] \to [0, 1]$ by
+    \begin{equation*}
+        Q_0(t) = 0, \; Q_{n+1}(t) = \frac{1}{2}(t + Q_n(t))^2.
+    \end{equation*}
+
+    If $Q_n(t)$ converges to some $q(t)$ then $q(t) \in [0, 1]$ and \eqref{eq:13-1} must hold.
+    To show that $Q_n$ does converge, note that for any $t \in [0, 1]$,
+    \begin{equation*}
+        Q_{n+1}(t) \geq Q_n(t).
+    \end{equation*}
+    Indeed,
+    \begin{equation*}
+        Q_{n+1}(t) - Q_n(t) = \frac{1}{2} \left(Q_n(t)^2 - Q_{n-1}(t)^2\right) = \frac{1}{2}\underbrace{(Q_n(t) - Q_{n-1}(t))}_{\geq 0 \text{ by induction}} \underbrace{(Q_n(t) + Q_{n-1}(t)).}_{\geq 0}
+    \end{equation*}
+
+    Also, $Q_n(t)$ is increasing in $t \in [0, 1]$, and the last equality implies that also $Q_{n+1}(t) - Q_n(t)$ is increasing in $t \in [0, 1]$.
+    \begin{align*}
+        &\implies Q_{n+1}(t) - Q_n(t) \leq Q_{n+1}(1) - Q_n(1) \\
+        &\implies Q_m(t) - Q_n(t) \leq Q_m(1) - Q_n(1) \quad \text{for } m \geq n, \quad t \in [0, 1].
+    \end{align*}
+
+    Let $m \to \infty$:
+    \begin{equation*}
+        0 \leq 1 - \sqrt{1 - t^2} - Q_n(t) &\leq 1 - Q_n(1) \\
+        \implies \norm{1 - Q_n - \sqrt{1-t}}_\infty \leq 1 - Q_n(1) \to 0.
+    \end{equation*}
+    Set $P_n(t) = 1 - Q(1-t^2)$. Then $\norm{P_n - \abs{\cdot}}_\infty \to 0$.
+\end{proof}
+
+\begin{ex}
+    Using the lemma, prove the Weierstra{\ss} Approximation Theorem for piecewise linear functions. Then deduce the general case.
+\end{ex}
+
+\begin{defi}
+    \begin{enumerate}[label=(\roman*)]
+        \item A real (complex) \textbf{algebra} is a real (complex) vector space $A$ with a bilinear map $A \times A \to A$, $(a, b) \mapsto ab$ called product such that
+            \begin{equation*}
+                (ab)c = a(bc) \text{ for all } a, b, c \in A \tag{(associativity)}.
+            \end{equation*}
+        \item If $A$ is a normed vector space and
+            \begin{equation*}
+                \norm{ab} \leq \norm{a} \norm{b} \text{ for all } a, b \in A
+            \end{equation*}
+            then $A$ is called a \textbf{normed algebra}.
+            If $A$ is a Banach space then $A$ is called a \textbf{Banach algebra}.
+        \item If $ab=ba$ for all $a,b  \in A$ then $A$ is \textbf{commutative}.
+        \item If there exist an element $1 \in A \setminus \{0\}$ such that $1a =a1=a$ for all $a \in A$ then $A$ is \textbf{unital} (and $1$ is called a \textbf{unit}).
+    \end{enumerate}
+\end{defi}
+
+\begin{eg}
+    \begin{itemize}
+        \item $C(K, \R)$ is commutative unital Banach algebra with product
+            \begin{equation*}
+                (fg)(x) = f(x) g(x) \quad \forall x \in K
+            \end{equation*}
+            and unit $1(x) = 1$ for all $x \in K$.
+        \item $\mathcal{B}(V, V)$ where $V$ is a normal vector space is a normed unital algebra with product given by composition and unit by the identity operation.
+            Then if $V$ is a Banach space, $\mathcal{B}(V, V)$ is a Banach algebra.
+    \end{itemize}
+\end{eg}
+
+\begin{thm}[Stone-Weierstra{\ss}]
+    Let $A \subset C(K, \R)$ be a subalgebra that
+    \begin{itemize}
+        \item separates points: for all $x, y \in K$, $x \neq y$, there is $f \in A$ such that $f(x) \neq f(y)$.
+        \item vanishes nowhere: for all $x \in K$, there is $f \in A$ such that $f(x) \neq 0$.
+    \end{itemize}
+    Then $A$ is dense in $C(K, \R)$, i.e. $\overline{A} = C(K, \R)$.
+\end{thm}
+
+\begin{eg}
+    Let $U \subset \R^n$ be bounded and open.
+    Let $A$ be the set of polynomials in $x_1, \dotsc, x_n$.
+    Then $A$ is an algebra $\subset C(\overline{U}, \R)$, separates points, and contains the constant polynomials, so vanishes nowhere.
+    Thus the Stone-Weierstra{\ss} Theorem implies that $\overline{A} = C(\overline{U}, \R)$.
+    In particular $C^\infty(\overline{U})$ is dense in $C(\overline{U})$.
+\end{eg}
+
+\begin{defi}
+    A \textbf{lattice} is a poset $L$ with the property that for any $u, v \in L$, there is a least upper bound (join) $u \vee v$ for $\{u, v\}$ and a greatest lower bound (meet) $u \wedge v$.
+\end{defi}
+
+\begin{eg}
+    $C(K, \R)$ is a lattice with partial order $f \leq g$ iff $f(x) \leq g(x)$ for all $x \in K$, and
+    \begin{align*}
+        (f \vee g)(x) &= \max\{f(x), g(x)\} \\
+        (f \wedge g)(x) &= \min\{f(x), g(x)\}.
+    \end{align*}
+\end{eg}
+
+\begin{lemma}
+    Let $\overline{A} \subset C(K, \R)$ be a closed subalgebra.
+    Then $\overline{A}$ is a lattice in $C(K, \R)$.
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        (f \vee g)(x) &= \frac{1}{2}\left(f(x) + g(x) + \abs{f(x) - g(x)}\right) \\
+        (f \wedge g)(x) &= \frac{1}{2}\left(f(x) + g(x) - \abs{f(x) - g(x)}\right) \\
+    \end{align*}
+    Thus it suffices to show that if $f \in \overline{A}$ then $\abs{f} \in \overline{A}$.
+
+    Let $f \in \overline{A} \setminus \{0\}$ and $\epsilon > 0$.
+    Replacing $f$ by $\frac{f}{\norm{f}_\infty}$ we may assume that $f$ takes values in $[-1, 1]$.
+    By the lemma at the beginning of this section (link?), there is a polynomial $P: [-1, 1] \to [0, 1]$ such that
+    \begin{align*}
+        \sup_{\abs{t} \leq 1} \abs{P(t) - \abs{t}} &< \epsilon \\
+        \implies \norm{P \circ f - \abs{f}} &< \epsilon.
+    \end{align*}
+    Since $P \circ f \in \overline{A}$ and since $\overline{A}$ is closed therefore $\abs{f} \in \overline{A}$.
+\end{proof}
+
 % \begin{proof}
 %     \begin{align*}
 %         \abs{f(x) - f_i(x)} &\leq \underbrace{\abs{f(x) - f(x_j)}}_{< \epsilon \text{ if } x \in U_{x_j}} +
