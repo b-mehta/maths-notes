@@ -14,6 +14,7 @@
 \DeclareMathOperator{\spn}{span}
 \DeclareMathOperator{\interior}{int}
 \usepackage{xfrac}
+\usepackage{bbm}
 % and here we go!
 
 \begin{document}
@@ -1720,7 +1721,7 @@ However, we can show that $S_nf \to f$ in $L^2$.
     Note that $S_n P = P$ if $n$ is larger than the degree of $P$.
     \begin{align*}
         &\implies \abs{f - S_n f} \leq \abs{f - P} + \abs{S_n f - S_n p} \qquad \text{for $n$ large enough}\\
-        &\implies \abs{f - S_n f}^2 \leq 2\abs{f - P}^2 + 2 \abs{S_n f - S_n P}^2 \\quad \text{since } (a+b)^2 \leq 2a^2 + 2b^2 \\
+        &\implies \abs{f - S_n f}^2 \leq 2\abs{f - P}^2 + 2 \abs{S_n f - S_n P}^2 \quad \text{since } (a+b)^2 \leq 2a^2 + 2b^2 \\
         &\implies \int_{-\pi}^{\pi} \abs{f - S_n f}^2 \, dx \leq 4 \int_{-\pi}{\pi} \abs{f - P}^2 \, dx \leq 8 \pi \epsilon^2
     \end{align*}
     The first inequality here is called Bessel's inequality:
@@ -1770,8 +1771,126 @@ However, we can show that $S_nf \to f$ in $L^2$.
 The weak topology makes $V$ be a locally convex topological vector space (and it does not come from a norm). On $V^*$, we now have three topologies.
 
 The weak-$*$ topology is `weaker' than the weak topology on $V^*$, as we are restricting our attention to the subset of $V^{**}$ induced by the includsion map $V \hookrightarrow V^{**}$.
-The weak-$*$ topology on $V^*$ is the weakest topology that makes the maps $f_v \in V^{**}$ continuous for all $v \in V$.
 
-% check if finished
+% new lec (16)
 
+Equivalently, we can define the weak topology on $V^*$ as the weakest topology that makes every bounded linear $l: V \to \K$ continuous.
+Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the maps $f_v \in V^{**}$ continuous for all $v \in V$, where $f_v \in V^{**}$ is defined by $f_v(l) = l(v)$.
+
+\begin{eg}
+    Let $K$ be compact Hausdorff. Then the map $x \in K \mapsto \delta_x \in C(K)^*$ is continuous with respect to the weak topology on $C(K)^*$:
+    \begin{equation*}
+        x \to y \implies \delta_x(f) - \delta_y(f) = f(x) - f(y) \to 0 \quad \text{if } f \in C(K)
+    \end{equation*}
+    % check this - online notes had something different
+\end{eg}
+
+\begin{thm}
+    A normed vector space $V$ is separable iff the weak-$*$ topology on the closed unit ball in $V^*$ is metrisable.
+\end{thm}
+
+\begin{proof}
+    See example sheet 3, question 9.
+\end{proof}
+
+\begin{thm}[Banach-Alaogla]
+    Let $V$ be a (separable) normed space.
+    Then the closed unit ball in $V^*$ is compact with respect to the weak-$*$ topology. (Similar to Arzel\`a-Ascoli).
+\end{thm}
+
+\begin{thm}
+    Let $V$ be a (separable) normed space. Let $K$ be the closed unit ball in $V^*$ with the weak-$*$ topology.
+    Then
+    \begin{equation*}
+        \Phi: V \to C(K), \qquad v \mapsto f_v \quad \text{where} \quad f_v(l) = l(v) \text{ for } l \in V^*
+    \end{equation*}
+    is an isometric isomorphism onto its image.
+\end{thm}
+
+\begin{proof}
+    That $f_v \in C(K)$ holds exactly by definition of the weak-$*$ topology.
+    Linearity is clear. That $\Phi$ is isometric follows from Hahn-Banach:
+    \begin{equation*}
+        \norm{f_v} = \sup_{l \in \K} \abs{f_v(l)} = \sup_{\norm{l} \leq 1} \abs{l(v)} = \norm{v}. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{eg}
+    Let $K$ be a compact metric space and
+    \begin{equation*}
+        P(K) = \set{\mu \in C(K)^* | \mu \text{ is positive}, \; \mu(\mathbbm{1}) = 1}
+    \end{equation*}
+    (where $\mathbbm{1}$ denotes the constant function $\mathbbm{1}(x) = 1$) be the set of Borel probability measures.
+    Let $\phi: K \to K$ be a homeomorphism. Then there exists a $\phi$-invariant probability measure, i.e., $\mu \in P(K)$ such that
+    \begin{equation*}
+        \mu(f) = \mu(f \circ \phi) \text{ for any }f \in C(K).
+    \end{equation*}
+    % picture?
+\end{eg}
+
+\begin{proof}
+    Fix $x_0 \in K$ and define $\mu_n \in P(K)$ by
+    \begin{equation*}
+        \mu_n(f) = \frac{1}{n} \sum_{k=0}^{n-1} f(\phi \circ \dotsb \circ \phi (x_0)) \text{ for } f \in C(K).
+    \end{equation*}
+
+    Since $K$ is metric, $C(K)$ is separable (example sheet 3). Also by example sheet 3, $\norm{\mu_n} \leq 1$.
+    By the Banach-Alaoglu Theorem, there exists a weak-$*$ convergent subsequence $(\mu_n)_{n \in \Lambda}$.
+    Its limit satisfies $\mu(1) = \lim_{\substack{n \to \infty \\ n \in \Lambda}} \mu_n(1) = 1, \quad \mu(f) \geq 0 \text{ if } f \geq 0.$
+    Thus $\mu \in P(K)$. Moreover, for any $f \in C(K)$,
+    \begin{align*}
+        \mu(f \circ \phi) &= \lim_{\substack{n \to \infty \\ n \in \Lambda}} \frac{1}{n} \sum_{k=1}^n f(\underbrace{\phi \circ \dotsb \circ \phi}_{k \text{ times}} (x_0)) \\
+                          &= \lim_{\substack{n \to \infty \\ n \in \Lambda}} \frac{1}{n} \sum_{k=0}^{n-1} f(\underbrace{\phi \circ \dotsb \circ \phi}_{k \text{ times}} (x_0)) \\
+                          &= \mu(f).
+    \end{align*}
+\end{proof}
+
+\clearpage
+\section{Euclidean vector spaces and Hilbert spaces}
+\subsection{Definitions and Examples}
+\begin{defi}
+    Let $V$ be a vector space (real or complex).
+    Then an \textbf{inner product} is a map $(\cdot, \cdot): V \times V \to \K$ such that
+    \begin{enumerate}[label=(\roman*)]
+        \item $(v, w) = \overline(w, v)$ for all $v, w \in V$ (skew-symmetry)
+        \item $(\lambda_1 v_1 + \lambda_2 v_2, w) = \lambda_1 (v_1, w) + \lambda_2(v_2, w)$ for all $v_i, w \in V$, $\lambda_i \in \K$ (linear in first argument)
+        \item $(v, v) \geq 0$ with $(v,v) = 0$ iff $v = 0$ (positive definite).
+    \end{enumerate}
+    A vector space together with an inner product is called an \textbf{inner product space}.
+\end{defi}
+
+\begin{prop}[Cauchy-Schwarz inequality]
+    Let $V$ be an inner product space. Then
+    \begin{equation*}
+        \abs{(v, w)} \leq (v,v)^\frac{1}{2} (w, w)^\frac{1}{2} \quad \forall v, w \in V
+    \end{equation*}
+    with equality iff $v = \lambda w$ for some $\lambda \in \K$ or $w = 0$.
+\end{prop}
+
+\begin{cor}
+    Let $V$ be an inner product space. Then $\norm{v} = (v,v)^\frac{1}{2}$ is a norm.
+\end{cor}
+
+\begin{defi}
+    A normed vector space whose norm is induced by an inner product is called a \textbf{Euclidean space}.
+    If it is also Banach, then it is a \textbf{Hilbert space}.
+\end{defi}
+
+\begin{fact}
+    Let $V$ be Euclidean. Then there is a unique inner product such that $\norm{v} = (v,v)^\frac{1}{2}$.
+\end{fact}
+
+\begin{proof}
+    $\norm{v}^2 = (v,v)$ implies $\norm{v+w}^2 = \norm{v}^2 + \norm{w}^2 + 2 \Re(v, w)$.
+    If $V$ is a real vector space, then $(v, w) = \frac{1}{2}(\norm{v+w}^2 - \norm{v}^2 - \norm{w}^2)$.
+    If $V$ is a complex vector space, then also $\norm{v + iw}^2 = \norm{v}^2 + \norm{w}^2 + 2 \Re(v, iw)$. But $\Re(v, iw) = -\Re i (v, w) = + \Im(v, w)$.
+    \begin{align*}
+        (v, w) &= \Re (v, w) + i \Im (v, w)  \\
+               &= \frac{1}{2} (\norm{v+w}^2 + i \norm{v + i w}^2 - (i+1) (\norm{v}^2 + \norm{w}^2)).
+    \end{align*}
+\end{proof}
+
+\begin{fact}
+    Let $V$ be Euclidean. Then the unique inner product $(\cdot, \cdot)$ inducing the norm is continuous.
+\end{fact}
 \end{document}
