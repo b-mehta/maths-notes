@@ -42,7 +42,7 @@
 % lecture 1
 
 \clearpage
-\section{Introduction}\label{sec:1}
+\section{Introduction}
 The primary motivation of this course is to study the solutions of polynomial equations in one variable to wander whether there is a formula involving roots, a solution by radicals.
 Quadratics were typically studied in school, while the solution in radicals for cubics and quartics has been known for a long time and studied in particular in 1770 by Lagrange.
 
@@ -72,7 +72,7 @@ In this way, we can see the field $k[t]/(f(t))$ as a field extension of $k$.
 The DPMMS website has a Galois Theory page with a long history of example sheets and notes, in particular see Tony Scholl's 2013-4 course page.
 \clearpage
 
-\section{Field Extensions}
+\section{Field Extensions}\label{sec:1}
 \begin{ndef}\label{def:1.1}\hypertarget{def:fieldExt}
     A \textbf{field extension} $K \leq L$ is the inclusion of a field $K$ into another field $L$ with the same $0$, $1$, and where the restriction of $+$ and $.$ (in L) to $K$ gives the $+$ and $.$ of $K$.
 \end{ndef}
@@ -1328,7 +1328,7 @@ From \cref{lem:1.21} we know that such $K$-homomorphisms are isomorphisms and th
 
 \clearpage
 \section{Fundamental Theorem of Galois Theory}
-\subsection{Artin's Theorem and Galois Theory of polynomials and of finite fields}
+\subsection{Artin's Theorem}
 \begin{ndef}[Fixed field]\label{def:3.1}\hypertarget{def:fixedField}
     Let $K \leq L$ be a field extension and $H \leq \Aut_K(L)$.
     The \textbf{fixed field} of $H$,
@@ -1573,6 +1573,8 @@ Thus $\Gal(f)$ may be regarded as a permutation group of the $n$ roots, so $\Gal
     $\phi_0$ extends to a $\phi:L \to L \in \Gal(L/K)$, thus $\alpha_k, \alpha_l$ are in the same orbit.
 \end{proof}
 
+Since the Galois group of an irreducible polynomial acts transitively, and is a subgroup of $S_n$, it is useful to know what the transitive subgroups of $S_n$ are.
+
 \begin{nlemma}\label{lem:3.7}
     The transitive subgroups of $S_n$ for $n \leq 5$ are
     \begin{center}
@@ -1675,4 +1677,110 @@ Thus $\Gal(f)$ may be regarded as a permutation group of the $n$ roots, so $\Gal
 
     $f(t) = t^3 - 3t-1 \in \Q[t]$ is irreducible since it is irreducible mod 2. Now $D(f) = 81$, so $\Gal(f) \cong A_3$.
 \end{nexample}
+
+For irreducible quartics, we saw that the possible Galois groups are $C_4, V_4, D_8, A_4, S_4$.
+Those that are subgroups of $A_4$ are $V_4$ and $A_4$.
+From looking at the discriminant, one gets information as to whether the group is one of $V_4, A_4$ or is $C_4, D_8, S_4$.
+We need further methods to pin down which group we are dealing with.
+
+\begin{nthm}[mod $p$ reduction]\label{thm:3.13}
+    Let $f(t) \in \Z[t]$ be monic of degree $n$ with $n$ distinct roots in a splitting field.
+    Let $p$ be a prime such that $\overline{f}(t)$, the reduction of $f(t)$ mod $p$ also has $n$ distinct roots in a splitting field.
+    Let $\overline{f}(t) = \overline{g_1}(t) \dotsm \overline{g_s}(t)$ be the factorisation into irreducibles in $\F_p[t]$ with $n_j = \deg \overline{g_j}(t)$.
+    Then $\Gal(\overline{f}) \hookrightarrow \Gal(f)$ and has an element of cycle type $(n_1, n_2, \dotsc, n_s)$.
+\end{nthm}
+
+\begin{proof}
+    We will talk about the last sentence after thinking about Galois groups of finite fields.
+    The fact that $\Gal(\overline{f}) \hookrightarrow \Gal(f)$ is from Number Fields - see Tony Scholl's teaching page on Galois.
+\end{proof}
+
+\begin{nexample}
+    For $f(t) = t^4 + dt + e$, we have $D(f) = -27d^4 + 256 e^3$, not proved here.
+    Consider $f(t) = t^4 - t - 1$, which is irreducible since it is irreducible mod 2.
+    Then $D(f) = -283$, which is not a square in $\Q$.
+
+    Now take $p=7$.
+    \begin{align*}
+        \overline{f}(t) &= t^4 - t - 1 \\
+                        &= (t+4)(t^3 +3t^2 + 2t + 5) \pmod{7}
+    \end{align*}
+    and the latter factor is irreducible over $\F_7$ as it is a cubic which has no roots in $\F_7$.
+
+    By \cref{thm:3.13}, $\Gal(f)$ contains an element of cycle type $(1,3)$, i.e. a 3-cycle.
+    We deduce $\Gal(f) \cong S_4$, as the other possibilities that contain an odd permutation do not contain 3 cycles.
+\end{nexample}
+
+\subsection{Galois Theory of Finite Fields}
+Recall what we already know from \cref{sec:1}.
+From \cref{thm:1.27}, a finite field $\F$ is of characteristic $p>0$, $p$ necessarily prime, and $\abs{\F}=p^r$ for some $r$.
+The multiplicative group of $\F$ is cyclic (\cref{thm:1.28}).
+It is a splitting field for $t^n-1$ over $\F_p$ where $n = p^r - 1$.
+By the \nameref{thm:1.24}, this is unique.
+Observe we could also describe $\F$ as the splitting field of $t^{p^r}-t$ over $\F_p$.
+What we haven't shown yet is that for any $p^r$, there is a field $\F$ with $\F = p^r$.
+
+\begin{ndef}[Frobenius automorphism]\label{def:3.15}
+    Let $\F$ be a finite field of characteristic $p$.
+    Then the \textbf{Frobenius automorphism} of $\F$ is
+    \begin{align*}
+        \phi: \F &\longrightarrow \F \\
+        \alpha &\longmapsto \alpha^p
+    \end{align*}
+\end{ndef}
+
+\begin{remark}
+    $(\alpha+\beta)^p = \alpha^p + \beta^p$ since all other terms in binomial expansion are divisible by $p$.
+    $\F_p$ is fixed under this, so it is an $\F_p$-automorphism.
+    Since $t^{p^r}$ splits as a product of distinct linear factors $(t-\alpha)$ in $\F$, we have that $\F_p \leq \F$ is a Galois extension and so we consider $\Gal(\F/\F_p) = G$.
+    It is of order $r$ since $\abs{\F:\F_p}=r$.
+\end{remark}
+
+\begin{nthm}[Galois groups of finite fields]\label{thm:3.16}
+    Let $\F$ be a finite field with $\abs{\F} = p^r$.
+    Then $\F_p \leq \F$ is a Galois extension with $\Gal(\F/\F_p) = G$, a cyclic group with the Frobenius automorphism as generator.
+\end{nthm}
+
+\begin{proof}
+    It remains to show that the order of the Frobenius automorphism is $r$.
+    Suppose $\phi^s = \mathrm{id}$.
+    Then $\alpha^{p^s} = \alpha \; \forall \alpha \in \F$.
+    But $t^{p^s} - t$ has at most $p^s$ roots in $\F$, so we deduce that $s \geq r$.
+    Observe that $\phi^r = \mathrm{id}$ since $\alpha^{p^n} = \alpha \; \forall \alpha \in \F$.
+
+    Now apply the \nameref{thm:3.2}:
+    \begin{equation*}
+        \{\F_p \leq M \leq \F \text{ intermediate fields } M\} \longleftrightarrow \{\text{subgroups } H \leq G\}
+    \end{equation*}
+    where $G = \Gal(\F/\F_p)$ is cyclic.
+
+    But we know all about subgroups of a cyclic group with generator $\phi$ of order $r$.
+    There is exactly ne subgroup of order $s$ for each $s \mid r$ generated by $\phi^\frac{r}{s}$.
+    The corresponding intermediate subfields are the fixed fields $\F^{\langle \phi^\frac{r}{s} \rangle}$, and $\abs{\F:\F^{\langle \phi^\frac{r}{s} \rangle}} = s$.
+    By the Tower Law, $\abs{\F^{\langle \phi^\frac{r}{s} \rangle}:\F_p} = \frac{r}{s}$.
+    Observe that all subgroups of cyclic groups are normal and therefore all our intermediate fields are normal extensions of $\F_p$.
+
+    By \cref{thm:3.2} part (iii), $\Gal(\F^{\langle \phi^\frac{r}{s} \rangle}/F_p) \cong \Gal(\F/\F_p) / H$ where $H = \langle \phi^\frac{r}{s} \rangle$.
+\end{proof}
+
+\begin{ncor}\label{cor:3.17}
+    Let $\F_p \leq M \leq \F$ be finite fields.
+    Then $\Gal(\F/M)$ is cyclic, generated by $\phi^u$, where $\phi$ is the Frobenius automorphism and $\abs{M} = p^u$ and is the fixed field of $\langle \phi^u \rangle$.
+\end{ncor}
+
+\begin{proof}
+    Set $n = \frac{r}{s}$.
+\end{proof}
+
+\begin{nthm}[Existence of finite fields]\label{thm:3.18}
+    Let $p$ be a prime and $u \geq 1$.
+    Then there is a field of order $p^u$, unique up to isomorphism.
+\end{nthm}
+
+\begin{proof}
+    Consider the splitting field $L$ of $f(t) = t^{p^u} - t$ over $\F_p$.
+    It is a finite Galois extension $\F_p \leq L$.
+    However the roots of $f(t)$ form a field, the fixed field of $\phi^u$.
+    Set $L = \F$ and $\abs{\F :\F_p} = u$.
+\end{proof}
 \end{document}
