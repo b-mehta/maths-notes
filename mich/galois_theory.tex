@@ -847,7 +847,6 @@ We can use this final construction to produce splitting fields in general.
 \end{eg}
 
 \begin{ncor}\label{cor:2.7}
-    % TODO understand this corollary
     The number of $K$-homomorphisms $K(\alpha) \to L = \deg f_\alpha(t) \iff L$ is large enough, in particular $L$ contains a splitting field for $f_\alpha(t)$ and $\alpha$ is separable over $K$.
 \end{ncor}
 
@@ -1064,7 +1063,7 @@ We can use this final construction to produce splitting fields in general.
     So, $1, \alpha, \alpha^2, \dotsc, \alpha^{s-1}, \beta_2, \beta_2 \alpha, \dotsc, \beta_2 \alpha^{s-1}, \beta_3, \dotsc$ is a $K$-vector space basis for $M$.
     Multiplication by $\alpha$ in $K(\alpha)$ is represented by matrix
     \begin{equation*}
-        A =
+        \vec{A} =
         \begin{pmatrix}
             0      & 0      & 0      & \dots  & 0      & -a_0     \\
             1      & 0      & 0      & \dots  & 0      & -a_1     \\
@@ -1078,7 +1077,13 @@ We can use this final construction to produce splitting fields in general.
 
     Multiplication by $\alpha$ in $M$ is represented by the $rs \times rs$ matrix
     \begin{equation*}
-        10 %stuff
+        \begin{pmatrix}
+            \vec{A} & 0       & 0       & \dots  & 0       \\
+            0       & \vec{A} & 0       & \dots  & 0       \\
+            0       & 0       & \vec{A} & \dots  & 0       \\
+            \vdots  & \vdots  & \vdots  & \ddots & \vdots  \\
+            0       & 0       & 0       & \dots  & \vec{A}
+        \end{pmatrix}
     \end{equation*}
     whose characteristic polynomial is $(f_\alpha(t))^r$.
 
@@ -1251,7 +1256,7 @@ From \cref{lem:1.21} we know that such $K$-homomorphisms are isomorphisms and th
 \end{remark}
 
 \begin{proof}[Proof of \cref{thm:2.24}]
-    Suppose $\abs{\Aut_K(M)} = \abs{M:K} = n$. Let $L$ be large enough contianing $M$.
+    Suppose $\abs{\Aut_K(M)} = \abs{M:K} = n$. Let $L$ be large enough containing $M$.
     The $n$ distinct $K$-homomorphisms of $\phi: M \to M \leq L$ give us $n$ $K$-homomorphisms $\phi:M \to L$ and \cref{lem:2.12} says that $M$ is separable over $K$.
     For normality, pick $\alpha \in M$ with minimal polynomial $f_\alpha(t)$ over $K$.
 
@@ -1366,12 +1371,40 @@ From \cref{lem:1.21} we know that such $K$-homomorphisms are isomorphisms and th
     \end{enumerate}
 \end{remark}
 
-\begin{eg}
+\begin{eg} \leavevmode
     \begin{enumerate}[label=(\roman*)]
         \item $\Q \leq \Q(\sqrt{2}, i)$, we saw in \cref{sec:1} the lattice of intermediate fields and subgroups $\Gal(\Q(\sqrt{2}, i)/\Q) \cong C_2 \times C_2$ abelian.
             All subgroups are normal and intermediate subfields are normal extensions of $\Q$.
         \item $\Q \leq \Q(\sqrt[3]{2}, \omega)$.
-            % big diagram
+            \begin{center}
+                \begin{tikzpicture}[scale=0.9]
+                    \node (Q2-w)   at ( 0, 2)    {$\Q(\sqrt[3]{2}, \omega)$};
+                    \node (Qw)     at (-3, 0)    {$\Q(\omega)$};
+                    \node (Q2)     at (-1, 0)    {$\Q(\sqrt[3]{2})$};
+                    \node (Qw-2)   at ( 1, 0)    {$\Q(\omega \sqrt[3]{2})$};
+                    \node (Qw2-2)  at ( 3, 0)    {$\Q(\omega^2 \sqrt[3]{2})$};
+                    \node (Q)      at ( 0,-2)    {$\Q$};
+
+                    \foreach \x in {(Qw), (Q2), (Qw-2), (Qw2-2)}{
+                        \draw (Q2-w) -- \x -- (Q);
+                        };
+                \end{tikzpicture}
+                \begin{tikzpicture}
+
+                    \begin{scope}[yshift=-6cm]
+                        \node (Q2-w)   at ( 0, 2)    {$\{e\}$};
+                        \node (Qw)     at (-3, 0)    {$\{\sigma_1, \sigma_2, \sigma_3\}$};
+                        \node (Q2)     at (-1, 0)    {$\{\sigma_1, \sigma_4\}$};
+                        \node (Qw-2)   at ( 1, 0)    {$\{\sigma_1, \sigma_5\}$};
+                        \node (Qw2-2)  at ( 3, 0)    {$\{\sigma_1, \sigma_6\}$};
+                        \node (Q)      at ( 0,-2)    {$D_6 \cong \{\sigma_1, \sigma_2, \sigma_3, \sigma_4, \sigma_5, \sigma_6\}$};
+
+                        \foreach \x in {(Qw), (Q2), (Qw-2), (Qw2-2)}{
+                            \draw (Q2-w) -- \x -- (Q);
+                            };
+                    \end{scope}
+                \end{tikzpicture}
+            \end{center}
             The subgroup $H$ of order 3 is normal but those of order 2 are not.
             \begin{align*}
                 \Q \leq \Q(\omega) \text{ is normal} &\longleftrightarrow H \text{ of order } 3 \\
@@ -1501,4 +1534,145 @@ From \cref{lem:1.21} we know that such $K$-homomorphisms are isomorphisms and th
             So $\abs{\Ker \theta} = \abs{L:L^H} = \abs{\Gal(L/L^H)} = \abs{H}$ by \cref{thm:3.3}, so $H = \Ker \theta$.
     \end{enumerate}
 \end{proof}
+
+\subsection{Galois groups of polynomials}
+\begin{ndef}\label{def:3.5}
+    Let $f(t)$ be a separable polynomial $\in K[t]$ and let $K \leq L$ with $L$ a splitting field for $f(t)$.
+    Then the Galois group of $f(t)$ over $K$ is
+    \begin{equation*}
+        \Gal(f) \coloneqq \Gal(L/K).
+    \end{equation*}
+\end{ndef}
+
+Since $L$ is a splitting field for $f(t)$, $L = K(\alpha_1, \dotsc, \alpha_n)$ where $\alpha_1, \dotsc, \alpha_n$ are the roots of $f(t)$ in $L$.
+Observe that if $\phi \in \Gal(L/K)$ it maps
+\begin{equation*}
+    \{\text{roots of } f(t)\} \longrightarrow \{\text{roots of } f(t)\}
+\end{equation*}
+Thus $\phi$ permutes the $\alpha_i$.
+Moreover, if $\phi$ fixes each $\alpha_i$, it also fixes all elements of $L$, and so is the identity map.
+Thus $\Gal(f)$ may be regarded as a permutation group of the $n$ roots, so $\Gal(f) \leq S_n$.
+
+\begin{nlemma}\label{lem:3.6}
+    Suppose separable $f(t) = g_1(t) \dotsm g_s(t)$ with $g_i(t)$ irreducible in $K[t]$ is a factorisation in $K[t]$.
+    Then the orbits of $\Gal(f)$ on the roots of $f(t)$ correspond to the factors $g_j(t)$.
+    \begin{equation*}
+        \text{Two roots are in the same orbit} \iff \text{they are roots of the same } g_j(t).
+    \end{equation*}
+    In particular, if $f(t)$ is irreducible in $K[t]$ there is one orbit, i.e., $\Gal(f)$ acts transitively on the roots of $f(t)$.
+\end{nlemma}
+\begin{proof}
+    Let $\alpha_k, \alpha_l$ be in the same orbit under $\Gal(f)$.
+    Thus there is $\phi \in \Gal(f)$ with $\alpha_l = \phi(\alpha_k)$.
+    But if $\alpha_k$ is a root of $g_j(t)$ then $\phi(\alpha_k) = \alpha_l$ is also a root of $g_j(t)$.
+
+    Conversely, if $\alpha_k, \alpha_l$ are roots of $g_j(t)$ then
+    % do picture!!
+    \textbf{missing stuff}
+
+    $\phi_0$ extends to a $\phi:L \to L \in \Gal(L/K)$, thus $\alpha_k, \alpha_l$ are in the same orbit.
+\end{proof}
+
+\begin{nlemma}\label{lem:3.7}
+    The transitive subgroups of $S_n$ for $n \leq 5$ are
+    \begin{center}
+        \begin{tabular}{rl}
+            $n=2$:  & $S_2 \; (\cong C_2)$ \\
+            $n=3$:  & $A_3 \; (\cong C_3), \; S_3$ \\
+            $n=4$:  & $C_4, \; V_4, \; D_8, \; A_4, \; S_4$ \\
+            $n=5$:  & $C_5, \; D_{10}, \; H_{20}, \; A_5, \; S_5$\\
+        \end{tabular}
+    \end{center}
+    where $H_{20}$ is generated by a 5-cycle and a 4-cycle.
+\end{nlemma}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{nthm}\label{thm:3.8}
+    Let $p$ be a prime, and $f(t)$ irreducible $\in \Q[t]$ of degree $p$.
+    Suppose $f(t)$ has exactly 2 non-real roots in $\C$.
+    Then $\Gal(f)$ over $\Q \cong S_p$.
+\end{nthm}
+
+\begin{proof}
+    $\Gal(f)$ acts on the $p$ distinct roots of $f(t)$ in a splitting field $L$ of $f(t)$ (in $\C$).
+    By \cref{lem:3.6}, the irreducibility of $f(t) \implies \Gal(f)$ is acting transitively on the $p$ roots.
+    By the orbit-stabiliser theorem, $p \mid \abs{\Gal(f)}$ but $\abs{\Gal(f)} \leq \abs{S_p} = p!$ and so $\Gal(f)$ has a Sylow $p$-subgroup of order $p$, necessarily cyclic.
+    Thus, $\Gal(f)$ contains a $p$-cycle.
+
+    The supposition that we have precisely 2 non-real roots gives that complex conjugation yields a transposition in $\Gal(f)$.
+    The $p$-cycle and transposition generate the whole of $S_p$.
+\end{proof}
+
+\begin{nexample}\label{eg:3.9}
+    Consider $f(t) = t^5 - 6t + 3 \in \Q[t]$. Then $\Gal(f) \cong S_5$.
+\end{nexample}
+
+\begin{proof}
+    $f(t)$ is irreducible by Eisenstein with $p=3$.
+    We want to show that $f(t)$ has three real roots, two non-real ones and apply \cref{thm:3.8}.
+
+    \begin{equation*}
+        f(-2) = -17, \; f(-1) = 8, \; f(1) = -2, \; f(2) = 23
+    \end{equation*}
+    and $f'(t) = 5t^4 - 6$ which has two real roots.
+    From the intermediate value theorem, $f$ has at least three real roots, and by Rolle's theorem there are at most three real roots, so we are done.
+\end{proof}
+
+\begin{ndef}[Discriminant]\label{def:3.10}\hypertarget{def:disc}
+    Let $f(t) \in K[t]$ with distinct roots $\alpha_1, \dotsc, \alpha_n$ in a splitting field (with $f(t)$ not necessarily irreducible).
+    Let
+    \begin{equation*}
+        \Delta = \prod_{i < j} (\alpha_i- \alpha_j).
+    \end{equation*}
+    Then the \textbf{discriminant} $D = D(f)$ of $f$ is
+    \begin{align*}
+        D = \Delta^2 &= \prod_{i < j} (\alpha_i - \alpha_j)^2 \\
+                          &= (-1)^\frac{n(n-1)}{2} \prod_{i \neq j} (\alpha_i - \alpha_j).
+    \end{align*}
+\end{ndef}
+
+\begin{remark}
+    We've already met this in the proof of \cref{thm:2.21}.
+\end{remark}
+
+\begin{nlemma}\label{lem:3.11}
+    Let $f(t)$ be separable $\in K[t]$ of degree $n$ with $\chara K \neq 2$.
+    Then $\Gal(f) \leq A_n \iff D (f)$ is a square in $K$.
+\end{nlemma}
+
+\begin{proof}
+    Let $L$ be a splitting field of $f(t)$ over $K$.
+    Then $D(f) \neq 0$ and is fixed by all elements of $G = \Gal(L/K)$ as the latter permutes the roots.
+    Thus $D \in K$, since $L^G = K$ (by Galois correspondence).
+
+    On the other hand, if $\sigma\in G$ then $\sigma(\Delta) = (\mathrm{sgn} \sigma) \Delta$ where we're regarding $G$ as a subgroup of $S_n$ and the signature of $\sigma$:
+    \begin{equation*}
+        \mathrm{sgn} \sigma =
+        \begin{cases}
+            +1 & \text{if $\sigma$ even} \\
+            -1 & \text{if $\sigma$ odd}
+        \end{cases}
+    \end{equation*}
+    (This is where we need $\chara K \neq 2$).
+
+    Thus if $G \leq A_n$ we get that $\Delta$ is fixed by all $\sigma \in G$.
+    Thus $\Delta \in K = L^G$.
+    Otherwise if $G \nleq A_n$, we get $\sigma(A) = -\Delta$ if $\sigma$ is an odd permutation, and so $\Delta \notin K=L^G$.
+    Note that if $D$ does have square roots, they must be $\pm \Delta$.
+\end{proof}
+
+\begin{nexample}\label{eg:3.12}
+    For $n=2$, take $f(t) = t^2 + bt + c$. Then $D(f) = b^2 - 4c$.
+
+    For $n=3$, consider $f(t) = t^3 + ct + d$. Then we can check that $D(f) = -4c^3 - 27d^2$.
+    Any general monic cubic can be written in the above form by suitable substitutions.
+
+    Take $f(t) = t^3 - t - 1 \in \Q[t]$. $f$ is irreducible since it is irreducible in $\Z[t]$ since it is irreducible mod $2$.
+    $D(f) = -23$, which is not a square in $\Q$, so $\Gal(f) \cong S_3$.
+
+    $f(t) = t^3 - 3t-1 \in \Q[t]$ is irreducible since it is irreducible mod 2. Now $D(f) = 81$, so $\Gal(f) \cong A_3$.
+\end{nexample}
 \end{document}
