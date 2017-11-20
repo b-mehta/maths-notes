@@ -11,13 +11,17 @@
 \setcounter{section}{-1}
 \usepackage{tkz-euclide}
 \usepackage{xfrac}
+\usepackage{stmaryrd}
 \usetkzobj{all}
+\usetikzlibrary{cd, backgrounds}
 
 \DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\Hom}{Hom}
 \DeclareMathOperator{\Root}{Root}
 \DeclareMathOperator{\chara}{char}
 \DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Ker}{Ker}
 
 \newtheorem{nexample}[nthm]{Example}
 \newtheorem{nremark}[nthm]{Remark}
@@ -37,7 +41,8 @@
 
 % lecture 1
 
-\section{Introduction}
+\clearpage
+\section{Introduction}\label{sec:1}
 The primary motivation of this course is to study the solutions of polynomial equations in one variable to wander whether there is a formula involving roots, a solution by radicals.
 Quadratics were typically studied in school, while the solution in radicals for cubics and quartics has been known for a long time and studied in particular in 1770 by Lagrange.
 
@@ -68,7 +73,7 @@ The DPMMS website has a Galois Theory page with a long history of example sheets
 \clearpage
 
 \section{Field Extensions}
-\begin{ndef}\hypertarget{def:fieldExt}
+\begin{ndef}\label{def:1.1}\hypertarget{def:fieldExt}
     A \textbf{field extension} $K \leq L$ is the inclusion of a field $K$ into another field $L$ with the same $0$, $1$, and where the restriction of $+$ and $.$ (in L) to $K$ gives the $+$ and $.$ of $K$.
 \end{ndef}
 
@@ -84,7 +89,7 @@ The DPMMS website has a Galois Theory page with a long history of example sheets
 
 Suppose $K \leq L$ is a \hyperlink{def:fieldExt}{field extension}. Then $L$ is a $K$-vector space using the addition from the field structure and scalar multiplcation given by the multiplication in the field $L$.
 
-\begin{ndef}\hypertarget{def:degreeOfFieldExt}
+\begin{ndef}\label{def:1.2}\hypertarget{def:degreeOfFieldExt}
     The \textbf{degree} of $L$ over $K$ is $\dim_K L$, the $K$-vector space dimension of $L$. This may not be finite. We typically denote this by $\abs{L:K}$.
     If $\abs{L:K} < \infty$, then the extension is \textbf{finite}, otherwise the extension is \textbf{infinite}.
 \end{ndef}
@@ -100,6 +105,7 @@ Suppose $K \leq L$ is a \hyperlink{def:fieldExt}{field extension}. Then $L$ is a
 \begin{nthm}[Tower law]\label{thm:towerLaw}
     Suppose $K \leq L \leq M$ are field extensions. Then $\abs{M:K}$ = $\abs{M:L}\abs{L:K}$.
 \end{nthm}
+
 \begin{proof}
     Assume that $\abs{M:L} < \infty$, and $\abs{L:K} < \infty$.
     Take an $L$-basis of $M$, given by $\Set{f_1, \dotsc, f_b}$, and a $K$-basis of $L$ given by $\Set{e_1, \dotsc, e_a}$.
@@ -139,14 +145,14 @@ What are these intermediate fields? There are $\Q\left(\sqrt{2}\right)$, $\Q(i)$
 The Galois correspodence arising in the Fundamental Theorem of Galois theory gives an order reversing bijection between the lattice of intermediate subfields and the subgroups of a group of ring automorphisms of the big field (in this case $\Q\left(i, \sqrt{2}\right)$) that fix the smaller field elementwise.
 For instance, consider the ring automorphisms of $\Q\left(i, \sqrt{2}\right)$ that fix $\Q$:
 \begin{align*}
-    e : \sqrt{2} &\mapsto \sqrt{2} \\
-               i &\mapsto i \\
-    g : \sqrt{2} &\mapsto \sqrt{2} \\
-               i &\mapsto -i \\
-    h : \sqrt{2} &\mapsto -\sqrt{2} \\
-               i &\mapsto i \\
-    gh: \sqrt{2} &\mapsto -\sqrt{2} \\
-               i &\mapsto -i
+    e : \sqrt{2} &\longmapsto \sqrt{2} \\
+               i &\longmapsto i \\
+    g : \sqrt{2} &\longmapsto \sqrt{2} \\
+               i &\longmapsto -i \\
+    h : \sqrt{2} &\longmapsto -\sqrt{2} \\
+               i &\longmapsto i \\
+    gh: \sqrt{2} &\longmapsto -\sqrt{2} \\
+               i &\longmapsto -i
 \end{align*}
 Notice that $i$ and $-i$ play the same role in the field $\Q\left(\sqrt{2}, i\right)$, both roots of $t^2 + 1 = 0$, similarly $\sqrt{2}$ and $-\sqrt{2}$ are both roots of $t^2 - 2 = 0$.  The automorphism $e$ is seen to be identity, and $g$ is conjugation.
 These four form the group of order $4 = \abs{\Q\left(\sqrt{2}, i\right) : \Q}$.
@@ -324,7 +330,7 @@ Assume we're given a set $P_0$ of points in $\R^2$, and we can formalise our ope
 
 \begin{ndef}[\hypertarget{def:constructible}{Constructible}]
     The points of intersection of any two distinct lines or circles drawn using these operations are \textbf{constructible in one step} from $P_0$.
-    More generally, a point $\vec{r} \in \R^2$ is \textbf{constructible} from $P_0$ if there is a finite sequence $\vec{r_1}, \vec{r_2}, \dotsc, \vec{r_n} = \vec{r}$ such that $\vec{r_i}$ is constructible in one step from $P_0 \cup \set{\vec{r_1}, \dotsc, \vec{r_{i-1}}}$.
+    More generally, a point $\vec{r} \in \R^2$ is \textbf{constructible} from $P_0$ if there is a finite sequence $\vec{r_1}, \vec{r_2}, \dotsc, \vec{r_n} = \vec{r}$ such that $\vec{r_i}$ is constructible in one step from $P_0 \cup \{\vec{r_1}, \dotsc, \vec{r_{i-1}}\}$.
 \end{ndef}
 
 \begin{exercise}
@@ -979,7 +985,7 @@ We can use this final construction to produce splitting fields in general.
 
 % new lec (9)
 
-\begin{nthm}\label{thm:2.17}
+\begin{nthm}[Primitive Element Theorem]\label{thm:2.17}
     Any finite separable extension $K \leq M$ is a simple extension, that is, $M = K(\alpha)$ for some $\alpha$ a primitive element.
 \end{nthm}
 
@@ -1224,11 +1230,155 @@ From \cref{lem:1.21} we know that such $K$-homomorphisms are isomorphisms and th
     \Cref{cor:2.10}.
 \end{proof}
 
-\begin{nthm}\label{2.24}
-    Let $K \leq M$ be a finite field extension. Then $\Aut_K(M) = \abs{M:K} \iff$ the extension is both normal and separable.
+\begin{nthm}\label{thm:2.24}
+    Let $K \leq M$ be a finite field extension. Then $\abs{\Aut_K(M)} = \abs{M:K}$ iff the extension is both normal and separable.
 \end{nthm}
 
-\begin{ndef}[Galois extension]\label{def:2.25}\hypertarget{def:galois}
+\begin{ndef}[Galois extension]\label{def:2.25}\hypertarget{def:galoisExt}
     A finite field extension that is normal and separable is a \textbf{Galois extension}.
 \end{ndef}
+
+% new lec (11)
+
+\begin{ndef}[Galois group]\label{def:2.26}\hypertarget{def:galoisGroup}
+    Let $K \leq M$ be a \hyperlink{def:galoisExt}{Galois extension}.
+    Then the $K$-automorphism group of $M$ is the \textbf{Galois group} of $M$ over $K$.
+    Write this as $\Gal(M / K)$.
+\end{ndef}
+
+\begin{remark}
+    Some authors use `Galois group' for the automorphism group even when the extension is not \hyperlink{def:galoisExt}{Galois}.
+\end{remark}
+
+\begin{proof}[Proof of \cref{thm:2.24}]
+    Suppose $\abs{\Aut_K(M)} = \abs{M:K} = n$. Let $L$ be large enough contianing $M$.
+    The $n$ distinct $K$-homomorphisms of $\phi: M \to M \leq L$ give us $n$ $K$-homomorphisms $\phi:M \to L$ and \cref{lem:2.12} says that $M$ is separable over $K$.
+    For normality, pick $\alpha \in M$ with minimal polynomial $f_\alpha(t)$ over $K$.
+
+    Take $M = K(\alpha_1, \dotsc, \alpha_m)$ as in the proof of \cref{cor:2.10} with $\alpha = \alpha_1$ and $L = M$.
+    We only get $\abs{M:K}$ extensions of the inclusion $K \hookrightarrow M$ if each inequality in the proof is an equality.
+    In particular we need the number of $K$-homomorphisms $K(\alpha_1) \to M$ to be $\abs{K(\alpha_1):K}$.
+    But then \cref{lem:2.6} says we have $\abs{K(\alpha):K}$ distinct roots of $f_\alpha(t)$ in $M$.
+    Thus $f_\alpha(t)$ splits over $M$.
+
+
+    Conversely, suppose $K \leq M$ is separable and normal.
+    Then for $K \leq M \leq L$ with $L$ large enough, separability implies there are $\abs{M:K}$ $K$-homomorphisms $\phi:M \to L$ by \cref{lem:2.12}.
+    However $K \leq M$ is normal implies it is the splitting field for some polynomial $f(t) \in K[t]$ (\cref{thm:1.26}) and thus $M = K(\alpha_1, \dotsc, \alpha_n)$, where $f(t) = (t - \alpha_1) \dotsm (t - \alpha_n)$.
+    Note that $\phi(a_j)$ is also a root of $\phi(f(t)) = f(t)$ and is therefore one of the $\alpha_j$s.
+    Thus $\phi(M) = M$. Thus we have $\abs{M:K}$ $K$-homomorphisms $\phi:M \to M$.
+\end{proof}
+
+\begin{remark}\label{rem:2.27}
+    In the proof we have shown that if $K \leq M \leq L$ and $\phi:M \to L$ is a $K$-homomorphism and $K \leq M$ is normal, then $\phi(M) = M$.
+\end{remark}
+
+\begin{eg}
+    \begin{enumerate}[label=(\arabic*)]
+        \item $\Q \leq \Q(\sqrt{2}, i)$ is Galois. $\Gal(\Q(\sqrt{2}, i)/\Q)$ has 4 elements:
+            \begin{align*}
+                \sigma: \sqrt{2} &\longmapsto \pm \sqrt{2} \\
+                               i &\longmapsto \pm i
+            \end{align*}
+            In particular, $\Gal(\Q(\sqrt{2}, i)/\Q) \cong C_2 \times C_2$, all non-identity elements have order 2.
+        \item Consider $f(t) = t^3 - 2$. The splitting field over $\Q$ is $\Q(\sqrt[3]{2}, \omega)$, where $\omega$ is a primitive cube root of 1.
+
+            Thus $\Q \leq \Q(\sqrt[3]{2})$ is Galois and $\abs{\Q(\sqrt[3]{2}, \omega):\Q} = 6$ (we saw this in the example after \cref{def:1.2}).
+            \begin{align*}
+                \sigma_1&:
+                    \begin{cases}
+                        \sqrt[3]{2} &\longmapsto \sqrt[3]{2} \\ \omega &\longmapsto \omega
+                    \end{cases}
+                    &&\text{identity} \\
+                \sigma_2&:
+                    \begin{cases}
+                        \sqrt[3]{2} &\longmapsto \omega\sqrt[3]{2} \\ \omega &\longmapsto \omega
+                    \end{cases}
+                    &&\text{order } 3 \\
+                \sigma_3&:
+                    \begin{cases}
+                        \sqrt[3]{2} &\longmapsto \omega^2\sqrt[3]{2} \\ \omega &\longmapsto \omega
+                    \end{cases}
+                    &&\text{order } 3 \\
+                \sigma_4&:
+                    \begin{cases}
+                        \sqrt[3]{2} &\longmapsto \sqrt[3]{2} \\ \omega &\longmapsto \omega^2
+                    \end{cases}
+                    &&\parbox{15em}{complex conjugation\\ order $2$} \\
+                \sigma_5&:
+                    \begin{cases}
+                        \sqrt[3]{2} &\longmapsto \omega^2\sqrt[3]{2} \\ \omega &\longmapsto \omega^2
+                    \end{cases}
+                    &&\text{order } 2 \\
+                \sigma_6&:
+                    \begin{cases}
+                        \sqrt[3]{2} &\longmapsto \omega\sqrt[3]{2} \\ \omega &\longmapsto \omega^2
+                    \end{cases}
+                    &&\text{order } 2 \\
+            \end{align*}
+
+            Observe also $\sigma_4 \sigma_2 \sigma_4^{-1} = \sigma_3$, so this is the dihedral group.
+    \end{enumerate}
+\end{eg}
+
+\clearpage
+\section{Fundamental Theorem of Galois Theory}
+\subsection{Artin's Theorem and Galois Theory of polynomials and of finite fields}
+\begin{ndef}[Fixed field]\label{def:3.1}\hypertarget{def:fixedField}
+    Let $K \leq L$ be a field extension and $H \leq \Aut_K(L)$.
+    The \textbf{fixed field} of $H$,
+    \begin{equation*}
+        L^H = \set{\alpha \in L | \sigma(a) = \alpha \text{ for all } \sigma \in H}
+    \end{equation*}
+\end{ndef}
+
+\begin{ex}
+    Check it is a field and $K \leq L^H \leq L$.
+\end{ex}
+
+\begin{nthm}[Fundamental Theorem of Galois Theory]\label{thm:3.2}
+    Let $K \leq L$ be a \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:galoisExt}{Galois extension}.
+    Then
+    \begin{enumerate}[label=(\roman*)]
+        \item there is a $1-1$ correspondence
+            \begin{align*}
+                \{\text{intermediate subfields } K \leq M \leq L\} &\longleftrightarrow \{\text{subgroups $H$ of } \Gal(L/K)\} \\
+                M &\longmapsto \Aut_M(L) \\
+                L^H &\longmapsfrom H
+            \end{align*}
+            This is called the Galois correspondence.
+        \item $H$ is a normal subgroup $\Gal(L/K)$ iff $K \leq L^H$ is normal iff $K \leq L^H$ is Galois.
+        \item If $H \lhd \Gal(L/K)$ then the map
+            \begin{equation*}
+                \theta: \Gal(L/K) \longrightarrow \Gal(L^H/K)
+            \end{equation*}
+            given by restriction to $L^H$ is a surjective group homomorphism with kernel $H$.
+    \end{enumerate}
+\end{nthm}
+
+\begin{remark}
+    \begin{enumerate}[label=(\roman*)]
+        \item Observe that $M \leq L$ is Galois and so we could have written $\Gal(L/M)$ instead of $\Aut_M(L)$ in (i).
+            To see this: separability follows from \cref{lem:2.15}.
+            Normality: If $\alpha \in L$, the minimal polynomial of $\alpha$ over $M$ divides the minimal polynomial of $\alpha$ over $K$.
+            But the latter splits over $L$.
+        \item If $K \leq M$ is normal then \cref{rem:2.27} says that if $\sigma: L \to L$ then $\sigma(M) = M$ and so we can talk about the restriction of $\alpha$ to $M$ giving an automorphism of $M$.
+    \end{enumerate}
+\end{remark}
+
+\begin{eg}
+    \begin{enumerate}[label=(\roman*)]
+        \item $\Q \leq \Q(\sqrt{2}, i)$, we saw in \cref{sec:1} the lattice of intermediate fields and subgroups $\Gal(\Q(\sqrt{2}, i)/\Q) \cong C_2 \times C_2$ abelian.
+            All subgroups are normal and intermediate subfields are normal extensions of $\Q$.
+        \item $\Q \leq \Q(\sqrt[3]{2}, \omega)$.
+            % big diagram
+            The subgroup $H$ of order 3 is normal but those of order 2 are not.
+            \begin{align*}
+                \Q \leq \Q(\omega) \text{ is normal} &\longleftrightarrow H \text{ of order } 3 \\
+                \Gal(\Q(\sqrt[3]{2}, \omega)/\Q) &\longrightarrow \Gal(\Q(\omega)/\Q) \\
+                D_6 &\longrightarrow C_2
+            \end{align*}
+            This final mapping has kernel $H$, and the image is generated by conjugation.
+    \end{enumerate}
+\end{eg}
 \end{document}
