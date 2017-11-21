@@ -1892,9 +1892,108 @@ Thus we get an injective map
 
 \begin{eg}
     Take $\F = \F_3$, then $\Phi_8(t) = t^4 + 1 = (t^2+t-1)(t^2-t-1)$.
-    $t^8 - 1$ factorises as a product of linear and quadratic polynomials mod 3, so $L = \F_q$ unique field of order 9 whose multiplicative group is cyclic $C_8$.
+    $t^8 - 1$ factorises as a product of linear and quadratic polynomials mod 3, so $L = \F_9$ unique field of order 9 whose multiplicative group is cyclic $C_8$.
     \begin{equation*}
         (\Z/8\Z)^\times = \{1,3,5,7\}\cong C_2 \times C_2
     \end{equation*}
+    We have $\abs{L:\F_3} = 2$, so $\abs{\Gal(L/\F_3)}=2$ hence $\Gal(L/\F_3)$ cyclic order 2, so $\theta$ is not surjective.
 \end{eg}
+
+What happens when $K = \Q$.
+\begin{nthm}\label{thm:4.8}
+    For all $m > 0$, $\Phi_m(t)$ is irreducible in $\Z[t]$ and hence in $\Q[t]$.
+    Thus $\theta$ in \cref{def:4.2} is an isomorphism and thus $\Gal(\Q(\xi)/\Q) \cong (\Z/m\Z)^\times$ where $\xi =$ primitive $m$th root of unity.
+\end{nthm}
+
+\begin{remark}
+    We already know this when $m = p$ prime by substitution and Eisenstein.
+\end{remark}
+
+\begin{proof}[Proof of \cref{thm:4.8}]
+    Gauss' Lemma gives us that irreducibility in $\Z[t]$ implies irreducibility in $\Q[t]$.
+    From \cref{lem:4.5}, irreducibility corresponds to surjectivity of $\theta$.
+    It's left to show that $\Phi_m(t)$ is irreducible in $\Z[t]$.
+
+    Suppose not, and $\Phi_m(t) = g(t) h(t)$ in $\Z[t]$ with $g(t)$ irreducible. monic and $\deg g(t) \lneqq \deg \Phi_m(t)$.
+    Let $\Q \leq L$ be the $m$th cyclotomic extension and $\xi$ be a root of $g(t)$, $\xi$ primitive $m$th root of unity.
+
+    \textbf{Claim} if $p \nmid m$, $p$ prime, then $\xi^p$ is also a root of $g(t)$ in $L$.
+    Suppose not. Then $\xi^p$ is also a primitive $m$th root of 1, since $p \nmid m$, as a root of $\Phi_m(t)$.
+    By the supposition, $\xi^p$ is a root of $h(t)$.
+    Define $r(t) = h(t^p)$. Then $r(\xi) = 0$ but $g(t)$ is the minimal polynomial of $\xi$ over $\Q$.
+    So $g(t) \mid r(t)$ in $\Q[t]$.
+
+    By Gauss' Lemma, $r(t) = g(t) s(t)$ with $s(t) \in \Z[t]$.
+    Now reduce mod $p$. $\overline{r}(t) = \overline{g}(t) \overline{s}(t)$.
+    But $\overline{r}(t) = \overline{h}(t^p) = (\overline{h}(t))^p$.
+    If $\overline{a}(t)$ is any irreducible factor of $\overline{g}(t)$ in $\F_p[t]$ then $\overline{a}(t) \mid (\overline{h}(t))^p$ and so $\overline{a}(t) \mid \overline{h}(t)$.
+    But then $(\overline{a}(t))^2 \mid \overline{g}(t) \overline{h}(t) = \overline{\Phi_m}(t)$.
+    Hence $\overline{\Phi_m}(t)$ has a repeated root and thus $t^m-1$ has repeated root mod $p$.
+    Contradiction, since $p \nmid m$, so claim is true.
+
+    Now consider a root $\gamma$ of $h(t)$.
+    Then it is also a primitive root of % something
+    and so $\gamma = \xi^i$ for some $i$ with $(i, m) = 1$.
+    Write $i = p_1 \dotsm p_k$ factorisation with $p_j$ prime, not necessarily distinct, $p_j \nmid m$.
+    Applying the claim repeatedly we get that $\gamma$ is a root of $g(t)$, and so $\Phi_m(t)$ has a repeated root.
+
+    Hence $\Phi_m(t)$ is irreducible over $\Q$.
+\end{proof}
+
+\begin{ndef}\label{def:4.9}
+    A Galois extension $K \leq L$ is \textbf{cyclic} if the extension is Galois and $\Gal(L/K)$ is cyclic.
+    Similarly, it is called \textbf{abelian} if $\Gal(L/K)$ is abelian.
+\end{ndef}
+
+\begin{eg}
+    In \cref{cor:3.17} we saw that for finite fields $\F < L$ is cyclic and from \cref{def:4.3} cyclotomic extensions are abelian.
+    However \cref{thm:4.8} says that $\Gal(\Q(\xi)/\Q) \cong (\Z/m\Z)^\times$ and so if $m=8$, $\Q \leq \Q(\xi)$ is abelian, non-cyclic extension, $\xi$ primitive $8$th root of unity.
+\end{eg}
+
+\subsection{Kummer Theory}
+We consider Galois extensions $K \leq L$ where $L$ is a splitting field of a polynomial of the form $t^m - \lambda$ with $\lambda \in K$.
+
+\begin{nthm}\label{thm:4.10}
+    Let $f(t) = t^m - \lambda \in K[t]$ and $\chara K \nmid m$.
+    Then the splitting field $L$ of $f(t)$ over $K$ contains a primitive $m$th root of unity $\xi$ and $\Gal(L/K(\xi))$ is cyclic of order dividing $m$.
+    Moreover $f(t)$ is irreducible over $K(\xi)$ iff $\abs{L:K(\xi)} = m$.
+\end{nthm}
+
+\begin{remark}
+    \begin{equation*}
+        \begin{tikzcd}[row sep=large]
+            L \arrow[d, no head] & \{e\} \arrow[d, no head, "\text{cyclic}"] \\
+            K(\xi) \arrow[d, no head] & \Gal(L/K(\xi)) \arrow[d, no head, "\text{abelian}"] \\
+            K & \Gal(L/K)
+        \end{tikzcd}
+    \end{equation*}
+    As $\Gal(L/K(\xi))$ is cyclic, $\Gal(L/K(\xi)) \lhd \Gal(L/K)$.
+    By \cref{thm:3.2} part (iii), $\Gal(L/K)/\Gal(L/K(\xi)) \cong \Gal(K(\xi)/K)$ is abelian.
+\end{remark}
+
+\begin{proof}[Proof of \cref{thm:4.10}]
+    Since $t^m - \lambda$ and $m t^{m-1}$ are coprime, we know that $t^m - \lambda$ has distinct roots $\alpha_1, \dotsc, \alpha_m$ in the splitting field $L$.
+    Since $(\alpha_i \alpha_j^{-1})^m = \lambda \lambda^{-1} = 1$, the elements $1 = \alpha_1 \alpha_1^{-1}, \alpha_2 \alpha_1^{-1}, \dotsc, \alpha_m \alpha_1^{-1}$ are $m$ distinct $m$th roots of unity in $L$ and so
+    \begin{equation*}
+        t^m - \lambda = (t-\beta)(t-\xi\beta)(t-\xi^2 \beta)\dotsm (t-\xi^{m-1}\beta) \in L[t]
+    \end{equation*}
+    where $\beta = \alpha_1$ and $\xi$ primitive $m$th root of unity.
+
+    So $L = K(\xi, \beta)$. Let $\sigma \in \Gal(L/K(\xi))$.
+    It's determined by its action on $\beta$. Note that $\sigma(\beta)$ is another root of $t^m - \lambda$ and so $\sigma(\beta) = \xi^{j(\sigma)} \beta$, where $0 \leq j(\sigma) < m$.
+    Also, if $\sigma, \tau \in \Gal(L/K(\xi))$ then
+    \begin{equation*}
+        \tau\sigma(\beta) = \tau(\xi^{j(\sigma)} \beta) = \xi^{j(\sigma)} \tau(\beta) = \xi^{j(\sigma)} \xi^{j(\tau)} \beta
+    \end{equation*}
+    since $\xi$ is fixed by $\tau$.
+    Thus $\sigma \to j(\sigma)$ gives a group homomorphism from
+    \begin{equation*}
+        \theta:\Gal(L/K(\xi)) \to \Z/m\Z.
+    \end{equation*}
+
+    Note that $j(\sigma) = 1$, only if $\sigma$ is the identity and so $\theta$ is injective.
+    Hence $\Gal(L/K(\xi)) \cong $ subgroup of $\Z/m\Z$.
+
+    Finally $\abs{L:K(\xi)} = \abs{\Gal(L/K(\xi))} \leq m$ with equality precisely when the action of $\Gal(L/K(\xi))$ is transitive on the roots, i.e. when $t^m-1$ is irreducible over $K(\xi)$ by \cref{lem:3.6}.
+\end{proof}
 \end{document}
