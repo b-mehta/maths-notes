@@ -1192,7 +1192,7 @@ Recall that a topological space is \hypertarget{def:Hausdorff}{\textbf{Hausdorff
 \end{thm}
 
 \begin{proof}We first assume that $g$ takes values in $[0, 1]$. Let $g_0 = g$.
-    Let $A_0 = g^{-1}(0, \frac{1}{3})$ and $B_0 = g^{-1}([\frac{2}{3}, 1])$. Then $A_0, B_0$ are closed and disjoint.
+    Let $A_0 = g^{-1}([0, \frac{1}{3}])$ and $B_0 = g^{-1}([\frac{2}{3}, 1])$. Then $A_0, B_0$ are closed and disjoint.
     By the \hyperlink{cor:urysohnCor}{corollary} to Urysohn's Lemma, there is $h_0: X \to [0, \frac{1}{3}]$ continuous such that
     \begin{equation*}
         h_0|_{A_0} = 0 \, , \; h_0|_{B_0} = \frac{1}{3}.
@@ -1229,8 +1229,9 @@ When is a subset of $C(K)$ compact?
     A metric space $X$ is compact if any of the following equivalent conditions hold:
     \begin{enumerate}[label=(\roman*)]
         \item $X$ has the Heine-Borel property: any open cover of $X$ has a finite subcover.
-        \item $X$ is sequentially compact: any seqeuence in $X$ has a convergent subsequence.
-        \item $X$ is complete and totally bounded: for $\epsilon > 0$ there is a finite $\epsilon$-set for $X$. This is a finite set $M \subset X$ such that for any $x \in X$ there exists $m \in M$ with $d(x, m) < \epsilon$.
+        \item $X$ is sequentially compact: any sequence in $X$ has a convergent subsequence.
+        \item $X$ is complete and totally bounded: for $\epsilon > 0$ there is a finite $\epsilon$-net for $X$.
+            This is a finite set $M \subset X$ such that for any $x \in X$ there exists $m \in M$ with $d(x, m) < \epsilon$.
     \end{enumerate}
 \end{prop}
 
@@ -1572,10 +1573,10 @@ For $K$ compact, we always assume that $C(K)$ has $\norm{\cdot}_\infty$-norm, ma
     In particular, \eqref{eq:14star} holds.
 
     By assumption, $A$ vanishes nowhere and separates points:
-    \begin{align*}
-        \forall x \in K \quad \exists f_x \in A \text{ s.t. } f_x(x) \neq 0
+    \begin{gather*}
+        \forall x \in K \quad \exists f_x \in A \text{ s.t. } f_x(x) \neq 0 \\
         \forall x, y \in K, \; x \neq y, \; f_{xy} \in A \text{ s.t. } f_{xy}(x) \neq f_{xy}(y).
-    \end{align*}
+    \end{gather*}
 
     If $x = y$, we can take $f = \frac{g(x)}{f_x(x)} f_x \in A$.
     Thus assume $x \neq y$.
@@ -1833,10 +1834,12 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
     \begin{equation*}
         \mu_n(f) = \frac{1}{n} \sum_{k=0}^{n-1} f(\phi \circ \dotsb \circ \phi (x_0)) \text{ for } f \in C(K).
     \end{equation*}
-
     Since $K$ is metric, $C(K)$ is separable (example sheet 3). Also by example sheet 3, $\norm{\mu_n} \leq 1$.
     By the Banach-Alaoglu Theorem, there exists a weak-$*$ convergent subsequence $(\mu_n)_{n \in \Lambda}$.
-    Its limit satisfies $\mu(1) = \lim_{\substack{n \to \infty \\ n \in \Lambda}} \mu_n(1) = 1, \quad \mu(f) \geq 0 \text{ if } f \geq 0.$
+    Its limit satisfies
+    \begin{equation*}
+        \mu(1) = \lim_{\substack{n \to \infty \\ n \in \Lambda}} \mu_n(1) = 1, \quad \mu(f) \geq 0 \text{ if } f \geq 0.
+    \end{equation*}
     Thus $\mu \in P(K)$. Moreover, for any $f \in C(K)$,
     \begin{align*}
         \mu(f \circ \phi) &= \lim_{\substack{n \to \infty \\ n \in \Lambda}} \frac{1}{n} \sum_{k=1}^n f(\underbrace{\phi \circ \dotsb \circ \phi}_{k \text{ times}} (x_0)) \\
@@ -1852,7 +1855,7 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
     Let $V$ be a vector space (real or complex).
     Then an \textbf{inner product} is a map $(\cdot, \cdot): V \times V \to \K$ such that
     \begin{enumerate}[label=(\roman*)]
-        \item $(v, w) = \overline(w, v)$ for all $v, w \in V$ (skew-symmetry)
+        \item $(v, w) = \overline{(w, v)}$ for all $v, w \in V$ (skew-symmetry)
         \item $(\lambda_1 v_1 + \lambda_2 v_2, w) = \lambda_1 (v_1, w) + \lambda_2(v_2, w)$ for all $v_i, w \in V$, $\lambda_i \in \K$ (linear in first argument)
         \item $(v, v) \geq 0$ with $(v,v) = 0$ iff $v = 0$ (positive definite).
     \end{enumerate}
@@ -1893,4 +1896,113 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
 \begin{fact}
     Let $V$ be Euclidean. Then the unique inner product $(\cdot, \cdot)$ inducing the norm is continuous.
 \end{fact}
+
+% new lec (17)
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item $\ell^2 = \set{(x_n) \in K | \sum_{n=1}^\infty \abs{x_n}^2 < \infty}$ is a Hilbert space with inner product $(x, y) = \sum_{n=1}^\infty x_n \overline{y_n}$.
+        \item $C[a, b]$ iwth norm
+            \begin{equation*}
+                \norm{f}_2 = (\int_a^b \abs{f(x)}^2\, dx )^\frac{1}{2}
+            \end{equation*}
+            (and inner product $\int_a^b f(x) g(x) \, dx$) is a Euclidean vector space, but it is not complete.
+            Its completion can be identified with the Lebesgue space $L^2[a, b]$.
+    \end{itemize}
+\end{eg}
+
+\begin{remark}
+    Any metric space $X$ can be completed.
+    For two Cauchy sequences $(x_n)$, $(y_n) \subset X$, set $(x_n) \sim (y_n)$ if $d(x_n, y_n) \to 0$.
+    This is an equivalence relation. Denote the equivalence class of a Cauchy sequence $x = (x_n)$ by $\overline{x}$.
+    Define
+    $\overline{X} = \set{\overline{x} | x \text{ is a Cauchy sequence in } X}.$
+    Then $\overline{d}(\overline{x}, \overline{y}) = \lim_{n \to \infty}$ exists (exercise), it is well-defined, i.e. independent of the sequences representing $\overline{x}$, $\overline{y}$ and one can check that $\overline{d}$ is a metric on $\overline{X}$.
+
+    The metric space $\overline{X}$ is complete: if $(\overline{x}^k) \subset \overline{X}$ is a Cauchy sequence in $\overline{X}$ and $(x^k_n)_n \subset X$ is a representative for $\overline{x}^k$, choose $n_k$ such that $d(x_i^k, x_j^k) \leq 2^{-k}$ for $i, j \geq n_k$.
+    Define $(x_k) \subset X$ by $x_k = x_{n_k}^k$. Then $x = (x_k) \subset X$ is a Cauchy sequence and $\overline{x}^k \to \overline{x}$ in $\overline{X}$.
+
+    The space $X$ is isometrically embedded in $\overline{X}$ by the map that sends $x \in X$ to the equivalence class of the constant sequence $(x, x, \dotsc)$.
+    Thus we can regard $X$ as a subspace of $\overline{X}$.
+    One can check that $X$ is dense in $\overline{X}$.
+\end{remark}
+
+\begin{ex}
+    Let $X$ be a normed vector space (inner product space).
+    Then the norm (inner product) extends uniquely from $X$ to its completion, making it a Banach (Hilbert) space.
+\end{ex}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item $L^2[a,b]$ is the completion of $C[a, b]$ with inner product $(f,g) = \int_a^n f \overline{g} \, dx$.
+        \item The Sobolev space $H^1[a,b]$ is the completion of $C^\infty$ with inner product $(f, g) = \int_a^b f(x) \overline{g(x)} \, dx + \int_a^b f'(x) \overline{g'(x)} \, dx$.
+    \end{itemize}
+\end{eg}
+
+\subsection{Orthogonal complements and projections}
+\begin{defi}
+    Let $V$ be a Euclidean vector space.
+    \begin{itemize}
+        \item $v,w \in V$ are \textbf{orthogonal} if $(v, w) = 0$.
+        \item The \textbf{orthogonal complement} of a set $S \subset V$ is $S^\perp = \set{v \in V | (v, w) = 0 \forall w \in S}$.
+    \end{itemize}
+\end{defi}
+
+\begin{fact}
+    If $v, w \in V$ are orthogonal, then $\norm{v+w}^2 = \norm{v}^2 + \norm{w}^2$.
+\end{fact}
+
+\begin{fact}
+    $S^\perp$ is a closed subspace of $V$, and $(\overline{\spn S})^\perp = S^\perp$.
+\end{fact}
+
+\begin{proof}
+    $S^\perp = \bigcup_{w \in S} f_w^{-1}(0)$ where $f_w(v) = (v, w)$ is continuous.
+    Thus $S^\perp$ is the intersection of closed sets, so closed. It is clear that $S^\perp$ is a linear subspace.
+    Clearly,
+    \begin{equation*}
+        S^\perp \supseteq (\spn S)^\perp \supseteq (\overline{\spn S})^\perp.
+    \end{equation*}
+
+    On the other hand, let $v \in S^\perp$ and $w \in \overline{\spn S}$, i.e. $w = \lim_{k \to \infty} w_k$ with $w_k \in \spn S$.
+    Then $(v, w) = \lim_{k \to \infty} (v, w_k) = 0$, so $v \in (\spn S)^\perp$.
+\end{proof}
+
+For $W \subset V$ a linear subspace, $W^\perp \cap W = \{0\}$. Thus the sum $W + W^\perp$ is direct, and we write $W + W^\perp = W \oplus W^\perp$.
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item If $X$ is finite-dimensional, then $V = W \oplus W^\perp$ for any linear subspace $W \subset V$.
+        \item Let $V = C[0,1]$ with $(f,g) = \int_0^1 f \overline{g} \, dx$ and $W = C^1[0,1] \subset C[0,1]$.
+            Then $W^\perp = \{0\}$, since $\int_0^1 f \overline{g} \, dx = 0 \forall g \in C^1$ implies $f = 0$. Thus $V \neq W \oplus W^\perp$.
+    \end{itemize}
+\end{eg}
+
+\begin{thm}
+    Let $W \subset V$ be a complete subspace. Then $W \oplus W^\perp = V$.
+    Moreover, given $v \in V$, its unique decomposition $v = v_\parallel + v_\perp$ with $v_\parallel \in W$ and $v_\perp \in W^\perp$ is characterised by
+    \begin{equation*}
+        \norm{v_\perp} = \norm{v - v_\parallel} = \inf_{w \in W} \norm{v - w} \tag{$*$} \label{eq:17star}.
+    \end{equation*}
+\end{thm}
+
+The assumption that $W$ is complete holds in particular if $V$ is a Hilbert space and $W \subset V$ is closed.
+
+\begin{proof}
+    Let $v \in V$, and $D = \inf_{w \in W} \norm{v - w}$. Choose any sequence $(w_k) \subset W$ such that $\norm{v - w_k} \to D$.
+
+    Claim: $(w_k)$ is Cauchy.
+    By the parallelogram identity, $\norm{x - y}^2 + \norm{x+y}^2 = 2 \norm{x}^2 + 2 \norm{y}^2$, with $x = v-w_j$ and $y = v+w_k$, we get
+    \begin{gather}
+        \norm{w_j - w_k}^2 + \norm{2v - w_j - w_k}^2 = 2 \norm{v - w_j}^2 + 2 \norm{v - w_k}^2 \\
+        \implies \norm{w_j - w_k}^2 = 2 \underbrace{\norm{v - w_j}^2}_{\to D^2} + 2 \underbrace{\norm{v - w_k}^2}_{\to D^2} - 4 \underbrace{\norm{v - \frac{1}{2}(w_j + w_k)}^2}_{\geq D^2} \\
+        \leq 4(D^2 + \epsilon) - 4D^2 \text{ for $i, k$ sufficiently large} \\
+        = 4\epsilon
+    \end{gather}
+    So, $(w_j)$ is Cauchy, and by completeness of $W$, $w_j \to v_\parallel$ for some $v_\parallel$ in $W$.
+\end{proof}
+
 \end{document}
