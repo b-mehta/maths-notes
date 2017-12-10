@@ -2145,4 +2145,154 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
 
     $\implies S_n$ is a projection with image $W$. Also, $(S_n f, g) = (f, S_n g)$ for all $f,g$ so $S_n$ is orthogonal.
 \end{proof}
+
+% new lec (19)
+
+\subsection{Orthonormal systems}
+\begin{defi}[Orthonormal system]\hypertarget{def:orthonormalsystem}
+    \leavevmode
+    \begin{itemize}
+        \item Let $V$ be a Euclidean vector space. A set $\{e_\alpha\}_\alpha \subset V$ of unit vectors is an \textbf{orthonormal system} (ONS) if $(e_\alpha, e_\beta) = 0$ for all $\alpha \neq \beta$.
+        \item An orthonormal system is \textbf{maximal} if it cannot be extended to a larger orthonormal system.
+        \item Let $H$ be a Hilbert space. Then a maximal orthonormal system is called a \textbf{complete} orthonormal system or a \textbf{Hilbert basis} (or simply a basis).
+    \end{itemize}
+\end{defi}
+\begin{fact}
+    Let $H$ be a Hilbert space and $S$ an orthonormal system. Then $S$ is a Hilbert basis if and only if $\overline{\spn S} = H$.
+\end{fact}
+
+\begin{proof}
+    Let $W = \overline{\spn S}$. Then $W$ is complete, so $H = W \oplus W^\bot$. Suppose that $W^\bot \neq \{0\}$.
+    Then there exists $0 \neq v \in W^\bot = S^\bot$, so $S \cup \{\frac{v}{\norm{v}}\}$ is an orthonormal system. Thus
+    \begin{equation*}
+        \overline{\spn S} \neq H \iff W^\bot \neq \{0\} \iff S \text{ is not maximal.} \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{fact}[Gram-Schmidt]
+    Let $V$ be Euclidean and $\{v_i\}_{i=1}^N$ linear independent (with $N = \infty$ permitted).
+    Then there is an orthonormal system $\{e_i\}_{i=1}^N$ with $\spn \{e_i\}_{i=1}^N$ with $\spn \{v_i\}_{i=1}^k$ for all $k \leq N$.
+\end{fact}
+
+\begin{proof}
+    Let $e_1 = \frac{v_1}{\norm{v_1}}$ and given $e_1, \dotsc, e_k$, set
+    \begin{equation*}
+        e_{k+1} = \frac{x_{k+1} - \sum_{i=1}^k e_i (v_{k+1}, e_i)}{\norm{x_{k+1} - \sum_{i=1}^k e_i (v_{k+1}, e_i)}}.\qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{cor}
+    Let $H$ be a \textbf{separable} Hilbert space. Then there is a countable Hilbert basis.
+\end{cor}
+Thus from now on, we will always take Hilbert bases to be countable if $H$ is separable.
+
+\begin{prop}[Bessel inequality]
+    Let $V$ be a Euclidean vector space and $\{e_i\}_{i=1}^N$ an orthonormal system (with $N=\infty$ permitted). Then
+    \begin{equation*}
+        \sum_{i=1}^N \abs{(v, e_i)}^2 \leq \norm{v}^2 \quad \text{for all } v \in V.
+    \end{equation*}
+    In particular, if $N = \infty$, then $(v_i) \in \ell^2$ where $v_i = (v, e_i)$.
+\end{prop}
+
+\begin{proof}
+    By taking a limit, we may assume that $N < \infty$. Define $Pv = \sum_{i=1}^N (v, e_i) e_i$. Then $P^2 = P$,
+    \begin{equation*}
+        (Pv, w) = \sum_{i=1}^N (v, e_i) \overline{(v, e_i)} = (v, Pw) \quad \text{for all } v, w \in V.
+    \end{equation*}
+    Thus $P$ is an orthogonal projection $\implies \sum_{i=1}^N \abs{(v, e_i)}^2 = \norm{Pv}^2 \leq \norm{v}^2$ for all $v \in V$.
+\end{proof}
+
+\begin{prop}
+    Let $H$ be a \textbf{separable} (infinite-dimensional) Hilbert space with Hilbert basis $\{e_i\}_{i=1}^\infty$. Then
+    \begin{enumerate}[label=(\roman*)]
+        \item For any $x \in H$, set $x_i = (x, e_i)$. Then $(x_i) \in \ell^2$ and
+            \begin{equation*}
+                x = \sum_{i=1}^\infty x_i e_i.
+            \end{equation*}
+        \item Conversely, if $(x_i) \in \ell^2$ then there is $x \in H$ such that $(x, e_i) = x_i$ for all $i$.
+        \item For any $x, y \in H$,
+            \begin{equation*}
+                (x, y) = \sum_{i=1}^\infty \qquad \text{(Parseval identity)}.
+            \end{equation*}
+    \end{enumerate}
+    In particular, the map
+    \begin{align*}
+        \phi: H &\longrightarrow \ell^2 \\
+        x &\longmapsto ((x, e_i))_{i=1}^\infty \in \ell^2
+    \end{align*}
+    is an isometric isomorphism. This is sometimes called the Riesz-Fischer Theorem.
+\end{prop}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item Let $s_n = \sum_{i=1}^n x_i e_i$. Then $(s_n)$ is Cauchy: for $m \geq n$,
+            \begin{equation*}
+                \norm{s_m - s_n}^2 = \norm{\sum_{i=n}^m x_i e_i}^2 = \sum_{i=n}^m \abs{x_i}^2 \leq \sum_{i=n}^\infty \abs{x_i}^2 \to 0 \text{ as } n \to \infty
+            \end{equation*}
+            since $(x_i) \in \ell^2$ by Bessel's inequality. By completeness of $H$, there is $s \in H$ such that $s_n \to s$.
+
+            Now claim $s = x$.
+            For any $i$,
+            \begin{gather*}
+                (s-x, e_i) = \lim_{n \to \infty} (s_n - x, e_i) = x_i - x_i = 0 \\
+                \implies s-x \in (\spn \{e_i\})^\bot = \overline{\spn \{e_i\}}^\bot = H^\bot = \{0\} \implies s = x.
+            \end{gather*}
+        \item If $(x_i) \in \ell^2$, then the sum $x = \sum_{i=1}^\infty x_i e_i$ converges by the argument in (i).
+            \begin{equation*}
+                \implies (x, e_i) = \lim_{n \to \infty} \left(\sum_{j=1}^n x_j e_j, e_i\right) = x_i.
+            \end{equation*}
+        \item Similarly.
+            \begin{equation*}
+            (x, y) = \lim_{\substack{n \to \infty \\ m \to \infty}} \left(\sum_{i=1}^n x_i e_i, \sum_{j=1}^m y_j e_j\right) = \sum_{i=1}^\infty x_i \overline{y_i}
+            \end{equation*}
+            where the infinite sum converges absolutely since $(x_i), (y_i) \in \ell^2$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\clearpage
+\section{Spectral theory}
+From now on, Banach and Hilbert spaces are always complex.
+
+\subsection{Spectrum and resolvent}
+\begin{defi}
+    Let $X$ be a (complex) Banach space and $T \in \mathcal{B}(X)$ where from now on $\mathcal{B}(X) = \mathcal{B}(X, X)$.
+    \begin{itemize}
+        \item The \textbf{resolvent set} of $T$ is
+            \begin{equation*}
+                \rho (T) = \set{z \in \C | T - z \text{ is bijective and } (T-z)^{-1} \in \mathcal{B}(X)}.
+            \end{equation*}
+            $T - z$ denotes the operator $T - z \id$.
+        \item The \textbf{spectrum} of $T$ is
+            \begin{equation*}
+                \sigma(T) = \C \setminus \rho(T).
+            \end{equation*}
+        \item The \textbf{resolvent} of $T$ is the map $R_T : \rho(T) \to \mathcal{B}(X)$,
+            \begin{equation*}
+                R_T(z) = (T-z)^{-1}.
+            \end{equation*}
+    \end{itemize}
+\end{defi}
+
+\begin{remark}
+    If $T$ is bounded above and $T-z$ is bijective, then $T-z \in \mathcal{B}(X)$ is automatic by the \hyperlink{thm:omt}{open mapping theorem}.
+\end{remark}
+
+\begin{fact}
+    Let $T \in \mathcal{B}(X)$ with $\norm{T} \leq 1$. Then the series $\sum_{n=0}^\infty T^n$ converges in $\mathcal{B}(X)$ and
+    \begin{equation*}
+        (\id -T)^{-1} = \sum_{n=0}^\infty T^n, \; \norm{(\id - T)^{-1}} \leq \frac{1}{1 - \norm{T}}.
+    \end{equation*}
+\end{fact}
+
+\begin{proof}
+    Let $S_n = \sum_{k=0}^n T^k$. Then $(S_n)$ is Cauchy in $\mathcal{B}(X)$:
+    \begin{equation*}
+        \norm{S_n - S_m} \leq \sum_{k=n}^\infty \norm{T}^k \to 0 \text{ as } n \to \infty.
+    \end{equation*}
+    Thus $S = \lim_{n \to \infty} S_n \in \mathcal{B}(X)$ exists and $\norm{S} \leq \lim_{n \to \infty} \sum_{k=0}^n \norm{T}^k \leq \frac{1}{1 - \norm{T}}$ and
+    \begin{equation*}
+        S(1-T) = \sum_{k=0}^\infty T^k - \sum_{k=1}^\infty T^k = \id.
+    \end{equation*}
+\end{proof}
 \end{document}
