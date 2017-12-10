@@ -2003,6 +2003,146 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
         = 4\epsilon
     \end{gather}
     So, $(w_j)$ is Cauchy, and by completeness of $W$, $w_j \to v_\parallel$ for some $v_\parallel$ in $W$.
+
+    % new lec (18)
+
+    Claim: $v_\perp = v - v_\parallel \in W^\perp$. If not, $\exists \tilde{w} \in W$ such that $(\tilde{w}, v_\perp) > 0$.
+    \begin{align*}
+        \norm{v_\perp - t \tilde{w}}^2 &= \norm{v_\perp}^2 - 2 t (v_\perp, \tilde{w}) + t^2 \norm{\tilde{w}}^2 \\
+                                       &= D^2 - t\underbrace{(2 (v_\perp, \tilde{w}) - t \norm{w}^2)}_{>0 \text{ for $t$ small}} \\
+                                       &< D^2 \text{ for $t$ small.}
+    \end{align*}
+    But also,
+    \begin{equation*}
+        \norm{v_\perp - t \tilde{w}}^2 = \norm{v - (v_\parallel + t \tilde{w})}^2 \geq D^2
+    \end{equation*}
+    by definition of $D$, a contradiction.
+
+    Thus, $v_\perp \in W^\perp$ and $v = v_\parallel + v_\perp$, $v_\parallel \in W$, $v_\perp \in W^\perp$.
+
+    To show that the decomposition is characterised by \eqref{eq:17star}, suppose
+    \begin{equation*}
+        v = \tilde{v}_\perp + \tilde{v}_\parallel \text{ for } \tilde{v}_\perp \in W^\perp, \tilde{v}_\parallel \in W.
+    \end{equation*}
+    Then $\tilde{v}_\parallel = v_\parallel + w$, $w = v_\perp - \tilde{v}_\perp \in W^\perp$ but also $w = \tilde{v}_\parallel - v_\parallel \in W$. Thus $w \in W \cap W^\perp = \{0\}$.
 \end{proof}
 
+\begin{cor}
+    Let $H$ be a Hilbert space and $S \subset H$.
+    Then $\overline{\spn S} = ((\overline{\spn S})^\perp)^\perp  = (S^\perp)^\perp$.
+\end{cor}
+
+\begin{thm}[Riesz Representation Theorem]
+    let $H$ be a Hilbert space.
+    Then for any $l \in H^*$ there is a unique $v_l \in H$ such that $l(w) = (w, v_l)$ for all $w \in H$.
+    Moreover, $\norm{l} = \norm{v_l}$.
+\end{thm}
+
+\begin{cor}
+    The antilinear map $H \to H^*$, $v \mapsto (\cdot, v)$ is bijective and isometric.
+    Thus $H$ and $H^*$ can be identified.
+    In particular, $H^*$ is a Hilbert space.
+    For $l, l' \in H^*$ the inner product on $H^*$ is $(l, l') = (v_l', v_l)$.
+\end{cor}
+
+\begin{proof}[Proof of Riesz Representation Theorem]
+    Let $l \in H^*$, $l \neq 0$. Then $\ker L$ is closed and the previous theorem implies the existence of the orthogonal decomposition $H = \ker l \oplus (ker l)^\perp$.
+    Since $l \neq 0$, $(\ker l)^\perp \neq \{0\}$.
+
+    Claim: There is $v_0 \in H$ such that $(\ker l)^\perp = \spn \{v_0\}$ and $\norm{v_0} = 1$.
+    Let $v_0 \in (\ker l)^\perp$, $\norm{v_0} = 1$. Then for any $w \in H$,
+    \begin{equation*}
+        w = \underbrace{\left(w - \frac{l(w)}{l(v_0)} v_0\right)}_{\in \ker l} + \underbrace{\frac{l(w)}{l(v_0)} v_0}_{\in \spn \{v_0\} \subset (\ker l)^\perp}
+    \end{equation*}
+
+    Claim: Define $v_l = \overline{l(v_0)} v_0$.
+    Then $l(v) = (v, v_l)$ for any $v \in H$.
+    If $v \in \ker l$, then $l(v) = 0$ and $(v, v_l) = l(v_0) (v,v_0) = 0$.
+    If $v \in (\ker l)^\perp$, i.e. $v = \lambda v_0$, $\lambda \in \K$, then
+    \begin{equation*}
+        (v, v_l) = \lambda l(v_0) (v_0, v_0) = \lambda l(v_0) = l(v).
+    \end{equation*}
+
+    Since $l$ and $(\cdot, v_l)$ are linear and agree on $\ker l$ and $(\ker l)^\perp$, they must also agree on $\ker l \oplus (\ker l)^\perp = H$.
+
+    Norm: $\norm{l} = \sup_{\norm{v} \leq 1} \abs{l(v)} = \sup_{\norm{v} \leq 1} \abs{(v, v_l)} = \norm{v_l}$
+    where the last equality follows from taking $v = \frac{v_l}{\norm{v_l}}$ and Cauchy-Schwarz.
+
+    Uniqueness: If $(v, v_l) = (v, \tilde{v}_l)$ for all $v \in H$, then
+    \begin{align*}
+        (v, v_l - \tilde{v}_l) = 0 \quad \forall v \\
+        \implies (v_l - \tilde{v}_l, v_l - \tilde{v}_l) = 0 \implies \tilde{v}_l = v_l.
+    \end{align*}
+\end{proof}
+
+\begin{defi}
+    Let $V$ be a Euclidean vector space.
+    \begin{itemize}
+        \item A linear operator $P:V \to V$ is a \textbf{projection} if $P^2 = P$.
+        \item $P$ is an \textbf{orthogonal projection} if $P^2 = P$ and $(Pv,w) = (v, Pw)$ for all $v, w \in V$ ($P$ is self-adjoint)
+    \end{itemize}
+\end{defi}
+
+\begin{fact}
+    Let $P$ be an orthogonal projection. Then $\norm{P} = 1$ or $\norm{P} = 0$.
+\end{fact}
+
+\begin{proof}
+    Let $v \in V$, $Pv \neq 0$. Then
+    \begin{align*}
+        \norm{Pv} = \frac{(Pv, Pv)}{\norm{Pv}} = \frac{(v, P^2v)}{\norm{Pv}} = \frac{(v, Pv)}{\norm{Pv}} \leq \norm{v}.
+        \norm{P} \leq 1.
+    \end{align*}
+
+    On the other hand, if $\norm{P} \neq 0$, there is $v$ such that $Pv \neq 0$. Let $w = Pv$. Then $\norm{Pw} = \norm{Pv} = \norm{w} \implies \norm{P} \geq 1$.
+\end{proof}
+
+\begin{cor}
+    Let $W \subset V$ be complete (i.e. closed if $V$ is a Hilbert space).
+    Then there is an orthogonal projection $P:V \to V$ with
+    \begin{equation*}
+        \im P = W, \ker P = W^\perp
+    \end{equation*}
+\end{cor}
+
+\begin{proof}
+    Let $Pv = v_\parallel$ with $v_\parallel \in W$ and $v_\perp = v - v_\parallel \in W^\perp$ as in the theorem.
+    Then $P$ is linear since
+    \begin{gather*}
+        v = v_\parallel + v_\perp, \quad w = w_\parallel + w_\perp, \quad v_\parallel, w_\parallel \in W, \quad v_\perp, w_\perp \in W^\perp
+        \implies \lambda v + \mu w = \underbrace{(\lambda v_\parallel + \mu w_\parallel)}_{\in W} + \underbrace{(\lambda v_\perp + \mu_\perp)}_{\in W^\perp}
+        \implies P(\lambda v + \mu w) = \lambda P v + \mu P w
+    \end{gather*}
+    by uniqueness of the orthogonal decomposition.
+    Clearly, $P^2 = P$ and $(Pv, w) = (v_\parallel, w_\parallel + w_\perp) = (v_\parallel, w_\parallel) = (v_\parallel + v_\perp, w_\parallel) = (v, Pw)$ so $P$ is orthogonal.
+\end{proof}
+
+\begin{eg}
+    Let $V = C(\mathbb{T}, \mathbb{C})$ with inner product
+    \begin{equation*}
+        (f, g) = \frac{1}{2\pi} \int_{-\pi}^\pi f \overline{g} \, dx.
+    \end{equation*}
+
+    Then $S_n : V \to V$ defined by the partial Fourier sum
+    \begin{equation*}
+        S_n f(x) = \sum_{k=-n}^n \hat{f}_k e^{ikx}, \quad \hat{f}_k = \frac{1}{2\pi} \int_{-\pi}^\pi f(x) e^{-ikx} \, dx
+    \end{equation*}
+    is the orthogonal projection with image $W = \spn \{e^{ikx}\}_{\abs{k}\leq n}$ (which is finite dimensional and thus complete).
+\end{eg}
+
+\begin{proof}
+    Let $e_k(x) = e^{ikx}$. Then $\hat{f}_k = (f, e_k)$ so $S_n f = \sum_{k = -n}^n e_k(f, e_k)$.
+    If $f \in W$, i.e., $f = \sum_{k=-n}^n a_k e_k$, $a_k \in \C$, then
+    \begin{equation*}
+        S_n f = \sum_{\abs{k} \leq n} e_k (\sum_{\abs{k}\leq n} a_l e_l, e_k) = f \text{ since } (e_k, e_l) =
+        \begin{cases}
+            1 & \text{if } k = l
+            0 & \text{if } k \neq l
+        \end{cases}
+    \end{equation*}
+
+    If $f \in W^\perp$ then $(f, e_k) = 0$ for all $\abs{k} \leq n$, so $S_n f= 0$.
+
+    $\implies S_n$ is a projection with image $W$. Also, $(S_n f, g) = (f, S_n g)$ for all $f,g$ so $S_n$ is orthogonal.
+\end{proof}
 \end{document}
