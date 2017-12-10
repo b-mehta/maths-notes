@@ -2295,4 +2295,114 @@ From now on, Banach and Hilbert spaces are always complex.
         S(1-T) = \sum_{k=0}^\infty T^k - \sum_{k=1}^\infty T^k = \id.
     \end{equation*}
 \end{proof}
+
+% new lec (20)
+
+\begin{prop}
+    Let $z_0 \in \rho(T)$. Then $\rho(T)$ contains the disk
+    \begin{equation*}
+        D = \set{z \in \C | \abs{z - z_0} \norm{R_T(z_0)} < 1}.
+    \end{equation*}
+    In particular, $\rho(T)$ is open, $\sigma(T)$ is closed.
+    Moreover, the map $R_T : \rho(T) \to \mathcal{B}(X)$ is analytic (can be represented by an absolutely convergent power series in any small enough disk).
+\end{prop}
+
+\begin{proof}
+    For $z \in D$,
+    \begin{align*}
+        T - z &= (T-z_0) - (z - z_0) \\
+              &= (T - z_0)(\id - \underbrace{R_T(z_0)(z - z_0)}_{\norm{\cdot} < 1 \text{ by definition of $D$.})
+    \end{align*}
+    \begin{align*}
+        \implies (\id - R_T(z_0)(z-z_0))^{-1} &= \sum_{n=0}^\infty (z-z_0)^n R_T(z_0)^n \in \mathcal{B}(X) \\
+        \implies (T-z)^{-1} &= \sum_{n=0}^\infty (z-z_0)^n R_T(z_0)^{n+1} \in \mathcal{B}(X) \\
+        \implies z &\in \rho(T). \\
+    \end{align*}
+    Therefore, $D \subset \rho(T)$. Moreover, $R_T$ is analytic on $\rho(T)$.
+\end{proof}
+
+\begin{cor}
+    $\sigma(T) \neq \emptyset$ and $\sigma(T) \subseteq \set{z \in \C | \abs{z} \leq \norm{T}}$.
+\end{cor}
+
+\begin{proof}
+    For any $\abs{z} > \norm{T}$,
+    \begin{equation*}
+        R_T(z) = \frac{1}{z} \frac{1}{1 - T/z} = \frac{1}{z} \sum_{n=0}^\infty \frac{T^n}{z^n} \in \mathcal{B}(X).
+    \end{equation*}
+
+    Thus $\sigma(T) \subseteq \set{z \in \C | \abs{z} \leq \norm{T}}$ and $\norm{R_T(z)} \to 0$ as $\abs{z} \to \infty$.
+    If $\sigma(T) = \emptyset$ then $R_T: \C \to \mathcal{B}(X)$ would be entire.
+    By Liouville's Theorem it would have to be constant, thus $0$ (since it tends to $0$ as $\abs{z} \to \infty$).
+    But $R_T(z)$ is not identically $0$, since e.g. $z R_T(z) \xrightarrow{\abs{z} \to \infty} \id$.
+\end{proof}
+
+\subsection{Classification of the spectrum}
+\begin{prop}
+    Let $X$ be a Banach space, $Y$ a normed space, $T \in \mathcal{B}(X,Y)$.
+    Then $T^{-1} \in \mathcal{B}(Y,X)$ iff $\im T$ is dense in $Y$ and $T$ is bounded below:
+    \begin{equation*}
+        \exists \epsilon > 0 \text{ s.t. } \forall x \in X \setminus \{0\}, \ \norm{T x} > \epsilon \norm{x}.
+    \end{equation*}
+\end{prop}
+
+\begin{proof}
+    The direction $T^{-1} \in \mathcal{B}(Y, X) \implies$ ($\im T$ dense and $T$ bounded below) is clear.
+    Thus assume that $T \in \mathcal{B}(X, Y)$ is such that $\im T$ is dense and $T$ bounded below.
+    Then $T$ is injective, so bijective onto its image.
+    Let $S: \im T \to X$ be its inverse.
+    Since $T$ is bounded below, $S$ is bounded.
+    Since $\im T$ is dense in $Y$, for every $y \in Y$, there are $(y_k) \subset \im T$ such that $y_k \to y$.
+    Define $T^{-1} y = \lim_{k \to \infty} Sy_k$.
+    The limit exists since $S$ is bounded and $X$ is complete, $T^{-1} y$ is linear in $y$ and independent of the approximating sequence.
+    Moreover, $T^{-1} \in \mathcal{B}(Y, X)$,
+    \begin{equation*}
+        T T^{-1} y = \lim_{k \to \infty} T S Y_k = \lim_{k \to \infty} y_k = y,
+    \end{equation*}
+    as claimed.
+\end{proof}
+
+\begin{defi}
+    \begin{itemize}
+        \item $\sigma_p(T) = \set{\lambda \in \C | T - \lambda \text{ is not injective}}$ is the \textbf{point spectrum} or the set of eigenvalues.
+        \item $\sigma_c(T) = \set{\lambda \in \sigma(T) | T - \lambda \text{ is injective and $\im (T - \lambda)$ is dense}}$ is the \textbf{continuous spectrum}.
+        \item $\sigma_r(T) = \set{\lambda \in \sigma(T) | T - \lambda \text{ is injective and } \im(T - \lambda) \text{ is not dense}}$ is the \textbf{residual spectrum}.
+    \end{itemize}
+\end{defi}
+
+\begin{remark}
+    By the previous proposition, if $\lambda \in \sigma_c(T)$, then $T-\lambda$ is not bounded below. Then there exists a sequence $(x_k) \subset X$ with $\norm{x_k}=1$ such that
+    \begin{equation*}
+        T x_k - \lambda x_k \to 0 \, : \quad \lambda \text{ is an approximate eigenvalue.}
+    \end{equation*}
+
+    The set $\sigma_{ap}(T) = \set{\lambda \in \sigma(T) | \lambda \text{ is an approximate eigenvalue}}$ is the approximate point spectrum.
+\end{remark}
+
+\begin{eg}
+    Let $X$ be finite dimensional. Then equivalently
+    \begin{itemize}
+        \item $T - \lambda$ is injective
+        \item $T - \lambda$ is surjective
+    \end{itemize}
+    so $\sigma(T) = \sigma_p(T)$. Moreover, $\sigma_p(T) = \set{\lambda \in \C | \det(T - \lambda) =0}$ contains at most $\dim X$ points.
+\end{eg}
+
+\subsection{Normal linear operators on a Hilbert space}
+Recall that given $T: H \to H$ we defined the adjoint $T^* : H^* \to H^*$ by $(T^* l)(x) = l(T x)$ for any $l \in H^*$ and $x \in H$.
+In a Hilbert space, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$. Explicitly,
+\begin{equation*}
+    (Tx, y) = (x, T^* y) \quad \text{for } x, y \in H.
+\end{equation*}
+
+\begin{defi}
+    $T \in \mathcal{B}(H)$ is
+    \begin{itemize}
+        \item \textbf{normal} if $T T^* = T^* T$
+        \item \textbf{self-adjoint} if $T = T^*$
+        \item \textbf{unitary} if $T T^* = T^* T = \id$
+    \end{itemize}
+    In particular, self-adjoint and unitary operators are normal.
+\end{defi}
+
 \end{document}
