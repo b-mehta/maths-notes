@@ -13,6 +13,7 @@
 \renewcommand{\emptyset}{\varnothing}
 \DeclareMathOperator{\spn}{span}
 \DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\im}{im}
 \usepackage{xfrac}
 \usepackage{bbm}
 % and here we go!
@@ -2046,7 +2047,7 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
 \end{cor}
 
 \begin{proof}[Proof of Riesz Representation Theorem]
-    Let $l \in H^*$, $l \neq 0$. Then $\ker L$ is closed and the previous theorem implies the existence of the orthogonal decomposition $H = \ker l \oplus (ker l)^\perp$.
+    Let $l \in H^*$, $l \neq 0$. Then $\ker L$ is closed and the previous theorem implies the existence of the orthogonal decomposition $H = \ker l \oplus (\ker l)^\perp$.
     Since $l \neq 0$, $(\ker l)^\perp \neq \{0\}$.
 
     Claim: There is $v_0 \in H$ such that $(\ker l)^\perp = \spn \{v_0\}$ and $\norm{v_0} = 1$.
@@ -2311,7 +2312,7 @@ From now on, Banach and Hilbert spaces are always complex.
     For $z \in D$,
     \begin{align*}
         T - z &= (T-z_0) - (z - z_0) \\
-              &= (T - z_0)(\id - \underbrace{R_T(z_0)(z - z_0)}_{\norm{\cdot} < 1 \text{ by definition of $D$.})
+              &= (T - z_0)(\id - \underbrace{R_T(z_0)(z - z_0)}_{\norm{\cdot} < 1 \text{ by definition of $D$.}})
     \end{align*}
     \begin{align*}
         \implies (\id - R_T(z_0)(z-z_0))^{-1} &= \sum_{n=0}^\infty (z-z_0)^n R_T(z_0)^n \in \mathcal{B}(X) \\
@@ -2322,7 +2323,7 @@ From now on, Banach and Hilbert spaces are always complex.
 \end{proof}
 
 \begin{cor}
-    $\sigma(T) \neq \emptyset$ and $\sigma(T) \subseteq \set{z \in \C | \abs{z} \leq \norm{T}}$.
+    $\sigma(T) \neq \emptyset$ and $\sigma(T) \subseteq \Set{z \in \C | \abs{z} \leq \norm{T}}$.
 \end{cor}
 
 \begin{proof}
@@ -2405,4 +2406,145 @@ In a Hilbert space, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$.
     In particular, self-adjoint and unitary operators are normal.
 \end{defi}
 
+% new lec (21)
+
+\begin{ex}
+    Let $T \in \mathcal{B}(H)$ be normal.
+    Then $\norm{Tx} = \norm{T^* x} \ \forall x \in H$ and $\ker T = \ker T^* = (\im T)^\perp = (\im T^*)^\perp$.
+    Also
+    \begin{equation*}
+        \overline{\im T} = (\im T)^{\perp \perp} = (\ker T)^\perp = (\ker T^*)^\perp = \overline{\im T^*}
+    \end{equation*}
+\end{ex}
+
+\begin{cor}
+    For $T$ normal, $\sigma_r(T) = \emptyset$ and $\sigma(T) = \sigma_{ap}(T)$.
+\end{cor}
+
+\begin{cor}
+    For $T$ normal, if $Tx = \lambda x$ then $T^* x = \overline{\lambda} x$.
+    In particular, $\overline{\sigma_p(T)} = \sigma_p(T^*)$ and similarly $\overline{\sigma_c(T)} = \sigma_c(T^*)$.
+\end{cor}
+
+\begin{proof}
+    If $T$ is normal, then so is $T - \lambda$ and $(T-\lambda)^* = T^* - \overline{\lambda}$.
+    Thus $\norm{(T-\lambda)x} = \norm{(T-\lambda)^* x} = \norm{(T^* - \overline{\lambda}) x}$ so $Tx = \lambda x \iff T^* x = \overline{\lambda} x$ and more generally
+    \begin{equation*}
+        (T - \lambda) x_j \to 0 \iff (T^* - \overline{\lambda}) x_j \ to 0.
+    \end{equation*}
+\end{proof}
+
+\begin{cor}
+    Let $T$ be self-adjoint. Then $\sigma(T) \subset \R$.
+\end{cor}
+
+\begin{ex}
+    Let $T$ be unitary. Then $\sigma(T) \subset S^1 = \set{z \in \C | \abs{z} = 1}$.
+\end{ex}
+
+\begin{eg}
+    Let $T \in \mathcal{B}(H)$ be self-adjoint. Then for all $t \in \R$,
+    \begin{equation*}
+        e^{itT} = \sum_{n=0}^\infty \frac{1}{n!} (itT)^n \in \mathcal{B}(H)
+    \end{equation*}
+    converges in $\mathcal{B}(H)$ and $U(t) = e^{itT}$ is characterised by the ODE
+    \begin{equation*}
+        -i \frac{\partial}{\partial t} U(t) = T U(t), \quad U(0) = \id.
+    \end{equation*}
+    Any solution to the Schr\"odinger equation
+    \begin{equation*}
+        -i \frac{\partial}{\partial t} \Psi(t) = t \Psi(t), \quad \Psi(0) = \psi_0
+    \end{equation*}
+    is given by $\Psi(t) = U(t) \psi_0$. For any $t \in \R$, $e^{itT}$ is unitary.
+    In Quantum Mechanics, $T$ is called the Hamiltonian and $\Psi$ the wave function.
+\end{eg}
+
+\begin{lemma}
+    Let $T \in \mathcal{B}(H)$ be self-adjoint. Then
+    \begin{equation*}
+        \norm{T} = \sup_{\norm{x} \leq 1} \sup_{\norm{y} \leq 1} \abs{(Tx, y)} = \sup_{\norm{x} \leq 1} \abs{(Tx, x)}.
+    \end{equation*}
+\end{lemma}
+
+\begin{proof}
+    Assume $T \neq 0$. By definition,
+    \begin{equation*}
+        \norm{T} = \sup_{\norm{x} \leq 1} (Tx,Tx)^\frac{1}{2}.
+    \end{equation*}
+    Let $(x_i) \subset H$, $\norm{x_i} = 1$ be such that $(T x_i, T x_i) \to \norm{T}^2$.
+    \begin{align*}
+        \norm{T} = \frac{1}{\norm{T}} \lim_{i \to \infty} (T x_i, T x_i) &= \frac{1}{\norm{T}} \lim_{i \to \infty} (x_i, T^2 x_i) \\
+                                                                         &= \lim_{i \to \infty} \frac{1}{\norm{T x_i}} (x_i, T^2 x_i) = \lim_{i \to \infty} (x_i, T y_i)
+    \end{align*}
+    where $y_i = \frac{T x_i}{\norm{T x_i}}$. Thus,
+    \begin{equation*}
+        \norm{T} \leq \sup_{\norm{x} \leq 1} \sup_{\norm{y} \leq 1} (x, Ty).
+    \end{equation*}
+    On the other hand $\abs{(x, Ty)} \leq \norm{T}$ for $\norm{x} \leq 1$, $\norm{y} \leq 1$, showing the first equality.
+
+    To show the second equality, first note $\sup_{\norm{x} \leq 1} \abs{(Tx,x)} \leq \sup_{\norm{x} leq 1} \sup_{\norm{y} \leq 1} \abs{(Tx, y)}$ is clear. On the other hand,
+    \begin{align*}
+        \abs{(x, Ty)} &= \frac{1}{4} \abs{((T(x+y),x+y) - (T(x-y),x-y))} \\
+        &\leq \frac{1}{4} \sup_{\norm{x} \leq 1} \abs{(Tx,x)} (\underbrace{\norm{x+y}^2 + \norm{x-y}^2}_{\leq 2 \norm{x}^2 + 2 \norm{y}^2}) \\
+        &\leq \sup_{\norm{x} \leq 1} \abs{(Tx,x)} \text{ for }\norm{x}, \norm{y} \leq 1
+    \end{align*}
+    as required.
+\end{proof}
+
+\begin{lemma}
+    Let $T$ be self-adjoint. Then at least one of $\norm{T}$ and $-\norm{T}$ must be an approximate eigenvalue.
+\end{lemma}
+
+\begin{proof}
+    Replacing $T$ by $-T$ if necessary, assume
+    \begin{equation*}
+        \norm{T} = \sup_{\norm{x} \leq 1} \abs{(x, Tx)} = \sup_{\norm{x} \leq 1} (x, Tx).
+    \end{equation*}
+    THen there is $(x_i) \subset H$, $\norm{x_i} = 1$ such that $(x_i, T x_i) \to \norm{T} = \lambda$.
+    \begin{equation*}
+        \implies \norm{T x_i - \lambda x_i}^2 = \underbrace{\norm{T x_i}^2}_{\leq \lambda^2} - 2 \lambda \underbrace{(x_i, T x_i)}_{\to \lambda} + \lambda^2 \to 0.
+    \end{equation*}
+\end{proof}
+
+\subsection{Spectral Theorem for compact self-adjoint operators}
+\begin{defi}
+    Let $X, Y$ be normed vector spaces.
+    Then $T \in \mathcal{B}(X, Y)$ is compact if $T(B)$ is relatively compact for any bounded $B \subset X$.
+\end{defi}
+
+\begin{lemma}
+    Let $T$ be compact. Then any nonzero approximate eigenvalue of $T$ is an eigenvalue.
+\end{lemma}
+
+\begin{proof}
+    Assume that $T x_i - \lambda x_i \to 0$ with $\norm{x_i} = 1$, $\lambda \neq 0$.
+    By compactness there is a subsequence $\Lambda$ such that $T x_i \to y$ ($i \in \Lambda$, $i \to \infty$)
+    \begin{equation*}
+        \implies T y = T(\lim T x_i) = \lim T (\lambda x_i) = \lambda y.
+    \end{equation*}
+    Moreover if $\lambda \neq 0$ then $y \neq 0$.
+\end{proof}
+
+\begin{cor}
+    Let $T \in \mathcal{B}(H)$ be self-adjoint and compact. Then $\norm{T}$ or $- \norm{T}$ is an eigenvalue.
+\end{cor}
+
+\begin{notation}
+    $E_\lambda = \ker(T - \lambda)$.
+\end{notation}
+Strategy: repeat corollary with $T$ replaced by $T|_{E_{\lambda_1}^\perp}$, $\abs{\lambda_i} = \norm{T}$.
+
+\begin{lemma}
+    Let $T \in \mathcal{B}(H)$ be self-adjoint.
+    Then for eigenvalues $\lambda \neq \mu$, the spaces $E_\lambda$ and $E_\mu$ are orthogonal.
+\end{lemma}
+
+\begin{proof}
+    Assume $T x = \lambda x$ and $T y = \mu y$, for some $x,y$, $\lambda \neq \mu$ and say $\lambda \neq 0$.
+    Then
+    \begin{gather*}
+        (x,y) = \frac{1}{\lambda} (T x,y) = \frac{1}{\lambda} (x, T y) = \frac{\mu}{\lambda} (x,y) \\
+        \implies \mu = \lambda \text{ or } (x, y) = 0.
+    \end{gather*}
+\end{proof}
 \end{document}
