@@ -16,6 +16,7 @@
 \DeclareMathOperator{\im}{im}
 \usepackage{xfrac}
 \usepackage{bbm}
+\usepackage{cancel}
 % and here we go!
 
 \begin{document}
@@ -2548,6 +2549,8 @@ Strategy: repeat corollary with $T$ replaced by $T|_{E_{\lambda_1}^\perp}$, $\ab
     \end{gather*}
 \end{proof}
 
+% new lec (22)
+
 \begin{lemma}
     Let $T \in \mathcal{B}(H)$ be self-adjoint. For any non-zero eigenvalues $\{\lambda_i\}_{i \in I}$,
     \begin{equation*}
@@ -2654,4 +2657,136 @@ where $a(x)>0$ is in $C^1$, $V$ is continuous, and
     B_1 u(b) + B_2 u'(b) &= 0, & (B_1, B_2) &\neq (0,0).
 \end{align*}
 
+% new lec (23)
+\begin{thm}
+    There exists a continuous function (Green's function) $k: [a,b]^2 \to \R$ such that the unique solution $u \in C^2 [a,b]$ to the boundary value problem
+    \begin{equation}
+    \begin{aligned}
+        Tu(x) &= f(x), \quad f \text{ continuous} \\
+        u(a) &= u(b) = 0
+    \end{aligned}
+    \tag{$*$}\label{eq:23star}
+    \end{equation}
+    is given by $u(x) = \int_a^b k(x,y) f(y) \, dy$ and $k(x,y) = k(y,x)$.
+\end{thm}
+
+\begin{proof}
+    By the theory of linear ODEs, there are $C^2$ functions $u_a:[a,b] \to \R$ and $u_b:[a,b] \to \R$ such that any solution to
+    \begin{equation*}
+        -u''(x) + V(x) u(x) = 0, \quad u(a) = 0
+    \end{equation*}
+    is a multiple of $u_a$ and any solution to
+    \begin{equation*}
+        -u''(x) + V(x) u(x) = 0, \quad u(b) = 0
+    \end{equation*}
+    is a multiple of $u_b$. Define
+    \begin{equation*}
+        k(x,y) =
+        \begin{cases}
+            u_a(y) u_b(x) & \text{if } a \leq y \leq x \leq b \\
+            u_a(x) u_b(y) & \text{if } a \leq x \leq y \leq b
+        \end{cases}
+    \end{equation*}
+
+    Claim: $u(x) = \int k(x,y) f(y) \, dy$ solves \eqref{eq:23star}.
+    \begin{align*}
+        u(x) ={}& \int_a^x u_a(y) u_b(x) f(y) \, dy + \int_x^b u_a(x) u_b(y) f(y) \, dy \\
+        \begin{split}
+            \implies u'(x) ={}& \cancel{u_a(x) u_b(x) f(x)} + \int_a^x u_a(y) u_b'(x) f(y) \, dy \\
+                              &-\cancel{u_a(x) u_b(x) f(x)} + \int_x^b u_a'(x) u_b(y) f(y) \, dy
+        \end{split} \\
+        \begin{split}
+            \implies u''(x) ={}& u_a(x) u_b'(x) f(x) + \int_a^x u_a(y) u_b''(x) f(y) \, dy \\
+                               &-u_a'(x) u_b(x) f(x) + \int_x^b u_a''(x) u_b(y) f(y) \, dy
+        \end{split} \\
+        ={}& \underbrace{(u_a u_b' - u_a' u_b)(x)}_{\eqqcolon W(x)} f(x) + V(x) u(x) \\
+        W'(x) ={}& (u_a u_b'' - u_a'' u_b)(x) \\
+              ={}& V(x) (u_a u_b - u_a u_b)(x) = 0 \implies W(x) = C
+    \end{align*}
+    Thus,
+    \begin{equation*}
+        u''(x) = C f(x) + V(x) u(x).
+    \end{equation*}
+    Multiplying $u_a$ by a constant, we can assume $C=-1$. Then
+    \begin{equation*}
+        -u''(x) + V(x) u(x) = f(x).
+    \end{equation*}
+    Also,
+    \begin{align*}
+        u(a) &= \int_a^b k(a,y) f(y) \, dy = u_a(a) \int_a^b u_b(y) f(y) \, dy = 0 \\
+        u(b) &= \int_a^b k(b,y) f(y) \, dy = u_b(b) \int_a^b u_a(y) f(y) \, dy = 0 \\
+        \text{and } k(x,y) &= k(y,x). \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{lemma}
+    Let $k:[a,b]^2 \to \R$ be continuous.
+    Then the integral operator defined by
+    \begin{equation*}
+        K f(x) = \int_a^b k(x,y) f(y) \, dy
+    \end{equation*}
+    is bounded and compact from $(C[a,b],\norm{\cdot}_2)$ to $(C[a,b],\norm{\cdot}_\infty)$.
+\end{lemma}
+
+\begin{proof}
+    By Cauchy-Schwarz,
+    \begin{equation*}
+        \norm{Kf}_\infty \leq \sup_x \int \abs{k(x,y)} \abs{f(y)} \, dy \leq \underbrace{\sup_x (\int \abs{k(x,y)}^2 \, dy)^\frac{1}{2}}_{\leq C} \norm{f}_2
+    \end{equation*}
+    so $K$ is bounded from $(C[a,b],\norm{\cdot}_2)$ to $(C[a,b],\norm{\cdot}_\infty)$.
+    Also $\set{K f | f \in C[a,b], \norm{f}_2 \leq 1}$ is equicontinuous:
+    \begin{equation*}
+        \abs{K f(x) - K f(y)} \leq (\underbrace{\int_a^b \abs{k(x,z) - k(y,z)}^2 \, dz}_{\to 0 \text{ as } x \to y})^\frac{1}{2} \norm{f}_2 \to 0
+    \end{equation*}
+    uniformly in $f$.
+
+    Thus compactness follows from the Arzel\`a-Ascoli Theorem.
+\end{proof}
+
+\begin{cor}
+    $K$ is bounded and compact from $(C[a,b], \norm{\cdot}_2)$ to $(C[a,b], \norm{\cdot}_2)$.
+\end{cor}
+
+\begin{proof}
+    This follows from
+    \begin{equation*}
+        \norm{Kf}_2 \leq (\int_a^b \abs{K f(x)}^2 \, dx)^\frac{1}{2} \leq \sqrt{\abs{a-b}} \norm{K f}_\infty. \qedhere
+    \end{equation*}
+\end{proof}
+
+Let $H = L^2[a,b]$ be the completion of $(C[a,b], \norm{\cdot}_2)$.
+In particular, $C[a,b]$ is dense in $L^2[a,b]$.
+
+\begin{fact}[Example sheet 4]
+    Let $X,Y$ be Banach spaces and $D \subset X$ a dense subspace.
+    Then a bounded (compact) operator $T:D \to Y$ extends uniquely to a bounded (compact) operator $T:X \to Y$ with the same norm (BLT thoerem).
+\end{fact}
+
+\begin{cor}
+    $K$ extends uniquely to a compact self-adjoint operator $K: H \to H$.
+    Moreover, $Kf \in C[a,b]$ for any $f \in H$.
+\end{cor}
+
+\begin{proof}
+    That $K$ is compact follows from the previous fact.
+    That $K$ is self-adjoint follows from the symmetry of $k$.
+
+    That $Kf \in C[a,b]$ for any $f \in H$ follows from the fact that $K$ is also bounded from $(C[a,b], \norm{\cdot}_2)$ to $(C[a,b],\norm{\cdot}_\infty)$ and thus from $H$ to $(C[a,b], \norm{\cdot}_\infty)$ by the previous fact.
+
+    By the spectral theorem, there exists an orthonormal system $(f_n) \subset H$, $(\mu_n) \subset \R$ with $\mu_n \to 0$ such that
+    \begin{equation*}
+        Kf = \sum_{n=1}^\infty \mu_n (f, f_n) f_n \text{  in } H.
+    \end{equation*}
+
+    By the last corollary, if $\mu_n \neq 0$, $f_n = \frac{1}{\mu_n} K f_n \in C[a,b]$ and in fact then $f_n \in C^2 [a,b]$ since $Kf \in C^2$ if $f \in C^0$.
+\end{proof}
+
+Assuming $\ker(K) = 0$, there is thus a Hilbert basis of $C^2$ eigenfunctions of $K$.
+With $\lambda_n = \frac{1}{\mu_n}$, then
+\begin{equation*}
+    T f_n = \lambda_n T K f_n = \lambda_n f_n,
+\end{equation*}
+so these $(f_n)$ are also eigenfunctions of $T$, and $\lambda_n \to \infty$.
+
+In QM, the vectors $f \in H$ describe the state of a system and $\abs{f(x)}^2$ the probability density of finding a particle at $x \in [a,b]$. The $(\lambda_n)$ are the quantized energy levels of the system.
 \end{document}
