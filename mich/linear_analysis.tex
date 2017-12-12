@@ -2547,4 +2547,111 @@ Strategy: repeat corollary with $T$ replaced by $T|_{E_{\lambda_1}^\perp}$, $\ab
         \implies \mu = \lambda \text{ or } (x, y) = 0.
     \end{gather*}
 \end{proof}
+
+\begin{lemma}
+    Let $T \in \mathcal{B}(H)$ be self-adjoint. For any non-zero eigenvalues $\{\lambda_i\}_{i \in I}$,
+    \begin{equation*}
+        T((\bigoplus_{i \in I} E_{\lambda_i})^\perp) \subset (\bigoplus_{i \in I} E_{\lambda_i})^\perp.
+    \end{equation*}
+\end{lemma}
+
+\begin{proof}
+    Let $y \in (\bigoplus_{i \in I} E_{\lambda_i})^\perp$. Then for any $x \in E_{\lambda_i}$,
+    \begin{gather*}
+        0 = (x,y) = \frac{1}{\lambda_i} (T x, y) = \frac{1}{\lambda_i} (x, T y) \\
+        \implies (x, T y) = 0 \quad \forall x \in \bigoplus_{i \in I} E_{\lambda_i} \\
+        \implies T((\bigoplus_{i \in I} E_{\lambda_i})^\perp) \subset (\bigoplus_{i \in I} E_{\lambda_i})^\perp. \qedhere
+    \end{gather*}
+\end{proof}
+
+\begin{lemma}
+    Let $T \in \mathcal{B}(H)$ be self-adjoint and compact.
+    Then, for any $\epsilon > 0$,
+    \begin{equation*}
+        \bigoplus_{\substack{\lambda \in \sigma_p(T) \\ \abs{\lambda} > \epsilon}} E_\lambda
+    \end{equation*}
+    is finite dimensional.
+\end{lemma}
+
+\begin{proof}
+    Otherwise there are infinitely many eigenvectors $(x_i)$ such that $\norm{x_i} = 1$ and $(x_i, x_j) = 0$ for $i \neq j$ and
+    \begin{equation*}
+        \norm{T x_i - T x_j}^2 = \norm{T x_i}^2 + \norm{T x_j}^2 \geq 2 \epsilon.
+    \end{equation*}
+    This is a contradiction to compactness of $T$.
+\end{proof}
+
+\begin{thm}[Hilbert-Schmidt]
+    Let $T \in \mathcal{B}(H)$ be self-adjoint and compact.
+    Then there are at most countably many eigenvalues $(\lambda_i)$ which can accumulate to $0$.
+    The eigenspaces $E_{\lambda_i}$ and $E_{\lambda_j}$ are orthogonal for $i \neq j$, $E_{\lambda_i}$ is finite-dimensional for $\lambda_i \neq 0$ and
+    \begin{equation*}
+        T = \sum_{j = 1}^\infty \lambda_j P_{\lambda_j} \text{ in } \mathcal{B}(H), \quad H = \ker T \oplus E_{\lambda_1} \oplus \dotsb
+    \end{equation*}
+    where $P_{\lambda_j}$ is the orthogonal projection onto $E_{\lambda_j}$.
+\end{thm}
+
+\begin{proof}
+    By the previous lemmas, there is an eigenvalue $\lambda_1$ such that $\abs{\lambda_1} = \norm{T}$.
+    Given $\abs{\lambda_1} \geq \abs{\lambda_2} \geq \dotsb \geq \abs{\lambda_k}$ such that $T$ has no eigenvalue with magnitude $> \abs{\lambda_k}$, let $H_k = (\bigoplus_{i=1}^k E_{\lambda_i})^\perp$.
+    Then $H_k \subset H$ is closed, so itself a Hilbert space.
+    Also,
+    \begin{equation*}
+        T|_{H_k} : H_k \to H_k, \quad \norm{T|_{H_k}} \leq \abs{\lambda_k}.
+    \end{equation*}
+
+    Thus there is an eigenvalue $\lambda_{k + 1}$ different from the $\lambda_i$, $i \leq k$, with $\abs{\lambda_{k+1}} = \norm{T|_{H_k}} \leq \abs{\lambda_k}$ and there is no other eigenvalue $\mu$ with $\abs{\lambda_{k+1}} < \abs{\mu} \geq \abs{\lambda_k}$.
+    This defines a sequence (possibly finite) $(\lambda_i)$ with $\abs{\lambda_{k+1}} \leq \abs{\lambda_k}$.
+    Since
+    $\bigoplus_{\abs{\lambda_j} > \epsilon} E_{\lambda_j}$ is finite dimensional, this sequence can only accumulate at 0.
+    In particular, $(\lambda_k)$ is finite or countable with $\lambda_k \to 0$.
+
+    Since $T|_{(\overline{\bigoplus_{i=1}^\infty E_{\lambda_i}})^\perp}$ cannot have a nonzero eigenvalue, $\norm{T|_{(\overline{\bigoplus_{i=1}^\infty E_{\lambda_i}})^\perp}} = 0$ and $H = \ker T \oplus (\overline{\bigoplus_{i=1}^\infty E_{\lambda_i}})$.
+
+    It follows that
+    \begin{gather*}
+        \norm{T x - \sum_{i=1}^n \lambda_i P_{\lambda_i} x} = \norm{T x - T P_n x} \leq \abs{\lambda_n} \norm{x} \\
+        \implies \norm{T - \sum_{i=1}^n \lambda_i P_{\lambda_i}} \leq \abs{\lambda_n} \to 0 \implies T = \sum_{i=1}^\infty \lambda_i P_{\lambda_i} \in \mathcal{B}(H)
+    \end{gather*}
+    where $P_n = \sum_{i=1}^n P_{\lambda_i}$.
+\end{proof}
+
+\begin{cor}
+    Let $H$ be separable and $T \in \mathcal{B}(H)$ self-adjoint and compact.
+    Then there is an orthonormal (Hilbert) bases for $H$ of $T$ eigenvectors.
+\end{cor}
+\begin{proof}
+    Apply Gram-Schmidt to the eigenspaces and the kernel.
+\end{proof}
+
+\begin{cor}
+    $\sigma(T) \setminus \{0\} = \sigma_p(T) \setminus \{0\}$.
+\end{cor}
+
+\begin{proof}
+    Let $T_n = \sum_{i=1}^n \lambda_i P_{\lambda_i}$. We will show that if $\mu \notin \sigma_p(T) \cup \{0\}$ then $\mu \notin \sigma(T)$.
+    \begin{align*}
+        T_n - \mu &= \sum_{i=1}^n (\lambda_i - \mu) P_{\lambda_i} - \mu \sum_{i=n+1}^\infty P_{\lambda_i} \\
+        \implies (T_n - \mu)^{-1} &= \sum_{i=1}^n (\lambda_i - \mu)^{-1} P_{\lambda_i} - \mu^{-1} \sum_{i=n+1}^\infty P_{\lambda_i} \text{ exists and} \\
+        \norm{(T_n - \mu)^{-1}} &\leq \max\{\abs{\mu}^{-1}, \abs{\lambda_i-\mu}^{-1}\}.
+        \implies T - \mu = T_n - \mu + T - T_n = (T_n - \mu)(1 + \underbrace{(T_n - \mu)}_{<C}^{-1}\underbrace{(T-T_n)}_{\norm{\cdot} \to 0}) \\
+        \implies (T-\mu)^{-1} \in \mathcal{B}(H) \implies \mu \notin \sigma(T)
+    \end{align*}
+\end{proof}
+
+\subsection{Application: Boundary Value Problem}
+Let $T$ be the 1D Schr\"odinger operator acting on $C^2[a,b]$ by
+\begin{equation*}
+    Tu(x) = -u''(x) + V(x) u(x)
+\end{equation*}
+with boundary condition $u(a) = u(b) = 0$ and $V$ is a continuous function.
+
+More generally, we could consider a Sturm-Liouville operator
+\[Tu(x) = -\frac{d}{dx}\left(a(x) \frac{d}{dx} u(x)\right) + V(x)\]
+where $a(x)>0$ is in $C^1$, $V$ is continuous, and
+\begin{align*}
+    A_1 u(a) + A_2 u'(a) &= 0, & (A_1, A_2) &\neq (0,0) \\
+    B_1 u(b) + B_2 u'(b) &= 0, & (B_1, B_2) &\neq (0,0).
+\end{align*}
+
 \end{document}
