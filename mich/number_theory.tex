@@ -9,6 +9,7 @@
 % preamble
 \setcounter{section}{-1}
 \newcommand{\legendre}[2]{\genfrac{(}{)}{}{}{#1}{#2}}
+\newcommand{\SL}{\mathrm{SL}}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 % and here We go!
@@ -109,6 +110,8 @@ This lets us prove the fundamental theorem of arithmetic.
     Existence is trivial. Uniqueness: suppose $n = p_1 \dots p_r = q_1 \dots q_s$. $p_1 \mid n$, so $p_1$ divides some $q_j$. Hence $p_1 = q_j$ and so we can cancel $p_1$ and $q_j$ from the relation, and repeat the process for $\frac{n}{p_1}$, eventually giving that the $\{p_1, \dots, p_r\}$ are the same as the $\{q_1, \dots, q_s\}$, up to ordering.
 \end{proof}
 
+% Lecture 2
+
 If we know $a = \prod_{i=1}^k p_i^{\alpha_i}$, $b = \prod_{i=1}^k p_i^{\beta_i}$ for $\alpha_i, \beta_i \geq 0$ and $p_i$ are distinct primes, then by uniqueness of prime factorisation,
 \begin{equation*}
     (a, b) = \prod_{i=1}^k p_i^{\gamma_i} \, , \quad \gamma_i = \min(\alpha_i, \beta_i)
@@ -204,7 +207,7 @@ This has an important special case, called Fermat's Little Theorem.
     Trivial if $p \mid a$.  If not, $(a, p) = 1$ so $a^{\phi(p)} \equiv 1 \pmod{p} \implies a^p \equiv a \pmod{p}$
 \end{proof}
 
-% start of missing things
+% Lecture 3
 
 \begin{nlemma}\label{lem:2_2}
     Let $G$ be a cyclic group of order $n \geq 1$. Then
@@ -343,6 +346,8 @@ Algebraic aside: We can write thus in terms of the rings $R_i = \Z / m_i \Z$.
     $f(n) = n^k$ (obviously multiplicative). Then $g(n) = \sigma_k(n)$.
     Later we will see how to recover $f$ from $g$.
 \end{eg}
+
+% Lecture 4 (probably)
 
 \begin{nthm}\label{thm:2_5}
     \leavevmode
@@ -498,6 +503,8 @@ The additive group $(\Z / n\Z, +)$ is cyclic. What about $((\Z/n\Z)^*, \times)$?
     So, $G$ must be cyclic.
 \end{proof}
 
+% Lecture 5
+
 \begin{defi}[Primitive root\hypertarget{def:primRoot}]
     If $g$ is a generator of $(\Z / p \Z)^*$ then $g$ is said to be a \textbf{primitive root mod $p$}.
 \end{defi}
@@ -622,6 +629,8 @@ For $a \not \equiv 0 \pmod{p}$, if $x$ is a solution then so is $-x$, and $-x \e
 \begin{defi}
     $a \equiv 0 \pmod{p}$ is a \textbf{quadratic residue} mod $p$ if $x^2 \equiv a \pmod{p}$ is soluble, and a \textbf{quadratic non-residue} if not.
 \end{defi}
+
+% Lecture 6
 
 So $a$ is a quadratic residue mod $p$ iff its class in $(\Z / p \Z)^*$ is a square.
 
@@ -765,6 +774,8 @@ This will prove
         \legendre{a}{p} \equiv a^{\frac{p-1}{2}} \equiv (-1)^\mu
     \end{equation*}
 \end{proof}
+
+% Lecture 7
 
 \begin{eg}
     Take the (trivial) special case of $a = -1$, then $-j \in (-\frac{p}{2}, 0)$ so $\epsilon_j = -1$ and $c_j = j$ for any $j$.
@@ -931,7 +942,6 @@ Note also that $0 < k < \frac{1}{2} + \frac{a j}{p} < \frac{a+1}{2}$.
     Note if $(a, n) > 1$ then $\legendre{a}{n} = 0$, and if $n=1$ then $\legendre{a}{1} = 1$.
 \end{defi}
 
-% prop 3.5
 \begin{nprop}\label{prop:3.5}
     \begin{enumerate}[label=(\roman*)]
         \item
@@ -952,6 +962,8 @@ Note also that $0 < k < \frac{1}{2} + \frac{a j}{p} < \frac{a+1}{2}$.
             \end{equation*}
     \end{enumerate}
 \end{nprop}
+
+% Lecture 8
 
 \begin{proof}
     \begin{enumerate}[label=(\roman*)]
@@ -1060,10 +1072,10 @@ What about higher reciprocity laws?
     \item A highlight of the (early) 20\textsuperscript{th} century:
         Recall that for $p$ odd,
         \begin{align*}
-            \legendre{-1}{p} = 1 \iff p \equiv 1 \pmod{4} &\iff p = x^2 + y^2 \; \text{for some} x, y \in \Z \\
+            \legendre{-1}{p} = 1 \iff p \equiv 1 \pmod{4} &\iff p = x^2 + y^2 \; \text{for some } x, y \in \Z \\
             &\iff p = (x+iy)(x-iy) \in \Z[i]
         \end{align*}
-        This can be hugely generalised to Artin's Reciprocity Law (in Algebraic Number Theory), and tells us how primes factor in more general number fields.
+        This was hugely generalised to Artin's Reciprocity Law (in Algebraic Number Theory), and tells us how primes factor in more general number fields.
 \end{itemize}
 
 \begin{proof}[Another proof of infinitude of $p \equiv 3 \pmod{4}$]
@@ -1088,7 +1100,7 @@ What about higher reciprocity laws?
 
     Suppose $p \equiv 3 \pmod{4}$. Then
     \begin{align*}
-        (1 + \frac{1}{p}) \sum_{n \geq 1} \legendre{-1}{n} \frac{1}{n}
+        \left(1 + \frac{1}{p}\right) \sum_{n \geq 1} \legendre{-1}{n} \frac{1}{n}
         &= \sum_{n \geq 1} \legendre{-1}{n} \frac{1}{n} + \sum_{m \geq 1} \legendre{-1}{m} \frac{1}{mp} \\
         &= \sum_{n \geq 1} \legendre{-1}{n} \frac{1}{n} - \sum_{m \geq 1} \legendre{-1}{mp} \frac{1}{mp} \\
         &= \sum_{\substack{(n, p) = 1 \\ n \geq 1}} \legendre{-1}{n} \frac{1}{n}
@@ -1113,13 +1125,16 @@ What about higher reciprocity laws?
     but this is divergent.
 \end{proof}
 
+% Lecture 9
+
 \clearpage
 
 \section{Binary quadratic forms}
 Motivating problem: Which $n \geq 1$ can be written as a sum of 2 integer squares?
 
-\begin{nthm}
-    Take $N \geq 1$ an integer. Then $N$ is a sum of two integer squares $\iff$ every prime factor $p \equiv 3 \pmod{4}$ if $N$ divides it to an even power.
+\begin{nthm}\label{thm:4.1}
+    Take $N \geq 1$ an integer.
+    Then $N$ is a sum of two integer squares $\iff$ every prime factor $p \equiv 3 \pmod{4}$ if $N$ divides it to an even power.
 \end{nthm}
 
 \begin{proof}
@@ -1130,7 +1145,7 @@ Motivating problem: Which $n \geq 1$ can be written as a sum of 2 integer square
     ($\impliedby$) Write $N = M^2 N_1$, where $N_1$ is a product of distinct primes, each either 2 or $\equiv1 \pmod{4}$.
     It suffices to show $N_1 = x^2 + y^2$.
 
-    As $(x^2 + y^2)(z^2 + t^2) = (xz - yt)^2 + (xt + yz)^2$ and $2 = 1^2 + 1^2$, it's enough to show if $p \equiv 1 \pmod{4}$ then $p = x^2 + y^2$, which is done later.
+    As $(x^2 + y^2)(z^2 + t^2) = (xz - yt)^2 + (xt + yz)^2$ and $2 = 1^2 + 1^2$, it's enough to show if $p \equiv 1 \pmod{4}$ then $p = x^2 + y^2$, which is done later (in lecture 11).
 \end{proof}
 
 There are similar results (Euler) for $x^2 + 2y^2$ and $x^2 + 3y^2$.  Meanwhile, $x^2 + 6y^2$ is complicated, we'll see why.
@@ -1140,10 +1155,12 @@ The general problem is to consider \textbf{binary quadratic forms} with integer 
     f(x, y) = a x^2 + b x y + c y^2 \quad a,b,c \in \Z
 \end{equation*}
 
-What are possible sets $\set{f(x, y) | x, y \in \Z}$? Say $f$ \textbf{represents} $n \in \Z$ if $\exists x, y \in \Z$ with $f(x, y) = n$.
+What are possible sets $\set{f(x, y) | x, y \in \Z}$?
+Say $f$ \textbf{represents} $n \in \Z$ if $\exists x, y \in \Z$ with $f(x, y) = n$.
 
 We use the convenient shorthand $(a,b,c)$ for the form $a x^2 + b x y + c y^2$.
-A BQF is a binary quadratic form with coefficients in $\Z$, and $f$ can be written in matrix form:
+Define a BQF as a binary quadratic form with coefficients in $\Z$.
+$f$ can be written in matrix form:
 \begin{equation*}
     a x^2 + b x y + c y^2 =
     \begin{pmatrix}
@@ -1159,37 +1176,25 @@ A BQF is a binary quadratic form with coefficients in $\Z$, and $f$ can be writt
 \end{equation*}
 
 \begin{eg}
+    \leavevmode
     \begin{itemize}
         \item $f(x, y) = x^2 + y^2$ or $(1, 0, 1)$ has matrix
             $\begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}$.
         \item $g(x, y) = 4 x^2 + 12 xy + 10y^2$ or $(4, 12, 10)$ has matrix
             $\begin{pmatrix}4 & 6 \\ 6 & 10\end{pmatrix}$.
-
     \end{itemize}
     Note $g(x, y) = (2 x + 3 y)^2 + y^2 = X^2 + Y^2 = f(X, Y)$, so $f, g$ are related by an integer change of variables.
     But they don't represent the same set of integers - $g$ only represents even integers.
     \begin{equation*}
-        \begin{pmatrix}
-            X \\ Y
-        \end{pmatrix}
+        \begin{pmatrix} X \\ Y \end{pmatrix}
         =
-        \begin{pmatrix}
-        2 & 3 \\ 0 & 1
-        \end{pmatrix}
-        \begin{pmatrix}
-            x \\ y
-        \end{pmatrix}
+        \begin{pmatrix} 2 & 3 \\ 0 & 1 \end{pmatrix}
+        \begin{pmatrix} x \\ y \end{pmatrix}
         \iff
-        \begin{pmatrix}
-            x \\ y
-        \end{pmatrix}
+        \begin{pmatrix} x \\ y \end{pmatrix}
         = \frac{1}{2}
-        \begin{pmatrix}
-            1 & -3 \\ 0 & 2
-        \end{pmatrix}
-        \begin{pmatrix}
-            X \\ Y
-        \end{pmatrix}.
+        \begin{pmatrix} 1 & -3 \\ 0 & 2 \end{pmatrix}
+        \begin{pmatrix} X \\ Y \end{pmatrix}.
     \end{equation*}
 \end{eg}
 
@@ -1200,25 +1205,15 @@ A BQF is a binary quadratic form with coefficients in $\Z$, and $f$ can be writt
             \begin{gather*}
                 X = \alpha x + \gamma y, \; Y = \beta x + \delta y, \; \alpha, \beta, \gamma, \delta \in \Z, \; \alpha \delta - \beta \gamma = 1 \\
                 \text{so} \;
-                \begin{pmatrix}
-                    X \\ Y
-                \end{pmatrix}
+                \begin{pmatrix} X \\ Y \end{pmatrix}
                 =
-                \begin{pmatrix}
-                    \alpha & \gamma \\ \beta & \delta
-                \end{pmatrix}
-                \begin{pmatrix}
-                    x \\ y
-                \end{pmatrix}
+                \begin{pmatrix} \alpha & \gamma \\ \beta & \delta \end{pmatrix}
+                \begin{pmatrix} x \\ y \end{pmatrix}
                 = A^T
-                \begin{pmatrix}
-                    x \\ y
-                \end{pmatrix}
+                \begin{pmatrix} x \\ y \end{pmatrix}
                 \, , \;
                 A =
-                \begin{pmatrix}
-                    \alpha & \beta \\ \gamma & \delta
-                \end{pmatrix}
+                \begin{pmatrix} \alpha & \beta \\ \gamma & \delta \end{pmatrix}
             \end{gather*}
         \item BQFs $f, g$ are \textbf{equivalent} if $f(X, Y) = g(x, y)$ for a unimodular substitution.
     \end{enumerate}
@@ -1230,11 +1225,40 @@ A BQF is a binary quadratic form with coefficients in $\Z$, and $f$ can be writt
         \item As $A^{-1}$ has integer entries, if $f, g$ are equivalent then they represent the same integers.
         \item (Exercise) This is an equivalence relation
     \end{enumerate}
-\end{remark}
- % optional stuff
 
-\begin{defi}
-    The discriminant of $f = ax^2 + b x y + c y^2$ is $\mathrm{disc}(f) = b^2 - 4ac$.
+    More formally,
+    \begin{equation*}
+        \Set{A = \begin{pmatrix} \alpha & \beta \\ \gamma & \delta \end{pmatrix} | \alpha, \beta, \gamma, \delta \in \Z, \ \alpha \delta - \gamma \beta = 1} = \SL _2(\Z)
+    \end{equation*}
+    is a group under matrix multiplication ($\det A = 1 \implies A^{-1} \in \SL_2(\Z)$) which acts on the set of BQFs by
+    \begin{equation*}
+        A : f(x,y) \longmapsto f(\alpha x + \gamma y, \beta x + \delta y)
+    \end{equation*}
+    and the equivalence classes of BQFs are the orbits of this action.
+
+    We can check this is a group action:
+    \begin{equation*}
+        A = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \implies A f = f
+    \end{equation*}
+    We must also check $(AB) f = (A (B f))$.
+
+    If $f = (a,b,c)$, $g = Af = (a',b',c')$ for $A = \begin{pmatrix} \alpha & \beta \\ \gamma & \delta \end{pmatrix}$ then
+    \begin{align*}
+    g(x,y) = f(X,Y) &= \begin{pmatrix}X & Y\end{pmatrix}\begin{pmatrix}a & \frac{b}{2} \\ \frac{b}{2} c \end{pmatrix}\begin{pmatrix}X \\ Y\end{pmatrix} \\
+                    &= \begin{pmatrix}x & y\end{pmatrix}A\begin{pmatrix}a & \frac{b}{2} \\ \frac{b}{2} & c \end{pmatrix}A^T \begin{pmatrix}x \\ y\end{pmatrix} \\
+        \shortintertext{and}
+                    A\begin{pmatrix}a & \frac{b}{2} \\ \frac{b}{2} & c \end{pmatrix}A^T&= \begin{pmatrix} a' & \frac{b'}{2} \\ \frac{b'}{2} & c' \end{pmatrix} \label{eq:9star}\tag{$*$}
+    \end{align*}
+    So to see that $A(Bf) = (AB)f$, write in matrix form
+    \begin{equation*}
+    A[B \begin{pmatrix}a & \frac{b}{2}\\\frac{b}{2} & c\end{pmatrix} B^T]A^T = (AB) \begin{pmatrix}a & \frac{b}{2}\\\frac{b}{2} & c\end{pmatrix} B^T A^T
+    \end{equation*}
+    and $B^TA^T = (AB)^T$.
+
+\end{remark}
+
+\begin{defi}[Discriminant]
+    The \textbf{discriminant} of $f = ax^2 + b x y + c y^2$ is $\mathrm{disc}(f) = b^2 - 4ac$.
     Observe $\mathrm{disc}(f) = -4 \times \det\begin{pmatrix}a & \frac{b}{2} \\ \frac{b}{2} & c\end{pmatrix}$.
 \end{defi}
 
@@ -1245,21 +1269,15 @@ A BQF is a binary quadratic form with coefficients in $\Z$, and $f$ can be writt
     \end{align*}
 \end{eg}
 
-\begin{nlemma}
+\begin{nlemma}\label{lem:4.2}
     Equivalent forms have the same discriminant (so the discriminant is an invariant of BQFs under equivalence).
 \end{nlemma}
 
 \begin{proof}
-    Take identity (*):
+    Take identity \eqref{eq:9star}:
     \begin{align*}
-        \begin{pmatrix}
-            a' & \frac{b'}{2} \\ \frac{b'}{2} & c
-        \end{pmatrix}
-        &=
-        A
-        \begin{pmatrix}
-            a & \frac{b}{2} \\ \frac{b}{2} & c
-        \end{pmatrix}
+        \begin{pmatrix} a' & \frac{b'}{2} \\ \frac{b'}{2} & c \end{pmatrix}
+        &= A \begin{pmatrix} a & \frac{b}{2} \\ \frac{b}{2} & c \end{pmatrix}
         A^T \\
         \implies \mathrm{disc}(a', b', c') &= \mathrm{disc}(a, b, c) \det A \det A^T \\
                                            &= \mathrm{disc}(a, b, c) \qedhere
@@ -1269,14 +1287,165 @@ A BQF is a binary quadratic form with coefficients in $\Z$, and $f$ can be writt
 \begin{remark}
     The converse is false: forms of the same discriminant need not be equivalent:
     \begin{equation*}
-        f = (1, 0, 0) = x^2 + 6y^2, \; g = (2, 0, 3) = 2x^2 + 3y^2
+        f = (1, 0, 6) = x^2 + 6y^2, \; g = (2, 0, 3) = 2x^2 + 3y^2
     \end{equation*}
     and $\mathrm{disc}(f) = -24 = \mathrm{disc}(g)$, but $f$ represents 1 and $g$ doesn't.
 \end{remark}
 
-\begin{nlemma}
+\begin{nlemma}\label{lem:4.3}
     $\exists$ BQF $f$ with $\mathrm{disc}(f) = d \iff d \equiv 0 \ \text{or}\ 1 \pmod{4}$.
 \end{nlemma}
- %finish!!
+\begin{proof}
+    $\implies$ $d = \disc(a, b, c) = b^2 - 4ac \equiv b^2 \pmod{4} \implies d \equiv 0 \text{ or } 1 \pmod{4}$ \\
+    \begin{align*}
+        \impliedby& & \text{if} d &\equiv 0 \pmod{4} & \text{then}& &\disc(1, 0, -\sfrac{d}{4}) &= d
+                  & & \text{if} d &\equiv 1 \pmod{4} & \text{then}& &\disc(1, 1, \sfrac{1-d}{4}) &= d
+    \end{align*}
+\end{proof}
+
+% Lecture 10
+
+\begin{defi}\hypertarget{def:definite}
+    A real quadratic form
+    \begin{equation*}
+        f(\vec{x}) = \sum_{1 \leq i \leq j \leq n} a_{ij} x_i x_j \quad (a_{ij} \in \R)
+    \end{equation*}
+    is
+    \begin{itemize}
+        \item \textbf{positive definite} if $\forall 0 \neq x \in \R^n$, $f(\vec{x}) > 0$
+        \item \textbf{negative definite} if $\forall 0 \neq x \in \R^n$, $f(\vec{x}) < 0$
+        \item \textbf{indefinite} if $\exists \vec{x}, \vec{x'} \in \R^n$ with $f(\vec{x} )> 0 > f(\vec{x'})$
+    \end{itemize}
+\end{defi}
+
+Consider the case $n = 2$:
+
+\begin{nlemma}\label{lem:4.4}
+    Take $f=(a,b,c)$ a BQF with $d = b^2 - 4ac$.
+    \begin{enumerate}[label=(\roman*)]
+        \item $d<0,\ a>0 \implies f$ is \hyperlink{def:definite}{positive definite}
+        \item $d<0,\ a<0 \implies f$ is \hyperlink{def:definite}{negative definite}
+        \item $d>0 \implies f$ is \hyperlink{def:definite}{indefinite}
+        \item $d=0 \implies f = l(m x + ny)^2 \quad l,m,n \in \Z$
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    \begin{enumerate}[label=(\roman*)]
+        \item,(ii) $d < 0$, so $ac > 0$ and $a,c$ have the same sign.
+            \begin{equation*}
+                4a f(x, y) = 4 a^2 x^2 + 4 a b x y + 4 a c y^2 = (2ax+by)^2 - dy^2
+            \end{equation*}
+            so $\forall x, y \in \R$, $4a f(x, y) \geq 0$ (as $d < 0$) with equality if and only if $x = y = 0$.
+            $f$ is positive definite if $a > 0$ and negative definite if $a < 0$.
+        \setcounter{enumi}{2}
+    \item Assume $d > 0$ and $a > 0$.
+        Consider $f(x, 1) = a x^2 + b x + c = a(x - \alpha)(x - \beta)$ with real $\alpha < \beta$ and
+        \begin{equation}
+            \alpha, \beta = \frac{-b \pm \sqrt{d}}{2a}
+        \end{equation}
+        If $\frac{r}{s} \in \Q$,
+        \begin{equation*}
+            f(r, s) = s^2 f(\frac{r}{s}, 1) = a s^2 (\frac{r}{s} - \alpha)(\frac{r}{s} - \beta)
+        \end{equation*}
+        \begin{align*}
+            \text{so } \frac{r}{s} &> \beta & f(r, s) &> 0 \\
+            \alpha < \frac{r'}{s'} &< \beta & f(r', s') &< 0.
+        \end{align*}
+        so $f$ is indefinite.
+        Indeed $\exists$ integer pairs $(r, s), (r', s')$ with $f(r, s) > 0 > f(r', s')$.
+
+        If $a > 0$ consider $-f$. If $a = 0$, $c \neq 0$ consider $f(1, y)$ instead.
+        If $a=c=0$ then $f = b xy$ and $b = \pm \sqrt{d} \neq 0$, so obviously indefinite.
+    \item $\alpha = \beta$, left as an exercise.
+    \end{enumerate}
+\end{proof}
+
+\begin{note}
+    We can have $a, b, c > 0$ but $f$ \hyperlink{def:definite}{indefinite}, for instance $(1, 3, 1)$ which has $d > 0$.
+    We can also have $b < 0$ but $f$ \hyperlink{def:definite}{positive definite}, for example $(1, -1, 2)$ which has $d < 0$.
+\end{note}
+
+From now on, we restrict to positive definite BQFs $(a, b, c)$ with $a,c>0$ and $d = b^2 - 4 ac < 0$.
+The first aim is to identify the `simplest' or `smallest' form in each equivalence class.
+\begin{eg}
+    Take $(10, 34, 29)$ and we look for equivalent forms with smaller coefficients (this has $d=-4$)
+
+    First try to reduce $b=45$ by replacing $x$ with $x + \lambda y$ for suitable $\lambda$.
+
+    \begin{equation*}
+        f(x, y) = a x^2 + b x y + c y^2 \implies f(x + \lambda y, y) = x^2 + (b + 2 \lambda a) x y + (\lambda^2 a + \lambda b + c) y^2
+    \end{equation*}
+
+    Take $\lambda = \pm 1$, so
+    \begin{equation*}
+        (a, b, c) \sim (a, b \pm 2a, a \pm b + c) \tag{$*$} \label{eq:proc1}
+    \end{equation*}
+    and in our example $(10, 34, 29) \sim (10, 14, 5) \sim (10, -6, 1)$.
+
+    To reduce the size of $a$, apply $\begin{pmatrix}0 & -1 \\ 1 & 0\end{pmatrix}$ so $X = y$, $Y = -x$ and
+    \begin{equation*}
+        (a, b, c) \sim (c, -b, a) \tag{$**$} \label{eq:proc2}
+    \end{equation*}
+
+    In the example,
+    \begin{align*}
+        (10, -6, 1) &\overset{\eqref{eq:proc2}}{\sim} (1, 6, 10) \\
+                    &\overset{\eqref{eq:proc1}}{\sim} (1, 4, 5) \\
+                    &\overset{\eqref{eq:proc1}}{\sim} (1, 2, 2) \\
+                    &\overset{\eqref{eq:proc1}}{\sim} (1, 0, 1)
+    \end{align*}
+\end{eg}
+
+\begin{remark}
+    \begin{itemize}
+        \item Applying \eqref{eq:proc1} repeatedly, we can replace $f$ by an equivalent form with the same $a$ and $\abs{b} \leq a$.
+        \item Applying \eqref{eq:proc2} repeatedly, we can replace $f$ by an equivalent form with $a \leq c$ and $\abs{b}$ unchanged.
+    \end{itemize}
+\end{remark}
+
+\begin{defi}
+    A positive definite BQF is reduced if either
+    \begin{equation*}
+        -a < b \leq a < c \text{ or } 0 \leq b \leq a = c.
+    \end{equation*}
+    Note that in both cases $\abs{b} \leq a \leq c$.
+
+    In the example, $(10, 34, 29)$ is not reduced as $\abs{b} \nleq a$, but $(1, 0, 1)$ is.
+\end{defi}
+
+\begin{nlemma}\label{lem:4.5}
+    Every positive definite BQF is equivalent to a reduced form.
+\end{nlemma}
+
+\begin{proof}Consider the unimodular substitutions
+    \begin{align*}
+        T_\pm =
+        \begin{pmatrix} 1 & 0 \\ \pm 1 & 1 \end{pmatrix} : (a, b, c) \mapsto (a, b \pm 2a, a \pm b + c) \\
+        S =
+        \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} : (a, b, c) \mapsto (c, -b, a)
+    \end{align*}
+    If $a > c$, apply $S$ to replace $f$ with an equivalent form with smaller $a$ but $\abs{b}$ unchanged.
+
+    If $a \geq c$ and $\abs{b} > a$, use one of $T_\pm$ to decrease $\abs{b}$ (as $\abs{b \pm 2a} < \abs{b}$ for some $\pm$ since $a < \abs{b}$) leaving $a$ unchanged.
+
+    Repeat. At each step, $a + \abs{b}$ is decreased, and $a + \abs{b} > 0$.
+    So the process must terminate; after a finite number of substitutions, we reach a form $(a, b, c)$ with $\abs{b} \leq a \leq c$.
+    There are two cases:
+    \begin{enumerate}[label=\alph*)]
+        \item $a < c$: then $(a, b, c)$ will be reduecd unless $b = -a$ and then
+            \begin{equation*}
+                (a, b, c) = (a, -a, c) \sim (a, a, c)
+            \end{equation*}
+            which is reduced since $-a < b = a < c$.
+        \item $a = c$, then $(a, b, c)$ will be reduced provided $0 \leq b \leq a$. Otherwise, $-a \leq b < 0$ and then $(a, b, c) = (a, b, c) \sim (a, -b, a)$ which is reduced. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    We showed that our form was equivalent to a reduced form using only the substitutions $S$, $T_\pm$.
+    With a bit more work, this shows that any unimodular substitution may be written as a product of $S$s and $T_\pm$s, so $SL_2(Z)$ is generated by $S$ and $T_+$.
+\end{remark}
+
 
 \end{document}
