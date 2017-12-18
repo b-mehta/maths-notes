@@ -1558,4 +1558,96 @@ For example, take $f=x^2 + y^2 = (1, 0, 1)$. $f(1, 0) = a = f(0, 1) = c < f(1, 1
     $\norm{b} \leq a \leq \sqrt{8}$ so $\abs{b} \leq a \leq 2$, and $b = d = 0 \pmod{2}$.
 \end{eg}
 
+% Lecture 12
+
+So every positive definite BQF is equivalent to a unique reduced form, and $\exists$ only a finite number of reduced forms of discriminant $d$.
+\begin{defi}[Class number]
+    The number of positive definite reduced forms of discriminant $d$ is called the \textbf{class number} $h(d)$.
+\end{defi}
+
+\begin{eg}
+    $h(-4) = 1 = h(-7)$, and $h(-24) = 2$.
+\end{eg}
+
+We saw that for given $d$, we can easily work out what the reduced forms are.
+How does $h(d)$ behave as a function of $d$?
+How many $d$ are there with $h(d) = 1$?
+Some results (beyond the scope of this course), mostly using analytic number theory:
+\begin{enumerate}
+    \item $h(d) \to \infty$ as $d \to -\infty$ (1934 Heilbronn), so $\#\set{d | h(d) \leq X}$ is finite.
+        First Siegel showed $h(d) \to \infty$ assuming the generated Riemann hypothesis in analytic number theory.
+        Then Heilbronn proved $h(d) \to \infty$ assuming GRH false by a completely different method.
+    \item `On average $h(d) \approx \sqrt{\abs{d}}$':
+        \begin{equation*}
+            \frac{1}{\frac{1}{2} X} \sum_{\substack{0 \geq d \geq -x \\ d\equiv 0,1\pmod{4}}}{h(d)} \sim c \sqrt{X} \text{ for some } c > 0. \tag{(1874, Mertens)}
+        \end{equation*}
+    \item $h(d) = 1 \iff -d = 3,4,7,8,11,19,43,67,163 \text{ and } 12,16,27,28$.
+        It was known since around 1900 that this was true, except for possibly one other $d$ with $-d$ very large.
+        (1967 Baker, Stark showed the list was complete, but was actually proved 10 years earlier by Heeger).
+    \item $\set{d | h(d) \leq 100}$ is known.
+        In fact $\exists$ explicit bound for the largest $\abs{d}$ with $h(d) = N$, but it is not very practical, for $N=1$ is is $e^{5000}$.
+        This is nevertheless a very hard result using analytic number theory, algebraic geometry and elliptic curves.
+\end{enumerate}
+
+Now study the problem: if $f$ is a BQF and $n \in \Z$, when does $f$ represent $n$?
+We've seen the answer for $x^2 + y^2$.
+Now partially generalise this to positive definite BQFs.
+For indefinite forms look at the section on continued fractions the method is very different.
+
+\begin{nlemma}\label{lem:4.9}
+    Let $f$ be a BQF, $n \in \Z$. Then $f$ properly represents $n \iff f \sim g = (a, b, c)$ with $a =n$.
+\end{nlemma}
+
+\begin{proof}
+    $(\impliedby)$. $g(n, b, c) \implies g(1, 0) = n$, so $g$ represents $n$ properly. Hence if $f \sim g$, so does $g$. \\
+    $(\implies)$ $f$ properly represents $n$ means $\exists \gamma, \delta \in \Z$ with $f(\gamma, \delta) = n$ and $(\gamma, \delta) = 1$.
+    Then $\exists \alpha, \beta \in \Z$ such that $\alpha \delta - \beta \gamma = 1$ by Euclid.
+    Let $g(x) = f(\gamma x + \alpha y, \delta x +\beta y) \sim f$.
+    Then $g(1, 0) = f(\gamma, \delta) = n$, i.e. $g = (n, b, c)$.
+\end{proof}
+
+Recall $p = x^2 + y^2 \iff p = 2$ or $\legendre{-1}{p} = 1$. Generalise:
+
+\begin{nthm}\label{thm:4.10}
+    Let $d < 0$ be a discriminant (i.e. $d \equiv 0 \text{ or } 1 \pmod{4}$), $n \geq 1$.
+    Then ($n$ is properly represented by some BQF of discrimant $d$) $\iff$ ($x^2 \equiv d \pmod{4n}$ is soluble).
+\end{nthm}
+
+\begin{proof}
+    $(\implies)$ Suppose $n = f(x, y)$ properly, and $\disc(f) = d$.
+    Then \cref{lem:4.9} $\implies f \sim g = (n, b, c)$ with $b, c \in \Z$ and $d = \disc(g) = b^2 - 4cn \implies b^2 \equiv d \pmod{4n}$.  \\
+    $(\impliedby)$ Suppose soluble. $\exists b, c \in \Z$ with $b^2 = d + 4 n c$.
+    Then $(n, b, c)$ has discriminant $d$, and properly represents $n$.
+\end{proof}
+
+\begin{eg}
+    What integers are represented (properly) by $f = x^2 + xy + 2y^2$. $\disc(f) = -7$.
+    $f$ is reduced. If $(a, b, c)$ is any reduced form of $\disc(f)$ then $\abs{b} \leq a \leq \sqrt{\frac{7}{3}}$ and $b \equiv d \pmod{2}$ is odd, so $a = 1$, $b = \pm 1$, $c = 2$ and $(a, b, c)$ reduced $\implies (a, b, c) = (1, 1, 2)$ so $h(-7) = 1$.
+
+    Let's first consider $f(x,y) = p$, $p$ prime, $p \neq 2, 7$.
+    By \cref{thm:4.10}, $p$ is properly represented by $f \iff x^2 \equiv -7 \pmod{4p}$ is soluble
+    \begin{align*}
+        &\iff \begin{cases} x^2 \equiv -7 \pmod{4} \\ x^2 \equiv -7 \pmod{p}\end{cases} \text{ are soluble}.
+        &\iff \legendre{-7}{p} = 1.
+    \end{align*}
+    But
+    \begin{equation*}
+        \legendre{-7}{p} = \legendre{-1}{p} (-1)^\frac{p-1}{2} \legendre{p}{7} = \legendre{p}{7} = \begin{cases}1 & p \equiv 1,2,4 \pmod{7} \\ -1 & p \equiv 3,5,6 \pmod{7}\end{cases}.
+    \end{equation*}
+    Also $f(0, 1) = 2$ and $f(1, -2) = 7$.
+
+    So, a prime $p$ is properly represented $\iff$ $p = 7 \text{ or } p \equiv 1, 2, 4 \pmod{7}$.
+\end{eg}
+For more general $n$, let $n = 2^{e_2} 3^{e_3} = \prod_p p^{e_p}, e_p \geq 0$ and $e_p = 0$ for all but finitely many $p$.
+Then
+\begin{equation*}
+    x^2 \equiv d \pmod{4n}\text{ is soluble } \iff
+    \begin{cases}
+        \forall p \neq 2 & x^2 \equiv d \pmod{p^e_p} \\
+        \text{and} & x^2 \equiv d \pmod{2^{e_p + 2}}
+    \end{cases}
+    \text{ are soluble}
+\end{equation*}
+
+The next goal is to show if $x^2 \equiv d \pmod{p}$ soluble ($p \nmid d$), then soluble mod $p^e\ \forall e \geq 1$ for $p$ odd.
 \end{document}
