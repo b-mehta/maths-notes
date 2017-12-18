@@ -1762,4 +1762,108 @@ Two natural questions are:
 \end{thm}
 The proof uses complex analysis.
 
+% Lecture 14
+We'll eventually prove
+\begin{thm}[Tchebyshev's Theorem]
+    $\exists c_2 > c_1 > 0$ such that
+    \begin{equation*}
+        c_1 \frac{x}{\log x} < \pi(x) < c_2 \frac{x}{\log x}
+    \end{equation*}
+\end{thm}
+For the moment, we'll prove some weaker results:
+\begin{nlemma}\label{lem:5.1}
+    \begin{equation*}
+        \pi(x) \geq \frac{\log x}{2 \log 2} \quad \forall \text{integers } x \geq 1
+    \end{equation*}
+\end{nlemma}
+
+\begin{proof}
+    Let $\{p_1, \dotsc, p_r\} = \{\text{primes } \leq x\}$ (so $\pi(x) = r$).
+    If $n \leq x$, $n = k^2 = p_1^{\alpha_1} \dotsm p_r^{\alpha_r}$, $1 \leq K \leq \sqrt{x}$, $\alpha_i \in \{0, 1\}$ (so $K$ is the largest square dividing $n$).
+    \begin{gather*}
+        \begin{rcases*}
+            \leq \sqrt{x} & possibilities for $k$ \\
+            \leq 2^r & possibilities for $\alpha_i$s
+        \end{rcases*}
+        \implies x = \#\{1 \leq n \leq x\} \leq \sqrt{x} 2^r \\
+        2^r = 2^{\pi(x)} \geq \sqrt{x} \implies \pi(x) \geq \frac{\log{x}}{2 \log 2}.
+    \end{gather*}
+\end{proof}
+
+Say $p_n$ is the nth prime.
+On average, by the prime number theorem, $p_{n+1} - p_n$ is around $\log X$. But the gap oscillates wildly.
+
+\paragraph{Small gaps} An old conjecture (`twin prime problem') $\exists \infty$ many $n$ with $p_{n+1} = p_n + 2$.
+Quite recently: there is a constant $C$ such that for infinitely many $n$, $p_{n+1} \leq p_n + C$.
+The best known such constant is $C=246$, from the Polymath project.
+
+\paragraph{Big gaps} By the PNT, at least $\log p_n$ infinitely often.
+
+We will prove:
+\begin{thm}[Bertrand's postulate]
+    $p_{n+1} \leq 2 p_n$, there is always a prime between $N$ and $2N$.
+\end{thm}
+
+Analytic number theory in fact shows that for $n$ sufficiently large, $p_{n+1} - p_n \leq p_n^{0.525}$.
+
+In the other direction, $\exists \infty$ many $n$ such that
+\begin{equation*}
+    p_{n+1} - p_n > c \frac{\log p_n \log \log p_n \log \log \log \log p_n}{\log \log \log p_n}
+\end{equation*}
+(and $(\log p_n)^2$ is conjectured).
+
+\begin{nthm}\label{thm:5.2} \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $\sum_{p \text{ prime}} \frac{1}{p}$ is divergent
+        \item $\prod_{p \text{ prime}} \left(1 - \frac{1}{p}\right)^{-1}$ is divergent i.e. $\prod_{p \leq x} \left(1 - \frac{1}{p}\right)^{-1} \to \infty$ as $x \to \infty$.
+    \end{enumerate}
+\end{nthm}
+
+\begin{proof}
+    First prove (ii)
+    \begin{equation*}
+        \prod_{p \leq x} \left(1 - \frac{1}{p}\right)^{-1} = \prod{p \leq x} \left(1 + \frac{1}{p} + \frac{1}{p^2} + \dotsc\right) \geq \sum_{n \leq x} \frac{1}{n}.
+    \end{equation*}
+    If $n = p_1^{e_1} \dotsm p_k^{e_k}$, all $p_i \leq x$ then $\frac{1}{n} = \frac{1}{p_1^{e_1}} \dotsm \frac{1}{p_k^{e_k}}$ occurs in the product and all terms $>0$.
+    So as $\sum \frac{1}{n} \to \infty$, the product $\to \infty$ as $x \to \infty$.
+
+    For (i) take logarithms
+    \begin{align*}
+        \log \prod_{p \leq x} (1 - \frac{1}{p})^{-1} &= \sum_{p \leq x} -\log(1 - \frac{1}{p}) \\
+                                                     &= \sum_{p \leq x} (\frac{1}{p} + \frac{1}{2p^2} + \frac{1}{3p^3} + \dotsb) \\
+                                                     &= \sum_{p \leq x} \frac{1}{p} + R_x \\
+        R_x = \sum_{p \leq x} (\frac{1}{2p^2} + \frac{1}{3p^3} + \dotsb) &\leq \sum_{p \leq x} (\frac{1}{p^2} + \frac{1}{p^3} + \dotsb) \\
+                                                                         &= \sum_{p \leq x} \frac{1}{p(p-1)} \\
+                                                                         &\leq \sum_{m \geq 2} \frac{1}{m(m-1)} = 1.
+    \end{align*}
+    As $\prod_{p \leq x} (1 - \frac{1}{p})^{-1} \to \infty$, so does $\log (\prod_{p \leq x} (1 - \frac{1}{p})^{-1})$ and so does $\sum_{p \leq x} \frac{1}{p}$.
+\end{proof}
+
+To take these ideas further, Riemann introduced the Riemann $\zeta$-function for complex variables
+\begin{equation*}
+    \zeta(s) = \sum_{n = 1}^\infty \frac{1}{n^s}
+\end{equation*}
+(previously considered by Euler for real $s > 1$).
+
+\begin{nprop}\label{prop:5.3}
+    The series converges absolutely iff $\Re(s) > 1$.
+\end{nprop}
+
+\begin{proof}
+    Let $s = \sigma + i t$, $\sigma,t \in \R$.  Then
+    \begin{equation*}
+        \abs{\frac{1}{n^s}} = \abs{\frac{1}{e^{\log n (\sigma + i t)}}} = \frac{1}{n^\sigma}.
+    \end{equation*}
+    So the series is absolutely convergent $\iff \sum_{n \geq 1} \frac{1}{n^\sigma}$ converges $\iff \sigma > 1$.
+\end{proof}
+
+By complex analysis and uniform convergence $\implies \zeta(s)$ is an analytic function of $s$ for $\Re(s) > 1$.
+What has $\zeta$ got to do with primes?
+
+\begin{nthm}\label{thm:5.4}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $\zeta(s) = \prod_{p \text{ prime}} (1 - \frac{1}{p})^{-1}$ - the `Euler product' ($\Re(s) > 1$).
+        \item $\zeta(s) \neq 0$ if $\Re(s) > 1$.
+    \end{enumerate}
+\end{nthm}
 \end{document}
