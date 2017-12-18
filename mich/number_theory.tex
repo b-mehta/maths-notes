@@ -14,7 +14,12 @@
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \newtheorem*{note}{Note}
-% and here We go!
+\newtheorem{manualinner}{}
+\newenvironment{manual}[1]{%
+    \renewcommand\themanualinner{#1}%
+    \manualinner
+}{\endmanualinner}
+% and here we go!
 
 \begin{document}
 \maketitle
@@ -1755,10 +1760,10 @@ Two natural questions are:
 
 (i) is partially answered by the
 \begin{thm}[Prime Number Theorem]
-    \begin{equation*}
+    \begin{align*}
         \pi(X) = \#\{\text{primes } p \leq X\} &\sim \frac{X}{\log X} \text{ as } X \to \infty \\
                                                &\sim \int_2^X \frac{dt}{\log t} \text{logarithmic integral}
-    \end{equation*}
+    \end{align*}
 \end{thm}
 The proof uses complex analysis.
 
@@ -1862,8 +1867,147 @@ What has $\zeta$ got to do with primes?
 
 \begin{nthm}\label{thm:5.4}\leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item $\zeta(s) = \prod_{p \text{ prime}} (1 - \frac{1}{p})^{-1}$ - the `Euler product' ($\Re(s) > 1$).
+        \item $\zeta(s) = \prod_{p \text{ prime}} (1 - \frac{1}{p^s})^{-1}$ - the `Euler product' ($\Re(s) > 1$).
         \item $\zeta(s) \neq 0$ if $\Re(s) > 1$.
     \end{enumerate}
 \end{nthm}
+
+% Lecture 15
+
+\begin{proof}
+    \begin{enumerate}[label=(\roman*)]
+        \item The aim is to show
+            \begin{equation*}
+                \prod_{p \leq x} \left(1 - \frac{1}{p^s}\right)^{-1} \to \zeta(s) \text{ as } x \to \infty
+            \end{equation*}
+            \begin{align*}
+                \zeta(s) - \prod_{p \leq x} \left(1 - \frac{1}{p^s}\right)^{-1} &= \sum_{n \geq 1} n^{-s} - \prod_{p \leq x} (1 + p^{-s} + p^{-2s} + \dotsb) \\
+                                                                     &= \sum_{n \in \eta_x} n^{-s}, \quad \eta_x = \set{n \geq 1 | \text{at least one prime factor of $n$ is $> x$}}
+            \end{align*}
+        because \begin{equation*}\prod_{p \leq x} (1 + p^{-s} + p^{-2s} + \dotsb) = \sum_{\mathclap{\substack{n \text{ product}\\\text{of primes}\\\leq x}}} n^{-s}\end{equation*} by unique factorisation.
+            So
+            \begin{align*}
+                \abs{\zeta(s) - \prod_{p \leq x} \left(1 - \frac{1}{p^s}\right)^{-1}} &\leq \sum_{n \leq \eta_x} n^{-\sigma} \tag{$\sigma = \Re(s) > 1$} \\
+                                                                           &\leq \sum_{n > x} n^{-\sigma} \to 0 \text{ as } x \to \infty \text{ as } \sigma > 1.
+            \end{align*}
+        \item
+            \begin{align*}
+                \prod_{p \leq x} \left(1 - \frac{1}{p^s}\right) \cdot \zeta(s) &= \prod_{p > x} \left(1 - \frac{1}{p^s}\right)^{-1} \text{ by part (i)} \\
+                                                                               &= 1 + \sum_{\mathclap{\substack{n \text{ s.t.} \\ \text{all } p \mid n \\\text{ satisfy } p > x}}} n^{-s} \to 1 \text{ as } x \to \infty
+            \end{align*}
+            so
+            \begin{align*}
+                \abs{\prod_{p \leq x} \left(1 - \frac{1}{p^s}\right) \zeta(s)} &\geq 1 - \sum_{n > x} n^{-\sigma} > 0 \text{ if $x$ is large enough} \\
+                                                                               &\implies \zeta(s) \neq 0. \qedhere
+            \end{align*}
+    \end{enumerate}
+\end{proof}
+
+\begin{nthm}\label{thm:5.5}
+    $\zeta(s) - \frac{1}{s-1}$ extends to an analytic function on $\{Re(s) > 0\}$ by analytic continuation.
+\end{nthm}
+(As $s \to 1$, the series representing $\zeta(s)$ becomes divergent, and we would like to subtract off the divergence. $\int_1^\infty \frac{dx}{x^{s-1}} = \frac{1}{s-1}$.)
+
+\begin{proof}
+    Suppose $\Re(s) > 2$ for the moment.
+    \begin{align*}
+        \zeta(s) = \sum_{n \geq 1} \frac{1}{n^s} &= \sum_{n \geq 1} (\frac{n}{n^s} - \frac{n-1}{n^s}) = \sum_{n \geq 1} \frac{n}{n^s} - \sum_{n \geq 2} \frac{n-1}{n^s} \\
+                                                 &= \sum_{n \geq 1} \frac{n}{n^s} = \sum_{n \geq 1} \frac{n}{(n+1)^s} = \sum_{n \geq 1} n \left(\frac{1}{n^s} - \frac{1}{(n+1)^s}\right) \\
+                                                 &= \sum_{n \geq 1} n \int_n^{n+1} s \frac{dx}{x^{s+1}} \\
+        \shortintertext{since}
+        \int_a^b \frac{dx}{x^s} &= [- \frac{x^{1-s}}{s-1}]_a^b \\
+                                &= \frac{1}{s-1}(\frac{1}{a^{s-1}} - \frac{1}{b^{s-1}})
+    \end{align*}
+
+    If $n \leq x < n+1$ then $n = \floor{x}$.
+    \begin{align*}
+        &= s \sum_{n \geq 1} \int_n^{n+1} \frac{\floor{x}}{x^{s+1}} \, dx = s \int_1^\infty \frac{\floor{x}}{x^{s+1}} \, dx = s \int_1^\infty \frac{x}{x^{s+1}} - \frac{x - \floor{x}}{x^{s+1}} \, dx \\
+        &= \underbracket{\frac{s}{s-1}}_{= \frac{1}{s-1} + 1} - s \int_1^\infty \frac{x - \floor{x}}{x^{s+1}} \, dx
+    \end{align*}
+    So $\sigma(s) - \frac{1}{s-1} = 1 - s \int_1^\infty \frac{x - \floor{x}}{x^{s+1}} \, dx$.
+    As $0 \leq x - \floor{x} < 1$, the integral converges for $\Re(s+1) > 1$, i.e. $\Re(s) > 0$ and by complex analysis represents an analytic function there.
+\end{proof}
+
+\begin{remark}
+    \begin{enumerate}[label=(\roman*)]
+        \item In fact (using a more subtle integral) can show that $\zeta(s) - \frac{1}{s-1}$ is analytic $\forall s \in \C$ and $\zeta(s)$ satisfies an interesting identity
+            \begin{align*}
+                \xi(s) &\coloneqq \pi^{-\frac{s}{2}} \Gamma(\frac{s}{2}) \zeta(s) \\
+                       &\xi(1-s)
+            \end{align*}
+            where $\Gamma$ is the function which interpolates factorial $\Gamma(s) = \int_0^\infty e^{-y} y^{s-1} \, dy$.
+        \item A key ingredient in the prime number theorem is that $\zeta(s) \neq 0$ if $s = 1 + it$, $t \neq 0$, (can't get this from the infinite product).
+    \end{enumerate}
+\end{remark}
+
+We will say a little more about series of the form $\sum_{n \geq 1} a_n n^{-s}$ (Dirichlet series).
+A useful tool for manipulating these (and for other purposes) is the M\"obius function.
+
+Recall \cref{lem:2.4}:
+\begin{manual}{Lemma 2.4}
+    Let $f$ be a multiplicative function. Then so is $g$, defined by \begin{equation*} g(n) = \sum_{d \mid n} f(d) \end{equation*}
+\end{manual}
+How can we recover $f$ from $g$?
+\begin{eg}
+    Try an example:
+    \begin{align*}
+        g(6) &= f(1) + f(2) + f(3) + f(6) \\
+        g(3) &= f(1) + f(3) \\
+        g(2) &= f(1) + f(2) \\
+        g(1) &= f(1) \\
+        \implies f(6) = g(6) &- g(2) - g(3) + g(1)
+    \end{align*}
+    This obviously works in general!
+\end{eg}
+
+\begin{defi}[M\"obius function]
+    The \textbf{M\"obius function} $\mu: \N \to \{0, \pm 1\}$ is given by
+    \begin{align*}
+        \mu(n) =
+        \begin{cases*}
+            1 & $n = 1$ \\
+            (-1)^k & $n = p_1 \dotsm p_k$ is a product of $k$ distinct primes \\
+            0 & otherwise (divisible by a square > 1)
+        \end{cases*}
+    \end{align*}
+\end{defi}
+
+\begin{ex}
+    $\mu$ is a multiplicative function.
+\end{ex}
+Apply \cref{lem:2.4} to $\mu$, let $\nu(n) = \sum_{d \mid n} \mu(d)$.
+Then $\nu$ is a multiplicative function.  Now
+\begin{align*}
+    \nu(p^k) &= \mu(1) + \mu(p) + \dotsb + \mu(p^k) \\
+             &=
+    \begin{cases*}
+        \mu(1) = 1 & if $k=0$ \\
+        \mu(1) + \mu(p) = 0 & if $k=1$ \\
+        0 & if $k>1$.
+    \end{cases*}
+\end{align*}
+So by multiplicativity
+\begin{equation*}
+    \nu(n) =
+    \begin{cases*}
+        1 & if $n = 1$ \\
+        0 & if $n = 0$
+    \end{cases*}
+\end{equation*}
+
+\begin{nprop}[M\"obius inversion formula]\label{prop:5.6}
+    Let $f: \N \to \C$ be any function, and $g(n) = \sum_{d \mid n} f(d)$.
+    Then
+    \begin{equation*}
+        f(n) = \sum_{d \mid n} \mu(d) g\!\left(\frac{n}{d}\right) = \sum_{d \mid n} \mu\!\left(\frac{n}{d}\right) g(d).
+    \end{equation*}
+\end{nprop}
+
+\begin{proof}
+    \begin{align*}
+        \sum_{d \mid n} \mu(d) g\!\left(\frac{n}{d}\right) &= \sum_{d \mid n} \mu(d) \sum_{e \mid \frac{n}{d}} f(e) \\
+                                              &= \sum_{e \mid n} f(e) \underbracket{\sum_{d \mid \frac{n}{e}} \mu(d)}_{\nu(\frac{n}{e})} = f(n).
+    \end{align*}
+\end{proof}
+
 \end{document}
