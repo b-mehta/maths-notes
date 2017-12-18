@@ -1556,6 +1556,10 @@ For example, take $f=x^2 + y^2 = (1, 0, 1)$. $f(1, 0) = a = f(0, 1) = c < f(1, 1
     For $d = -24$, $x^2 + 6y^2$ and $2x^2 + 3y^2$ are reduced and inequivalent, with $\disc = -24$.
     Are there others?
     $\norm{b} \leq a \leq \sqrt{8}$ so $\abs{b} \leq a \leq 2$, and $b = d = 0 \pmod{2}$.
+
+    For $a = 1$, we have $b=0$ so $c = 6$, giving $(1, 0, 6)$.
+    For $a=2$, $b\in \{0, \pm 2\}$ and $c = \frac{b^2 +24}{8}$. $b = \pm 2 \implies c \notin \Z$, so $b=0$ and $c=3$ giving $(2, 0, 3)$.
+    So there are no others.
 \end{eg}
 
 % Lecture 12
@@ -1649,5 +1653,113 @@ Then
     \text{ are soluble}
 \end{equation*}
 
-The next goal is to show if $x^2 \equiv d \pmod{p}$ soluble ($p \nmid d$), then soluble mod $p^e\ \forall e \geq 1$ for $p$ odd.
+The next goal is to show if $x^2 \equiv d \pmod{p}$ soluble ($p \nmid d$), then soluble mod $p^e\ \forall e \geq 1$ for $p$ odd, i.e. that the Legendre symbol determines solubility..
+% Lecture 13
+
+\begin{nlemma}\label{lem:4.11}
+    \begin{enumerate}[label=(\roman*)]
+        \item Take $p$ an odd prime, $a \in \Z$ with $\legendre{a}{p} = 1$.
+            Then $\forall n \geq 1$, $x^2 \equiv a \pmod{p^n}$ is soluble.
+        \item $a \equiv 1 \pmod{8} \implies x^2 \equiv a \pmod{2^n}$ soluble $\forall n \geq 1$.
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    \begin{enumerate}[label=(\roman*)]
+        \item $\legendre{a}{p} = 1 \implies $ there is a solution to $x^2 \equiv 0 \pmod{p}$.
+            So, by induction assume that for some $n \geq 1$, $x^2 = a + k p^n$ for some $k \in \Z$.
+            Consider $t \in \Z$, so
+            \begin{align*}
+                (x + t p^n)^2 &= x^2 + 2 x t p^n + t^2 p^{2n} \\
+                              &\equiv a + (k+ 2xt)p^n \pmod{p^{n+1}}.
+            \end{align*}
+            Since $\legendre{a}{p} \neq 0$, $(a, p) = 1 = (x, p)$. So, $\exists t \in \Z$ such that $k + 2 x t \equiv 0 \pmod{p}$.
+            For this $t$, $(x + p^n t)^2 \equiv a \pmod{p^{n+1}}$.
+        \item $n \geq 3$ is easy, take $x=1$.
+            So again by induction, assume $x^2 = a + 2^n k$ for $n \geq 3$.
+            If $k$ even, then $x^2 \equiv a \pmod{2^{n+1}}$. Otherwise,
+            \begin{align*}
+                (x + 2^{n-1})^2 = x^2 + x 2^n + 2^{2n-2} &\equiv a + (x+k)2^n \pmod{2^{n+1}} \\
+                                                         &\equiv a \pmod{2^{n+1}}.
+            \end{align*}
+    \end{enumerate}
+\end{proof}
+
+\begin{eg}
+    Continuing the example of $f = (1, 1, 2)$ with $d = -7$,
+    $-7 \equiv 1 \pmod{8} \implies x^2 \equiv -7 \pmod{2^n}$ is soluble $\forall n$.
+    For $p$ odd and $ p \equiv 1, 2, 4 \pmod{7}, \legendre{-7}{p} = 1 \implies x^2 \equiv -7 \pmod{p^n}$ is soluble $\forall n \geq 1$.
+    For $p = 7$: $x^2 \equiv -7 \pmod{7}$ is soluble, but $x^2 \equiv -7 \pmod{49}$ is insoluble, hence insoluble mod $7^n$ $\forall n \geq 2$.
+    Conclusion: $f = (1, 1, 2)$ properly represents $n \geq 1$ if and only if
+    \begin{equation*}
+        n = 2^{e_2} 7^{e_7} \prod_{p \equiv 1, 2, 4 \pmod{7}} p^{e_p} \qquad e_p \geq 0, \; e_7 \in \{0, 1\}
+    \end{equation*}
+    The numbers represented (not necessarily properly) by $f$ are $k^2 n$, $k \geq 1$ with $n$ as above.
+    That is, $n = x^2 + x y + 2y^2$ for some $x, y \in \Z$ if and only if $n = 0$ or every prime $p \not\equiv 1, 2, 4 \pmod{7}$ dividing $n$ divides it to an even power.
+\end{eg}
+
+This method completely describes the integers represented by $f$ of discriminant $d < 0$ when $h(d) = 1$.
+For $h(d) > 1$, all this tells us is which $n$ are represented by \emph{some} equivalence class of BQFs of discriminant $d$.
+
+Sometimes (as on the example sheet), you can figure out which just by congruence conditions, but usually not.
+For example, $x^2 + 23 y^2$ - the representability of $n$ by $x^2 + 23 y^2$ cannot be described using congruence conditions on $p \mid n$.
+(Why? Deep algebraic number theory related to `non-abelian reciprocity laws')
+
+\begin{defi}[Fundamental discriminant]\hypertarget{def:fundDisc}
+    $d \equiv 0 \text{ or } 1 \pmod{4}$ is a \textbf{fundamental discriminant} if $d \equiv k^2 d'$, where $k \geq 2$ and $d' \equiv 0 \text{ or } 1 \pmod{4}$.
+\end{defi}
+For fundamental discriminant $d < 0$, Gauss defined composition of 2 BQFs of discriminant $d$ to get a third, turning \{equivalence classes of positive definite BQFs of discriminant $d$\} into an abelian group, the class group.
+This turns out to be the ideal class group of the quadratic field $\Q(\sqrt{d})$ (see Number Fields).
+
+Negative definite forms now provide nothing new, but what about indefinite forms?
+
+The key difference between definite and indefinite forms is that for a definite form $f$, $\#\set{(x, y) \in \Z^2 | f(x, y) = n}$ is always finite.
+For instance, $x^2 + y^2 = n \implies \abs{x}, \abs{y} \leq \sqrt{n}$. In general, $f(x, y) = n$ is the equation of an ellipse in $\R^2$, so integer points $(x, y)$ on it have bounded size.
+On the other hand, if $f$ is indefinite, then there can be infinitely many solutions.
+For example, $x^2 - 2y^2$ is indefinite. Consider $x^2 - 2y^1 = 1$. We have solutions $(x, y) = (1, 0)$ and also $(3, 2)$. If $(x, y)$ is a solution, then $(x^2 + 2y^2)^2 - 2 (2xy)^2 = (x^2 - 2y^2)^2 = 1$ as well.
+So starting with $(3, 2)$ and repeating gets solutions of arbitrarily large size. We study $x^2 - dy^2 = 1$ later.
+
+What about more variables? For instance, what integer values does $x_1^2 + x_2^2 + \dotsb + x_k^2$ take?
+
+\begin{thm}[1770, Lagrange]
+    Every positive integer $n$ is a sum of $4$ squares. So for $k \geq 4$, we are done.
+\end{thm}
+
+\begin{proof}
+    Not in the scope of this course, but there is a formula for the number of representations involving 'modular forms'.
+\end{proof}
+
+Harder is
+\begin{thm}[1797, Legendre]
+    \begin{equation*}
+        n = x^2 + y^2 + z^2 \iff n \neq 4^a (8b + 7)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    The $\implies$ direction is easy, and the usual proof of $\impliedby$ is hard and uses quadratic reciprocity, and Dirichlet's theorem on existence of primes in arithmetic progressions. Again, this is out of scope.
+\end{proof}
+
+\clearpage
+\section{Distribution of the primes}
+\begin{equation*}
+    2, 3, 5, 7, 11, 13, 17, \dotsc, 691, \dotsc, 144169, \dotsc
+\end{equation*}
+an infinite sequence (Euclid).
+
+Two natural questions are:
+\begin{enumerate}
+    \item How rapidly does the sequence grow?
+    \item How (ir)regular e.g. how big are the gaps?
+\end{enumerate}
+
+(i) is partially answered by the
+\begin{thm}[Prime Number Theorem]
+    \begin{equation*}
+        \pi(X) = \#\{\text{primes } p \leq X\} &\sim \frac{X}{\log X} \text{ as } X \to \infty \\
+                                               &\sim \int_2^X \frac{dt}{\log t} \text{logarithmic integral}
+    \end{equation*}
+\end{thm}
+The proof uses complex analysis.
+
 \end{document}
