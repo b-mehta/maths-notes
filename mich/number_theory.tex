@@ -172,7 +172,7 @@ Fix $n \geq 1$ (the modulus).  Typically we will use $n > 1$.
 
 This defines an equivalence relation on $\Z$. Write $\Z / n\Z$ for the set of equivalence classes $\set{a + n \Z}$, where $a + n \Z = b + n \Z \iff a \equiv b \pmod{n}$.  It is easy to see that the operations of addition and multiplication in $\set{a + n \Z}$ are well defined.  [In other words, $n \Z$ is an ideal in the ring $\Z$, and $\Z / n\Z$ is the quotient ring.]
 
-\begin{nlemma}\label{lem:2_1}
+\begin{nlemma}\label{lem:2.1}
     Let $a \in \Z$. The following are equivalent:
     \begin{enumerate}[label=\roman*.]
         \item $(a, n) = 1$
@@ -191,7 +191,7 @@ This defines an equivalence relation on $\Z$. Write $\Z / n\Z$ for the set of eq
 \end{proof}
 
 \begin{notation}
-    For $n > 1$, we write $(\Z / n \Z)^*$ to denote the set of units (invertible elements) of $\Z / n \Z$. By \cref{lem:2_1}, this is the set of classes $a + n \Z$ where $(a, n) = 1$.
+    For $n > 1$, we write $(\Z / n \Z)^*$ to denote the set of units (invertible elements) of $\Z / n \Z$. By \cref{lem:2.1}, this is the set of classes $a + n \Z$ where $(a, n) = 1$.
     We can then define $\phi(n) =\# (\Z / n \Z)^* = \# \set{a \in \Z | 1 \leq a \leq n, \, (a, n) = 1}$, the \textbf{Euler $\phi$-function}.
 \end{notation}
 
@@ -218,7 +218,7 @@ This has an important special case, called Fermat's Little Theorem.
 
 % Lecture 3
 
-\begin{nlemma}\label{lem:2_2}
+\begin{nlemma}\label{lem:2.2}
     Let $G$ be a cyclic group of order $n \geq 1$. Then
     \begin{align*}
         \varphi (n) &=  \# \set{g \in G | (\text{order of } g) = n} \\
@@ -227,7 +227,7 @@ This has an important special case, called Fermat's Little Theorem.
 \end{nlemma}
 
 \begin{proof}
-    We may assume $G = \Z/ n \Z$, in which case this is just \cref{lem:2_1}
+    We may assume $G = \Z/ n \Z$, in which case this is just \cref{lem:2.1}
 \end{proof}
 
 \subsection{Simultaneous Congruences}
@@ -339,7 +339,7 @@ Algebraic aside: We can write thus in terms of the rings $R_i = \Z / m_i \Z$.
     \end{itemize}
 \end{eg}
 
-\begin{nlemma}\label{lem:2_4}
+\begin{nlemma}\label{lem:2.4}
     Let $f$ be a multiplicative function. Then so is $g$, defined by \begin{equation*} g(n) = \sum_{d \mid n} f(d) \end{equation*}
 \end{nlemma}
 
@@ -358,7 +358,7 @@ Algebraic aside: We can write thus in terms of the rings $R_i = \Z / m_i \Z$.
 
 % Lecture 4 (probably)
 
-\begin{nthm}\label{thm:2_5}
+\begin{nthm}\label{thm:2.5}
     \leavevmode
     \begin{enumerate}[label=(\roman*)]
         \item $p$ prime, $k \leq 1 \implies \varphi(p^k) = p^{k-1} (p-1) = p^k \left(1-\frac{1}{p}\right)$
@@ -381,7 +381,7 @@ Algebraic aside: We can write thus in terms of the rings $R_i = \Z / m_i \Z$.
                             &= \prod_i p_i^{k_i} \left(1 - \frac{1}{p_i}\right) \\
                             &= n \prod_i \left(1 - \frac{1}{p_i} \right)
             \end{align*}
-        \item By \cref{lem:2_4}, the left hand side is multiplicative. The right hand side is obviously multiplicative, so it is enough to prove for $n = p^k$.
+        \item By \cref{lem:2.4}, the left hand side is multiplicative. The right hand side is obviously multiplicative, so it is enough to prove for $n = p^k$.
             \begin{align*}
                 \sum_{d \mid n} \varphi(d) &= \varphi(1) + \varphi(p) + \dotsb + \varphi(p^k) \\
                                        &= 1 + (p - 1) + (p^2 - p) + \dotsb + (p^k - p^{k-1}) \\
@@ -501,12 +501,12 @@ The additive group $(\Z / n\Z, +)$ is cyclic. What about $((\Z/n\Z)^*, \times)$?
 \end{nthm}
 
 \begin{proof}
-    $\# G = p-1 = \sum_{d \mid p-1} \phi(d)$ by \cref{thm:2_5} part (iii).
+    $\# G = p-1 = \sum_{d \mid p-1} \phi(d)$ by \cref{thm:2.5} part (iii).
 
     Also, by Lagrange's Theorem in elementary group theory, \begin{equation*}\# G = \sum_{d \mid p-1} \# \set{g \in G \ \text{of order d}} = \sum_{d \mid p-1} N_d\end{equation*}
     Suppose $G$ is not cyclic, so $G$ has no element of order $p-1$, then ${N_{p-1} = 0 < \phi(p-1)}$.
     As $\sum \phi(d) = \sum N_d$, there exists some $d$ for which $N_d > \phi(d) > 0$. Let $\alpha \in G$ be an element of order $d$.
-    Then $\langle\alpha\rangle \coloneqq \set{1, \alpha, \alpha^2, \dotsc, \alpha^{d-1}} \subset G$ is a cyclic subgroup of order $d$ so has exactly $\phi(d)$ elements of order $d$ by \cref{lem:2_2}.
+    Then $\langle\alpha\rangle \coloneqq \set{1, \alpha, \alpha^2, \dotsc, \alpha^{d-1}} \subset G$ is a cyclic subgroup of order $d$ so has exactly $\phi(d)$ elements of order $d$ by \cref{lem:2.2}.
     So $\exists \beta \notin \langle\alpha\rangle$ where $\beta$ has order $d$.
     Then $1, \alpha, \alpha^{d-1}, \beta$ are $(d+1)$ roots of the polynomial $X^d - 1$, contradicting \cref{thm:2.7}.
     So, $G$ must be cyclic.
@@ -552,7 +552,7 @@ So, $(\Z/2^n \Z)^*$ is not cyclic for $n \geq 3$ since a generator would map to 
     The proof is deferred until \cpageref{pf:2.9}.
 \end{proof}
 
-\begin{nlemma}\label{lem:2_10}
+\begin{nlemma}\label{lem:2.10}
     Take $p$ an odd prime, and let $y \in \Z$ and $k \geq 1$. Then,
     \begin{enumerate}[label=(\roman*)]
         \item If $x \equiv 1 + p^k y \pmod{p^{k+1}}$ then $x^p \equiv 1 + p^{k+1} y \pmod{p^{k+2}}$
@@ -575,7 +575,7 @@ So, $(\Z/2^n \Z)^*$ is not cyclic for $n \geq 3$ since a generator would map to 
     \end{enumerate}
 \end{proof}
 
-\begin{nlemma}\label{lem:2_11}
+\begin{nlemma}\label{lem:2.11}
     If $g \in \Z$, $(g, p) = 1$, $g$ is a primitive root mod $p$, and $g^{p-1} \not\equiv 1 \pmod{p^2}$, then $g$ is a generator of $(\Z/p^n \Z)^* = G$.
 \end{nlemma}
 
@@ -590,7 +590,7 @@ So, $(\Z/2^n \Z)^*$ is not cyclic for $n \geq 3$ since a generator would map to 
 
     \begin{enumerate}[label=(\roman*)]
         \item Let $x = g^{p-1} = 1+py$ with $y \not\equiv 0 \pmod{p}$, because $g^{p-1} \not\equiv 1 \pmod{p^2}$.
-            Then by \cref{lem:2_10} part (ii), we have $x^{p^{n-2}} \equiv 1 + p^{n-1} y \pmod{p^n}$, so $g^{p^{n-2}(p-1)} \not\equiv 1 \pmod{p^n}$.
+            Then by \cref{lem:2.10} part (ii), we have $x^{p^{n-2}} \equiv 1 + p^{n-1} y \pmod{p^n}$, so $g^{p^{n-2}(p-1)} \not\equiv 1 \pmod{p^n}$.
 
         \item $g^{p^{n-1}e} \equiv g^e \pmod{p}$ by Fermat-Euler, and this is not congruent to $1 \pmod{p}$ as $g$ is a primitive root mod $p$.
     \end{enumerate}
@@ -601,18 +601,18 @@ So, $(\Z/2^n \Z)^*$ is not cyclic for $n \geq 3$ since a generator would map to 
 We can return and prove \cref{thm:2.9}.
 
 \begin{proof}[Proof of \cref{thm:2.9}\label{pf:2.9}]
-    Let $g \in \Z$ be a primitive root mod $p$. If $g^{p-1} \not\equiv 1 \pmod{p^2}$, then by \cref{lem:2_11}, $g$ generates $(\Z/p^n \Z)^*$.
+    Let $g \in \Z$ be a primitive root mod $p$. If $g^{p-1} \not\equiv 1 \pmod{p^2}$, then by \cref{lem:2.11}, $g$ generates $(\Z/p^n \Z)^*$.
     If not, $g^p \equiv g \pmod{p^2}$. Let $g_1 = g(1 + p)$.
-    Then, $g_1^p = g^p (1+p)^p$ and $(1+p)^p \equiv 1 \pmod{p^2}$ by \cref{lem:2_10}.
+    Then, $g_1^p = g^p (1+p)^p$ and $(1+p)^p \equiv 1 \pmod{p^2}$ by \cref{lem:2.10}.
 
-    So, $g_1^p \equiv g^p \pmod{p^2} \equiv g \pmod{p^2} \not\equiv g_1 \pmod{p^2}$, so by \cref{lem:2_11}, $g_1$ generates $(\Z/p^n \Z)^*$.
+    So, $g_1^p \equiv g^p \pmod{p^2} \equiv g \pmod{p^2} \not\equiv g_1 \pmod{p^2}$, so by \cref{lem:2.11}, $g_1$ generates $(\Z/p^n \Z)^*$.
 \end{proof}
 
 \begin{remark}
     \leavevmode
     \begin{enumerate}
         \item Our proof gives an easy way to find a generator for $(\Z / p^n \Z)^*$, independent of $n \geq 2$.
-        \item What happens when $p=2$? \Cref{lem:2_10}(i) fails to hold for $p=2$, $k=1$: $(1+2)^2 \equiv 1 \pmod{8}$.  It does hold for $p=2$ and $k \geq 2$ however. Part (ii) becomes $(1+4)^{k-1} \equiv 1 + 2^{k+1} \pmod{2^{k+2}}$.
+        \item What happens when $p=2$? \Cref{lem:2.10}(i) fails to hold for $p=2$, $k=1$: $(1+2)^2 \equiv 1 \pmod{8}$.  It does hold for $p=2$ and $k \geq 2$ however. Part (ii) becomes $(1+4)^{k-1} \equiv 1 + 2^{k+1} \pmod{2^{k+2}}$.
             We can then show (following the argument for $p$ odd), that $(\Z/2^n \Z)^*$ for $n \geq 3$ is generated by $-1$ and $5$ which have orders $2$ and $2^{n-2}$ respectively.
             So, we have that
             \begin{equation*}
@@ -2010,4 +2010,166 @@ So by multiplicativity
     \end{align*}
 \end{proof}
 
+% Lecture 16
+\begin{defi}[Dirichlet series]
+    The series
+    \begin{equation*}
+        \sum_{n \geq 1} \frac{a_n}{n^s}
+    \end{equation*}
+    for $s$ a (complex) variable is called a \textbf{Dirichlet series}.
+\end{defi}
+This is absolutely convergent if $\abs{a_n} \leq A n^k$ for some $k$ and $\Re(s) > k+1$.
+
+We can take products of Dirichlet series
+\begin{align*}
+    \sum_{m \geq 1} \frac{a_m}{m^s} \sum_{n \geq 1} \frac{b_n}{n^s} = \sum_{m,n\geq 1} \frac{a_m b_n}{(mn)^s} = \sum_{N \geq 1} \frac{c_N}{N^s} \qquad N=mn \\
+    \text{where } c_N = \sum_{d \mid N} a_d b_{\frac{N}{d}}
+\end{align*}
+
+\begin{eg}
+    \begin{equation*}
+        \zeta(s-1) \zeta(s) = (\sum_{n \geq 1} \frac{n}{n^s})(\sum_{n \geq 1} \frac{1}{n^s}) = \sum_{n \geq 1} (\sum_{d \mid n} d) \frac{1}{n^s} = \sum_{n \geq 1} \frac{\sigma(n)}{n^s}
+    \end{equation*}
+    where $\sigma(n) = \sum_{d \mid n} d$.
+\end{eg}
+
+A Dirichlet series related to primes:
+\begin{nthm}\label{thm:5.5}
+    \begin{gather*}
+        -\frac{\zeta'(s)}{\zeta(s)} = \sum_{n \geq 1} \Lambda(n) n^{-s} = \frac{\log 2}{2^s} + \frac{\log 3}{3^s} + \frac{\log 2}{4^s} + \frac{\log 5}{5^s} + \frac{\log 7}{7^s} \\
+        \text{where } \Lambda(n) =
+        \begin{cases*}
+            \log p & $n = p^k$, $p$ prime \\
+            0 & otherwise
+        \end{cases*}
+        \text{ von Mangoldt function}
+    \end{gather*}
+\end{nthm}
+
+\begin{proof}
+    Assume $s > 1$ is real (for complex $s$, same follows by analytic continuation).
+    \begin{align*}
+        -\frac{\zeta'(s)}{\zeta(s)} = - \frac{d}{ds} \log \zeta(s) &= - \frac{d}{ds} \sum_{p \text{ prime}} \log\left(\frac{1}{1 - p^{-s}}\right) \tag{by Euler product} \\
+                                                                   &= \sum_{p \text{ prime}} \frac{(\log p) p^{-s}} {1 - p^{-s}} \\
+                                                                   &= \sum_{p \text{ prime}} \log p (p^{-s} + p^{-2s} + \dotsb) \\
+                                                                   &= \sum_{n \geq 1} \Lambda(n) n^{-s}.
+    \end{align*}
+    (Exchange of $\frac{d}{ds}$ and $\sum$ is justified by uniform convergence.)
+\end{proof}
+
+Define $\Psi(x) = \sum_{n \leq x} \Lambda(n)$.
+It is not hard to show that
+\begin{equation*}
+    \pi(x) \sim \frac{\Psi(x)}{\log x}
+\end{equation*}
+so the prime number theorem is equivalent to $\Psi(x) \sim x$.
+This is proved by integrating $\frac{x^{s+1}}{s(s+1)} \frac{\zeta'(s)}{\zeta(s)}$ over suitable contours (the non-vanishing of $\zeta(s)$ for $\Re s = 1$ enters here).
+
+\begin{thm}[Dirichlet's theorem]
+    Let $a, N \in \Z$, $N > 1$, $(a,N)=1$.
+    There are infinitely many primes $\equiv a \pmod{N}$ (we have seen this already for $N=4$, $a=1$ and $a=-1$) i.e. the arithmetic progression $\{a, a + N, a + 2N, \dotsc\}$ contains $\infty$ many primes.
+\end{thm}
+
+In fact, the proportion of primes in such an arithmetic progression is $\frac{1}{\varphi(N)}$.
+\begin{proof}[Sketch]
+    The proof involves Dirichlet series. Take this series
+    \begin{equation*}
+        F_{a,N}(s) = \sum_{p \equiv a \pmod{N}} \frac{1}{p^s}
+    \end{equation*}
+    and show it has infinitely many terms. It is enough to show that the series diverges for $s=1$.
+    To get a handle on $F_{a,N}(s)$, write it as a linear combination of Dirichlet series of the form $\sum_p \frac{\chi(p)}{p^s}$, where $\chi(p)$ is a multiplicative function.
+\end{proof}
+
+\begin{defi}[Dirichlet character]
+    A \textbf{Dirichlet character} mod $N$ is a function $\chi: \N \to \C$ such that
+    \begin{enumerate}[label=(\roman*)]
+        \item $\chi(1)=1$, $\chi(n) = 0$ if $(N, n) > 1$.
+        \item $\chi(n+N) = \chi(n)$ periodic mod $N$.
+        \item $\chi(mn) = \chi(m)\chi(n)$ $\forall m,n$.
+    \end{enumerate}
+\end{defi}
+So $\chi$ is just a homomorphism $(\Z/n\Z)^\times \to C^*$ extended to all $n$ by $\chi(n) = 0$ if $(n, N)>1$.
+An example is given by the Legendre/Jacobi symbol.
+
+\begin{fact}
+    The function
+    \begin{equation*}
+        f(n) =
+        \begin{cases}
+            1 & \text{if } n\equiv a \pmod{N} \\
+            0 & \text{if } n\not\equiv a \pmod{N}
+        \end{cases}
+    \end{equation*}
+    for $(a,N)=1$ is a linear combination of Dirichlet characters mod $N$.
+\end{fact}
+
+\begin{eg}
+    For $N=3$, $\chi_p: \N \to \C$:
+    \begin{align*}
+        \chi_0(n) =
+        \begin{cases}
+            1 & \text{if } (n, 3) = 1 \\
+            0 & \text{otherwise}
+        \end{cases} \\
+        \chi_1(n) =
+        \begin{cases}
+            1 & n \equiv 1 \pmod{3} \\
+            -1 & n \equiv -1 \pmod{3} \\
+            0 & (n,3) \neq 1
+        \end{cases} \\
+        \frac{\chi_0(n) \pm \chi_1(n)}{2} =
+        \begin{cases}
+            1 & n \equiv \pm 1 \pmod{3} \\
+            0 & \text{otherwise}
+        \end{cases} \\
+    \end{align*}
+\end{eg}
+
+Analytic facts about $L(\chi, s) = \sum_{n \geq 1} \chi(n) n^{-s}$ then can be used to prove Dirichlet's theorem.
+
+\subsection{Elementary methods for primes}
+\textbf{Sieve of Eratosthenes}: if you delete from $\{2,3,\dotsc, X\}$ all multiples of primes $\leq \sqrt{X}$, left with $\set{p \text{ primes} | \sqrt{X} \leq p \leq X}$.
+
+\begin{nprop}[Legendre's formula]\label{prop:5.6}
+    Let $x \geq 1$. $P = \prod_{p \leq \sqrt{X}} p$ product of all primes $\leq \sqrt{X}$.
+    Then $\pi(X) - \pi(\sqrt{X}) + 1 = \# \set{1 \leq n \leq X | (n,P) = 1} = \sum_{d \mid P} \mu(d) \floor{\frac{X}{d}}$.
+\end{nprop}
+
+\begin{proof}
+    \begin{equation*}
+        \set{1 \leq n \leq X | (n, P) = 1} = \{1\} \cup \set{p | \sqrt{X} \leq p \leq X}
+    \end{equation*}
+    hence first equality. Recall
+    \begin{gather*}
+        \sum_{d \mid n} \mu(d) =
+        \begin{cases}
+            1 & \text{if } n = 1 \\
+            0 & \text{if } n > 1
+        \end{cases}
+    \end{gather*}
+        so
+    \begin{align*}
+        \# \set{1 \leq n \leq X | (n, P) = 1} &= \sum_{1 \leq n \leq X} \left[ \sum_{d \mid (n, P)} \mu(d)\right] \\
+                                              &= \sum_{d \mid P} \mu(d) \sum_{\mathclap{\substack{1 \leq n \leq X \\ n \equiv 0 \bmod{d}}}} 1 \\
+                                              &= \sum_{d \mid P} \mu(d) \floor*{\frac{X}{d}}.
+    \end{align*}
+\end{proof}
+
+\subsection{Divisibility of special numbers}
+\begin{defi}
+    Let $n \geq 1$, $p$ prime. Let $\nu_p(n)=$ exponent of $p$ in factorisation of $n$ ($p$-adic valuation of $n$).
+\end{defi}
+
+So $n = p^{\nu_p(n)} n_0$ where $(n_0, p) = 1$.  In addition, $\nu_p(mn) = \nu_p(m) + \nu_p(n)$.
+
+\begin{eg}
+    \begin{equation*}
+        \binom{2n}{n} = N = \frac{2n (2n-1) \dotsm (n+1)}{n (n-1) \dotsm 1}
+    \end{equation*}
+    If $n < p \leq 2n$, $p$ exactly divides numerator, and doesn't divide the denominator.
+    $\nu_p(n) = 1$ $\forall p \in (n, 2n]$.
+
+    On the other hand $N \leq \sum_r \binom{2n}{r} = 2^{2n}$, so $\prod_{n < p \leq 2n} p \leq N \leq 2^{2n}$, giving an estimate and upper bound for $\pi(x)$.
+    A similar argument also gives a lower bound if more careful.
+\end{eg}
 \end{document}
