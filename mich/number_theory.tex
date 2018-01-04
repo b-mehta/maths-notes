@@ -7,6 +7,7 @@
 \def\ncourse{Number Theory}
 \input{header}
 % preamble
+\usepackage{xfrac}
 \setcounter{section}{-1}
 \newcommand{\legendre}[2]{\genfrac{(}{)}{}{}{#1}{#2}}
 \newcommand{\SL}{\mathrm{SL}}
@@ -2034,7 +2035,7 @@ We can take products of Dirichlet series
 \end{eg}
 
 A Dirichlet series related to primes:
-\begin{nthm}\label{thm:5.5}
+\begin{manual}{Theorem 5.5a}\label{thm:5.5a}
     \begin{gather*}
         -\frac{\zeta'(s)}{\zeta(s)} = \sum_{n \geq 1} \Lambda(n) n^{-s} = \frac{\log 2}{2^s} + \frac{\log 3}{3^s} + \frac{\log 2}{4^s} + \frac{\log 5}{5^s} + \frac{\log 7}{7^s} \\
         \text{where } \Lambda(n) =
@@ -2044,7 +2045,7 @@ A Dirichlet series related to primes:
         \end{cases*}
         \text{ von Mangoldt function}
     \end{gather*}
-\end{nthm}
+\end{manual}
 
 \begin{proof}
     Assume $s > 1$ is real (for complex $s$, same follows by analytic continuation).
@@ -2106,18 +2107,18 @@ An example is given by the Legendre/Jacobi symbol.
 \begin{eg}
     For $N=3$, $\chi_p: \N \to \C$:
     \begin{align*}
-        \chi_0(n) =
+        \chi_0(n) &=
         \begin{cases}
             1 & \text{if } (n, 3) = 1 \\
             0 & \text{otherwise}
         \end{cases} \\
-        \chi_1(n) =
+        \chi_1(n) &=
         \begin{cases}
             1 & n \equiv 1 \pmod{3} \\
             -1 & n \equiv -1 \pmod{3} \\
             0 & (n,3) \neq 1
         \end{cases} \\
-        \frac{\chi_0(n) \pm \chi_1(n)}{2} =
+        \frac{\chi_0(n) \pm \chi_1(n)}{2} &=
         \begin{cases}
             1 & n \equiv \pm 1 \pmod{3} \\
             0 & \text{otherwise}
@@ -2130,10 +2131,10 @@ Analytic facts about $L(\chi, s) = \sum_{n \geq 1} \chi(n) n^{-s}$ then can be u
 \subsection{Elementary methods for primes}
 \textbf{Sieve of Eratosthenes}: if you delete from $\{2,3,\dotsc, X\}$ all multiples of primes $\leq \sqrt{X}$, left with $\set{p \text{ primes} | \sqrt{X} \leq p \leq X}$.
 
-\begin{nprop}[Legendre's formula]\label{prop:5.6}
+\begin{manual}[Legendre's formula]{Proposition 5.6a}\label{prop:5.6a}
     Let $x \geq 1$. $P = \prod_{p \leq \sqrt{X}} p$ product of all primes $\leq \sqrt{X}$.
     Then $\pi(X) - \pi(\sqrt{X}) + 1 = \# \set{1 \leq n \leq X | (n,P) = 1} = \sum_{d \mid P} \mu(d) \floor{\frac{X}{d}}$.
-\end{nprop}
+\end{manual}
 
 \begin{proof}
     \begin{equation*}
@@ -2172,4 +2173,121 @@ So $n = p^{\nu_p(n)} n_0$ where $(n_0, p) = 1$.  In addition, $\nu_p(mn) = \nu_p
     On the other hand $N \leq \sum_r \binom{2n}{r} = 2^{2n}$, so $\prod_{n < p \leq 2n} p \leq N \leq 2^{2n}$, giving an estimate and upper bound for $\pi(x)$.
     A similar argument also gives a lower bound if more careful.
 \end{eg}
+
+% Lecture 17
+\begin{nlemma}\label{lem:5.7}
+    Let $N = \binom{2n}{n}$, $n \geq 1$. Then
+    \begin{enumerate}[label=(\roman*)]
+        \item $\frac{2^{2n}}{2n} \leq N \leq 2^{2n}$
+        \item $n < p \leq 2n \implies \nu_p(N) = 1$
+        \item $\frac{2n}{3} < p \leq n \implies (N, p) = 1$
+        \item $p^k \mid N \implies p^k \leq 2n$ for any prime power $p^k$.
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item
+            \begin{equation*}
+                N < \sum_{m=0}^{2n} \binom{2n}{m} = (1+1)^{2n} = 2^{2n} = 2 + \sum_{\mathclap{1 \leq m \leq 2n-1}} \binom{2n}{m} \leq 2 + (2n-1) N \leq 2n N
+            \end{equation*}
+        \item $n < p \leq 2n < 2p \implies p$ divides numerator $2n \dotsm (n+1)$ exactly but not denominator $n (n-1) \dotsm 1$ of $N$.
+        \item $p \in (\frac{2}{3}n, n] \implies p \leq n < 2p \leq 2n < 3p \implies p$ divides both numerator and denominator exactly $\implies (p, N) = 1$.
+        \item For the last part we need the following formula, proved on Example Sheet 3
+            \begin{equation*}
+                \nu_p(n!) = \sum_{i \geq 1} \floor*{\frac{n}{p^i}} = \floor*{\frac{n}{p}} + \floor*{\frac{n}{p^2}} + \dotsb
+            \end{equation*}
+
+            \begin{lemma}
+                If $x \geq 0$ then $\floor{2x} - 2 \floor{x} \in \{0, 1\}$.
+            \end{lemma}
+            \begin{proof}
+                $x = n + \alpha$ with $0 \leq \alpha < 1$.
+                Then, LHS = $\floor{2\alpha} - 2 \floor{\alpha} = \begin{cases}0 & 0 \leq \alpha < \frac{1}{2} \\ 1 & \frac{1}{2} \leq \alpha < 1\end{cases}.$
+            \end{proof}
+            So,
+            \begin{align*}
+                \nu_p(N) &= \nu_p((2n)!) - 2 \nu_p(n!) \\
+                         &= \sum_{i \geq 1} \left(\floor*{\frac{2n}{p^i}} - 2 \floor*{\frac{n}{p^i}}\right) \\
+                \shortintertext{If $p^k > 2n$}
+                &= \sum_{1 \leq i \leq k-1} \left(\floor*{\frac{2n}{p^i}} - 2 \floor*{\frac{n}{p^i}}\right) \leq k-1 \quad \text{so } \nu_p(N) = k \implies p^k \leq 2n
+            \end{align*}
+    \end{enumerate}
+\end{proof}
+
+Use this to prove:
+\begin{nthm}[Tchebyshev's theorem]\label{thm:5.8}
+    $\exists c_2 > c_1 > 0$ such that $\forall x \geq 3$, $c_1 \frac{x}{\log x} \leq \pi(x) \leq c_2 \frac{x}{\log x}$
+    We will show $c_1 = \frac{\log 2}{2} = 0.346...$ and $c_2 = 6 \log 2 = 4.158...$.
+\end{nthm}
+
+\begin{proof}
+    \textbf{Upper bound:} First claim $\pi(2^k) \leq 3 \frac{2^k}{k}$.
+    True for $k \leq 6$ as $\pi(x) \leq \frac{x}{2}$ if $x$ even $\geq 4$.
+    By \cref{lem:5.7} (i) and (ii),
+    \begin{gather*}
+        n^{\pi(2n) - \pi(n)} \leq \prod_{n < p \leq 2n} p \overset{(ii)}{\leq} N \overset{(i)}{\leq} 2^{2n} \\
+        \implies \pi(2n) - \pi(n) \leq 2 \log 2 \cdot \frac{n}{\log n}
+    \end{gather*}
+    \begin{align*}
+        \implies \pi(2^{k+1}) \leq \pi(2^k) + \frac{2^{k+1}}{k} &\leq 3 \frac{2^k}{k} + \frac{2^{k+1}}{k} \tag{induction on $k$} \\
+                                                                &= \frac{5 \cdot 2^{k+1}}{2k} \leq \frac{3}{k+1} 2^{k+1} \tag{$k \geq 5$}
+    \end{align*}
+    proving the claim.
+
+    Observe $\frac{x}{\log x}$ is monotonically increasing for $x \geq e$ (check by differentiating).
+    So if
+    \begin{align*}
+        4 \leq 2^k < x < 2^{k+1} \implies \pi(x) \leq \pi(2^{k+1}) \leq 6 \cdot \frac{2^k}{k+1} &< 6 \cdot \frac{2^k}{k} \\
+                                                                                                &= 6 \log 2 \cdot \frac{2^k}{\log 2^k} \\
+                                                                                                &\leq 6 \log 2 \cdot \frac{x}{\log x}
+    \end{align*}
+
+    \textbf{Lower bound:} \cref{lem:5.7}(iv) $\implies \forall p, p^{\nu_p(N)} \leq 2n$ i.e. $\nu_p(N) \leq \frac{\log 2n}{\log p}$ (and $=0$ if $p>2n$).
+    Now $\frac{2^{2n}}{2n} \leq N$ so
+    \begin{align*}
+        n \log 2 - \log 2n \leq \log N &= \sum_{p \leq 2n} \nu_p(N) \log p \tag{as $N = \prod p^{\nu_p(N)}$} \\
+                                       &\leq \sum_{p \leq 2n} \log(2n) = \pi(2n) \log(2n) \\
+        \implies \pi(2n) &\geq \frac{2n \log 2}{\log 2n} - 1
+    \end{align*}
+    So if $2n \leq x < 2n+2$
+    \begin{align*}
+        \pi(x) \geq \pi(2n) \geq \log 2 \cdot \frac{2n}{\log 2n} - 1 &\geq \log 2 \cdot \frac{x-2}{\log x} - 1 \\
+                                                                     &= \log 2 \cdot \frac{x}{\log x} - \left(\frac{2\log 2}{\log x} + 1\right) \\
+                                                                     &\geq \frac{1}{2} \log 2 \frac{x}{\log x} \quad \text{if } x \geq 16.
+    \end{align*}
+    If $3 \leq x \leq 16$, $\frac{1}{2} \log 2 \cdot \frac{x}{\log x} < \frac{16}{2 \cdot 4} = 2 \leq \pi(x)$.
+\end{proof}
+Tchebyshev actually showed
+\begin{equation*}
+    0.92 < \frac{\pi(x)}{{x}/{\log x}} < 1.11 \text{ for $x$ sufficiently large.}
+\end{equation*}
+
+\begin{nthm}[Bertrand's postulate]\label{thm:5.9}
+    $\forall n > 1$ $\exists$ prime $p$ with $n < p < 2n$.
+\end{nthm}
+
+First proved by Tchebyshev, this proof by Erd\H{o}s.
+\begin{proof}
+    Claim: Let $\Theta(x) = \prod_{p \leq x} p$. Then $\Theta(x) \leq 4^x \quad \forall x \geq 1$ (proof deferred).
+    Suppose $\nexists p \in (n, 2n)$. Then by \cref{lem:5.7}, if $p \mid N = \binom{2n}{n}$, $p \leq \frac{2n}{3}$.
+    Write $N = N_1 N_2$, where
+    \begin{align*}
+        N_1 &= \prod_{\mathclap{\nu_p(N) = 1}} p\, \Theta\left(\frac{2n}{3}\right) \leq 4^{2n/3} \\
+        N_2 &= \prod_{\mathclap{\nu_p(N) \geq 2}} \nu_p(N) \leq (2n)^{\sqrt{2n}}
+    \end{align*}
+    since  $p^2 \leq p^{\nu_p(N)} \leq 2n$  by \cref{lem:5.7}(iv), so $p \leq \sqrt{2n}$.
+    Therefore
+    \begin{equation*}
+        \frac{2^{2n}}{2n} \leq N = N_1 N_2 \leq 4^{2n/3} \cdot (2n)^{\sqrt{2n}}
+    \end{equation*}
+    i.e. $2^{2n/3} \leq (2n)^{1 + \sqrt{2n}}$ or $\frac{\log 2}{3} \cdot 2n \leq (1 + \sqrt{2n}) \log 2n$.
+
+    This is false for $n \geq 500$, giving the required contradiction:
+    \begin{equation*}
+        \frac{d}{dx} \left(\frac{\log 2}{3} x - (1 + \sqrt{x}) \log x\right) = \frac{\log 2}{3} - \frac{1+\sqrt{x}}{x} - \frac{\log x}{2 \sqrt{x}} > 0 \text{ if } x \geq 300
+    \end{equation*}
+    For small $n$, $2,3,5,7,11,19,37,73,137,277,547$ fills the gap.
+\end{proof}
 \end{document}
