@@ -2290,4 +2290,144 @@ First proved by Tchebyshev, this proof by Erd\H{o}s.
     \end{equation*}
     For small $n$, $2,3,5,7,11,19,37,73,137,277,547$ fills the gap.
 \end{proof}
+
+% Lecture 18
+\begin{prop}
+    Let $\Theta(x) = \prod_{p \leq x} p$. Then $\Theta(x) \leq 4^x \quad \forall x \geq 1$.
+\end{prop}
+
+\begin{proof}
+    Note that $
+    2 \binom{2n+1}{n} = \binom{2n+1}{n} + \binom{2n+1}{n+1} \leq (1+1)^{2n+1} = 2^{2n+1}$.
+
+    Also if $n+2 < p \leq 2n+1$ then $p \mid \binom{2n+1}{n+1}$ so
+    \begin{equation*}
+        \prod_{n+2 \leq p \leq 2n+1} p \mid \binom{2n+1}{n+1} \leq 4^n
+    \end{equation*}
+    So if $n \geq 1$,
+    \begin{align*}
+        \Theta(2n+2) = \Theta(2n+1) = \prod_{p \leq n+1} p \prod_{n+2 \leq p \leq 2n+1} p &\leq \Theta(n+1) \cdot 4^n \\
+                                                                                          &\leq 4^{n+1} \cdot 4^n \text{ (induction on $n$)} \\
+                                                                                          &=4^{2n+1}.
+    \end{align*}
+    So, for all integers $n \geq 1$, $\Theta(n) \leq 4^n$ and $\Theta(x) = \Theta(\floor{x})$.
+\end{proof}
+
+\clearpage
+\section{Continued Fractions}
+Consider the following problem: $\theta \in \R$, what are the `best' rational approximations to $\Theta$?
+\begin{align*}
+    \abs{\pi - \frac{314159}{100000}} &< 3 \times 10^{-6} \\
+    \abs{\pi - \frac{355}{113}} &< 3 \times 10^{-7}
+\end{align*}
+We would like a systematic way to get such approximations (where the error is small compared with the denominator).
+
+\subsubsection*{Continued Fraction algorithm}
+Let $\theta \in \R$. Define a (possible finite) sequence of integers $a_0, a_1, \dotsc, $ with $a_n \geq 1$ for $n \geq 1$ as follows.
+
+\textbf{Step 0}
+$a_0 = \floor{\theta}$. If $a_0 = \theta$, stop. Otherwise $0 < \theta - a_0 < 1$. \\
+Let $\theta_1 = \frac{1}{\theta - a_0} > 1$ so that $\theta = a_0 + \frac{1}{\theta_1}$.
+
+\textbf{Step 1}
+$a_1 = \floor{\theta_1}$. If $a_1 = \theta_1$, stop.  \\
+Otherwise, let $\theta_2 = \frac{1}{\theta_1 - a_1} > 1$, so $\theta = a_0 + \frac{1}{a_1 + \frac{1}{\theta_2}}$.
+
+Continue. If process stops at nth stage, i.e. $a_n = \theta_n$, then
+\begin{equation*}
+    \theta =
+    \begin{matrix}
+        a_0 + \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \dotsb}}} &&\\
+                                                                                 &\ddots &\\
+                                                                                 &&\cfrac{1}{a_{n-1} + \cfrac{1}{a_n}}
+    \end{matrix}
+    \eqqcolon[a_0, a_1, \dotsc, a_n]
+\end{equation*}
+
+If it doesn't stop, for every n, $\theta = [a_0, \dotsc, a_{n-1}, \theta_n]$ in this notation.
+We'll write $\theta=[a_0, a_1, \dotsc]$ called the continued fraction expansion (CF) of $\theta$ (shortly we'll make sense of the $=$ sign here).
+
+The integers $a_0, a_1, \dotsc$ are the partial quotients.
+
+\begin{eg}
+    Take $\theta = \frac{59}{13}$.
+    \begin{align*}
+        \frac{59}{13} &= 4 + \frac{7}{13} & a_0 = 4&, \theta_1 = \frac{13}{7} \\
+        \frac{13}{7} &= 1 + \frac{6}{7} & a_1 = 1&, \theta_2 = \frac{7}{6} \\
+        \frac{7}{6} &= 1 + \frac{1}{6} & a_2 = 1&, \theta_3 = 6
+    \end{align*}
+    $a_3 = 6 = \theta_3$, so
+    \begin{equation*}
+        \frac{59}{13} = [4,1,1,6] = 4 + \cfrac{1}{1 + \cfrac{1}{1 + \cfrac{1}{6}}}
+    \end{equation*}
+\end{eg}
+
+Clearly if the continued fraction algorithm for $\theta$ terminates, $\theta \in \Q$. Converse:
+\begin{nprop}\label{prop:6.1}
+    The continued fraction expansion of $\theta$ terminates $\iff \theta \in \Q$.
+\end{nprop}
+\begin{proof}
+    Let $\theta = \frac{b_0}{c_0}$, $\theta_i = \frac{b_i}{c_i}$, $b_i, c_i \in \Z$, $(b_i, c_i) = 1$ $c_i \geq 1$.
+    If the continued fraction doesn't terminate, as $\theta_i \geq 1$, we must have $\theta_i > 1$ i.e. $b_i > c_i$.
+    \begin{equation*}
+        \forall i \geq 1 \quad \theta_i = a_i + \frac{1}{\theta_{i+1}} \implies \frac{b_i}{c_i} = a_i + \frac{c_{i+1}}{b_{i+1}} \overset{(*)}{\implies} b_{i+1} = c_i < b_i
+    \end{equation*}
+    But $b_i$ is then a decreasing sequence of positive $i > 0$ integers, so terminates.
+\end{proof}
+
+\begin{remark}
+    $(*)$ can be rewritten $b_i = a_i b_{i+1} + b_{i+2}$.
+    So the sequence $(b_i)$ comes from applying Euclid's algorithm to $(b_0, b_1=c_0)$. For example, $\frac{59}{13} = \theta = \frac{b_0}{c_1}$,
+    \begin{align*}
+        59 &= 4 \cdot 13 + 7 \\
+        13 &= 1 \cdot 7 + 6 \\
+        7 &= 1 \cdot 6 + 1 \\
+        6 &= 6 \cdot 1 + 0
+    \end{align*}
+    hence the terminology `partial quotient'.
+\end{remark}
+
+\begin{defi}
+    Given $a_0, a_1, \dotsc, \in \Z$ $a_i \geq 1$ if $i \geq 1$ define sequence of integers $p_n, q_n$ $(n \geq 0)$ recursively as follows
+    \begin{align*}
+        p_0 &= a_0 & p_1 &= a_1 a_0 + 1 & p_n &= a_n p_{n-1} + p_{n-2} \\
+        q_0 &= 1   & q_1 &= a_1         & q_n &= a_n q_{n-1} + q_{n-2} \text{ if } n \geq 2.
+    \end{align*}
+    It is convenient also to define $p_{-1} = 0$, $q_{-1} = 0$ (so the recursion holds for $n \geq 1$).
+
+    As $a_i \geq 1$ if $i > 0$, $1 \leq q_1 < q_2 < q_3 < \dotsb$ is an increasing sequence of positive integers.
+\end{defi}
+
+\begin{nlemma}\label{lem:6.2}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $\forall n \geq 0 \quad \frac{p_n}{q_n} = [a_0, \dotsc, a_n]$.
+        \item Let $\beta > 0$ be real.
+            \begin{equation*}
+                \frac{\beta p_n + p_{n-1}}{\beta q_n + q_{n-1}} = [a_0, a_1, \dotsc, a_n, \beta]
+            \end{equation*}
+            and this number lies strictly between $\frac{p_n}{q_n}$ and $\frac{p_{n-1}}{q_{n-1}}$.
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item If we put $\beta = a_{n+1}$ in (ii) we get LHS = $\frac{p_{n+1}}{q_{n+1}}$ by the recursion formula, giving the required formula (replacing $n$ with $n+1$).
+        \item Induct on $n$. For $n=0$, $[a_0, \beta] = a_0 + \frac{1}{\beta} = \frac{\beta a_0 + 1}{\beta \dot 1 + 0}$.
+
+            Let $\gamma = a_n + \frac{1}{\beta}$.
+            \begin{align*}
+                [a_0, \dotsc, a_n, \beta] = [a_0, \dotsc, a_{n-1}, \gamma] &= \frac{\gamma p_{n-1} + p_{n-2}}{\gamma q_{n-1} + q_{n-2}} \\
+                                                                           &= \frac{(a_n p_{n-1} + p_{n-2}) + \frac{1}{\beta} p_{n-1}}{(a_n q_{n-1} + q_{n-2}) + \frac{1}{\beta} q_{n-1}} \\
+                                                                           &= \frac{\beta p_n + p_{n-1}} {\beta q_n + q_{n-1}}
+            \end{align*}
+
+            For the last part, if $\frac{x}{y} < \frac{x'}{y'}$ for $(x, x', y, y') \in \R$ and $y, y' > 0$ then
+            \begin{equation*}
+                \frac{x}{y} < \frac{x+x'}{y+y'} < \frac{x'}{y'}
+            \end{equation*}
+            (exercise), giving the required result.
+    \end{enumerate}
+\end{proof}
 \end{document}
