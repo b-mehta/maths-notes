@@ -2430,4 +2430,153 @@ Clearly if the continued fraction algorithm for $\theta$ terminates, $\theta \in
             (exercise), giving the required result.
     \end{enumerate}
 \end{proof}
+
+% Lecture 19
+If $[a_0, a_1, \dotsc]$ is the CF expansion of $\theta$, say $\frac{p_n}{q_n}$ are the convergents to $\theta$. If $\theta = [a_0, \dotsc, a_n]$ is rational, then \cref{lem:6.2} $\implies \theta = \frac{p_n}{q_n}$.
+
+\begin{nlemma}\label{lem:6.3}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $\forall n \geq 1$ (even $n \geq 0$) $p_n q_{n-1} - p_{n-1} q_n = (-1)^{n-1}$
+        \item $\forall n \geq 2$ (even $n \geq 1$) $p_n q_{n-2} - p_{n-2} q_n = (-1)^n a_n$
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    \begin{enumerate}[label=(\roman*)]
+        \item Induction on $n$: $n=0$ or $1$ true.
+            Assume true for $n-1$. Then
+            \begin{align*}
+                p_n q_{n-1} - p_{n-1} q_n &= (a_n p_{n-1} + p_{n-2}) q_{n-1} - p_{n-1} (a_n q_{n-1} + q_{n-2}) \\
+                                          &= -(p_{n-1} q_{n-2} - p_{n-2} q_{n-1}) = (-1)^{n-1}
+            \end{align*}
+            by induction.
+        \item LHS:
+            \begin{align*}
+                (a_n p_{n-1} + p_{n-2}) q_{n-2} - (a_n q_{n-1} + q_{n-2}) p_{n-2} &= a_n (p_{n-1} q_{n-2} - p_{n-2} q_{n-1}) \\
+                                                                                  &= (-1)^n a_n
+            \end{align*}
+            by (i).
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    As a consequence,
+    (i) $\implies (p_n, q_n) = 1$ i.e. $\frac{p_n}{q_n}$ is in lowest terms and
+    \begin{equation*}
+        \frac{p_n}{q_n} - \frac{p_{n+1}}{q_{n+1}} = \frac{p_n q_{n+1} - p_{n+1} q_n}{q_n q_{n+1}} = \frac{(-1)^{n-1}}{q_n q_{n+1}}
+    \end{equation*}
+
+    From (ii),
+    \begin{gather}
+        \frac{p_n}{q_n} - \frac{p_{n-2}}{q_{n-2}} = (-1)^n \frac{a_n}{q_n q_{n+2}} \\
+        \implies \frac{p_0}{q_0} < \frac{p_2}{q_2} < \frac{p_4}{q_4} < \dotsb < \frac{p_5}{q_5} < \frac{p_3}{q_3} < \frac{p_1}{q_1}
+    \end{gather}
+    and as $\frac{p_n}{q_n} - \frac{p_{n+1}}{q_{n+1}} \to 0$, $\frac{p_n}{q_n}$ converges.
+
+    If $[a_0, a_1, \dotsc]$ is the CF expansion of $\theta$ by 6.2 (ii), $\theta = [a_0, \dotsc, a_n, \theta_{n+1}]$ lies between $\frac{p_n}{q_n}$ and $\frac{p_{n+1}}{q_{n+1}} \ \forall n$.
+    This proves
+\end{remark}
+
+\begin{nthm}\label{thm:6.4}
+    $\frac{p_n}{q_n} \to \theta$ as $n \to \infty$, and $\forall n \geq 0$
+    \begin{equation*}
+        \abs{\theta - \frac{p_n}{q_n}} < \frac{1}{q_n q_{n+1}} = \abs{\frac{p_n}{q_n} - \frac{p_{n+1}}{q_{n+1}}}
+    \end{equation*}
+\end{nthm}
+
+\begin{remark}
+    This actually shows that the CF expansion is a bijection
+    \begin{equation*}
+        \{ \theta \in \R \setminus \theta\} \longleftrightarrow \{ \text{sequences } a_0, a_1, \dotsc,\text{ where } a_n \in \Z, \ a_n \geq 1 \text{ for } n > 0\}
+    \end{equation*}
+\end{remark}
+
+\subsection{Rational Approximations}
+\begin{nthm}\label{thm:6.5}
+    Let $\theta \in \R \setminus \Q$, $p, q \in \Z$, $0 < q < q_{n+1}$. Then
+    \begin{equation*}
+        \abs{q \theta - p} \geq \abs{q_n \theta - p_n}
+    \end{equation*}
+\end{nthm}
+
+\begin{cor}
+    If $p, q \in \Z$ and $\abs{\theta - \frac{p}{q}} < \abs{\theta - \frac{p_n}{q_n}}$ then $q > q_n$, so
+    $\frac{p_n}{q_n}$ is the best approximation with denominator $\leq q_n$.
+\end{cor}
+
+\begin{proof}[Proof of corollary]
+    If $q \leq q_n < q_{n+1}$, by \cref{thm:6.5} $\abs{\theta - \frac{p}{q}} \geq \frac{q}{q_n} \abs{\theta - \frac{p_n}{q_n}} \geq \abs{\theta - \frac{p_n}{q_n}}$
+\end{proof}
+
+\begin{proof}[Proof of theorem]
+    As $p_{n+1} q_n - p_n q_{n+1} = \pm 1$ $\exists u, v \in \Z$
+    \begin{gather*}
+        \begin{pmatrix} p_n & p_{n+1} \\ q_n & q_{n+1} \end{pmatrix}
+        \begin{pmatrix} u \\ v \end{pmatrix} = \begin{pmatrix} p \\ q \end{pmatrix}
+        \quad \text{ i.e. } \quad
+        \begin{matrix}
+            u p_n + v p_{n+1} &= p \\
+            u q_n + q_{n+1} v &= q
+        \end{matrix}
+        \\
+        \therefore q \theta - p = u(q_n \theta - p_n) + v (q_{n+1} \theta - p_{n+1})
+    \end{gather*}
+    If $v = 0$, then $u \geq 1$ so $\abs{q \theta - p} \geq u \abs{q_n \theta - p_n} \geq \abs{q_n \theta - p_n}$.
+    So suppose $v \neq 0$, $0 < q < q_{n+1} \implies u \neq 0$ and $u, v$ have opposite signs.
+
+    Now $q_n \theta - p_n$, $q_{n+1} \theta - p_{n+1}$ have opposite signs ($\theta$ lies between any two consecutive convergents).
+    So $u (q_n \theta - p_n)$ and $v (q_{n+1} \theta - p_{n+1})$ have the same sign. Hence
+    \begin{equation*}
+        \abs{q \theta - p} = \abs{u (q_n \theta - p_n) + v (q_{n+1} \theta - p_{n+1})} \geq \abs{q_n \theta - p_n} \text{ as } u \neq 0.
+    \end{equation*}
+\end{proof}
+
+\begin{nthm}\label{thm:6.6}
+    Let $\theta \in \R \setminus \Q$. Then
+    \begin{enumerate}[label=(\roman*)]
+        \item at least one of any pair of successive convergents satisfies $\abs{\theta - \frac{p}{q}} < \frac{1}{2 q^2}$
+        \item conversely if $\frac{p}{q} \in \Q$ satisfies (i) then $\frac{p}{q} = \frac{p_n}{q_n}$ for some $n$.
+    \end{enumerate}
+\end{nthm}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $\theta$ lies between $\frac{p_n}{q_n}$, $\frac{p_{n+1}}{q_{n+1}}$,
+            \begin{equation*}
+                \implies \abs{\theta - \frac{p_n}{q_n}} + \abs{\theta - \frac{p_{n+1}}{q_{n+1}}} = \abs{\frac{p_n}{q_n} - \frac{p_{n+1}}{q_{n+1}}} = \frac{1}{q_n q_{n+1}} < \frac{1}{2} \left(\frac{1}{q_n^2} + \frac{1}{q_{n+1}^2}\right)
+            \end{equation*}
+            (the inequality follows from AM-GM)
+            so either $\abs{\theta - \frac{p_n}{q_n}} < \frac{1}{2 q_n^2}$ or $\abs{\theta - \frac{p_{n+1}}{q_{n+1}}} < \frac{1}{2 q_{n+1}^2}$
+        \item Suppose $q \geq 1$, $\abs{\theta - \frac{p}{q}} < \frac{1}{2 q^2}$. $\exists n$ such that $q_n \leq q < q_{n+1}$. Show $\frac{p}{q} = \frac{p_n}{q_n}$:
+            \begin{equation*}
+                \abs{\frac{p}{q} - \frac{p_n}{q_n}} \leq \abs{\theta - \frac{p}{q}} + \abs{\theta - \frac{p_n}{q_n}}
+            \end{equation*}
+            As $q < q_{n+1}$, \cref{thm:6.5} $\implies \abs{q \theta - p} \geq \abs{q_n \theta - p_n}$
+            \textbf{coming soon}
+    \end{enumerate}
+\end{proof}
+
+\subsection*{Simplest irrationals}
+The simplest irrationals are the quadratic surds $\sqrt{d}$, for $d>1$ not a square.
+Their CF expansions are computable and have nice properties.
+\begin{eg}
+    \begin{align*}
+        \theta &= \sqrt{6} = 2 + (\sqrt{6} - 2) & a_0&=2 \\
+        \theta_1 &= \frac{1}{\sqrt{6}-2} = \frac{\sqrt{6} + 2}{2} = 2 + \frac{\sqrt{6}-2}{2} & a_1&=2\\
+        \theta_2 &= \frac{2}{\sqrt{6}-2} = \sqrt{6}+2 = 4 + (\sqrt{6} - 2) & a_2&=4 \\
+        \theta_3 &= \frac{1}{\sqrt{6}-2} = \theta_1 \implies a_3 = 2 = a_1 = a_5 = a_7 = \dotsb&& \\
+                 & \qquad \implies \theta_4 = \theta_2 \text{ so } a_4 = 4 = a_2 = a_6 = \dotsb
+    \end{align*}
+    so $\theta = [2, 2, 4, 2, 4, 2, 4, 2, 4, 2, 4, \dotsc] = [2, \overline{2, 4}]$.
+\end{eg}
+
+\begin{defi}
+    The CF $[a_0, a_1, \dotsc, a_{m-1}, \overline{a_m, \dotsc, a_{m-k+1}}]$ is eventually periodic.
+    The least $k$ for which this holds is the period of the continued fraction.
+    It is purely periodic if $m=0$, i.e. $\theta = [\overline{a_0, \dotsc, a_{k-1}}]$.
+\end{defi}
+
+% Lecture 20
 \end{document}
