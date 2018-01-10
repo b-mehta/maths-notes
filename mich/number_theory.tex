@@ -209,7 +209,7 @@ This defines an equivalence relation on $\Z$. Write $\Z / n\Z$ for the set of eq
 \end{proof}
 
 This has an important special case, called Fermat's Little Theorem.
-\begin{thm}[Fermat's Little Theorem\hypertarget{thm:fermatLittle}]
+\begin{thm}[Fermat's Little Theorem]\hypertarget{thm:fermatLittle}
     If $p$ is prime and $a \in \Z$, then $a^p \equiv a \pmod{p}$.
 \end{thm}
 
@@ -2674,4 +2674,123 @@ Their CF expansions are computable and have nice properties.
 \end{remark}
 
 % Lecture 21
+\section{Primality testing and factorisation}
+RSA relies on:
+\begin{enumerate}
+    \item if $N=pq$, where $p, q$ are primes around $2^{500}$, knowing $N$ alone it is very hard to recover $p, q$.
+    \item there are easy to find large primes
+\end{enumerate}
+
+To find a large prime, test numbers in a range for primality.
+By the prime number theorem, testing numbers of size $M$ gives success after about $\log M$ tries.
+
+It would be useful to find some easy to check property which only holds for primes.
+
+Recall \nameref{thm:fermatLittle}:
+\begin{thm}[Fermat's Little Theorem]
+    If $p$ is prime and $(a, p)=1$, then $a^{p-1} \equiv 1 \pmod{p}$.
+\end{thm}
+
+\begin{eg}
+    For $N=15$, $2^{14} = (2^4)^3 \cdot 2^2 = 16^3 \cdot 4 \equiv 4 \pmod{15} \not\equiv 1 \pmod{15}$. So, 15 is not prime.
+
+    For $N=91$, $3^{90} \equiv 1 \pmod{91}$, which gives no information. $2^{90} \equiv 64 \pmod{91}$, so 91 is not prime.
+\end{eg}
+
+So we will have to use more than one value of $a$ to get a good test.
+How many different $a$ do we need to check $a^{N-1} \equiv 1 \pmod{N}$ to be sure $N$ is prime?
+Or, if $N$ is composite, how many $a$'s do we need to try to detect this?
+
+\begin{defi}[Pseudoprime]
+    Take $N$ an odd, composite integer mod $b \geq 1$, $(b, N) = 1$.
+    Say $N$ is a (Fermat) \textbf{pseudoprime} to the base $b$ if $b^{N-1} \equiv 1 \pmod{N}$.
+    (This depends only on $b \bmod{N}$, so generally restrict to $1 \leq b < N$.)
+\end{defi}
+
+\begin{eg}
+    91 is a Fermat pseudoprime base 3.
+\end{eg}
+
+Notice if $N$ is a pseudoprime to base $b_1$ and to base $b_2$, as $(b_1 b_2)^{N-1} = b_1^{N-1} b_2^{N-1}$, it is a pseudoprime to base $b_1 b_2$.
+Obviously every composite $N$ is a pseudoprime to base $1$.
+
+So $\{1 \leq b < N, (b, N) = 1 \text{ s.t. $N$ is a pseudoprime to base } b\}$ is a subgroup of the group $(\Z/n\Z)^\times$ of residue class prime to $N$ under multiplication.
+
+\begin{nprop}\label{prop:7.1}
+    $N>1$, odd composite. If $N$ is not a pseudoprime to some base, then for at least $\frac{1}{2}$ of $\{1 \leq b < N | (b, N)\}$ it is not a pseudoprime to base $b$.
+\end{nprop}
+\begin{proof}
+    \begin{equation*}
+        \{b | N \text{ is a pseudoprime to base } b\}
+    \end{equation*}
+    is a subgroup of $(\Z/n\Z)^\times$. By hypothesis, it is a proper subgroup (as $\exists b \notin H$).
+    By Lagrange, the order of $H$ divides $\phi(N) = \# (\Z/N\Z)^\times$, so $\#H \leq \frac{1}{2} \phi(N)$, so $\#\{b \notin H\} \geq \frac{1}{2} \phi(N)$.
+\end{proof}
+
+This is encouraging: if $N$ is composite and it is not a pseudoprime to some base, then this can be detected by testing a small number of bases, with high probability.
+Unfortunately, there exist composite integers which are pseudoprimes to every base.
+
+\begin{defi}
+    A composite odd $N>1$ is a Carmichael number if it is a Fermat pseudoprime to every base $b$, $(b,N=1)$.
+\end{defi}
+
+\begin{fact}
+    There are infinitely many such numbers (hard theorem). See the example sheet for some properties.
+\end{fact}
+
+\begin{equation*}
+    a^{p-1} \equiv 1 \pmod{p} \text{ so } a^{\frac{p-1}{2}} \equiv \pm 1 \pmod{p}
+\end{equation*}
+In fact, $\equiv \legendre{a}{p}$.
+So, if $p$ is prime, the only square roots of 1 mod $p$ are $\pm 1$.
+
+If $N$ composite, say $N = \prod_{i=1}^k p_i^{e_i}$, product of $k$ distinct prime powers, there are $2^k$ square roots of $1 \pmod{N}$ (for $N$ odd) by the Chinese remainder theorem, as
+\begin{equation*}
+    x^2 \equiv 1 \pmod{N} \iff
+    \begin{cases}
+        x^2 \equiv 1 \pmod{p_1^{e_1}} \\
+        \vdots \\
+        x^2 \equiv 1 \pmod{p_k^{e_k}}
+    \end{cases}
+\end{equation*}
+and each of these congruences has 2 solutions.
+
+\begin{defi}
+    $N$ (an odd composite) is an \textbf{Euler pseudoprime} to the base $b$ if
+    \begin{equation*}
+        b^{\frac{N-1}{2}} \equiv \legendre{b}{N} \pmod{N} \tag{$*$} \label{eq:21star}
+    \end{equation*}
+\end{defi}
+
+Squaring \eqref{eq:21star} $\implies$ every Euler pseudoprime to base $b$ is also a Fermat pseudoprime (to some base $b$).
+Also if $N$ is an Euler pseudoprime to bases $b_1$ and $b_2$, then it is also one to base $b_1 b_2$ as
+\begin{equation*}
+    (b_1 b_2)^{\frac{N-1}{2}} = b_1^{\frac{N-1}{2}} b_2^{\frac{N-1}{2}} \text{ and } \legendre{b_1 b_2}{N} = \legendre{b_1}{N} \legendre{b_2}{N}
+\end{equation*}
+So just as for Fermat pseudoprimes:
+
+\begin{nprop}\label{prop:7.2}
+    If $N$ is not an Euler pseudoprime to some base $b$, then it isn't an Euler pseudoprime to at least $\frac{1}{2}$ of the possible bases.
+\end{nprop}
+
+\begin{proof}
+    Same as in \cref{prop:7.1}
+\end{proof}
+Euler pseudoprimes are better than Fermat ones, because
+\begin{nthm}\label{thm:7.3}
+    If $N$ is odd, composite, then there is a base $b$ to which $N$ is not an Euler pseudoprime (i.e. no analogue of Carmichael numbers for Euler pseudoprimes).
+\end{nthm}
+
+This gives a `probabilistic' primality test, the Solovay-Strassen probability test:
+Given $N>1$ odd,
+\begin{itemize}
+    \item Pick $b > 1$ at random. Check $(b, N) = 1$ (if not, $N$ is composite).
+    \item Check whether $b^{\frac{N-1}{2}} \equiv \legendre{b}{N} \pmod{N}$
+        (LHS: write $N-1$ in binary, use repeated squaring, RHS: use quadratic reciprocity law), takes polynomial time.
+    \item If not, then $N$ is certainly composite.
+    \item Otherwise, $N$ is composite with probability $\leq \frac{1}{2}$ (by \cref{prop:7.2} and \cref{thm:7.3}).
+    \item Repeat for more $b$'s, after $t$ tries, $N$ is prime with probability $1 - \frac{1}{2^t}$.
+\end{itemize}
+
+% Lecture 22
 \end{document}
