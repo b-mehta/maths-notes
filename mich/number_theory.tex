@@ -2579,4 +2579,99 @@ Their CF expansions are computable and have nice properties.
 \end{defi}
 
 % Lecture 20
+\begin{nthm}(Lagrange)\label{thm:6.7}
+    The CF expansion of $\theta \in \R \setminus \Q$ is eventually periodic $\iff \theta$ is a quadratic irrational.
+    That is, $\theta = r + s \sqrt{d}$, $r, s \in \Q$, $s \neq 0$, $d > 1$, non-square integer $\iff a \theta^2 + b \theta + c = 0$ for $a, b, c \in \Z$.
+\end{nthm}
+
+\begin{proof}
+    ($\iff$, easy part). If $\phi = [\overline{a_0, \dotsc, a_{n-1}}]$ is purely periodic, then
+    \begin{equation*}
+        \phi = [a_0, \dotsc, a_{n-1}, \phi] = \frac{p_{n-1} \phi + p_{n-2}}{q_{n-1} \theta + q_{n-2}} \implies \theta \text{ satisfies a quadratic equation}.
+    \end{equation*}
+
+    If $\theta = [a_1, \dotsc, a_{n-1}, \overline{a_n, \dotsc, a_{n+d-1}}]$ is eventually periodic,
+    \begin{equation*}
+        \theta = \frac{p_{n-1} \theta_n + p_{n-2}}{q_{n-1} \theta_n + q_{n-2}} \text{ where } \theta_n = [\overline{a_n, \dotsc, a_{n+d-1}}] = r + s \sqrt{D}
+    \end{equation*}
+    by the earlier argument.
+    So,
+    \begin{align*}
+        \theta = \frac{p_{n-1} r + p_{n-2} + p_{n-1} s \sqrt{D}}{q_{n-1} r + q_{n-2} + q_{n-1} \sqrt{D}} &= \frac{A + B \sqrt{D}}{A' + B' \sqrt{D}} \\
+                                                                                                         &= \frac{(A + B \sqrt{D})(A' - B' \sqrt{D})}{A'^2 - B'^2 D}.
+    \end{align*}
+
+    ($\impliedby$) Suppose $a \theta^2 + b \theta + c= 0$ for $a, b, c \in \Z$, $a > 0$.
+    Let $f(x, y) = a x^2 + b x y + c y^2$ (BQF indefinite as $\theta$ real).
+    \begin{gather*}
+        \theta = \frac{p_n \theta_{n+1} + p_{n+1}}{q_n \theta_{n+1} + q_{n+1}} \implies f_n(\theta_{n+1}, 1) = 0 \text{ where} \\
+        f_n(x, y) = f(p_n + p_{n-1} y, q_n x + q_{n-1} y) = A_n x^2 + B_n x y + C_n y^2 \\\
+        \implies A_n = f_n(1, 0) = f(p_n, q_n) = f_{n+1}(0, 1) = C_{n+1} \\
+        \text{and } \disc(f_n) = \disc(f) \text{ as } \begin{vmatrix} p_n & q_n \\ p_{n-1} & q_{n-1} \end{vmatrix} = \pm 1
+    \end{gather*}
+
+    \textbf{Claim:} $\exists$ constant $K$ such that $\abs{A_n} \leq K \ \forall n$.
+    Suppose so: then $\abs{C_n} = \abs{A_{n-1}} \leq K$ and $B_n^2 - 4 A_n C_n = \disc(f)$.
+    As $A_n, B_n, C_n \in \Z$, there are only finitely many possibilities for $f_n$. Hence, for some $n, k > 0$, $\theta_{n+k} = \theta_n$.
+
+    Proof of claim: Let $\theta'$ be the other root of $a \theta^2 + b \theta + c=0$. Then
+    \begin{equation*}
+        \abs{f(\frac{p_n}{q_n}, 1)} = a \underbrace{\abs{\frac{p_n}{q_n}-\theta}}_{\leq \frac{1}{q_n^2}} \cdot \underbrace{\abs{\frac{p_n}{q_n}-\theta'}}_{\to \theta - \theta'} \text{ since } f(x, 1) = (x - \theta)(x - \theta')
+    \end{equation*}
+    So $\abs{f(\frac{p_n}{q_n}, 1)} \leq \frac{K}{q_n^2} \quad \forall n$, for some $K$, so $\abs{A_n} = \abs{f(p_n, q_n)} \leq K$.
+\end{proof}
+
+\begin{remark}
+    This doesn't tell us what the period of the CF is. $\sqrt{6} = [2, \overline{2, 4}]$.
+    $\sqrt{889} = [29, \overline{1, 4, 2, 3, \dotsc, 1, 58}]$, length 42.
+\end{remark}
+
+\begin{nthm}\label{thm:6.8}
+    (Galois) Let $\theta$ be a quadratic irrational.
+    Then the CF for $\theta$ is purely periodic (i.e. $=[\overline{a_0, \dotsc, a_{n-1}}]$), iff $\theta > 1$ and $-1 < \theta' < 1$ where $\theta'$ is the other root of the quadratic.
+    If so, then $-\frac{1}{\theta'} = [\overline{a_{n-1}, \dotsc, a_0}]$ (proof omitted).
+\end{nthm}
+
+\begin{remark}
+    Let $\theta = \sqrt{d}$, for $d > 1$ not a square. Then $\theta_1 = \frac{1}{\sqrt{d} - a_0} > 1$ and $\theta_1' = \frac{1}{-\sqrt{d}-a_0} \in (-1, 0)$.
+    Hence $\theta_1$ has a purely periodic CF, and $\sqrt{d} = [a_0, \overline{a_1, \dotsc, a_n}]$.
+\end{remark}
+
+\begin{nthm}\label{thm:6.9}
+    Let $d$ be a positive integer, not a square. Then Pell's equation
+    \begin{equation*}
+        x^2 - d y^2 = 1 \tag{$*$} \label{eq:pell}
+    \end{equation*}
+    has a solution in integers $x, y \neq 0$ (in fact has infinitely many).
+\end{nthm}
+
+\begin{proof}
+    \begin{gather*}
+        \theta = \sqrt{d} = [a_0, \overline{a_1, \dotsc, a_n}] = [a_0, a_1, \dotsc, a_n, \theta_{n+1}]\\ \text{ with } \theta_{n+1} = \theta_1 = [\overline{a_1, \dotsc, a_n}] = \frac{1}{\sqrt{d} - a_0} \\
+        \implies \sqrt{d} = \frac{\theta_1 p_n + p_{n-1}}{\theta_1 q_n + q_{n-1}} = \frac{p_n + p_{n-1} (\sqrt{d} - a_0)}{q_n + q_{n-1} (\sqrt{d} - a_0)}
+    \end{gather*}
+    Multiply and equate coefficients of $1, \sqrt{d}$:
+    \begin{align*}
+        p_{n-1} &= q_n - q_{n-1} a_0 \\
+        d \cdot q_{n-1} &= p_n - p_{n-1} a_0
+        \implies p_{n-1}^2 - d q_{n-1}^2 = p_{n-1} q_n - p_n q_{n-1} = (-1)^n
+    \end{align*}
+    So if $n$ is even, $(x, y) = (p_{n-1}, q_{n-1})$ is a solution of \eqref{eq:pell}.
+    Otherwise, $[a_0, \overline{a_1, \dotsc, a_{2n}}] \implies (p_{2n-1}, q_{2n-1})$ is a solution.
+    More generally, $(p_{kn-1}, q_{kn-1})$ is a oslution $\forall k$ such that $kn$ is even, so there are infinitely many solutions.
+\end{proof}
+
+\begin{remark}
+    We can also show (using the fact that $\frac{p_n}{q_n}$ are better approximations to $\theta$ than other rationals) that any solution $(x, y)$ when $x, y > 0$ is $(p_n, q_n)$ for some $n$.
+\end{remark}
+
+\begin{remark}
+    If $x_1^2 - d y_1^2 = 1 = x_2^2 - d y_2^2$ then $X^2 - d Y^2 = 1$ where
+    \begin{equation*}
+        X + Y \sqrt{d} = (x_1 + y_1 \sqrt{d})(x_2 + y_2 \sqrt{d})
+    \end{equation*}
+    This shows that the solutions of \eqref{eq:pell} form a group under this operation. (See Number FIelds `units in quadratic fields'.)
+\end{remark}
+
+% Lecture 21
 \end{document}
