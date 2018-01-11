@@ -2686,7 +2686,7 @@ By the prime number theorem, testing numbers of size $M$ gives success after abo
 
 It would be useful to find some easy to check property which only holds for primes.
 
-Recall \nameref{thm:fermatLittle}:
+Recall \hyperlink{thm:fermatLittle}{Fermat's Little Theorem}:
 \begin{thm}[Fermat's Little Theorem]
     If $p$ is prime and $(a, p)=1$, then $a^{p-1} \equiv 1 \pmod{p}$.
 \end{thm}
@@ -2793,4 +2793,105 @@ Given $N>1$ odd,
 \end{itemize}
 
 % Lecture 22
+\begin{proof}[Proof of \cref{thm:7.3}]
+    2 cases:
+    \begin{enumerate}[label=\Alph*]
+        \item \textbf{$N$ squarefree}, so $N = pm$, $p$ prime, $p \nmid m$, $m \geq 3$.
+            Pick $u \in \Z$ such that $\legendre{u}{p} = -1$.
+            Then \nameref{thm:crt} $\implies \exists b \in \Z$, $b > 1$ with $b \equiv u \pmod{p}$ and $b \equiv 1 \pmod{m}$, so $\legendre{b}{N} = \legendre{b}{m} \legendre{b}{p} = -1$.
+            But $b \equiv 1 \pmod{m} \implies b^{\frac{N-1}{2}} \equiv 1 \not\equiv -1 \pmod{m} \implies b^{\frac{N-1}{2}} \not\equiv -1 \pmod{N}$, so $N$ is not an Euler pseudoprime to base $b$.
+        \item In the other case, some prime $p$ has $p^2 \mid N$.
+            By \nameref*{thm:crt}, $\exists b \in \Z$ with $b \equiv 1 + p \pmod{p^2}$ and $(b, N) = 1$.
+            \begin{align*}
+                \implies b^{N-1} &\equiv (1+p)^{N-1} \pmod{p^2} \\
+                                 &\equiv 1 + p(N-1) \pmod{p^2} \\
+                                 &\equiv 1 - p \pmod{p^2} \\
+                                 &\not\equiv 1 \pmod{p^2}
+            \end{align*}
+            So $b^{\frac{N-1}{2}} \not \equiv \pm 1 \pmod{N}$.
+    \end{enumerate}
+\end{proof}
+
+Carry this further. If $p$ prime, $(a, p) = 1$, $a^{\frac{p-1}{2}} \equiv \pm 1 \pmod{p}$.
+If $a^{\frac{p-1}{2}} \equiv +1 \pmod{p}$ and $4 \mid p-1$, then $a^{\frac{p-1}{4}} \equiv \pm 1 \pmod{p}$ and so on.
+
+This suggests:
+\begin{defi}
+    Let $N > 1$ be odd, and let $N - 1 = 2^s t$, $s \geq 1$, $t$ odd.
+    Say $N$ passes the strong test to base $b$ for $(b, N) = 1$ if either $b^t \equiv 1 \pmod{N}$ or $b^{2^r t} \equiv -1 \pmod{N}$ for some $0 \leq r < s$.
+\end{defi}
+
+By previous discussion, $N$ prime $\implies N$ passes the strong test (to every base).
+Say that $N$ is a strong pseudoprime to base $b$ if it is composite and passes the strong test (to base $b$).
+
+\begin{eg}
+    $N = 65$, $b = 8$. $N - 1 = 64 = 2^6$, so $s = 6$ and $t=1$.
+
+    $8^1 \not\equiv 1 \pmod{N}$ but $8^2 = 64 = -1 \pmod{N}$, so $N$ is a strong pseudoprime to base $8$.
+    For $b=2$, $2^1 \not\equiv 1 \pmod{N}$, and none of $2^2, 2^4, 2^8, 2^{16}, 2^{32}$ are $-1 \pmod{65}$, so $N$ fails the strong test to this base, hence is composite.
+\end{eg}
+
+\begin{nthm}\label{thm:7.4}
+    If $N$ is a strong pseudoprime to base $b$, then it is an Euler (hence also Fermat) pseudoprime to base $b$.
+\end{nthm}
+\begin{nthm}\label{thm:7.5}
+    If $N$ composite, then it passes the strong test for at most $\frac{1}{4} \phi(N)$ bases $b \in \{1, \dotsc, N-1\}$, $(b, N) = 1$.
+\end{nthm}
+\begin{proof}
+    Omitted in this course. See book by Koblitz.
+\end{proof}
+
+Use this as a (probabilistic) primality test (Miller-Rabin test):
+\begin{itemize}
+    \item Choose a random base $b$, $(b, N) = 1$. If $N$ fails the strong test to base $b$, then it is composite.
+    \item Otherwise, probability that it is composite is $\leq \frac{1}{4}$.
+    \item Repeat for a total of $k$ bases.
+\end{itemize}
+If $N$ passes the strong test for all the bases, then it will be prime with probability $1 - \frac{1}{4^k}$.
+Hypothetically, can make this deterministic:
+
+\begin{nthm}
+    If the Generalised Riemann Hypothesis holds, then any composite $N$ fails the strong test for some base $b < 2 (\log N)^2$, giving a polynomial time primality test.
+\end{nthm}
+
+In 2002: Agrawal-Kayal-Saxeno discovered a polynomial-time deterministic algorithm which doesn't depend on GRH (or any other unproved assumption).
+Unfortunately, it's slow for numbers of interest $\sim (\log N)^{6 + \epsilon}$.
+Upshot: primality testing can be done quickly.
+
+Factorisation is another story! \\
+Take $N$ an odd composite integer. We'd like an algorithm to find a nontrivial factor of $N$.
+The simplest method is `trial division': check divisibility of $N$ by $3,5,7,\dotsc$.
+If $N=pq$, $p,q \approx N^\frac{1}{2}$, this will take $\approx N^\frac{1}{2}$ steps (but this is good if $N$ happens to have a small factor).
+
+\subsubsection*{Fermat factorisation}
+Suppose $N=ab$, $\abs{a-b}$ small. Fermat observed:
+\begin{equation*}
+    N = ab = \left(\frac{a+b}{2}\right)^2 - \left(\frac{a-b}{2}\right)^2
+\end{equation*}
+as $a,b$ are both odd. That is, $N+y^2 = x^2$, $x \geq \sqrt{N}$.
+So try $x = \floor{\sqrt{N}} + 1, \floor{\sqrt{N}} + 2, \dotsc$ and see if $x^2 - N$ is a square, say $y^2$.
+If so, $N=(x+y)(x-y)$ gives a factor of $N$.
+
+\begin{eg}
+    Take $N=200819$,
+    \begin{align*}
+        \floor{\sqrt{200819}} &= 448 \\
+        449^2 - N &= 782 \text{ not a square} \\
+        450^2 - N &= 1681 = 41^2
+    \end{align*}
+    So $N = 450^2 -41^2 = 491 \times 409$.
+\end{eg}
+We could have tested $N+y^2$ for squareness, $y = 1,2,\dotsc$.
+% finish that sentence??
+
+How many steps? $x = \floor{\sqrt{N}} + t$ will take $t$ steps to get to.
+\begin{gather}
+    N = ab = (x+y)(x-y) \text{ with } x = \frac{a+b}{2} = \floor{\sqrt{N}} +t.\\
+    \text{So, } t \approx \frac{a+b}{2} - \sqrt{ab} = \frac{(\sqrt{a} - \sqrt{b})^2}{2} \text{ running time.} \\
+\end{gather}
+If $N = pq, p \approx 10^k, q \approx 2 \times 10^k$, then
+\begin{equation*}
+    \frac{(\sqrt{q}-\sqrt{p})^2}{2} \approx \frac{(\sqrt{2}-1)^2 \cdot 10^4}{2} \approx 0.8 \times 10^{k-1}
+\end{equation*}
+Better than trial division $(10^k)$ but not by much.
 \end{document}
