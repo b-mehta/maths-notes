@@ -8,6 +8,10 @@
 \input{header}
 % preamble
 \usepackage{xfrac}
+\usepackage{multirow}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
 \setcounter{section}{-1}
 \newcommand{\legendre}[2]{\genfrac{(}{)}{}{}{#1}{#2}}
 \newcommand{\SL}{\mathrm{SL}}
@@ -2798,10 +2802,10 @@ Given $N>1$ odd,
     \begin{enumerate}[label=\Alph*]
         \item \textbf{$N$ squarefree}, so $N = pm$, $p$ prime, $p \nmid m$, $m \geq 3$.
             Pick $u \in \Z$ such that $\legendre{u}{p} = -1$.
-            Then \nameref{thm:crt} $\implies \exists b \in \Z$, $b > 1$ with $b \equiv u \pmod{p}$ and $b \equiv 1 \pmod{m}$, so $\legendre{b}{N} = \legendre{b}{m} \legendre{b}{p} = -1$.
+            Then \hyperlink{thm:crt}{Chinese Remainder Theorem} $\implies \exists b \in \Z$, $b > 1$ with $b \equiv u \pmod{p}$ and $b \equiv 1 \pmod{m}$, so $\legendre{b}{N} = \legendre{b}{m} \legendre{b}{p} = -1$.
             But $b \equiv 1 \pmod{m} \implies b^{\frac{N-1}{2}} \equiv 1 \not\equiv -1 \pmod{m} \implies b^{\frac{N-1}{2}} \not\equiv -1 \pmod{N}$, so $N$ is not an Euler pseudoprime to base $b$.
         \item In the other case, some prime $p$ has $p^2 \mid N$.
-            By \nameref*{thm:crt}, $\exists b \in \Z$ with $b \equiv 1 + p \pmod{p^2}$ and $(b, N) = 1$.
+            By \hyperlink*{thm:crt}{Chinese Remainder Theorem}, $\exists b \in \Z$ with $b \equiv 1 + p \pmod{p^2}$ and $(b, N) = 1$.
             \begin{align*}
                 \implies b^{N-1} &\equiv (1+p)^{N-1} \pmod{p^2} \\
                                  &\equiv 1 + p(N-1) \pmod{p^2} \\
@@ -2881,7 +2885,7 @@ If so, $N=(x+y)(x-y)$ gives a factor of $N$.
     \end{align*}
     So $N = 450^2 -41^2 = 491 \times 409$.
 \end{eg}
-We could have tested $N+y^2$ for squareness, $y = 1,2,\dotsc$.
+We could have tested $N+y^2$ for squareness, $y = 1,2,\dotsc$, but that would have taken $41$ steps.
 % finish that sentence??
 
 How many steps? $x = \floor{\sqrt{N}} + t$ will take $t$ steps to get to.
@@ -2894,4 +2898,104 @@ If $N = pq, p \approx 10^k, q \approx 2 \times 10^k$, then
     \frac{(\sqrt{q}-\sqrt{p})^2}{2} \approx \frac{(\sqrt{2}-1)^2 \cdot 10^4}{2} \approx 0.8 \times 10^{k-1}
 \end{equation*}
 Better than trial division $(10^k)$ but not by much.
+
+% Lecture 23
+\begin{nprop}\label{prop:7.7}
+    Suppose $x^2 \equiv y^2 \pmod{N}$ and $x \not\equiv \pm y \pmod{N}$.
+    Then the GCDs $(N, x+y)$ and $(N, x-y)$ are both proper divisors of $N$.
+\end{nprop}
+
+\begin{proof}
+    We treat the case of $x+y$. $(N, x+y) \mid N$ by definition.
+    If $(N, x+y) = N$ then $x \equiv -y \pmod{N}$, a contradiction.
+    If $(N, x+y) = 1$ then $(x+y)(x-y) \equiv 0 \pmod{N}$, hence $x-y \equiv 0 \pmod{N}$, i.e. $x \equiv y \pmod{N}$, a contradiction.
+\end{proof}
+
+Finding squares which are congruent mod $N$ is difficult.
+Instead try to find many integers $x_i$ such that $x_i^2 \equiv c_i \pmod{N}$, where $c_i$ is divisible only by small powers.
+Then hope to multiply some $x_i$ together to get a solution to $x^2 \equiv y^2 \pmod{N}$.
+
+\begin{nlemma}\label{lem:7.8}
+    Let $p_1, \dotsc, p_r$ be distinct primes and let $c_1, \dotsc, c_k$ be non-zero integers (divisible only by these $p_i$).
+    Then if $k > r+1$ there eixsts a non-empty subset $I \subset \{1, \dotsc, k\}$ such that $\prod_{i \in I} c_i$ is a square.
+\end{nlemma}
+
+\begin{proof}
+    For any $J \subseteq \{1, \dotsc, k\}$ write $c_J = \prod_{i \in J} c_i$ and
+    \begin{equation*}
+        c_J = (-1)^{\alpha_{J, 0}} p_1^{\alpha_{J, 1}} \dotsm p_r^{\alpha_{J, r}} m_J^2 \text{ where }
+        \begin{cases}
+            m_J \geq 1 \\ \alpha_{J, i} \in \{0, 1\}
+        \end{cases}
+    \end{equation*}
+    Observe $c_J$ is a square $\iff \alpha_{J, i} = 0 \forall i = 0, \dotsc, r$.
+
+    By the pigeonhole principle, since $k > r+1$, there exist distinct subset $J, K \subseteq \{1, \dotsc, k\}$ such that $\alpha_{J, i} = \alpha_{K, i}$ for each $i = 0, \dotsc, r$.
+    It follows that $c_J c_K$ is a square.
+    We also have $c_{J \cap K} \mid c_J$, $c_{J \cap K} \mid c_K$, hence $c_{J \cap K}^2 \mid c_J c_K$.
+    Hence $\frac{c_J c_K}{c_{J \cap K}^2}$ is a square integer, and equals $c_{J \setminus (J \cap K)} c_{K \setminus (J \cap K)} = c_{J \triangle K}$.
+\end{proof}
+
+\begin{defi}
+    A factor base is a set $B = \{-1, p_1, \dotsc, p_r\}$ where the $p_i$ are primes.
+    A $B$-number is a positive integer $x$ such that all prime factors of $\langle x^2 \rangle$ lie in $B$.
+
+    If $a \in \Z$, then $\langle a \rangle$ is the unique integer in $(-\frac{N}{2}, \frac{N}{2}]$ such that $\langle a \rangle \equiv a \pmod{N}$.
+\end{defi}
+
+Here is the `factor base method' to factor $N$:
+\begin{enumerate}
+    \item Choose a factor base $B$
+    \item Generate some $B$-numbers $x_1, \dotsc, x_k$.
+    \item Find a non-empty subset $I \subseteq \{1, \dotsc, k\}$ such that $\prod_{i \in I} \langle x_i^2 \rangle = y^2$ is a square.
+    \item Then if $x = \prod_{i \in I} x_i$, then $x^2 \equiv y^2 \pmod{N}$.
+        If $x \equiv \pm y \pmod{N}$ then \cref{prop:7.7} implies we have found a factor of $N$.
+        Otherwise, find more $B$-numbers and try again.
+\end{enumerate}
+
+How likely is this to work? If $N = \prod_{i =1}^t p_i^{e_i}$ with $e_i \geq 1$ and $p_1, \dotsc, p_t$ distinct primes, then the congruence
+$x^2 \equiv 1 \pmod{p_i^{e_i}}$ has exactly 2 solutions (if $p_i \equiv 2$).
+
+By the \hyperlink{thm:crt}{Chinese Remainder Theorem}, the congruence $x^2 \equiv 1 \pmod{N}$ has $2^t$ solutions.
+Only two if there are $\pm 1$.
+If we apply the factor base method to obtain $x^2 \equiv y^2 \pmod{N}$ then $\left(\frac{x}{y}\right)^2 \equiv 1 \pmod{N}$.
+As long as $\frac{x}{y}$ is one of the $2^t - 2$ solutions other than $\pm 1$ to $t^2 \equiv 1 \pmod{N}$, we have found a factor of $N$.
+
+\textbf{Heuristic}: We succeed with probability $1-\frac{1}{2^{t-1}}$.
+If $t \geq 2$, we expect this method to eventually factor $N$.
+
+How do we generate $B$-numbers, as required by step 2?
+First guess: try $x_i = \floor{\sqrt{kN}}$ or $\floor{\sqrt{kN}} + 1$, $k \geq 1$ a small integer.
+
+Then $x_i^2$ should be close to a multiple of $N$, hence $\langle x_i^2 \rangle$ should be divisible only by small primes.
+In practice, generate the $x_i$ first and then choose the factor base $B$.
+
+\begin{eg}[Worked example]
+    $N=1829$. Choose factor base
+    \begin{equation*}B = \{-1, 2, 3, 5, 7, 11, 13, 17, 19\}\end{equation*}
+    \begin{center}
+        \begin{tabular}{c|c|c|c|c|c|c|c}
+            $x_i$ & 42 & 43 & 60 & 61 & 74 & 75 & 85 \\
+            \hline
+            $\langle x_i^2 \rangle$ & $-65$ & 20 & $-58$ & 63 & $-11$ & 138 & $-91$ \\
+            \hline
+            \multirow{2}{*}{$B$-number?} & $-5\cdot13$ & $2^2 \cdot 5$ & $-2\cdot29$ & $3^2 \cdot 7$ & $-11$ & $2 \cdot 3 \cdot 23$ & $-7 \cdot 13$ \\
+                                         & \cmark      & \cmark & \xmark & \cmark & \cmark & \xmark & \cmark
+        \end{tabular}
+    \end{center}
+
+    Next step: choose some $x_i$ with the property that $\prod \langle x_i^2 \rangle$ is square.
+    By inspection,
+    \begin{align*}
+        (42 \cdot 43 \cdot 61 \cdot 85)^2 &\equiv (-65 \cdot 20 \cdot 63 \cdot -91) \pmod{N} \\
+                                          &\equiv (2 \cdot 3 \cdot 5 \cdot 7 \cdot 13)^2 \pmod{N} \\
+                          \implies 1459^2 &\equiv 901^2 \pmod{N}
+    \end{align*}
+    We find $(1829, 558)=31$, $(1829, 2360) = 59$. In this case, $N=31 \times 59$.
+\end{eg}
+\begin{remark}
+    In general, it need not be the case that $N = (N, x+y)(N, x-y)$.
+\end{remark}
+
+Computational result: In step 2, we chose $B$ to contain small primes and check whether $x_i$ is a $B$-number using trial division or using Euclid's algorithm on $\prod_{p_i \in B} p_i$.
 \end{document}
