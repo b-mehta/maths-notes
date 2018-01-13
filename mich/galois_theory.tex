@@ -1996,4 +1996,62 @@ We consider Galois extensions $K \leq L$ where $L$ is a splitting field of a pol
 
     Finally $\abs{L:K(\xi)} = \abs{\Gal(L/K(\xi))} \leq m$ with equality precisely when the action of $\Gal(L/K(\xi))$ is transitive on the roots, i.e. when $t^m-1$ is irreducible over $K(\xi)$ by \cref{lem:3.6}.
 \end{proof}
+
+\begin{eg}
+    Consider $f(t) = t^6 + 3$.
+    If $\xi$ is a primitive 6th root of unity, $\xi = -\omega$, with $\omega$ a primitive cube root of 1.
+    \begin{equation*}
+        \Q(\xi) = \Q(\omega) = \Q(\frac{1}{2}(1 + \sqrt{-3})) = \Q(\sqrt{-3})
+    \end{equation*}
+    $f(t)$ irreducible over $\Q$ by Eisenstein with $p=3$.
+    However over $\Q(\xi) = \Q(\sqrt{-3})$ factorises as
+    \begin{equation*}
+        f(t) = (t^3 - \sqrt{-3})(t^3 + \sqrt{-3})
+    \end{equation*}
+    \textbf{missing stuff}
+\end{eg}
+
+We have a converse of \cref{thm:4.10}
+\begin{nthm}\label{thm:4.11}
+    Suppose $K \leq M$ is cyclic extension with $\abs{L:K} = m$, where $\chara K \nmid m$ and that $K$ contains a primitive $m$th root of unity.
+    Then $\exists \lambda \in K$ such that $t^m - \lambda$ is irreducible over $K$ and $K$ is the splitting field of $t^m - \lambda$ over $K$.
+    If $\beta$ is a root of $t^m - \lambda$ in $L$, then $L = K(\beta)$.
+\end{nthm}
+
+\begin{ndef}[Kummer extension]\label{def:4.12}
+    A cyclic extension $K \leq L$ with $\abs{L:K} = m$, where $\char K \nmid m$ and $K$ contains a primitive $m$th root of 1 is a \textbf{Kummer extension}.
+\end{ndef}
+
+The proof of \cref{thm:4.11} uses
+\begin{nlemma}
+    Let $\phi_1, \dotsc, \phi_n$ be embeddings of a field $K$ into a field $L$.
+    Then there do not exist $\lambda_1, \dotsc, \lambda_n$ not all zero such that $\lambda_1 \phi_1(x) + \dotsb + \lambda_n \phi_n(x) = 0 \; \forall x \in K$.
+\end{nlemma}
+
+\begin{proof}
+    Example sheet 2, question 10.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:4.11}]
+    Let $\Gal(L/K) = \langle \sigma \rangle$ of order $m$.
+    Observe that $1, \sigma, \sigma^2, \dotsc, \sigma^{m-1}$ are distinct maps $L \to L$, and we can apply \cref{lem:4.13}.
+    There exists $\alpha \in L$ such that
+    \begin{equation*}
+        \beta = \alpha + \xi \sigma(\alpha) + \dotsb + \xi^{m-1} \sigma^{m-1}(\alpha) \neq 0
+    \end{equation*}
+    where $\xi$ is a primitive $m$th root of unity.
+    Observe that $\sigma(\beta) = \xi^{-1} \beta \neq \beta$ and so $\beta \notin K$, the fixed field of $\Gal(L/K)$.
+
+    $\sigma(\beta^m) = (\sigma(\beta))^m = \beta^m$. Let $\lambda = \beta^m \in K$.
+    But $t^m - \lambda = (t-\beta)(t-\xi\beta)\dotsm(t-\xi^{m-1}\beta)$ in $L[t]$, and so $K(\beta)$ is the splitting field of $t^m - \lambda$ over $K$ (recall $\xi \in K$).
+    Observe that $1, \sigma, \dotsc, \sigma^{m-1}$ are distinct $K$-automorphisms of $K(\beta)$ and so $\abs{K(\beta):K)} \geq m$.
+
+    So $L = K(\beta) = K(\xi\beta)$ since $\xi \in K$.
+    $t^m - \lambda$ is the minimal polynomial of $\beta$ over $K$ and hence is irreducible.
+\end{proof}
+
+\begin{ndef}\label{def:4.14}
+    A field extension $K \leq L$ is an \textbf{extension by radicals} if $\exists K = L_0 \leq L_1 \leq \dotsb \leq L_n = L$ such that each $L_i \leq L_{i+1}$ is either cyclotomic or Kummer extension.
+    A polynomial $f(t) \in K[t]$ is soluble by radicals if its splitting field lies in an extension by radicals.
+\end{ndef}
 \end{document}
