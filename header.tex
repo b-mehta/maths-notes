@@ -23,7 +23,7 @@
 \usepackage[hypcap=true]{caption}
 \usepackage{enumitem}
 \usepackage[colorlinks=true, linkcolor=lblue]{hyperref}
-\usepackage[nameinlink,noabbrev]{cleveref}
+\usepackage[capitalise,nameinlink,noabbrev]{cleveref}
 \usepackage{nameref}
 \usepackage[margin=1.5in]{geometry}
 
@@ -50,8 +50,6 @@
 \newtheorem*{remark}{Remark}
 \newtheorem*{warning}{Warning}
 \newtheorem*{exercise}{Exercise}
-
-% \newcommand{\nthmautorefname}{Theorem}
 
 \newtheorem{nthm}{Theorem}[section]
 \newtheorem{nlemma}[nthm]{Lemma}
@@ -86,4 +84,8 @@
 \colorlet{bred}{red}
 \colorlet{bblue}{Cyan!50!blue}
 \colorlet{byellow}{yellow}
-\colorlet{bgreen}{Green}
+\colorlet{bgreen}{YellowGreen!50!Green}
+\colorlet{borange}{red!20!yellow}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing

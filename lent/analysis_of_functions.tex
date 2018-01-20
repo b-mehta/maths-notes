@@ -1,0 +1,167 @@
+\documentclass{article}
+
+\def\npart {II}
+\def\nyear {2017}
+\def\nterm {Lent}
+\def\nlecturer{Prof C.\ Mouhot}
+\def\ncourse{Analysis of Functions}
+\input{header}
+
+% preamble
+\usepackage{tikz}
+\usepackage{mathrsfs}
+% \newcommand{\powerset}{\raisebox{.15\baselineskip}{\Large\ensuremath{\wp}}}
+\newcommand{\powerset}{\mathscr{P}}
+%\setcounter{section}{-1}
+% and here we go!
+
+\begin{document}
+\maketitle
+
+% Chapter 1: Integration of functions
+% Chapter 2: Vector spaces of functions
+% Chapter 3: Fourier decomposition of functions
+% Chapter 4: Generalised derivatives of functions (and spaces using them)
+
+% Chapter 1:
+    % I. Lebesgue measure/integration
+    % II. Integrability and convergence
+
+% I)
+\section{Lebesgue theory}
+\begin{ex}
+    Show pointwise limit of Riemann-integrable functions is not necessariy Riemann-integrable.
+\end{ex}
+(Hint: Dirichlet function).
+
+% 1)
+\subsection{Recap of measure theory}
+Consider a set $X$ and $\powerset(X)$ subsets of $X$.
+\begin{defi}[Algebra]\hypertarget{def:algebra}
+    $\mathscr{A} \subset \powerset(X)$ is an \textbf{algebra} if
+    \begin{enumerate}[label=(\roman*)]
+        \item stable under finite union
+        \item stable under absolute difference
+        \item $X \in \mathscr{A}$.
+    \end{enumerate}
+\end{defi}
+
+\begin{defi}[$\sigma$-algebra]\hypertarget{def:sigAlg}
+    $\mathscr{A} \subset \powerset(X)$ is a $\sigma$-\textbf{algebra} if
+    \begin{enumerate}[label=(\roman*)]
+        \item stable under countable union
+        \item stable under absolute difference
+        \item $X \in \mathscr{A}$.
+    \end{enumerate}
+\end{defi}
+
+\begin{remark}
+    Topologies $\mathscr{T} \subset \powerset(X)$ are (i) stable under \textit{any} union, (ii) finite intersection, includes $X$ and $\emptyset$.
+\end{remark}
+
+\begin{remark}
+    The property of being a \hyperlink{def:sigAlg}{$\sigma$-algebra} is stable under intersection.\hypertarget{def:borelSet}
+    The notion of smaller $\sigma$-algebra containing some topology $\mathscr{T}$ are called \textbf{Borel} sets, written $\mathcal{B}(X)$.
+\end{remark}
+
+\begin{defi}\hypertarget{def:measure}
+    Consider $(X, \mathscr{A})$, where $\mathscr{A}$ is a \hyperlink{def:sigAlg}{$\sigma$-algebra}.
+    A \textbf{measure} $\mu$ is a function $\mathscr{A} \to [0, +\infty]$ such that $\mu(\emptyset) = 0$.
+    It is \textbf{$\sigma$-additive} \hypertarget{def:sigAdd} if
+    \begin{equation*}
+        \mu\left( \bigcup_{n=1}^\infty A_n\right) = \mu\left( \bigsqcup_{n=1}^\infty A_n\right) = \sum_{n=1}^\infty \mu(A_n).
+    \end{equation*}
+
+    Then $X, \mathscr{A}, \mu)$ is a \textbf{measure space}.
+    It is called \textbf{complete} \hypertarget{def:completeMeasure} if $A \in \mathscr{A}$ with $B \subset A$ and $\mu(A) = 0$, then $B \in \mathscr{A}$ and $\mu(B)=0$.
+\end{defi}
+
+\begin{ex}
+    Show \hyperlink{def:sigAdd}{$\sigma$-additivity} is implied by either of the following properties:
+    \begin{itemize}
+        \item finite additivity and continuity from below
+        \item finite $\mu(X) < +\infty$ and finite additivity and continuity from above at $\emptyset$
+    \end{itemize}
+    where
+    \begin{itemize}
+        \item continuity from below:
+            \begin{equation*}
+                A_n \in \mathscr{A}, \mu\left(\bigcup_{k=1}^\infty A_k\right)  = \lim_{n \to +\infty} \mu\left(\bigcup_{k=1}^n A_k\right)
+            \end{equation*}
+        \item continuity from above
+            \begin{equation*}
+                A_n \in \mathscr{A}, \mu(A_1) < +\infty, \mu\left(\bigcap_{k=1}^\infty A_k\right)  = \lim_{\mathclap{n \to +\infty}} \mu\left(\bigcap_{k=1}^n A_k\right)
+            \end{equation*}
+    \end{itemize}
+\end{ex}
+
+\begin{ex}
+    Find the cardinality of $\mathscr{T}(\R)$, $\mathcal{B}(\R)$, $\mathscr{L}(\R)$. $\mathscr{L}(\R)$ are the Lebesgue sets, defined by adding all subsets of null sets to $\mathcal{B}(\R)$.
+\end{ex}
+
+\begin{thm}
+    There is a unique measure on $(\R^n, \mathcal{B}(\R^n))$ such that $\mu\left(\prod_{i=1}^n [a_i, b_i]\right) = \prod_{i=1}^n (b_i - a_i)$ ($a_i \leq b_i \in \R$).
+\end{thm}
+
+\begin{remark}
+    Lebesgue measure is $\sigma$-finite: $\exists$ a countable increasing sequence of sets with finite measure covering $\R^n$.
+\end{remark}
+
+\begin{defi}[Measurable function]\hypertarget{def:measFunc}
+    Take $(X, \mathscr{A})$, $(Y, \mathscr{B})$ two spaces with $\sigma$-algebras.
+    A function $f: X \to Y$ is said to be measurable if $\forall B \in \mathscr{B}$, $f^{-1}(B) \in \mathscr{A}$.
+\end{defi}
+
+\begin{prop}
+    Take $(X, \mathscr{A}), (Y, \mathscr{B})$ two spaces with $\sigma$-algebras where $Y$ is a metric space and $\mathscr{B}$ is the collection of Borel sets.
+    Let $f_k: X \to Y$ be a sequence of measurable functions which converge pointwise to $f:X \to Y$.
+    Then $f$ is measurable.
+\end{prop}
+
+\begin{proof}
+    Since $B$ is formed from open sets through countable union/intersection and difference, it is enough to prove $\forall U \in \mathscr{T}(Y)$, $f^{-1}(U) \in \mathscr{A}$.
+
+    Let
+    \begin{align*}
+        U_n &= \set{y \in Y | d(y, Y \setminus U) > \frac{1}{n}} \\
+        F_n &= \set{y \in Y | d(y, Y \setminus U) \geq \frac{1}{n}} \\
+    \end{align*}
+    so that
+    \begin{equation*}
+        U_n \subset F_n \subset U_{n+1} \subset \dotsb \subset U
+    \end{equation*}
+    and $F_n$ are closed.
+
+    We can see $U = \bigcup_{n \geq 1} U_n = \bigcup_{n \geq 1} F_n$ ($U$ open). % why U open matters?
+    Hence,
+    \begin{equation*}
+        f^{-1}(U) = f^{-1} \left(\bigcup_{n \geq 1} U_n\right) = \bigcup_{n \geq 1} f^{-1}(U_n) \subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f^{-1}_k(U_n).
+    \end{equation*}
+    We used $f^{-1}(U_n) \subset \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(U_n)$, $x \in f^{-1}(U_n)$, $f(x) = y \in U_n$.
+    We know
+    \begin{equation*}
+        f_k(x) \xrightarrow{k \to \infty} f(x).
+    \end{equation*}
+
+    Since $U_n$ open, $\exists l_x \geq 1$ such that $A k \geq l_x, f_k(x) \in U_n \implies x \in \bigcup_{x \geq l_x} f_k^{-1}(U_n)$.
+
+    \begin{align*}
+        f^{-1}(U) &\subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(U_n). \\
+        &\subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(F_n).
+    \end{align*}
+
+    $F_n$ closed, so
+    \begin{equation*}
+        \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1} (F_n) \subset f^{-1}(F_n).
+    \end{equation*}
+    If $x \in $LHS, $\exists l \geq 1$ such that $\forall k \geq l$, $f_k(x) \in F_n$.
+    Pass to the limit, and $f_n$ closed gives $f(x) \in F_n$, $x \in f^{-1}(F_n)$.
+
+    In conclusion,
+    \begin{align*}
+        f^{-1}(U) &\subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(U_n) \subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(F_n) \\
+                  & \subset \bigcup_{n \geq 1} f^{-1}(F_n) = f^{-1}\left(\bigcup_{n \geq 1} F_n\right) = f^{-1}(U).
+    \end{align*}
+    So, all inclusions are equality: $f^{-1}(U)$ is formed of countable intersections and unions of $f_k^{-1}(\text{element of }B)$, hence $f^{-1}(U) \in \mathscr{A}$.
+\end{proof}
+\end{document}
