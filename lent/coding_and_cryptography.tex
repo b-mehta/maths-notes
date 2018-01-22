@@ -15,6 +15,7 @@
 
 \begin{document}
 \maketitle
+\tableofcontents
 
 \section*{Introduction to communication channels and coding}
 For example, given a message $m$=`Call me!' which we wish to send by email, first encode as binary strings using ASCII.
@@ -48,7 +49,7 @@ So, $f(C) = 1000011, f(a) = 1100001$, and $f^*(m) = 1000011\ 1100001 \dots 01000
 \begin{eg}
 \leavevmode
 \begin{itemize}
-\item `economically'
+    \item `economically'
     Morse code: common letters have shorter codewords:
     % A .-, E ., Q --.--
     \item `reliably'
@@ -179,14 +180,14 @@ Rate refers to units of information per unit time, which we want to be high. Sim
 \end{notation}
 If $x = x_1 \dotsc x_r$, $y = y_1 \dotsc y_s$ are strings from $\Sigma$, write $xy$ for the concatenation $x_1 \dotsc x_r y_1 \dotsc y_s$.
 Further, $\abs{x_1 \dotsc x_r y_1 \dotsc y_s} = r+s$, length of string.
-\begin{defi}[Code]
+\begin{defi}[Code]\hypertarget{def:code}
     Let $\Sigma_1, \Sigma_2$ be two alphabets. A \textbf{code} is a function $f: \Sigma_1 \to \Sigma_2^*$. The strings $f(x)$ for $x \in \Sigma_1$ are called \textbf{codewords}.
 \end{defi}
 \begin{eg}
     \leavevmode
     \begin{enumerate}[label=\arabic*)] % 1)
         \item
-            Greek fire code:
+            Greek fire \hyperlink{def:code}{code}:
             \begin{align*}
                 \Sigma_1 &= \{\alpha, \beta, \gamma, \dotsc, \omega\} \quad \text{ 24 letters} \\
                 \Sigma_2 &= \{1, 2, 3, 4, 5\}
@@ -199,8 +200,8 @@ Further, $\abs{x_1 \dotsc x_r y_1 \dotsc y_s} = r+s$, length of string.
 \end{eg}
 We send a message $x_1, \dotsc, x_n \in \Sigma_1^*$ as $f(x_1) f(x_2) \dotsm f(x_n) \in \Sigma_2^*$ i.e. extend $f$ to $f^* : \Sigma_1^* \to \Sigma_2^*$.
 
-\begin{defi}[Decipherable]
-    A code $f$ is \textbf{decipherable} if $f^*$ is injective, i.e. every string from $\Sigma_2$ arises from at most one message.
+\begin{defi}[Decipherable]\hypertarget{def:decipherable}
+    A \hyperlink{def:code}{code} $f$ is \textbf{decipherable} if $f^*$ is injective, i.e. every string from $\Sigma_2$ arises from at most one message.
     Clearly we need $f$ injective, but this is not enough.
 \end{defi}
 \end{document}

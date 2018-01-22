@@ -17,6 +17,7 @@
 
 \begin{document}
 \maketitle
+\tableofcontents
 
 % Chapter 1: Integration of functions
 % Chapter 2: Vector spaces of functions
@@ -30,7 +31,7 @@
 % I)
 \section{Lebesgue theory}
 \begin{ex}
-    Show pointwise limit of Riemann-integrable functions is not necessariy Riemann-integrable.
+    Show pointwise limit of Riemann-integrable functions is not necessarily Riemann-integrable.
 \end{ex}
 (Hint: Dirichlet function).
 
@@ -38,7 +39,7 @@
 \subsection{Recap of measure theory}
 Consider a set $X$ and $\powerset(X)$ subsets of $X$.
 \begin{defi}[Algebra]\hypertarget{def:algebra}
-    $\mathscr{A} \subset \powerset(X)$ is an \textbf{algebra} if
+    $\mathscr{A} \subset \powerset(X)$ is an \textbf{algebra} if it is
     \begin{enumerate}[label=(\roman*)]
         \item stable under finite union
         \item stable under absolute difference
@@ -47,7 +48,7 @@ Consider a set $X$ and $\powerset(X)$ subsets of $X$.
 \end{defi}
 
 \begin{defi}[$\sigma$-algebra]\hypertarget{def:sigAlg}
-    $\mathscr{A} \subset \powerset(X)$ is a $\sigma$-\textbf{algebra} if
+    $\mathscr{A} \subset \powerset(X)$ is a $\sigma$-\textbf{algebra} if it is
     \begin{enumerate}[label=(\roman*)]
         \item stable under countable union
         \item stable under absolute difference
@@ -56,7 +57,7 @@ Consider a set $X$ and $\powerset(X)$ subsets of $X$.
 \end{defi}
 
 \begin{remark}
-    Topologies $\mathscr{T} \subset \powerset(X)$ are (i) stable under \textit{any} union, (ii) finite intersection, includes $X$ and $\emptyset$.
+    Topologies $\mathscr{T} \subset \powerset(X)$ are (i) stable under \textit{any} union, (ii) finite intersection, (ii) include $X$ and $\emptyset$.
 \end{remark}
 
 \begin{remark}
@@ -96,35 +97,42 @@ Consider a set $X$ and $\powerset(X)$ subsets of $X$.
 \end{ex}
 
 \begin{ex}
-    Find the cardinality of $\mathscr{T}(\R)$, $\mathcal{B}(\R)$, $\mathscr{L}(\R)$. $\mathscr{L}(\R)$ are the Lebesgue sets, defined by adding all subsets of null sets to $\mathcal{B}(\R)$.
+    Find the cardinality of $\mathscr{T}(\R)$, $\mathcal{B}(\R)$, $\mathscr{L}(\R)$ where $\mathscr{L}(\R)$ are the Lebesgue sets, defined by adding all subsets of null sets to $\mathcal{B}(\R)$.
 \end{ex}
 
 \begin{thm}
-    There is a unique measure on $(\R^n, \mathcal{B}(\R^n))$ such that $\mu\left(\prod_{i=1}^n [a_i, b_i]\right) = \prod_{i=1}^n (b_i - a_i)$ ($a_i \leq b_i \in \R$).
+    There is a unique \hyperlink{def:measure}{measure} on $(\R^n, \mathcal{B}(\R^n))$ such that
+    \begin{equation*}
+        \mu\left(\prod_{i=1}^n [a_i, b_i]\right) = \prod_{i=1}^n (b_i - a_i) \quad a_i \leq b_i \in \R
+    \end{equation*}
+    called the Lebesgue measure\hypertarget{def:lebMeas}.
 \end{thm}
+\begin{proof}
+    See Probability and Measure.
+\end{proof}
 
 \begin{remark}
-    Lebesgue measure is $\sigma$-finite: $\exists$ a countable increasing sequence of sets with finite measure covering $\R^n$.
+    \hyperlink{def:lebMeas}{Lebesgue measure} is \hypertarget{def:sigFinite}{$\sigma$-finite}: $\exists$ a countable increasing sequence of sets with finite measure covering $\R^n$.
 \end{remark}
 
 \begin{defi}[Measurable function]\hypertarget{def:measFunc}
-    Take $(X, \mathscr{A})$, $(Y, \mathscr{B})$ two spaces with $\sigma$-algebras.
-    A function $f: X \to Y$ is said to be measurable if $\forall B \in \mathscr{B}$, $f^{-1}(B) \in \mathscr{A}$.
+    Take $(X, \mathscr{A})$, $(Y, \mathscr{B})$ two spaces with \hyperlink{def:sigAlg}{$\sigma$-algebras}.
+    A function $f: X \to Y$ is said to be \textbf{measurable} if $\forall B \in \mathscr{B}$, $f^{-1}(B) \in \mathscr{A}$.
 \end{defi}
 
 \begin{prop}
-    Take $(X, \mathscr{A}), (Y, \mathscr{B})$ two spaces with $\sigma$-algebras where $Y$ is a metric space and $\mathscr{B}$ is the collection of Borel sets.
-    Let $f_k: X \to Y$ be a sequence of measurable functions which converge pointwise to $f:X \to Y$.
+    Take $(X, \mathscr{A}), (Y, \mathscr{B})$ two spaces with \hyperlink{def:sigAlg}{$\sigma$-algebras} where $Y$ is a metric space and $\mathscr{B}$ is the collection of \hyperlink{def:borelSet}{Borel sets}.
+    Let $f_k: X \to Y$ be a sequence of \hyperlink{def:measFunc}{measurable functions} which converge pointwise to $f:X \to Y$.
     Then $f$ is measurable.
 \end{prop}
 
 \begin{proof}
-    Since $B$ is formed from open sets through countable union/intersection and difference, it is enough to prove $\forall U \in \mathscr{T}(Y)$, $f^{-1}(U) \in \mathscr{A}$.
+    Since $B$ is formed from open sets through countable union/intersection and difference, it is enough to prove $\forall U \in \mathscr{T}(Y)$, $f^{-1}(U) \in \mathscr{A}$. (Exercise: Check.)
 
     Let
     \begin{align*}
-        U_n &= \set{y \in Y | d(y, Y \setminus U) > \frac{1}{n}} \\
-        F_n &= \set{y \in Y | d(y, Y \setminus U) \geq \frac{1}{n}} \\
+        U_n &= \Set{y \in Y | d(y, Y \setminus U) > \frac{1}{n}} \\
+        F_n &= \Set{y \in Y | d(y, Y \setminus U) \geq \frac{1}{n}}
     \end{align*}
     so that
     \begin{equation*}
@@ -137,24 +145,25 @@ Consider a set $X$ and $\powerset(X)$ subsets of $X$.
     \begin{equation*}
         f^{-1}(U) = f^{-1} \left(\bigcup_{n \geq 1} U_n\right) = \bigcup_{n \geq 1} f^{-1}(U_n) \subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f^{-1}_k(U_n).
     \end{equation*}
-    We used $f^{-1}(U_n) \subset \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(U_n)$, $x \in f^{-1}(U_n)$, $f(x) = y \in U_n$.
+    We used the fact that
+    \begin{equation*}f^{-1}(U_n) \subset \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(U_n)\end{equation*}
+    To show this, take $x \in f^{-1}(U_n)$, so $f(x) = y \in U_n$.
     We know
     \begin{equation*}
         f_k(x) \xrightarrow{k \to \infty} f(x).
     \end{equation*}
+    Since $U_n$ open, $\exists l_x \geq 1$ such that $\forall k \geq l_x, f_k(x) \in U_n$ giving $x \in \bigcap_{k \geq l} f_k^{-1}(U_n)$.
 
-    Since $U_n$ open, $\exists l_x \geq 1$ such that $A k \geq l_x, f_k(x) \in U_n \implies x \in \bigcup_{x \geq l_x} f_k^{-1}(U_n)$.
-
+    Continuing,
     \begin{align*}
         f^{-1}(U) &\subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(U_n). \\
         &\subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(F_n).
     \end{align*}
-
     $F_n$ closed, so
     \begin{equation*}
         \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1} (F_n) \subset f^{-1}(F_n).
     \end{equation*}
-    If $x \in $LHS, $\exists l \geq 1$ such that $\forall k \geq l$, $f_k(x) \in F_n$.
+    In particular, if $x \in$ LHS, $\exists l \geq 1$ such that $\forall k \geq l$, $f_k(x) \in F_n$.
     Pass to the limit, and $f_n$ closed gives $f(x) \in F_n$, $x \in f^{-1}(F_n)$.
 
     In conclusion,
@@ -162,6 +171,6 @@ Consider a set $X$ and $\powerset(X)$ subsets of $X$.
         f^{-1}(U) &\subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(U_n) \subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f_k^{-1}(F_n) \\
                   & \subset \bigcup_{n \geq 1} f^{-1}(F_n) = f^{-1}\left(\bigcup_{n \geq 1} F_n\right) = f^{-1}(U).
     \end{align*}
-    So, all inclusions are equality: $f^{-1}(U)$ is formed of countable intersections and unions of $f_k^{-1}(\text{element of }B)$, hence $f^{-1}(U) \in \mathscr{A}$.
+    So, all inclusions are equality: $f^{-1}(U)$ is formed of countable intersections and unions of preimages of sets in $\mathscr{B}$, hence $f^{-1}(U) \in \mathscr{A}$.
 \end{proof}
 \end{document}
