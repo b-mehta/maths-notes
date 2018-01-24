@@ -204,4 +204,132 @@ We send a message $x_1, \dotsc, x_n \in \Sigma_1^*$ as $f(x_1) f(x_2) \dotsm f(x
     A \hyperlink{def:code}{code} $f$ is \textbf{decipherable} if $f^*$ is injective, i.e. every string from $\Sigma_2$ arises from at most one message.
     Clearly we need $f$ injective, but this is not enough.
 \end{defi}
+
+\begin{eg}
+    Take $\Sigma_1 = \{1, 2, 3, 4\}$, $\Sigma_2 = \{0, 1\}$ with
+    \begin{equation*}
+        f(1) = 0, f(2) = 1, f(3) = 00, f(4) = 01
+    \end{equation*}
+    $f$ injective but $f^*(312) = 0001 = f^*(114)$ so $f^*$ not \hyperlink{def:decipherable}{decipherable}.
+\end{eg}
+
+\begin{notation}
+    If $\abs{\Sigma_1} = m$, $\abs{\Sigma_2} = a$, then we say $f$ is an $a$-ary code of size $m$. (If $a=2$ we say binary).
+\end{notation}
+\begin{aim}
+    Construct \hyperlink{def:decipherable}{decipherable} \hyperlink{def:code}{codes} with short word lengths.
+\end{aim}
+
+Provided $f: \Sigma_1 \to \Sigma_2^*$ is injective, the following codes are always decipherable.
+\begin{enumerate}[label=(\roman*)]
+    \item A \textbf{block code} is a code with all codewords of the same length (e.g. Greek fire code).
+    \item In a \textbf{comma code}, we reserve one letter from $\Sigma_2$ that is only used to signal the end of the codeword (Example 2).
+    \item A \textbf{prefix-free code} is a code where no codeword is a prefix of another (if $x, y \in \Sigma_2^*$, $x$ is a prefix of $y$ if $y=xz$ for some $z \in \Sigma_2^*$.)
+\end{enumerate}
+
+\begin{remark}(i) and (ii) are special cases of (iii).
+\end{remark}
+
+Prefix-free codes are also known as \textbf{instantaneous codes} (i.e. a word can be recognised as soon as it is complete) or \textbf{self-punctuating codes}.
+
+% thm 1.1
+\begin{nthm}[Kraft's inequality]\label{thm:kraft}
+    Let $\abs{\Sigma_1} = m, \abs{\Sigma_2} = a$. A prefix-free code $f: \Sigma_1 \to \Sigma_2^*$ with word lengths $s_1, \dotsc, s_m$ exists iff
+    \begin{equation*}
+        \sum_{i = 1}^m a^{-s_i} \leq 1
+    \end{equation*}
+\end{nthm}
+
+\begin{proof}
+    $(\implies)$ Consider an $\infty$ tree where each has a descendant, labelled by the elements of $\Sigma_2$. Each codeword corresponds to a node, the path from the root to this node spelling out the codeword.
+    For example,
+    \begin{center}
+        \begin{tikzpicture}
+            \filldraw (0, 0) circle (1pt);
+            \filldraw (1, 1) circle (1pt);
+            \filldraw (1,-1) circle (1pt);
+            \foreach \x in {1,...,5}{
+                \pgfmathsetmacro\a{(3-\x)/2.0}
+                \pgfmathsetmacro\b{(3-\x)/4.0 + 1}
+                \pgfmathsetmacro\c{(3-\x)/4.0 - 1}
+                \draw (0, 0) -- (1, \a);
+                \draw (1, 1) -- (2, \b);
+                \draw (1, -1) -- (2, \c);
+            };
+        \end{tikzpicture}
+    \end{center}
+    Assuming $f$ is prefix-free, no codeword is the ancestor of any other. Now view the tree as a network with water being pumped in at a constant rate and dividing the flow equally at each node.
+
+    The total amount of water we can extract at the codewords is $\sum_{i=1}^m a^{-s_i}$, which is therefore $\leq 1$.
+
+    $(\impliedby)$ Conversely, suppose we can construct a prefix-free code with word lengths $s_1, \dotsc, s_m$ wlog $s_1 \leq s_2 \leq \dotsb \leq s_m$.
+    We pick codewords of lengths $s_1, s_2, \dotsc$ sequentially ensuring previous codewords are not prefixes.
+    Suppose there is no valid choice for the $r$th codeword.
+    Then reconstructing the tree as above gives $ \sum_{i=1}^{r-1} a^{-s_i} = 1 $, contradicting our assumption.
+    So we can construct a prefix-free code. (There is a more algebraic proof in Welsh.)
+\end{proof}
+
+\begin{nthm}[McMillan]
+    Every decipherable code satisfies Kraft's inequality.
+\end{nthm}
+
+\begin{proof}[Karush]
+    Let $f: \Sigma_1 \to \Sigma_2^*$ be a decipherable code with word lengths $s_1, \dotsc, s_m$, let $s = \max_{1 \leq i \leq m} s_i$.
+    Let $r \in \N$
+    \begin{equation*}
+        \left(\sum_{i=1}^m a^{-s_i}\right)^r = \sum_{l=1}^{rs} b_l a^{-l}
+    \end{equation*}
+    where $b_l$ is the \# of ways of choosing $r$ codewords of total length $l$. $f$ decipherable $\implies b_l \leq \abs{\Sigma_2}^l = a^l$.
+
+    Thus \begin{align*}\left(\sum_{i=1}^m a^{-s_i}\right)^r \leq \sum_{l=1}^{rs} a^l a^{-l} = rs \\
+    \implies \sum_{i=1}^m a^{-s_i} \leq (rs)^{\frac{1}{r}} \to 1 \text{ as } r \to \infty.
+    \end{align*}
+    (As $\frac{\log r + \log s}{r} \to 0$ as $r \to \infty$).
+    \begin{equation*}
+        \therefore \sum_{i=1}^m a^{-s_i} \leq 1.
+    \end{equation*}
+\end{proof}
+
+\begin{eg}
+    \begin{enumerate}[label=\arabic*.]
+        \item Suppose $p_1 = p_2 = p_3 = p_4 = \frac{1}{4}$. We identify $\{x_1, x_2, x_3, x_4\}$ with $\{HH, HT, TH, HH\}$. $H(X) = 2$.
+        \item Take $(p_1, p_2, p_3, p_4) = (\frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{8})$.
+            \begin{center}
+                \begin{tikzpicture}[xscale=1.8]
+                    \draw (0,0) -- (1,1);
+                    \draw (0,0) -- (1, -1);
+                    \draw (1, -1) -- (2, 0);
+                    \draw (1, -1) -- (2, -2);
+                    \draw (2, -2) -- (3, -1);
+                    \draw (2, -2) -- (3, -3);
+                \end{tikzpicture}
+            \end{center}
+            So example 1 is more random than example 2.
+    \end{enumerate}
+\end{eg}
+
+\begin{defi}[Entropy]
+    The entropy of $X$:
+    \begin{equation*}
+        H(X) = H(p_1, \dotsc, p_n) = -\sum_{i=1}^n p_i \log p_i
+    \end{equation*}
+    where, in this course, $log = \log_2$.
+\end{defi}
+
+\begin{remark}
+    \begin{enumerate}[label=(\roman*)]
+        \item If $p_i = 0$, we take $p_i \log p_i=0$.
+        \item $H(x) \geq 0$.
+    \end{enumerate}
+\end{remark}
+
+\begin{cor}
+    A decipherable code with prescribed word lengths exists iff there exists a prefix-free code with the same word lengths.
+\end{cor}
+So we can restrict our attention to prefix-free codes.
+
+\subsection{Mathematical Entropy}
+Entropy is a measure of `randomness' or `uncertainty'.
+Consider a random variable $X$ taking values $x_1, \dotsc, x_n$ with probability $p_1, \dotsc, p_n$ ($\sum p_i = 1, 0 \leq p_i \leq 1$).
+The entropy $H(X)$ is roughly speaking the expected number of tosses of a fair coin needed to simulate $X$ (or the expected number of yes/no questions we need to ask in order to establish the value of $X$).
 \end{document}

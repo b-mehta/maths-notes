@@ -173,4 +173,152 @@ Consider a set $X$ and $\powerset(X)$ subsets of $X$.
     \end{align*}
     So, all inclusions are equality: $f^{-1}(U)$ is formed of countable intersections and unions of preimages of sets in $\mathscr{B}$, hence $f^{-1}(U) \in \mathscr{A}$.
 \end{proof}
+
+\subsection{Lebesgue integration}
+The important result from measures is the existence of Lebesgue measure, and that the `theory' is closed for pointwise convergence.
+
+We move now from Riemann integration to Lebesgue integration.
+In Riemann's theory of integration, we approximate the integral with Darboux sums, by dividing the domain. We require the domain to have a total order, while the codomain must be a Banach space.
+Conversely, in Lebesgue integration we divide the codomain (again, needing a total order) while the domain must simply be a measure space.
+
+\begin{defi}[Simple]\hypertarget{def:simple}
+    $f: (X, \mathscr{A}) \to (\R, \mathcal{B}(R))$ is \textbf{simple} if it is measurable and takes a finite number of values in $[0, +\infty)$.
+\end{defi}
+From here on in, when working on the real line, subsets thereof, or the extended real line the \hyperlink{def:sigAlg}{$\sigma$-algebra} will be the \hyperlink{def:borelSet}{Borel sets}.
+\begin{remark}
+    $A \subset X$, $\chi_A$ is \hyperlink{def:measFunc}{measurable} iff $A \in \mathscr{A}$ is simple.
+    The general form of a simple function is $s = \sum \alpha_i \chi_{A_i}$.
+\end{remark}
+\begin{prop}
+    Let $f: (X, \mathscr{A}) \to [0, +\infty]$ measurable.
+    Here $[0, +\infty] = [0, +\infty) \cup \{+\infty\}$, so the neighbourhoods of $\infty$ are $(a, +\infty])$, and we can have a metric $d(x,y) = \abs{\arctan x - \arctan y}$
+    There is $(s_k)$, a sequence of simple functions $s_{k+1} \geq s_k$ converging pointwise to $f$.
+\end{prop}
+\begin{proof}
+    For $n \geq 1$, define
+    \begin{align*}
+        B_n &= \set{x | f(x) \geq n}  \\
+        A_n^i &= \Set{x | f(x) \in \left[\frac{i-1}{2^n}, \frac{i}{2^n}\right]} \quad i=0, \dotsc, n 2^n
+    \end{align*}
+    Also, set
+
+    \begin{equation*}
+    s_n = \begin{cases*}\frac{i-1}{2^n} & on $A_n^i$ \\ n & on $B_n$\end{cases*}
+    \end{equation*}
+    Check
+    \begin{itemize}
+        \item $s_{n+1} \geq s_n$ $[A_n^i = A_{n+1}^{2i} \cup A_{n+1}^{2i+1}]$
+        \item on $B_n$, $\abs{s_n - f} \leq \frac{1}{2^n}$
+        \item on $x \in \bigcap_{k \geq 1} B_n$, $s_n(x) \to +\infty$.
+    \end{itemize}
+\end{proof}
+
+\begin{defi}
+    Take  $(X, \mathscr{A}, \mu)$ and $s$ a simple function on it given by $s=\sum_{i=1}^n \alpha_i \chi_{A_i}$, $\alpha_i \in [0, \infty)$.
+    For $E \in \mathscr{A}$, define
+    \begin{equation*}
+        \int_E s \, d\mu = \sum_{i=1}^n \alpha_i \mu(A_i \cap E).
+    \end{equation*}
+\end{defi}
+\begin{remark}
+    This induces a new measure on $\mathscr{A}$, with $E \mapsto \int_E s \, d\mu$.
+\end{remark}
+
+\begin{defi}
+    Take $f:(X, \mathscr{A}, \mu) \to [0, \infty]$ measurable and $E \in \mathscr{A}$.
+    Then define
+    \begin{equation*}
+        \int_E f \, d \mu \coloneqq \sup\Set{\int_E s \, d\mu | s \leq f} \in [0, +\infty]
+    \end{equation*}
+\end{defi}
+\begin{remark}
+    This integral always makes sense. Also, $\int_E f \, d\mu = 0$ if $\mu(E) = 0$
+\end{remark}
+\begin{ex}
+    Check linearity of the integral. Show Chebyshev's inequality:
+    \begin{equation*}
+        \mu(\set{x | f(x) \geq \alpha}) \leq \alpha^{-1} \int_X f \, d\mu
+    \end{equation*}
+    for $\alpha>0$.
+    If $f$ is measurable, $X \to [0, +\infty]$ satisfies $\int_X f \, d\mu < +\infty$, then $\mu(\set{x | f(x) = +\infty})$
+\end{ex}
+
+\begin{thm}[Beppo-Levi monotone convergence]
+    Take $f_k: (X, \mathscr{A}, \mu) \to [0, +\infty]$ measurable, converging pointwise to $f$ with $f_k \leq f_{k+1}$.
+    Then $\forall E \in \mathscr{A}$, $\int_E f_k \, d\mu \xrightarrow{k \to +\infty} \int_E f \, d\mu$.
+\end{thm}
+\begin{proof}
+    Reduce to $E = X$ by consdering $f_k \chi_E, f \chi_E, \dotsc$.
+    Then $\left(\int_X f_k \, d\mu\right)_{k \geq 1}$ is a sequence in $[0, +\infty]$, non-decreasing.
+
+    By monotonicity, $f_k \nearrow f$, so $\int_X f_k \, d\mu \leq \int_X f \, d\mu$.
+    Let
+    \begin{equation*}
+        \alpha \coloneqq \lim_{k \to +\infty} \int_X f_k \, d\mu \leq \int_X f \, d\mu.
+    \end{equation*}
+    Consider a simple function $s \leq f$ and $c \in (0, 1)$.
+    \begin{gather*}
+        E_k = \set{x\in X | f_k(x) \geq c s(x)} \in \mathscr{A} \text{ (using that $f_k$, $s$ are measurable)}\\
+        E_k \subset E_{k+1}, \bigcup_{k \geq 1} E_k = X \text{ (by pointwise convergence)}
+    \end{gather*}
+    Thus $\int_X s \, d\mu = \lim_{k \to +\infty} \int_{E_k} s \, d\mu$ (by continuity from below of $\mu$).
+    \begin{equation*}
+        \int_X f_k \, d\mu \geq \int_{E_k} f_k \, d \mu \geq c \int_{E_k} s \, d \mu
+    \end{equation*}
+    Take $k \to +\infty$. $\alpha \geq c \int_X s \, \mu$, and let $c \nearrow 1$, giving $\int_X s \, d\mu$.
+    Taking the supremum over $s \leq f$ for $s$ simple,
+    \begin{equation*}
+        \alpha \geq \int_X f `, d\mu.\qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{ex}
+    Taking $f_k$ as above, show
+    \begin{equation*}
+        \int_X \left(\sum_{k \geq 1} f_k\right) \, d\mu = \sum_{k \geq 1} \int_X f_k \, d\mu
+    \end{equation*}
+    Let $\nu: A \in \mathscr{A} \mapsto \int_A f \, d\mu$ (for $f$ a measure $X \to [0, +\infty]$).
+    Show that for any measure $g: (X, \mathscr{A}, \mu) \to [0, +\infty]$, $\int_X g \, d\mu = \int_X fg \, d\mu$.
+\end{ex}
+\begin{thm}[Fatou's lemma]
+    Take $f_k$ as above, then
+    \begin{equation*}
+        \int_X (\liminf f_k) \, d\mu \leq \liminf \left(\int_X f_k \, d\mu\right)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let $F_k = \inf\set{f_l | l \geq k}$, non-decreasing, valued in $[0, +\infty]$.
+    These are measurable: $\{F_k \geq a\} = \bigcap_{l \geq k} \{f_l \geq a\}$.
+    Observe that $\int \min(f, g) \, d\mu \leq \min(\int f \, d\mu, \int g \, d\mu)$.
+    Now, by \hyperlink{thm:Beppo-Levi},
+    \begin{align*}
+        \int_X (\liminf f_k) \, d\mu &= \int_X (\lim F_k) \, d\mu = \lim_{k \to +\infty} \left(\int_X F_k \, d\mu\right) \\
+                                     &= \lim_{k \to \infty} \left(\int_X \left( \inf_{l \geq k} f_l\right) \, d\mu\right) \\
+                                     &\leq \lim_{k \to \infty} \inf_{l \geq k} \left(\int_X f_l \, d\mu\right)\\
+                                     &\leq \liminf_{k \to \infty} \int f_k \, d\mu.\qedhere
+    \end{align*}
+\end{proof}
+\begin{defi}[Integrable]
+    $f: (X, \mathscr{A}, \mu) \to \C$ measurable is integrable if $\abs{f}: X \to [0, +\infty)$ satisfies $\int_X \abs{f} \, d\mu < +\infty$.
+\end{defi}
+Compute by splitting $f$ into real and imaginary parts, and each into nonnegative and nonpositive parts.
+
+\begin{thm}[Lebesgue's Dominated Convergence]
+    Take $f_k: (X, \mathscr{A}, \mu) \to \C$ where
+    \begin{itemize}
+        \item convergence: $f_k$ converges pointwise to $f$
+        \item domination: $\exists g$ integrable
+    \end{itemize}
+\end{thm}
+
+\begin{proof}
+    Let $h_k = 2g - \abs{f - f_k}$, taking values in $[0, +\infty]$.
+    Then $h_k \to 2g$ pointwise.
+    \begin{gather*}
+        \int_X 2g \, \mu = \int_X (\lim h_k) \, d\mu \leq \liminf_{k \to \infty} \left(\int_X h_k \, d\mu\right).
+        \text{Recall }\int_X h_k \, d\mu = \int_X 2g \, d\mu - \int_X \abs{f_k-f} \, d\mu
+        \int_X 2g \, d\mu \leq \int_X 2g \, d\mu - \limsup_{k \to \infty} \int \abs{f_k - f} \, d\mu.
+    \end{gather*}
+\end{proof}
 \end{document}

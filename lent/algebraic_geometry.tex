@@ -9,7 +9,10 @@
 
 % preamble
 \usepackage{tikz}
+\usepackage{tikz-cd}
 \newcommand{\A}{\mathbb{A}}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\chara}{char}
 %\setcounter{section}{-1}
 % and here we go!
 
@@ -99,5 +102,112 @@ then $Z(J) = Z(S)$.  Hence,
     (iv): $\supseteq$ holds by (i). Conversely, if $x \notin Z(I)$ then $\exists f_1 \in I$ such that $f_1(X) \neq 0$.
     So if $x \notin Z(J)$ also, $\exists f_2 \in J$ with $f_2(x) \neq 0$ also.
     Hence $f_1 f_2(x) = f_1(x) f_2(x) \neq 0$, so $x \notin Z(f_1 f_2)$. But $f_1 f_2 \in I \cap J$, as $I, J$ ideals so $x \notin Z(I \cap J)$.
+\end{proof}
+
+Looking at these results, $Z(I)$ form closed subsets of a topology on $\A^n$, called the \hypertarget{def:zariski}{`Zariski topology'}.
+
+If $Z \subset \A^n$ is any subset, let $I(Z) = \set{f \in k[\A^n] | f(p) = 0, \forall p \in \Z}$.
+Observe that $I(Z)$ is an ideal: if $g \in k[\A^n]$, $f(p) = 0$ then $(gf)(p) = 0$.
+\begin{lemma}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $Z \subseteq Z' \implies I(Z') \subseteq I(Z)$
+        \item for any $Y \subseteq \A^n$, $Y \subseteq Z(I(Y))$,
+        \item if $V = Z(J)$ is a subvariety of $\A^n$, then $V = Z(I(V))$.
+        \item if $J \lhd k[\A^n] = k[x_1, \dotsc, x_n]$ an ideal, then $J \subseteq I(Z(J))$.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    (i), (ii), (iv) are clear.
+    For (iii), first show $\supseteq$. $I(V) = I(Z(J))\supseteq J$ by (iv) so $Z(I(V)) \subseteq Z(J)=V$ by (i). $\subseteq$ follows by (iv).
+\end{proof}
+Hence (ii) and (iii) show that $Z(I(Y))$ is the smallest affine subvariety of $\A^n$ containing $Y$, i.e. it is the closure of $Y$ in the Zariski topology.
+
+Take $\Z \subseteq \C = \A^1$, $k = \C$ the closure of $\Z$ in Zariski topology is $\C$. $I(\Z) = \{0\}$ as if a poly vanishhes at every integer it is 0.
+Note if $k = \C$, $f \in \C[x_1, \dotsc, x_n]$, then $f$ is continuous in the usual topology, so
+\begin{equation*}
+    Z(J) = \bigcap_{f \in J} Z(f) = \bigcap_{f \in J} f^{-1}(0)
+\end{equation*}
+is a closed set in the usual topology, i.e. Zariski closed $Z \implies$ clsoed in the usual topology.
+So,
+\begin{equation*}
+\begin{tikzcd}
+    \{\text{Zariski closed subvarieties of} \A^n\} & \{\text{ideals in } k[x_1, \dotsc, x_n]\}
+\end{tikzcd}
+\end{equation*}
+But this is not a bijection
+$Z(X) = Z(X^2) = Z(X^3) = \dotsc = \{0\} \subseteq \A^1$. $Z(\langle f_1^{a_1}, \dotsc, f_r^{a_r}\rangle) = Z(f_1, f_2, \dotsc, f_r)$.
+but it turns out this kind of thing is the only problem % Nullstellensatz
+\begin{defi}
+    An affine variety $Y$ is \textbf{reducible} if $\exists$ affine varieties $Y_1, Y_2$, $Y_i \neq Y$ with $Y = Y_1 \cup Y_2$, and irreducible otherwise, and disconnected if $Y_1 \cap Y_2 = \emptyset$.
+\end{defi}
+% picsss
+So $Z(xy) = Z(x) \cup Z(y)$, reducible.
+$Z(y(y-1), x(y-1)) = Z(xy) \cup Z(y-1)$ reducible and disconnected.
+\begin{prop}
+    Any affine variety is a finite union of irreducible affine varieties.
+\end{prop}
+\begin{remark}
+    This is very different from usual manifolds.
+\end{remark}
+\begin{proof}
+    If not, $Y$ is not irreducible, so $Y = Y_1 \cup Y_1'$ and one of $Y_1, Y_1'$, (say $Y_1$) is not the finite union of irreducible affine varieties, so
+    \begin{equation*}
+        Y_1 = Y_2 \cup Y_2', \dotsc
+    \end{equation*}
+    and so we get an infinite chain of affine varities $Y \supsetneq Y_1 \supsetneq Y_2 \supsetneq \dotsb$.
+    But each $Y_i = Z(I_i)$ for some ideal $I_l$. Let $W = \bigcap Y_l = Z(\sum I_i) = Z(I)$.
+    $I = \sum I_i$ is an ideal. As the ideal $I$ is finitely generated $I = \langle f_1, \dotsc, f_r \rangle$ for some $f_i$.
+    $f_i \in I_{a_i}$ for some $a_1, \dotsc, a_r$ so $I = I_{a_1} + \dotsb + I_{a_r}$, $W = Y_{i_1} \cap \dotsb \cap Y_{i_r}$ contradicting $Y_N \subsetneq Y_{a_1} \cap \dotsb \cap Y_{a_r}$ if $N > r$.
+\end{proof}
+\begin{ex}
+    If $Y$ is a subvariety of $\A^\N$, $Y = Y_1 \cup \dotsb \cup Y_r$ with $Y_i$ irreducible, and $r$ minimal is unique up to reordering. Call the $Y_l$ the irreducible components of $Y$.
+\end{ex}
+\begin{prop}
+    $Y$ is irreducible $\iff I(Y)$ is a prime ideal in $k[\A^n] = k[x_1, \dotsc, x_n]$.
+\end{prop}
+\begin{eg}
+    \begin{enumerate}[label=(\roman*)]
+        \item $(x y)$ is not a prime ideal.
+        \item Exercise: Let $R$ be a UFD, $f \in R$, $f \neq 0$, $f$ irreducible $\iff (f)$ a prime ideal.
+        \item Exercise: $k[x_1, \dotsc, x_n]$ is a UFD.
+            hence $Z(y^2 - x^3 + x)$ is irreducible, $Z(y-x^2)$ is irreducible.
+    \end{enumerate}
+\end{eg}
+\begin{proof}
+    \begin{center}
+        \begin{tikzpicture}
+            \draw plot [smooth] coordinates {(-1, 1) (1, -1) (1.4, -2)};
+            \draw plot [smooth] coordinates {(-1, -1) (1, 1) (1.5, 1.2)};
+            % \draw plot [smooth] coordinates {<coordinate1> <coordinate2> <coordinate3> ...};
+        \end{tikzpicture}
+    \end{center}
+    If $Y = Y_1 \cup Y_2$ is reducible, $\exists p \in Y_1 \setminus Y_2$ so $\exists f \in I(Y_2)$ such that $f(p) \neq 0$ and similarly, $\exists q \in Y_2 \setminus Y_1$ so $\exists g \in I(Y_1)$ such that $g(q) \neq 0$.
+    Then $fg \in I(Y_1) \cap I(Y_2) = I(Y)$. But $f \notin I(Y)$, $g \notin I(Y)$ so not prime.
+
+    Conversely, if $I(Y)$ is not prime $\exists f_1 f_2 \in k[\A^n]$ such that $f_1, f_2 \notin I(Y)$ but $f_1 f_2 \in I(Y)$.
+    Let $Y_i = Y_n \cap Z(f_i) = \set{p \in Y | f_i(p) = 0}$. $Y_1 \cup Y_2 = Y$, as $p \in Y \implies f_1 f_2 (p) = 0 \implies f_1(p) = 0$ or $f_2(p) = 0$.
+    $Y_i \neq Y$ as $f_i \notin I(Y)$ (i.e. $\exists p_l \in Y$ such that $f_i(p_i) \neq 0$ so $p_i \notin Y_i$).
+\end{proof}
+\begin{lemma}
+    $X$ irreducible affine subvariety of $\A^n$, $\mathcal{U} \subseteq X$ open and non-empty $\implies \overline{\mathcal{U}} = X$.
+\end{lemma}
+\begin{proof}
+    Let $Y = X - \mathcal{U}$, closed. Then $\overline{\mathcal{U}} \cup Y = X$, and $U \neq \emptyset \implies Y \neq X$. But $X$ is irreducible, so $\overline{\mathcal{U}} = X$.
+\end{proof}
+
+Application: Cayley-Hamilton Theorem
+$A \in \Mat_n(k)$, an $n \times n$ matrix, with
+\begin{equation*}
+    \chara_A(x) = \det(x I - A) \in k[x]
+\end{equation*}
+the characteristic polynomial.
+This gives a function $\chara_A: \Mat_n(k) \to \Mat_n(k)$ $B \mapsto \chara_A(B)$.
+Cayley-Hamilton theorem says that $\forall A \in \Mat_n(k)$, $\chara_A(A) = 0$. Notice this is an equality of matrices, so it is $n^2$ equations.
+\begin{proof}
+    Let $X = \A^{n^2} = \Mat_n(k)$, affine space, hence irreducible algebraic variety.
+    Consider $CH = \set{A \in \Mat_n(k) | \chara_A(A) = 0}$.
+    Claim: this is a Zariski closed subvariety of $\A^{n^2}$, cut out by $n^2$ equations, $\chara_A(A)_y = 0$.
+    We must check that these equations are polynomials in the matrix coefficients of $A$.
 \end{proof}
 \end{document}
