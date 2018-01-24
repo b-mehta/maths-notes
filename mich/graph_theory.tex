@@ -1484,4 +1484,30 @@ A lot more work gives:
 
     Case 3: $d(v) = 5$, % finish this
 \end{proof}
+
+% new lec
+
+The four colour theorem was proved in 1976, with 1936 cases checked.
+
+\subsection{General Graphs}
+We know $G$ planar $\implies \chi(G) \leq 4$.
+
+What can we say about $\chi(G)$ if not given $G$ planar?
+Clearly $\chi(G)$ can be as large as we like, e.g. $\chi(K_k) = k$.
+
+\subsubsection{Lower bounds}
+\begin{enumerate}[label=(\alph*)]
+    \item If $K_k \subset G$ then $\chi(G) \geq k$.
+        The \textbf{clique number} of $G$ is $\omega(G) = \max\set{k | K_k \subset G}$. Then $\chi(G) \leq \omega(G)$.
+        Sometimes this bound is not good. For instance, we can find $G$ with $\omega(G) = 2$ and $\chi(G)$ arbitrarily large (see example sheet 2).
+    \item Suppose we have a colouring of $G$. Let $W \subset V(G)$ be a colour class. Then $W$ is an \textbf{independent set} - there are no edges within $W$.
+        The \textbf{independence number} of $G$ is
+        \begin{equation*}
+            \alpha(G) = \max\set{\abs{W} | W \subset V(G), W \text{ independent}}.
+        \end{equation*}
+        Then $\chi(G) \geq \frac{\abs{G}}{\alpha(G)}$.
+        Sometimes this bound is not good.
+        For instance, take $G = K_k \cup \overline{K_k}$.
+        Then $\chi(G) = k$, $\frac{\abs{G}}{\alpha(G)} = \frac{2k}{k+1} \approx 2$.
+\end{enumerate}
 \end{document}

@@ -2124,7 +2124,7 @@ $L = K(\alpha_1, \alpha_2, \alpha_3, \alpha_4)$ splitting field for $f(t)$ over 
 \begin{center}
     \begin{tikzpicture}[node distance=2cm]
         \node (L) {$L$};
-        \node (M) [below of=L] {$M$};
+        \node (M) [below of=L] {$M=L^{G \cap V_4}$};
         \node (Kd) [below of=M] {$K(\Delta)$};
         \node (K) [below of =Kd] {$K$};
         \node [left of=M,align=center] {normal\\extension\\of $K$};
@@ -2159,4 +2159,47 @@ These are distinct, e.g. if $y^2=z^2$ then $y=\pm z$ and so either $\alpha_3 = \
 The $x^2,y^2,z^2$ are permuted by $G$ and are fixed by $G \cap V_4$. So $K(x^2, y^2, z^2) \leq M = L^{G \cap V_4}$.
 \textbf{Claim}: We have equality $M=K(x^2, y^2, z^2)$. Now consider the resolvent cubic $g(t) = (t-x^2)(t-y^2)(t-z^2) \in K[t]$.
 Note that its coefficients are fixed by $G$ and so lie in $K$.
+
+% Lecture 19
+Observe $D(f) = D(g)$, (check on example sheet).
+So $K(\Delta) \leq K(x^2, y^2, z^2)$. Now observe that $\Gal(L/K(x^2, y^2, z^2)) = \Gal(K(x,y,z)/K(x^2,y^2,z^2))$.
+\begin{equation*}
+    K(x^2,y^2,z^2) \leq K(x,y^2,z^2)\leq K(x,y,z^2) \leq K(x,y,z)
+\end{equation*}
+where each extension is degree 1 or 2.
+So $\abs{K(x,y,z):K(x^2,y^2,z^2)}$ divides 8.
+So, the elements of $\Gal(L/K(x^2,y^2,z^2))$ have order dividing 8.
+But $\Gal(L/K(x^2,y^2,z^2)) \leq G \cap A_4$, so $\Gal(L/K(x^2,y^2,z^2)) \leq G \cap V_4$.
+By the fundamental theorem, $M=K(x^2,y^2,z^2)$.
+
+Consider the coefficients of $g(t)$: $x^2,y^2,z^2$ are permuted by $G$ and so the coefficients of $g(t)$ are fixed by $G$ and theorefore in $K$.
+
+\begin{align*}
+    x^2+y^2+z^2&=-2b,\\
+    x^2y^2+x^2z^2+y^2z^2&=b^2-4d\\
+    xyz=-c \quad x^2y^2z^2&=c^2\\
+    \text{So } g(t)&=t^3+2bt^2+(b^2-4d)t-c^2
+\end{align*}
+
+We know how to solve cubics and so we can solve for $x^2, y^2, z^2$. Then we can solve for $x,y,z$.
+Then use the formulae from earlier to find $\alpha_1, \alpha_2,\alpha_3, \alpha_4$.
+\begin{center}
+    \begin{tikzpicture}[node distance=2cm]
+        \node (L) {$L$};
+        \node (M) [below of=L] {$M$};
+        \node (Kd) [below of=M] {$K(\Delta)$};
+        \node (K) [below of =Kd] {$K$};
+        \node [left of=M,align=center] {normal\\extension\\of $K$};
+
+        \node (dummy) [right of=L] {};
+        \node (e) [right of=dummy] {$\{e\}$};
+        \node (Gv) [below of=e] {$G\cap V_4 \lhd G$};
+        \node (Ga) [below of=Gv] {$G \cap A_4$};
+        \node (G) [below of=Ga] {$G=\Gal(L/K)\leq S_4$};
+
+        \draw (L) -- (M) -- (Kd) node[midway,anchor=east]{1 or 3} -- (K);
+        \draw (e) -- (Gv) -- (Ga) node[midway,anchor=east]{1 or 3} -- (G)
+    \end{tikzpicture}
+\end{center}
+Recall $\theta: S_4 \to S_3$, with $\ker \theta = V_4$. Now, $\theta|_{A_4}: A_4 \to A_3 \cong C_3$, so $\theta|_
 \end{document}
