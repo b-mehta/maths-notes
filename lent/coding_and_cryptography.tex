@@ -9,8 +9,11 @@
 
 % preamble
 \usepackage{tikz}
+\usepackage{pgfplots}
 \usetikzlibrary{arrows,decorations.pathmorphing,decorations.markings,positioning}
 \renewcommand{\thesection}{\Roman{section}}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\pgfplotsset{width=7cm}
 % and here we go!
 
 \begin{document}
@@ -205,6 +208,8 @@ We send a message $x_1, \dotsc, x_n \in \Sigma_1^*$ as $f(x_1) f(x_2) \dotsm f(x
     Clearly we need $f$ injective, but this is not enough.
 \end{defi}
 
+% Lecture 2
+
 \begin{eg}
     Take $\Sigma_1 = \{1, 2, 3, 4\}$, $\Sigma_2 = \{0, 1\}$ with
     \begin{equation*}
@@ -241,28 +246,41 @@ Prefix-free codes are also known as \textbf{instantaneous codes} (i.e. a word ca
 \end{nthm}
 
 \begin{proof}
-    $(\implies)$ Consider an $\infty$ tree where each has a descendant, labelled by the elements of $\Sigma_2$. Each codeword corresponds to a node, the path from the root to this node spelling out the codeword.
+    $(\Rightarrow)$ Consider an $\infty$ tree where each has a descendant, labelled by the elements of $\Sigma_2$. Each codeword corresponds to a node, the path from the root to this node spelling out the codeword.
     For example,
     \begin{center}
-        \begin{tikzpicture}
-            \filldraw (0, 0) circle (1pt);
-            \filldraw (1, 1) circle (1pt);
-            \filldraw (1,-1) circle (1pt);
+        \begin{tikzpicture}[scale=2]
+            \filldraw (0, 0) circle (0.5pt);
+            \filldraw (1, 1) circle (0.5pt);
+            \filldraw (1,-1) circle (0.5pt);
             \foreach \x in {1,...,5}{
                 \pgfmathsetmacro\a{(3-\x)/2.0}
-                \pgfmathsetmacro\b{(3-\x)/4.0 + 1}
-                \pgfmathsetmacro\c{(3-\x)/4.0 - 1}
-                \draw (0, 0) -- (1, \a);
-                \draw (1, 1) -- (2, \b);
-                \draw (1, -1) -- (2, \c);
+                \pgfmathsetmacro\b{(3-\x)/4.0 + 1.2}
+                \draw (0, 0) --(1, \a) node[pos=0.7, above] {$\scriptstyle \x$};
+                \draw (1, 1) -- (2, \b) node[pos=0.8, above] {$\scriptstyle \x$};
             };
+            \foreach \x in {1,...,4}{
+                \pgfmathsetmacro\c{(3-\x)/4.0 - 1.2}
+                \draw (1, -1) -- (2, \c) node[pos=0.8, above] {$\scriptstyle \x$};
+            };
+            \node at (2, 0.1) {$\vdots$};
+            \node [right] at (2, 1.7) {$\alpha$};
+            \node [right] at (2, 1.45) {$\beta$};
+            \node [right] at (2, 1.2) {$\gamma$};
+            \node [right] at (2, 0.95) {$\delta$};
+            \node [right] at (2, 0.7) {$\epsilon$};
+
+            \node [right] at (2, -0.7) {$\phi$};
+            \node [right] at (2, -0.95) {$\chi$};
+            \node [right] at (2, -1.2) {$\psi$};
+            \node [right] at (2, -1.45) {$\omega$};
         \end{tikzpicture}
     \end{center}
     Assuming $f$ is prefix-free, no codeword is the ancestor of any other. Now view the tree as a network with water being pumped in at a constant rate and dividing the flow equally at each node.
 
     The total amount of water we can extract at the codewords is $\sum_{i=1}^m a^{-s_i}$, which is therefore $\leq 1$.
 
-    $(\impliedby)$ Conversely, suppose we can construct a prefix-free code with word lengths $s_1, \dotsc, s_m$ wlog $s_1 \leq s_2 \leq \dotsb \leq s_m$.
+    $(\Leftarrow)$ Conversely, suppose we can construct a prefix-free code with word lengths $s_1, \dotsc, s_m$ wlog $s_1 \leq s_2 \leq \dotsb \leq s_m$.
     We pick codewords of lengths $s_1, s_2, \dotsc$ sequentially ensuring previous codewords are not prefixes.
     Suppose there is no valid choice for the $r$th codeword.
     Then reconstructing the tree as above gives $ \sum_{i=1}^{r-1} a^{-s_i} = 1 $, contradicting our assumption.
@@ -273,7 +291,7 @@ Prefix-free codes are also known as \textbf{instantaneous codes} (i.e. a word ca
     Every decipherable code satisfies Kraft's inequality.
 \end{nthm}
 
-\begin{proof}[Karush]
+\begin{proof}(Karush)
     Let $f: \Sigma_1 \to \Sigma_2^*$ be a decipherable code with word lengths $s_1, \dotsc, s_m$, let $s = \max_{1 \leq i \leq m} s_i$.
     Let $r \in \N$
     \begin{equation*}
@@ -291,32 +309,38 @@ Prefix-free codes are also known as \textbf{instantaneous codes} (i.e. a word ca
 \end{proof}
 
 \begin{eg}
+    \leavevmode
     \begin{enumerate}[label=\arabic*.]
         \item Suppose $p_1 = p_2 = p_3 = p_4 = \frac{1}{4}$. We identify $\{x_1, x_2, x_3, x_4\}$ with $\{HH, HT, TH, HH\}$. $H(X) = 2$.
         \item Take $(p_1, p_2, p_3, p_4) = (\frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{8})$.
             \begin{center}
-                \begin{tikzpicture}[xscale=1.8]
+                \begin{tikzpicture}[xscale=1.8, yscale=0.8]
                     \draw (0,0) -- (1,1);
                     \draw (0,0) -- (1, -1);
                     \draw (1, -1) -- (2, 0);
                     \draw (1, -1) -- (2, -2);
                     \draw (2, -2) -- (3, -1);
                     \draw (2, -2) -- (3, -3);
+                    \node [right] at (1, 1) {$\frac{1}{2}$};
+                    \node [right] at (2, 0) {$\frac{1}{4}$};
+                    \node [right] at (3, -1) {$\frac{1}{8}$};
+                    \node [right] at (3, -3) {$\frac{1}{8}$};
                 \end{tikzpicture}
             \end{center}
             So example 1 is more random than example 2.
     \end{enumerate}
 \end{eg}
 
-\begin{defi}[Entropy]
+\begin{defi}[Entropy]\hypertarget{def:entropy}
     The entropy of $X$:
     \begin{equation*}
         H(X) = H(p_1, \dotsc, p_n) = -\sum_{i=1}^n p_i \log p_i
     \end{equation*}
-    where, in this course, $log = \log_2$.
+    where, in this course, $\log = \log_2$.
 \end{defi}
 
 \begin{remark}
+    \leavevmode
     \begin{enumerate}[label=(\roman*)]
         \item If $p_i = 0$, we take $p_i \log p_i=0$.
         \item $H(x) \geq 0$.
@@ -329,7 +353,143 @@ Prefix-free codes are also known as \textbf{instantaneous codes} (i.e. a word ca
 So we can restrict our attention to prefix-free codes.
 
 \subsection{Mathematical Entropy}
-Entropy is a measure of `randomness' or `uncertainty'.
+\hyperlink{def:entropy}{Entropy} is a measure of `randomness' or `uncertainty'.
 Consider a random variable $X$ taking values $x_1, \dotsc, x_n$ with probability $p_1, \dotsc, p_n$ ($\sum p_i = 1, 0 \leq p_i \leq 1$).
 The entropy $H(X)$ is roughly speaking the expected number of tosses of a fair coin needed to simulate $X$ (or the expected number of yes/no questions we need to ask in order to establish the value of $X$).
+
+% Lecture 3
+\begin{eg}
+    We toss a biased coin, $P(\text{heads}) = p, P(\text{tails}) = 1-p$. Write $H(p) = H(p, 1-p) = -p \log p - (1-p) \log (1-p)$.
+    If $p=0$ or $1$, the outcome is certain and so entropy=0. Entropy is maximal where $p=\frac{1}{2}$, i.e. a fair coin.
+
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+            ]
+            % density of Normal distribution:
+            \addplot [
+            red,
+            domain=0:1,
+            samples=201,
+            ]
+            {-x*log2(x) - (1-x)*log2(1-x)};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+\end{eg}
+
+Note the \hyperlink{def:entropy}{entropy} can also be viewed as the expected value of the information of $X$, where information is given by $I(X=x) = -\log_2 P(X=x)$.
+For example, if a coin always lands heads we gain no information from tossing the coin.
+The entropy is the average amount of information conveyed by a random variable $X$.
+
+\begin{nlemma}[Gibbs' Inequality]\label{lem:gibbs}
+    Let $p_1, \dotsc, p_n$ and $q_1, \dotsc, q_n$ be probability distributions. Then
+    \begin{equation*}
+        -\sum p_i \log p_i \leq -\sum p_i \log q_i
+    \end{equation*}
+    with equality iff $p_i = q_i$.
+\end{nlemma}
+\begin{proof}
+    Since $\log x = \frac{\ln x}{\ln 2}$ it suffices to prove the inequality with $\log$ replaced with $\ln$.
+    Note $\ln x \leq x - 1$, equality iff $x=1$.
+    % graph x-1 and ln x
+    Let $I = \set{1 \leq i \leq n | p_i \neq 0}$
+    \begin{align*}
+        \ln \frac{q_i}{p_i} &\leq \frac{q_i}{p_i} - 1 \quad \forall i \in I \\
+        \sum_{i \in I} p_i \ln \frac{q_i}{p_i} &\leq \sum q_i - \underbrace{\sum p_i}_{=1} \leq 0 \\
+        \implies -\sum_{i \in I} p_i \ln p_i &\leq -\sum_{i \in I} p_i \ln q_i \\
+        \implies -\sum_{i =1}^n p_i \ln p_i &\leq -\sum_{i =1}^n p_i \ln q_i \\
+    \end{align*}
+    If equality holds then $\frac{q_i}{p_i} = 1$ $\forall i \in I$. So, $\sum_{i \in I} q_i = 1$ and hence $p_i = q_i$ for $1 \leq i \leq n$.
+\end{proof}
+
+\begin{cor}
+    $H(p_1, \dotsc, p_n) \leq \log n$ with equality iff $p_1 = p_2 = \dotsb = p_n = \frac{1}{n}$.
+\end{cor}
+\begin{proof}
+    Take $q_1 = q_2 = \dotsc = q_n = \frac{1}{n}$ in previous lemma.
+\end{proof}
+
+Suppose we have two alphabets $\Sigma_1, \Sigma_2$ with $\abs{\Sigma_1} = m$ and $\abs{\Sigma_2} = a$, for $m \geq 2$ and $a \geq 2$.
+We model the source as a sequence of random variables $X_1, X_2, \dotsc$ taking values in $\Sigma_1$.
+\begin{defi}[Memoryless source]\hypertarget{def:memoryless}
+    A \textbf{Bernoulli} or \textbf{memoryless} source is a sequence of independently, identically distributed random variables.
+\end{defi}
+That is, for each $\mu \in \Sigma_1$, $P(X_i = \mu)$ is independent of $i$ and independent of all past and future symbols emitted. Thus
+\begin{equation*}
+    P(X_1= x_1, X_2 = x_2, \dotsc, X_k = x_k) = \prod_{i = 1}^k P(X_i = x_i)
+\end{equation*}
+Let $\Sigma_1 = \{\mu_1, \dotsc, \mu_n\}$, $p_i = P(X=\mu_i)$ (assume $p_i > 0$).
+\begin{defi}[Expected word length]\hypertarget{def:ewl}
+    The \textbf{expected word length} of a code $f: \Sigma_1 \to \Sigma_2^*$ with word lengths $s_1, \dotsc, s_m$ is $E(S) = \sum_{i=1}^m p_i s_i$.
+\end{defi}
+
+\begin{defi}[Optimal code]\hypertarget{def:optCode}
+    A \hyperlink{def:code}{code} $f:\Sigma_1 \to \Sigma_2^*$ is \textbf{optimal} if it has the shortest possible \hyperlink{def:ewl}{expected word length} among \hyperlink{def:decipherable}{decipherable} codes.
+\end{defi}
+\begin{nthm}[Shannon's Noiseless Coding Theorem]
+    The minimum \hyperlink{def:ewl}{expected word length} of a \hyperlink{def:decipherable}{decipherable code} $f: \Sigma_1 \to \Sigma_2^*$ satisfies
+    \begin{equation*}
+        \frac{H(X)}{\log a} \leq E(S) < \frac{H(X)}{\log a} + 1
+    \end{equation*}
+\end{nthm}
+\begin{proof}
+    The lower bound is given by combining \nameref{lem:gibbs} and \nameref{thm:kraft}.
+    Let $q_i = \frac{a^{-s_i}}{c}$ where $c = \sum a^{-s_i} \leq 1$ by \nameref*{thm:kraft}.
+    Note $\sum q_i = 1$.
+    \begin{align*}
+        H(X) = -\sum p_i \log p_i &\leq -\sum_i p_i \log q_i \\
+                                  &= \sum p_i (s_i \log a + \log c) \\
+                                  &= (\sum p_i s_i) \log a + \underbrace{\log c}_{\leq 0} \leq E(S) \log a\\
+        \implies \frac{H(X)}{\log a} &\leq E(S)
+    \end{align*}
+    We get equality $\iff p_i = a^{-s_i}$ for some integers $s_i$.
+    For the upper bound put
+    \begin{equation*}
+        s_i = \ceil{-\log_a p_i}
+    \end{equation*}
+    where $\ceil{x}$ means least integer $\geq x$.
+
+    We have
+    \begin{gather*}
+        - \log_a p_i \leq s_i < - \log_a p_i + 1 \\
+        \implies a^{-s_i} \leq p_i \implies \sum a^{-s_i} \leq \sum p_i \leq 1
+    \end{gather*}
+    So by \cref{thm:kraft}, $\exists$ a prefix-free code with word lengths $s_1, \dotsc, s_m$.
+    Also,
+    \begin{align*}
+        E(S) &= \sum p_i s_i \\
+             &< p_i (- \log_a p_i + 1) \\
+             &= \frac{H(X)}{\log a} + 1
+    \end{align*}
+\end{proof}
+\begin{remark}
+    The lower bound holds for all decipherable codes.
+\end{remark}
+
+\subsubsection*{Shannon-Fano coding}
+Follows from above proof.
+Set $s_i = \ceil{-\log_a p_i}$ and construct a prefix-free code with word lengths $s_1, \dotsc, s_m$ by taking the $s_i$ in increasing order ensuring that previous codewords are not prefixes.
+The Kraft inequality ensures there is enough room.
+\begin{eg}
+    Suppose $\mu_1, \dotsc, \mu_5$ are emitted with probabilities $0.4, 0.2, 0.2, 0.1, 0.1$.
+    A Shannon-Fano code (with $a=2$, $\Sigma_2 = \{0, 1\}$) has
+    \begin{center}
+    \begin{tabular}{c c c}
+        $p_i$ & $\ceil{-\log_2 p_i}$ & \\
+        \hline
+        0.4 & 2 & 00 \\
+        0.2 & 3 & 010 \\
+        0.2 & 3 & 100 \\
+        0.1 & 4 & 1100 \\
+        0.1 & 4 & 1110
+    \end{tabular}
+    \end{center}
+    This has \hyperlink{def:ewl}{expected word length}
+    \begin{align*}
+        &= 2 \times 0.4 + 3 \times 0.2 + 3 \times 0.2 + 4 \times 0.1 + 4 \times 0.1 \\
+        &= 2.8
+    \end{align*}
+    compare $H(X) \approx 2.12$.
+\end{eg}
 \end{document}
