@@ -287,7 +287,7 @@ as used in Probability and Measure.
     \begin{equation*}
         \int_X \left(\sum_{k \geq 1} f_k\right) \, d\mu = \sum_{k \geq 1} \int_X f_k \, d\mu.
     \end{equation*}
-    Let $\nu: A \in \mathscr{A} \mapsto \int_A f \, d\mu$ (for $f$ a \hyperlink{def:measFunc}{measurable} $X \to [0, +\infty]$).
+    Let $\nu: A \in \mathscr{A} \mapsto \int_A f \, d\mu$ (for $f: X \to [0, +\infty]$ \hyperlink{def:measFunc}{measurable}).
     Show that for any \hyperlink{def:measure}{measure} $g: (X, \mathscr{A}, \mu) \to [0, +\infty]$, $\int_X g \, d\mu = \int_X fg \, d\mu$.
 \end{ex}
 \begin{thm}[Fatou's lemma]\hypertarget{thm:fatou}
@@ -454,7 +454,11 @@ Observe this implies that any Lebesgue set of finite \hyperlink{def:measure}{mea
 
             Claim: Any open set $\mathcal{O} \subset \R^n$ can be covered with a countable union of elements of $\mathcal{C}$ with disjoint interiors.
 
-            Use an inductive procedure: Split into $\Z^n$. 1. Keep cubes that are fully inside, discard ones that are fully outside. For borderline cubes, divide into $2^n$ cubes evenly and start 1 again.
+            Use an inductive procedure: Split into $\Z^n$.
+            \begin{enumerate}[label=\arabic*.]
+                \item Keep cubes that are fully inside, discard ones that are fully outside.
+                \item For borderline cubes, divide into $2^n$ cubes evenly and go back to step 1.
+            \end{enumerate}
             Check that $\mathcal{O} = \bigcup_{n, k} C_{n, k}$, and note that the hypercubes have dyadic, hence rational coordinates.
             The figure shows a few steps for an example in $\R^2$.
             \begin{center}
