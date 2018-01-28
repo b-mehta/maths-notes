@@ -10,12 +10,16 @@
 % preamble
 \usepackage{tikz}
 \usepackage{mathrsfs}
-% \newcommand{\powerset}{\raisebox{.15\baselineskip}{\Large\ensuremath{\wp}}}
+\usepackage{bm}
 \newcommand{\powerset}{\mathscr{P}}
+\usetikzlibrary{backgrounds}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 %\setcounter{section}{-1}
 % and here we go!
 
 \begin{document}
+% \iffalse
 \maketitle
 \tableofcontents
 
@@ -32,8 +36,8 @@
 \section{Lebesgue theory}
 \begin{ex}
     Show pointwise limit of Riemann-integrable functions is not necessarily Riemann-integrable.
+    (Hint: Dirichlet function).
 \end{ex}
-(Hint: Dirichlet function).
 
 % 1)
 \subsection{Recap of measure theory}
@@ -61,8 +65,8 @@ Consider a set $X$ and $\powerset(X)$ subsets of $X$.
 \end{remark}
 
 \begin{remark}
-    The property of being a \hyperlink{def:sigAlg}{$\sigma$-algebra} is stable under intersection.\hypertarget{def:borelSet}
-    The notion of smaller $\sigma$-algebra containing some topology $\mathscr{T}$ are called \textbf{Borel} sets, written $\mathcal{B}(X)$.
+    The property of being a \hyperlink{def:sigAlg}{$\sigma$-algebra} is stable under intersection.
+    The smallest $\sigma$-algebra containing some topology $\mathscr{T}$ has elements called \hypertarget{def:borelSet}{\textbf{Borel} sets}, written $\mathcal{B}(X)$.
 \end{remark}
 
 \begin{defi}\hypertarget{def:measure}
@@ -127,7 +131,7 @@ Consider a set $X$ and $\powerset(X)$ subsets of $X$.
 \end{prop}
 
 \begin{proof}
-    Since $B$ is formed from open sets through countable union/intersection and difference, it is enough to prove $\forall U \in \mathscr{T}(Y)$, $f^{-1}(U) \in \mathscr{A}$. (Exercise: Check.)
+    Since $B$ is formed from open sets through countable union/intersection and difference, it is enough to prove that $\forall U \in \mathscr{T}(Y)$, $f^{-1}(U) \in \mathscr{A}$. (Exercise: Check.)
 
     Let
     \begin{align*}
@@ -140,7 +144,7 @@ Consider a set $X$ and $\powerset(X)$ subsets of $X$.
     \end{equation*}
     and $F_n$ are closed.
 
-    We can see $U = \bigcup_{n \geq 1} U_n = \bigcup_{n \geq 1} F_n$ ($U$ open). % why U open matters?
+    We can see $U = \bigcup_{n \geq 1} U_n = \bigcup_{n \geq 1} F_n$ because $U$ is open. % why U open matters? so that all points are indeed included
     Hence,
     \begin{equation*}
         f^{-1}(U) = f^{-1} \left(\bigcup_{n \geq 1} U_n\right) = \bigcup_{n \geq 1} f^{-1}(U_n) \subset \bigcup_{n \geq 1} \bigcup_{l \geq 1} \bigcap_{k \geq l} f^{-1}_k(U_n).
@@ -179,20 +183,21 @@ The important result from measures is the existence of Lebesgue measure, and tha
 
 We move now from Riemann integration to Lebesgue integration.
 In Riemann's theory of integration, we approximate the integral with Darboux sums, by dividing the domain. We require the domain to have a total order, while the codomain must be a Banach space.
-Conversely, in Lebesgue integration we divide the codomain (again, needing a total order) while the domain must simply be a measure space.
-
+Conversely, in Lebesgue integration we divide the codomain (again, needing a total order) while the domain must have a \hyperlink{def:measure}{measure} defined on it.
 \begin{defi}[Simple]\hypertarget{def:simple}
-    $f: (X, \mathscr{A}) \to (\R, \mathcal{B}(R))$ is \textbf{simple} if it is measurable and takes a finite number of values in $[0, +\infty)$.
+    $f: (X, \mathscr{A}) \to (\R, \mathcal{B}(R))$ is \textbf{simple} if it is \hyperlink{def:measure}{measurable} and takes a finite number of values in $[0, +\infty)$.
 \end{defi}
 From here on in, when working on the real line, subsets thereof, or the extended real line the \hyperlink{def:sigAlg}{$\sigma$-algebra} will be the \hyperlink{def:borelSet}{Borel sets}.
 \begin{remark}
-    $A \subset X$, $\chi_A$ is \hyperlink{def:measFunc}{measurable} iff $A \in \mathscr{A}$ is simple.
+    $A \subset X$, $\chi_A$ is \hyperlink{def:measFunc}{measurable} iff $A \in \mathscr{A}$ is \hyperlink{def:simple}{simple}.
     The general form of a simple function is $s = \sum \alpha_i \chi_{A_i}$.
 \end{remark}
+\begin{notation}
+    $[0, +\infty] = [0, +\infty) \cup \{+\infty\}$, so the neighbourhoods of $\infty$ are $(a, +\infty]$, and we can have a metric $d(x,y) = \abs{\arctan x - \arctan y}$.
+\end{notation}
 \begin{prop}
-    Let $f: (X, \mathscr{A}) \to [0, +\infty]$ measurable.
-    Here $[0, +\infty] = [0, +\infty) \cup \{+\infty\}$, so the neighbourhoods of $\infty$ are $(a, +\infty])$, and we can have a metric $d(x,y) = \abs{\arctan x - \arctan y}$
-    There is $(s_k)$, a sequence of simple functions $s_{k+1} \geq s_k$ converging pointwise to $f$.
+    Let $f: (X, \mathscr{A}) \to [0, +\infty]$ \hyperlink{def:measFunc}{measurable}.
+    There is $(s_k)$, a sequence of \hyperlink{def:simple}{simple} functions $s_{k+1} \geq s_k$ converging pointwise to $f$.
 \end{prop}
 \begin{proof}
     For $n \geq 1$, define
@@ -201,7 +206,6 @@ From here on in, when working on the real line, subsets thereof, or the extended
         A_n^i &= \Set{x | f(x) \in \left[\frac{i-1}{2^n}, \frac{i}{2^n}\right]} \quad i=0, \dotsc, n 2^n
     \end{align*}
     Also, set
-
     \begin{equation*}
     s_n = \begin{cases*}\frac{i-1}{2^n} & on $A_n^i$ \\ n & on $B_n$\end{cases*}
     \end{equation*}
@@ -209,78 +213,84 @@ From here on in, when working on the real line, subsets thereof, or the extended
     \begin{itemize}
         \item $s_{n+1} \geq s_n$ $[A_n^i = A_{n+1}^{2i} \cup A_{n+1}^{2i+1}]$
         \item on $B_n$, $\abs{s_n - f} \leq \frac{1}{2^n}$
-        \item on $x \in \bigcap_{k \geq 1} B_n$, $s_n(x) \to +\infty$.
+        \item on $x \in \bigcap_{k \geq 1} B_n$, $s_n(x) \to +\infty$.\qedhere
     \end{itemize}
 \end{proof}
+Observe this construction is simply
+\begin{equation*}
+    s_n = \max\left(n, 2^{-n} \floor*{\frac{x}{2^{n}}}\right)
+\end{equation*}
+as used in Probability and Measure.
 
-\begin{defi}
-    Take  $(X, \mathscr{A}, \mu)$ and $s$ a simple function on it given by $s=\sum_{i=1}^n \alpha_i \chi_{A_i}$, $\alpha_i \in [0, \infty)$.
+\begin{defi}[Integral of simple function]
+    Take  $(X, \mathscr{A}, \mu)$ and $s$ a \hyperlink{def:simple}{simple} function on it given by $s=\sum_{i=1}^n \alpha_i \chi_{A_i}$, $\alpha_i \in [0, \infty)$.
     For $E \in \mathscr{A}$, define
     \begin{equation*}
         \int_E s \, d\mu = \sum_{i=1}^n \alpha_i \mu(A_i \cap E).
     \end{equation*}
 \end{defi}
 \begin{remark}
-    This induces a new measure on $\mathscr{A}$, with $E \mapsto \int_E s \, d\mu$.
+    This induces a new \hyperlink{def:measure}{measure} on $\mathscr{A}$, sending $E \mapsto \int_E s \, d\mu$.
 \end{remark}
 
-\begin{defi}
-    Take $f:(X, \mathscr{A}, \mu) \to [0, \infty]$ measurable and $E \in \mathscr{A}$.
+\begin{defi}[Integral]\hypertarget{def:integral}
+    Take $f:(X, \mathscr{A}, \mu) \to [0, \infty]$ \hyperlink{measFunc}{measurable} and $E \in \mathscr{A}$.
     Then define
     \begin{equation*}
         \int_E f \, d \mu \coloneqq \sup\Set{\int_E s \, d\mu | s \leq f} \in [0, +\infty]
     \end{equation*}
 \end{defi}
 \begin{remark}
-    This integral always makes sense. Also, $\int_E f \, d\mu = 0$ if $\mu(E) = 0$
+    This \hyperlink{def:integral}{integral} always makes sense. Also, $\int_E f \, d\mu = 0$ if $\mu(E) = 0$.
 \end{remark}
 \begin{ex}
-    Check linearity of the integral. Show Chebyshev's inequality:
+    Check linearity of the \hyperlink{def:integral}{integral}. Show Chebyshev's inequality:
     \begin{equation*}
-        \mu(\set{x | f(x) \geq \alpha}) \leq \alpha^{-1} \int_X f \, d\mu
+        \mu(\set{x | f(x) \geq \alpha}) \leq \alpha^{-1} \int_X f \, d\mu \quad \forall \alpha > 0.
     \end{equation*}
-    for $\alpha>0$.
-    If $f$ is measurable, $X \to [0, +\infty]$ satisfies $\int_X f \, d\mu < +\infty$, then $\mu(\set{x | f(x) = +\infty})$
+    Also show that for $f$ \hyperlink{def:measFunc}{measurable}, $X \to [0, \infty]$
+    \begin{equation*}\int_X f \, d\mu < \infty \implies \mu(\set{x | f(x) = \infty}) = 0.\end{equation*}
 \end{ex}
 
 \begin{thm}[Beppo-Levi monotone convergence]\hypertarget{thm:Beppo}
-    Take $f_k: (X, \mathscr{A}, \mu) \to [0, +\infty]$ measurable, converging pointwise to $f$ with $f_k \leq f_{k+1}$.
-    Then $\forall E \in \mathscr{A}$, $\int_E f_k \, d\mu \xrightarrow{k \to +\infty} \int_E f \, d\mu$.
+    Take $f_k: (X, \mathscr{A}, \mu) \to [0, \infty]$ \hyperlink{def:measFunc}{measurable}, converging pointwise to $f$ with $f_k \leq f_{k+1}$.
+    Then $\forall E \in \mathscr{A}$,
+    \begin{equation*}\int_E f_k \, d\mu \xrightarrow{k \to \infty} \int_E f \, d\mu.\end{equation*}
 \end{thm}
 \begin{proof}
-    Reduce to $E = X$ by consdering $f_k \chi_E, f \chi_E, \dotsc$.
-    Then $\left(\int_X f_k \, d\mu\right)_{k \geq 1}$ is a sequence in $[0, +\infty]$, non-decreasing.
+    Reduce to $E = X$ by consdering $f_k \chi_E, f \chi_E$.
+    Then $\left(\int_X f_k \, d\mu\right)_{k \geq 1}$ is a sequence in $[0, \infty]$, non-decreasing.
 
     By monotonicity, $f_k \nearrow f$, so $\int_X f_k \, d\mu \leq \int_X f \, d\mu$.
     Let
     \begin{equation*}
         \alpha \coloneqq \lim_{k \to +\infty} \int_X f_k \, d\mu \leq \int_X f \, d\mu.
     \end{equation*}
-    Consider a simple function $s \leq f$ and $c \in (0, 1)$.
+    Consider a \hyperlink{def:simple}{simple} function $s \leq f$ and $c \in (0, 1)$.
     \begin{gather*}
         E_k = \set{x\in X | f_k(x) \geq c s(x)} \in \mathscr{A} \text{ (using that $f_k$, $s$ are measurable)}\\
         E_k \subset E_{k+1}, \bigcup_{k \geq 1} E_k = X \text{ (by pointwise convergence)}
     \end{gather*}
-    Thus $\int_X s \, d\mu = \lim_{k \to +\infty} \int_{E_k} s \, d\mu$ (by continuity from below of $\mu$).
+    Thus $\int_X s \, d\mu = \lim_{k \to \infty} \int_{E_k} s \, d\mu$ (by continuity from below of $\mu$).
     \begin{equation*}
         \int_X f_k \, d\mu \geq \int_{E_k} f_k \, d \mu \geq c \int_{E_k} s \, d \mu
     \end{equation*}
-    Take $k \to +\infty$. $\alpha \geq c \int_X s \, \mu$, and let $c \nearrow 1$, giving $\int_X s \, d\mu$.
+    Take $k \to +\infty$. $\alpha \geq c \int_X s \, d\mu$, and let $c \nearrow 1$, giving $\int_X s \, d\mu$.
     Taking the supremum over $s \leq f$ for $s$ simple,
     \begin{equation*}
-        \alpha \geq \int_X f `, d\mu.\qedhere
+        \alpha \geq \int_X f \, d\mu.\qedhere
     \end{equation*}
 \end{proof}
 
 \begin{ex}
     Taking $f_k$ as above, show
     \begin{equation*}
-        \int_X \left(\sum_{k \geq 1} f_k\right) \, d\mu = \sum_{k \geq 1} \int_X f_k \, d\mu
+        \int_X \left(\sum_{k \geq 1} f_k\right) \, d\mu = \sum_{k \geq 1} \int_X f_k \, d\mu.
     \end{equation*}
-    Let $\nu: A \in \mathscr{A} \mapsto \int_A f \, d\mu$ (for $f$ a measure $X \to [0, +\infty]$).
-    Show that for any measure $g: (X, \mathscr{A}, \mu) \to [0, +\infty]$, $\int_X g \, d\mu = \int_X fg \, d\mu$.
+    Let $\nu: A \in \mathscr{A} \mapsto \int_A f \, d\mu$ (for $f$ a \hyperlink{def:measFunc}{measurable} $X \to [0, +\infty]$).
+    Show that for any \hyperlink{def:measure}{measure} $g: (X, \mathscr{A}, \mu) \to [0, +\infty]$, $\int_X g \, d\mu = \int_X fg \, d\mu$.
 \end{ex}
-\begin{thm}[Fatou's lemma]
+\begin{thm}[Fatou's lemma]\hypertarget{thm:fatou}
     Take $f_k$ as above, then
     \begin{equation*}
         \int_X (\liminf f_k) \, d\mu \leq \liminf \left(\int_X f_k \, d\mu\right)
@@ -291,7 +301,7 @@ From here on in, when working on the real line, subsets thereof, or the extended
     Let $F_k = \inf\set{f_l | l \geq k}$, non-decreasing, valued in $[0, +\infty]$.
     These are measurable: $\{F_k \geq a\} = \bigcap_{l \geq k} \{f_l \geq a\}$.
     Observe that $\int \min(f, g) \, d\mu \leq \min(\int f \, d\mu, \int g \, d\mu)$.
-    Now, by \hyperlink{thm:Beppo-Levi},
+    Now, by \hyperlink{thm:Beppo},
     \begin{align*}
         \int_X (\liminf f_k) \, d\mu &= \int_X (\lim F_k) \, d\mu = \lim_{k \to +\infty} \left(\int_X F_k \, d\mu\right) \\
                                      &= \lim_{k \to \infty} \left(\int_X \left( \inf_{l \geq k} f_l\right) \, d\mu\right) \\
@@ -308,38 +318,39 @@ Compute by splitting $f$ into real and imaginary parts, and each into nonnegativ
     Take $f_k: (X, \mathscr{A}, \mu) \to \C$ where
     \begin{itemize}
         \item convergence: $f_k$ converges pointwise to $f$
-        \item domination: $\exists g$ integrable
+        \item domination: $\exists g$ integrable such that $\abs{f_k} \leq g$ $\forall k \geq 1$.
     \end{itemize}
+    Then $f_k, f$ integrable and $\int_X \abs{f_k - f} d \mu \to 0$.
 \end{thm}
 
 \begin{proof}
-    Let $h_k = 2g - \abs{f - f_k}$, taking values in $[0, +\infty]$.
+    Let $h_k = 2g - \abs{f - f_k}$, taking values in $[0, +\infty)$.
     Then $h_k \to 2g$ pointwise.
     \begin{gather*}
-        \int_X 2g \, \mu = \int_X (\lim h_k) \, d\mu \leq \liminf_{k \to \infty} \left(\int_X h_k \, d\mu\right).
-        \text{Recall }\int_X h_k \, d\mu = \int_X 2g \, d\mu - \int_X \abs{f_k-f} \, d\mu
-        \int_X 2g \, d\mu \leq \int_X 2g \, d\mu - \limsup_{k \to \infty} \int \abs{f_k - f} \, d\mu.
+        \int_X 2g \, d\mu = \int_X (\lim h_k) \, d\mu \hyperlink{thm:fatou}{\leq} \liminf_{k \to \infty} \underbrace{\left(\int_X h_k \, d\mu\right)}_{\mathclap{ = \int_X 2g \, d\mu - \int_X \abs{f_k-f} \, d\mu}}. \\
+        \implies \int_X 2g \, d\mu \leq \int_X 2g \, d\mu - \limsup_{k \to \infty} \int_X \abs{f_k - f} \, d\mu.\qedhere
     \end{gather*}
 \end{proof}
 
 % lecture 3
 % III)
 \subsection{Lebesgue spaces}
-\begin{defi}
+\begin{defi}[$L^p$ space]\hypertarget{def:lpspace}
     Let $p \in [1, +\infty]$, and $(X, \mathscr{A}, \mu)$ a measure space.
-    $L^p(X)$ is the set of equivalence classes for almost everywhere equality of functions $f: X \to  \R$ (or $\C$) such that $\abs{f}^p$ is integrable (for $p \in [1, +\infty)$, or $f$ essentially bounded i.e. bounded outside null sets for $p=\infty$).
+    $\bm{L^p(X)}$ is the set of equivalence classes for almost everywhere equality of functions $f: X \to  \R$ (or $\C$) such that $\abs{f}^p$ is integrable (for $p \in [1, +\infty)$, or $f$ essentially bounded i.e. bounded outside null sets for $p=\infty$).
 \end{defi}
 
-\begin{thm}[Riesz-Fischer]
-    $(L^p(X), \norm{\cdot}_{L^p})$ is a Banach space for $p \in [1, +\infty]$, where
+\begin{thm}[Riesz-Fischer]\hypertarget{thm:rieszFischer}
+    $(\hyperlink{def:lpspace}{L^p(X)}, \norm{\cdot}_{L^p})$ is a Banach space for $p \in [1, +\infty]$, where
+    \hypertarget{def:lpnorm}{
     \begin{equation*}
-        \norm{f}_{L^p} \coloneqq \left(\int_X \abs{f}^p\right)^{\frac{1}{p}} \quad \norm{f}_{L^\infty} \coloneqq \inf\set{M \geq 0 | \mu\{\abs{f(x)} \geq M\} = 0}
-    \end{equation*}
+        \norm{f}_{L^p} \coloneqq \left(\int_X \abs{f}^p\right)^{\frac{1}{p}}, \quad \norm{f}_{L^\infty} \coloneqq \inf\set{M \geq 0 | \mu\{\abs{f(x)} \geq M\} = 0}.
+    \end{equation*}}
 \end{thm}
 \begin{ex}
-    Take $\mu(X) < +\infty$, so $f$ supported on a finite measure space. For $f \in L^\infty(X)$,then $f \in L^p(X)$ for any $p \in [1, +\infty)$ and
+    Take $\mu(X) < \infty$, so the domain of $f$ is a finite \hyperlink{def:measure}{measure} space. Take $f \in \hyperlink{def:lpspace}{L^\infty(X)}$, then show $f \in L^p(X)$ for any $p \in [1, \infty)$ and
     \begin{equation*}
-        \lim_{p \to +\infty} \norm{f}_{L^p(X)} = \norm{f}_{L^\infty(X)}
+        \lim_{p \to \infty} \norm{f}_{L^p(X)} = \norm{f}_{L^\infty(X)}.
     \end{equation*}
 \end{ex}
 
@@ -348,20 +359,21 @@ Compute by splitting $f$ into real and imaginary parts, and each into nonnegativ
     Instead, we focus on completeness. Start with $p \in [1, +\infty)$.
 
     Initially, prove this auxiliary result.
-    \textbf{Claim}: Take $p \in [1, +\infty)$, consider a sequence $(g_k)$ in $L^p(X)$ such that $\sum_{k \geq 1} \norm{g_k}_{L^p(X)} = M < +\infty$, then there exists $G \in L^p(X)$ such that $\sum_{k=1}^n g_k$ converges to $G$ in $L^p(X)$ and almost everywhere.
-    \textbf{Proof of the claim}:
+    \textbf{Claim}: Take $p \in [1, +\infty)$, and consider a sequence $(g_k) \in L^p(X)$ such that $\sum_{k \geq 1} \norm{g_k}_{L^p(X)} = M < \infty$, then there exists $G \in L^p(X)$ such that $\sum_{k=1}^n g_k$ converges to $G$ in $L^p(X)$ and almost everywhere.
+
+    \textbf{Proof of the claim}: Let
     \begin{equation*}
-        h_n \coloneqq \sum_{k=1}^n \abs{g_k}, \quad h \coloneqq \sum_{k=1}^\infty \abs{g_k} \in [0, +\infty]
+        h_n \coloneqq \sum_{k=1}^n \abs{g_k}, \quad h \coloneqq \sum_{k=1}^\infty \abs{g_k} \in [0, +\infty].
     \end{equation*}
-    $(h_n)$ is non-decreasing sequence since $h_n \leq h_{n+1}$, and $h_n \to h$ pointwise.
+    $(h_n)$ is a non-decreasing sequence since $h_n \leq h_{n+1}$, and $h_n \to h$ pointwise.
     Hence, \hyperlink{thm:Beppo}{Beppo-Levi} gives that
     \begin{equation*}
-        \int_X h_n^p \, d\mu \to \int_X h^p  \, d\mu \in [0, +\infty]
+        \int_X h_n^p \, d\mu \to \int_X h^p  \, d\mu \in [0, +\infty].
     \end{equation*}
-    By the assumtion on $(g_k)$
+    By the assumption on $(g_k)$,
     \begin{align*}
-        &\implies \norm{h_n}_{L^p(X)} \leq \sum_{k=1}^n \norm{g_k}_{L^p(X)} \leq M < +\infty
-        &\implies \norm{h}_{L^p(X)} \text{ is finite and less than } M
+        &\implies \norm{h_n}_{L^p(X)} \leq \sum_{k=1}^n \norm{g_k}_{L^p(X)} \leq M < +\infty \\
+        &\implies \norm{h}_{L^p(X)} \text{ is finite and less than } M.
     \end{align*}
     Hence $h$ finite almost everywhere, and $\sum g_k$ is absolutely convergent almost everywhere, so convergent almost everywhere.
 
@@ -375,7 +387,8 @@ Compute by splitting $f$ into real and imaginary parts, and each into nonnegativ
     \begin{equation*}
         \int_X \abs{G(x) - \sum_{k=1}^n g_k}^p \, d\mu \to 0
     \end{equation*}
-    since the integrand converges pointwise to 0, and the domination is given by $\abs{G(x) - \sum_{k=1}^n g_k}^p \leq 2^p h(x)^p$, where $h^p$ integrable since $G \in L^p(X)$ and $\sum_{k=1}^m g_k \to G$ in $L^p(X)$ and almost everywhere.
+    since the integrand converges pointwise to 0, and the domination is given by
+    \begin{equation*}\abs{G(x) - \sum_{k=1}^n g_k}^p \leq 2^p h(x)^p,\end{equation*} where $h^p$ integrable since $G \in L^p(X)$ and $\sum_{k=1}^m g_k \to G$ in $L^p(X)$ and almost everywhere.
     This proves the claim, so we go back to the main proof.
 
     Let $(f_k)$ be a Cauchy sequence in $L^p(X)$.
@@ -383,8 +396,9 @@ Compute by splitting $f$ into real and imaginary parts, and each into nonnegativ
     Hence, $\exists G \in L^p(X)$ such that $\sum_{k=1}^n g_k \to G$ almost everywhere and in $L^p(X)$. But $g_k = f_{\phi(n+1)} - f_{\phi(n)}$.
     So,
     \begin{equation*}
-        f_{\phi(n)} \longrightarrow f_{\phi(1)} + G \eqqcolon F \text{ in } L^p(X) \text{ and almost everywhere}
+        f_{\phi(n)} \longrightarrow f_{\phi(1)} + G \eqqcolon F
     \end{equation*}
+    where the convergence is in $L^p(X)$ and almost everywhere.
     But $(f_n)$ Cauchy in $L^p(X)$, so $f_n \to F$ in $L^p(X)$.
 \end{proof}
 
@@ -394,16 +408,16 @@ Compute by splitting $f$ into real and imaginary parts, and each into nonnegativ
 \begin{ex}
     \leavevmode
     \begin{enumerate}[label=\arabic*)]
-        \item Find a sequence $(f_n)$ converging in $L^p(\R)$ and not converging almost everywhere to its $L^p$ limit (for $p \in [1, \infty)$). This shows passing to a subsequence was necessary, and not a defect of the argument.
-        \item Complete the proof of Riesz-Fischer theorem in the $p=+\infty$ case.
+        \item Find a sequence $(f_n)$ converging in $\hyperlink{def:lpspace}{L^p}(\R)$ and not converging almost everywhere to its $L^p$ limit (for $p \in [1, \infty)$). This shows passing to a subsequence was necessary, and not a defect of the argument.
+        \item Complete the proof of \hyperlink{thm:rieszFischer}{Riesz-Fischer} theorem in the $p=\infty$ case.
     \end{enumerate}
 \end{ex}
 
 \begin{thm}[Abstract density result]
-    Take a measure space $(X, \mathscr{A}, \mu)$ and $p \in [1, +\infty]$. Then simple functions that belong to $L^p(X)$ are dense in $L^p(X)$.
+    Take a measure space $(X, \mathscr{A}, \mu)$ and $p \in [1, \infty]$. Then \hyperlink{def:simple}{simple functions} that belong to \hyperlink{def:lpspace}{$L^p(X)$} are dense in $L^p(X)$.
 \end{thm}
 \begin{proof}
-    For $f$ real or complex, split into real/imaginary parts and positive/negative parts to reduce to approximating $f \geq 0$ by simple functions.
+    For $f$ real or complex, split into real/imaginary parts and positive/negative parts to reduce to approximating $f \geq 0$ by \hyperlink{def:simple}{simple} functions.
     Define
     \begin{equation*}
         S_n =
@@ -412,43 +426,148 @@ Compute by splitting $f$ into real and imaginary parts, and each into nonnegativ
             \frac{i-1}{2^n} & \text{on } A_n^i = \{f \in [\frac{i-1}{2^n}, \frac{i}{2^n})\}, 1 \leq i \leq n 2^n
         \end{cases}
     \end{equation*}
-    as our usual approximation.
-    In the case $p=\infty$, $\norm{f}_{L^\infty(X)} < \infty$, then for $n > \norm{f}_{L^\infty(X)}$, $\abs{S_n-f} \leq \frac{1}{2^n}$ almost everywhere. Then $\norm{S_n-f}_{L^\infty(X)} \leq \frac{1}{2^n} \to 0$.
-    In the case $p \in [1, \infty)$, $0 \leq S_n \leq f$ and $S_{n+1} \geq S_n$, with $S_n \to f$ pointwise. By the \hyperlink{thm:Beppo}{Beppo-Levi theorem}, $\norm{S_n - f}_{L^p(X)} \to 0$.
+    our usual approximation.
+    In the case $p=\infty$, $\norm{f}_{L^\infty(X)} < \infty$, thus for $n > \norm{f}_{L^\infty(X)}$, $\abs{S_n-f} \leq \frac{1}{2^n}$ almost everywhere. Then $\norm{S_n-f}_{L^\infty(X)} \leq \frac{1}{2^n} \to 0$.
+    In the case $p \in [1, \infty)$, $0 \leq S_n \leq f$ and $S_{n+1} \geq S_n$, with $S_n \to f$ pointwise. By \hyperlink{thm:Beppo}{Beppo-Levi monotone convergence}, $\norm{S_n - f}_{L^p(X)} \to 0$.
 \end{proof}
 
 \begin{thm}[Density-separability of $L^p(\R^n)$, $p \in [1, +\infty)$]
     \leavevmode
     \begin{enumerate}[label=(\arabic*)]
-        \item For $O$ an open set in $\R^n$, $L^p(O)$ is separable (has a countable dense subset).
-        \item Smooth functions compactly supported in $O$ are dense in $L^p(O)$.
+        \item For $\mathcal{O}$ an open set in $\R^n$, $L^p(\mathcal{O})$ is separable (has a countable dense subset).
+        \item Smooth functions compactly supported in $\mathcal{O}$ are dense in $L^p(\mathcal{O})$.
     \end{enumerate}
 \end{thm}
 
 We need and admit a theorem from Probability and Measure (this statement is non-examinable).
+\begin{defi}[Regular measure]\hypertarget{def:regularMeasure}
+    A regular \hyperlink{def:measure}{measure} on a topological space $X$ with \hyperlink{def:sigAlg}{$\sigma$-algebra} $\mathscr{A}$ of \hyperlink{def:measFunc}{measurable} sets is a measure such that every measurable set can be approximated from above by open measurable sets and from below by compact measurable sets.
+\end{defi}
 \begin{thm}[Regularity of the Lebesgue measure]
-    A regular measure on a topological space $X$ with $\sigma$-algebra $\mathscr{A}$ of measurable sets is a measure such that every measurable set can be approximated from above by open measurable sets and from below by compact measurable sets.
-    The Lebesgue measure on $\R^n$ is regular for the Lebesgue sets.
+    The \hyperlink{def:lebMeas}{Lebesgue measure} on $\R^n$ is regular for the Lebesgue sets.
 \end{thm}
-Observe this implies that any Lebesgue set of finite measure in $\R^n$ is squeezed between two Borel sets with the same measure.
+Observe this implies that any Lebesgue set of finite \hyperlink{def:measure}{measure} in $\R^n$ is squeezed between two \hyperlink{def:borelSet}{Borel sets} with the same measure.
 \begin{proof}
     \leavevmode
     \begin{enumerate}[label=(\arabic*)]
-        \item Let $\mathcal{C} = \{\text{open sets which are hypercubes} \prod_{i=1}^n (a_i, b_i), a_i, b_i \in \Q\}$, a countable set.
-            Claim: Any open set $O \subset \R^n$ can be covered with a countable union of elements of $\mathcal{C}$ with disjoint interiors.
-            Use an inductive procedure: Split into $\Z^n$. Keep cubes fully inside, discard the rest. For borderline cubes, divide into $2^n$ cubes evenly and start 1 again.
-            Check that $O = \bigcup_{n, k} C_{n, k}$, and note that the hypercubes have dyadic, hence rational, coordinates.
+        \item Let $\mathcal{C} = \{\text{open sets of the form } \prod_{i=1}^n (a_i, b_i), a_i, b_i \in \Q\}$, a countable set.
+
+            Claim: Any open set $\mathcal{O} \subset \R^n$ can be covered with a countable union of elements of $\mathcal{C}$ with disjoint interiors.
+
+            Use an inductive procedure: Split into $\Z^n$. 1. Keep cubes that are fully inside, discard ones that are fully outside. For borderline cubes, divide into $2^n$ cubes evenly and start 1 again.
+            Check that $\mathcal{O} = \bigcup_{n, k} C_{n, k}$, and note that the hypercubes have dyadic, hence rational coordinates.
+            The figure shows a few steps for an example in $\R^2$.
             \begin{center}
-                \begin{tikzpicture}
+                \begin{tikzpicture}[scale=1.4]
+                    \begin{scope}[every path/.append style={gray, ultra thin}]
+                        \fill [orange!10] (2, 1) rectangle (6, 2);
+                        \fill [orange!10] (3, 2) rectangle (6, 3);
+
+                        \begin{scope}[xshift=4cm, yshift=3cm, scale=1/2]
+                            \fill [orange!20] (1, 0) rectangle (2, 1);
+                            \begin{scope}[every path/.append style={fill=orange!28, line width=0.06pt}, scale=1/2]
+                                \foreach \y/\b/\e in {0/0/1,0/1/2,1/1/2}
+                                \fill (\b,\y) rectangle (\e,\y+1);
+                                \begin{scope}[every path/.append style={fill=orange!35}, scale=1/2]
+                                    \fill (0, 2) rectangle (2, 3);
+                                    \fill (4, 4) rectangle (8, 5);
+                                    \fill (7, 5) rectangle (8, 6);
+                                    \begin{scope}[every path/.append style={fill=orange!43, line width=0.03pt}, scale=1/2]
+                                        \foreach \y/\b/\e in {6/1/4,7/3/4,8/5/8,10/10/14,11/13/14}
+                                        \fill (\b,\y) rectangle (\e,\y+1);
+                                        \begin{scope}[every path/.append style={fill=orange!50}, scale=1/2]
+                                            \foreach \y/\b/\e in {12/0/2,13/1/2,14/4/6,16/8/10,18/13/16,19/15/16,20/18/20,22/23/26,24/29/32}
+                                            \fill (\b,\y) rectangle (\e,\y+1);
+                                            \foreach \y/\b/\e in {13/0/1, 14/0/4, 15/3/6, 16/5/8, 17/7/10, 18/9/13, 19/12/15,
+                                                                  20/14/18, 21/17/20, 22/19/23, 23/22/26, 24/25/29, 25/28/32, 26/31/32}
+                                            \draw [step=0.5] (\b,\y) grid (\e,\y+1);
+                                        \end{scope}
+                                        \foreach \x/\y/\z in {6/0/1, 7/0/3, 8/2/5, 9/4/8, 10/7/10, 11/9/13, 12/12/16, 13/15/16}
+                                        \draw [step=0.5] (\y,\x) grid (\z,\x+1);
+                                    \end{scope}
+                                    \foreach \x/\y/\z in {3/0/2, 4/1/4, 5/3/7, 6/6/8}
+                                    \draw [step=0.5] (\y,\x) grid (\z,\x+1);
+                                \end{scope}
+                                \draw [step=0.5] (0,1) grid (1,2);
+                                \draw [step=0.5] (0,2) grid (4,3);
+                                \draw [step=0.5] (3,3) grid (4,4);
+                            \end{scope}
+                            \draw [step=1] (0, 0) grid (2, 2);
+                            \draw [step=0.5] (0, 0) grid (1, 1);
+                            \draw [step=0.5] (0, 1) grid (1, 2);
+                            \draw [step=0.5] (1, 1) grid (2, 2);
+                            \begin{scope}[every path/.append style={line width=0.02pt}, scale=1/32]
+                                \foreach \y/\b/\e in {27/0/2,28/1/4,29/3/7,30/6/9,31/8/11,32/10/13,33/12/16,34/15/18,
+                                                      35/17/20,36/19/23,37/22/25,38/24/27,39/26/30,40/29/32,41/31/35,
+                                                      42/34/37,43/36/40,44/39/43,45/42/45,46/44/48,47/47/51,48/50/54,
+                                                      49/53/57,50/56/60,51/59/63,52/62/64}
+                                \draw [step=0.5] (\b,\y) grid (\e,\y+1);
+                            \end{scope}
+                            \begin{pgfonlayer}{background}
+                                \begin{scope}[every path/.append style={fill=orange!58}, scale=1/32]
+                                    \foreach \y/\b/\e in {26/0/2,28/4/8,29/7/8,30/9/12,31/11/12,32/13/16,34/18/20,36/23/26,
+                                                          37/25/26,38/27/30,40/32/36,41/35/36,42/37/40,44/43/46,45/45/46,
+                                                          46/48/52,47/51/52,48/54/58,49/57/58,50/60/64,51/63/64}
+                                    \fill (\b,\y) rectangle (\e,\y+1);
+                                \end{scope}
+                                \begin{scope}[every path/.append style={fill=orange!65}, scale=1/64,yshift=1pt,xshift=1pt]
+                                    \foreach \y/\b/\e in {54/1/4,56/6/8,58/10/14,59/13/14,60/15/18,61/17/18,62/19/22,
+                                                          64/24/26,66/29/32,67/31/32,68/33/36,70/38/40,72/43/46,73/45/46,
+                                                          74/47/50,76/52/54,78/57/60,79/59/60,80/62/64,82/67/70,83/69/70,
+                                                          84/72/74,86/77/80,87/79/80,88/82/86,89/85/86,90/87/90,92/93/96,
+                                                          93/95/96,94/98/102,95/101/102,96/104/108,97/107/108,98/110/114,
+                                                          99/113/114,100/116/120,101/119/120,102/122/126,103/125/126}
+                                    \fill (\b,\y) rectangle (\e,\y+1);
+                                \end{scope}
+                            \end{pgfonlayer}
+                        \end{scope}
+                        %\begin{scope}[xshift=3cm, yshift=3cm, scale=1/2]
+                        %    \begin{scope}[every path/.append style={fill=orange!30, line width=0.06pt}, scale=1/2]
+                        %        \fill (3,0) rectangle (4,1);
+                        %        \begin{scope}[every path/.append style={fill=orange!40}, scale=1/2]
+                        %        \foreach \y/\b/\e in {0/3/6,1/5/6}
+                        %        \fill (\b,\y) rectangle (\e,\y+1);
+                        %        \begin{scope}[every path/.append style={fill=orange!50, line width=0.03pt}, scale=1/2]
+                        %        \foreach \y/\b/\e in {0/3/6,2/8/10,4/12/16,5/15/16}
+                        %        \fill (\b,\y) rectangle (\e,\y+1);
+                        %            \begin{scope}[every path/.append style={fill=orange!60}, scale=1/2]
+                        %            \foreach \y/\b/\e in {0/3/6,2/8/12,3/11/12,4/13/16,5/15/16,6/18/20,8/22/24,10/27/30,11/29/30,
+                        %                                  12/31/32}
+                        %            \fill (\b,\y) rectangle (\e,\y+1);
+                        %            \begin{scope}[every path/.append style={fill=orange!80}, scale=1/2]
+                        %            \foreach \y/\b/\e in {0/3/6,2/8/12,3/11/12,4/14/16,6/18/22,7/21/22,8/23/26,
+                        %                                  10/28/30,12/33/36,13/35/36,14/37/40,15/39/40,16/41/44,
+                        %                                  18/46/48,20/50/54,21/53/54,22/55/58,23/57/58,24/59/62}
+                        %            \fill (\b,\y) rectangle (\e,\y+1);
+                        %            \end{scope}
+                        %            \foreach \y/\b/\e in {0/0/3,1/2/6,2/5/8,3/7/11,4/10/13,5/12/15,6/14/18,7/17/20,
+                        %                                  8/19/22,9/21/24,10/23/27,11/26/29,12/28/31,13/30/32}
+                        %            \draw [step=0.5] (\b,\y) grid (\e,\y+1);
+                        %            \end{scope}
+                        %        \foreach \x/\y/\z in {0/0/3, 1/2/6, 2/5/8, 3/7/10, 4/9/12, 5/11/15, 6/14/16}
+                        %        \draw [step=0.5] (\y,\x) grid (\z,\x+1);
+                        %        \end{scope}
+                        %        \foreach \y/\b/\e in {0/0/3,1/2/5,2/4/8,3/7/8}
+                        %        \draw [step=0.5] (\b,\y) grid (\e,\y+1);
+                        %        \end{scope}
+                        %        \foreach \y/\b/\e in {0/0/3,1/2/4}
+                        %        \draw [step=0.5] (\b,\y) grid (\e,\y+1);
+                        %    \end{scope}
+                        %    \draw [step=1] (0, 0) grid (2, 2);
+
+                        %    \draw [step=0.5] (0, 0) grid (1, 1);
+                        %    \draw [step=0.5] (1, 0) grid (2, 1);
+                        %\end{scope}
+                        \node (A) at (1.0, 2.0) {};
+                        \node (B) at (2.0, 1.0) {};
+                        \node (C) at (6.0, 0.7) {};
+                        \node (D) at (6.0, 3.8) {};
+                        \node (E) at (3.0, 3.0) {};
+                        \draw [bblue] plot [smooth cycle, tension=0.7] coordinates {(A) (B) (C) (D) (E)};
+                    \end{scope}
+                    \draw [gray, very thin, step=1] (-0.7,-0.7) grid (7.7,4.7);
                     \draw [->] (-0.8, 0) -- (7.9, 0);
                     \draw [->] (0, -0.8) -- (0, 4.9);
-                    \draw[step=1,gray,very thin] (-0.7,-0.7) grid (7.7,4.7);
-                    \draw (2, 2) circle (1pt);
-                    \draw (4.1, 1.4) circle (1pt);
-                    \draw (  6, 3.3) circle (1pt);
-                    \draw (6.4, 4.2) circle (1pt);
-                    \draw (2.6, 3.7) circle (1pt);
-                    \draw [bblue] plot [smooth cycle] coordinates {(2,2) (4.1,1.4) (6,3.3) (6.4,4.2) (2.6,3.7)};
                 \end{tikzpicture}
             \end{center}
     \end{enumerate}
