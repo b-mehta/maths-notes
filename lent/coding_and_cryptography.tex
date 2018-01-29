@@ -182,7 +182,7 @@ Rate refers to units of information per unit time, which we want to be high. Sim
     For $\Sigma$ an alphabet, let $\Sigma^* = \bigcup_{n \geq 0} \Sigma^n$ be the set of all finite strings of elements of $\Sigma$.
 \end{notation}
 If $x = x_1 \dotsc x_r$, $y = y_1 \dotsc y_s$ are strings from $\Sigma$, write $xy$ for the concatenation $x_1 \dotsc x_r y_1 \dotsc y_s$.
-Further, $\abs{x_1 \dotsc x_r y_1 \dotsc y_s} = r+s$, length of string.
+Further, $\abs{x_1 \dotsc x_r y_1 \dotsc y_s} = r+s$, the length of the string.
 \begin{defi}[Code]\hypertarget{def:code}
     Let $\Sigma_1, \Sigma_2$ be two alphabets. A \textbf{code} is a function $f: \Sigma_1 \to \Sigma_2^*$. The strings $f(x)$ for $x \in \Sigma_1$ are called \textbf{codewords}.
 \end{defi}
@@ -190,15 +190,15 @@ Further, $\abs{x_1 \dotsc x_r y_1 \dotsc y_s} = r+s$, length of string.
     \leavevmode
     \begin{enumerate}[label=\arabic*)] % 1)
         \item
-            Greek fire \hyperlink{def:code}{code}:
+            \hypertarget{ex:greekFire}{Greek fire} \hyperlink{def:code}{code}:
             \begin{align*}
                 \Sigma_1 &= \{\alpha, \beta, \gamma, \dotsc, \omega\} \quad \text{ 24 letters} \\
                 \Sigma_2 &= \{1, 2, 3, 4, 5\}
             \end{align*}
             so, $\alpha \mapsto 11, \beta \mapsto 12, \dotsc, \omega \mapsto 54$.
         \item
-            $\Sigma_1 = $ \{all words in the dictionary\}, and $\Sigma_2 = $\{A, B, $\dotsc$, Z, \} % add space symbol
-            and $f$=`spell the word and a space'.
+            $\Sigma_1 = $ \{all words in the dictionary\}, and $\Sigma_2 = \{A, B, \dotsc, Z, [space]\}$ % add space symbol
+            and $f$=`spell the word and a space'\hypertarget{ex:comma-code}.
     \end{enumerate}
 \end{eg}
 We send a message $x_1, \dotsc, x_n \in \Sigma_1^*$ as $f(x_1) f(x_2) \dotsm f(x_n) \in \Sigma_2^*$ i.e. extend $f$ to $f^* : \Sigma_1^* \to \Sigma_2^*$.
@@ -227,9 +227,9 @@ We send a message $x_1, \dotsc, x_n \in \Sigma_1^*$ as $f(x_1) f(x_2) \dotsm f(x
 
 Provided $f: \Sigma_1 \to \Sigma_2^*$ is injective, the following codes are always decipherable.
 \begin{enumerate}[label=(\roman*)]
-    \item A \textbf{block code} is a code with all codewords of the same length (e.g. Greek fire code).
-    \item In a \textbf{comma code}, we reserve one letter from $\Sigma_2$ that is only used to signal the end of the codeword (Example 2).
-    \item A \textbf{prefix-free code} is a code where no codeword is a prefix of another (if $x, y \in \Sigma_2^*$, $x$ is a prefix of $y$ if $y=xz$ for some $z \in \Sigma_2^*$.)
+    \item A \textbf{block code} is a code with all codewords of the same length (e.g. \hyperlink{eg:greekFire}{Greek fire code}).
+    \item In a \textbf{comma code}, we reserve one letter from $\Sigma_2$ that is only used to signal the end of the codeword (e.g. \hyperlink{ex:comma-code}{Example 2 above}).
+    \item A \hypertarget{def:prefixFreeCode}{\textbf{prefix-free code}} is a code where no codeword is a prefix of another (if $x, y \in \Sigma_2^*$, $x$ is a prefix of $y$ if $y=xz$ for some $z \in \Sigma_2^*$.)
 \end{enumerate}
 
 \begin{remark}(i) and (ii) are special cases of (iii).
@@ -246,7 +246,7 @@ Prefix-free codes are also known as \textbf{instantaneous codes} (i.e. a word ca
 \end{nthm}
 
 \begin{proof}
-    $(\Rightarrow)$ Consider an $\infty$ tree where each has a descendant, labelled by the elements of $\Sigma_2$. Each codeword corresponds to a node, the path from the root to this node spelling out the codeword.
+    $(\Rightarrow)$ Consider an infinite tree where each has a descendant, labelled by the elements of $\Sigma_2$. Each codeword corresponds to a node, the path from the root to this node spelling out the codeword.
     For example,
     \begin{center}
         \begin{tikzpicture}[scale=2]
@@ -311,7 +311,7 @@ Prefix-free codes are also known as \textbf{instantaneous codes} (i.e. a word ca
 \begin{eg}
     \leavevmode
     \begin{enumerate}[label=\arabic*.]
-        \item Suppose $p_1 = p_2 = p_3 = p_4 = \frac{1}{4}$. We identify $\{x_1, x_2, x_3, x_4\}$ with $\{HH, HT, TH, HH\}$. $H(X) = 2$.
+        \item Suppose $p_1 = p_2 = p_3 = p_4 = \frac{1}{4}$. We identify $\{x_1, x_2, x_3, x_4\}$ with \{HT, HT, TH, TT\}. Then $H(X) = 2$.
         \item Take $(p_1, p_2, p_3, p_4) = (\frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{8})$.
             \begin{center}
                 \begin{tikzpicture}[xscale=1.8, yscale=0.8]
@@ -364,9 +364,7 @@ The entropy $H(X)$ is roughly speaking the expected number of tosses of a fair c
 
     \begin{center}
         \begin{tikzpicture}
-            \begin{axis}[
-            ]
-            % density of Normal distribution:
+            \begin{axis}[]
             \addplot [
             red,
             domain=0:1,
@@ -440,7 +438,7 @@ Let $\Sigma_1 = \{\mu_1, \dotsc, \mu_n\}$, $p_i = P(X=\mu_i)$ (assume $p_i > 0$)
     \begin{align*}
         H(X) = -\sum p_i \log p_i &\leq -\sum_i p_i \log q_i \\
                                   &= \sum p_i (s_i \log a + \log c) \\
-                                  &= (\sum p_i s_i) \log a + \underbrace{\log c}_{\leq 0} \leq E(S) \log a\\
+                                  &= \left(\sum p_i s_i\right) \log a + \underbrace{\log c}_{\leq 0} \leq E(S) \log a\\
         \implies \frac{H(X)}{\log a} &\leq E(S)
     \end{align*}
     We get equality $\iff p_i = a^{-s_i}$ for some integers $s_i$.
@@ -453,7 +451,7 @@ Let $\Sigma_1 = \{\mu_1, \dotsc, \mu_n\}$, $p_i = P(X=\mu_i)$ (assume $p_i > 0$)
     We have
     \begin{gather*}
         - \log_a p_i \leq s_i < - \log_a p_i + 1 \\
-        \implies a^{-s_i} \leq p_i \implies \sum a^{-s_i} \leq \sum p_i \leq 1
+        \implies a^{-s_i} \leq p_i \implies \sum a^{-s_i} \leq \sum p_i \leq 1.
     \end{gather*}
     So by \cref{thm:kraft}, $\exists$ a prefix-free code with word lengths $s_1, \dotsc, s_m$.
     Also,
@@ -473,7 +471,8 @@ Set $s_i = \ceil{-\log_a p_i}$ and construct a prefix-free code with word length
 The Kraft inequality ensures there is enough room.
 \begin{eg}
     Suppose $\mu_1, \dotsc, \mu_5$ are emitted with probabilities $0.4, 0.2, 0.2, 0.1, 0.1$.
-    A Shannon-Fano code (with $a=2$, $\Sigma_2 = \{0, 1\}$) has
+
+    A \hypertarget{ex:shannonfano1}{possible Shannon-Fano} code (with $a=2$, $\Sigma_2 = \{0, 1\}$) has
     \begin{center}
     \begin{tabular}{c c c}
         $p_i$ & $\ceil{-\log_2 p_i}$ & \\
@@ -488,8 +487,191 @@ The Kraft inequality ensures there is enough room.
     This has \hyperlink{def:ewl}{expected word length}
     \begin{align*}
         &= 2 \times 0.4 + 3 \times 0.2 + 3 \times 0.2 + 4 \times 0.1 + 4 \times 0.1 \\
-        &= 2.8
+        &= 2.8.
     \end{align*}
     compare $H(X) \approx 2.12$.
 \end{eg}
+
+\subsubsection*{Huffman coding}
+For simplicity, take $a=2$.
+Take $\Sigma_1=\{\mu_1, \dotsc, \mu_m\}$ with $p_i = P(X = \mu_i)$. Without loss of generality, $p_1 \geq p_2 \geq \dotsb \geq p_m$.
+Huffman coding is defined inductively.
+
+If $m=2$, assign codewords $0$ and $1$. If $\mu > 2$, find a Huffman coding in the case of messages $\mu_1, \mu_2, \dotsc, \nu$, with probabilities $p_1, p_2, \dotsc, p_{m-1} + p_m$.
+
+Append $0$ (resp, $1$) to the codeword for $\nu$ to give a codeword for $\mu_{m-1}$ (resp, $\mu_m$).
+
+\begin{remark}
+    \leavevmode
+    \begin{enumerate}[label=\roman*)]
+        \item This construction gives a prefix-free code.
+        \item We exercise some choice when some of the $p_i$ are equal. So Huffman codes are not unique.
+    \end{enumerate}
+\end{remark}
+
+\begin{eg}
+    Use the same \hyperlink{ex:shannonfano1}{example probabilities} as earlier. \\
+    (diagram of example) \\
+    So $\{1, 00, 011, 0101, 0100\}$ is the prefix-free code constructed. The \hyperlink{def:ewl}{expected word length} is:
+    \begin{align*}
+        &= 1 \times 0.4 + 2 \times 0.2 + 2 \times 0.2 + 4 \times 0.1 + 4 \times 0.1 \\
+        &= 0.4 + 0.4 + 0.6 + 0.4 + 0.4\\
+        &= 2.2.
+    \end{align*}
+    This is better than Shannon-Fano, which gave 2.8.
+\end{eg}
+
+\begin{nthm}\label{thm:huffOpt}
+    Huffman coding is \hyperlink{def:optCode}{optimal}.
+\end{nthm}
+\begin{nlemma}
+    Suppose we have $\mu_1, \dotsc, \mu_m \in \Sigma_1$ emitted with probabilities $p_1, \dotsc, p_m$.
+    Let $f$ be an \hyperlink{def:optCode}{optimal} \hyperlink{def:prefixFreeCode}{prefix-free} \hyperlink{def:code}{code}, with word lengths $s_1, \dotsc, s_m$.
+    Then
+    \begin{enumerate}[label=\roman*)]
+        \item If $p_i > p_j$, then $s_i \leq s_j$.
+        \item $\exists$ two codewords of maximal length which are equal up to the last digit.
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=\roman*)]
+        \item If not, then swap the $i$th and $j$th \hyperlink{def:codewords}{codewords}.
+            This decreases the \hyperlink{def:ewl}{expected word length}, contradicting $f$ \hyperlink{def:optCode}{optimal}.
+        \item If not, then either only one codeword of maximal length, or any two codewords of maximal length differ before the last digit.
+            In either case, delete the last digit of each codeword of maximal length.
+            This maintains the \hyperlink{def:prefixFreeCode}{prefix-free} condition, contradicting $f$ optimal.
+    \end{enumerate}
+\end{proof}
+
+% fill in gaps
+Suppose a source $\Omega$ produces a stream $X_1, X_2, \dotsc$ of random variables with values in $\Sigma$.
+The probability mass function (p.m.f.) of $X^{(n)} = (X_1, \dotsc, X_n)$ is given by
+\begin{equation*}p_n(x_1, \dotsc, x_n) = P(X_1, \dotsc, X_n = x_1, \dotsc, x_n) \quad \forall x_1, \dotsc, x_n \in \Sigma^n\end{equation*}
+Now,
+\begin{align*}
+    p_n &: \Sigma^n \to \R \\
+    X^{(n)} &: \Omega \to \Sigma^n\\
+    \shortintertext{can form} \\
+    p(X^{(n)})&: \Sigma \xrightarrow{X^{(n)}} \to \Sigma^n \xrightarrow{p_n} \R
+\end{align*}
+a random variable sending $\omega \mapsto p_n(X^{(n)} = X^{(n)} (\omega))$.
+\begin{eg}
+    Take $\Sigma = \{A, B, C\}$, with
+    \begin{equation*}
+        X^{(2)} =
+        \begin{cases}
+            AB & p=0.3 \\
+            AC & p=0.1 \\
+            BC & p=0.1 \\
+            BA & p=0.2 \\
+            CA & p=0.25 \\
+            CB & p=0.05 \\
+        \end{cases}
+    \end{equation*}
+    So, $p_2(AB) = 0.3$, etc, and $p_2(X^{(2)})$ takes values
+    \begin{equation*}
+        p_2(X^{(2)}) =
+        \begin{cases}
+            0.3 & p=0.3 \\
+            0.1 & p=0.2 \\
+            0.2 & p=0.2 \\
+            0.25 & p=0.25 \\
+            0.05 & p=0.05 \\
+        \end{cases}
+    \end{equation*}
+\end{eg}
+
+\begin{defi}[Convergence in probability]\hypertarget{def:probConverge}
+    A sequence of random variables $X_1, X_2, \dotsc$ \textbf{converges in probability} to $c \in \R$, written $X_n \xrightarrow{p} c$ as $n \to \infty$, if
+    \begin{equation*}
+        \forall \epsilon > 0 \quad P(\abs{X_n - c} \leq \epsilon) \to 1 \quad \text{as } n \to \infty.
+    \end{equation*}
+    So, $X_n$ and $c$ can take very different values for large $n$, but only on a set with small probability.
+\end{defi}
+
+\subsubsection*{Weak law of large numbers}
+$X_1, X_2, \dotsc$ an independent, identically distributed sequence of random variables with finite expected value $\mu$, then
+\begin{equation*}
+    \frac{1}{n} \sum_{i=1}^n X_i \xrightarrow{p} \to \mu \quad \text{as } n \to \infty.
+\end{equation*}
+\begin{eg}[Application]
+    Take $X_1, X_n, \dotsc$ a Bernoulli source. Then $p(X_1), p(X_2), \dotsc$ are i.i.d. random variables
+    \begin{align*}
+        &p(X_1, \dotsc, X_n) = p(X_1) \dotsc p(X_n) \\
+        -\frac{1}{n} \log p(X_1, \dotsc, X_n) = -\frac{1}{n} \sum_{i=1}^n \log p(X_i) \xrightarrow{p} E(-\log p(X_1)) = H(X_1) \quad \text{as } n \to \infty.
+    \end{align*}
+\end{eg}
+\begin{defi}[Asymptotic Equipartition Property]\hypertarget{def:aep}
+    A source $X_1, X_2, \dotsc$ satisfies the \textbf{Asymptotic Equipartition Property} (AEP) if for some $H\geq 0$ we have
+    \begin{equation*}
+        -\frac{1}{n} \log p(X_1, \dotsc, X_n) \xrightarrow{p} H \quad \text{as } n \to \infty.
+    \end{equation*}
+\end{defi}
+\begin{eg}[Motivating example]
+    Consider a coin, $p(H) = p$. If coin tossed $N$ times, expect approximately $pN$ heads and $(1-p)N$ tails.
+    \begin{align*}
+        P(\text{particular sequence of $pN$ heads and $(1-p)N$ tails}) &= p^{pN} (1-p)^{(1-p)N}\\
+                                                                       &2^{N(p \log p) + (1-p) \log (1-p)} = 2^{-N H(A)}
+    \end{align*}
+    where $A$ is the result of an independent coin toss.
+    So, with high probability we will get a typical sequence, and its probability will be close to $2^{-NH(A)}$.
+\end{eg}
+% 1.18
+\begin{nlemma}
+    A source $X_1, \dotsc, X_n$ satisfies \hyperlink{def:aep}{AEP} iff it satisfies the following:
+    \begin{equation*}
+        \forall \epsilon > 0, \, \exists n_0(\epsilon) \text{ such that } \forall n \geq n_0(\epsilon) \, \exists \text{ a `typical set'} T_n \subset \Sigma^n \text{ with} \\
+    \end{equation*}
+    \begin{gather*}
+        P((X_1, \dotsc, X_n) \in T_n) > 1 - \epsilon \\
+        2^{-n(H+\epsilon)} \leq p(x_1, \dotsc, x_n) \leq 2^{-n(H-\epsilon)}\quad \forall (x_1, \dotsc, x_n) \in T^n.
+        \tag{*}
+    \end{gather*}
+\end{nlemma}
+\begin{proof}[Sketch proof]
+    \hyperlink{def:aep}{AEP} $\implies *$.
+    Take
+    \begin{align*}
+        T_n &= \set{(x_1, \dotsc, x_n) \in \Sigma^n | \abs{-\frac{1}{n} \log p(x_1, \dotsc, x_n) - H} < \epsilon} \\
+            &= \set{(x_1, \dotsc, x_n) \in \Sigma^n | 2^{-n(H+\epsilon)} \leq p(x_1, \dotsc, x_n) \leq 2^{-n(H-\epsilon)}} \\
+    \end{align*}
+    $* \implies$ \hyperlink{def:aep}{AEP}
+    \begin{equation*}
+        P(\abs{- \frac{1}{n} p(X_1, \dotsc, X_n) - H} < \epsilon) \geq P(T_n) \to 1 \quad \text{as } n \to \infty.
+    \end{equation*}
+\end{proof}
+\begin{defi}[Reliably encodable]\hypertarget{def:reliablyEncode}
+    A source $X_1, X_2, \dotsc$ is \textbf{reliably encodable} at rate $r$ if $\exists A_n \subset \Sigma^n$ for each $n$ such that
+    \begin{enumerate}[label=(\roman*)]
+        \item $\frac{\log \abs{A_n}}{n} \to r \quad \text{as } n \to \infty$
+        \item $P((X_1, \dotsc, X_n) \in A_n) \to 1 \quad \text{as } n \to \infty$.
+    \end{enumerate}
+    So, in principle you can encode at rate almost $r$ with negligible error for long enough strings.
+\end{defi}
+So, if $\abs{\Sigma}=a$, you can \hyperlink{def:reliablyEncode}{reliably encode} at rate $\log a$. However you can often do better.
+For example, consider telegraph English with 26 letters and a space. $27 \approx 2^{4.756}$, so can encode at rate of $4.76$ bits/letter. But much lower rates suffice, as there is a lot of redundancy in the English language.
+Hence the following definition.
+\begin{defi}[Information rate]\hypertarget{def:informationRate}
+    The \textbf{information rate} $H$ of a source is the infimum of all values at which it is \hyperlink{def:reliablyEncode}{reliably encodable}.
+\end{defi}
+Roughly, $nH$ is the number of bits required to encode $(X_1, \dotsc, X_n)$.
+\begin{nthm}[Shannon's first coding theorem]
+    If a source satisfies \hyperlink{def:aep}{AEP} with some constant $H$, then the source has information rate $H$.
+\end{nthm}
+\begin{proof}Let $\epsilon > 0$ and let $T_n \subset \Sigma^n$ be typical sets.
+    Then for sufficiently large $n \geq n_0(\epsilon)$,
+    \begin{equation*}
+        p(x_1, \dotsc, x_n) \geq 2^{-n (H + \epsilon))} \quad \forall (x_1, \dotsc, x_n) \in T^n.
+    \end{equation*}
+    So,
+    \begin{gather*}
+        P((X_1, \dotsc, X_n) \in T_n) \geq 2^{-n(H+\epsilon)} \abs{T_n} \\
+        \implies \abs{T_n} \leq 2^{n(H+\epsilon)}
+    \end{gather*}
+    therefore the source is \hyperlink{def:reliablyEncode}{reliably encodable} at rate $H+\epsilon$.
+
+    Conversely, if $H=0$, done. Otherwise, pick $0 < \epsilon < \frac{H}{2}$. Suppose the source is reliably encodable at rate $H - 2 \epsilon$, say with sets $A_n$.
+\end{proof}
 \end{document}
