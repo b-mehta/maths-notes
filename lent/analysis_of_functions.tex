@@ -452,14 +452,14 @@ Observe this implies that any Lebesgue set of finite \hyperlink{def:measure}{mea
     \begin{enumerate}[label=(\arabic*)]
         \item Let $\mathcal{C} = \{\text{open sets of the form } \prod_{i=1}^n (a_i, b_i), a_i, b_i \in \Q\}$, a countable set.
 
-            Claim: Any open set $\mathcal{O} \subset \R^n$ can be covered with a countable union of elements of $\mathcal{C}$ with disjoint interiors.
+            Claim: Any open set $\mathcal{U} \subset \R^n$ can be covered with a countable union of elements of $\mathcal{C}$ with disjoint interiors.
 
             Use an inductive procedure: Split into $\Z^n$.
             \begin{enumerate}[label=\arabic*.]
                 \item Keep cubes that are fully inside, discard ones that are fully outside.
                 \item For borderline cubes, divide into $2^n$ cubes evenly and go back to step 1.
             \end{enumerate}
-            Check that $\mathcal{O} = \bigcup_{n, k} C_{n, k}$, and note that the hypercubes have dyadic, hence rational coordinates.
+            Check that $\mathcal{U} = \bigcup_{n, k} C_{n, k}$, and note that the hypercubes have dyadic, hence rational coordinates.
             The figure shows a few steps for an example in $\R^2$.
             \begin{center}
                 \begin{tikzpicture}[scale=1.4]
@@ -574,6 +574,127 @@ Observe this implies that any Lebesgue set of finite \hyperlink{def:measure}{mea
                     \draw [->] (0, -0.8) -- (0, 4.9);
                 \end{tikzpicture}
             \end{center}
+
+            % This gives
+            % \begin{equation*}
+            %     s = \sum_{i=1}^k \alpha_i \chi_{c_i} \quad c_i \in \mathcal{C}, \, \alpha_i \in \Q.
+            % \end{equation*}
+
+            Take $f \in L^p(\mathcal{O})$, $s_k = \sum_{i=1}^k \alpha \chi_{A_i}$ simple functions such that $s_k \nearrow f$.
+
+            Each $A_i$ (measurable) can be approximated by $U_i$ open sets with $\frac{\epsilon}{k}$ error in measure (outer regularity).
+            Each $U_i$ is covered by rational cubes $C_{l, i}$ by the claim:
+            \begin{equation*}
+                (\infty < \mu(A_i) + \epsilon >) \mu(U_i) = \sum_{e \geq 1} \mu(C_{l, i}).
+            \end{equation*}
+            Pick up enough (finitely many) $(C_{l, i})_{l=1}^{m_i}$ such that
+            \begin{equation*}
+                \abs{\mu(U_i) - \sum_{i=1}^{m_i} \mu(C_{l, i})} \leq \frac{\epsilon}{k}.
+            \end{equation*}
+            Putting together all cubes $(C_{l, i})^k_{i=1, l=1, \dotsc, m_i}$ with error in measure less than $2\epsilon$,
+            \begin{align*}
+                \tilde{s_k} &= \sum_{i=1}^k \alpha_i \left(\sum_{l=1}^{m_i} \chi_{C_{l, i}}\right)\\
+                \tilde{\tilde{s_k}} &= \sum_{i=1}^k \tilde{\alpha_i} \left(\sum_{l=1}^{m_i} \chi_{C_{l, i}}\right)
+            \end{align*}
+            where $\abs{\alpha_i  -\tilde{\alpha_i}} \leq \frac{\epsilon}{k}$, and $\tilde{\alpha_i} \in \Q$, so $\tilde{\tilde{s_k}}$ belongs to the target set.
+
+            One more approximation step: $L^\infty$ bound on coefficients.
+        \item On each $C_{l, i}$ approximate $\chi_{C_{l, i}}$.
+            In $C^0$ we can do this easily with affine functions. To approximate with $C^\infty$ functions, we can use translations and copies from a smooth compactly supported functions, for instance $e^{-\frac{1}{x^2}}$.
+            % pic of affine functions and the exp thing
+            This requires on the continuity of the translation operator in $L^p$. In particular, with the translation operator $\tau_h f = f(\cdot + h_n)$, we need
+            \begin{equation*}
+                \norm{\tau_h f - f}_{L^p} \xrightarrow{h \to 0} 0.
+            \end{equation*}
+            We can show this by proving for simple functions, then approximate.
     \end{enumerate}
+\end{proof}
+\begin{ex}
+    Prove $L^\infty(\R^n)$ is not separable. (Hint: consider $(\chi_{B(0, r)})_{r > 0}$).
+\end{ex}
+
+\subsection{How regular are integrable/measurable functions}
+Take $f \in L^1(\R)$, and let
+\begin{equation*}
+    \int_0^x f(y) \, dy \eqqcolon F(x).
+\end{equation*}
+Is $F$ differentiable?
+\begin{defi}[Lebesgue point]\hypertarget{def:lebPoint}
+    Let $f: \R^n \to \C$ be \hyperlink{def:measFunc}{measurable}. $x \in \R^n$ is a \textbf{Lebesgue point} if
+    \begin{equation*}
+        \frac{1}{\mu(B(x, r))} \int_{B(x, r)} \abs{f(y) - f(x)} \, dy \xrightarrow{r \to 0} 0
+    \end{equation*}
+\end{defi}
+\begin{remark}
+    \begin{equation*}
+        \frac{1}{r} \left(\int_0^{x+r} f - \int_0^x f\right) = \frac{1}{r} \int_x^{x+r} f \xrightarrow{?} f(x) = F'(x).
+    \end{equation*}
+\end{remark}
+\begin{ex}[Worked example]
+    Prove that points of continuity are \hyperlink{def:lebPoint}{Lebesgue points}:
+    \begin{equation*}
+        x \text{ a point of continuity} \implies \forall \epsilon > 0, \, \exists r_0 > 0 \text{s.t. } \forall y \in B(x, r_0) \, \abs{f(x) - f(y)} < \epsilon.
+    \end{equation*}
+    Hence for $r < r_0$,
+    \begin{equation*}
+        \frac{1}{\mu(B(x, r))} \int_{B(x,r)} \abs{f(y) - f(x)} \, d\mu < \epsilon.
+    \end{equation*}
+    True for any $\epsilon>0$, so we have a Lebesgue point.
+\end{ex}
+\begin{thm}
+    For $f \in L^1(\R^n)$:
+    \begin{enumerate}[label=(\arabic*)]
+        \item Differentiation: almost every $x \in \R^n$ is a Lebesgue point.
+        \item For any $E$ a \hyperlink{def:borelSet}{Borel set} of $\R^n$, for almost every $x \in \R^n$,
+            \begin{equation*}
+                \frac{\mu(E \cap B(x, r))}{\mu(B(x, r))} \xrightarrow{r \to 0} \chi_E(x).
+            \end{equation*}
+    \end{enumerate}
+\end{thm}
+\begin{proof}[Proof (1) $\Rightarrow$ (2)]
+    Consider $\abs{x} \leq M$, $r < 1$.
+    \begin{equation*}
+        \frac{\mu(E \cap B(x, r))}{\mu(B(x, r))} = \frac{\mu(E \cap B(0, M+1) \cap B(x, r)}{\mu(B(x, r))}.
+    \end{equation*}
+    Apply (1) to $f \coloneqq \chi_{E \cap B(0, M+1)} \in L^1(\R^n)$.
+    Do that for any $M \in \N_{\geq 0}$, (2) true for almost every $x \in B(0, M)$, $\forall M \in N_{\geq 0}$, i.e. outside $N_M$.
+    $N_0 = \bigcup_{M \geq 1} N_M$ is a null set, (2) true on $\R^n \setminus N_0$.
+    %  check phone for pictures of this - grammar is unclear.
+\end{proof}
+\begin{proof}[Proof (1)]
+    Note that this is immediately true if $f$ is continuous, from the exercise earlier. So, aim to write $f = g+h$ where $g$ continuous and $\norm{h}_{L^1(\R^n)}$ is as small as is needed.
+    \textbf{Step 1}. Define the Hardy-Littlewood operator
+    \begin{align*}
+        Mf(x) &\coloneqq \sup_{r \geq 0} mf (x, r), \quad mf(x, r) \coloneqq \frac{1}{\mu(B(x, r))} \int_{B(x,r)} \abs{f} \, d\mu\\
+        \shortintertext{and} \\
+        a>0, E_a &\coloneqq \set{x \in \R^n | Mf(x) > a}.
+    \end{align*}
+    Claim: $E_a$ is an open set, hence measurable.
+    Take $x \in E_a$. $Mf(x) > a$, $\exists r >0$ such that $mf(x) > a$. So, $\frac{a}{mf(x)} < 1$.
+    Pick $\epsilon > 0$ small such that $(\frac{r}{r+\epsilon}) > \frac{a}{mf(x, r)}$. Consider $y \in B(x, \epsilon)$, so $B(x, r) \subset B(y, r + \epsilon)$ by triangle inequality.
+    \begin{align*}
+        mf(y, r+\epsilon) &= \frac{1}{\mu(B(y, r+\epsilon))} \int_{B(y, r+\epsilon)} \abs{f} \, d\mu \\
+                          &\geq (\frac{r}{r+\epsilon})^n \frac{1}{\mu(B(x,r))} \int_{B(x, r)} \abs{f} \, d\mu \geq (\frac{r}{r+\epsilon})^n mf(x, r) > a
+    \end{align*}
+    Conclude that $B(x, \epsilon) \subset E_a$, hence open.
+
+    Now take $x \in E_a$. Relate the volume of a local ball to $\int \abs{f}$.
+    \textbf{Step 2}. Vitali's covering lemma.
+    Take $X \subset \R^n$, and $X \subset \bigcup_{i=1}^N B(x_i, r_i)$.  Then $\exists J \subset \{1, \dotsc, N\}$ subset of indices such that
+    \begin{enumerate}[label=(\alph*)]
+        \item $(B(x_i, r_i))_{i \in J}$ are pairwise disjoint
+        \item
+            \begin{equation*}
+                X \subset \bigcup_{i \in J} B(x_i, 3 r_i)
+            \end{equation*}
+    \end{enumerate}
+    Proof: WLOG, take $r_1 \geq r_2 \geq \dotsb \geq r_N$. Consider $B(x_1, r_1)$. All balls that intersect it are entirely included in $B(x_1, 3 r_1)$. % pic to demonstrate
+    Remove these intersecting balls, to give a set of indices $J_1$. By induction, start the argument again on the second largest radius.
+    The induction preserves the covering property, so we are done.
+
+    \textbf{Step 3}. $\mu(E_a) \leq \frac{3^n}{a} \norm{f}_{L^1(\R^n)}$.
+    Sketch: Take $K$ compact, $K \subset E_a$ (inner regularity).
+    For each $x \in K \quad \exists r_x, mf(x, r_x) > a$, $K \subset \bigcup_{x \in K} B(x, r_x) \subset \bigcup_{i=1}^N B(x_i, r_i) \subset \bigcup_{i \in J} B(x_i, 3 r_i)$.
+    By Vitali covering lemma, $\mu(K) \leq \sum_{J} \mu(B(x_i, 3r_i)) \leq \frac{3^n}{a} \int \abs{f}$.
 \end{proof}
 \end{document}
