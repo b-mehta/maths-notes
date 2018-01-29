@@ -13,6 +13,8 @@
 \newcommand{\A}{\mathbb{A}}
 \DeclareMathOperator{\Mat}{Mat}
 \DeclareMathOperator{\chara}{char}
+\DeclareMathOperator{\Mor}{Mor}
+\DeclareMathOperator{\Gal}{Gal}
 %\setcounter{section}{-1}
 % and here we go!
 
@@ -373,7 +375,6 @@ Observe $Z(\sqrt{J}) = Z(J)$.
     \begin{equation*}
         f^N = \sum \tilde{\gamma_i}, \tilde{\gamma_i} \in J, i.e. f^N \in J.
     \end{equation*}
-
 \end{proof}
 \begin{remark}
     This proof uses $k[x_1, \dotsc, x_n, t]/tf-1 \twoheadleftarrow k[\A^{n+1}]$. This is $k[Y]$, where $Y = Z(tf-1) \subseteq \A^{n+1}$ and $Z(tf-1) = \set{(p, t_0) | f(p) t_0 = 1}$.
@@ -383,6 +384,71 @@ We will return to this, but first lets deduce some consequences of Nullstellensa
 \begin{cor}
     If $k = \overline{k}$, $Z(I) = Z(J) \iff I(Z(I)) = I(Z(J)) \iff \sqrt{I} = \sqrt{J}$.
     So we have a bijection
-
+    % missing thing
 \end{cor}
+The intrinsic definition of affine varieties is a consequence (doesn't depend on the embedding of $X \hookrightarrow \A^n$).
+
+\begin{defi}[Nilpotent]
+    In a ring $R$, an element $y \in R$ is \textbf{nilpotent} if $y^n = 0$ for some $n > 0$.
+\end{defi}
+\begin{eg}
+    In $k[x]/x^7$, $x$ is nilpotent.
+\end{eg}
+\begin{ex}
+    Let $J \geq k[x_1, \dotsc, x_n]$ be an ideal, $R = k[x_1, \dotsc, x_n]/J$. Then $J = \sqrt{J} \iff R$ has no non-zero nilpotent elements.
+\end{ex}
+\begin{cor}
+    Let $X \subseteq \A^n$ be a Zariski closed subvariety.
+    Then $k[X]$ is a finitely generated $k$-algebra with no non-zero nilpotent elements.
+    As it is finitely generated, there is $k[x_1, \dotsc, x_n] \xtwoheadrightarrow{\alpha}k[X]$ a surjective algebra homomorphism and no non-zero nilpotents $\iff \ker \alpha$ is a radical ideal.
+\end{cor}
+\begin{defi}[Affine variety, v2]
+    An affine variety over a field $k$ is a finitely generated $k$-algebra with no non-zero nilpotents.
+\end{defi}
+Observe:
+\begin{enumerate}[label=(\roman*)]
+    \item if $k = \overline{k}$, this coincides with our previous definition.
+    \item if $k \neq \overline{k}$, we get new examples, now $\R[x,y]/x^2 + y^2 + 1$ is an affine algebraic variety over $\R$ even though $Z(x^2 + y^2 + 1) = \emptyset$.
+        Note Nullstellensatz says $\R[x,y]/x^2 + y^2 + 1$ still has lots of maximal ideals but they correspond to $\Gal(\C/\R)$ orbits of complex solutions, i.e. complex conjugate pairs.
+    \item this definition does not explicitly refer to a choice of embedding $X \hookrightarrow \A^n$ (the data of a choice of algebra generators for $k[X]$).
+\end{enumerate}
+What is missing? We still have to define what a map of algebraic varieties is.
+\begin{defi}[Morphism]
+    A \textbf{morphism} of algebraic varieties $X \to Y$ is a $k$-algebra homomorphism $f^* k[Y] \to k[X]$. Write $\Mor(X, Y)$ for the set of morphisms, and write $f$ for the morphism associated to $f^*$.
+\end{defi}
+Let us unpack this definition.
+Write
+\begin{equation*}
+    k[X] = k[x_1, \dotsc, x_n] / \langle s_1, \dotsc, s_l \rangle \qquad k[Y] = k[y_1, \dotsc, y_m] / \langle r_1, \dotsc, r_k \rangle
+\end{equation*}
+and write $\overline{y_1}, \dotsc, \overline{y_m}$ for the images of $y_i$ in $k[Y]$.
+An algebra homomorphism $f^*: k[Y] \to k[X]$ takes $\overline{y_i} \mapsto f^*(\overline{y_i})$.
+Choose a poly $\Phi_i = \Phi_i(x_1, \dotsc, x_n) \in k[x_1, \dotsc, x_n]$ which mod the ideal $\langle s_1, \dotsc, s_l \rangle$ equals $f^*(\overline{y_i})$.
+This defines an algebra homomorphism
+\begin{align*}
+    k[y_1, \dotsc, y_m] &\longrightarrow k[x_1, \dotsc, x_n] \\
+    y_l &\mapsto \Phi_i(x_1, \dotsc, x_n).
+\end{align*}
+Now the condition that this determines an algebra homomorphism $k[Y] \to k[X]$ is the condition that $r_i(\Phi_1, \dotsc \Phi_m) = 0$ in $k[X] \quad \forall i$ i.e. the ideal $\langle r_1, \dotsc, r_l\rangle$ get sent to zero in $k[X]$.
+That is, $f^*$ is the data of polynomials $\Phi_1, \dotsc, \Phi_m$ in $k[x_1, \dotsc x_n]$ such that $r_i(\Phi_1, \dotsc \Phi_m) = 0$ (and the choice of such polynomials is well defined, up to adding any element of $\langle s_1, \dotsc, s_i\rangle$).
+Moreover, $f^*$ determines a map of sets $X \to Y$, denoted $f:X \to Y$, $x \mapsto (\Phi_1(x), \dotsc, \Phi_m(x))$.
+So, a morphism of algebraic varieties $f: X \to Y$ is, roughly speaking, a map of sets $X = (X_1, \dotsc, X_n) \in X \longrightarrow f(x) = (\Phi_1(x), \dotsc, \Phi_m(x)) \in Y$ (where $X \subseteq \A^n$ and $Y \subseteq \A^m$) given by polynomials $\Phi_1, \dotsc, \Phi_m \in k[\A^n]$. The condition that $(\Phi_1(x), \dotsc, \Phi_m(x)) \in Y$ is the condition $r_i(\Phi_1, \dotsc, \Phi_m) = 0$.
+But, we gave this definition in a way which didn't require choosing $X \hookrightarrow \A^n$ etc.
+
+\begin{defi}[Isomorphic]
+    $X$ is \textbf{isomorphic} to $Y$ if $\exists \alpha^*: k[Y] \to k[X]$, $\beta^*: k[X] \to k[Y]$ such that $\alpha^* \beta^*$ and $\beta^* \alpha^*$ are identity.
+\end{defi}
+\begin{eg}
+    \begin{enumerate}[label=(\roman*)]
+        \item $t \mapsto (t^2, t^3)$ is a morphism $\A^1 \to \A^2$.
+            More generally, $\Mor(\A^1, \A^n) = k$-algebra homomorphims $k[x_1, \dotsc, x_n] \to k[t]$ is just a tuple of polys $(\phi_1(t), \dotsc, \phi_n(t)) \in k[t]^n$.
+        \item Take $\Mor(X, \A^1) \ni \varphi^*$, then $\varphi^* k[t] \to k[X]$ an algebra homomorphism. $k[t]$ is the free $k$-algebra on 1 generator $t$.
+            That is, to specify an algebra homomorphism $k[t] \to R$ (for any ring $R$), it is enough to say where $t$ gets mapped to, and conversely any element of $R$ determines such a homomorphism.
+            So $\Mor(X, \A^1) = k[X]$.
+        \item $X = \A^1$, $Y = \set{(x, y) | x^2 = y^3} = Z(x^2 - y^3)$. Consider $t \mapsto (t^3, t^2)$. This is a morphism $(t^3)^2 = (t^2)^3$.
+            Exercise: Is this an isomorphism? Is $Y \cong \A^1$?
+        \item Take $\chara k \neq 2$. Is there a morphism $\A^1 \to \set{(x, y) | y^2 = x^3 - x}$ (which isn't a trival map).
+            Do there exist polynomials $a = a(t), b=b(t) \in k[t]$, not both constant such that $b^2 = a^3 - a$.
+    \end{enumerate}
+\end{eg}
 \end{document}
