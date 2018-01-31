@@ -1,6 +1,8 @@
-# maths-notes
-My Part II notes
+# Part II notes
 
-Will be updated with .tex files for backup purposes, but these should not be treated as clean.  On the other hand, `pdf` files can be treated as ready. I make no guarantees of accuracy or timing, but corrections or suggestions are always welcome.
+## Lent
+- [Algebraic Geometry](lent/algebraic_geometry.pdf) up to lecture 5 - needs tidying
+- [Analysis of Functions](lent/analysis_of_functions.pdf) up to lecture 4 - mostly complete
+- [Coding and Cryptography](lent/coding_and_cryptography.pdf) up to lecture 5 - mostly complete
 
-For those interested in my setup, I use neovim inside tmux, with vimtex plugins and Skim as my viewwer.  Completion provided by deoplete and ultisnips.
+My notes from part II maths. Feel free to get in touch with any typos, comments or suggestions at bm489@cam.ac.uk.
