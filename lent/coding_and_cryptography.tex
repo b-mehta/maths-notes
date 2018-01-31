@@ -14,6 +14,7 @@
 \usepackage{extarrows}
 \usetikzlibrary{arrows,decorations.pathmorphing,decorations.markings,positioning}
 % \renewcommand{\thesection}{\Roman{section}}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \pgfplotsset{width=7cm}
 \newcommand{\probConv}{\hyperlink{def:probConverge}{\xlongrightarrow{p}}}
@@ -91,7 +92,7 @@ A channel is determined by the probabilities
 The channel matrix is the $r \times s$ matrix with entries $p_{ij}$ (note the rows sum to 1).
 
 \begin{eg}
-    Binary Symmetric Channel (BSC) has $\Sigma_1 = \Sigma_2 = \{0, 1\}$, $0 \leq p \leq 1$:
+    Binary Symmetric Channel \hypertarget{def:bsc}{(BSC)} has $\Sigma_1 = \Sigma_2 = \{0, 1\}$, $0 \leq p \leq 1$:
     \begin{center}
         \begin{tikzpicture}
             \draw (-2, 0) circle [x radius=1cm, y radius=2cm] node [below=2cm] {$\Sigma_1$};
@@ -760,6 +761,150 @@ Roughly, $nH$ is the number of bits required to encode $(X_1, \dotsc, X_n)$.
     therefore the source is \hyperlink{def:reliablyEncode}{reliably encodable} at rate $H+\epsilon$.
 
     Conversely, if $H=0$, done. Otherwise, pick $0 < \epsilon < \frac{H}{2}$. Suppose the source is reliably encodable at rate $H - 2 \epsilon$, say with sets $A_n$.
+    \begin{gather*}
+        p(x_1, \dotsc, x_n) \leq 2^{-n(H-\epsilon)} \quad \forall (x_1, \dotsc, x_n) \in T_n \\
+        \begin{aligned}
+            \implies P((x_1, \dotsc, x_n) \in A_n \cap T_n) &\leq 2^{-n (H-\epsilon)} \abs{A_n} \\
+            \implies \frac{\log P(A_n \cap T_n)}{n} &\leq -(H-\epsilon) + \frac{\log \abs{A_n}}{n} \\
+                                                    &\to -(H-\epsilon) + (H-2 \epsilon) = -\epsilon \quad \text{as } n \to \infty. \qedhere
+        \end{aligned}
+    \end{gather*}
     % A few things missing here - make sure to fill in!
 \end{proof}
+
+% lecture 6
+\clearpage
+\section{Error Control Codes}
+\begin{defi}[Binary code]\hypertarget{def:binaryCode}
+    A $[n, m]$ \textbf{binary code} is a subset $C \subset \{0, 1\}^n$ of size $\abs{C}=m$. We say $C$ has length $n$.
+    The elements of $C$ are called codewords.
+\end{defi}
+We use a $[n, m]$-code to send one of $m$ possible messages through a \hyperlink{def:bsc}{BSC} making use of the channel $n$ times.
+\begin{center}
+    \begin{tikzpicture}
+        \draw (-2, 0) circle [x radius=1cm, y radius=2cm] node [below=2cm] {$\Sigma_1$};
+        \draw ( 2, 0) circle [x radius=1cm, y radius=2cm] node [below=2cm] {$\Sigma_2$};
+
+        \node (0l) at (-2, 1) {};
+        \node (1l) at (-2,-1) {};
+
+        \node (0r) at (2, 1) {};
+        \node (1r) at (2,-1) {};
+
+        \filldraw (0l) circle (1pt) node [left] {0};
+        \filldraw (1l) circle (1pt) node [left] {1};
+        \filldraw (0r) circle (1pt) node [right] {0};
+        \filldraw (1r) circle (1pt) node [right] {1};
+
+        \begin{scope}[decoration={
+            markings,
+            mark=at position 0.6 with {\arrow{>}}}
+            ]
+            \draw[postaction={decorate}] (0l) -- (0r)
+                node [above,align=center,pos=0.6] {$\scriptstyle 1-p$};
+            \draw[postaction={decorate}] (0l) -- (1r)
+                node [below,align=center,pos=0.6] {$\scriptstyle p$};
+            \draw[postaction={decorate}] (1l) -- (0r)
+                node [above,align=center,pos=0.6] {$\scriptstyle p$};
+            \draw[postaction={decorate}] (1l) -- (1r)
+                node [below,align=center,pos=0.6] {$\scriptstyle 1-p$};
+        \end{scope}
+    \end{tikzpicture}
+\end{center}
+\begin{defi}[Information rate]\hypertarget{def:infoRate}
+    The \textbf{information rate} of $C$ is
+    \begin{equation*}
+        \rho(C) = \frac{\log{m}}{n}
+    \end{equation*}
+    where we continue to use $\log = \log_2$.
+\end{defi}
+
+Note since $C\subset\{0, 1\}^n$, $\rho(C) \leq 1$, with equality iff $C = \{0, 1\}^n$.
+A code with size $m=1$ has \hyperlink{def:infoRate}{information rate} 0.
+We aim to design code with both a large information rate and a small error rate, which are contradicting aims.
+The error rate depends on the decoding rule. We consider 3 possible rules.
+\begin{enumerate}[label=(\roman*)]
+    \item The \hypertarget{def:idealObserver}{\textbf{ideal observer}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $P(c\text{ sent} \mid x\text{ received})$.
+    \item The \hypertarget{def:maximumLikelihood}{\textbf{maximum likelihood}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $P(x\text{ received} \mid c\text{ sent})$.
+    \item The \hypertarget{def:minimumDistance}{\textbf{minimum distance}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ minimising $\#\set{1 \leq i \leq n | x_i \neq c_i}$.
+\end{enumerate}
+\begin{remark}
+    Some convention should be agreed in the case of a `tie', e.g.\ choose at random, or ask for message to be sent again.
+\end{remark}
+\begin{nlemma}\label{lem:2.1}
+    If all messages are equally likely, then the \hyperlink{def:idealObserver}{ideal observer} and \hyperlink{def:maximumLikelihood}{maximum likelihood rule} agree.
+\end{nlemma}
+\begin{proof}
+    By Bayes' rule,
+    \begin{align*}
+        P(c \text{ sent} \mid x \text{ received}) &= \frac{P(c \text{ sent}, x \text{ received})}{P(x \text{ received})} \\
+                                               &= \frac{P(c \text{ sent})}{P(x \text{ received})} P(x \text{ received} \mid c \text{ sent}).
+    \end{align*}
+    We suppose $P(c \text{ sent})$ is independent of $c$. So for fixed $x$, maximising $P(c \text{ sent} \mid x \text{ received}) $ is the same as maximising $P(x \text{ received} \mid c \text{ sent})$.
+\end{proof}
+
+\begin{defi}
+    Let $x, y \in \{0, 1\}^n$. Then \textbf{Hamming distance} between $x$ and $y$ is $d(x, y) = \# \set{1 \leq i \leq n | x_i \neq y_i}$.
+\end{defi}
+\begin{nlemma}\label{lem:2.2}
+    If $p < \frac{1}{2}$, then \hyperlink{def:maximumLikelihood}{maximum likelihood} and \hyperlink{def:minimumDistance}{minimum distance} agree.
+\end{nlemma}
+\begin{proof}
+    Suppose $d(x, c) = r$.
+    \begin{equation*}
+        P(x \text{ received} \mid c \text{ sent}) = p^r (1-p)^{n-r} = (1-p)^n \left(\frac{p}{1-p}\right)^r
+    \end{equation*}
+    Since $p < \frac{1}{2}$, $\frac{p}{1-p} < 1$. So choosing $c$ to maximise $P(x \text{ received} \mid c \text{ sent})$ is the same as choosing $c$ to minimise $d(x, c)$.
+\end{proof}
+Note we assumed $p < \frac{1}{2}$, which is not unreasonable.
+\begin{eg}
+    Suppose codewords $000$ and $111$ are sent with probabilities $\alpha = \frac{9}{10}$ and $1-\alpha = \frac{1}{10}$ respectively. We use a \hyperlink{def:bsc}{BSC} with $p = \frac{1}{4}$.
+    If we receive $110$, how should it be decoded?
+    Clearly \hyperlink{def:minimumDistance}{minimum distance} and therefore \hyperlink{def:maximumLikelihood}{maximum likelihood} (by \cref{lem:2.2}) say decode as $111$.
+    For \hyperlink{def:idealObserver}{ideal observer:}
+    \begin{align*}
+        P(000 \text{ sent} \mid 110 \text{ received}) &= \frac{P(000 \text{ sent} , 110 \text{ received})}{P(110 \text{ received})} \\
+                                                   &= \frac{\alpha p^2 (1-p)}{\alpha p^2 (1-p) + (1-\alpha) p (1-p)^2} \\
+                                                   &= \frac{\alpha p}{\alpha p + (1-\alpha) (1-p)} \\
+                                                   &= \frac{9/40}{9/40 + 3/40} = \frac{3}{4} \\
+        P(000 \text{ sent} \mid 110 \text{ received}) &= \frac{(1-\alpha) p^2 (1-p)}{(1-\alpha) p^2 (1-p) + \alpha p (1-p)^2} \\
+                                                   &= \frac{(1-\alpha)(1-p)}{(1-\alpha)(1-p) + \alpha p} \\
+                                                   &= \frac{3/40}{9/40 + 3/40} = \frac{1}{4}.
+    \end{align*}
+    So the ideal observer rule says decode as $000$.
+\end{eg}
+\begin{remark}
+    The \hyperlink{def:idealObserver}{ideal observer} rule is also known as the minimum-error rule.
+    But it does rely on knowing the probabilities of the codewords sent.
+\end{remark}
+From now on, we use \hyperlink{def:minimumDistance}{minimum distance} decoding.
+\begin{defi}
+    For a \hyperlink{def:binaryCode}{binary code} $C$,
+    \begin{enumerate}[label=(\roman*)]
+        \item $C$ is \hypertarget{def:errorDet}{\textbf{$d$-error detecting}} if changing at most $d$ letters of a codeword cannot give another codeword.
+        \item $C$ is \hypertarget{def:errorCor}{\textbf{$e$-error correcting}} if knowing that the string received has at most $e$ errors is sufficient to determine which codeword was sent.
+    \end{enumerate}
+\end{defi}
+\begin{eg} \leavevmode
+    \begin{enumerate}[label=\arabic*.]
+        \item The repetition code of length $n$ has:
+            \begin{equation*}
+                C = \{\underbrace{0\dotsm0}_n, \underbrace{1 \dotsm1}_n\}
+            \end{equation*}
+            This is an \hyperlink{def:binaryCode}{$[n, 2]$-code}. It is \hyperlink{def:errorDet}{$n-1$ error detecting}, and $\floor{\frac{n-1}{2}}$ \hyperlink{def:errorCor}{error correcting}.
+            But it has \hyperlink{def:infoRate}{information rate} $= \frac{1}{n}$.
+        \item The simple parity check code of length $n$ (also known as paper tape code).
+            We view $\{0, 1\} = \mathbb{F}_2 = \Z/2\Z$ (i.e.\ do arithmetic modulo $2$).
+            \begin{equation*}
+                C = \Set{(x_1, \dotsc, x_n) \in \{0, 1\}^n | \sum_{i=1}^n x_i = 0}.
+            \end{equation*}
+            This is a $[n, 2^{n-1}]$ code. It is $1$-\hyperlink{def:errorDet}{error detecting} and $0$-\hyperlink{def:errorCor}{error correcting}.
+            It has information rate $\frac{n-1}{n}$.
+    \end{enumerate}
+\end{eg}
+\begin{remark}
+    Suppose we change our code $C \subset \{0, 1\}^n$ by using the same permutation to reorder each codeword.
+    This gives a code with the same mathematical properties (e.g.\ \hyperlink{def:infoRate}{information rate}, \hyperlink{def:errorDet}{error detection rate}).
+    We say such codes are equivalent.
+\end{remark}
 \end{document}
