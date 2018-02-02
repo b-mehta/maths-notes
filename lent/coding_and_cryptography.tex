@@ -1000,4 +1000,20 @@ Recall $d(x, y) = \#\set{1 \leq i \leq n | x_i \neq y_i}$.
         \item \hyperlink{def:hammingCode}{Hamming's original} $[7, 16]$-code is $1$-error correcting $\implies d \geq 3$. Since 0000000 and 1110000 are both valid codewords, $d=3$. That is, it is a $[7, 16, 3]$-code.
     \end{enumerate}
 \end{eg}
+
+\subsection{New codes from old}
+Let $C$ be an \hyperlink{def:nmdCode}{$[n,m,d]$-code}.
+\begin{enumerate}[label=\roman*)]
+    \item The \hypertarget{def:parityExtension}{parity extension} of $C$ is
+        \begin{equation*}
+            \overline{C} - \set{(c_1, c_2, \dotsc, c_n, \sum c_i) | (c_1, \dotsc, c_n) \in C}.
+        \end{equation*}
+        It is a $[n+1, m, d']$ code, for $d' = d$ or $d+1$, depending on $d$ being odd or even.
+    \item Fix $1 \leq i \leq n$. Deleting the $i$th letter from each codeword gives a \hypertarget{def:puncturedCode}{punctured code}.  If $d \geq 2$, the new code is $[n-1, m, d'']$ for $d'' = d-1$ or $d$.
+    \item Fix $i \leq i \leq n$ and $a \in \{0, 1\}$. The shortened code is
+        \begin{equation*}
+            \set{(c_1, \dotsc, c_{i-1}, c_{i+1}, \dotsc, c_n) | (c_1, \dotsc, c_{i-1}, a, c_{i+1}, \dotsc, c_n) \in C}.
+        \end{equation*}
+        It is a $[n-1, m', d']$-code, where $d' \geq d$ and some choice of $a$ gives $m' \geq \frac{m}{2}$.
+\end{enumerate}
 \end{document}
