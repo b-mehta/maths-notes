@@ -827,7 +827,7 @@ The error rate depends on the decoding rule. We consider 3 possible rules.
 \begin{enumerate}[label=(\roman*)]
     \item The \hypertarget{def:idealObserver}{\textbf{ideal observer}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $\Prob(c\text{ sent} \mid x\text{ received})$.
     \item The \hypertarget{def:maximumLikelihood}{\textbf{maximum likelihood}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $\Prob(x\text{ received} \mid c\text{ sent})$.
-    \item The \hypertarget{def:minimumDistance}{\textbf{minimum distance}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ minimising $\#\set{1 \leq i \leq n | x_i \neq c_i}$.
+    \item The \hypertarget{def:minimumDistanceRule}{\textbf{minimum distance}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ minimising $\#\set{1 \leq i \leq n | x_i \neq c_i}$.
 \end{enumerate}
 \begin{remark}
     Some convention should be agreed in the case of a `tie', e.g.\ choose at random, or ask for message to be sent again.
@@ -848,7 +848,7 @@ The error rate depends on the decoding rule. We consider 3 possible rules.
     Let $x, y \in \{0, 1\}^n$. Then \textbf{Hamming distance} between $x$ and $y$ is $d(x, y) = \# \set{1 \leq i \leq n | x_i \neq y_i}$.
 \end{defi}
 \begin{nlemma}\label{lem:2.2}
-    If $p < \frac{1}{2}$, then \hyperlink{def:maximumLikelihood}{maximum likelihood} and \hyperlink{def:minimumDistance}{minimum distance} agree.
+    If $p < \frac{1}{2}$, then \hyperlink{def:maximumLikelihood}{maximum likelihood} and \hyperlink{def:minimumDistanceRule}{minimum distance} agree.
 \end{nlemma}
 \begin{proof}
     Suppose $d(x, c) = r$.
@@ -861,7 +861,7 @@ Note we assumed $p < \frac{1}{2}$, which is not unreasonable.
 \begin{eg}
     Suppose codewords $000$ and $111$ are sent with probabilities $\alpha = \frac{9}{10}$ and $1-\alpha = \frac{1}{10}$ respectively. We use a \hyperlink{def:bsc}{BSC} with $p = \frac{1}{4}$.
     If we receive $110$, how should it be decoded?
-    Clearly \hyperlink{def:minimumDistance}{minimum distance} and therefore \hyperlink{def:maximumLikelihood}{maximum likelihood} (by \cref{lem:2.2}) say decode as $111$.
+    Clearly \hyperlink{def:minimumDistanceRule}{minimum distance} and therefore \hyperlink{def:maximumLikelihood}{maximum likelihood} (by \cref{lem:2.2}) say decode as $111$.
     For \hyperlink{def:idealObserver}{ideal observer:}
     \begin{align*}
         \Prob(000 \text{ sent} \mid 110 \text{ received}) &= \frac{\Prob(000 \text{ sent} , 110 \text{ received})}{\Prob(110 \text{ received})} \\
@@ -878,7 +878,7 @@ Note we assumed $p < \frac{1}{2}$, which is not unreasonable.
     The \hyperlink{def:idealObserver}{ideal observer} rule is also known as the minimum-error rule.
     But it does rely on knowing the probabilities of the codewords sent.
 \end{remark}
-From now on, we use \hyperlink{def:minimumDistance}{minimum distance} decoding.
+From now on, we use \hyperlink{def:minimumDistanceRule}{minimum distance} decoding.
 \begin{defi}
     For a \hyperlink{def:binaryCode}{binary code} $C$,
     \begin{enumerate}[label=(\roman*)]
@@ -888,24 +888,116 @@ From now on, we use \hyperlink{def:minimumDistance}{minimum distance} decoding.
 \end{defi}
 \begin{eg} \leavevmode
     \begin{enumerate}[label=\arabic*.]
-        \item The repetition code of length $n$ has:
+        \item The \hypertarget{def:repetitionCode}{repetition code} of length $n$ has:
             \begin{equation*}
                 C = \{\underbrace{0\dotsm0}_n, \underbrace{1 \dotsm1}_n\}
             \end{equation*}
             This is an \hyperlink{def:binaryCode}{$[n, 2]$-code}. It is \hyperlink{def:errorDet}{$n-1$ error detecting}, and $\floor{\frac{n-1}{2}}$ \hyperlink{def:errorCor}{error correcting}.
             But it has \hyperlink{def:infoRate}{information rate} $= \frac{1}{n}$.
-        \item The simple parity check code of length $n$ (also known as paper tape code).
+        \item The \hypertarget{def:parityCheckCode}{simple parity check} code of length $n$ (also known as paper tape code).
             We view $\{0, 1\} = \mathbb{F}_2 = \Z/2\Z$ (i.e.\ do arithmetic modulo $2$).
             \begin{equation*}
                 C = \Set{(x_1, \dotsc, x_n) \in \{0, 1\}^n | \sum_{i=1}^n x_i = 0}.
             \end{equation*}
             This is a $[n, 2^{n-1}]$ code. It is $1$-\hyperlink{def:errorDet}{error detecting} and $0$-\hyperlink{def:errorCor}{error correcting}.
             It has information rate $\frac{n-1}{n}$.
+        \item \hypertarget{def:hammingCode}{Hamming's original} code (1950). % this example was lecture 7
+            Let $C \subseteq \mathbb{F}_2^7$ be defined by
+            \begin{align*}
+                c_1 + c_3 + c_5 + c_7 &= 0 \\
+                c_2 + c_3 + c_6 + c_7 &= 0 \\
+                c_4 + c_5 + c_6 + c_7 &= 0
+            \end{align*}
+            where all arithmetic is modulo 2.
+            Since we may choose $c_3, c_5, c_6, c_7$ freely, the $c_1, c_2, c_4$ are uniquely determined.
+            So we get $\abs{C} = 2^4$ i.e.\ $C$ is a $[7,16]$-\hyperlink{def:binaryCode}{code}.
+            It has \hyperlink{def:infoRate}{information rate} $\frac{\log m} {n}$.
+            Note $c_{3,5,6,7}$ are free, $c_{1,2,4}$ are check digits.
+
+            Suppose we receive $x \in \mathbb{F}_2^7$. We form the syndrome $z_x = (z_1, z_2, z_4)$ where
+            \begin{align*}
+                z_1 = x_1 + x_3 + x_5 + x_7 \\
+                z_2 = x_2 + x_3 + x_6 + x_7 \\
+                z_4 = x_4 + x_5 + x_6 + x_7.
+            \end{align*}
+            If $x \in C$, then $z = (0,0,0)$. If $d(x, c) = 1$ for some $c \in C$, then the place where $x$ and $c$ differ is given by $z_1 + 2 z_2 + 4z_4$ (not modulo 2).
+            Since if $x = c+ e_i$ where $e_i = 0\dotsm010\dotsm 0$ ($1$ in the $i$th place), then the syndrome of $x$ is the syndrome of $e_i$.
+            For example the syndrome of $e_3$ is $(1, 1, 0)$, the binary expansion of $3$.
+            True in fact for each $1 \leq i \leq 7$.
     \end{enumerate}
 \end{eg}
+
 \begin{remark}
     Suppose we change our code $C \subset \{0, 1\}^n$ by using the same permutation to reorder each codeword.
     This gives a code with the same mathematical properties (e.g.\ \hyperlink{def:infoRate}{information rate}, \hyperlink{def:errorDet}{error detection rate}).
     We say such codes are equivalent.
 \end{remark}
+
+% lecture 7
+
+Recall $d(x, y) = \#\set{1 \leq i \leq n | x_i \neq y_i}$.
+\begin{nlemma}\label{lem:2.3}
+    The Hamming Distance is a metric on $\mathbb{F}_2^n$.
+\end{nlemma}
+
+\begin{proof}
+    Clearly $d(x, y) \geq 0$ with equality iff $x=y$.
+    Also $d(x, y) = d(y, x)$. Check triangle inequality, let $x, y, z \in \mathbb{F}_2^n$:
+    \begin{gather*}
+        \set{1 \leq i \leq n | x_i \neq z_i} \subseteq
+        \set{1 \leq i \leq n | x_i \neq y_i} \cup
+        \set{1 \leq i \leq n | y_i \neq z_i} \\
+        \implies d(x, z) \leq d(x, y) + d(y, z)
+    \end{gather*}
+\end{proof}
+\begin{remark}
+    We could also write $d(x, y) = \sum_{i=1}^n d_1(x_i, y_i)$ where $d_1$ is the discrete metric on $\{0, 1\}$.
+\end{remark}
+
+\begin{defi}[Minimum distance]\label{def:minimumDistanceCode}
+    The \textbf{minimum distance} of a code $C$ is the smallest Hamming distance between distinct codewords.
+\end{defi}
+\begin{notation}
+    An \hyperlink{def:binaryCode}{$[n, m]$-code} with \hyperlink{def:minimumDistanceCode}{minimum distance} $d$ is sometimes called an \hyperlink{def:nmdCode}{$[n, m, d]$-code}.
+\end{notation}
+\begin{remark}\leavevmode
+    \begin{itemize}
+        \item $m \leq 2^n$, with equality if $C = \mathbb{F}_2^n$, this is called the \hypertarget{def:trivialCode}{trivial code}.
+        \item $d \leq n$, with equality in the case of the \hyperlink{def:repetitionCode}{repetition code}.
+    \end{itemize}
+\end{remark}
+\begin{nlemma}\label{lem:2.4}
+    Let $C$ be a code with minimum distance $d$.
+    \begin{enumerate}[label=(\roman*)]
+        \item $C$ is $(d-1)$-\hyperlink{def:errorDet}{error detecting}, but cannot detect all sets of errors.
+        \item $C$ is $\floor{\frac{d-1}{2}}$-\hyperlink{def:errorCor}{error correcting}, but cannot correct all sets of $\floor{\frac{d-1}{2}} + 1$ errors.
+    \end{enumerate}
+\end{nlemma}
+\begin{proof}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item If $x \in \mathbb{F}_2^n$ and $c \in C$ with $1 \leq d(x, c) \leq d-1$ then $x \notin C$. So errors are detected.
+            Suppose $c_1, c_2 \in C$ with $d(c_1, c_2) = d$. Then $c_1$ can be corrupted to $c_2$ with just $d$ errors, this set of errors will not be detected.
+        \item Let $e = \floor{\frac{d-1}{2}}$, so $e \leq \floor{\frac{d-1}{2}} < e+1$, i.e.\ $2e < d \leq 2(e+1)$.
+            Let $x \in \mathbb{F}_2^n$. If $\exists c_1 \in C$ with $d(x, c_1) \leq e$, we want to show $d(x, c_2) > e \quad \forall c_2 \in C, c_2 \neq c_1$.
+            By the triangle inequality,
+            \begin{align*}
+                d(x, c_2) &\geq d(c_1, c_2) - d(x, c_1) \\
+                          &\geq d - e \\
+                          &> e
+            \end{align*}
+            so $C$ is $e$-error correcting.
+
+            Let $c_1, c_2 \in C$ with $d(c_1, c_2) = d$. Let $x \in \mathbb{F}_2^n$ differ from $c_1$ in precisely $e+1$ places, where $c_1$ and $c_2$ differ.
+            Then $d(x, c_1) = e+1$ and $d(x, c_2) = d - (e+1) \leq e+1$.
+            So $C$ cannot correct all $e+1$ errors.
+    \end{enumerate}
+\end{proof}
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}[label=\arabic*)]
+        \item The \hyperlink{def:repetitionCode}{repetition code} is a \hyperlink{def:nmdCode}{$[n, 2, n]$-code}, it is $n-1$ \hyperlink{def:errorDet}{error detecting} and $\floor{\frac{n-1}{2}}$ \hyperlink{def:errorCor}{error correcting}.
+        \item The simple \hyperlink{def:parityCheckCode}{parity check} code is a $[n, 2^{n-1}, 2]$-code, it is $1$-error detecting and $0$-error correcting.
+        \item \hyperlink{def:hammingCode}{Hamming's original} $[7, 16]$-code is $1$-error correcting $\implies d \geq 3$. Since 0000000 and 1110000 are both valid codewords, $d=3$. That is, it is a $[7, 16, 3]$-code.
+    \end{enumerate}
+\end{eg}
 \end{document}
