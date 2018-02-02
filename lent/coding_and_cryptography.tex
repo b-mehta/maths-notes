@@ -18,6 +18,7 @@
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \pgfplotsset{width=7cm}
 \newcommand{\probConv}{\hyperlink{def:probConverge}{\xlongrightarrow{p}}}
+\newcommand{\Prob}{\mathbb{P}}
 % and here we go!
 
 \begin{document}
@@ -78,13 +79,13 @@ A \textbf{communication channel} takes letters from an input alphabet $\Sigma_1 
 
 A channel is determined by the probabilities
 \begin{equation*}
-    P(y_1 \dotsc y_k \text{ received} \mid x_1 \dotsc x_k \text{ sent})
+    \Prob(y_1 \dotsc y_k \text{ received} \mid x_1 \dotsc x_k \text{ sent})
 \end{equation*}
 
 \begin{defi}[Discrete memoryless channel]\hypertarget{def:dmc}
     A \textbf{discrete memoryless channel} (DMC) is a channel for which
     \begin{equation*}
-        P_{ij} = P(b_j \text{ received} \mid a_i \text{ sent})
+        P_{ij} = \Prob(b_j \text{ received} \mid a_i \text{ sent})
     \end{equation*}
     is the same each time the channel is used and is independent of all past and future uses.
 \end{defi}
@@ -367,7 +368,7 @@ The entropy $H(X)$ is roughly speaking the expected number of tosses of a fair c
 
 % Lecture 3
 \begin{eg}
-    We toss a biased coin, $P(\text{heads}) = p, P(\text{tails}) = 1-p$. Write $H(p) = H(p, 1-p) = -p \log p - (1-p) \log (1-p)$.
+    We toss a biased coin, $\Prob(\text{heads}) = p, \Prob(\text{tails}) = 1-p$. Write $H(p) = H(p, 1-p) = -p \log p - (1-p) \log (1-p)$.
     If $p=0$ or $1$, the outcome is certain and so $H(p)=0$. \hyperlink{def:entropy}{Entropy} is maximal where $p=\frac{1}{2}$, i.e. a fair coin.
 
     \begin{center}
@@ -380,7 +381,7 @@ The entropy $H(X)$ is roughly speaking the expected number of tosses of a fair c
     \end{center}
 \end{eg}
 
-Note the \hyperlink{def:entropy}{entropy} can also be viewed as the expected value of the information of $X$, where information is given by $I(X=x) = -\log_2 P(X=x)$.
+Note the \hyperlink{def:entropy}{entropy} can also be viewed as the expected value of the information of $X$, where information is given by $I(X=x) = -\log_2 \Prob(X=x)$.
 For example, if a coin always lands heads we gain no information from tossing the coin.
 The entropy is the average amount of information conveyed by a random variable $X$.
 
@@ -426,11 +427,11 @@ We model the source as a sequence of random variables $X_1, X_2, \dotsc$ taking 
 \begin{defi}[Memoryless source]\hypertarget{def:memoryless}
     A \textbf{Bernoulli} or \textbf{memoryless} source is a sequence of independently, identically distributed random variables.
 \end{defi}
-That is, for each $\mu \in \Sigma_1$, $P(X_i = \mu)$ is independent of $i$ and independent of all past and future symbols emitted. Thus
+That is, for each $\mu \in \Sigma_1$, $\Prob(X_i = \mu)$ is independent of $i$ and independent of all past and future symbols emitted. Thus
 \begin{equation*}
-    P(X_1= x_1, X_2 = x_2, \dotsc, X_k = x_k) = \prod_{i = 1}^k P(X_i = x_i).
+    \Prob(X_1= x_1, X_2 = x_2, \dotsc, X_k = x_k) = \prod_{i = 1}^k \Prob(X_i = x_i).
 \end{equation*}
-Let $\Sigma_1 = \{\mu_1, \dotsc, \mu_n\}$, $p_i = P(X=\mu_i)$ (assume $p_i > 0$).
+Let $\Sigma_1 = \{\mu_1, \dotsc, \mu_n\}$, $p_i = \Prob(X=\mu_i)$ (assume $p_i > 0$).
 \begin{defi}[Expected word length]\hypertarget{def:ewl}
     The \textbf{expected word length} of a code $f: \Sigma_1 \to \Sigma_2^*$ with word lengths $s_1, \dotsc, s_m$ is $E(S) = \sum_{i=1}^m p_i s_i$.
 \end{defi}
@@ -507,7 +508,7 @@ Follows from above proof.
 
 \subsubsection*{Huffman coding}
 For simplicity, take $a=2$.
-Take $\Sigma_1=\{\mu_1, \dotsc, \mu_m\}$ with $p_i = P(X = \mu_i)$. Without loss of generality, $p_1 \geq p_2 \geq \dotsb \geq p_m$.
+Take $\Sigma_1=\{\mu_1, \dotsc, \mu_m\}$ with $p_i = \Prob(X = \mu_i)$. Without loss of generality, $p_1 \geq p_2 \geq \dotsb \geq p_m$.
 \hypertarget{def:huffmanCode}Huffman coding is defined inductively.
 
 If $m=2$, assign codewords $0$ and $1$. If $\mu > 2$, find a Huffman coding in the case of messages $\mu_1, \mu_2, \dotsc, \nu$, with probabilities $p_1, p_2, \dotsc, p_{m-1} + p_m$.
@@ -608,7 +609,7 @@ Append $0$ (resp, $1$) to the codeword for $\nu$ to give a codeword for $\mu_{m-
 \begin{defi}[Joint entropy]\hypertarget{def:jointEntropy}
     The \textbf{joint entropy} of $X$ and $Y$ is
     \begin{equation*}
-        H(X,Y) = - \sum_{x \in \Sigma_1} \sum_{y \in \Sigma_2} P(X=x, Y=y) \log P(X=x, Y=y).
+        H(X,Y) = - \sum_{x \in \Sigma_1} \sum_{y \in \Sigma_2} \Prob(X=x, Y=y) \log \Prob(X=x, Y=y).
     \end{equation*}
 \end{defi}
 
@@ -617,7 +618,7 @@ Append $0$ (resp, $1$) to the codeword for $\nu$ to give a codeword for $\mu_{m-
 \end{nlemma}
 
 \begin{proof}
-    Take $\Sigma_1 = \{x_1, \dotsc, x_m\}$, $\Sigma_2 = \{y_1, \dotsc, y_n\}$. Let $p_{ij} = P(X=x_i, Y=y_j)$, as well as $p_i = P(X=x_i)$, $q_i = P(Y=y_i)$.
+    Take $\Sigma_1 = \{x_1, \dotsc, x_m\}$, $\Sigma_2 = \{y_1, \dotsc, y_n\}$. Let $p_{ij} = \Prob(X=x_i, Y=y_j)$, as well as $p_i = \Prob(X=x_i)$, $q_i = \Prob(Y=y_i)$.
     Apply \nameref{lem:gibbs} to the distributions $p_{ij}$ and $p_i q_j$:
     \begin{align*}
         -\sum p_{ij} \log(p_{ij}) &\leq -\sum p_{ij} \log(p_i q_j) \\
@@ -631,7 +632,7 @@ Append $0$ (resp, $1$) to the codeword for $\nu$ to give a codeword for $\mu_{m-
 % Lecture 5
 Suppose a source $\Omega$ produces a stream $X_1, X_2, \dotsc$ of random variables with values in $\Sigma$.
 The probability mass function (p.m.f.) of $X^{(n)} = (X_1, \dotsc, X_n)$ is given by
-\begin{equation*}p_n(x_1, \dotsc, x_n) = P(X_1, \dotsc, X_n = x_1, \dotsc, x_n) \quad \forall x_1, \dotsc, x_n \in \Sigma^n\end{equation*}
+\begin{equation*}p_n(x_1, \dotsc, x_n) = \Prob(X_1, \dotsc, X_n = x_1, \dotsc, x_n) \quad \forall x_1, \dotsc, x_n \in \Sigma^n\end{equation*}
 Now,
 \begin{align*}
     p_n &: \Sigma^n \to \R \\
@@ -669,7 +670,7 @@ a random variable sending $\omega \mapsto p_n(X^{(n)} = X^{(n)} (\omega))$.
 \begin{defi}[Convergence in probability]\hypertarget{def:probConverge}
     A sequence of random variables $X_1, X_2, \dotsc$ \textbf{converges in probability} to $c \in \R$, written $X_n \xlongrightarrow{p} c$ as $n \to \infty$, if
     \begin{equation*}
-        \forall \epsilon > 0 \quad P(\abs{X_n - c} \leq \epsilon) \to 1 \quad \text{as } n \to \infty.
+        \forall \epsilon > 0 \quad \Prob(\abs{X_n - c} \leq \epsilon) \to 1 \quad \text{as } n \to \infty.
     \end{equation*}
     So, $X_n$ and $c$ can take very different values for large $n$, but only on a set with small probability.
 \end{defi}
@@ -698,7 +699,7 @@ a random variable sending $\omega \mapsto p_n(X^{(n)} = X^{(n)} (\omega))$.
 \begin{eg}
     Consider a coin, $p(H) = p$. If coin tossed $N$ times, expect approximately $pN$ heads and $(1-p)N$ tails.
     \begin{align*}
-        &P(\text{particular sequence of $pN$ heads and $(1-p)N$ tails}) \\
+        &\Prob(\text{particular sequence of $pN$ heads and $(1-p)N$ tails}) \\
         =&p^{pN} (1-p)^{(1-p)N}\\
         =&2^{N(p \log p) + (1-p) \log (1-p)} = 2^{-N H(A)}
     \end{align*}
@@ -712,7 +713,7 @@ a random variable sending $\omega \mapsto p_n(X^{(n)} = X^{(n)} (\omega))$.
     \end{gather*}
     \begin{equation*}
         \begin{gathered}
-        P((X_1, \dotsc, X_n) \in T_n) > 1 - \epsilon \\
+        \Prob((X_1, \dotsc, X_n) \in T_n) > 1 - \epsilon \\
         2^{-n(H+\epsilon)} \leq p(x_1, \dotsc, x_n) \leq 2^{-n(H-\epsilon)}\quad \forall (x_1, \dotsc, x_n) \in T^n
         \end{gathered}
         \tag{$*$} \label{eq:5star}
@@ -727,14 +728,14 @@ a random variable sending $\omega \mapsto p_n(X^{(n)} = X^{(n)} (\omega))$.
     \end{align*}
     \eqref{eq:5star} $\Rightarrow$ \hyperlink{def:aep}{AEP}
     \begin{equation*}
-        P\left(\abs{- \frac{1}{n} p(X_1, \dotsc, X_n) - H} < \epsilon\right) \geq P(T_n) \to 1 \quad \text{as } n \to \infty. \qedhere
+        \Prob\left(\abs{- \frac{1}{n} p(X_1, \dotsc, X_n) - H} < \epsilon\right) \geq \Prob(T_n) \to 1 \quad \text{as } n \to \infty. \qedhere
     \end{equation*}
 \end{proof}
 \begin{defi}[Reliably encodable]\hypertarget{def:reliablyEncode}
     A source $X_1, X_2, \dotsc$ is \textbf{reliably encodable} at rate $r$ if $\exists A_n \subset \Sigma^n$ for each $n$ such that
     \begin{enumerate}[label=(\roman*)]
         \item $\frac{\log \abs{A_n}}{n} \to r \quad \text{as } n \to \infty$
-        \item $P((X_1, \dotsc, X_n) \in A_n) \to 1 \quad \text{as } n \to \infty$.
+        \item $\Prob((X_1, \dotsc, X_n) \in A_n) \to 1 \quad \text{as } n \to \infty$.
     \end{enumerate}
     So, in principle you can encode at rate almost $r$ with negligible error for long enough strings.
 \end{defi}
@@ -755,7 +756,7 @@ Roughly, $nH$ is the number of bits required to encode $(X_1, \dotsc, X_n)$.
     \end{equation*}
     So,
     \begin{gather*}
-        P(\left(X_1, \dotsc, X_n\right) \in T_n) \geq 2^{-n(H+\epsilon)} \abs{T_n} \\
+        \Prob(\left(X_1, \dotsc, X_n\right) \in T_n) \geq 2^{-n(H+\epsilon)} \abs{T_n} \\
         \implies \abs{T_n} \leq 2^{n(H+\epsilon)}
     \end{gather*}
     therefore the source is \hyperlink{def:reliablyEncode}{reliably encodable} at rate $H+\epsilon$.
@@ -764,8 +765,8 @@ Roughly, $nH$ is the number of bits required to encode $(X_1, \dotsc, X_n)$.
     \begin{gather*}
         p(x_1, \dotsc, x_n) \leq 2^{-n(H-\epsilon)} \quad \forall (x_1, \dotsc, x_n) \in T_n \\
         \begin{aligned}
-            \implies P((x_1, \dotsc, x_n) \in A_n \cap T_n) &\leq 2^{-n (H-\epsilon)} \abs{A_n} \\
-            \implies \frac{\log P(A_n \cap T_n)}{n} &\leq -(H-\epsilon) + \frac{\log \abs{A_n}}{n} \\
+            \implies \Prob((x_1, \dotsc, x_n) \in A_n \cap T_n) &\leq 2^{-n (H-\epsilon)} \abs{A_n} \\
+            \implies \frac{\log \Prob(A_n \cap T_n)}{n} &\leq -(H-\epsilon) + \frac{\log \abs{A_n}}{n} \\
                                                     &\to -(H-\epsilon) + (H-2 \epsilon) = -\epsilon \quad \text{as } n \to \infty. \qedhere
         \end{aligned}
     \end{gather*}
@@ -824,8 +825,8 @@ A code with size $m=1$ has \hyperlink{def:infoRate}{information rate} 0.
 We aim to design code with both a large information rate and a small error rate, which are contradicting aims.
 The error rate depends on the decoding rule. We consider 3 possible rules.
 \begin{enumerate}[label=(\roman*)]
-    \item The \hypertarget{def:idealObserver}{\textbf{ideal observer}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $P(c\text{ sent} \mid x\text{ received})$.
-    \item The \hypertarget{def:maximumLikelihood}{\textbf{maximum likelihood}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $P(x\text{ received} \mid c\text{ sent})$.
+    \item The \hypertarget{def:idealObserver}{\textbf{ideal observer}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $\Prob(c\text{ sent} \mid x\text{ received})$.
+    \item The \hypertarget{def:maximumLikelihood}{\textbf{maximum likelihood}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $\Prob(x\text{ received} \mid c\text{ sent})$.
     \item The \hypertarget{def:minimumDistance}{\textbf{minimum distance}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ minimising $\#\set{1 \leq i \leq n | x_i \neq c_i}$.
 \end{enumerate}
 \begin{remark}
@@ -837,10 +838,10 @@ The error rate depends on the decoding rule. We consider 3 possible rules.
 \begin{proof}
     By Bayes' rule,
     \begin{align*}
-        P(c \text{ sent} \mid x \text{ received}) &= \frac{P(c \text{ sent}, x \text{ received})}{P(x \text{ received})} \\
-                                               &= \frac{P(c \text{ sent})}{P(x \text{ received})} P(x \text{ received} \mid c \text{ sent}).
+        \Prob(c \text{ sent} \mid x \text{ received}) &= \frac{\Prob(c \text{ sent}, x \text{ received})}{\Prob(x \text{ received})} \\
+                                               &= \frac{\Prob(c \text{ sent})}{\Prob(x \text{ received})} \Prob(x \text{ received} \mid c \text{ sent}).
     \end{align*}
-    We suppose $P(c \text{ sent})$ is independent of $c$. So for fixed $x$, maximising $P(c \text{ sent} \mid x \text{ received}) $ is the same as maximising $P(x \text{ received} \mid c \text{ sent})$.
+    We suppose $\Prob(c \text{ sent})$ is independent of $c$. So for fixed $x$, maximising $\Prob(c \text{ sent} \mid x \text{ received}) $ is the same as maximising $\Prob(x \text{ received} \mid c \text{ sent})$.
 \end{proof}
 
 \begin{defi}
@@ -852,9 +853,9 @@ The error rate depends on the decoding rule. We consider 3 possible rules.
 \begin{proof}
     Suppose $d(x, c) = r$.
     \begin{equation*}
-        P(x \text{ received} \mid c \text{ sent}) = p^r (1-p)^{n-r} = (1-p)^n \left(\frac{p}{1-p}\right)^r
+        \Prob(x \text{ received} \mid c \text{ sent}) = p^r (1-p)^{n-r} = (1-p)^n \left(\frac{p}{1-p}\right)^r
     \end{equation*}
-    Since $p < \frac{1}{2}$, $\frac{p}{1-p} < 1$. So choosing $c$ to maximise $P(x \text{ received} \mid c \text{ sent})$ is the same as choosing $c$ to minimise $d(x, c)$.
+    Since $p < \frac{1}{2}$, $\frac{p}{1-p} < 1$. So choosing $c$ to maximise $\Prob(x \text{ received} \mid c \text{ sent})$ is the same as choosing $c$ to minimise $d(x, c)$.
 \end{proof}
 Note we assumed $p < \frac{1}{2}$, which is not unreasonable.
 \begin{eg}
@@ -863,11 +864,11 @@ Note we assumed $p < \frac{1}{2}$, which is not unreasonable.
     Clearly \hyperlink{def:minimumDistance}{minimum distance} and therefore \hyperlink{def:maximumLikelihood}{maximum likelihood} (by \cref{lem:2.2}) say decode as $111$.
     For \hyperlink{def:idealObserver}{ideal observer:}
     \begin{align*}
-        P(000 \text{ sent} \mid 110 \text{ received}) &= \frac{P(000 \text{ sent} , 110 \text{ received})}{P(110 \text{ received})} \\
+        \Prob(000 \text{ sent} \mid 110 \text{ received}) &= \frac{\Prob(000 \text{ sent} , 110 \text{ received})}{\Prob(110 \text{ received})} \\
                                                    &= \frac{\alpha p^2 (1-p)}{\alpha p^2 (1-p) + (1-\alpha) p (1-p)^2} \\
                                                    &= \frac{\alpha p}{\alpha p + (1-\alpha) (1-p)} \\
                                                    &= \frac{9/40}{9/40 + 3/40} = \frac{3}{4} \\
-        P(000 \text{ sent} \mid 110 \text{ received}) &= \frac{(1-\alpha) p^2 (1-p)}{(1-\alpha) p^2 (1-p) + \alpha p (1-p)^2} \\
+        \Prob(000 \text{ sent} \mid 110 \text{ received}) &= \frac{(1-\alpha) p^2 (1-p)}{(1-\alpha) p^2 (1-p) + \alpha p (1-p)^2} \\
                                                    &= \frac{(1-\alpha)(1-p)}{(1-\alpha)(1-p) + \alpha p} \\
                                                    &= \frac{3/40}{9/40 + 3/40} = \frac{1}{4}.
     \end{align*}
