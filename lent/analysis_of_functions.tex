@@ -244,7 +244,7 @@ as used in Probability and Measure.
     This \hyperlink{def:integral}{integral} always makes sense. Also, $\int_E f \, d\mu = 0$ if $\mu(E) = 0$.
 \end{remark}
 \begin{ex}
-    Check linearity of the \hyperlink{def:integral}{integral}. Show Chebyshev's inequality:
+    Check linearity of the \hyperlink{def:integral}{integral}. Show \hypertarget{def:chebyshev}{Chebyshev's inequality:}
     \begin{equation*}
         \mu(\set{x | f(x) \geq \alpha}) \leq \alpha^{-1} \int_X f \, d\mu \quad \forall \alpha > 0.
     \end{equation*}
@@ -622,7 +622,7 @@ Is $F$ differentiable?
 \begin{defi}[Lebesgue point]\hypertarget{def:lebPoint}
     Let $f: \R^n \to \C$ be \hyperlink{def:measFunc}{measurable}. $x \in \R^n$ is a \textbf{Lebesgue point} if
     \begin{equation*}
-        \frac{1}{\mu(B(x, r))} \int_{B(x, r)} \abs{f(y) - f(x)} \, dy \xrightarrow{r \to 0} 0
+        \frac{1}{\mu(B(x, r))} \int_{B(x, r)} \abs{f(y) - f(x)} \, dy \xrightarrow{r \to 0} 0.
     \end{equation*}
 \end{defi}
 \begin{remark}
@@ -633,7 +633,7 @@ Is $F$ differentiable?
 \begin{ex}[Worked example]
     Prove that points of continuity are \hyperlink{def:lebPoint}{Lebesgue points}:
     \begin{equation*}
-        x \text{ a point of continuity} \implies \forall \epsilon > 0, \, \exists r_0 > 0 \text{s.t. } \forall y \in B(x, r_0) \, \abs{f(x) - f(y)} < \epsilon.
+        x \text{ a point of continuity} \implies \forall \epsilon > 0, \, \exists r_0 > 0 \text{ s.t. } \forall y \in B(x, r_0) \, \abs{f(x) - f(y)} < \epsilon.
     \end{equation*}
     Hence for $r < r_0$,
     \begin{equation*}
@@ -654,31 +654,36 @@ Is $F$ differentiable?
 \begin{proof}[Proof (1) $\Rightarrow$ (2)]
     Consider $\abs{x} \leq M$, $r < 1$.
     \begin{equation*}
-        \frac{\mu(E \cap B(x, r))}{\mu(B(x, r))} = \frac{\mu(E \cap B(0, M+1) \cap B(x, r)}{\mu(B(x, r))}.
+        \frac{\mu(E \cap B(x, r))}{\mu(B(x, r))} = \frac{\mu(E \cap B(0, M+1) \cap B(x, r))}{\mu(B(x, r))}.
     \end{equation*}
     Apply (1) to $f \coloneqq \chi_{E \cap B(0, M+1)} \in L^1(\R^n)$.
     Do that for any $M \in \N_{\geq 0}$, (2) true for almost every $x \in B(0, M)$, $\forall M \in N_{\geq 0}$, i.e. outside $N_M$.
     $N_0 = \bigcup_{M \geq 1} N_M$ is a null set, (2) true on $\R^n \setminus N_0$.
     %  check phone for pictures of this - grammar is unclear.
 \end{proof}
-\begin{proof}[Proof (1)]
+\begin{proof}[Proof of (1)]
+    \newcommand{\mf}{m \! f}
+    \newcommand{\Mf}{M \! f}
     Note that this is immediately true if $f$ is continuous, from the exercise earlier. So, aim to write $f = g+h$ where $g$ continuous and $\norm{h}_{L^1(\R^n)}$ is as small as is needed.
+
     \textbf{Step 1}. Define the Hardy-Littlewood operator
     \begin{align*}
-        Mf(x) &\coloneqq \sup_{r \geq 0} mf (x, r), \quad mf(x, r) \coloneqq \frac{1}{\mu(B(x, r))} \int_{B(x,r)} \abs{f} \, d\mu\\
+        \Mf(x) &\coloneqq \sup_{r \geq 0}  \mf (x, r), \quad \mf(x, r) \coloneqq \frac{1}{\mu(B(x, r))} \int_{B(x,r)} \abs{f} \, d\mu\\
         \shortintertext{and} \\
-        a>0, E_a &\coloneqq \set{x \in \R^n | Mf(x) > a}.
+        \quad E_a &\coloneqq \set{x \in \R^n | \Mf(x) > a} \quad \text{for } a > 0
     \end{align*}
     Claim: $E_a$ is an open set, hence measurable.
-    Take $x \in E_a$. $Mf(x) > a$, $\exists r >0$ such that $mf(x) > a$. So, $\frac{a}{mf(x)} < 1$.
-    Pick $\epsilon > 0$ small such that $(\frac{r}{r+\epsilon}) > \frac{a}{mf(x, r)}$. Consider $y \in B(x, \epsilon)$, so $B(x, r) \subset B(y, r + \epsilon)$ by triangle inequality.
+    Take $x \in E_a$. $\Mf(x) > a$, so $\exists r >0$ such that $\mf(x) > a$ and $\frac{a}{\mf(x)} < 1$.
+    Pick $\epsilon > 0$ small enough such that $(\frac{r}{r+\epsilon}) > \frac{a}{\mf(x, r)}$. Consider $y \in B(x, \epsilon)$, so $B(x, r) \subset B(y, r + \epsilon)$ by triangle inequality.
     \begin{align*}
-        mf(y, r+\epsilon) &= \frac{1}{\mu(B(y, r+\epsilon))} \int_{B(y, r+\epsilon)} \abs{f} \, d\mu \\
-                          &\geq (\frac{r}{r+\epsilon})^n \frac{1}{\mu(B(x,r))} \int_{B(x, r)} \abs{f} \, d\mu \geq (\frac{r}{r+\epsilon})^n mf(x, r) > a
+        \mf(y, r+\epsilon) &= \frac{1}{\mu(B(y, r+\epsilon))} \int_{B(y, r+\epsilon)} \abs{f} \, d\mu \\
+                          &\geq \left(\frac{r}{r+\epsilon}\right)^n \frac{1}{\mu(B(x,r))} \int_{B(x, r)} \abs{f} \, d\mu \\
+                          &\geq \left(\frac{r}{r+\epsilon}\right)^n \mf(x, r) > a
     \end{align*}
     Conclude that $B(x, \epsilon) \subset E_a$, hence open.
 
-    Now take $x \in E_a$. Relate the volume of a local ball to $\int \abs{f}$.
+    Now take $x \in E_a$. Relate the volume of a local ball to $\int \abs{f}$:
+
     \textbf{Step 2}. Vitali's covering lemma.
     Take $X \subset \R^n$, and $X \subset \bigcup_{i=1}^N B(x_i, r_i)$.  Then $\exists J \subset \{1, \dotsc, N\}$ subset of indices such that
     \begin{enumerate}[label=(\alph*)]
@@ -692,9 +697,114 @@ Is $F$ differentiable?
     Remove these intersecting balls, to give a set of indices $J_1$. By induction, start the argument again on the second largest radius.
     The induction preserves the covering property, so we are done.
 
-    \textbf{Step 3}. $\mu(E_a) \leq \frac{3^n}{a} \norm{f}_{L^1(\R^n)}$.
-    Sketch: Take $K$ compact, $K \subset E_a$ (inner regularity).
-    For each $x \in K \quad \exists r_x, mf(x, r_x) > a$, $K \subset \bigcup_{x \in K} B(x, r_x) \subset \bigcup_{i=1}^N B(x_i, r_i) \subset \bigcup_{i \in J} B(x_i, 3 r_i)$.
-    By Vitali covering lemma, $\mu(K) \leq \sum_{J} \mu(B(x_i, 3r_i)) \leq \frac{3^n}{a} \int \abs{f}$.
+    % lecture 5
+    \textbf{Step 3}. Claim: $\mu(E_a) \leq \frac{3^n}{a} \norm{f}_{L^1(\R^n)}$.
+
+    Let $K \subset E_a$ be compact.
+    For each $x \in K$ $\exists r_x$ with $\mf(x, r_x) > a$.
+    \begin{align*}
+        K &\subset \bigcup_{x \in K} B(x, r_x) \\
+          &\subset \bigcup_{i=1}^N B(x_i, r_i) \\
+          &\subset \bigcup_{i \in J} B(x_i, 3 r_i)
+    \end{align*}
+    using compactness to get to the second line, and Vitali's covering lemma for the third. Now,
+    \begin{align*}
+        \mu(K) &\leq \sum_J \mu(B(x_i, 3 r_i)) \\
+               &= 3^n \sum_J \mu(B(x_i, r_i)) \\
+               &\leq \frac{3^n}{a} \left(\sum_J \int_{B(x_i, r_i)} \abs{f} \, d\mu\right) \\
+               &\leq \frac{3^n}{a} \int_{\bigcup_J B(x_i, r_i)} \abs{f} \, d\mu \\
+               &\leq \frac{3^n}{a} \int_{\R^n} \abs{f} \, d\mu.
+    \end{align*}
+    This bound is independent of $K$, and by inner regularity \begin{equation*}\mu(E_a) = \sup\set{\mu(K) | K \subset E_a \text{ compact}},\end{equation*} giving the required result:
+    \begin{equation*}
+        \mu(E_a) \leq \frac{3^n}{a} \int \abs{f} \, d\mu = \frac{3^n}{a} \norm{f}_{L^1}.
+    \end{equation*}
+
+    \textbf{Step 4}.
+    Say $f = g+h$ for $g \in L^1(\R^n)$ continuous, and $h \in L^1(\R^n)$, $\norm{h}_{L^1} < \epsilon$.
+    Define
+    \begin{equation*}
+        t\!f(x, r) = \frac{1}{\mu(B(x, r)))} \int_{B(x, r)} \abs{f(y) - f(x)} \, d \mu(y).
+    \end{equation*}
+    So,
+    \begin{equation*}
+        t\!f(x, r) \leq t \! g(x, r) + \frac{1}{\mu(B(x, r))} \int_{B(x, r)} \abs{h(y)} \, dy + \abs{h(x)}.
+    \end{equation*}
+    Define $T \! f (x) = \limsup_{r \to 0} t \! f(x, r)$, so $T\! f(x) \leq T \! g(x) + M \! h(x) + \abs{h(x)}$, and $T\!g(x)  = 0$ as $g$ is continuous.
+    Take $k \in \N$, then
+    \begin{align*}
+        \mu\left(\Set{x | T \! f > \frac{1}{k}}\right) &\leq \mu\left(\Set{x | M \! h > \frac{1}{k}}\right) + \mu\left(\Set{x | \abs{h} > \frac{1}{2k}}\right) \\
+                                            &\leq 2k 3^n \norm{h}_{L^1} + 2k \norm{h}_{L^1} \\
+                                            &\leq 2k (3^n+1) \epsilon
+    \end{align*}
+    using \hyperlink{def:chebyshev}{Chebyshev's inequality} and Step 3.
+    This holds $\epsilon > 0$, since continuous functions are dense in $L^1$ so $\mu\left(\Set{x | T \! f > \frac{1}{k}}\right) = 0$.
+    Take the (countable) union for all $k\geq 1$, giving $\mu\left(\Set{x | T\! f > 0}\right) = 0$.
+    So, almost every $x$ is a \hyperlink{def:lebPoint}{Lebesgue point}.
 \end{proof}
+Pointwise convergence is `almost' uniform convergence.
+\begin{thm}[Egorov's Theorem]\label{thm:egorov}
+    Take $f_n: \R^d \to \C$ a sequence of measurable functions, and $A \subset \R^d$ a \hyperlink{def:borelSet}{Borel set} of finite measure, $f_n \to f$ pointwise on $A$.
+    Then $\forall \epsilon > 0, \ \exists A_\epsilon \subset A$, $A_\epsilon$ a Borel set with $\mu(A \setminus A_\epsilon) \leq \epsilon$, and $f_n$ converges uniformly to $f$ on $A_\epsilon$.
+\end{thm}
+\begin{proof}
+    Define for $k, n \geq 1$,
+    \begin{equation*}
+        E_n^{(k)} = \bigcap_{p \geq n} \set{x \in A | \abs{f_p(x) - f(x)} \leq \frac{1}{k}}.
+    \end{equation*}
+    Check $E_n^{(k)} \subset E_{n+1}^{(k)}$, $E_n^{(k+1)} \subset E_n^{(k)}$ and for fixed $k \geq 1$ $A = \bigcup_{n \geq 1} E_n^{(k)}$ (pointwise convergence).
+    Using continuity from below, $\mu(A) = \lim_n \mu(E_n^{(k)})$, so $\exists {n_k \geq 1}$ such that $\Delta_k = A \setminus E_{n_k}^{(k)}$ has measure $\mu(\Delta_k) \leq \frac{\epsilon}{2^k}$.
+    Then $\Delta \coloneqq \bigcup_{k \geq 1} \Delta_k$ has measure $\mu(\Delta) \leq \sum \mu(\Delta_k) \leq \epsilon$, and let $A_\epsilon = A \setminus \Delta$.
+
+    Observe there is uniform convergence on $A_\epsilon$: $\forall k \geq 1$, $\exists n_k \geq 1$ such that $A_\epsilon \subset E_{n_k}^{(k)}$.
+    This means: $\sup_{x \in A_\epsilon} \abs{f_p(x) - f(x)} \leq \frac{1}{k} \ \forall p \geq n_k$.
+\end{proof}
+
+\begin{thm}[Lusin version 1]
+    Take $f: \R \to \C$ measurable. Given any $\epsilon > 0$, $\exists E \subset \R$ measurable and $\mu(E) < \epsilon$ such that $f|_{\R \setminus E}$ is continuous.
+\end{thm}
+\begin{remark}
+    Notice this is different from `$f$ continuous at all points in $\R \setminus E$'.
+\end{remark}
+\begin{proof}[Sketch of long proof]
+    Build a sequence $s_n$ of step functions converging to $f$, use \nameref{thm:egorov} and conclude... See full details in \href{https://cmouhot.files.wordpress.com/2017/01/notes-af-v21.pdf}{official notes} (Theorem 1.34).
+\end{proof}
+\begin{proof}[Short proof]
+    It is enough to do it for $f: F \to \C$ (where $F = [l, l+1)$) for any $l \in \Z$, and $E = \bigcup_{l \in \Z} E_l$, $\mu(E_l) \leq \frac{\epsilon}{2^{l+1}}$.
+    Take $(V_n)_{n \geq 1}$ an enumeration of open intervals with rational endpoints (intersected with $F$).
+    By inner regularity, with $f^{-1}(V_n)$ measurable and $F \setminus f^{-1}(V_n)$ measurable, choose $K_n, K_n'$ compact sets such that $K_n \subset f^{-1}(V_n)$ and $K_n' \subset F\setminus f^{-1}(V_n)$ and $\mu(F \setminus (K_n \cup K_n')) < \frac{\epsilon}{2^n}$.
+    Fix open sets $U_n$ such that $K_n \subset U_n$, $U_n \cap K_n' = \emptyset$ (using compactness).
+    Now, $K \coloneqq \bigcap_{n \geq } (K_n \cup K_n')$ satisfies
+    \begin{equation*}
+        \mu(F \setminus K) \leq \sum_{n \geq 1} \mu(F \setminus (K_n \cup K_n')) \leq \epsilon.
+    \end{equation*}
+    Given $x \in K$, for any $n \geq 1$ such that $f(x) \in V_n$, $\Rightarrow x \in K_n$. Moreover, $K_n \subset U_n$, $U_n$ open hence $f(U_n \cap K) \subset V_n$.
+\end{proof}
+\begin{thm}[Lusin version 2]
+    Take $f: \R \to \C$ measurable. Given any $\epsilon > 0$, $\exists G \subset \R$ with $\mu(G) < \epsilon$ and $g: \R \to \C$ such that $f = g$ on $\R \setminus G$, $g$ continuous.
+\end{thm}
+\begin{proof}
+    The previous theorem implies that $\exists E$ measurable such that $\mu(E) < \frac{\epsilon}{2}$ where $f|_{R \setminus E}$ is continuous.
+    Outer regularity gives $\exists G$ open, $G \supset E$, $\mu(G) < \epsilon$ where $G = \bigsqcup_{n \geq 1} I_n$, for $I_n$ open intervals.
+    Define
+    \begin{equation*}
+        g(x) =
+        \begin{cases}
+            f(x) & x \in \R \setminus G \\
+            f(a_n) + \frac{(x-a_n)}{b_n - a_n} (f(b_n) - f(a_n)) & x \in (a_n, b_n)=I_n.
+        \end{cases}\qedhere
+    \end{equation*}
+\end{proof}
+\begin{ex}
+    Reprove from this that continuous functions are dense in $L^1(\R)$.
+\end{ex}
+
+% Chapter 2
+% I) Recalls on normed vector spaces (LA)
+% II) Hahn-Banach (LA)
+% III) Duality and weak topologies
+% IV) Reflexivity
+% V) Separability
+% VI) L^p spaces
+% VII) Recalls on Baire's category theorem and consequences
 \end{document}
