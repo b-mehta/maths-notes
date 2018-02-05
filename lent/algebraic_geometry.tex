@@ -9,8 +9,11 @@
 
 % preamble
 \usepackage{tikz}
+\usepackage{stmaryrd}
 \usepackage{tikz-cd}
 \newcommand{\A}{\mathbb{A}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\proj}{\mathbb{P}}
 \DeclareMathOperator{\Mat}{Mat}
 \DeclareMathOperator{\chara}{char}
 \DeclareMathOperator{\Mor}{Mor}
@@ -20,6 +23,7 @@
 
 \begin{document}
 \maketitle
+\tableofcontents
 
 Consider $E = \set{(x, y) \in \C^2 | y^2 = x^3 - x}$. Let's first draw this when $(x, y) \in \R^2$.
 If $y \in \R$, $y^2 \geq 0$, so if $x \in \R$, $x^3 - x = x(x^2 - 1) \geq 0$ so $x \geq 1$ or $-1 \leq x \leq 0$.
@@ -39,22 +43,26 @@ Proof: Exercise.
 So, $E \setminus \Gamma$ is two copies of
 % pic
 glued together. To glue, turn one of the pieces over (this ruins the representation as a double cover, but is the right gluing).
-Think of (pic) by adding a point at $\infty$, so it lives on the Riemann surface.
+Think of (the picture below) by adding a point at $\infty$, so it lives on the Riemann surface.
 
 Take another copy, flip it over and glue back.
+(this section is in the process of tidying)
 
+\clearpage
 % I
 \section{Dictionary between algebra and geometry}
 % 1.
 \subsection{Basic notions}
-\begin{defi}[Affine space]
+\begin{defi}[Affine space]\label{def:affineSpace}
     \textbf{Affine $n$-space} is $\A^n = \A^n(k) \coloneqq k^n$ for $k$ a field.
 \end{defi}
-Write $k[\A^n] = k[x_1, \dotsc, x_n]$ polynomials in $n$ variables.
-Any $f \in k[\A^n]$ defines a function $f: \A^n =k^n \to k$ by $(\lambda_1, \dotsc, \lambda_n) \mapsto f(\lambda_1, \dotsc, \lambda_n)$ by evaluation.
+\begin{notation}\hypertarget{def:polys}
+    Write $k[\A^n] = k[x_1, \dotsc, x_n]$ for the polynomials in $n$ variables.
+\end{notation}
+Any $f \in \hyperlink{def:polys}{k[\A^n]}$ defines a function $f: \A^n =k^n \to k$ given by $(\lambda_1, \dotsc, \lambda_n) \mapsto f(\lambda_1, \dotsc, \lambda_n)$ by evaluation.
 
 Let $S \subseteq k[x_1, \dotsc, x_n]$ be any subset of polynomials.
-\begin{defi}[Affine variety]
+\begin{defi}[Affine variety]\label{def:affineVariety}
     \begin{equation*}
         Z(S) = \set{\lambda = (\lambda_1, \dotsc, \lambda_n) \in k^n | f(\lambda_1, \dotsc, \lambda_n) = 0 \text{ for all } f \in S}
     \end{equation*}
@@ -65,10 +73,10 @@ Let $S \subseteq k[x_1, \dotsc, x_n]$ be any subset of polynomials.
 \begin{eg}
     \leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item $\A^n = Z(0)$.
+        \item $\hyperlink{def:affineSpace}{\A^n} = \hyperlink{def:affineVariety}{Z}(0)$.
         \item On $\A^1$, $Z(x) = \{0\}$, $Z(x-7) = \{7\}$.  If $f(x) = (x - \lambda_1)\dotsc (x-\lambda_n)$, $Z(f(x)) = \{\lambda_1, \dotsc, \lambda_n\}$.
-            Affine subvarieties of $\A^1$ are $\A^1$ and finite subsets of $\A^1$.
-        \item in $\A^2$, $E=Z(y^2-x^3+x)$ we have sketched when $k=\C$ and $k=\R$.
+            Affine subvarieties of $\A^1$ are: $\A^1$ and finite subsets of $\A^1$.
+        \item in $\A^2$, $E=Z(y^2-x^3+x)$ we have sketched when $k=\C$ and $k=\R$ in the introduction.
             % diagrams of Z(x,y), Z(xy), Z(y) and Z(y(y-1),x(y-1))
     \end{enumerate}
 \end{eg}
@@ -106,9 +114,9 @@ then $Z(J) = Z(S)$.  Hence,
     Hence $f_1 f_2(x) = f_1(x) f_2(x) \neq 0$, so $x \notin Z(f_1 f_2)$. But $f_1 f_2 \in I \cap J$, as $I, J$ ideals so $x \notin Z(I \cap J)$.
 \end{proof}
 
-Looking at these results, $Z(I)$ form closed subsets of a topology on $\A^n$, called the \hypertarget{def:zariski}{`Zariski topology'}.
+Looking at these results, $Z(I)$ form closed subsets of a topology on $\A^n$, called the \hypertarget{def:zariski}{\textbf{`Zariski topology'}}.
 
-If $Z \subset \A^n$ is any subset, let $I(Z) = \set{f \in k[\A^n] | f(p) = 0, \forall p \in \Z}$.
+If $Z \subset \A^n$ is any subset, let $I(Z) = \set{f \in k[\A^n] | f(p) = 0, \forall p \in Z}$.
 Observe that $I(Z)$ is an ideal: if $g \in k[\A^n]$, $f(p) = 0$ then $(gf)(p) = 0$.
 \begin{lemma}
     \leavevmode
@@ -125,27 +133,34 @@ Observe that $I(Z)$ is an ideal: if $g \in k[\A^n]$, $f(p) = 0$ then $(gf)(p) = 
 \end{proof}
 Hence (ii) and (iii) show that $Z(I(Y))$ is the smallest affine subvariety of $\A^n$ containing $Y$, i.e. it is the closure of $Y$ in the Zariski topology.
 
-Take $\Z \subseteq \C = \A^1$, $k = \C$ the closure of $\Z$ in Zariski topology is $\C$. $I(\Z) = \{0\}$ as if a poly vanishhes at every integer it is 0.
+
+Take $\Z \subseteq \C = \A^1$, $k = \C$.
+If a polynomial in one variable vanishes at every integer, it is $0$, so $I(\Z) = 0$ and hence the closure of $\Z$ in the Zariski topology is $\C$.
+
 Note if $k = \C$, $f \in \C[x_1, \dotsc, x_n]$, then $f$ is continuous in the usual topology, so
 \begin{equation*}
-    Z(J) = \bigcap_{f \in J} Z(f) = \bigcap_{f \in J} f^{-1}(0)
+    Z(J) = \bigcap_{f \in J} Z(f) = \bigcap_{f \in J} f^{-1}(\{0\})
 \end{equation*}
-is a closed set in the usual topology, i.e. Zariski closed $Z \implies$ clsoed in the usual topology.
+is a closed set in the usual topology, i.e. Zariski closed $\implies$ closed in the usual topology.
+
 So,
 \begin{equation*}
 \begin{tikzcd}
-    \{\text{Zariski closed subvarieties of} \A^n\} & \{\text{ideals in } k[x_1, \dotsc, x_n]\}
+    \{\text{Zariski closed subvarieties of } \A^n\} \ar[r, bend right, hookrightarrow, "I"]& \{\text{ideals in } k[x_1, \dotsc, x_n]\} \ar[l, bend right, two heads, "Z"]
 \end{tikzcd}
 \end{equation*}
-But this is not a bijection
-$Z(X) = Z(X^2) = Z(X^3) = \dotsc = \{0\} \subseteq \A^1$. $Z(\langle f_1^{a_1}, \dotsc, f_r^{a_r}\rangle) = Z(f_1, f_2, \dotsc, f_r)$.
-but it turns out this kind of thing is the only problem % Nullstellensatz
+But this is not a bijection. For instance,
+$Z(x) = Z(x^2) = Z(x^3) = \dotsc = \{0\} \subseteq \A^1$.
+More generally,
+$Z(\langle f_1^{a_1}, \dotsc, f_r^{a_r}\rangle) = Z(f_1, f_2, \dotsc, f_r)$.
+but it turns out this kind of thing is the only problem.
+This is called Hilbert's `Nullstellensatz'.
 \begin{defi}
     An affine variety $Y$ is \textbf{reducible} if $\exists$ affine varieties $Y_1, Y_2$, $Y_i \neq Y$ with $Y = Y_1 \cup Y_2$, and irreducible otherwise, and disconnected if $Y_1 \cap Y_2 = \emptyset$.
 \end{defi}
 % picsss
 So $Z(xy) = Z(x) \cup Z(y)$, reducible.
-$Z(y(y-1), x(y-1)) = Z(xy) \cup Z(y-1)$ reducible and disconnected.
+$Z(y(y-1), x(y-1)) = Z(x,y) \cup Z(y-1)$ reducible and disconnected.
 \begin{prop}
     Any affine variety is a finite union of irreducible affine varieties.
 \end{prop}
@@ -163,17 +178,18 @@ $Z(y(y-1), x(y-1)) = Z(xy) \cup Z(y-1)$ reducible and disconnected.
     $f_i \in I_{a_i}$ for some $a_1, \dotsc, a_r$ so $I = I_{a_1} + \dotsb + I_{a_r}$, $W = Y_{i_1} \cap \dotsb \cap Y_{i_r}$ contradicting $Y_N \subsetneq Y_{a_1} \cap \dotsb \cap Y_{a_r}$ if $N > r$.
 \end{proof}
 \begin{ex}
-    If $Y$ is a subvariety of $\A^\N$, $Y = Y_1 \cup \dotsb \cup Y_r$ with $Y_i$ irreducible, and $r$ minimal is unique up to reordering. Call the $Y_l$ the irreducible components of $Y$.
+    If $Y$ is a subvariety of $\A^\N$, $Y = Y_1 \cup \dotsb \cup Y_r$ with $Y_i$ irreducible, and $r$ minimal is unique up to reordering. Call the $Y_i$ the irreducible components of $Y$. % did you really mean \N?
 \end{ex}
 \begin{prop}
     $Y$ is irreducible $\iff I(Y)$ is a prime ideal in $k[\A^n] = k[x_1, \dotsc, x_n]$.
 \end{prop}
 \begin{eg}
+    \leavevmode
     \begin{enumerate}[label=(\roman*)]
         \item $(x y)$ is not a prime ideal.
         \item Exercise: Let $R$ be a UFD, $f \in R$, $f \neq 0$, $f$ irreducible $\iff (f)$ a prime ideal.
         \item Exercise: $k[x_1, \dotsc, x_n]$ is a UFD.
-            hence $Z(y^2 - x^3 + x)$ is irreducible, $Z(y-x^2)$ is irreducible.
+            Hence $Z(y^2 - x^3 + x)$ is irreducible, $Z(y-x^2)$ is irreducible.
     \end{enumerate}
 \end{eg}
 \begin{proof}
@@ -189,7 +205,7 @@ $Z(y(y-1), x(y-1)) = Z(xy) \cup Z(y-1)$ reducible and disconnected.
     \end{center}
 
     Conversely, if $I(Y)$ is not prime $\exists f_1 f_2 \in k[\A^n]$ such that $f_1, f_2 \notin I(Y)$ but $f_1 f_2 \in I(Y)$.
-    Let $Y_i = Y_n \cap Z(f_i) = \set{p \in Y | f_i(p) = 0}$. $Y_1 \cup Y_2 = Y$, as $p \in Y \implies f_1 f_2 (p) = 0 \implies f_1(p) = 0$ or $f_2(p) = 0$.
+    Let $Y_i = Y \cap Z(f_i) = \set{p \in Y | f_i(p) = 0}$. $Y_1 \cup Y_2 = Y$, as $p \in Y \implies f_1 f_2 (p) = 0 \implies f_1(p) = 0$ or $f_2(p) = 0$.
     $Y_i \neq Y$ as $f_i \notin I(Y)$ (i.e. $\exists p_l \in Y$ such that $f_i(p_i) \neq 0$ so $p_i \notin Y_i$).
 \end{proof}
 \begin{lemma}
@@ -400,7 +416,7 @@ The intrinsic definition of affine varieties is a consequence (doesn't depend on
 \begin{cor}
     Let $X \subseteq \A^n$ be a Zariski closed subvariety.
     Then $k[X]$ is a finitely generated $k$-algebra with no non-zero nilpotent elements.
-    As it is finitely generated, there is $k[x_1, \dotsc, x_n] \xtwoheadrightarrow{\alpha}k[X]$ a surjective algebra homomorphism and no non-zero nilpotents $\iff \ker \alpha$ is a radical ideal.
+    As it is finitely generated, there is $k[x_1, \dotsc, x_n] \overset{\alpha}{\twoheadrightarrow}k[X]$ a surjective algebra homomorphism and no non-zero nilpotents $\iff \ker \alpha$ is a radical ideal.
 \end{cor}
 \begin{defi}[Affine variety, v2]
     An affine variety over a field $k$ is a finitely generated $k$-algebra with no non-zero nilpotents.
@@ -414,7 +430,7 @@ Observe:
 \end{enumerate}
 What is missing? We still have to define what a map of algebraic varieties is.
 \begin{defi}[Morphism]
-    A \textbf{morphism} of algebraic varieties $X \to Y$ is a $k$-algebra homomorphism $f^* k[Y] \to k[X]$. Write $\Mor(X, Y)$ for the set of morphisms, and write $f$ for the morphism associated to $f^*$.
+    A \textbf{morphism} of algebraic varieties $X \to Y$ is a $k$-algebra homomorphism $f^*: k[Y] \to k[X]$. Write $\Mor(X, Y)$ for the set of morphisms, and write $f$ for the morphism associated to $f^*$.
 \end{defi}
 Let us unpack this definition.
 Write
@@ -450,5 +466,103 @@ But, we gave this definition in a way which didn't require choosing $X \hookrigh
         \item Take $\chara k \neq 2$. Is there a morphism $\A^1 \to \set{(x, y) | y^2 = x^3 - x}$ (which isn't a trival map).
             Do there exist polynomials $a = a(t), b=b(t) \in k[t]$, not both constant such that $b^2 = a^3 - a$.
     \end{enumerate}
+\end{eg}
+
+If $k = \overline{k}$, we can also reconstruct $f$ as follows
+% points of x \longleftrightarrow max ideals m of k[X] <-> alg homs k[X] -> k
+% now observe if $f^* : k[Y] \to k[X]$ and $x \in $X$, $ev_x: k[X] \to k$.
+% get an alg homo $ev_x \cdot f^* : k[Y] \to k$, so the kernel is a maixmal ideal m_y$ for some y \in Y and f(x) = y
+% ex: check f(x) = y
+
+\begin{prop}
+    Let $X$ be an affine algebraic variety, and $f \in k[X]$.  Then set \begin{equation*}Y = \set{(p, t) \in X \times \A^1 | t f(p) = 1}\end{equation*}.
+    This is an affine algebraic variety, and the map $Y \hookrightarrow X$ with $(p, t) \mapsto p$ is a morphism of affine algebraic varieties.
+\end{prop}
+\begin{proof}
+    It is $k[X] \to k[Y] \eqqcolon k[X][t]/tf-1$. Exercise: $k[Y]$ has no non-zero nilpotents.
+\end{proof}
+This means you should think of $Y \xrightarrow{\sim} X \setminus Z(f) \hookrightarrow X$.
+That is, you should think of this as saying the Zariski open $X \setminus Z(f)$ is also an affine algebraic variety and the inclusion map $Y \hookrightarrow X$ is a morphism of algebraic varieties.
+
+\begin{warning}
+    Take $\set{(x, y) \in \A^2 | (x, y) \neq (0, 0)}$. This is Zariski open in $\A^2$ as $\{(0, 0)\}$ is a closed set. But, this is not an affine algebraic variety.
+\end{warning}
+
+\clearpage
+\section{Projective space}
+We will define it first as a set, then as an algebraic variety (but not an affine one).
+Take $V$ a vector space over $k$, $\dim V = n+1$ for $n \geq 0$.
+\begin{align*}
+    \mathbb{P}V = \mathbb{P}^n &= \{\text{set of lines through } 0 \text{ in } V\} \\
+                               &= (V \setminus \{0\}) /k^\times
+\end{align*}
+That is, if $v \in V$, $v \neq 0$ then $k v = \set{\lambda v | \lambda \in k}$ is a line through $0$, and conversely if $l \in \mathbb{P}V$ is a line, $l = kv$ for any $v \in l \setminus 0$.
+Choose a basis $e_0, \dotsc, e_n$ of $V$, write $V \overset{\sim}{\leftarrow} k^{n+1}$, $\sum x_i e_i \mapsfrom (x_0, \dotsc, x_n)$. If $(x_0, \dotsc, x_n) \neq (0, \dotsc, 0)$, write $[x_0: \dotsc: x_n]$ for the corresponding point in $\mathbb{P}^n$ so $[\lambda x_0: \dotsc: \lambda x_n] = [x_0: \dotsc : x_n]$.
+Claim: $\mathbb{P}^n = \A^n \amalg \mathbb{P}^{n-1}$.
+Proof: Consider $[x_0 : \dotsc : x_n] \in \mathbb{P}^n$. Either $x_n = 0$ or $x_n \neq 0$.
+If $x_n = 0$, $p = [x_0 : \dotsc : x_{n-1} : 0]$, and $p = p' = [x_0' : \dotsc : x_n']$ if and only if $x_n' =0$ and $\lambda(x_0, \dotsc, x_{n-1}) = (x_0', \dotsc, x_{n-1}')$ for some $\lambda \in k^\infty$, i.e. $p = p' \in \mathbb{P}^{n-1}$.
+If $x_n \neq 0$, then we can rescale $(x_0, \dotsc, x_n) = x_n \cdot (\frac{x_0}{x_n}, \dotsc, \frac{x_{n-1}}{x_n}, 1)$, so get $\set{p \in \mathbb{P}^n | x_n \neq 0} \cong \A^n$. sending $[X_0 : \dotsc : X_n] \to (\frac{X_0}{X_n}, \dotsc, \frac{X_{n-1}}{X_n})$.
+\begin{eg}
+    $\mathbb{P}^1 = \A^1 \amalg \{\infty\}$ % picture
+    Also, $\mathbb{P}^2 = \A^2 \amalg \mathbb{P}^1 = \A^2 \amalg \A^1 \amalg \A^0$.
+    If $k = \F^q$, the number of points in $\mathbb{P}^n$ is $1 + q + \dotsc + q^n = \frac{q^{n+1}-1}{q-1}$.
+\end{eg}
+To phrase the above claim without coordinates, choose $H \leq V$ a vector subspace of codimension 1, and $w_0 \in V \setminus H$.
+Then we have maps $\mathbb{P}H \hookrightarrow \mathbb{P} V \hookleftarrow H$ where the first map is $kv \mapsto kv$ and the second has $k(w_0 + h) \mapsfrom h$.
+This gives $\mathbb{P}V \setminus \mathbb{P}H \overset{\sim}{\leftarrow} H$, in particular $\mathbb{P}V \setminus \mathbb{P}H \cong \A^n$.
+So decomposition $\mathbb{P}V = \mathbb{P}H \amalg$ a space isomorphic to $\A^n$ depends only on the choice of a hyperplane $H$ but the isomorphism $\A^n \to \mathbb{P}V \setminus \mathbb{P}H$ depends on choice of $w_0 \in V \setminus H$.
+Exercise: How does changing $w_0$ to $w_0'$ change the isomorphism?
+
+% new lecture
+
+% picture of n=1
+% disjoint union of two copies of A1 (complex) surjects onto P1, and intersection is sphere missing both poles
+% similar argument for P1 where A is real, (drawing nicely because of the action)
+
+% GLn acts transitively on (n+1) hyperplanes when things intersect
+
+% repeat for P2, taking A real again
+So, $P^2 \twoheadleftarrow U_0 \amalg U_1 \amalg U_2$.
+We have $U_i \cap U_j = \set{[x_0:\dotsm:x_n] | x_i \neq 0, x_j \neq 0} \cong \A^{n+1} \times (\A^1 \setminus \{0\})$.
+The congruence here follows by embedding $U_i \cap U_j \hookrightarrow U_i$, and the image is points where $x_j/x_i \neq 0$.
+In particular, we have $U_i \xrightarrow{\sim} \A^n$, with $x \mapsto (\frac{x_0}{x_i}, \dotsc, \frac{x_n}{x_i})$, where $1=x_i/x_i$ is omitted.
+So, this lets us see projective space as covered by open sets (analogous to charts on a manifold).
+% finitary data
+% done in the handout apparently
+\begin{defi}
+    $X \subseteq \proj^n$ is Zariski closed if $X \cap U_i$ is Zariski closed in $U_i=\A^n$ for each $i=0, \dotsc, n$.
+\end{defi}
+Recall $E_0 = \set{(x, y) \in A^2 | y^2 = x^3 - x}$. Sit this inside $P^2 = [X:Y:Z]$ via $\A^2 \xrightarrow{\sim} U_2 = \{Z \neq 0\} \subseteq \proj^2$.
+That is, $[X:Y:Z] \mapsto (x/z, y/z)$.
+So, $x = \frac{X}{Z}$ and $y=\frac{Y}{Z}$. The equation $y^2 = x^3 - x$ becomes $Y^2/Z^2 = X^3 / Z^3 - X/Z$, and $Z \neq 0$ so the equation is $Y^2 Z = X^3 - XZ^2$ (for $Z \neq 0$).
+Hence, $E_0 = \set{[X:Y:Z] | Y^2 Z = X^3 - X Z^2, Z \neq 0} \in \proj^2$.
+
+% complement of three lines, so chart Y!=0 needs to miss out third line
+On the chart $Z \neq 0$, we have the original equation $y^2 = x^3 - x$.
+On $Y \neq 0$, take $x = \frac{X}{Y}$, $z = Z/Y$, i.e. set $Y=1$, get $z = x^3 - xz^2$ for $z \neq 0$.
+For the chart $X \neq 0$, take $y = Y/X$, $z = Z/X$ get $y^2 z = 1 - z^2$ and $z \neq 0$.
+So now take the closure of $E^0$ in $\proj^2$, which means ignore the condition $z \neq 0$. What, if any, extra points have we added?
+On the chart $Y \neq 0$, if $Z = 0$ get $x^3 = 0$ the unique extra point $[0:1:0]$ % adding Z=0, Y!=0 back in gave one extra point
+On the chart $X \neq 0$, if $Z=0$ get $1 = 0$, no solutions, so no extra points are added.
+So, the closure of $E^0$ is $E_0 \amalg *$, just as we wanted.
+
+More generally, if we have $I \leq k[x_1, \dotsc, x_n]$ an ideal, $Z = Z(I) \subseteq \A^n$, we can ask what the closure of $Z$ is in $\proj^n$ using $\A^n \to \proj^n$ given by $(x_1, \dotsc, x_n) \mapsto [1:x_1:\dotsm:x_n]$.
+As we saw in the example, given $f \in k[x_1, \dotsc, x_n]$ make $f$ homogeneous:
+If $\deg f = d$, define $\tilde{f}(x_0, \dotsc, x_n) = x_0^d f(x_1/x_0, \dotsc, x_n/x_0)$ and then $\tilde{f}(1, x_1, \dotsc, x_n) = f(x_1, \dotsc, x_n)$ and $\tilde{f}(\lambda x_0, \dotsc, \lambda x_n) = \lambda^d \tilde{f}(x_0, \dotsc, x_n)$ $\forall \lambda \in k^\infty$ homogeneous of degree $d$.
+For example, if $f = y^2 - x^3 + x$, $\tilde{f} = z^3 ((y/z)^2 - (x/z)^3 + (x/z))$ as in our example.
+Define $\tilde{0} = 0$.
+Observe
+(i) if $f \neq 0$, then $x_0 \nmid \tilde{f}$, and conversely
+(ii) if $x_0 \nmid g$, $g \in k[x_0, \dotsc, x_n]$ which is homogeneous of degree $d$, then $\tilde{g}(1, x_1, \dotsc, x_n) = g$.
+\begin{defi}
+    If $I \leq k[x_1, \dotsc, x_n]$ an ideal, define $\tilde{I} = \langle \tilde{f} | f \in I \rangle$ the ideal generated by the $\tilde{f}$.
+\end{defi}
+% important warning
+\begin{warning}
+    If $I = \langle f_1, \dotsc, f_r \rangle$ it need not be the case that $\tilde{I} = \langle \tilde{f_1}, \dotsc, \tilde{f_r}\rangle$
+\end{warning}
+\begin{eg}
+    (i) Take $I = \langle x - y^2, y \rangle$. Note this is $\langle x, y \rangle$ and so the zero set is $\{0\}$. Now, $\langle \widetilde{x - y^2}, \tilde{y} \rangle = \langle xz - y^2, y \rangle = \langle xz, y\rangle$ but $\tilde{I} = \langle \tilde{x}, \tilde{y} \rangle = \langle x, y \rangle$.
+    (ii)  Can you find an example of $I$ where $\tilde{I} \neq \langle \tilde{f_1}, \dotsc, \tilde{f_r} \rangle$ for any choice of $\langle f_1, \dotsc, f_r \rangle = I$ which has $r$ minimal.
 \end{eg}
 \end{document}
