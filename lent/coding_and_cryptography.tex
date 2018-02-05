@@ -12,6 +12,7 @@
 \usepackage{pgfplots}
 \usepackage{tikz-cd}
 \usepackage{extarrows}
+\usepackage{bm}
 \usetikzlibrary{arrows,decorations.pathmorphing,decorations.markings,positioning}
 % \renewcommand{\thesection}{\Roman{section}}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
@@ -778,7 +779,7 @@ Roughly, $nH$ is the number of bits required to encode $(X_1, \dotsc, X_n)$.
 \section{Error Control Codes}
 \begin{defi}[Binary code]\hypertarget{def:binaryCode}
     A $[n, m]$ \textbf{binary code} is a subset $C \subset \{0, 1\}^n$ of size $\abs{C}=m$. We say $C$ has length $n$.
-    The elements of $C$ are called codewords.
+    The elements of $C$ are called \textbf{codewords}.
 \end{defi}
 We use a $[n, m]$-code to send one of $m$ possible messages through a \hyperlink{def:bsc}{BSC} making use of the channel $n$ times.
 \begin{center}
@@ -821,13 +822,14 @@ We use a $[n, m]$-code to send one of $m$ possible messages through a \hyperlink
 \end{defi}
 
 Note since $C\subset\{0, 1\}^n$, $\rho(C) \leq 1$, with equality iff $C = \{0, 1\}^n$.
-A code with size $m=1$ has \hyperlink{def:infoRate}{information rate} 0.
-We aim to design code with both a large information rate and a small error rate, which are contradicting aims.
+A \hyperlink{def:binaryCode}{code} with size $m=1$ has \hyperlink{def:infoRate}{information rate} 0.
+
+We aim to design codes with both a large information rate and a small error rate, which are contradicting aims.
 The error rate depends on the decoding rule. We consider 3 possible rules.
-\begin{enumerate}[label=(\roman*)]
-    \item The \hypertarget{def:idealObserver}{\textbf{ideal observer}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $\Prob(c\text{ sent} \mid x\text{ received})$.
-    \item The \hypertarget{def:maximumLikelihood}{\textbf{maximum likelihood}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $\Prob(x\text{ received} \mid c\text{ sent})$.
-    \item The \hypertarget{def:minimumDistanceRule}{\textbf{minimum distance}} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ minimising $\#\set{1 \leq i \leq n | x_i \neq c_i}$.
+\begin{enumerate}[label=(\roman*)]\hypertarget{def:idealObserver}
+    \item The \textbf{ideal observer} decoding rule decodes $x \in \{0, 1\}^n$ as the \hyperlink{def:binaryCode}{codeword} $c$ maximising $\Prob(c\text{ sent} \mid x\text{ received})$.
+    \item \hypertarget{def:maximumLikelihood}{The} \textbf{maximum likelihood} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ maximising $\Prob(x\text{ received} \mid c\text{ sent})$.
+    \item \hypertarget{def:minimumDistanceRule}{The} \textbf{minimum distance} decoding rule decodes $x \in \{0, 1\}^n$ as the codeword $c$ minimising $\#\set{1 \leq i \leq n | x_i \neq c_i}$.
 \end{enumerate}
 \begin{remark}
     Some convention should be agreed in the case of a `tie', e.g.\ choose at random, or ask for message to be sent again.
@@ -844,16 +846,17 @@ The error rate depends on the decoding rule. We consider 3 possible rules.
     We suppose $\Prob(c \text{ sent})$ is independent of $c$. So for fixed $x$, maximising $\Prob(c \text{ sent} \mid x \text{ received}) $ is the same as maximising $\Prob(x \text{ received} \mid c \text{ sent})$.
 \end{proof}
 
-\begin{defi}
-    Let $x, y \in \{0, 1\}^n$. Then \textbf{Hamming distance} between $x$ and $y$ is $d(x, y) = \# \set{1 \leq i \leq n | x_i \neq y_i}$.
+\begin{defi}[Hamming distance]\label{def:hammingDistance}
+    Let $x, y \in \{0, 1\}^n$. Then \textbf{Hamming distance} between $x$ and $y$ is
+    \begin{equation*}d(x, y) = \# \set{1 \leq i \leq n | x_i \neq y_i}.\end{equation*}
 \end{defi}
 \begin{nlemma}\label{lem:2.2}
     If $p < \frac{1}{2}$, then \hyperlink{def:maximumLikelihood}{maximum likelihood} and \hyperlink{def:minimumDistanceRule}{minimum distance} agree.
 \end{nlemma}
 \begin{proof}
-    Suppose $d(x, c) = r$.
+    Suppose $\hyperlink{def:hammingDistance}{d(x, c)} = r$,
     \begin{equation*}
-        \Prob(x \text{ received} \mid c \text{ sent}) = p^r (1-p)^{n-r} = (1-p)^n \left(\frac{p}{1-p}\right)^r
+        \Prob(x \text{ received} \mid c \text{ sent}) = p^r (1-p)^{n-r} = (1-p)^n \left(\frac{p}{1-p}\right)^r.
     \end{equation*}
     Since $p < \frac{1}{2}$, $\frac{p}{1-p} < 1$. So choosing $c$ to maximise $\Prob(x \text{ received} \mid c \text{ sent})$ is the same as choosing $c$ to minimise $d(x, c)$.
 \end{proof}
@@ -892,7 +895,7 @@ From now on, we use \hyperlink{def:minimumDistanceRule}{minimum distance} decodi
             \begin{equation*}
                 C = \{\underbrace{0\dotsm0}_n, \underbrace{1 \dotsm1}_n\}
             \end{equation*}
-            This is an \hyperlink{def:binaryCode}{$[n, 2]$-code}. It is \hyperlink{def:errorDet}{$n-1$ error detecting}, and $\floor{\frac{n-1}{2}}$ \hyperlink{def:errorCor}{error correcting}.
+            This is an \hyperlink{def:binaryCode}{$[n, 2]$-code}. It is $n-1$ \hyperlink{def:errorDet}{error detecting}, and $\floor{\frac{n-1}{2}}$ \hyperlink{def:errorCor}{error correcting}.
             But it has \hyperlink{def:infoRate}{information rate} $= \frac{1}{n}$.
         \item The \hypertarget{def:parityCheckCode}{simple parity check} code of length $n$ (also known as paper tape code).
             We view $\{0, 1\} = \mathbb{F}_2 = \Z/2\Z$ (i.e.\ do arithmetic modulo $2$).
@@ -911,33 +914,32 @@ From now on, we use \hyperlink{def:minimumDistanceRule}{minimum distance} decodi
             where all arithmetic is modulo 2.
             Since we may choose $c_3, c_5, c_6, c_7$ freely, the $c_1, c_2, c_4$ are uniquely determined.
             So we get $\abs{C} = 2^4$ i.e.\ $C$ is a $[7,16]$-\hyperlink{def:binaryCode}{code}.
-            It has \hyperlink{def:infoRate}{information rate} $\frac{\log m} {n}$.
+            It has \hyperlink{def:infoRate}{information rate} $\frac{\log m} {n} = \frac{4}{7}$.
             Note $c_{3,5,6,7}$ are free, $c_{1,2,4}$ are check digits.
 
             Suppose we receive $x \in \mathbb{F}_2^7$. We form the syndrome $z_x = (z_1, z_2, z_4)$ where
             \begin{align*}
-                z_1 = x_1 + x_3 + x_5 + x_7 \\
-                z_2 = x_2 + x_3 + x_6 + x_7 \\
-                z_4 = x_4 + x_5 + x_6 + x_7.
+                z_1 &= x_1 + x_3 + x_5 + x_7 \\
+                z_2 &= x_2 + x_3 + x_6 + x_7 \\
+                z_4 &= x_4 + x_5 + x_6 + x_7.
             \end{align*}
-            If $x \in C$, then $z = (0,0,0)$. If $d(x, c) = 1$ for some $c \in C$, then the place where $x$ and $c$ differ is given by $z_1 + 2 z_2 + 4z_4$ (not modulo 2).
-            Since if $x = c+ e_i$ where $e_i = 0\dotsm010\dotsm 0$ ($1$ in the $i$th place), then the syndrome of $x$ is the syndrome of $e_i$.
+            If $x \in C$, then $z = (0,0,0)$. If $\hyperlink{def:hammingDistance}{d}(x, c) = 1$ for some $c \in C$, then the place where $x$ and $c$ differ is given by $z_1 + 2 z_2 + 4z_4$ (not modulo 2).
+            Since if $x = c+ e_i$ where $e_i = 0\dotso 010\dotso 0$ ($1$ in the $i$th place), then the syndrome of $x$ is the syndrome of $e_i$.
             For example the syndrome of $e_3$ is $(1, 1, 0)$, the binary expansion of $3$.
             True in fact for each $1 \leq i \leq 7$.
     \end{enumerate}
 \end{eg}
 
 \begin{remark}
-    Suppose we change our code $C \subset \{0, 1\}^n$ by using the same permutation to reorder each codeword.
+    Suppose we change our \hyperlink{def:binaryCode}{code} $C \subset \{0, 1\}^n$ by using the same permutation to reorder each \hyperlink{def:binaryCode}{codeword}.
     This gives a code with the same mathematical properties (e.g.\ \hyperlink{def:infoRate}{information rate}, \hyperlink{def:errorDet}{error detection rate}).
     We say such codes are equivalent.
 \end{remark}
 
 % lecture 7
 
-Recall $d(x, y) = \#\set{1 \leq i \leq n | x_i \neq y_i}$.
 \begin{nlemma}\label{lem:2.3}
-    The Hamming Distance is a metric on $\mathbb{F}_2^n$.
+    The \hyperlink{def:hammingDistance}{Hamming distance} is a metric on $\mathbb{F}_2^n$.
 \end{nlemma}
 
 \begin{proof}
@@ -955,10 +957,10 @@ Recall $d(x, y) = \#\set{1 \leq i \leq n | x_i \neq y_i}$.
 \end{remark}
 
 \begin{defi}[Minimum distance]\label{def:minimumDistanceCode}
-    The \textbf{minimum distance} of a code $C$ is the smallest Hamming distance between distinct codewords.
+    The \textbf{minimum distance} of a code $C$ is the smallest \hyperlink{def:hammingDistance}{Hamming distance} between distinct codewords.
 \end{defi}
 \begin{notation}
-    An \hyperlink{def:binaryCode}{$[n, m]$-code} with \hyperlink{def:minimumDistanceCode}{minimum distance} $d$ is sometimes called an \hyperlink{def:nmdCode}{$[n, m, d]$-code}.
+    An \hyperlink{def:binaryCode}{$[n, m]$-code} with \hyperlink{def:minimumDistanceCode}{minimum distance} $d$ is sometimes called an \hypertarget{def:nmdCode}{$\bm{[n, m, d]}$\textbf{-code}}.
 \end{notation}
 \begin{remark}\leavevmode
     \begin{itemize}
@@ -976,7 +978,8 @@ Recall $d(x, y) = \#\set{1 \leq i \leq n | x_i \neq y_i}$.
 \begin{proof}\leavevmode
     \begin{enumerate}[label=(\roman*)]
         \item If $x \in \mathbb{F}_2^n$ and $c \in C$ with $1 \leq d(x, c) \leq d-1$ then $x \notin C$. So errors are detected.
-            Suppose $c_1, c_2 \in C$ with $d(c_1, c_2) = d$. Then $c_1$ can be corrupted to $c_2$ with just $d$ errors, this set of errors will not be detected.
+            Suppose $c_1, c_2 \in C$ with $\hyperlink{def:hammingDistance}{d(c_1, c_2)} = d$.
+            Then $c_1$ can be corrupted to $c_2$ with just $d$ errors, this set of errors will not be detected.
         \item Let $e = \floor{\frac{d-1}{2}}$, so $e \leq \floor{\frac{d-1}{2}} < e+1$, i.e.\ $2e < d \leq 2(e+1)$.
             Let $x \in \mathbb{F}_2^n$. If $\exists c_1 \in C$ with $d(x, c_1) \leq e$, we want to show $d(x, c_2) > e \quad \forall c_2 \in C, c_2 \neq c_1$.
             By the triangle inequality,
@@ -997,7 +1000,7 @@ Recall $d(x, y) = \#\set{1 \leq i \leq n | x_i \neq y_i}$.
     \begin{enumerate}[label=\arabic*)]
         \item The \hyperlink{def:repetitionCode}{repetition code} is a \hyperlink{def:nmdCode}{$[n, 2, n]$-code}, it is $n-1$ \hyperlink{def:errorDet}{error detecting} and $\floor{\frac{n-1}{2}}$ \hyperlink{def:errorCor}{error correcting}.
         \item The simple \hyperlink{def:parityCheckCode}{parity check} code is a $[n, 2^{n-1}, 2]$-code, it is $1$-error detecting and $0$-error correcting.
-        \item \hyperlink{def:hammingCode}{Hamming's original} $[7, 16]$-code is $1$-error correcting $\implies d \geq 3$. Since 0000000 and 1110000 are both valid codewords, $d=3$. That is, it is a $[7, 16, 3]$-code.
+        \item \hyperlink{def:hammingCode}{Hamming's original} $[7, 16]$-code is $1$-error correcting $\implies d \geq 3$. Since 0000000 and 1110000 are both valid \hyperlink{def:binaryCode}{codewords}, $d=3$. That is, it is a $[7, 16, 3]$-code.
     \end{enumerate}
 \end{eg}
 
@@ -1006,14 +1009,155 @@ Let $C$ be an \hyperlink{def:nmdCode}{$[n,m,d]$-code}.
 \begin{enumerate}[label=\roman*)]
     \item The \hypertarget{def:parityExtension}{parity extension} of $C$ is
         \begin{equation*}
-            \overline{C} - \set{(c_1, c_2, \dotsc, c_n, \sum c_i) | (c_1, \dotsc, c_n) \in C}.
+            \overline{C} = \Set{(c_1, c_2, \dotsc, c_n, \sum c_i) | (c_1, \dotsc, c_n) \in C}.
         \end{equation*}
         It is a $[n+1, m, d']$ code, for $d' = d$ or $d+1$, depending on $d$ being odd or even.
     \item Fix $1 \leq i \leq n$. Deleting the $i$th letter from each codeword gives a \hypertarget{def:puncturedCode}{punctured code}.  If $d \geq 2$, the new code is $[n-1, m, d'']$ for $d'' = d-1$ or $d$.
-    \item Fix $i \leq i \leq n$ and $a \in \{0, 1\}$. The shortened code is
+    \item Fix $1 \leq i \leq n$ and $a \in \{0, 1\}$. The shortened code is
         \begin{equation*}
             \set{(c_1, \dotsc, c_{i-1}, c_{i+1}, \dotsc, c_n) | (c_1, \dotsc, c_{i-1}, a, c_{i+1}, \dotsc, c_n) \in C}.
         \end{equation*}
         It is a $[n-1, m', d']$-code, where $d' \geq d$ and some choice of $a$ gives $m' \geq \frac{m}{2}$.
 \end{enumerate}
+
+\subsection{Bound on codes}
+\begin{defi}[Hamming ball]
+    Let $x \in \mathbb{F}_2^n$ and $r \geq 0$. The (closed) \hypertarget{def:hammingBall}{\textbf{Hamming ball}} with centre $x$ and radius $r$ is
+    \begin{equation*}
+        B(x, r) = \set{y \in \mathbb{F}_2^n | \hyperlink{def:hammingDistance}{d}(x, y) \leq r}.
+    \end{equation*}
+    Note the `volume'
+    \begin{equation*}
+        V(n, r) = \abs{B(x, r)} = \sum_{i=0}^r \binom{n}{i}
+    \end{equation*}
+    which is independent of $x$.
+\end{defi}
+\begin{nlemma}[Hamming's bound]\label{lem:2.5}
+    If $C \subset \mathbb{F}_2^n$ is $e$-\hyperlink{def:errorCor}{error correcting}, then
+    \begin{equation*}
+        \abs{C} \leq \frac{2^n}{V(n, e)}.
+    \end{equation*}
+\end{nlemma}
+\begin{proof}
+    Since $C$ is $e$-\hyperlink{def:errorCor}{error correcting}, the \hyperlink{def:hammingBall}{Hamming balls} $B(c, e)$ are disjoint for $c \in C$.
+    So
+    \begin{align*}
+        \sum_{c \in C} \abs{B(c, e)} &\leq \abs{\mathbb{F}_2^n} \\
+        \implies \abs{C} V(n, e) &\leq 2^n \\
+        \implies \abs{C} &\leq \frac{2^n}{V(n, e)}.\qedhere
+    \end{align*}
+\end{proof}
+\begin{defi}[Perfect code]
+    A \hyperlink{def:binaryCode}{$[n, m]$-code} which can \hyperlink{def:errorCor}{correct} $e$ errors is called \textbf{\hypertarget{def:perfect}perfect} if \begin{equation*}m = \frac{2^n}{V(n, e)}.\end{equation*}
+\end{defi}
+
+\begin{remark}
+    If $\frac{2^n}{V(n, e)} \notin \Z$, then no perfect $e$-\hyperlink{def:errorCor}{error correcting} code of length $n$ can exist.
+\end{remark}
+\begin{eg}
+    \hyperlink{def:hammingCode}{Hamming's original $[7,16,3]$-code}, can \hyperlink{def:errorCor}{correct} $1$ error.
+    \begin{equation*}
+        \frac{2^n}{V(n, e)} = \frac{2^7}{V(7, 1)} = \frac{2^7}{1 + 7} = 2^4 = m
+    \end{equation*}
+    so it is a \hyperlink{def:perfect}{perfect code}.
+\end{eg}
+\begin{remark}
+    A \hyperlink{def:perfect}{perfect} $e$-\hyperlink{def:errorCor}{error correcting} code will always incorrectly decode $e+1$ errors.
+\end{remark}
+\begin{defi}[Maximum size of code\hypertarget{def:bestCode}]
+    \begin{equation*}
+        A(n, d) = \max\set{m | \exists \text{ a } [n, m, d]\text{-code}}
+    \end{equation*}
+    i.e.\ size of largest code with parameters $n$ and $d$ .
+\end{defi}
+\begin{eg}
+    $\hyperlink{def:bestCode}{A(n, 1)} = 2^n$, the \hyperlink{def:trivialCode}{trivial code} = $\mathbb{F}_2^n$. $A(n, n) = 2$, for the \hyperlink{def:repetitionCode}{repetition code}.
+\end{eg}
+\begin{nprop}[Gilbert-Shannon-Varshanov bound]\label{prop:2.6}
+    \begin{equation*}
+        \frac{2^n}{V(n, d-1)} \leq A(n, d) \leq \frac{2^n}{V(n, \floor{\frac{n-1}{2}})}
+    \end{equation*}
+    % label the inequalities - GSV on left, Hamming on right
+\end{nprop}
+\begin{proof}[Proof of Gilbert-Shannon-Varshanov bound]
+    Let $C$ be a code of length $n$ and minimum distance $d$ of largest possible size.
+    Then $\nexists x \in \mathbb{F}_2^n$ such that $d(x, c) \geq d \quad \forall c \in C$, otherwise we would replace $C$ with $C \cup \{x\}$
+    \begin{align*}
+        \implies \mathbb{F}_2^n &\subseteq \bigcup_{c \in C}B(c, d-1) \\
+        \implies 2^n &\leq \abs{C} V(n, d-1) \\
+        \implies \abs{C} &\geq \frac{2^n}{V(n, d-1)}. \qedhere
+    \end{align*}
+\end{proof}
+\begin{eg}
+    Take $n=10$, $d=3$.
+    \begin{align*}
+        V(n, 1) &= 1 + 10 = 11 \\
+        V(n, 2) &= 1 + 10 + \binom{10}{2} = 56
+    \end{align*}
+    \Cref{prop:2.6} gives $\frac{2^{10}}{56} \leq A(10, 3) \leq \frac{2^{10}}{11}$, so $19 \leq A(10, 3) \leq 93$. The exact value $A(10, 3) = 72$ was only found in 1999.
+\end{eg}
+There exist asymptotic versions of the \nameref{prop:2.6} and \nameref{lem:2.5}.
+Let
+\begin{equation*}\alpha(\delta) = \limsup \frac{1}{n} \log A(n, \delta n), \quad 0 \leq \delta \leq 1.\end{equation*}
+\begin{notation}
+    $H(\delta) = -\delta \log \delta - (1-\delta) \log (1-\delta)$.
+\end{notation}
+The asymptotic GSV says
+\begin{equation*}
+    \alpha(\delta) \geq 1 - H(\delta) \quad \text{for } 0 <\delta < \frac{1}{2}
+\end{equation*}
+while the asymptotic Hamming bound says
+\begin{equation*}
+    \alpha(\delta) \leq 1 - H\left(\frac{\delta}{2}\right)
+\end{equation*}
+We prove the asymptotic GSV bound
+\begin{nprop}\label{prop:2.7}
+    Let $0 < \delta < \frac{1}{2}$. Then
+    \begin{enumerate}[label=(\roman*)]
+        \item $\log V(n, \floor{n \delta}) \leq n H(\delta)$
+        \item $\frac{\log A(n, \floor{n \delta})}{n} \geq 1 - H(\delta)$
+    \end{enumerate}
+\end{nprop}
+\begin{proof}[Proof (i) $\Rightarrow$ (ii)]
+    The \nameref{prop:2.6} gives
+    \begin{align*}
+        A(n, \floor{n \delta}) &\geq \frac{2^n}{V(n, \floor{n \delta} - 1)} \\
+                               &\geq \frac{2^n}{V(n, \floor{n \delta})} \\
+        \implies \log A(n, \floor{n \delta}) &\geq n - \log V(n, \floor{n \delta})\\
+                                             &\geq n - n H(\delta) \qquad \text{by (i)} \\
+        \implies \frac{\log A(n, \floor{n\delta})}{n} &\geq 1 - H(\delta) \qedhere
+    \end{align*}
+\end{proof}
+\begin{proof}[Proof of (i)]
+    \begin{align*}
+        1 = (\delta + (1-\delta))^n &= \sum_{i=0}^n \binom{n}{i}\delta^i (1-\delta)^{n-i} \\
+                                    &\geq \sum_{i=0}^{\floor{n \delta}} \binom{n}{i} \delta^i (1 - \delta)^{n-i} \\
+                                    &= (1-\delta)^n \sum_{i=0}^{\floor{n\delta}} \binom{n}{i} \left(\frac{\delta}{1 - \delta}\right)^i\\
+                                    &\geq (1-\delta)^n \sum_{i = 0}^{\floor{n \delta}} \binom{n}{i} \left(\frac{\delta}{1-\delta}\right)^{n\delta}\\
+        1&\geq \delta^{n \delta} (1-\delta)^{n(1-\delta)} V(n, \floor{n\delta}) \\
+        \implies 0 &\geq n(\delta \log \delta + (1-\delta) \log (1-\delta)) + \log V(n, \floor{n \delta}) \\
+        \implies \log V(n, \floor{n \delta}) &\leq n H(\delta). \qedhere
+    \end{align*}
+\end{proof}
+\subsection{Channel Capacity}
+Let $\abs{\Sigma} = q$. A code of length $n$ is a subset of $\Sigma^n$ (usually we take $q=2$).
+
+A code is used to send messages through a \hyperlink{def:dmc}{discrete memoryless channel} with $q$ input letters.
+For each code a decoding rule is chosen.
+
+\begin{defi}[Maximum error probability]\hypertarget{def:ehat}
+    The \textbf{maximum error probability} is
+\begin{equation*}
+    \hat{e}(C) = \max_{c \in C} \Prob(\text{error} \mid c \text{ sent}).
+\end{equation*}
+\end{defi}
+\begin{defi}[Reliable transmission]\hypertarget{def:relTrans}
+    A channel can transmit \textbf{reliably at rate $R$} if there exists a sequence of codes $C_1, C_2, \dotsc$ where $C_n$ is a code of length $n$ and size $\floor{2^{nR}}$ such that
+    \begin{equation*}
+        \hyperlink{def:ehat}{\hat{e}(C_n)} \to 0 \text{ as } n \to \infty.
+    \end{equation*}
+\end{defi}
+\begin{defi}
+    The (operational) \textbf{channel capacity} is the supremum over all \hyperlink{def:relTrans}{reliable transmission} rates.
+\end{defi}
 \end{document}
