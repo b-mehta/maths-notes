@@ -13,6 +13,7 @@
 \usepackage{amssymb}
 \usepackage{enumerate}
 \usepackage{mathtools}
+\usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{tikz}
@@ -96,3 +97,17 @@ pdfkeywords={Cambridge Mathematics Maths Math \npart\ \nterm\ \nyear\ \ncourse}]
 
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\href{b-mehta.github.io/maths-notes}{\color{lblue}{Updated online}}}
+\fancyfoot[C]{\thepage}
+\ifdefined\draft
+\fancyfoot[L]{\emph{\draft}}
+\else
+\fi
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.2pt}
+% \fancyfoot[C]{\thepage}
+%\headrulewidth 0.4pt
+%\footrulewidth 0 pt
