@@ -1,10 +1,11 @@
-\documentclass{article}
+\documentclass[twoside]{article}
 
 \def\npart {II}
 \def\nyear {2017}
 \def\nterm {Lent}
 \def\nlecturer{Prof C.\ Mouhot}
 \def\ncourse{Analysis of Functions}
+% \def\draft{Rough}
 \input{header}
 
 % preamble
@@ -33,6 +34,7 @@
     % II. Integrability and convergence
 
 % I)
+\clearpage
 \section{Lebesgue theory}
 \begin{ex}
     Show pointwise limit of Riemann-integrable functions is not necessarily Riemann-integrable.
@@ -77,7 +79,7 @@ Consider a set $X$ and $\powerset(X)$ subsets of $X$.
         \mu\left( \bigcup_{n=1}^\infty A_n\right) = \mu\left( \bigsqcup_{n=1}^\infty A_n\right) = \sum_{n=1}^\infty \mu(A_n).
     \end{equation*}
 
-    Then $X, \mathscr{A}, \mu)$ is a \textbf{measure space}.
+    Then $(X, \mathscr{A}, \mu)$ is a \textbf{measure space}.
     It is called \textbf{complete} \hypertarget{def:completeMeasure} if $A \in \mathscr{A}$ with $B \subset A$ and $\mu(A) = 0$, then $B \in \mathscr{A}$ and $\mu(B)=0$.
 \end{defi}
 
@@ -218,7 +220,7 @@ From here on in, when working on the real line, subsets thereof, or the extended
 \end{proof}
 Observe this construction is simply
 \begin{equation*}
-    s_n = \max\left(n, 2^{-n} \floor*{\frac{x}{2^{n}}}\right)
+    s_n = \max\left(n, 2^{-n} \floor*{2^{n} f(x)}\right)
 \end{equation*}
 as used in Probability and Measure.
 
@@ -799,62 +801,70 @@ Pointwise convergence is `almost' uniform convergence.
     Reprove from this that continuous functions are dense in $L^1(\R)$.
 \end{ex}
 
+\clearpage
 \section{Vector spaces of functions}
-% I. Recalls on vector spaces
-% II. Separating points and Hahn-Banach theorem
-\begin{thm}[Hahn-Banach]
+\subsection{Recalls on vector spaces}
+Omitted from lectures - see \href{https://cmouhot.files.wordpress.com/2017/01/chap2-v13.pdf}{official notes} for details. These are recalls from previous courses, mostly Linear Analysis.
+\subsection{Separating points and Hahn-Banach theorem}
+We restate the Hahn-Banach theorem from Linear Analysis, and give consequences. The consequences are important, but proofs thereof are non-examinable.
+\begin{thm}[Hahn-Banach]\hypertarget{thm:hb}
     Take a normed vector space $E$.
     \begin{enumerate}[label=(\roman*)]
-        \item Given $E_0$ subspace of $E$, $F:E_0 \to \R$ linear continuous. Then, $\exists \tilde{F}:E \to \R$ continuous linear which extends $F$, and
+        \item Take $E_0$ subspace of $E$, $F:E_0 \to \R$ linear continuous. Then, $\exists \tilde{F}:E \to \R$ continuous linear which extends $F$, and
             \begin{equation*}
-                \norm{F}_{E_0'} \coloneqq \sup\set{F(f) | f \in E_0, \norm{f} \leq 1} = \norm{\tilde{F}}_E' = \sup\set{\tilde{F}(f)| f \in E, \norm{f} \leq 1}.
+                \norm{F}_{E_0'} \coloneqq \sup\set{F(f) | f \in E_0, \norm{f} \leq 1} = \lVert\tilde{F}\rVert _{E'}= \sup\set{\tilde{F}(f)| f \in E, \norm{f} \leq 1}.
             \end{equation*}
             The letter $f$ is used to encourage thinking about function spaces.
-        \item $A$ an open convex non-empty in $E$ and $B$ convex non-empty in $E$ with $A \cap B = \emptyset$.
-            Then $\exists F: E \to \R$ continuous linearsuch that
+        \item Let $A$ be an open convex non-empty in $E$ and $B$ convex non-empty in $E$ with $A \cap B = \emptyset$.
+            Then $\exists F: E \to \R$ linear continuous such that
             \begin{align*}
                 F &\le \alpha \text{ on } A \\
-                F &\geq \alpha \text{ on } B \\
+                F &\geq \alpha \text{ on } B
             \end{align*}
             for some $\alpha \in \R$.
-        \item A closed convex non-empty $\subset E$, $B$ a compact convex non-empty $\subset E$.$A\cap B= \emptyset$.
+        \item Take $A$ closed convex non-empty $\subset E$, $B$ a compact convex non-empty $\subset E$ with $A\cap B= \emptyset$.
             Then $\exists F: E \to \R$ linear continuous such that
             \begin{align*}
                 F &\leq \alpha - \epsilon \text{ on } A \\
-                F &\geq \alpha + \epsilon \text{ on } B \\
+                F &\geq \alpha + \epsilon \text{ on } B
             \end{align*}
             for some $\alpha \in \R$, $\epsilon> 0$.
             % pictures for both
     \end{enumerate}
 \end{thm}
 
-% III. Duality and weak topologies
-We know that the Bolzano-Weierstrass theorem holds for $\R$, and for $\R^n$ and more generally for $\C^n$.
-But, the theorem fails in infinite dimension. For example, take the basis vectors of $\ell^2$.
-How can we restore this? In order to get \emph{more} compact sets, we should try taking \emph{fewer} open sets, so weaken the topologies.
-\begin{defi}[Initial topologies]
-    Take $X$, $(Y_i)_{i \in I}$ topological spaces and a family of functions $\phi_i: X \to Y_i$, then the \textbf{initial topology} is the weakest topology on $X$ that makes all $(\phi_i)_{i \in I}$ continuous.
+\subsection{Duality and weak topologies}
+We know that the Bolzano-Weierstrass theorem holds for $\R$, for $\R^n$ and more generally for $\C^n$.
+But, the theorem fails in infinite dimensional vector spaces over $\R$. For example, take the basis vectors of $\ell^2$.
+How can we restore this?
+In order to get \emph{more} compact sets, we should try taking \emph{fewer} open sets, so try to weaken the topologies.
+\begin{defi}[Initial topologies]\hypertarget{def:initTop}
+    Take $X$, $(Y_i)_{i \in I}$ topological spaces and a family of functions $\phi_i: X \to Y_i$.
+    Then the \textbf{initial topology} is the weakest topology on $X$ that makes all $(\phi_i)_{i \in I}$ continuous.
 \end{defi}
 \begin{remark}
-    There is also a notion of final topology, with $\phi_i: Y_i \to X$ and take the finest topology such that they are all continuous.
+    There is also a notion of \hypertarget{def:finalTop}{final topology}, with $\phi_i: Y_i \to X$, taking the finest topology such that they are all continuous.
 \end{remark}
-\begin{ex}
+\begin{ex}\leavevmode
     \begin{enumerate}[label=(\arabic*)]
-        \item Construct the smallest topology $\mathscr{T}$ (subsets of $X$) that is stable by finite intersection and general union, and contains a given family of subsets $\mathcal{F}$.
-        \item Check that $\mathscr{T}$ above is realised by first taking finite intersections of elements of $\mathcal{F}$ and second any union of what you have obtained. (Hint: Prove the resulting $\mathscr{T}$ is stable by finite intersection).
-        \item Check that if you reverse these 2 operations, you need to do a third union again.
+        \item Construct the smallest topology $\mathscr{T}$ (subsets of $X$) that is stable under finite intersection and general union, that contains a given family of subsets $\mathcal{F}$.
+        \item Check that $\mathscr{T}$ above is realised by first taking finite intersections of elements of $\mathcal{F}$ and second by taking any union of what you have obtained. (Hint: Prove the resulting $\mathscr{T}$ is stable by finite intersection).
+        \item Check that if you reverse these two operations, you need to do a third union again.
     \end{enumerate}
 \end{ex}
-\begin{defi}
-    Take $X$ a topological space. A \textbf{neighbourhood} $V$ of $x \in X$ is a subset of $X$ that contains $U \in \mathscr{T}_X$, such that $x \in U \subset V$.
-    Call $\mathcal{V}(x)$ the \textbf{neighbourhood system} of all such subsets.
-    $\mathcal{B}(x)$ is a \textbf{neighbourhood basis} if any $V \in \mathcal{V}(x)$ contains a $B \in \mathcal{B}(x)$.
+\begin{defi}[Neighbourhood]\hypertarget{def:neighbourhood}
+    Take $X$ a topological space.
+    \begin{itemize}
+        \item A \textbf{neighbourhood} $V$ of $x \in X$ is a subset of $X$ that contains $U \in \mathscr{T}_X$, such that $x \in U \subset V$.
+        \item Call $\mathcal{V}(x)$ the \textbf{neighbourhood system} of all such subsets.
+        \item Say $\mathcal{B}(x)$ is a \textbf{neighbourhood basis} if any $V \in \mathcal{V}(x)$ contains a $B \in \mathcal{B}(x)$.
+    \end{itemize}
 \end{defi}
 \begin{prop}
     Consider $X$, $(Y_i)_{i \in i}$ topological spaces, and $\phi_i:X \to Y_i$ functions.
-    Take $\mathscr{T}$ the \hyperlink{def:initTop}{initial topology} on $X$ as above, $x \in X$, then a possible neighbourhood basis is
+    Take $\mathscr{T}$ the \hyperlink{def:initTop}{initial topology} on $X$ as above, $x \in X$, then a possible \hyperlink{def:neighbourhood}{neighbourhood basis} is
     \begin{equation*}
-        \mathcal{B}(x) \coloneqq \Set{\bigcap_{\text{finite}} \phi_i^{-1}(\omega_i) | \omega_i \text{open set of } Y_i \text{ containing }\phi_i(x)}
+        \mathcal{B}(x) \coloneqq \Set{\bigcap_{\text{finite}} \phi_i^{-1}(\omega_i) | \omega_i \text{ open set of } Y_i \text{ containing }\phi_i(x)}
     \end{equation*}
 \end{prop}
 \begin{proof}
@@ -864,12 +874,12 @@ How can we restore this? In order to get \emph{more} compact sets, we should try
     \end{equation*}
     Hence $\exists j_0 \in J$ such that
     \begin{equation*}
-        x \in \bigcap_{n=1}^{N_{j_0}} \phi_{i_n^{j_0}}^{-1} (\omega_{j_0, i_n}) \text{ open}.
+        x \in \bigcap_{n=1}^{N_{j_0}} \phi_{i_n^{j_0}}^{-1} (\omega_{j_0, i_n}) \text{ open}. \qedhere
     \end{equation*}
 \end{proof}
-\begin{ex}
+\begin{ex}\leavevmode
     \begin{itemize}
-        \item Prove that $x_n \to x$ in $(X, \mathscr{T}_{\text{initial}})$ iff
+        \item Prove that $x_n \to x$ in $(X, \mathscr{T}_{\text{\hyperlink{def:initTop}{initial}}})$ iff
             \begin{equation*}
                 \phi_i(x_n) \to \phi_i(x) \text{ in } Y_i, \text{ for all } i \in I
             \end{equation*}
@@ -877,37 +887,38 @@ How can we restore this? In order to get \emph{more} compact sets, we should try
     \end{itemize}
 \end{ex}
 \begin{remark}
-    The product topology on $(\bigotimes_{i \in I} X_i)$ where each $(X_i, \mathscr{T}_i)$ a topological space, is the initial topology with $Y_i = X_i$ with topology $\mathcal{T}_i$ and $\phi_i$ as the canonical projection
-    \begin{equation}
+    The product topology on $(\bigotimes_{i \in I} X_i)$ where each $(X_i, \mathscr{T}_i)$ a topological space, is the \hyperlink{def:initTop}{initial topology} with $Y_i = X_i$ each with topology $\mathcal{T}_i$ and $\phi_i$ as the canonical projection
+    \begin{equation*}
         \phi_i: (x_j)_{j \in I} \in \bigotimes_{j \in I} X_j \to x_i
-    \end{equation}
-    Describe the $B((x_i)_{i \in I}$ as above.
+    \end{equation*}
+    Describe the $B((x_i)_{i \in I})$ as above.
+
     The induced (subspace) topology is the initial topology for the canonical embedding, and $Y_1$ the whole space.
-    The quotient topology can be seen as a final topology.
+
+    The quotient topology can be seen as a \hyperlink{def:finalTop}{final topology}.
 \end{remark}
 \begin{defi}\hypertarget{def:dualSpace}
     Take $E$ a normed vector space. Then $E'$ is the space of linear continuous forms to $\R$:
     \begin{equation*}
         F: E \to \R
     \end{equation*}
-    The weak topology on $E'$, denoted $\sigma(E, E')$ is the initial topology for the family of functions $E'$.
+    The weak topology on $E'$, denoted $\sigma(E, E')$ is the \hyperlink{def:initTop}{initial topology} for the family of functions $E'$.
 \end{defi}
 It is the coarsest topology that makes all dual forms continuous.
 \begin{prop}
     The topology $\sigma(E, E')$ on $E$ is Hausdorff: distinct points can be separated by disjoint open sets.
 \end{prop}
 \begin{proof}
-    Take the third formulation of the Hahn-Banach theorem:
-    Let $f \neq g$ in $E$, set $A = \{f\}$ which is closed convex non-empty and $B=\{g\}$ compact convex. Clearly $A \cap B = \emptyset$.
-    Hence $\exists F \in E$, $\alpha \in \R$ such that $f \in U_1 \coloneqq \{F < \alpha\}$ and $g \in U_2 \coloneqq \{F > \alpha\}$, $U_1 \cap U_2$ by definition.
+    Take the third formulation of the \hyperlink{thm:hb}{Hahn-Banach theorem}:
+    Given $f \neq g$ in $E$, set $A = \{f\}$ which is closed convex non-empty and $B=\{g\}$ compact convex. Clearly $A \cap B = \emptyset$.
+    Hence $\exists F \in E$, $\alpha \in \R$ such that $f \in U_1 \coloneqq \{F < \alpha\}$ and $g \in U_2 \coloneqq \{F > \alpha\}$, $U_1 \cap U_2 = \emptyset$ by definition.
 \end{proof}
-\begin{remark}
+\begin{remark}\leavevmode
     \begin{itemize}
-        \item Prove $\sigma(E, E')$ is not more refined than the strong (original) topology.
-        \item In finite dimension, prove $\sigma(E, E') = $ strong topology. Give a counter-example in infinite dimensions
+        \item Prove $\hyperlink{def:dualSpace}{\sigma(E, E')}$ is not more refined than the strong (original) topology.
+        \item In finite dimension, prove $\sigma(E, E') = $ strong topology. Give a counter-example in infinite dimensions.
         \item Show strong/weak convergences can still agree, e.g.\ on $C^1(\R)$.
     \end{itemize}
-
 \end{remark}
 % Chapter 2
 % I) Recalls on normed vector spaces (LA)
