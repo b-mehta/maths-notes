@@ -5,7 +5,11 @@
 
 \author{Based on lectures by \nlecturer \\\small Notes taken by \nauthor}
 \date{\nterm\ \nyear}
+\ifdefined\draft
+\title{Part \npart\ -- \ncourse\ (\draft)}
+\else
 \title{Part \npart\ -- \ncourse}
+\fi
 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -108,6 +112,3 @@ pdfkeywords={Cambridge Mathematics Maths Math \npart\ \nterm\ \nyear\ \ncourse}]
 \fi
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0.2pt}
-% \fancyfoot[C]{\thepage}
-%\headrulewidth 0.4pt
-%\footrulewidth 0 pt
