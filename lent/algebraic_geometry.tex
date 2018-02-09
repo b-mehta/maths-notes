@@ -19,6 +19,7 @@
 \DeclareMathOperator{\chara}{char}
 \DeclareMathOperator{\Mor}{Mor}
 \DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Der}{Der}
 %\setcounter{section}{-1}
 % and here we go!
 
@@ -55,7 +56,7 @@ Take another copy, flip it over and glue back.
 \section{Dictionary between algebra and geometry}
 % 1.
 \subsection{Basic notions}
-\begin{defi}[Affine space]\label{def:affineSpace}
+\begin{defi}[Affine space\hypertarget{def:affineSpace}]
     \textbf{Affine $n$-space} is $\A^n = \A^n(k) \coloneqq k^n$ for $k$ a field.
 \end{defi}
 \begin{notation}\hypertarget{def:polys}
@@ -708,4 +709,136 @@ An affine variety is $k[X] = k[x_1, \dotsc, x_n]/I$, $I = \sqrt{I}$.
 \end{defi}
 \begin{ex}If $\mathcal{U} \subseteq X$ an open subset of a variety $X$, $\exists$ structure of a variety on $\mathcal{U}$ makes the embedding a morphism of varieties.
 \end{ex}
+
+% Lecture 9
+\section{Smooth points, dimension, Noether normalisation}
+Let $X \subseteq \A^n$ be an affine variety, $p \in X$. Write $X = Z(I)$, $I = \langle f_1, \dotsc, f_r \rangle$.
+We would like to think about the tangent space to $X$ at $p$, a vector space.
+Our tentative definition is
+\begin{align*}
+    T_p X &= \set{v \in \A^n | \sum v_i \frac{\partial f_j}{\partial x_i}(p) = 0, j = 1,\dotsc, r} \\
+    &= \set{v \in \A^n | \sum v_i \frac{\partial f}{\partial x_i}(p) = 0, \forall f \in I}
+\end{align*}
+For example, take $I = \langle y^2 - x^3 \rangle$.
+% pic
+Then
+\begin{equation*}
+    T_{(p_1, p_2)} X = \set{(v_1, v_2) | v_1 (-3p_1^2) + v_2 (2 p_2) = 0, -3p_1^2 v_1 + 2p_2 v_2 = 0}
+\end{equation*}
+So if $(p_1, p_2) \neq (0, 0)$ then $T_{(p_1, p_2)} X$ is a line, and if $(p_1, p_2) = (0, 0)$ then $T_{(p_1, p_2)} X = \A^2$.
+\begin{remark}
+    You can think of $T_p X$ as sitting at $p \in X$, by translating $v \mapsto v + p$.
+    So,
+    \begin{equation*}
+        \simeq \set{v \in \A^n | \sum (v_i - p_i) \frac{\partial f}{\partial x_i} (p) = 0, \forall f \in I}
+    \end{equation*}
+    We can think of this as a linear approximation to the variety, $f(x) = f(p) + \sum (x_i - p_i) \frac{\partial f}{\partial x_i} + $ higher order terms.
+\end{remark}
+\begin{lemma}
+    \begin{equation*}
+        \set{p \in X | \dim T_p X \geq d}
+    \end{equation*}
+    is a Zariski closed subvariety of $X$, for all $d \geq 0$.
+\end{lemma}
+\begin{proof}
+    \begin{equation*}
+        T_p X = \ker
+        \begin{bmatrix}
+            \frac{\partial f_1}{\partial x_1} & \dots & \frac{\partial f_1}{\partial x_n} \\
+            \vdots & \ddots & \vdots \\
+            \frac{\partial f_r}{\partial x_1} & \dots & \frac{\partial f_r}{\partial x_n} \\
+        \end{bmatrix}
+    \end{equation*}
+    and recall $\dim(\ker A) + r(A) = 0$.
+    So, $\dim \ker \geq d \iff n - \text{rank} \geq d \iff rank \leq n - d$.
+    But the rank of a matrix is greater than $a \iff$ exists some $a \times a$ submatrix with non-zero determinant.
+    So, $\text{rank}(\frac{\partial f_j}{\partial x_i}) \leq d \iff \text{all } (n - d + 1) \times (n - d + 1)$ subminors have zero determinant which is a collection of polynomial equations.
+    That is, $I \set{p \in X | \dim T_p X \geq d} = \langle f_1, \dotsc, f_r, \text{ determinants of all subminors} \rangle$.
+\end{proof}
+The problem with the definition from earlier was that it depends on an embedding, and we want a definition of $T_p X$ which doesn't depend on embedding $X \hookrightarrow \A^n$.
+\begin{defi}\hypertarget{def:derivation}
+    Take $A$ an algebra over $k$, and $\phi: A \to k$ a homomorphism. (For example, take $A = k[X]$, $\phi = \text{ev}_p: f \mapsto f(p)$.)
+    A \textbf{derivation} `centered at $\phi$' is a $k$-linear map $D: A \to k$ such that
+    \begin{equation*}
+        D(fg) = D f \phi (g) + \phi(f) Dg \tag{Leibniz rule}
+    \end{equation*}
+    Write $\Der(A, \phi)$ for the set of such derivations, a vector space over $k$.
+\end{defi}
+\begin{eg}
+    Take $A = k[x_1, \dotsc, x_n]$, $p \in \A^n$.
+    If $(v_1, \dotsc, v_n) \in \A^n$, then $D(f) = \sum v_i \frac{\partial f}{\partial x_i} (p)$ is a \hyperlink{def:derivation}{derivation} centered at $\text{ev}_p$.
+    Moreover, it is the unique derivation with $D(x_i) = v_i$.
+\end{eg}
+\begin{ex}
+    Show it is unique.
+\end{ex}
+Conversely, given $D \in \Der(k[x_1, \dotsc, x_n], \text{ev}_p)$, get $v_i = D(x_i)$ so $\Der(k[x_1, \dotsc, x_n], \text{ev}_p) = T_p \A^n$.
+More generally,
+\begin{lemma}
+    Let $A = \hyperlink{def:polys}{k[x_1, \dotsc, x_n]}/\langle f_1, \dotsc, f_r \rangle = k[X]$ and take $p \in X$.
+    \begin{equation*}
+        \Der(A, \text{ev}_p) = \set{D = \sum v_i \frac{\partial}{\partial x_i} |_p | D \langle f_1, \dotsc, f_r \rangle = 0 \text{ in } k[X]}
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    Can be seen as above.
+    Alternatively, $\Der(k[X], \text{ev}_p)$ determines $\tilde{D} \in \Der(k[x_1, \dotsc, x_n], \text{ev}_p)$ and then the condition $\tilde{D}$ descends to a map $k[X] \to k$ is the condition $D\langle f_1, \dotsc, f_r \rangle = 0$.
+\end{proof}
+This gives us a better definition of tangent space:
+\begin{defi}[Intrinsic definition of tangent space]
+    \begin{equation*}
+        T_p X = \Der(k[X], \text{ev}_p).
+    \end{equation*}
+\end{defi}
+We can almost immediately conclude that this gives a definition for any algebraic variety.
+\begin{ex}
+    Let $V = X \setminus Z(f)$, $f \in k[X]$ be a Zariski open affine subvariety of $X$, i.e.\
+    \begin{equation*}
+        k[V] = k[X][\frac{1}{f}].
+    \end{equation*}
+    Show $T_p X \cong T_p X$ a canoncial isomorphism, i.e. that $\Der(k[X][\frac{1}{f}], \text{ev}_p) \xrightarrow{\sim} \Der(k[X], \text{ev}_p)$.
+\end{ex}
+So now $T_p X = T_p U$, for $U$ any Zariski open subvariety: the tangent space is Zariski local.
+% pic
+
+\begin{eg}
+    Take $X = \proj^n$, $p = [p_0: p_1: \dotsb: p_n]$. If $p_0 \neq 0$, $p = [1: \frac{p_1}{p_0} : \dotsb : \frac{p_n}{p_0}] = \iota(\bar{p})$, the embedding of some $\bar{p} \in \A^n \hookrightarrow \proj^n$. THen
+    \begin{equation*}
+        T_p \proj^n = T_{\bar{p}} \A^n = \A^n
+    \end{equation*}
+\end{eg}
+\begin{defi}
+    Let $X$ be irreducible. Then the \textbf{dimension} of $X$:
+    \begin{equation*}
+        \dim X \coloneqq \min \set{\dim T_p X | p \in X}
+    \end{equation*}
+\end{defi}
+\begin{eg}
+    $\dim A^n = n = \dim \proj^n$, $\dim \set{(x, y) | y^2 = x^3} = 1$.
+\end{eg}
+If $X$ is not irreducible, the dimension is not such a great concept.
+\begin{defi}
+    If $X$ is arbitrary, $\dim X \coloneqq \max{\dim X_i | X_i \text{ a \hyperlink{def:component}{component} of } X}$.
+\end{defi}
+\begin{defi}
+    If $X$ is irreducible, $p \in X$ is \textbf{smooth} if $\dim T_p X = \dim X$, and singular otherwise and we've shown singular points in $X$ form a Zariski closed subvariety, whose complement is non-empty. % (lemma from earlier in lecture)
+\end{defi}
+\begin{lemma}
+    Let $f \in k[x_1, \dotsc, x_n]$ be prime. Then $\dim Z(f) = n-1$. Call this a `hypersurface'.
+\end{lemma}
+\begin{proof}
+    $T_p Z(f)$ has dimension $n$ or $n-1$, and $T_p Z(f) = \A^n \iff \forall i \, \frac{\partial f}{\partial x_i} = 0$.
+    So $T_p Z(f)$ has dimension $n$ for all $p \in Z(f) \implies \frac{\partial f}{\partial x_i} \in I(Z(f)) \quad \forall i=1, \dotsc, n$.
+    But $I(Z(f)) = \sqrt{f}$, by Nullstellensatz, so $=(f)$ as $f$ is prime.
+    So, $\frac{\partial f}{\partial x_i} = f . g$ for some $g$. But $\deg x_i \frac{\partial f}{\partial x_i} < \deg_{x_i} f \implies g = 0$.
+    So $\dim Z(f) = 0 \implies \frac{\partial f}{\partial x_i} = 0 \quad \forall i$.
+    There are now two cases,
+    \begin{enumerate}[label=(\roman*)]
+        \item if $\chara k = 0$, this implies $f = 0$.
+        \item if $\chara k = p$, this implies $f \in k[x_1^p, \dotsc, x_n^p]$ as $\frac{\partial (x^p)}{\partial x} = p x^{p-1} = 0$.
+    \end{enumerate}
+    Claim: $\exists g \in k[x_1, \dotsc, x_n]$ such that $g(x)^p = f(x)$.
+    Proof: If $f = \sum a_\lambda x^{\lambda p}$, $g = \sum a_\lambda^{1/p} x^\lambda$ (for $a_\lambda \in k$) which requires can take $p$th roots of things in $k$, which is allowed if $k = \bar{k}$.
+    But this contradicts $f$ is prime!
+\end{proof}
 \end{document}
