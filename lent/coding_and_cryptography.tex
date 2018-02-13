@@ -5,6 +5,7 @@
 \def\nterm {Lent}
 \def\nlecturer{Dr R.\ Camina}
 \def\ncourse{Coding and Cryptography}
+\def\draft{Rough}
 \input{header}
 
 % preamble
@@ -20,6 +21,7 @@
 \pgfplotsset{width=7cm}
 \newcommand{\probConv}{\hyperlink{def:probConverge}{\xlongrightarrow{p}}}
 \newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Exp}{\mathbb{E}}
 % and here we go!
 
 \begin{document}
@@ -1175,4 +1177,39 @@ For each code a decoding rule is chosen.
 \begin{defi}
     The (operational) \textbf{channel capacity} is the supremum over all \hyperlink{def:relTrans}{reliable transmission} rates.
 \end{defi}
+
+% Lecture 9
+\begin{nlemma}\label{lem:2.8}
+    Let $\epsilon > 0$. A \hyperlink{def:bsc}{BSC} with error probability $p$ is used to send $n$ digits. Then
+    \begin{equation*}
+        \Prob(\text{BSC makes} \geq n(p + \epsilon) \text{ errors}) \to 0 \text{ as } n \to \infty.
+    \end{equation*}
+\end{nlemma}
+\begin{proof}
+    Let
+    \begin{equation*}
+        \mu_i =
+        \begin{cases*}
+            1 & if digit mistransmitted \\
+            0 & otherwise
+        \end{cases*}
+    \end{equation*}
+    $\mu_1, \mu_2, \mu_3, \dotsc$ are i.i.d.\ random variables.
+    \begin{align*}
+        \begin{rcases}
+            \Prob(\mu_i = 1) = p \\
+            \Prob(\mu_i = 0) = 1-p
+        \end{rcases}
+        \implies \Exp(\mu_i) &= p \\
+        \Prob(\text{BSC makes} \geq n(p + \epsilon) \text{ errors}) &= \Prob(\sum_{i=1}^n \mu_i \geq n(p + \epsilon)) \\
+                                                                    &\leq \Prob(\abs{\frac{1}{n} \sum \mu_i - p} \geq \epsilon)
+    \end{align*}
+    This $\to 0$ as $n \to \infty$ by \hyperlink{def:wlln}{WLLN}.
+\end{proof}
+\begin{remark}
+    $\sum_{i=1}^n \mu_i$ is a binomial random variable with parameters $n$ and $p$.
+\end{remark}
+\begin{nprop}\label{prop:2.9}
+\end{nprop}
+% Lecture 10
 \end{document}
