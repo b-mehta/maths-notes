@@ -1027,7 +1027,7 @@ and weak-$*$ refers to the topology $\sigma(E', E)$.
 \begin{proof}
     $(\Rightarrow)$. $B_E(0, 1)$ is $\Phi^{-1}(B_{E''}(0, 1))$ so it is enough to prove that $\Phi^{-1}$ is continuous:
     \begin{equation*}
-        (E'', \sigma(E'', E')) \longrightarrow (E, \sigma(E, E')).
+        \Phi^{-1}: (E'', \sigma(E'', E')) \longrightarrow (E, \sigma(E, E')).
     \end{equation*}
     Then $\Phi^{-1}(B_{E''}(0, 1))$ is weakly compact since BAB gives $B_{E''}(0, 1)$ is weak-$*$ compact.
 
@@ -1047,9 +1047,54 @@ and weak-$*$ refers to the topology $\sigma(E', E)$.
     \begin{lemma}
         For a Banach space $E$, $\Phi(B_E(0, 1))$ is dense in $B_E''(0, 1)$ for the weak-$*$ topology $\sigma(E'', E')$.
     \end{lemma}
-    $\Phi$ is continuous $E \to E''$ with the strong topologies, so it is continuous for the weak topologies $(E, \sigma(E, E')) \longrightarrow (E'', \sigma(E'', E'''))$.
-    This means $\forall \zeta \in E'''$,
+    % $\Phi$ is continuous $E \to E''$ with the strong topologies, so it is continuous for the weak topologies $(E, \sigma(E, E')) \longrightarrow (E'', \sigma(E'', E'''))$.
+    % This means $\forall \zeta \in E'''$,
+    % some missing things
+
+    % We now claim that $\Phi(B_E(0, 1))$ is closed in $(E'', \norm{\cdot}_{E''})$.
+    Assuming the lemma, $\Phi(B_E(0, 1)) \subset B_{E''}(0, 1)$ is dense with topology $(\sigma(E'', E'))$. If closed % what is closed?
+    we are done, and we prove the stronger fact that it is compact.
+    It is enough to have that $\Phi(E, \sigma(E, E')) \to (E'', \sigma(E'', E'))$ is continuous.
+    First we show $\Phi: (E, \sigma(E, E')) \to (E'', \sigma(E'', E'''))$ is continuous.
+    This is equivalent to $\zeta \circ \Phi: (E, \sigma(E, E')) \to \R$ is continuous $\forall \zeta \in E'''$.
+    But $\zeta \circ \Phi: (E, \norm{\cdot}_\E) \to \R$ is continuous, hence by definition $\zeta \circ \Phi$ is continuous in $\sigma(E, E')$.
+    Moreover, since the weak-$*$ topology is weaker than the weak topology, this implies that
+    $\Phi: (E, \sigma(E, E')) \to (E'', \sigma(E'', E'))$ is continuous.
+
+    It now only remains to prove the lemma.
+
+    Consider $\varphi \in B_{E''}(0, 1)$ and $V$ a neighbourhood of $\varphi$ for $\sigma(E'', E')$ that we take to be (wlog)
+    \begin{equation*}
+        V = \set{\psi \in E'' | \abs{\psi(F_i) - \phi(F_i)} < \epsilon} \quad \text{for some $\epsilon > 0$, $F_1, \dotsc, F_k \in E'$}
+    \end{equation*}
+    Our goal is to find $f \in B_E$ such that $\abs{\varphi_f(F_i) - \varphi(F_i)} < \epsilon$, $i = 1, \dotsc, k$.
+    (end of argument coming soon).
 \end{proof}
+
+\begin{cor}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item A closed subspace of a reflexive Banach space is reflexive.
+        \item A Banach space $E$ is reflexive iff $E'$ is reflexive.
+    \end{enumerate}
+\end{cor}
+\begin{proof}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item Take $M$ a closed subspace of $E$, then check (exercise) $\sigma(E, E') \cap M = \sigma(M, M')$, and that $\overline{B}_M$ is $\sigma(E, E')$ closed.
+            By the Kakutani theorem, $\overline{B}_E$ is $\sigma(E, E')$ compact, so $\overline{B}_M$ is precompact hence compact in $\sigma(M, M')$.
+            Again using Kakutani, this gives that $M$ is reflexive.
+        \item First show that $E$ reflexive $\implies E'$ is reflexive, the identification $\Phi$ of $E$ with $E''$ shows $\sigma(E', E) = \sigma(E', E'')$.
+            Thus BAB shows $\overline{B}_E'$ is compact in $\sigma(E', E'')$ so $\sigma(E', E)$ compact. Hence by Kakutani, $E'$ is reflexive.
+            Conversely, if $E'$ is reflexive then by the previous case, $E''$ is reflexive, and $\Phi(E)$ is a closed subspace of $E''$ hence reflexive.
+            $E$ is isometric to it, so is reflexive.
+\end{proof}
+
+\begin{defi}
+    A Banach space $E$ is called uniformly convex $\forall \epsilon > 0$, $\exists \delta > 0$ such that $\forall f, g \in \overline{B}_E$, $\norm{f-g}_E > \epsilon \implies \norm{\frac{f+g}{2}}_E$.
+\end{defi}
+\begin{eg}
+    % pictures
+    % sup norm in R^n and l1 norm are not UC but p norm for p in (1, inf) is.
+\end{eg}
 % Chapter 2
 % I) Recalls on normed vector spaces (LA)
 % II) Hahn-Banach (LA)
