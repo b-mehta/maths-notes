@@ -942,4 +942,81 @@ In this situation, we have a lemma
 
 Finally, note morphisms as above with $a_N = 1$, i.e.\ $f$ a monic polynomial, are even nicer. $\varphi$ is surjective.
 
+% new lecture
+Suppose we have affine varieties $X$ and $Y$ with morphism $k[X] = k[Y][t]/f(t) \leftarrow k[Y]$.
+We noticed that if $f \in k[Y][t]$ is a monic polynomial, then the map of algebraic varities $X \xrightarrow{\varphi} Y$ is surjective with finite $\varphi^{-1}(y)$ $\forall y \in Y$.
+
+\begin{defi}
+    $B \subseteq A$ is an integral ring extension if $\forall a \in A$, $\exists$ a monic polynomial $f \in B[t]$ with $f(a) = 0$.
+\end{defi}
+\begin{lemma}
+    \begin{enumerate}[label=(\roman*)]
+        \item If $f$ is a monic polynomial, then $B \subseteq B[t]/\langle f(t) \rangle$ is an integral extension of $B$.
+        \item If $C \subseteq B \subseteq A$ are integral ring extensions, so is $C \subseteq A$.
+    \end{enumerate}
+\end{lemma}
+\begin{defi}
+    If $\phi^*: k[Y] \to k[X]$ is an integral inclusion of rings, we say $\varphi: X \to Y$ is a \textbf{finite morphism}.
+\end{defi}
+\begin{thm}[Noether normalisation lemma]
+    Let $X$ be an affine variety. Then there exists a finite surjective morphism $X \to \A^d$ for some $d$.
+    More precisely, let $k$ be such that $\chara k = 0$ or $\chara k = p$ and $x \mapsto x^p$ is surjective, e.g.\ $k$ is finite or algebraically closed.
+    Let $A$ be a finitely generated algebra over $k$ and an integral domain. Then $\exists x_1, \dotsc, x_N$ which generate $A$ as a $k$-algebra such that
+    \begin{enumerate}[label=(\roman*)]
+        \item $x_1, \dotsc, x_d$ algebraically independent over $k$
+        \item for each $i > d$, $x_i$ is separable algebraic with monic polynomial $F_i[t] \in k[x_1, \dotsc, x_{i-1}][t]$. That is, $k[x_1, \dotsc, x_{i-1}] \subseteq k[x_1, \dotsc, x_i]$ is an integral extension for $i > d$.
+    \end{enumerate}
+\end{thm}
+Notice, by the lemma (i) and (ii), this says that $k[x_1, \dotsc, x_d] \subseteq A$ is an integral ring extension.
+\begin{cor}
+    $\trdim X = \dim X$.
+\end{cor}
+\begin{proof}
+    We showed last time $\trdim \A^d = d = \dim \A^d$, and that if $\varphi: X \to Y$ had this nice form, then $\trdim X = \trdim Y$, $\dim X = \dim Y$.
+\end{proof}
+\begin{eg}
+    Take $k = \C$, and $X = \set{(x, y) \in \A^2 | x y = 1}$. Notice that $X \to \A^1$ with $(x, y) \mapsto x$ is not a finite morphism, as $k[x] \hookrightarrow k[x, y] /xy-1$ is not of the form $k[x][t]/(f(t))$ with $f$ monic.
+    However $X \to \A^1$ given by $(t, t^{-1}) \mapsto t + t^{-1} = z$ is finite, since $z = t+t^{-1} \implies t^2 - tz + 1 = 0$, i.e.\
+    \begin{equation}
+        k[t, t^{-1}] = k[z][t]/t^2-tz+1
+    \end{equation}
+    and indeed any projection onto a line other than the $x$ or $y$ axis will work.
+\end{eg}
+\begin{thm}
+    If $k = \overline{k}$, and $\varphi: X \to Y$ is a morphism of algebraic varities, and $X$, $Y$ irreducible.
+    \begin{enumerate}[label=(\alph*)]
+        \item $\overline{\varphi(X) = Y} \iff$ algebra homomorphism $k[Y] \to k[X]$ is injective.
+        \item Suppose $\overline{\varphi(X) = Y}$. Then
+            \begin{enumerate}[label=(\roman*)]
+                \item $\dim X \geq \dim Y$
+                \item there exists an open subset $U \subseteq Y$, non-empty such that $\forall y \in U$, $\dim \phi^{-1} y = \dim X - \dim Y$.
+                \item For all $y \in \varphi(X)$, $\dim \varphi^{-1}(y) \geq \dim X - \dim Y$.
+            \end{enumerate}
+    \end{enumerate}
+\end{thm}
+\begin{eg}
+    Take $X = \A^2 = Y$, and $\varphi: (x, y) \mapsto (xy, y)$.
+    If $U = \set{(a, b) | b \neq 0}$, $\varphi^{-1}\{(a, b)\} = \{(a/b, b)\}$ a point, $\dim \varphi^{-1}(a, b) = 0 = 2- 2$.
+    If $b = 0$, then
+    \begin{equation}
+        \varphi^{-1}((a, 0)) =
+        \begin{cases}
+            \emptyset & \text{if } a \neq 0 \\
+            \A^1 \times \{0\} & \text{if } a = 0
+        \end{cases}
+    \end{equation}
+    with dimension $1 > 0$. Notice $\varphi$ is not surjective but $\overline{\varphi(X)} = Y$.
+\end{eg}
+\begin{proof}
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $f \in \ker(k[Y] \to k[X])$. Then $\forall x \in X$, $f \circ \varphi (x) = 0$, so $f|_{\varphi(X)} = 0$ so $f|_{\overline{\varphi(X)}} = 0$, as $f$ is continuous.
+            Hence if $\overline{\varphi(X)} = y$, $f \equiv 0$ on $Y$, so $f = 0$. Converse is exercise.
+        \item
+            \begin{enumerate}[label=(\roman*)]
+            \item $k[X]$ and $k[Y]$ are integral domains, so the fraction field $k(Y) \hookrightarrow k(X)$, hence $\trdim Y \leq \trdim X$.
+            \item Claim: Noether normalisation $\implies \exists$ open subset $V \subseteq Y$, $V \neq \emptyset $ such that if you put $U = \varphi^{-1}(V)$, the map $\varphi: U \to V$ factors as $\varphi = p \circ \alpha$, for $\alpha: U \to \A^d \times V$ a finite morphism and $p: A^d \times V \to V$, $p(a, v) = v$ is projection.
+                Exercise: Show the claim shows part (ii) of the proposition. Prove the claim. Hint: Let $L = k(Y)$, set $A = L. k[X] \subseteq k(X)$ be the subalgebra of $k(X)$ generated by $L$ and $k[X]$, so an algebra over the field $L$.
+                Apply Noether to $A$ over the field $L$ to get $a_1, \dotsc, a_d$ in $A$ are algebraically independent over $L$, such that $A$ is integral over $L[a_1, \dotsc, a_d]$ and generated by $a_{d+1}, \dots, a_N$.
+                Put $a_i$ over a common denominator and deduce the result.
+\end{proof}
 \end{document}
