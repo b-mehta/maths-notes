@@ -841,4 +841,105 @@ If $X$ is not irreducible, the dimension is not such a great concept.
     Proof: If $f = \sum a_\lambda x^{\lambda p}$, $g = \sum a_\lambda^{1/p} x^\lambda$ (for $a_\lambda \in k$) which requires can take $p$th roots of things in $k$, which is allowed if $k = \bar{k}$.
     But this contradicts $f$ is prime!
 \end{proof}
+% Lecture 10
+There are two other notions of dimension:
+\begin{enumerate}[label=(\arabic*)]
+    \item Krull dimension:
+        \begin{equation*}
+            \dim_{Kr} X = \max\set{r | \emptyset \neq Z_0 \lneq Z_0 \lneq Z_1 \lneq \dotsb \lneq Z_r = X}
+        \end{equation*}
+        where each $Z_i$ is an irreducible Zariski closed subvariety.
+
+        For example, take $\A^1$. The only such chains are $\text{point} \lneq \A^1$, so $\dim_{Kr} \A^1 = 1$.
+        We won't have time show show $\dim_{Kr} X = \dim X$.
+    \item If $X$ is affine and irreducible, define $k(X)$ as the field of fractions of $k[X]$, which is non-zero as $k[X]$ is an integral domain.
+        This is
+        \begin{align*}
+            k(X) &= \set{f/g | f, g \in k[X]} \\
+                 &= \bigcup_{g \in k[X]} k[X \setminus Z(g)] \\
+                 &= \bigcup_{g \in k[X]} k[X][\frac{1}{g}] \\
+                 &= \bigcup_{U \subseteq X} \text{Zar. open, affine} k[U]
+        \end{align*}
+        called the function field of $X$.
+        Observe that if $U \subseteq X$ is affine and open, then $k(U) = k(X)$.
+        But this means that if $X$ is any irreducible variety, affine or not, can define $k(X) = k(U)$, for $U$ any affine open subset of $X$.
+
+        Examples:
+        \begin{enumerate}[label=(\roman*)]
+            \item $k(\A^n) = k(x_1, \dotsc, x_n)$
+            \item $k(\proj^n) = k(\frac{x_1}{x_0}, \dotsc, \frac{x_n}{x_0}) \simeq k(\frac{x_0}{x_n}, \dotsc, \frac{x_{n-1}}{x_n})$ since $\frac{x_i}{x_0} \cdot \frac{x_0}{x_n} = \frac{x_i}{x_n}$.
+            \item if $E = \set{(x, y) | y^2 = x^3 - x}$, then $k(E) = k(x)[y]/y^2 = x^3 - x$
+            \item $X = \set{(x, y) | y^2 = x^3}$, $k(X) = k(x)[y] / y^2 = x^3$
+        \end{enumerate}
+
+        Now we can define $\text{trdim} X =$ the transcendance dimension of extension $k \subseteq k(X)$.
+        We need a small lemma to show trdim $k(x_1, \dotsc, x_n)/k = $ trdim $\A^n$ = n.
+\end{enumerate}
+\begin{thm}
+    For any algebraic variety $X$ trdim $X = \dim X$.
+\end{thm}
+Proof strategy: We will reduce this to $\A^n$ where we know $\dim \A^n = n = \text{trdim} \A^n$ by looking for very special nice morphisms $X \to \A^n$.
+To motivate this, consider the following special situation.
+Suppose $k = \overline{k}$ and take a morphism $\varphi: X \to Y$ of affine varieties such that
+\begin{enumerate}[label=(\arabic*)]
+    \item $X, Y$ are irreducible
+    \item \begin{equation*}
+        k[X] = k[Y][t]/\langle f(t) \rangle
+        \end{equation*}
+        and $\varphi$ is the inclusion $k[Y] \hookrightarrow k[Y][t]/\langle f\rangle = k[X]$ where $f(t) \in k[Y][t]$,
+        \begin{equation*}
+            f(t) = a_0(y) + a_1(y)t + \dotsb + a_N(y) t^N = f(y, t) \quad \text{with } a_N \neq 0
+        \end{equation*}
+    \item $f$ is a separable polynomial, when regarded as an element of $k(Y)[t]$, i.e.\
+        \begin{equation*}
+            F(t) = \frac{f(t)}{a_N(y)} = t^N + \frac{a_{N-1}}{a_N} t^{N-1} + \dotsb + \frac{a_0}{a_N}
+        \end{equation*}
+        is such that $F(t), F'(t)$ have no common roots i.e.\ $\varphi X \to Y$ comes from a separable algebraic extension of function fields $k(X) \supseteq k(Y)$.
+\end{enumerate}
+In this situation, we have a lemma
+\begin{lemma}
+    \leavevmode
+    \begin{enumerate}[label=(\alph*)]
+        \item $\varphi(X)$ contains an open (hence dense!) subset of $Y$
+        \item exists an open non-empty subset $V \subseteq Y$ such that $\varphi^{-1}(V)$ is finite, $\# \varphi^{-1}(v) \leq N, \; \forall v \in V$.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    (b). $X = \set{(y_0, t_0) \in Y \times \A^1 | f(y_0, t_0) = 0}$ and the morphism $X \to Y$ sends $(y_0, t_0) \mapsto y_0$.
+    Now for fixed $y_0 \in Y \setminus Z(a_N)$, $f(y_0, t)$ is a polynomial in $k[t]$ of degree $N$ so has at most $N$ roots.
+    (a). Let $U = \set{y \in Y | a_N(y) \neq 0} = Y \setminus Z(a_N)$ is Zariski open.
+\end{proof}
+\begin{ex}
+    If $f: X \to Y$ is a morphism of affine varieties then we get $\forall p \in X$, a map $df: T_p X \to T f(p) Y$
+\end{ex}
+\begin{prop}
+    In the same situation as above, exists a Zariski open $U \subseteq Y$ such that $\forall (y_0, t_0) \in X$ such that $y_0 \in U$, and the natural map $T_{(y_0, t_0)} X \to T_{y_0} Y$ is an isomorphism.
+\end{prop}
+\begin{proof}
+    Let $Y \subseteq \A^n$, so $T_{y_0} Y = \set{v \in \A^n | \sum v_i \frac{\partial h}{\partial x_i}(y_0) = 0, \forall h \in I(Y)}$ and
+    \begin{equation*}
+        T_{(y_0, t_0)} X = \set{(v, \gamma) \in \A^n \times \A^1 | \sum v_i \frac{\partial h}{\partial x_i}(y_0) = 0, \forall h \in I(Y), \text{and } \sum v_i \frac{\partial f}{\partial x_i} (y_0, t_0) + \gamma \frac{\partial f}{\partial t}(y_0, t_0) = 0}.
+    \end{equation*}
+    as $I(X) = \langle I(Y), f \rangle$ but this is
+    \begin{equation*}
+        \set{(v, \gamma) \in T_{y_0} X \times \A^1 | \sum v_i \frac{\partial f}{\partial x_i} + \gamma \frac{\partial f}{\partial t}(y_0, t_0) = 0}.
+    \end{equation*}
+    If $\frac{\partial f}{\partial t}(y_0, t_0) \neq 0$, then can divide by it, and get isomorphism $T_{y_0} X \overset{\sim}{\rightarrow} T_{(y_0, t_0)} X$.
+    So the proposition is equivalent to $\exists$ Zariski open subset $U$ of $Y$ such that $\forall y_0 \in U \forall t_0$ with $f(y_0, t_0) = 0$, $\frac{\partial f}{\partial t}(y_0, t_0) \neq 0$.
+    But this is immediate if $\frac{\partial f}{\partial t}$ isn't the zero polynomial, and our assumption of separability implies this.
+\end{proof}
+
+\begin{enumerate}[label=(\arabic*)]
+    \item Note separability is necessary. For instance, take $k = \overline{\mathbb{F}_p}$, $Y = \A^1$, $X = \set{(y, t) | y = t^p}$.
+        \begin{equation*}
+            T_{(y_0, t_0)} X = \set{(v, \gamma)} X = \set{(v, \gamma) | v - p t_0^{p-1} \cdot \gamma = 0} = \set{(0, \gamma) | \gamma \in \A^1}
+        \end{equation*}
+        and map $T_{y_0, t_0} X \to T_{y_0} \A^1$ by $(0, \gamma) \mapsto 0$.
+    \item $\dim X = \dim Y$, $\trdim X = \trdim Y$. The second equality is clear as this is a separable algebraic extension of fields.
+        To prove the first, let $Y^{sm}$ be the smooth points of $Y$. $Y$ irreducible, so $Y^{sm} \cap U$ is open and Zariski dense. and $\dim T_p Y = \dim Y$ if $y \in Y^{sm} \cap U$.
+        but $\varphi^{-1} (Y^{sm} \cap U)$ is open in $X$, so $\dim X = \dim T_{(p, t)} X$ any $(p, )$ in this set.
+\end{enumerate}
+
+Finally, note morphisms as above with $a_N = 1$, i.e.\ $f$ a monic polynomial, are even nicer. $\varphi$ is surjective.
+
 \end{document}
