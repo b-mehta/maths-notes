@@ -1325,6 +1325,67 @@ For each code a decoding rule is chosen.
 \end{proof}
 
 % Lecture 10
+\begin{defi}[Mutual information]\hypertarget{def:mutInfo}
+    Let $X, Y$ be random variables. The \textbf{mutual information} is $ I(X; Y) = \hyperlink{def:entropy}{H(X)} - \hyperlink{def:condH}{H(X | Y)} $ i.e.\ the amount of information about $X$ conveyed by $Y$.
+\end{defi}
+
+By \cref{lem:1.7} and \cref{lem:2.10}, $\hyperlink{def:mutInfo}{I(X;Y)} = \hyperlink{def:entropy}{H(X)} + H(Y) - \hyperlink{def:jointEntropy}{H(X,Y)} \geq 0$ with equality iff $X$ and $Y$ are independent.
+Note the symmetry $I(X;Y) = I(Y;X)$.
+
+Consider a \hyperlink{def:dmc}{DMC}. Let $X$ take values in $\Sigma_1$, where $\abs{\Sigma_1} = m$ with probabilities $p_1, \dotsc, p_m$.
+Let $Y$ be the random variables output when the channel is given input $X$.
+
+\begin{defi}[Information channel capacity]\hypertarget{def:infoChannelCapacity}
+    \leavevmode
+    The \textbf{information channel capacity} is \begin{equation*}\max_X \hyperlink{def:mutInfo}{I(X;Y)}.\end{equation*}
+\end{defi}
+
+\begin{remark}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item The maximum is over all choices of $p_1, \dotsc, p_m$.
+        \item The maximum is attained, since we have a continuous function on the compact set $\set{(p_1, \dotsc, p_m) | p_i \geq 0, \sum p_i = 1} \subset \R^n$.
+        \item The information capacity only depends on the channel matrix.
+    \end{enumerate}
+\end{remark}
+
+\begin{nthm}[Shannon's Second Coding Theorem]\label{thm:2.13}
+    \hyperlink{def:capacity}{Operational capacity} = \hyperlink{def:infoChannelCapacity}{information capacity}.
+\end{nthm}
+We will show $\leq$ in general, $\geq$ for a \hyperlink{def:bsc}{BSC}.
+We now compute the capacity of certain channels using \cref{thm:2.13}.
+
+\subsubsection*{Capacity of a \hyperlink{def:bsc}{BSC}}
+\textbf{Coming soon.}
+\subsubsection*{Capacity of Binary Erasure Channel}
+\textbf{Coming soon.}
+
+We model using a channel $n$ times as the $n$th extension, i.e.\ replace input and output alphabets $\Sigma_1$ and $\Sigma_2$ by $\Sigma_1^n$ and $\Sigma_2^n$ with channel probabilities
+\begin{equation*}
+    \Prob(y_1, \dotsc, y_n \text{ received} | x_1, \dotsc, x_n \text{ sent}) = \prod_{i=1}^n \Prob(y_i \text{ received} | x_i \text{ sent})
+\end{equation*}
+
+\begin{nlemma}\label{lem:2.14}
+    The $n$th extension of a \hyperlink{def:dmc}{DMC} with information capacity $C$ has information capacity $nC$.
+\end{nlemma}
+\begin{proof}
+    We take random variable input $(X_1, \dotsc, X_n) = \vec{X}$ producing random variable output $(Y_1, \dotsc, Y_n) = \vec{Y}$.
+    Now, $\hyperlink{def:condH}{H(\vec{Y} | \vec{X})} = \sum_{\vec{x}} \Prob(\vec{X} = \vec{x}) H(\vec{Y} | \vec{X}=\vec{x})$.
+    Since the channel is memoryless, $H(\vec{Y} | \vec{X} = \vec{x}) = \sum_i H(Y_i | \vec{X} = \vec{x}) = \sum_i H(Y_i | X_i = x_i)$.
+    So,
+    \begin{align*}
+        H(\vec{Y} | \vec{X}) &= \sum_{\vec{x}} \Prob(\vec{X}=\vec{x}) \sum_i H(Y_i | X_i = x_i) \\
+                             &= \sum_i \sum_n H(Y_i | X_i = u) \Prob(X_i = u) \\
+                             &= \sum_i H(Y_i | X_i)
+    \end{align*}
+    Now $H(\vec{Y}) \leq \hyperlink{def:entropy}{H(Y_1)} + \dotsb + H(Y_n)$ by \cref{lem:1.7}, thus
+    \begin{align*}
+        \hyperlink{def:mutInfo}{I(X; Y)} &= H(\vec{Y}) - H(\vec{Y} | \vec{X}) \\
+                                         &\leq \sum_i (H(Y_i) - H(Y_i | X_i)) \\
+                                         &= \sum_i I(X_i ; Y_i) \\
+                                         &\leq nC \quad \text{by definition of info capacity}.
+    \end{align*}
+    For equality, need $Y_1, \dotsc, Y_n$ to be independent. This can be achieved by taking $X_1, \dotsc, X_n$ independent and choosing the distribution such that $I(X_i; Y_i) = c$.
+\end{proof}
 \color{gray}
 % lecture 12
 \begin{nlemma}
