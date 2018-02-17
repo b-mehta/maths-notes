@@ -13,6 +13,7 @@
 \usepackage{mathrsfs}
 \usepackage{bm}
 \newcommand{\powerset}{\mathscr{P}}
+\newcommand{\weakconv}{\overset{w}{\rightharpoonup}}
 \usetikzlibrary{backgrounds}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
@@ -1095,6 +1096,99 @@ and weak-$*$ refers to the topology $\sigma(E', E)$.
     % pictures
     % sup norm in R^n and l1 norm are not UC but p norm for p in (1, inf) is.
 \end{eg}
+
+% Lecture number
+\subsection{Reflexivity}
+\begin{thm}
+    Any \hyperlink{def:uc}{uniformly convex} Banach space is \hyperlink{def:reflexive}{reflexive}.
+\end{thm}
+\begin{proof}
+    Since $\Phi(\overline{B}_E)$ is closed in $(E'', \norm{\cdot}_{E''})$, it is enough to prove that it is dense in the strong topology.
+    Wlog $\varphi \in E''$, $\norm{\varphi}_{E''} = 1$. Consider $\epsilon > 0$ so $\exists \delta$ with
+    \begin{equation*}
+        \norm{f - g}_E > \epsilon \implies \norm{\frac{f+g}{2}}_E < 1 - \delta.
+    \end{equation*}
+    By definition of $E''$, $\exists F \in \overline{B_{E'}}$ such that $\abs{\varphi(F)} > 1 - \frac{\delta}{2}$.
+
+    An open neighbourhood in $\sigma(E'', E')$ can be written as $V = \set{\psi \in E'' | \abs{\psi(F) - \varphi(F)} < \frac{\delta}{2}}$.
+    Recall Goldstine's lemma ($\Phi(\overline{B}_E)$ is dense in $\overline{B}_{E''}$ for $\sigma(E'', E')$).
+    $\exists f \in \overline{B}_E$ such that $\Phi(f) \in V)$. If $\norm{\Phi(f) - \varphi}_{E''} \leq \epsilon$, we are done.
+    If not, $\varphi \in W \coloneqq (\Phi(f) + \epsilon \overline{B}_{E''})^c$ which is open in $\sigma(E'', E')$.
+    So, $V \cap W$ is open and non-empty (contains $\varphi$). Using Goldstine, $\exists g \in \overline{B}_E$, $\Phi(g) \in W \cap V$.
+
+    \begin{align*}
+        \abs{\underbrace{\Phi(f)(F) - \varphi(F)}}_{F(f)} &< \frac{\delta}{2} \\
+        \abs{\underbrace{\Phi(g)(F) - \varphi(F)}}_{F(g)} &< \frac{\delta}{2} \\
+        \norm{f-g} > \epsilon
+    \end{align*}
+    The first two give $2 \varphi(F) \leq F(f+g) + \delta$, so $\abs{\varphi(F)} \leq \norm{\frac{f+g}{2}}_E + \delta$ and $\norm{\frac{f+g}{2}}_E \geq 1 - \delta$.
+    But this together with $\norm{f-g} > \epsilon$ contradict uniform convexity.
+\end{proof}
+\begin{notation}
+    For a sequence $(f_n)$ in $E$, $f_n \rightharpoonup f$ means $f_n$ converges to $f$ in the weak $(\sigma(E, E'))$ topology.
+\end{notation}
+\begin{prop}
+    Take $E$ a \hyperlink{def:uc}{uniformly convex} Banach space, then a sequence $f_n$ of $E$ converges strongly to $f \in E$ iff $f_n \rightharpoonup f$ and $\norm{f_n} \to \norm{f}$.
+\end{prop}
+\begin{proof}
+    $(\Rightarrow)$ left as an exercise.
+    $(\Leftarrow)$ Consider $f_n \weakconv f$ with $\norm{f_n} \to \norm{f}$. If $f = 0$ we are done. Assume $f \neq 0$ and $ n \geq n_0$, $n_0$ large enough such that $\norm{f_n} \neq 0$.
+    For $n \geq n_0$: take
+    \begin{equation*}
+        g_n \coloneqq \frac{f_n}{\norm{f_n}}, \quad g \coloneqq \frac{f}{\norm{f}}
+    \end{equation*}
+    and we aim to show $\norm{g_n - g} \to 0$.
+    Observe that $\frac{g_n + g}{2} \in \overline{B}_E$, and $g_n \weakconv g$. $\forall F \in E'$, $F(g_n) \to F(g)$.
+
+    \begin{equation*}
+        F(\frac{f_n}{\norm{f_n}}) = \frac{1}{\norm{f_n}} F(f_n) \longrightarrow \frac{1}{\norm{f}} F(f) = F(g)
+    \end{equation*}
+    since these are just converging sequences.
+
+    Thus $\frac{g_n + g}{2} \weakconv g$ (linearity).
+    Claim: Then $\norm{g} \leq \liminf_{n} \norm{\frac{g_n + g}{2}}$.
+    % justify - \norm{g} \leq 1, \frac{g_n + g}{2} \eq 1
+    Hence $\norm{\frac{g_n+g}{2}} \to 1$, and UC implies that $\norm{g_n - g} \to 0$ and finally $\norm{f_n - f} \to 0$.
+\end{proof}
+
+\subsection{Separability}
+\begin{defi}
+    A topological space $X$ is separable if it contains a dense countable subset.
+\end{defi}
+\begin{ex}
+    $Y \subset X$ and $X$ a separable topology space, prove $Y$ is separable in the induced topology.
+\end{ex}
+\begin{prop}
+    Take a Banach space $E$  with $(E', \norm{\cdot}_E')$ separable. Then $(E, \norm{\cdot}_{E})$ is separable.
+\end{prop}
+\begin{proof}
+    Take $(F_n)$ dense in $(E', \norm{\cdot}_E')$, and for each $n \geq 1$ pick $f_n \in B_E$ such that $F_n(f_n) \geq \frac{1}{2} \norm{F_n}_{E'}$ (by definition of \textit{something}).
+    $L = \span \{(f_n)\}$ is separable (linear combinations with rational coefficients). Let us prove $L$ is dense in $(E, \norm{\cdot}_E)$, which is enough to conclude.
+    Claim: Assume $F \in E'$ is zero on $L$, let us prove that $F = 0$. Given $\epsilon > 0$, $\exists n_0 \geq 1$ such that $\norm{F - F_{n_0}}_{E'} \leq \epsilon$.
+    \begin{equation*}
+        \norm{F_{n_0}}_{E'} \leq 2 F_{n_0} (f_{n_0}) = 2 (F_{n_0} - F)(f_{n_0}) \leq 2\epsilon
+    \end{equation*}
+    where the first inequality comes from the construction of $f_n$.
+    Thus $\norm{F_{n_0}}_{E'} \leq 2 \epsilon$ and so $\norm{F}_{E'} \leq 3 \epsilon$. But this holds $\forall \epsilon > 0$, so $F = 0$.
+
+    It implies that $L$ is dense in $E$:
+    Otherwise use Hahn-Banach (III) to separate $A = \norm{L}$, $B = \set{f_0}$ with $f_0 \in E \setminus I$.
+    This gives $G \in E'$, $\alpha \in \R$ such that $\alpha f \in L$, $G(f) < \alpha < G(f_0)$.
+    This implies $G|_L \equiv 0$, so $G \equiv 0$, a contradiction.
+\end{proof}
+\begin{ex}
+    $E$ is Banach reflexive separable iff $E'$ is Banach reflexive separable.
+\end{ex}
+\begin{prop}
+    A Banach space $E$ is separable iff $(\overline{B}_{E'}, \sigma(E', E))$ is metrisable.
+\end{prop}
+\begin{prop}[`Countable BAB']
+    \begin{enumerate}[label=(\roman*)]
+        \item Take $E$ a Banach separable space, then closed bounded subsets of $E'$ are sequentially weak-$*$ compact ($\sigma(E', E)$).
+        \item Take $E$ a Banach reflexive, then closed bounded subsets of $E$ are sequentially weakly compact.
+    \end{enumerate}
+\end{prop}
+
 % Chapter 2
 % I) Recalls on normed vector spaces (LA)
 % II) Hahn-Banach (LA)
