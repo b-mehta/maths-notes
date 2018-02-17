@@ -1288,4 +1288,101 @@ Warning: we can have $C \cap C^\perp \neq =\{0\}$.
         \right)
     \end{equation*}
 \end{proof}
+
+% Lecture 13
+% missing
+\begin{defi}
+    The \textbf{weight} $w(C)$ of a linear code $C$ is the minimum weight of a non-zero codeword.
+\end{defi}
+By \cref{2.22} this is the same as minimum distance.
+\subsubsection*{Syndrome decoding}
+Let $C$ be a $(n, \hat{k})$-linear code with parity check matrix $H$. Then $C = \set{x \in \mathbb{F}_2^n : Hx = 0}$ where $x$ is a column vector.
+
+Suppose we receive $y = c +e$ where $c \in C$ is a codeword and $e\in \mathbb{F}_2^n$ is an error.
+We compute the \textbf{syndrome} $Hy$.
+Suppose we know $C$ is $K$-error correcting. Then we tabulate the syndromes $He$ for all $e \in \mathbb{F}_2^n$ with $w(e) \leq K$.
+If we receive $y$ we search for $Hy$ in our list. If successful we get $Hy = He$ for some $e \in \mathbb{F}_2^n$ with $w(e) \leq K$.
+We decode $y$ as $c = y-e$. Then $c \in C$ as $He = Hy - He = 0$, and $d(y, c) = w(e) \leq k$.
+
+Recall \hyperlink{def:hammingCode}{Hamming's original code}:
+\begin{align*}
+    c_1 + c_3 + c_5 + c_7 &= 0 \\
+    c_2 + c_3 + c_6 + c_7 &= 0 \\
+    c_4 + c_5 + c_6 + c_7 &= 0
+\end{align*}
+So, $C^\perp = \langle
+\begin{pmatrix}1 & 0 & 1 & 0 & 1 & 0 & 1 \end{pmatrix}
+\begin{pmatrix}0 & 1 & 1 & 0 & 0 & 1 & 1 \end{pmatrix}
+\begin{pmatrix}0 & 0 & 0 & 1 & 1 & 1 & 1 \end{pmatrix}
+\rangle$, giving
+\begin{equation*}
+    H =
+    \begin{pmatrix}
+        1 & 0 & 1 & 0 & 1 & 0 & 1 \\
+        0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+        0 & 0 & 0 & 1 & 1 & 1 & 1
+    \end{pmatrix}
+    \quad \text{and} \quad
+    Hy = z =
+    \begin{pmatrix}
+        z_1 & z_2 & z_4
+    \end{pmatrix}
+\end{equation*}
+In general, we have
+\begin{defi}[Hamming codes]
+    Let $d \geq 1$, $n = 2^d - 1$. Let $H$ be the $d \times n$ matrix whose columns are the non-zero elements of $\mathbb{F}_2^d$.
+    The Hamming $(n, n-d)$ linear code is the linear code with parity check matrix $H$ (original is $d=3$).
+\end{defi}
+\begin{nlemma}\label{lem:2.23}
+    Let $C$ be a linear code with parity check matrix $H$. Then $w(C) = d$ iff
+    \begin{enumerate}[label=(\roman*)]
+        \item any $(d-1)$-columns of $H$ are linearly independent.
+        \item some $d$ columns of $H$ are linearly dependent.
+    \end{enumerate}
+\end{nlemma}
+\begin{proof}
+    Suppose $C$ has length $n$. THen $C = \set{x \in \mathbb{F}_2^n | Hx = 0}$. If $H$ has columns $v_1, \dotsc, v_n$ then
+    \begin{equation*}
+        (x_1, \dotsc, x_n) \in C \iff \sum_{i=1}^n x_i v_i = 0
+    \end{equation*}
+    i.e. codewords are dependence relations between columns.
+\end{proof}
+\begin{nlemma}\label{lem:2.24}
+    The Hamming $(n, n-d)$ linear code has minimum distance $d(C) =3$ and is a perfect $1$-\hyperlink{def:errorCor}{error correcting} code.
+\end{nlemma}
+\begin{proof}
+    Any two columns of $H$ are linearly independent (where $H$ is the parity check matrix of $C$), but $\exists$ 3 that area linearly dependent. Hence $d(C) = 3$ by \cref{lem:2.23}.
+    By \cref{lem:2.4}, $C$ is $\floor{\frac{3-1}{2}} = 1$ error correcting.
+
+    To be perfect,
+    \begin{equation*}
+        \abs{C} = \frac{2^n}{V(n, e)}.
+    \end{equation*}
+    Here, $n=2^d - 1$, $e = 1$ so
+    \begin{equation*}
+        \frac{2^n}{V(n, e)} = \frac{2^n}{1+2^d - 1} = 2^{n-d} = \abs{C}. \qedhere
+    \end{equation*}
+\end{proof}
+
+\subsection{New codes from old}
+The following construction is specific to linear codes.
+\begin{defi}[Bar product]
+    Let $C_1, C_2$ linear codes of length $n$ with $C_2 \subseteq C_1$, i.e.\ $C_2$ is a subcode of $C_1$. The \textbf{bar product} is
+    \begin{equation*}
+        C_1 \barP C_2 = \set{(x | x+y) | x \in C_1, y \in C_2}
+    \end{equation*}
+    a linear code of length $2n$.
+\end{defi}
+\begin{nlemma}
+    Take $C_1, C_2$ as above.
+    \begin{enumerate}[label=(\roman*)]
+        \item $\rank(C_1 \barP C_2) = \rank(C_1) + \rank(C_2)$
+        \item $w(C_1 | C_2) = \min \{ 2 w(C_1), w(C_2) \}$
+    \end{enumerate}
+\end{nlemma}
+\begin{proof}
+    \begin{enumerate}[label=(\roman*)]
+        Let $x_1, \dotsc, x_k$ a basis for $C_1$. Let $y_1, \dotsc, y_l$ be a basis for $C_2$. Then $\set{(x_i | x_i) : 1 \leq i \leq k} \cup \set{(0 | y_j) }$
+\end{proof}
+
 \end{document}
