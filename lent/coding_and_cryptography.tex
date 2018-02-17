@@ -19,6 +19,7 @@
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \pgfplotsset{width=7cm}
+\newcommand{\barP}{\mid}
 \newcommand{\probConv}{\hyperlink{def:probConverge}{\xlongrightarrow{p}}}
 \newcommand{\Prob}{\mathbb{P}}
 \newcommand{\Exp}{\mathbb{E}}
@@ -1212,4 +1213,79 @@ For each code a decoding rule is chosen.
 \begin{nprop}\label{prop:2.9}
 \end{nprop}
 % Lecture 10
+
+% lecture 12
+\begin{nlemma}
+    Let $P \subset \mathbb{F}_2^n$ be a subset. Then $C = \set{x \in \mathbb{F}_2^n | p \cdot x = 0 \quad \forall p \in P}$ is a linear code.
+\end{nlemma}
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $0 \in C$ since $p \cdot 0 = 0$ $\forall p \in P$
+        \item If $x, y \in C$, then $p \cdot (x+y) = p \cdot x + p \cdot y = 0 \implies x + y \in C$.
+    \end{enumerate}
+\end{proof}
+$P$ is called a set of \textbf{parity checks} and $C$ is a \textbf{parity check code}.
+\begin{defi}
+    Let $C \subset \mathbb{F}_2^n$ be a linear code. The \textbf{dual code} is $C^\perp = \set{x \in \mathbb{F}_2^m | x \cdot y = 0 \quad \forall y \in C}$.
+\end{defi}
+This is a code by \cref{lem:2.18}.
+\begin{nlemma}
+    $\dim C + \dim C^\perp = n$.
+\end{nlemma}
+Warning: we can have $C \cap C^\perp \neq =\{0\}$.
+
+\begin{proof}
+    $V = \mathbb{F}_2^n$, $V^* = \{\text{linear maps: }V \to \mathbb{F}_2\}$. Consider
+    \begin{align*}
+        \phi : V &\longrightarrow V^* \\
+        x &\longmapsto \theta_x \quad \text{where} \theta_x : y \longmapsto x \cdot y.
+    \end{align*}
+    $\phi$ is a linear map. SUppose $x \in \ker \phi$, then $x \cdot y = 0$ $\forall y \in V$.
+    Taking $y = e_i (0, \dotsc, 0, 1, 0, \dotsc, 0)$ (with 1 in the $i$th place) gives $x_i = 0$. So $\ker \phi = \{0\}$.
+    Since $\dim V = \dim V^*$, it follows that $\phi$ is an isomorphism.
+    Thus
+    \begin{align*}
+        \theta(C^\perp) &= \set{\theta \in V^* | \theta(x) = 0 \ \forall x \in C} \\
+                        &= \text{`annihilator of C'} = C^\circ
+    \end{align*}
+    so $\dim C + \dim \phi(C^\perp) = \dim V$, and $\dim C + \dim C^\perp = n$.
+\end{proof}
+\begin{cor}
+    $(C^\perp)^\perp = C$ for any linear code $C$. In particular, any linear code is a parity check code.
+\end{cor}
+\begin{proof}
+    Let $x \in C$. Then $x \cdot y = 0$ $\forall y \in C^\perp$, so $x \in (C^\perp)^\perp$, i.e.\ $C \subseteq (C^\perp)^\perp$.
+    By \cref{lemma:2.19} (twice), $\dim (C^\perp)^\perp = dim C$, so $C = (C^\perp)^\perp$.
+\end{proof}
+\begin{defi}
+    Let $C$ be a $(n, k)$ linear code.
+    \begin{enumerate}[label=(\roman*)]
+        \item A \textbf{generator matrix} for $C$ is a $k \times n$ matrix whose rows are a basis for $C$.
+        \item A \textbf{parity check matrix} for $C$ is a generator matrix for $C^\perp$. It is a $(n-k) \times n$ matrix.
+    \end{enumerate}
+\end{defi}
+\begin{nlemma}
+    Every $(n, k)$ linear code is equivalent to  a linear code with generator matrix $\left( \begin{array}{c|c} I_k & B \end{array}\right)$.
+\end{nlemma}
+\begin{proof}
+    We can perform row operations:
+    \begin{itemize}
+        \item swap 2 rows
+        \item add one row to another
+    \end{itemize}
+    (multiplying by a scalar is not useful in $\mathbb{F}_2$).
+    By Gaussian elimination, we get $G$, the generator matrix in row echelon form, e.g.\
+
+
+    Permuting the columns of $G$ gives an equivalent code, i.e.\ $l(i) = i$ $1 \leq i \leq k$, i.e.\
+    \begin{equation*}
+        G =
+        \left(
+            \begin{array}{c c | c}
+                1 & *  \\
+            \end{array}
+        \right)
+    \end{equation*}
+\end{proof}
 \end{document}
