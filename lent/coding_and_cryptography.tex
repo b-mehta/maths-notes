@@ -23,6 +23,7 @@
 \newcommand{\probConv}{\hyperlink{def:probConverge}{\xlongrightarrow{p}}}
 \newcommand{\Prob}{\mathbb{P}}
 \newcommand{\Exp}{\mathbb{E}}
+\DeclareMathOperator{\rank}{rank}
 % and here we go!
 
 \begin{document}
@@ -619,7 +620,7 @@ Append $0$ (resp, $1$) to the codeword for $\nu$ to give a codeword for $\mu_{m-
     \end{equation*}
 \end{defi}
 
-\begin{nlemma}
+\begin{nlemma}\label{lem:1.7}
     $\hyperlink{def:jointEntropy}{H(X, Y)} \leq \hyperlink{def:entropy}{H}(X) + H(Y)$, with equality $\iff X,Y$ independent.
 \end{nlemma}
 
@@ -712,7 +713,7 @@ a random variable sending $\omega \mapsto p_n(X^{(n)} = X^{(n)} (\omega))$.
     where $A$ is the result of an independent coin toss.
     So, with high probability we will get a typical sequence, and its probability will be close to $2^{-NH(A)}$.
 \end{eg}
-\begin{nlemma}
+\begin{nlemma}\label{lem:1.8}
     A source $X_1, \dotsc, X_n$ satisfies \hyperlink{def:aep}{AEP} iff it satisfies the following.
     \begin{gather*}
         \forall \epsilon > 0, \, \exists n_0(\epsilon) \text{ such that } \forall n \geq n_0(\epsilon) \, \exists \text{ a `\hypertarget{def:typicalSet}{typical set}' } T_n \subset \Sigma^n \text{ with}
@@ -975,7 +976,7 @@ From now on, we use \hyperlink{def:minimumDistanceRule}{minimum distance} decodi
     \end{itemize}
 \end{remark}
 \begin{nlemma}\label{lem:2.4}
-    Let $C$ be a code with minimum distance $d$.
+    Let $C$ be a \hyperlink{def:binaryCode}{code} with \hyperlink{def:minimumDistanceCode}{minimum distance} $d$.
     \begin{enumerate}[label=(\roman*)]
         \item $C$ is $(d-1)$-\hyperlink{def:errorDet}{error detecting}, but cannot detect all sets of errors.
         \item $C$ is $\floor{\frac{d-1}{2}}$-\hyperlink{def:errorCor}{error correcting}, but cannot correct all sets of $\floor{\frac{d-1}{2}} + 1$ errors.
@@ -1098,7 +1099,7 @@ Let $C$ be an \hyperlink{def:nmdCode}{$[n,m,d]$-code}.
     % label the inequalities - GSV on left, Hamming on right
 \end{nprop}
 \begin{proof}
-    Let $C$ be a code of length $n$ and minimum distance $d$ of largest possible size.
+    Let $C$ be a code of length $n$ and \hyperlink{def:minimumDistanceCode}{minimum distance} $d$ of largest possible size.
     Then $\nexists x \in \mathbb{F}_2^n$ such that $d(x, c) \geq d \quad \forall c \in C$, otherwise we would replace $C$ with $C \cup \{x\}$
     \begin{align*}
         \implies \mathbb{F}_2^n &\subseteq \bigcup_{c \in C}B(c, d-1) \\
@@ -1165,9 +1166,9 @@ For each code a decoding rule is chosen.
 
 \begin{defi}[Maximum error probability]\hypertarget{def:ehat}
     The \textbf{maximum error probability} is
-\begin{equation*}
-    \hat{e}(C) = \max_{c \in C} \Prob(\text{error} \mid c \text{ sent}).
-\end{equation*}
+    \begin{equation*}
+        \hat{e}(C) = \max_{c \in C} \Prob(\text{error} \mid c \text{ sent}).
+    \end{equation*}
 \end{defi}
 \begin{defi}[Reliable transmission]\hypertarget{def:relTrans}
     A channel can transmit \textbf{reliably at rate $R$} if there exists a sequence of codes $C_1, C_2, \dotsc$ where $C_n$ is a code of length $n$ and size $\floor{2^{nR}}$ such that
@@ -1175,7 +1176,7 @@ For each code a decoding rule is chosen.
         \hyperlink{def:ehat}{\hat{e}(C_n)} \to 0 \text{ as } n \to \infty.
     \end{equation*}
 \end{defi}
-\begin{defi}
+\begin{defi}\hypertarget{def:capacity}
     The (operational) \textbf{channel capacity} is the supremum over all \hyperlink{def:relTrans}{reliable transmission} rates.
 \end{defi}
 
@@ -1211,9 +1212,120 @@ For each code a decoding rule is chosen.
     $\sum_{i=1}^n \mu_i$ is a binomial random variable with parameters $n$ and $p$.
 \end{remark}
 \begin{nprop}\label{prop:2.9}
+    The \hyperlink{def:capacity}{capacity} of a \hyperlink{def:bsc}{BSC} with error probability $p<\frac{1}{4}$ is $\neq 0$.
 \end{nprop}
-% Lecture 10
+\begin{proof}
+    Choose $\delta$ with $2 p < \delta < \frac{1}{2}$. We prove \hyperlink{def:relTrans}{reliably encoding} at rate $R = 1 - H(\delta) > 0$.
+    Let $C_n$ be the largest code of length $n$ and \hyperlink{def:minimumDistance}{minimum distance} $\floor n \delta$.
+    \begin{align*}
+        \abs{C_n} = A(n, \floor{n \delta}) &\geq 2^{n (1 - H(\delta))} \qquad \text{by \cref{prop:2.7}}
+                                           &= 2^{nR}.
+    \end{align*}
+    Replacing $C_n$ by a subcode gives $\abs{C_n} = \floor{2^{nR}}$ and still minimum distance $\geq \floor{n\delta}$.
+    Using \hyperlink{def:minimumDistanceRule}{minimum distance decoding},
+    \begin{align}
+        \hyperlink{def:ehat}{\hat{e}(C_n)} &\leq \Prob(\text{\hyperlink{def:bsc}{BSC} makes} \geq \floor{\frac{\floor{n \delta}-1}{2}} \text{errors}) \\
+        &\leq \Prob(\text{\hyperlink{def:bsc}{BSC} makes} \geq \floor{\frac{n \delta-1}{2}} \text{errors}). \\
+    \end{align}
+    Pick $\epsilon > 0$ such that $p + \epsilon < \frac{\delta}{2}$.
+    Then $\frac{n \delta - 1}{2} = n \left(\frac{\delta}{2} - \frac{1}{2n}\right) > n(p+\epsilon)$ for $n$ sufficiently large.
+    Therefore, $\hat{e}(C_n) \leq \Prob(\text{BSC makes} \geq n(p+\epsilon) \text{errors}) \to 0$ as $ n \to \infty$ by \cref{lem:2.8}.
+\end{proof}
 
+\subsection{Conditional Entropy}
+\begin{defi}[Conditional Entropy]\hypertarget{def:condH}
+    Let $X$ and $Y$ be random variables taking values in $\Sigma_1$ and $\Sigma_2$. We define
+    \begin{align*}
+        H(X | Y = y) &= -\sum_{x \in \Sigma_1} \Prob(X = x | Y=y) \log \Prob(X=x | Y=y) \\
+        H(X | Y) &= \sum_{y \in \Sigma_2} \Prob(Y = y) H(X | Y=y).
+    \end{align*}
+\end{defi}
+\begin{nlemma}\label{lem:2.10}
+    $\hyperlink{def:jointEntropy}{H(X, Y)} = \hyperlink{def:condH}{H(X | Y)} + \hyperlink{def:entropy}{H(Y)}$
+\end{nlemma}
+\begin{proof}
+    \begin{align*}
+        H(X | Y) &= -\sum_{y \in \Sigma_2} \sum_{x \in \Sigma_1} \Prob(X = x | Y = y) \Prob(Y = y) \log \Prob(X = x | Y = y) \\
+                 &= -\sum_{y \in \Sigma_2} \sum_{x \in \Sigma_1} \Prob(X = x , Y = y) \log \left(\frac{\Prob(X = x , Y = y)}{\Prob(Y = y)}\right) \\
+            & \begin{multlined} =-\sum_{y \in \Sigma_2} \sum_{x \in \Sigma_1} \Prob(X=x,Y=y) \log \Prob(X=x,Y=y)\\ + \sum_{y\in \Sigma_2} \left(\sum_{x \in \Sigma_1} \Prob(X=x,Y=y)\right) \log \Prob(Y=y)
+        \end{multlined} \\
+                 &= H(X, Y) - H(Y). \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{eg}
+    A fair six-sided dice is thrown. $X$ is the value on the dice,
+    \begin{align*}
+        Y &=
+        \begin{dcases*}
+            0 & if $X$ even\\
+            1 & if $X$ odd\\
+        \end{dcases*}
+        \\
+        H(X, Y) &= H(X) = \log 6 \qquad H(Y) = \log 2 = 1 \\
+        H(X | Y) &= H(X, Y) - H(Y) = \log 3 \\
+        H(Y, X) &= 0.
+    \end{align*}
+\end{eg}
+\begin{cor}
+    $\hyperlink{def:condH}{H(X|Y)} \leq \hyperlink{def:entropy}{H(X)}$ with equality iff $X$ and $Y$ are independent.
+\end{cor}
+
+\begin{proof}
+    Since $H(X | Y) = \hyperlink{def:jointEntropy}{H(X, Y)} - H(Y)$, this is equivalent to showing $H(X, Y) \leq H(X) + H(Y)$ with equality iff $X$ and $Y$ are independent. We showed this in \cref{lem:1.7}.
+\end{proof}
+
+\begin{notation}
+    In the definition of conditional entropy we can replace random variables $X$ and $Y$ with random vectors $\vec{X} = (X_1, \dotsc, X_r)$ and $\vec{Y} = (Y_1,  \dotsc, Y_s)$.  This defines
+    \begin{equation*}H(X_1, \dotsc, X_r | Y_1, \dotsc, Y_s) \coloneqq H(\vec{X}, \vec{Y}).\end{equation*}
+\end{notation}
+
+\begin{nlemma}\label{lem:2.11}
+    $\hyperlink{def:condH}{H(X | Y)} \leq H(X | Y , Z) + \hyperlink{def:entropy}{H(Z)}.$
+\end{nlemma}
+
+\begin{proof}
+    We expand $H(X, Y, Z)$ using \cref{lem:2.10} in two different ways.
+    \begin{align*}
+        H(X, Y, Z) &= H(Z | X, Y) + H(X | Y) + H(Y) \\
+        H(X, Y, Z) &= H(X | Y, Z) + H(Z | Y) + H(Y) \\
+        \shortintertext{Since $H(Z|X,Y) \geq 0$,}
+        H(X | Y) &\leq H(X | Y, Z) + H(Z | Y) \leq H(X | Y, Z) + H(Z). \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{nlemma}[Fano's inequality]\label{lem:2.12}
+    Let $X,Y$ be random variables taking values in $\Sigma_1$ with $\abs{\Sigma_1} = m$.
+    Let $p  = P(X \neq Y)$. Then $\hyperlink{def:condH}{H(X | Y)} \leq H(p) + p \log(m-1)$.
+\end{nlemma}
+
+\begin{proof}
+    Let
+    \begin{equation*}
+        Z =
+        \begin{dcases}
+            1 & \text{if } X \neq Y \\
+            0 & \text{if } X = Y \\
+        \end{dcases}
+    \end{equation*}
+    so $P(Z=1)=p$ and $P(Z=0) = 1-p$.
+    By \cref{lem:2.11},
+    \begin{equation*}H(X | Y) \leq H(X | Y, Z) + H(Z) = H(X | Y, Z) + H(p).\end{equation*}
+    Now,
+    \begin{align*}
+        &H(X | Y = y, Z=0)=0, &&\text{as $Z=0$ implies $X = Y$}\\
+        &H(X | Y = y, Z=1) \leq \log(m-1) &&\text{since $m-1$ choices for $X$ remain.}
+    \end{align*}
+    So,
+    \begin{align*}
+        H(X | Y, Z) &= \sum_{y, z} \Prob(Y=y, Z=z) H(X | Y=y, Z=z) \\
+                    &\leq \sum_y \Prob(Y=y, Z=1) \log(m-1)  \\
+                    &= \Prob(Z=1) \log(m-1). \qedhere
+    \end{align*}
+\end{proof}
+
+% Lecture 10
+\color{gray}
 % lecture 12
 \begin{nlemma}
     Let $P \subset \mathbb{F}_2^n$ be a subset. Then $C = \set{x \in \mathbb{F}_2^n | p \cdot x = 0 \quad \forall p \in P}$ is a linear code.
@@ -1226,8 +1338,9 @@ For each code a decoding rule is chosen.
     \end{enumerate}
 \end{proof}
 $P$ is called a set of \textbf{parity checks} and $C$ is a \textbf{parity check code}.
-\begin{defi}
-    Let $C \subset \mathbb{F}_2^n$ be a linear code. The \textbf{dual code} is $C^\perp = \set{x \in \mathbb{F}_2^m | x \cdot y = 0 \quad \forall y \in C}$.
+\begin{defi}[Dual code]
+    Let $C \subset \mathbb{F}_2^n$ be a linear code. The \textbf{dual code} is
+    \begin{equation*}C^\perp = \set{x \in \mathbb{F}_2^m | x \cdot y = 0 \quad \forall y \in C}.\end{equation*}
 \end{defi}
 This is a code by \cref{lem:2.18}.
 \begin{nlemma}
@@ -1239,15 +1352,17 @@ Warning: we can have $C \cap C^\perp \neq =\{0\}$.
     $V = \mathbb{F}_2^n$, $V^* = \{\text{linear maps: }V \to \mathbb{F}_2\}$. Consider
     \begin{align*}
         \phi : V &\longrightarrow V^* \\
-        x &\longmapsto \theta_x \quad \text{where} \theta_x : y \longmapsto x \cdot y.
+        x &\longmapsto \theta_x \quad \text{where } \theta_x : y \longmapsto x \cdot y.
     \end{align*}
-    $\phi$ is a linear map. SUppose $x \in \ker \phi$, then $x \cdot y = 0$ $\forall y \in V$.
-    Taking $y = e_i (0, \dotsc, 0, 1, 0, \dotsc, 0)$ (with 1 in the $i$th place) gives $x_i = 0$. So $\ker \phi = \{0\}$.
+    $\phi$ is a linear map.
+
+    Suppose $x \in \ker \phi$, then $x \cdot y = 0$ $\forall y \in V$.
+    Taking $y = e_i = (0, \dotsc, 0, 1, 0, \dotsc, 0)$ (with 1 in the $i$th place) gives $x_i = 0$. So $\ker \phi = \{0\}$.
     Since $\dim V = \dim V^*$, it follows that $\phi$ is an isomorphism.
     Thus
     \begin{align*}
         \theta(C^\perp) &= \set{\theta \in V^* | \theta(x) = 0 \ \forall x \in C} \\
-                        &= \text{`annihilator of C'} = C^\circ
+                        &= \text{`annihilator of $C$'} = C^\circ
     \end{align*}
     so $\dim C + \dim \phi(C^\perp) = \dim V$, and $\dim C + \dim C^\perp = n$.
 \end{proof}
@@ -1383,6 +1498,7 @@ The following construction is specific to linear codes.
 \begin{proof}
     \begin{enumerate}[label=(\roman*)]
         Let $x_1, \dotsc, x_k$ a basis for $C_1$. Let $y_1, \dotsc, y_l$ be a basis for $C_2$. Then $\set{(x_i | x_i) : 1 \leq i \leq k} \cup \set{(0 | y_j) }$
+    \end{enumerate}
 \end{proof}
 
 \end{document}
