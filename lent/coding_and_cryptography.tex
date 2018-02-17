@@ -14,6 +14,7 @@
 \usepackage{tikz-cd}
 \usepackage{extarrows}
 \usepackage{bm}
+\usepackage{wrapfig}
 \usetikzlibrary{arrows,decorations.pathmorphing,decorations.markings,positioning}
 % \renewcommand{\thesection}{\Roman{section}}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
@@ -1236,16 +1237,16 @@ For each code a decoding rule is chosen.
 \begin{defi}[Conditional Entropy]\hypertarget{def:condH}
     Let $X$ and $Y$ be random variables taking values in $\Sigma_1$ and $\Sigma_2$. We define
     \begin{align*}
-        H(X | Y = y) &= -\sum_{x \in \Sigma_1} \Prob(X = x | Y=y) \log \Prob(X=x | Y=y) \\
-        H(X | Y) &= \sum_{y \in \Sigma_2} \Prob(Y = y) H(X | Y=y).
+        H(X \mid Y = y) &= -\sum_{x \in \Sigma_1} \Prob(X = x \mid Y=y) \log \Prob(X=x \mid Y=y) \\
+        H(X \mid Y) &= \sum_{y \in \Sigma_2} \Prob(Y = y) H(X \mid Y=y).
     \end{align*}
 \end{defi}
 \begin{nlemma}\label{lem:2.10}
-    $\hyperlink{def:jointEntropy}{H(X, Y)} = \hyperlink{def:condH}{H(X | Y)} + \hyperlink{def:entropy}{H(Y)}$
+$\hyperlink{def:jointEntropy}{H(X, Y)} = \hyperlink{def:condH}{H(X \mid Y)} + \hyperlink{def:entropy}{H(Y)}$
 \end{nlemma}
 \begin{proof}
     \begin{align*}
-        H(X | Y) &= -\sum_{y \in \Sigma_2} \sum_{x \in \Sigma_1} \Prob(X = x | Y = y) \Prob(Y = y) \log \Prob(X = x | Y = y) \\
+        H(X \mid Y) &= -\sum_{y \in \Sigma_2} \sum_{x \in \Sigma_1} \Prob(X = x \mid Y = y) \Prob(Y = y) \log \Prob(X = x \mid Y = y) \\
                  &= -\sum_{y \in \Sigma_2} \sum_{x \in \Sigma_1} \Prob(X = x , Y = y) \log \left(\frac{\Prob(X = x , Y = y)}{\Prob(Y = y)}\right) \\
             & \begin{multlined} =-\sum_{y \in \Sigma_2} \sum_{x \in \Sigma_1} \Prob(X=x,Y=y) \log \Prob(X=x,Y=y)\\ + \sum_{y\in \Sigma_2} \left(\sum_{x \in \Sigma_1} \Prob(X=x,Y=y)\right) \log \Prob(Y=y)
         \end{multlined} \\
@@ -1263,40 +1264,40 @@ For each code a decoding rule is chosen.
         \end{dcases*}
         \\
         H(X, Y) &= H(X) = \log 6 \qquad H(Y) = \log 2 = 1 \\
-        H(X | Y) &= H(X, Y) - H(Y) = \log 3 \\
+        H(X \mid Y) &= H(X, Y) - H(Y) = \log 3 \\
         H(Y, X) &= 0.
     \end{align*}
 \end{eg}
 \begin{cor}
-    $\hyperlink{def:condH}{H(X|Y)} \leq \hyperlink{def:entropy}{H(X)}$ with equality iff $X$ and $Y$ are independent.
+    $\hyperlink{def:condH}{H(X\mid Y)} \leq \hyperlink{def:entropy}{H(X)}$ with equality iff $X$ and $Y$ are independent.
 \end{cor}
 
 \begin{proof}
-    Since $H(X | Y) = \hyperlink{def:jointEntropy}{H(X, Y)} - H(Y)$, this is equivalent to showing $H(X, Y) \leq H(X) + H(Y)$ with equality iff $X$ and $Y$ are independent. We showed this in \cref{lem:1.7}.
+    Since $H(X \mid Y) = \hyperlink{def:jointEntropy}{H(X, Y)} - H(Y)$, this is equivalent to showing $H(X, Y) \leq H(X) + H(Y)$ with equality iff $X$ and $Y$ are independent. We showed this in \cref{lem:1.7}.
 \end{proof}
 
 \begin{notation}
     In the definition of conditional entropy we can replace random variables $X$ and $Y$ with random vectors $\vec{X} = (X_1, \dotsc, X_r)$ and $\vec{Y} = (Y_1,  \dotsc, Y_s)$.  This defines
-    \begin{equation*}H(X_1, \dotsc, X_r | Y_1, \dotsc, Y_s) \coloneqq H(\vec{X}, \vec{Y}).\end{equation*}
+    \begin{equation*}H(X_1, \dotsc, X_r \mid Y_1, \dotsc, Y_s) \coloneqq H(\vec{X}, \vec{Y}).\end{equation*}
 \end{notation}
 
 \begin{nlemma}\label{lem:2.11}
-    $\hyperlink{def:condH}{H(X | Y)} \leq H(X | Y , Z) + \hyperlink{def:entropy}{H(Z)}.$
+    $\hyperlink{def:condH}{H(X \mid Y)} \leq H(X \mid Y , Z) + \hyperlink{def:entropy}{H(Z)}.$
 \end{nlemma}
 
 \begin{proof}
     We expand $H(X, Y, Z)$ using \cref{lem:2.10} in two different ways.
     \begin{align*}
-        H(X, Y, Z) &= H(Z | X, Y) + H(X | Y) + H(Y) \\
-        H(X, Y, Z) &= H(X | Y, Z) + H(Z | Y) + H(Y) \\
-        \shortintertext{Since $H(Z|X,Y) \geq 0$,}
-        H(X | Y) &\leq H(X | Y, Z) + H(Z | Y) \leq H(X | Y, Z) + H(Z). \qedhere
+        H(X, Y, Z) &= H(Z \mid X, Y) + H(X \mid Y) + H(Y) \\
+        H(X, Y, Z) &= H(X \mid Y, Z) + H(Z \mid Y) + H(Y) \\
+        \shortintertext{Since $H(Z\mid X,Y) \geq 0$,}
+        H(X \mid Y) &\leq H(X \mid Y, Z) + H(Z \mid Y) \leq H(X \mid Y, Z) + H(Z). \qedhere
     \end{align*}
 \end{proof}
 
 \begin{nlemma}[Fano's inequality]\label{lem:2.12}
     Let $X,Y$ be random variables taking values in $\Sigma_1$ with $\abs{\Sigma_1} = m$.
-    Let $p  = P(X \neq Y)$. Then $\hyperlink{def:condH}{H(X | Y)} \leq H(p) + p \log(m-1)$.
+    Let $p  = P(X \neq Y)$. Then $\hyperlink{def:condH}{H(X \mid Y)} \leq H(p) + p \log(m-1)$.
 \end{nlemma}
 
 \begin{proof}
@@ -1310,15 +1311,15 @@ For each code a decoding rule is chosen.
     \end{equation*}
     so $P(Z=1)=p$ and $P(Z=0) = 1-p$.
     By \cref{lem:2.11},
-    \begin{equation*}H(X | Y) \leq H(X | Y, Z) + H(Z) = H(X | Y, Z) + H(p).\end{equation*}
+    \begin{equation*}H(X \mid Y) \leq H(X \mid Y, Z) + H(Z) = H(X \mid Y, Z) + H(p).\end{equation*}
     Now,
     \begin{align*}
-        &H(X | Y = y, Z=0)=0, &&\text{as $Z=0$ implies $X = Y$}\\
-        &H(X | Y = y, Z=1) \leq \log(m-1) &&\text{since $m-1$ choices for $X$ remain.}
+        &H(X \mid Y = y, Z=0)=0, &&\text{as $Z=0$ implies $X = Y$}\\
+        &H(X \mid Y = y, Z=1) \leq \log(m-1) &&\text{since $m-1$ choices for $X$ remain.}
     \end{align*}
     So,
     \begin{align*}
-        H(X | Y, Z) &= \sum_{y, z} \Prob(Y=y, Z=z) H(X | Y=y, Z=z) \\
+        H(X \mid Y, Z) &= \sum_{y, z} \Prob(Y=y, Z=z) H(X \mid Y=y, Z=z) \\
                     &\leq \sum_y \Prob(Y=y, Z=1) \log(m-1)  \\
                     &= \Prob(Z=1) \log(m-1). \qedhere
     \end{align*}
@@ -1326,7 +1327,7 @@ For each code a decoding rule is chosen.
 
 % Lecture 10
 \begin{defi}[Mutual information]\hypertarget{def:mutInfo}
-    Let $X, Y$ be random variables. The \textbf{mutual information} is $ I(X; Y) = \hyperlink{def:entropy}{H(X)} - \hyperlink{def:condH}{H(X | Y)} $ i.e.\ the amount of information about $X$ conveyed by $Y$.
+    Let $X, Y$ be random variables. The \textbf{mutual information} is $ I(X; Y) = \hyperlink{def:entropy}{H(X)} - \hyperlink{def:condH}{H(X \mid Y)} $ i.e.\ the amount of information about $X$ conveyed by $Y$.
 \end{defi}
 
 By \cref{lem:1.7} and \cref{lem:2.10}, $\hyperlink{def:mutInfo}{I(X;Y)} = \hyperlink{def:entropy}{H(X)} + H(Y) - \hyperlink{def:jointEntropy}{H(X,Y)} \geq 0$ with equality iff $X$ and $Y$ are independent.
@@ -1354,14 +1355,99 @@ Let $Y$ be the random variables output when the channel is given input $X$.
 We will show $\leq$ in general, $\geq$ for a \hyperlink{def:bsc}{BSC}.
 We now compute the capacity of certain channels using \cref{thm:2.13}.
 
-\subsubsection*{Capacity of a \hyperlink{def:bsc}{BSC}}
-\textbf{Coming soon.}
+\subsubsection*{Capacity of a \hyperlink{def:bsc}{Binary Symmetric Channel}}
+Take error probability $p$.
+
+\begin{center}
+    \begin{tikzpicture}
+        \begin{scope}[every node/.append style={circle,fill=black,inner sep=1pt}]
+            \node [label=left:{0}] (0l) at (-1, 1) {};
+            \node [label=left:{1}] (1l) at (-1,-1) {};
+
+            \node [label=right:{0}] (0r) at (1, 1) {};
+            \node [label=right:{1}] (1r) at (1,-1) {};
+        \end{scope}
+
+        \begin{scope}[decoration={markings, mark=at position 0.7 with {\arrow{>}}}, every node/.append style={align=center,pos=0.7}]
+            \draw[postaction={decorate}] (0l) -- (0r) node [above] {$\scriptstyle 1-p$};
+            \draw[postaction={decorate}] (0l) -- (1r) node [below] {$\scriptstyle p$};
+            \draw[postaction={decorate}] (1l) -- (0r) node [above] {$\scriptstyle p$};
+            \draw[postaction={decorate}] (1l) -- (1r) node [below] {$\scriptstyle 1-p$};
+        \end{scope}
+    \end{tikzpicture}
+\end{center}
+\begin{align*}
+    \text{Input $X$:} \qquad \Prob(X=0) &= 1-\alpha \\
+    \Prob(X=1) &= \alpha \\
+    \text{Output $Y$:} \qquad
+    \Prob(Y=0) &= (1-\alpha)(1-p) + \alpha p \\
+    \Prob(Y=1) &= \alpha (1-p) + (1-\alpha) p
+\end{align*}
+\begin{align*}
+    \text{\hyperlink{def:infoChannelCapacity}{Capacity is } }C &= \max_\alpha \hyperlink{def:mutInfo}{I(X;Y)} \\
+      &= \max_\alpha (\hyperlink{def:entropy}{H(Y)} - \hyperlink{def:condH}{H(Y \mid X)}) \\
+      &= \max_\alpha (H(\alpha(1-p) + (1-\alpha) p) - H(p)) \\
+    \intertext{since $H(Y \mid X) = \Prob(X=0)H(p) + \Prob(X=1)H(p) = H(p)$}
+    &= 1 - H(p) \\
+    &= 1 + p \log p + (1-p) \log(1-p)
+\end{align*}
+
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[ axis lines=center, xmin=-0.2, xmax=1.2, ymin=-0.2, ymax=1.2]
+        \addplot [domain=0:1, samples=201]
+        {1+x*log2(x) + (1-x)*log2(1-x)};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+
 \subsubsection*{Capacity of Binary Erasure Channel}
-\textbf{Coming soon.}
+Again, take error probability $p$.
+\begin{center}
+    \begin{tikzpicture}[yscale=0.7]
+        \begin{scope}[every node/.style={circle,fill=black,inner sep=1pt}]
+            \node [label=left:0] (0l) at (-1, 1) {};
+            \node [label=left:1] (1l) at (-1,-1) {};
+
+            \node [label=right:0] (0r) at (1, 2) {};
+            \node [label=right:$*$] (*r) at (1, 0) {};
+            \node [label=right:1] (1r) at (1,-2) {};
+        \end{scope}
+        \begin{scope}[decoration={ markings, mark=at position 0.6 with {\arrow{>}}}, every node/.style={align=center,pos=0.6,above}]
+            \draw[postaction={decorate}] (0l) -- (0r) node {$\scriptstyle 1-p$};
+            \draw[postaction={decorate}] (0l) -- (*r) node {$\scriptstyle p$};
+            \draw[postaction={decorate}] (1l) -- (*r) node {$\scriptstyle p$};
+            \draw[postaction={decorate}] (1l) -- (1r) node {$\scriptstyle 1-p$};
+        \end{scope}
+    \end{tikzpicture}
+\end{center}
+\begin{align*}
+    \text{Input $X$:} \qquad \Prob(X=0) &= 1-\alpha \\
+    \Prob(X=1) &= \alpha \\
+    \text{Output $Y$:} \qquad
+    \Prob(Y=0) &= (1-\alpha)(1-p)\\
+    \Prob(Y=1) &= \alpha (1-p) \\
+    \Prob(Y=*) &= p
+\end{align*}
+We have $H(X \mid Y=0) = 0$, $H(X \mid Y=1)=0$.
+\begin{gather*}
+    H(X \mid Y=*) = - \sum_x \Prob(X=x \mid Y=*) \log \Prob(X=x \mid Y=*) \\
+    \Prob(X=0 \mid Y=*) = \frac{\Prob(X=0, Y=*)}{\Prob(Y=*)} = \frac{(1-\alpha)p}{p} = 1-\alpha.
+\end{gather*}
+Similarly, $\Prob(X=1 \mid Y=*) = \alpha$.
+So $H(X \mid Y=*) = H(\alpha)$, so $H(X \mid Y) = p H(\alpha)$.
+
+\begin{align*}
+    \text{\hyperlink{def:infoChannelCapacity}{Capacity is } }C &= \max_\alpha \hyperlink{def:mutInfo}{I(X;Y)} \\
+      &= \max_\alpha (\hyperlink{def:entropy}{H(X)} - \hyperlink{def:condH}{H(X \mid Y)}) \\
+      &= \max_\alpha (H(\alpha) - pH(\alpha)) \\
+      &= (1-p) \max_\alpha H(\alpha) \\
+      &= 1 -p, \quad \text{attained when } \alpha = \tfrac{1}{2}.
+\end{align*}
 
 We model using a channel $n$ times as the $n$th extension, i.e.\ replace input and output alphabets $\Sigma_1$ and $\Sigma_2$ by $\Sigma_1^n$ and $\Sigma_2^n$ with channel probabilities
 \begin{equation*}
-    \Prob(y_1, \dotsc, y_n \text{ received} | x_1, \dotsc, x_n \text{ sent}) = \prod_{i=1}^n \Prob(y_i \text{ received} | x_i \text{ sent})
+    \Prob(y_1, \dotsc, y_n \text{ received} \mid x_1, \dotsc, x_n \text{ sent}) = \prod_{i=1}^n \Prob(y_i \text{ received} \mid x_i \text{ sent})
 \end{equation*}
 
 \begin{nlemma}\label{lem:2.14}
@@ -1369,20 +1455,20 @@ We model using a channel $n$ times as the $n$th extension, i.e.\ replace input a
 \end{nlemma}
 \begin{proof}
     We take random variable input $(X_1, \dotsc, X_n) = \vec{X}$ producing random variable output $(Y_1, \dotsc, Y_n) = \vec{Y}$.
-    Now, $\hyperlink{def:condH}{H(\vec{Y} | \vec{X})} = \sum_{\vec{x}} \Prob(\vec{X} = \vec{x}) H(\vec{Y} | \vec{X}=\vec{x})$.
-    Since the channel is memoryless, $H(\vec{Y} | \vec{X} = \vec{x}) = \sum_i H(Y_i | \vec{X} = \vec{x}) = \sum_i H(Y_i | X_i = x_i)$.
+    Now, $\hyperlink{def:condH}{H(\vec{Y} \mid \vec{X})} = \sum_{\vec{x}} \Prob(\vec{X} = \vec{x}) H(\vec{Y} \mid \vec{X}=\vec{x})$.
+    Since the channel is memoryless, $H(\vec{Y} \mid \vec{X} = \vec{x}) = \sum_i H(Y_i \mid \vec{X} = \vec{x}) = \sum_i H(Y_i \mid X_i = x_i)$.
     So,
     \begin{align*}
-        H(\vec{Y} | \vec{X}) &= \sum_{\vec{x}} \Prob(\vec{X}=\vec{x}) \sum_i H(Y_i | X_i = x_i) \\
-                             &= \sum_i \sum_n H(Y_i | X_i = u) \Prob(X_i = u) \\
-                             &= \sum_i H(Y_i | X_i)
+        H(\vec{Y} \mid \vec{X}) &= \sum_{\vec{x}} \Prob(\vec{X}=\vec{x}) \sum_i H(Y_i \mid X_i = x_i) \\
+                             &= \sum_i \sum_n H(Y_i \mid X_i = u) \Prob(X_i = u) \\
+                             &= \sum_i H(Y_i \mid X_i).
     \end{align*}
     Now $H(\vec{Y}) \leq \hyperlink{def:entropy}{H(Y_1)} + \dotsb + H(Y_n)$ by \cref{lem:1.7}, thus
     \begin{align*}
-        \hyperlink{def:mutInfo}{I(X; Y)} &= H(\vec{Y}) - H(\vec{Y} | \vec{X}) \\
-                                         &\leq \sum_i (H(Y_i) - H(Y_i | X_i)) \\
+        \hyperlink{def:mutInfo}{I(X; Y)} &= H(\vec{Y}) - H(\vec{Y} \mid \vec{X}) \\
+                                         &\leq \sum_i (H(Y_i) - H(Y_i \mid X_i)) \\
                                          &= \sum_i I(X_i ; Y_i) \\
-                                         &\leq nC \quad \text{by definition of info capacity}.
+                                         &\leq nC \quad \text{by definition of \hyperlink{def:infoChannelCapacity}{information capacity}}.
     \end{align*}
     For equality, need $Y_1, \dotsc, Y_n$ to be independent. This can be achieved by taking $X_1, \dotsc, X_n$ independent and choosing the distribution such that $I(X_i; Y_i) = c$.
 \end{proof}
@@ -1553,7 +1639,7 @@ The following construction is specific to linear codes.
     Take $C_1, C_2$ as above.
     \begin{enumerate}[label=(\roman*)]
         \item $\rank(C_1 \barP C_2) = \rank(C_1) + \rank(C_2)$
-        \item $w(C_1 | C_2) = \min \{ 2 w(C_1), w(C_2) \}$
+        \item $w(C_1 \barP C_2) = \min \{ 2 w(C_1), w(C_2) \}$
     \end{enumerate}
 \end{nlemma}
 \begin{proof}
