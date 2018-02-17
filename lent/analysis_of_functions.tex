@@ -1000,6 +1000,7 @@ and weak-$*$ refers to the topology $\sigma(E', E)$.
     This illustrates our idea that fewer open sets can give more compact sets.
     What if $E$ is separable? Now we can use a weaker argument than Tychonoff's theorem, which required AC. Instead, Cantor's diagonal argument suffices.
 \end{remark}
+\color{gray}
 \subsection{Reflexivity}
 \begin{aim}
     We have \hyperlink{thm:bab}{BAB} theorem on $(E'', \sigma(E'', E'))$, can we bring this back to $(E, \sigma(E, E'))$, the weak topology?
@@ -1058,7 +1059,7 @@ and weak-$*$ refers to the topology $\sigma(E', E)$.
     It is enough to have that $\Phi(E, \sigma(E, E')) \to (E'', \sigma(E'', E'))$ is continuous.
     First we show $\Phi: (E, \sigma(E, E')) \to (E'', \sigma(E'', E'''))$ is continuous.
     This is equivalent to $\zeta \circ \Phi: (E, \sigma(E, E')) \to \R$ is continuous $\forall \zeta \in E'''$.
-    But $\zeta \circ \Phi: (E, \norm{\cdot}_\E) \to \R$ is continuous, hence by definition $\zeta \circ \Phi$ is continuous in $\sigma(E, E')$.
+    But $\zeta \circ \Phi: (E, \norm{\cdot}_{E}) \to \R$ is continuous, hence by definition $\zeta \circ \Phi$ is continuous in $\sigma(E, E')$.
     Moreover, since the weak-$*$ topology is weaker than the weak topology, this implies that
     $\Phi: (E, \sigma(E, E')) \to (E'', \sigma(E'', E'))$ is continuous.
 
@@ -1087,6 +1088,7 @@ and weak-$*$ refers to the topology $\sigma(E', E)$.
             Thus BAB shows $\overline{B}_E'$ is compact in $\sigma(E', E'')$ so $\sigma(E', E)$ compact. Hence by Kakutani, $E'$ is reflexive.
             Conversely, if $E'$ is reflexive then by the previous case, $E''$ is reflexive, and $\Phi(E)$ is a closed subspace of $E''$ hence reflexive.
             $E$ is isometric to it, so is reflexive.
+    \end{enumerate}
 \end{proof}
 
 \begin{defi}
@@ -1098,7 +1100,6 @@ and weak-$*$ refers to the topology $\sigma(E', E)$.
 \end{eg}
 
 % Lecture number
-\subsection{Reflexivity}
 \begin{thm}
     Any \hyperlink{def:uc}{uniformly convex} Banach space is \hyperlink{def:reflexive}{reflexive}.
 \end{thm}
