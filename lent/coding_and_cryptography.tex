@@ -24,6 +24,7 @@
 \newcommand{\probConv}{\hyperlink{def:probConverge}{\xlongrightarrow{p}}}
 \newcommand{\Prob}{\mathbb{P}}
 \newcommand{\Exp}{\mathbb{E}}
+\newcommand{\F}{\mathbb{F}}
 \DeclareMathOperator{\rank}{rank}
 % and here we go!
 
@@ -1204,8 +1205,8 @@ For each code a decoding rule is chosen.
             \Prob(\mu_i = 0) = 1-p
         \end{rcases}
         \implies \Exp(\mu_i) &= p \\
-        \Prob(\text{BSC makes} \geq n(p + \epsilon) \text{ errors}) &= \Prob(\sum_{i=1}^n \mu_i \geq n(p + \epsilon)) \\
-                                                                    &\leq \Prob(\abs{\frac{1}{n} \sum \mu_i - p} \geq \epsilon)
+        \Prob(\text{BSC makes} \geq n(p + \epsilon) \text{ errors}) &= \Prob\left(\sum_{i=1}^n \mu_i \geq n(p + \epsilon)\right) \\
+                                                                    &\leq \Prob\left(\abs{\frac{1}{n} \sum \mu_i - p} \geq \epsilon\right)
     \end{align*}
     This $\to 0$ as $n \to \infty$ by \hyperlink{def:wlln}{WLLN}.
 \end{proof}
@@ -1217,7 +1218,7 @@ For each code a decoding rule is chosen.
 \end{nprop}
 \begin{proof}
     Choose $\delta$ with $2 p < \delta < \frac{1}{2}$. We prove \hyperlink{def:relTrans}{reliably encoding} at rate $R = 1 - H(\delta) > 0$.
-    Let $C_n$ be the largest code of length $n$ and \hyperlink{def:minimumDistance}{minimum distance} $\floor n \delta$.
+    Let $C_n$ be the largest code of length $n$ and \hyperlink{def:minimumDistanceCode}{minimum distance} $\floor n \delta$.
     \begin{align*}
         \abs{C_n} = A(n, \floor{n \delta}) &\geq 2^{n (1 - H(\delta))} \qquad \text{by \cref{prop:2.7}}
                                            &= 2^{nR}.
@@ -1472,7 +1473,110 @@ We model using a channel $n$ times as the $n$th extension, i.e.\ replace input a
     \end{align*}
     For equality, need $Y_1, \dotsc, Y_n$ to be independent. This can be achieved by taking $X_1, \dotsc, X_n$ independent and choosing the distribution such that $I(X_i; Y_i) = c$.
 \end{proof}
-\color{gray}
+
+% lecture 11
+\begin{nprop}\label{prop:2.15}
+    For a \hyperlink{def:dmc}{DMC}, \hyperlink{def:capacity}{operational capacity} $\leq$ \hyperlink{def:infoChannelCapacity}{information capacity}.
+\end{nprop}
+\begin{proof}
+    Let $C$ be the \hyperlink{def:infoChannelCapacity}{information capacity}.
+    Suppose we can \hyperlink{def:relTrans}{transmit reliably} at rate $R > C$, i.e.\ there is a sequence of codes $(C_n)_{n \geq 1}$ with $C_n$ of length $n$ and size $\floor{2^{nR}}$ such that $\hyperlink{def:ehat}{\hat{e}}(C_n) \to 0$ as $n \to \infty$.
+    \begin{align*}
+        \text{Recall } \hat{e}(C_n) &= \max_{c \in C_n} \Prob(\text{error} \mid c \text{ sent}). \\
+        \hypertarget{def:e}{\text{Let } \hat{e}(C_n)} &= \frac{1}{\abs{C_n}} \sum_{c \in C_n} \Prob(\text{error} \mid c \text{ sent}).
+    \end{align*}
+    Clearly $e(C_n) \leq \hat{e}(C_n)$, so $e(C_n) \to 0$ as $n \to \infty$.
+    Take random variable input $X$, equidistributed over $C_n$.
+    Let $Y$ be the random variable output when $X$ is transmitted and decoded.
+    So $e(C_n) = P(X \neq Y) = p$, say.
+    \begin{align*}
+        H(X) &= \log \abs{C_n} \geq n R - 1 \text{ for large } n. \\
+        H(X \mid Y) &\leq H(p) + p \log(\abs{C_n} - 1) \text{ by \nameref{lem:2.12}} \\
+                    &\leq 1 + pnR \\
+        I(X;Y)&= H(X) - H(X \mid Y) \\
+        n C &\geq n R - 1 - (1 + p n R) \\
+        \implies p n R &\geq n(R-C) - 2 \\
+        \implies p &\geq \frac{n(R-C) - 2}{nR} \nrightarrow 0 \text{ as } n \to \infty.
+    \end{align*}
+    Thus our sequence of codes cannot exist.
+\end{proof}
+
+\begin{nprop}\label{prop:2.16}
+    Consider a \hyperlink{def:bsc}{BSC}, error probability $p$.
+    Let $R < 1 - \hyperlink{def:entropy}{H(p)}$.
+    Then $\exists$ a sequence of codes $(C_n)_{n \geq 1}$ of length $n$ and size $\floor{2^{nR}}$ such that $\hyperlink{def:e}{e(C_n)} \to 0$ as $n \to \infty$.
+\end{nprop}
+\begin{proof}
+    Idea: Construct codes by picking codewords at random.
+    Without loss of generality $p < \frac{1}{2}$, so $\exists \epsilon > 0$ such that $R < 1 - H(p+\epsilon)$.
+    We use \hyperlink{def:minimumDistanceRule}{minimum distance decoding} (in case of tie, make arbitrary choice).
+    Let $m = \floor{2^{nR}}$.
+    We pick a \hyperlink{def:binaryCode}{$[n, m]$-code} $C$ at random (i.e.\ each word with probability).
+    Say $C = \{c_1, \dotsc, c_m\}$.
+
+    Choose $1 \leq i \leq m$ at random (i.e.\ each with probability $\frac{1}{m}$).
+    We send $c_i$ through the channel and get output $Y$.
+    Then $\Prob(Y \text{ is not decoded as } c_i)$ is the average value of $e(C)$ as $C$ runs over all $[n,m]$-codes.
+    We can pick $C_n$ a $[n, m]$-code with $e(C_n)$ at most this average.
+    So it will suffice to show
+    $\Prob(Y \text{ is not decoded as } c_i) \to 0$ as $n \to \infty$.
+
+    Let $r = \floor{n (p+\epsilon)}$.
+    \begin{equation*}\Prob(Y \text{ is not decoded as } c_i) \leq \Prob(c_i \notin B(y, r)) + \Prob(B(Y, r) \cap C \supsetneq \{c_i\}).\end{equation*}
+    We now split into two cases: (i) $d(c_i, Y) > r$ or (ii) $d(c_i, Y) \leq r$.
+    \begin{enumerate}[label=(\roman*)]
+        \item \begin{equation*}\begin{aligned}[t]
+                \Prob(d(c_i, Y) > r) &= \Prob(\text{BSC makes} >r \text{ errors}) \\
+                                     &= \Prob(\text{BSC makes} >n(p+\epsilon) \text{ errors}) \\
+                                     &\to 0 \text{ as } n \to \infty \text{ by \cref{lem:2.8}}.
+            \end{aligned}\end{equation*}
+        \item If $j \neq i$,
+            \begin{align*}
+                \Prob(c_j \in B(Y, r) \mid c_i \in B(Y, r)) &= \frac{V(n, r) - 1}{2^n - 1} \leq \frac{V(n, r)}{2^n} \\
+                \text{So } \Prob(B(Y,r) \cap C \supsetneq \{c_i\}) & \leq \frac{(m-1) V(n, r)}{2^n} \\
+                                                                   &\leq 2^{nR} 2^{nH(p+\epsilon)} 2^{-n} \text{ by \cref{prop:2.7}(i)} \\
+                                                                   &= 2^{n(R - (1-H(p+\epsilon)))} \\
+                                                                   &\to 0 \text{ as } n \to \infty \text{ since } R < 1 - H(p+\epsilon). \qedhere
+            \end{align*}
+    \end{enumerate}
+\end{proof}
+
+\begin{nprop}\label{prop:2.17}
+    Consider a \hyperlink{def:bsc}{BSC} with error probability $p$.
+    Let $R < 1 - H(p)$. Then $\exists$ a sequence of \hyperlink{def:binaryCode}{$[n, m]$-codes} $(C_n)_{n \geq 1}$ with $C_n$ of length $n$, size $\floor{2^{nR}}$ and $\hat{e}(C_n) \to 0$ as $n \to \infty$.
+\end{nprop}
+
+\begin{proof}
+    Pick $R'$ such that $R < R' < 1 - H(p)$.
+    By \cref{prop:2.16} we construct a sequence of codes $(C_n')_{n \geq 1}$ with $C_n'$ of length $n$, size $\floor{2^{nR'}}$ and $e(C_n') \to 0$ as $n \to \infty$.
+    Throwing out the worst half of the codewords in $C_n'$ gives a code $C_n$ with $\hat{e}(C_n) \leq 2 e(C_n')$.
+
+    So $\hat{e}(C_n) \to 0$ as $n \to \infty$.
+    Note $C_n$ has length $n$ and size $\floor{2^{nR'}/2}$.
+    \begin{align*}
+        \floor{2^{nR'}}/2 &= \floor{2^{nR'-1}} \\
+                          &= 2^{n(R' - \frac{1}{n})} \\
+                          &\geq 2^{nR} \text{ for large } n.
+    \end{align*}
+    We can replace $C_n$ by a code of smaller size $\floor{2^{nR}}$ and still get $\hat{e}(C_n) \to 0$ as $n \to \infty$.
+\end{proof}
+
+\paragraph{Conclusion} A \hyperlink{def:bsc}{BSC} with error probability $p$ has \hyperlink{def:capacity}{operational capacity} $1 - \hyperlink{def:entropy}{H(p)}$.
+
+\begin{remark}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item How does it work? Say capacity is $0.8$, we have a message (a string of $0$'s and $1$'s).
+            Let $R = 0.75 < 0.8$.
+            Then $\exists$ a set of $2^{0.75 n}$ codewords of length $n$ that have error probability below some prescribed threshold.
+            Hence, to encode message,
+            \begin{enumerate}[label=\alph*)]
+                \item break message into blocks of size $3 \ceil{\frac{n}{4}} = m$ sufficiently large
+                \item encode these $m$-blocks into $C_n$ by using codewords of length $\frac{4}{3} m$ for each $m$-block
+                \item transmit new message through channel.
+            \end{enumerate}
+        \item The theorem shows good codes exist. But the proof does not construct them for us.
+    \end{enumerate}
+\end{remark}
 % lecture 12
 \begin{nlemma}
     Let $P \subset \mathbb{F}_2^n$ be a subset. Then $C = \set{x \in \mathbb{F}_2^n | p \cdot x = 0 \quad \forall p \in P}$ is a linear code.
