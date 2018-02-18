@@ -1578,26 +1578,52 @@ We model using a channel $n$ times as the $n$th extension, i.e.\ replace input a
     \end{enumerate}
 \end{remark}
 % lecture 12
-\begin{nlemma}
-    Let $P \subset \mathbb{F}_2^n$ be a subset. Then $C = \set{x \in \mathbb{F}_2^n | p \cdot x = 0 \quad \forall p \in P}$ is a linear code.
+\subsection{Linear Codes}
+In practise we consider codes with extra structure to allow efficient decoding.
+\begin{defi}[Linear code]\hypertarget{def:linearCode}
+    A code $C \subseteq \F_2^n$ is \textbf{linear} if
+    \begin{enumerate}[label=(\roman*)]
+        \item $0 \in C$
+        \item $x, y \in C \implies x + y \in C$.
+    \end{enumerate}
+\end{defi}
+Recall $\F_2 = \{0, 1\}$ is the field of two elements. So $C$ is linear if it is a $\F_2$-vector space.
+\begin{defi}[Rank]\hypertarget{def:rank}
+    The \textbf{rank} of $C$ is its dimension as a $\F_2$ vector space.
+\end{defi}
+\begin{notation}\hypertarget{def:nkcode}
+    A code $C$ of length $n$ and rank $k$ is called a $(n, k)$-code.
+\end{notation}
+Say $C$ has a basis $v_1, \dotsc, v_k$.
+Then $C = \set{\sum \lambda_i v_i | \lambda_i \in \F_2}$ so $\abs{C} = 2^k$, so a \hyperlink{def:nkcode}{$(n, k)$-code} is a \hyperlink{def:binaryCode}{$[n, 2^k]$-code}.
+Thus, the information rate is $\frac{k}{n}$.
+
+Now for $x, y \in \F_2^n$, define $x \cdot y = \sum_{i=1}^n x_i y_i \in \F_2$.
+Note $\cdot$ is symmetric and bilinear, but $x \cdot x = 0 \nRightarrow x = 0$.
+\begin{nlemma}\label{lem:2.18}
+    Let $P \subset \mathbb{F}_2^n$ be a subset.
+    Then $C = \set{x \in \mathbb{F}_2^n | p \cdot x = 0 \quad \forall p \in P}$ is a \hyperlink{def:linearCode}{linear code}.
 \end{nlemma}
 \begin{proof}
     \leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item $0 \in C$ since $p \cdot 0 = 0$ $\forall p \in P$
-        \item If $x, y \in C$, then $p \cdot (x+y) = p \cdot x + p \cdot y = 0 \implies x + y \in C$.
+        \item $0 \in C$ since $p \cdot 0 = 0$ $\forall p \in P$.
+        \item If $x, y \in C$, then $p \cdot (x+y) = p \cdot x + p \cdot y = 0 \implies x + y \in C$. \qedhere
     \end{enumerate}
 \end{proof}
 $P$ is called a set of \textbf{parity checks} and $C$ is a \textbf{parity check code}.
 \begin{defi}[Dual code]
-    Let $C \subset \mathbb{F}_2^n$ be a linear code. The \textbf{dual code} is
-    \begin{equation*}C^\perp = \set{x \in \mathbb{F}_2^m | x \cdot y = 0 \quad \forall y \in C}.\end{equation*}
+    Let $C \subset \mathbb{F}_2^n$ be a \hyperlink{def:linearCode}{linear code}.
+    The \textbf{dual code} is
+    \begin{equation*}
+        C^\perp = \set{x \in \mathbb{F}_2^m | x \cdot y = 0 \quad \forall y \in C}.
+    \end{equation*}
 \end{defi}
 This is a code by \cref{lem:2.18}.
-\begin{nlemma}
+\begin{nlemma}\label{lem:2.19}
     $\dim C + \dim C^\perp = n$.
 \end{nlemma}
-Warning: we can have $C \cap C^\perp \neq =\{0\}$.
+Warning: we can have $C \cap C^\perp \neq \{0\}$.
 
 \begin{proof}
     $V = \mathbb{F}_2^n$, $V^* = \{\text{linear maps: }V \to \mathbb{F}_2\}$. Consider
@@ -1617,12 +1643,14 @@ Warning: we can have $C \cap C^\perp \neq =\{0\}$.
     \end{align*}
     so $\dim C + \dim \phi(C^\perp) = \dim V$, and $\dim C + \dim C^\perp = n$.
 \end{proof}
+\color{gray}
 \begin{cor}
-    $(C^\perp)^\perp = C$ for any linear code $C$. In particular, any linear code is a parity check code.
+    $(C^\perp)^\perp = C$ for any \hyperlink{def:linearCode}{linear code} $C$.
+    In particular, any linear code is a parity check code.
 \end{cor}
 \begin{proof}
     Let $x \in C$. Then $x \cdot y = 0$ $\forall y \in C^\perp$, so $x \in (C^\perp)^\perp$, i.e.\ $C \subseteq (C^\perp)^\perp$.
-    By \cref{lemma:2.19} (twice), $\dim (C^\perp)^\perp = dim C$, so $C = (C^\perp)^\perp$.
+    By \cref{lem:2.19} (twice), $\dim (C^\perp)^\perp = dim C$, so $C = (C^\perp)^\perp$.
 \end{proof}
 \begin{defi}
     Let $C$ be a $(n, k)$ linear code.
@@ -1631,7 +1659,7 @@ Warning: we can have $C \cap C^\perp \neq =\{0\}$.
         \item A \textbf{parity check matrix} for $C$ is a generator matrix for $C^\perp$. It is a $(n-k) \times n$ matrix.
     \end{enumerate}
 \end{defi}
-\begin{nlemma}
+\begin{nlemma}\label{lem:2.20}
     Every $(n, k)$ linear code is equivalent to  a linear code with generator matrix $\left( \begin{array}{c|c} I_k & B \end{array}\right)$.
 \end{nlemma}
 \begin{proof}
@@ -1642,25 +1670,81 @@ Warning: we can have $C \cap C^\perp \neq =\{0\}$.
     \end{itemize}
     (multiplying by a scalar is not useful in $\mathbb{F}_2$).
     By Gaussian elimination, we get $G$, the generator matrix in row echelon form, e.g.\
-
-
-    Permuting the columns of $G$ gives an equivalent code, i.e.\ $l(i) = i$ $1 \leq i \leq k$, i.e.\
+    \begin{equation*}
+        G =
+        \begin{pmatrix}
+            1 & * & * & * & \dots \\
+            0 & 1 & * & * & \dots \\
+            0 & 0 & 0 & 1 & \dots \\
+            \vdots & \vdots & \vdots & \vdots & \ddots
+        \end{pmatrix}
+    \end{equation*}
+    i.e.\ $\exists l(1) < l(2) < \dotsb < l(n)$ such that
+    \begin{equation*}
+        G_{ij} =
+        \begin{dcases*}
+            = 0 & if $j < l(i)$ \\
+            = 1 & if $j = l(i)$ \\
+        \end{dcases*}
+    \end{equation*}
+    Permuting the columns of $G$ gives an equivalent code, i.e.\ $l(i) = i$ for $1 \leq i \leq k$, i.e.\
     \begin{equation*}
         G =
         \left(
-            \begin{array}{c c | c}
-                1 & *  \\
+            \begin{array}{c c c c | c}
+                1 & * & \dots & * & *\\
+                0 & 1 & \dots & * & *\\
+                \vdots & \vdots & \ddots & \vdots & \vdots\\
+                0 & 0 & \dots & 1 & *\\
             \end{array}
         \right)
     \end{equation*}
+More row operations put $G$ in the form $\left( \begin{array}{c|c} I_k & B \end{array}\right)$ with $B$ a $k \times (n-k)$ matrix.
 \end{proof}
 
+\begin{remark}
+    A message $y \in \F_2^k$ (a row vector) is sent as $yG$. If $G = \left( \begin{array}{c|c} I_k & B \end{array}\right)$ then
+    \begin{equation*}
+        yG = \left(\ y \mid yB\ \right)
+    \end{equation*}
+    where $y$ forms the message and $yB$ are the check digits.
+\end{remark}
+\begin{nlemma}\label{lem:2.21}
+    A \hyperlink{def:linearCode}{$(n, k)$ linear code} with generator matrix $G = (\ I_k \mid B \ )$ has parity check matrix $H = (\ -B^T \mid I_{n-k} \ )$.
+\end{nlemma}
+\begin{proof}
+    \begin{equation*}
+        GH^T = (\ I \mid B)
+        \left(
+        \begin{array}{c}
+            -B \\ \hline I_{n-k}
+        \end{array}
+        \right) = -B + B = 0
+    \end{equation*}
+    So the rows of $H$ generate a subcode $C^\perp$. But
+    \begin{align*}
+        \dim(C^\perp) &= n-k \quad \text{by \cref{lem:2.19}} \\
+                      &= \rank H \quad \text{since $H$ has $I_{n-k}$ as a submatrix.}
+    \end{align*}
+    Therefore the rows of $H$ are a basis for $C^\perp$, as required.
+\end{proof}
 % Lecture 13
-% missing
+\begin{defi}
+    The \textbf{Hamming weight} of $x \in C$ is $w(x) \coloneqq \hyperlink{def:hammingDistance}{d(x, 0)}$.
+\end{defi}
+\begin{nlemma}\label{lem:2.22}
+    The \hyperlink{def:minimumDistanceCode}{minimum distance} of $C$, a \hyperlink{def:linearCode}{linear code}, is the minimum weight of a non-zero codeword.
+\end{nlemma}
+\begin{proof}
+    Let $x, y \in C$. Then $x + y \in C$ and $d(x, y) = d(x-y, 0) = d(x+y, 0) = w(x+y)$.
+    Note $x, y$ distinct $\iff x+y \neq 0$.
+    So
+\begin{equation*}d(C) = \min_{\mathclap{\substack{x, y \in C \\ \text{distinct}}}} d(x, y) = \min_{\mathclap{\substack{x \in C\\ x \neq 0}}} w(x)\qedhere\end{equation*}
+\end{proof}
 \begin{defi}
     The \textbf{weight} $w(C)$ of a linear code $C$ is the minimum weight of a non-zero codeword.
 \end{defi}
-By \cref{2.22} this is the same as minimum distance.
+By \cref{lem:2.22} this is the same as minimum distance.
 \subsubsection*{Syndrome decoding}
 Let $C$ be a $(n, \hat{k})$-linear code with parity check matrix $H$. Then $C = \set{x \in \mathbb{F}_2^n : Hx = 0}$ where $x$ is a column vector.
 
@@ -1707,7 +1791,7 @@ In general, we have
     \end{enumerate}
 \end{nlemma}
 \begin{proof}
-    Suppose $C$ has length $n$. THen $C = \set{x \in \mathbb{F}_2^n | Hx = 0}$. If $H$ has columns $v_1, \dotsc, v_n$ then
+    Suppose $C$ has length $n$. Then $C = \set{x \in \mathbb{F}_2^n | Hx = 0}$. If $H$ has columns $v_1, \dotsc, v_n$ then
     \begin{equation*}
         (x_1, \dotsc, x_n) \in C \iff \sum_{i=1}^n x_i v_i = 0
     \end{equation*}
@@ -1746,9 +1830,23 @@ The following construction is specific to linear codes.
         \item $w(C_1 \barP C_2) = \min \{ 2 w(C_1), w(C_2) \}$
     \end{enumerate}
 \end{nlemma}
-\begin{proof}
+\begin{proof}\leavevmode
     \begin{enumerate}[label=(\roman*)]
-        Let $x_1, \dotsc, x_k$ a basis for $C_1$. Let $y_1, \dotsc, y_l$ be a basis for $C_2$. Then $\set{(x_i | x_i) : 1 \leq i \leq k} \cup \set{(0 | y_j) }$
+        \item Let $x_1, \dotsc, x_k$ a basis for $C_1$.
+            Let $y_1, \dotsc, y_l$ be a basis for $C_2$.
+            Then \begin{equation*}\set{(x_i \barP x_i) | 1 \leq i \leq k} \cup \set{(0 \barP y_j) | 1 \leq j \leq l}\end{equation*} is a basis for $C_1 \barP C_2$.
+            Hence $\rank(C_1 \barP C_2) = \rank(C_1) + \rank(C_2)$.
+        \item Let $x \in C_1$, $y \in C_2$ not both zero.
+            If $y \neq 0$,
+
+            \begin{align*}w(x \barP x+y) &= w(x) + w(x+y)\\ &\geq w(y)\\ &\geq w(C_2).\end{align*}
+
+            If $y = 0$ ($x \neq 0$), $w(x \barP x) = 2w(x) \geq 2w(C_1)$.
+            So $w(C_1 \barP C_2) \geq \min\{2 w(C_1), w(C_2)\}$.
+
+            But $\exists 0 \neq x \in C_1$ such that $w(x) = w(C_1)$ so $w(x \barP x) = 2 w(x) = 2 w(C_1)$.
+            Also $\exists 0 \neq y \in C_2$ such that $w(y) = w(C_2)$ so $w(0 \barP y) = w(y) = w(C_2)$.
+            Therefore $w(C_1 \barP C_2) = \min\{2 w(C_1), w(C_2)\}$. \qedhere
     \end{enumerate}
 \end{proof}
 
