@@ -13,6 +13,7 @@
 \usepackage{pgfplots}
 \usepackage{tikz-cd}
 \usepackage{extarrows}
+\usepackage{bbm}
 \usepackage{bm}
 \usepackage{wrapfig}
 \usetikzlibrary{arrows,decorations.pathmorphing,decorations.markings,positioning}
@@ -25,7 +26,9 @@
 \newcommand{\Prob}{\mathbb{P}}
 \newcommand{\Exp}{\mathbb{E}}
 \newcommand{\F}{\mathbb{F}}
+\newcommand{\1}[1]{\mathbbm{1}_{#1}}
 \DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\RM}{RM}
 % and here we go!
 
 \begin{document}
@@ -514,6 +517,7 @@ Follows from above proof.
     compare $H(X) \approx 2.12$.
 \end{eg}
 
+% Lecture 4
 \subsection{Huffman coding}
 For simplicity, take $a=2$.
 Take $\Sigma_1=\{\mu_1, \dotsc, \mu_m\}$ with $p_i = \Prob(X = \mu_i)$. Without loss of generality, $p_1 \geq p_2 \geq \dotsb \geq p_m$.
@@ -782,7 +786,7 @@ Roughly, $nH$ is the number of bits required to encode $(X_1, \dotsc, X_n)$.
     % A few things missing here - make sure to fill in!
 \end{proof}
 
-% lecture 6
+% Lecture 6
 \clearpage
 \section{Error Control Codes}
 \begin{defi}[Binary code]\hypertarget{def:binaryCode}
@@ -879,7 +883,7 @@ Note we assumed $p < \frac{1}{2}$, which is not unreasonable.
                                                    &= \frac{\alpha p^2 (1-p)}{\alpha p^2 (1-p) + (1-\alpha) p (1-p)^2} \\
                                                    &= \frac{\alpha p}{\alpha p + (1-\alpha) (1-p)} \\
                                                    &= \frac{9/40}{9/40 + 3/40} = \frac{3}{4} \\
-        \Prob(000 \text{ sent} \mid 110 \text{ received}) &= \frac{(1-\alpha) p^2 (1-p)}{(1-\alpha) p^2 (1-p) + \alpha p (1-p)^2} \\
+        \Prob(111 \text{ sent} \mid 110 \text{ received}) &= \frac{(1-\alpha) p^2 (1-p)}{(1-\alpha) p^2 (1-p) + \alpha p (1-p)^2} \\
                                                    &= \frac{(1-\alpha)(1-p)}{(1-\alpha)(1-p) + \alpha p} \\
                                                    &= \frac{3/40}{9/40 + 3/40} = \frac{1}{4}.
     \end{align*}
@@ -945,7 +949,7 @@ From now on, we use \hyperlink{def:minimumDistanceRule}{minimum distance} decodi
     We say such codes are equivalent.
 \end{remark}
 
-% lecture 7
+% Lecture 7
 
 \begin{nlemma}\label{lem:2.3}
     The \hyperlink{def:hammingDistance}{Hamming distance} is a metric on $\mathbb{F}_2^n$.
@@ -1029,6 +1033,7 @@ Let $C$ be an \hyperlink{def:nmdCode}{$[n,m,d]$-code}.
         It is a $[n-1, m', d']$-code, where $d' \geq d$ and some choice of $a$ gives $m' \geq \frac{m}{2}$.
 \end{enumerate}
 
+% Lecture 8
 \subsection{Bound on codes}
 \begin{defi}[Hamming ball]
     Let $x \in \mathbb{F}_2^n$ and $r \geq 0$. The (closed) \hypertarget{def:hammingBall}{\textbf{Hamming ball}} with centre $x$ and radius $r$ is
@@ -1474,7 +1479,7 @@ We model using a channel $n$ times as the $n$th extension, i.e.\ replace input a
     For equality, need $Y_1, \dotsc, Y_n$ to be independent. This can be achieved by taking $X_1, \dotsc, X_n$ independent and choosing the distribution such that $I(X_i; Y_i) = c$.
 \end{proof}
 
-% lecture 11
+% Lecture 11
 \begin{nprop}\label{prop:2.15}
     For a \hyperlink{def:dmc}{DMC}, \hyperlink{def:capacity}{operational capacity} $\leq$ \hyperlink{def:infoChannelCapacity}{information capacity}.
 \end{nprop}
@@ -1577,7 +1582,7 @@ We model using a channel $n$ times as the $n$th extension, i.e.\ replace input a
         \item The theorem shows good codes exist. But the proof does not construct them for us.
     \end{enumerate}
 \end{remark}
-% lecture 12
+% Lecture 12
 \subsection{Linear Codes}
 In practise we consider codes with extra structure to allow efficient decoding.
 \begin{defi}[Linear code]\hypertarget{def:linearCode}
@@ -1592,7 +1597,7 @@ Recall $\F_2 = \{0, 1\}$ is the field of two elements. So $C$ is linear if it is
     The \textbf{rank} of $C$ is its dimension as a $\F_2$ vector space.
 \end{defi}
 \begin{notation}\hypertarget{def:nkcode}
-    A code $C$ of length $n$ and rank $k$ is called a $(n, k)$-code.
+    A \hyperlink{def:linearCode}{linear code} $C$ of length $n$ and \hyperlink{def:rank}{rank} $k$ is called a $(n, k)$-code.
 \end{notation}
 Say $C$ has a basis $v_1, \dotsc, v_k$.
 Then $C = \set{\sum \lambda_i v_i | \lambda_i \in \F_2}$ so $\abs{C} = 2^k$, so a \hyperlink{def:nkcode}{$(n, k)$-code} is a \hyperlink{def:binaryCode}{$[n, 2^k]$-code}.
@@ -1611,8 +1616,10 @@ Note $\cdot$ is symmetric and bilinear, but $x \cdot x = 0 \nRightarrow x = 0$.
         \item If $x, y \in C$, then $p \cdot (x+y) = p \cdot x + p \cdot y = 0 \implies x + y \in C$. \qedhere
     \end{enumerate}
 \end{proof}
-$P$ is called a set of \textbf{parity checks} and $C$ is a \textbf{parity check code}.
-\begin{defi}[Dual code]
+\begin{defi}[Parity check code]\hypertarget{def:parityCheckCode}
+    $P$ is called a set of \textbf{parity checks} and $C$ is a \textbf{parity check code}.
+\end{defi}
+\begin{defi}[Dual code]\hypertarget{def:dualCode}
     Let $C \subset \mathbb{F}_2^n$ be a \hyperlink{def:linearCode}{linear code}.
     The \textbf{dual code} is
     \begin{equation*}
@@ -1643,17 +1650,16 @@ Warning: we can have $C \cap C^\perp \neq \{0\}$.
     \end{align*}
     so $\dim C + \dim \phi(C^\perp) = \dim V$, and $\dim C + \dim C^\perp = n$.
 \end{proof}
-\color{gray}
 \begin{cor}
     $(C^\perp)^\perp = C$ for any \hyperlink{def:linearCode}{linear code} $C$.
-    In particular, any linear code is a parity check code.
+    In particular, any \hyperlink{def:linearCode}{linear code} is a \hyperlink{def:parityCheckCode}{parity check code}.
 \end{cor}
 \begin{proof}
     Let $x \in C$. Then $x \cdot y = 0$ $\forall y \in C^\perp$, so $x \in (C^\perp)^\perp$, i.e.\ $C \subseteq (C^\perp)^\perp$.
-    By \cref{lem:2.19} (twice), $\dim (C^\perp)^\perp = dim C$, so $C = (C^\perp)^\perp$.
+    By \cref{lem:2.19} (twice), $\dim (C^\perp)^\perp = \dim C$, so $C = (C^\perp)^\perp$.
 \end{proof}
 \begin{defi}
-    Let $C$ be a $(n, k)$ linear code.
+    Let $C$ be a \hyperlink{def:nkCode}{$(n, k)$-code}.
     \begin{enumerate}[label=(\roman*)]
         \item A \textbf{generator matrix} for $C$ is a $k \times n$ matrix whose rows are a basis for $C$.
         \item A \textbf{parity check matrix} for $C$ is a generator matrix for $C^\perp$. It is a $(n-k) \times n$ matrix.
@@ -1691,15 +1697,15 @@ Warning: we can have $C \cap C^\perp \neq \{0\}$.
     \begin{equation*}
         G =
         \left(
-            \begin{array}{c c c c | c}
-                1 & * & \dots & * & *\\
-                0 & 1 & \dots & * & *\\
-                \vdots & \vdots & \ddots & \vdots & \vdots\\
-                0 & 0 & \dots & 1 & *\\
+            \begin{array}{c c c c | c c}
+                1 & * & \dots & * & * & *\\
+                0 & 1 & \dots & * & * & *\\
+                \vdots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+                0 & 0 & \dots & 1 & * & *\\
             \end{array}
         \right)
     \end{equation*}
-More row operations put $G$ in the form $\left( \begin{array}{c|c} I_k & B \end{array}\right)$ with $B$ a $k \times (n-k)$ matrix.
+    More row operations put $G$ in the form $\left( \begin{array}{c|c} I_k & B \end{array}\right)$ with $B$ a $k \times (n-k)$ matrix.
 \end{proof}
 
 \begin{remark}
@@ -1729,7 +1735,7 @@ More row operations put $G$ in the form $\left( \begin{array}{c|c} I_k & B \end{
     Therefore the rows of $H$ are a basis for $C^\perp$, as required.
 \end{proof}
 % Lecture 13
-\begin{defi}
+\begin{defi}\hypertarget{def:hammingWeight}
     The \textbf{Hamming weight} of $x \in C$ is $w(x) \coloneqq \hyperlink{def:hammingDistance}{d(x, 0)}$.
 \end{defi}
 \begin{nlemma}\label{lem:2.22}
@@ -1755,17 +1761,19 @@ If we receive $y$ we search for $Hy$ in our list. If successful we get $Hy = He$
 We decode $y$ as $c = y-e$. Then $c \in C$ as $He = Hy - He = 0$, and $d(y, c) = w(e) \leq k$.
 
 Recall \hyperlink{def:hammingCode}{Hamming's original code}:
-\begin{align*}
+\begin{gather*}
+    \begin{aligned}
     c_1 + c_3 + c_5 + c_7 &= 0 \\
     c_2 + c_3 + c_6 + c_7 &= 0 \\
     c_4 + c_5 + c_6 + c_7 &= 0
-\end{align*}
-So, $C^\perp = \langle
-\begin{pmatrix}1 & 0 & 1 & 0 & 1 & 0 & 1 \end{pmatrix}
-\begin{pmatrix}0 & 1 & 1 & 0 & 0 & 1 & 1 \end{pmatrix}
-\begin{pmatrix}0 & 0 & 0 & 1 & 1 & 1 & 1 \end{pmatrix}
-\rangle$, giving
-\begin{equation*}
+    \end{aligned}
+    \intertext{So}
+    C^\perp = \left\langle
+    (1 \ \ 0 \ \ 1 \ \ 0 \ \ 1 \ \ 0 \ \ 1),
+    (0 \ \ 1 \ \ 1 \ \ 0 \ \ 0 \ \ 1 \ \ 1),
+    (0 \ \ 0 \ \ 0 \ \ 1 \ \ 1 \ \ 1 \ \ 1)
+    \right\rangle \\
+    \shortintertext{So}
     H =
     \begin{pmatrix}
         1 & 0 & 1 & 0 & 1 & 0 & 1 \\
@@ -1777,7 +1785,7 @@ So, $C^\perp = \langle
     \begin{pmatrix}
         z_1 & z_2 & z_4
     \end{pmatrix}
-\end{equation*}
+\end{gather*}
 In general, we have
 \begin{defi}[Hamming codes]
     Let $d \geq 1$, $n = 2^d - 1$. Let $H$ be the $d \times n$ matrix whose columns are the non-zero elements of $\mathbb{F}_2^d$.
@@ -1814,16 +1822,16 @@ In general, we have
     \end{equation*}
 \end{proof}
 
-\subsection{New codes from old}
+\subsection{New codes from old (again)}
 The following construction is specific to linear codes.
 \begin{defi}[Bar product]
     Let $C_1, C_2$ linear codes of length $n$ with $C_2 \subseteq C_1$, i.e.\ $C_2$ is a subcode of $C_1$. The \textbf{bar product} is
     \begin{equation*}
-        C_1 \barP C_2 = \set{(x | x+y) | x \in C_1, y \in C_2}
+        C_1 \barP C_2 = \set{(x \barP x+y) | x \in C_1, y \in C_2}
     \end{equation*}
     a linear code of length $2n$.
 \end{defi}
-\begin{nlemma}
+\begin{nlemma}\label{lem:2.25}
     Take $C_1, C_2$ as above.
     \begin{enumerate}[label=(\roman*)]
         \item $\rank(C_1 \barP C_2) = \rank(C_1) + \rank(C_2)$
