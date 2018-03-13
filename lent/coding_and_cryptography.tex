@@ -1956,6 +1956,129 @@ By convention, the empty wedge product is $v_0$.
         \item We order $X = \F_2^d$ such that
             \textbf{missing proof}
             % Lecture 15
+        \item $RM(d, 0)$ is the repetition code of length $2^d$, which has weight $2^d$. $RM(d, d) = \F_2^n$ by (i), so has weight $1 = 2^{d-d}$.
+            By induction, $RM(d-1, r)$ has weight $2^{d-1-r}$ and $RM(d-1, r-1)$ has weight $2^{d-r}$.
+            Using \cref{lem:2.25} and (iii), $RM(d, r)$ has weight $\min(2 \times 2^{d-1-r}, 2^{d-r}) = 2^{d-r}$.
     \end{enumerate}
 \end{proof}
+\begin{remark}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item A different ordering gives an equivalent code.
+        \item We could alternatively define the Reed-Muller code recursively using the bar product, starting with $RM(d, d) = \F_2^{2^d}$ and $RM(d, 0)=\{1\dotsm1, 0\dotsm0\}$.
+    \end{enumerate}
+\end{remark}
+
+% handout
+\subsubsection*{Algebraic aside}
+Coming soon
+\begin{nlemma}\label{lem:2.27}
+\end{nlemma}
+\begin{nlemma}\label{lem:2.28}
+\end{nlemma}
+
+\subsection{Cyclic Codes}
+\begin{defi}
+    $C \subset \F_2^n$ is a \textbf{cyclic code} if $C$ is linear and
+    \begin{equation*}
+        (a_0, a_1, \dotsc, a_{n-1}) \in C \implies (a_{n-1}, a_0, \dotsc, a_{n-2}) \in C.
+    \end{equation*}
+\end{defi}
+We identify $\F_2^n$ with $\F_2[X]/\langle X^n - 1 \rangle$ via
+\begin{align*}
+    \F_2^n &\overset{\pi}{\longmapsto} \F_2[X]/\langle X^n - 1 \rangle \\
+    (a_0, \dotsc, a_{n-1}) &\longrightarrow a_0 + a_1 X + \dotsb + a_{n-1} X^{n-1} + \langle X^n - 1 \rangle
+\end{align*}
+
+\begin{nlemma}\label{lem:2.29}
+    A code $C \subseteq \F_2^n$ is cyclic iff $\mathcal{C} = \pi(C)$ satisfies
+    \begin{enumerate}[label=(\roman*)]
+        \item $0 \in \mathcal{C}$
+        \item $f, g \in \mathcal{C} \implies f+g \in \mathcal{C}$
+        \item $f \in \mathcal{C}, g \in \F_2[X] \implies g f \in \mathcal{C}$.
+    \end{enumerate}
+\end{nlemma}
+\begin{proof}
+    (i) and (ii) follow by linearity.
+    For (iii), observe that $Xf$ `cycles' $f$, i.e.\
+    \begin{align*}
+        f &= a_0 + a_1 X + \dotsb + a_{n-1} X^{n-1} + \langle X^n - 1 \rangle\\
+        Xf &= a_{n-1} + a_0 X + \dotsb + a_{n-2} X^{n-1} + \langle X^n - 1 \rangle
+    \end{align*}
+    So $C$ cyclic $\iff (f \in \mathcal{C} \implies Xf \in \mathcal{C})$, and the general statement follows by linearity.
+\end{proof}
+\begin{remark}
+    So $C$ cyclic of length $n$ if and only iff $\mathcal{C}$ is an ideal in the PID $\F_2[X]/\langle X^n - 1 \rangle$.
+\end{remark}
+From now on $C$ identifies with $\mathcal{C}$.
+
+\begin{defi}
+    A \textbf{generator polynomial} $g(X)$ for a cyclic code $C$ is a polynomial $g$ such that $g \mid X^n - 1$ and
+    \begin{equation*}
+        \mathcal{C} = \langle g \rangle = \set{f g | f \in \F_2[X]}.
+    \end{equation*}
+\end{defi}
+\begin{nthm}\label{thm:2.30}
+    Every cyclic code has a generator polynomial.
+\end{nthm}
+\begin{proof}
+    $\mathcal{C}$ is an ideal in $\F_2[X] / \langle X^n - 1 \rangle$.
+    By \cref{lem:2.27}, $\mathcal{C} = J/\langle X^n - \rangle$, for $\langle X^n - 1 \rangle \subseteq J \subseteq \F_2[X]$ and $J$ an ideal.
+    $F_2[X]$ is a PID, so $J = \langle g \rangle$ for some $g$. $X^n - 1 \in \langle g \rangle \implies g \mid X^n - 1$.
+\end{proof}
+Note generator polynomials are unique if we insist on $g$ monic.
+But this is true over $\F_2$ for any $g$.
+
+\begin{cor}
+    There is a bijection
+    \begin{equation*}
+        \begin{tikzcd}
+            \left\{\parbox{2cm}{\centering cyclic codes of length $n$}\right\} \ar[r, leftrightarrow] &
+            \left\{\parbox{3cm}{\centering factors of $X^n - 1$ in $\F_2[X]$}\right\}
+        \end{tikzcd}
+    \end{equation*}
+    Further, if cyclic codes $C_1$, $C_2$ have generator polynomials $g_1, g_2$ respectively then
+    \begin{equation*}
+        C_1 \supset C_2 \implies g_1 \mid g_2.
+    \end{equation*}
+    Also if $n$ odd, $f(X) = X^n - 1$ has no repeated roots. So
+    \begin{equation*}
+        X^n - 1 = f_1(X) \dotsm f_r(X)
+    \end{equation*}
+    where $f_1, \dotsc, f_r$ are distinct and irreducible in $\F_2[X]$.
+    So, there are $2^r$ cyclic codes of length $n$.
+\end{cor}
+\begin{nlemma}
+    Say $C$ is cyclic with generator $g$:
+    \begin{equation*}
+        g(X) = a_0 + a_1 X + \dotsb + a_k X^k
+    \end{equation*}
+    with $a_k = 1$. Then $\{g, Xg, \dotsc, X^{n-k-1} g\}$ is a basis for $C$.
+\end{nlemma}
+\begin{proof}
+    \textbf{LI}: Say $fg = 0 \in \F_2[X]/\langle X^n - 1 \rangle$, for some $f \in \F_2[X]$ with $\deg f \leq n - k - 1$.
+    So
+    \begin{align*}
+        \deg f g \leq n - 1 &\implies f g = 0 \\
+                            &\implies f = 0
+    \end{align*}
+
+    \textbf{Spanning}: Say $p \in \F_2[X]$ representing an element of $C$. WLOG say $\deg p \leq n-1$.
+    Then $p = f g$ for some $f \in \F_2[X]$ with $\deg f = \deg p - \deg g \leq n - k - 1$.
+    Hence
+    \begin{equation*}p \in \mathrm{span}\{g, Xg, \dotsc, X^{n-k-1} g\}\end{equation*}.
+\end{proof}
+\begin{cor}
+    $C$ has rank $n-k$, and has generator matrix
+    \begin{equation*}
+        G =
+        \begin{pmatrix}
+            a_0 & a_1 & a_2 & \dots & a_k & 0 & 0 & \dots & 0 \\
+            0 & a_0 & a_1 & \dots & a_{k-1} & a_k & 0 & \dots & 0 \\
+            0 & 0 & a_0 & \dots & a_{k-2} & a_{k-1} & a_k & \dots & 0 \\
+            \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & 0 & \dots & a_0 & a_1 & a_2 & \dots & a_k
+        \end{pmatrix}
+    \end{equation*}
+    with dimensions $(n-k) \times n$.
+\end{cor}
 \end{document}
