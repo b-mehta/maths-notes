@@ -1853,9 +1853,109 @@ The following construction is specific to linear codes.
             So $w(C_1 \barP C_2) \geq \min\{2 w(C_1), w(C_2)\}$.
 
             But $\exists 0 \neq x \in C_1$ such that $w(x) = w(C_1)$ so $w(x \barP x) = 2 w(x) = 2 w(C_1)$.
+
             Also $\exists 0 \neq y \in C_2$ such that $w(y) = w(C_2)$ so $w(0 \barP y) = w(y) = w(C_2)$.
+
             Therefore $w(C_1 \barP C_2) = \min\{2 w(C_1), w(C_2)\}$. \qedhere
     \end{enumerate}
 \end{proof}
 
+% Lecture 14
+\color{black}
+\subsection{Reed-Muller Codes}
+Let $X = \F_2^d = \{p_1, \dotsc, p_n\}$ where $n = 2^d$ (we have chosen an ordering).
+For $A \subseteq X$, we get a vector $\1{A} \in \F_2^n$ by the rule
+\begin{equation*}
+    (\1{A})_i = 1 \iff p_i \in A,
+\end{equation*}
+i.e.\ $\1{A}$ is the indicator function of $A$.
+For $x, y \in \F_2^n$ we have
+\begin{align*}
+    x+y &= (x_1 + y_1, \dotsc, x_n + y_n) \\
+    x \wedge y &= (x_1 y_1, \dotsc, x_n y_n)
+\end{align*}
+Then $(\F_2^n, +, \wedge)$ is a ring.
+Note for $A, B \subseteq X$, we have
+\begin{align*}
+    \1{A} + \1{B} &= \1{A \bigtriangleup B} \quad \text{(symmetric difference)} \\
+    \1{A} \wedge \1{B} &= \1{A \cap B} \\
+    \hyperlink{def:hammingWeight}{w(\1{A})} = \abs{A}.
+\end{align*}
+
+Define $v_0 = \1{X} = (1, \dotsc, 1)$ (multiplicative identity). For $1 \leq i \leq d$, let
+\begin{equation*}
+    v_i = \1{H_i} \text{ where } H_i = \set{p \in X | p_i = 0}
+\end{equation*}
+
+\begin{defi}[Reed-Muller code]\hypertarget{def:rmCode}
+    Let $0 \leq r \leq d$. The \textbf{Reed-Muller code} $RM(d, r)$ of order $r$ and length $2^d$ is the vector subspace of $\F_2^n$ spanned by $v_0$ and wedge products of at most $r$ of the $v_i$.
+\end{defi}
+By convention, the empty wedge product is $v_0$.
+\begin{eg}
+    Take $d = 3$.
+    \begin{center}
+    \begin{tabular}{c | c c c c c c c c}
+        $X$ & 000 & 001 & 010 & 011 & 100 & 101 & 110 & 111 \\
+        \hline
+        $v_0$ & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+        $v_1$ & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+        $v_2$ & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\
+        $v_3$ & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 \\
+        \hline
+        $v_1 \wedge v_2$ & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        $v_2 \wedge v_3$ & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        $v_1 \wedge v_3$ & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        $v_1 \wedge v_2 \wedge v_3$ & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+    \end{tabular}
+    \end{center}
+    \begin{itemize}
+        \item $RM(3, 0)$ is spanned by $v_0$. It is the repetition code of length $8$.
+        \item $RM(3, 1)$ is spanned by $v_0, v_1, v_2, v_3$.
+            Deleting the 1st component gives \hyperlink{def:hammingCode}{Hamming's $(7, 4)$-code}, i.e.\ the highlighted rectangle in the diagram is the generator matrix for the Hamming $(7, 4)$-code.
+            Note $1110000$ corresponds to
+            \begin{equation*}
+            \begin{pmatrix}0 \\ 0 \\ 1\end{pmatrix} +
+            \begin{pmatrix}0 \\ 1 \\ 0\end{pmatrix} +
+            \begin{pmatrix}0 \\ 1 \\ 1\end{pmatrix}
+            \end{equation*}
+            Notice also $v_0, v_1, v_2, v_3$ all have even weight. So $RM(3, 1)$ is (equivalent to) the parity check extension of the Hamming $(7, 4)$-code.
+        \item $RM(3, 2)$ is spanned by $v_0, v_1, v_2, v_3, v_1 \wedge v_2, v_1 \wedge v_3, v_2 \wedge v_3$.
+            These are linearly independent (see next theorem), so $RM(3, 2)$ is a $(8, 7)$-code.
+            Each codeword has even weight so $RM(3, 2)$ is the simple parity check code of length $8$.
+        \item $RM(3, 3) = \F_2^8$, the trivial code.
+    \end{itemize}
+\end{eg}
+\begin{nthm}\label{thm:2.26}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item The vectors $v_{i_1} \wedge \dotsb \wedge v_{i_s}$ for $1 \leq i_1 < \dotsb < i_s \leq d$ and $0 \leq s \leq d$ are a basis for $\F_2^n$.
+        \item $\RM(d, r)$ has rank $\sum_{s=0}^r \binom{d}{s}$
+        \item $\RM(d, r) = \RM(d-1, r)/\RM(d-1, r-1)$
+        \item $\RM(d, r)$ has weight $2^{d-r}$.
+    \end{enumerate}
+\end{nthm}
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item We have a set of $\sum_{s=0}^d \binom{d}{s} = (1+1)^d = 2^d = n$ vectors.
+            So it suffices to show they span $\F_2^n$, equivalently $RM(d, d) = \F_2^n$.
+            Let $p \in X$, and let
+            \begin{equation*}
+                y_i =
+                \begin{cases}
+                    v_i & \text{if } p_i = 0 \\
+                    v_0 + v_i & \text{if } p_i = 1
+                \end{cases}
+            \end{equation*}
+            giving $\1{\{p\}} = y_1 \wedge y_2 \wedge \dotsb \wedge y_d$.
+
+            Expanding using the distributive law gives that $\1{\{p\}} \in RM(d, d)$.
+            But the $\1{\{p\}}$ for $p \in X$ span $\F_2^n$, so $RM(d, d) = \F_2^n$.
+        \item By definition, $RM(d, r)$ is spanned by the vectors $v_{i_1} \wedge \dotsb \wedge v_{i_s}$ with $1 \leq i_1 < \dotsb < i_s \leq d$ and $0 \leq s \leq r$.
+            By (i), these vectors are linearly independent so form a basis of $RM(d, r)$.
+            There $\sum_{s=0}^r \binom{d}{s}$ such vectors, giving the required rank.
+        \item We order $X = \F_2^d$ such that
+            \textbf{missing proof}
+            % Lecture 15
+    \end{enumerate}
+\end{proof}
 \end{document}
