@@ -2213,4 +2213,112 @@ Let
     \end{equation*}
 \end{defi}
 Assuming $\deg(\sigma) = \abs{\mathcal{E}} \leq t$, our aim is to recover $\sigma(X)$ from $r(X)$.
+% Lecture 17
+\begin{nthm}\label{thm:2.34}
+    $\sigma(X)$ has constant term $1$, and satisfies
+    \begin{equation*}
+        \sigma(X) \sum_{j=0}^{2t} r(\alpha^j) X^j \equiv w(X) \pmod{X^{2t+1}}
+    \end{equation*}
+    where $w(X)$ is a polynomial of degree $\leq t$.
+    Moreover, $\sigma(X)$ is the unique polynomial of least degree satisfying the above.
+\end{nthm}
+\paragraph{Application}
+Taking coefficients of $X^i$ for $t+1 \leq i \leq 2t$ allows us to solve for the coefficients of $\sigma(X)$. Then
+\begin{equation*}
+    \xi = \set{0 \leq i \leq n-1 | \sigma(a^{-i}) = 0}.
+\end{equation*}
+This determines $e$ and we decode as $r-e$.
+\begin{proof}[Proof of \cref{thm:2.34}]
+    Let
+    \begin{equation*}
+        w(X) = -X \sigma'(X) = \sum_{i \in \xi} \alpha^i X \prod_{j \neq i} (1 - \alpha^j X).
+    \end{equation*}
+    So $w(X)$ is a polynomial of degree $=\deg(\sigma)$.
+    We work in $k[[X]]$ the ring of formal power series $\sum_{i=0}^\infty \beta_i X_i$, $\beta_i \in K$.
+    Note
+    \begin{equation*}
+        \frac{1}{1 - \alpha^i X} = \sum_{j=0}^\infty (\alpha^i X)^j \in k[[X]].
+    \end{equation*}
+    So
+    \begin{align*}
+        \frac{w(X)}{\sigma(X)} &= \sum_{i \in \xi} \frac{\alpha^i X}{1 - \alpha^i X} \\
+                               &= \sum_{i \in \xi} \sum_{j=1}^\infty (\alpha^i X)^j \\
+                               &= \sum_{j=1} \left(\sum_{i\in \xi} (\alpha^j)^i\right) X^j \\
+                               &= \sum_{j=1}^\infty e(\alpha^j) X^j \\
+        \implies w(X) &= \left(\sum_{j=1}^\infty e(\alpha^j) X^j \right) \sigma(X).
+    \end{align*}
+    By defnition of $C$ we have $c(\alpha^j) = 0$ for $1 \leq i \leq \delta-1$ so for $1 \leq j \leq 2t$.
+    So $r(\alpha^j) = e(\alpha^j)$ for $1 \leq j \leq 2t$.  Thus
+    \begin{equation*}
+        \sigma(X) \sum_{j=1}^{2t} r(\alpha^j) X^j \equiv w(X) \pmod{X^{2t+1}}.
+    \end{equation*}
+    Now to show uniqueness.
+    Note $\sigma(X)$ has distinct nonzero roots, so $\sigma(X)$ and $w(X) = -X \sigma'(X)$ are coprime.
+    Suppose $\tilde{\sigma}(X)$ and $\tilde{w}(X)$ are another solution.
+    Assume $\deg(\tilde{\sigma}) \leq \deg(\sigma)$. Then
+    \begin{equation*}
+        \sigma(X) \tilde{w}(X) \equiv \tilde{\sigma}(X) w(X) \pmod{X^{2t+1}}.
+    \end{equation*}
+    But $\sigma, \tilde{\sigma}, w, \tilde{w}$ all have degree $\leq t$. So
+    \begin{equation*}
+        \sigma(X) \tilde{w}(X) = \tilde{\sigma}(X) w(X).
+    \end{equation*}
+    Since $\sigma(X)$ and $w(X)$ are coprime $\implies \sigma(X) \mid \tilde{\sigma})(X)$.
+    But $\deg(\tilde{\sigma}) \leq \deg(\sigma)$, so $\tilde{\sigma}$ is a scalar multiple of $\sigma$.
+    Both have constant term $1$ so $\sigma = \tilde{\sigma}$.
+\end{proof}
+\subsection{Shift registers}
+\begin{defi}[General feedback shift register]
+    A \textbf{general feedback shift register} is a fucntion $f:\F_2^d \to \F_2^d$ of the form
+    \begin{equation*}
+        f(x_0, \dotsc, x_{d-1}) = (x_1, \dotsc, x_{d-1}, c(x_0, \dotsc, x_{d-1}))
+    \end{equation*}
+    where $c:\F_2^d \to F_2$.
+\end{defi}
+\begin{defi}[Linear feedback shift register]
+    A \textbf{linear feedback shift register} is a function $f: \F_2^d \to \F_2^d$ as above with $c$ linear i.e.\
+    \begin{equation*}
+        c(x_0, \dotsc, x_{d-1}) = a_0 x_0 + \dotsb + a_{d-1} x_{d-1} \quad \text{for some } a_0, \dotsc, a_{d-1} \in \F^2.
+    \end{equation*}
+\end{defi}
+The stream associated to the initial fill $y_0, \dotsc, y_{d-1}$ is the sequence $y_0, y_1, \dotsc$ where
+\begin{equation*}
+    y_n = a_{d-1} y_{n-1} + a_{d-2} y_{n-2} + \dotsb + a_0 y_{n-d} \quad \forall n \geq d
+\end{equation*}
+or more generally $y_n = c(y_{n-d}, \dotsc, y_{n-1})$.
+
+The stream produced by a LFSR is a recurrence relation (= difference relation).
+The feedback (auxiliary) polynomial is
+\begin{equation*}
+    P(X) = X^d + a_{d-1} X^{d-1} + \dotsb + a_0.
+\end{equation*}
+\begin{defi}
+    A sequence of elements in $\F_2$ has generating function
+    \begin{equation*}
+        G(X) = \sum_{j=0}^\infty x_j X^j \in \F_2[[X]].
+    \end{equation*}
+\end{defi}
+\begin{nthm}\label{thm:2.35}
+    The stream comes from a LFSR with feedback polynomial $P(X)$ iff $G(X) = \frac{B(X)}{A(X)}$ where $A(X)$ is the reverse of $P(X)$ and $B(X)$ a polynomial of degree $< \deg(A)$.
+\end{nthm}
+\begin{proof}
+    Suppose $P(X) = a_d X^d + a_{d-1} X^{d-1} + \dotsb + a_0$ with $a_d = 1$.
+    Then $A(X) = a_0 X^d + a_1 X^{d-1} + \dotsb + a_d$. So,
+    \begin{equation*}
+        A(X) G(X) = \left(\sum_{i=0}^d a_{d-i} X^i\right) \left(\sum_{j=0}^\infty x_j X^j\right).
+    \end{equation*}
+    So $A(X) G(X)$ is a polynomial of degree $<d$ iff the coefficient of $X^r$ in $A(X) G(X)$ is $0$ $\forall r \geq d$
+    \begin{align*}
+        &\iff \sum_{i=0}^d a_{d-1} x_{r-i} = 0 \quad \forall r \geq d \\
+        &\iff (x_n)_{n \geq 0} \text{ comes from a LFSR with feedback polynomial } P(X). \qedhere
+    \end{align*}
+\end{proof}
+\begin{remark}
+    The problems
+    \begin{enumerate}[label=(\roman*)]
+        \item Recover the LFSR from its sequence output.
+        \item Decoding BCH codes.
+    \end{enumerate}
+    both involve recognising a power series as a quotient of polynomials.
+\end{remark}
 \end{document}
