@@ -343,14 +343,15 @@ So we can restrict our attention to prefix-free codes.
     \leavevmode
     \begin{enumerate}[label=(\roman*)]
         \item If $p_i = 0$, we take $p_i \log p_i=0$.
-        \item $H(x) \geq 0$.
+        \item $\hyperlink{def:entropy}{H(X)} \geq 0$.
     \end{enumerate}
 \end{remark}
 
 \begin{eg}
     \leavevmode
     \begin{enumerate}[label=\arabic*.]
-        \item Suppose $p_1 = p_2 = p_3 = p_4 = \frac{1}{4}$. We identify $\{x_1, x_2, x_3, x_4\}$ with \{HT, HT, TH, TT\}. Then $H(X) = 2$.
+        \item Suppose $p_1 = p_2 = p_3 = p_4 = \frac{1}{4}$.
+            We identify $\{x_1, x_2, x_3, x_4\}$ with \{HT, HT, TH, TT\}. Then $\hyperlink{def:entropy}{H(X)} = 2$.
         \item Take $(p_1, p_2, p_3, p_4) = (\frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{8})$.
             \begin{center}
                 \begin{tikzpicture}[xscale=1.3, yscale=0.8]
@@ -1488,7 +1489,7 @@ We model using a channel $n$ times as the $n$th extension, i.e.\ replace input a
     Suppose we can \hyperlink{def:relTrans}{transmit reliably} at rate $R > C$, i.e.\ there is a sequence of codes $(C_n)_{n \geq 1}$ with $C_n$ of length $n$ and size $\floor{2^{nR}}$ such that $\hyperlink{def:ehat}{\hat{e}}(C_n) \to 0$ as $n \to \infty$.
     \begin{align*}
         \text{Recall } \hat{e}(C_n) &= \max_{c \in C_n} \Prob(\text{error} \mid c \text{ sent}). \\
-        \hypertarget{def:e}{\text{Let } \hat{e}(C_n)} &= \frac{1}{\abs{C_n}} \sum_{c \in C_n} \Prob(\text{error} \mid c \text{ sent}).
+        \hypertarget{def:e}{\text{Let } e(C_n)} &= \frac{1}{\abs{C_n}} \sum_{c \in C_n} \Prob(\text{error} \mid c \text{ sent}).
     \end{align*}
     Clearly $e(C_n) \leq \hat{e}(C_n)$, so $e(C_n) \to 0$ as $n \to \infty$.
     Take random variable input $X$, equidistributed over $C_n$.
@@ -1612,7 +1613,7 @@ Note $\cdot$ is symmetric and bilinear, but $x \cdot x = 0 \nRightarrow x = 0$.
 \begin{proof}
     \leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item $0 \in C$ since $p \cdot 0 = 0$ $\forall p \in P$.
+        \item $0 \in C$ since $p \cdot 0 = 0 \quad \forall p \in P$.
         \item If $x, y \in C$, then $p \cdot (x+y) = p \cdot x + p \cdot y = 0 \implies x + y \in C$. \qedhere
     \end{enumerate}
 \end{proof}
@@ -1689,8 +1690,8 @@ Warning: we can have $C \cap C^\perp \neq \{0\}$.
     \begin{equation*}
         G_{ij} =
         \begin{dcases*}
-            = 0 & if $j < l(i)$ \\
-            = 1 & if $j = l(i)$ \\
+            0 & if $j < l(i)$ \\
+            1 & if $j = l(i)$ \\
         \end{dcases*}
     \end{equation*}
     Permuting the columns of $G$ gives an equivalent code, i.e.\ $l(i) = i$ for $1 \leq i \leq k$, i.e.\
@@ -1846,7 +1847,6 @@ The following construction is specific to linear codes.
             Hence $\rank(C_1 \barP C_2) = \rank(C_1) + \rank(C_2)$.
         \item Let $x \in C_1$, $y \in C_2$ not both zero.
             If $y \neq 0$,
-
             \begin{align*}w(x \barP x+y) &= w(x) + w(x+y)\\ &\geq w(y)\\ &\geq w(C_2).\end{align*}
 
             If $y = 0$ ($x \neq 0$), $w(x \barP x) = 2w(x) \geq 2w(C_1)$.
@@ -1879,7 +1879,7 @@ Note for $A, B \subseteq X$, we have
 \begin{align*}
     \1{A} + \1{B} &= \1{A \bigtriangleup B} \quad \text{(symmetric difference)} \\
     \1{A} \wedge \1{B} &= \1{A \cap B} \\
-    \hyperlink{def:hammingWeight}{w(\1{A})} = \abs{A}.
+    \hyperlink{def:hammingWeight}{w(\1{A})} &= \abs{A}.
 \end{align*}
 
 Define $v_0 = \1{X} = (1, \dotsc, 1)$ (multiplicative identity). For $1 \leq i \leq d$, let
@@ -1953,7 +1953,7 @@ By convention, the empty wedge product is $v_0$.
         \item By definition, $RM(d, r)$ is spanned by the vectors $v_{i_1} \wedge \dotsb \wedge v_{i_s}$ with $1 \leq i_1 < \dotsb < i_s \leq d$ and $0 \leq s \leq r$.
             By (i), these vectors are linearly independent so form a basis of $RM(d, r)$.
             There $\sum_{s=0}^r \binom{d}{s}$ such vectors, giving the required rank.
-        \item We order $X = \F_2^d$ such that
+        \item % We order $X = \F_2^d$ such that
             \textbf{missing proof}
             % Lecture 15
         \item $RM(d, 0)$ is the repetition code of length $2^d$, which has weight $2^d$. $RM(d, d) = \F_2^n$ by (i), so has weight $1 = 2^{d-d}$.
@@ -1970,11 +1970,68 @@ By convention, the empty wedge product is $v_0$.
 
 % handout
 \subsubsection*{Algebraic aside}
-Coming soon
+A \textbf{ring} $R$ is a set with two operations, $+$ and $\times$. $(R, +)$ is an additive group and $\times$ is distributive over addition i.e.\ $a(b+c)=ab+ac$. Think of $\Z$ or $\Z_{10}$.
+
+An \textbf{ideal} $I \unlhd R$ is an additive subgroup, closed under external mutliplication, i.e.\ if $a \in I$ and $r \in R$ then $ra \in I$. Think of $2\Z \unlhd Z$.
 \begin{nlemma}\label{lem:2.27}
+    Let $I$ be an ideal in ring $R$ and let $q: R \to R/I$ be the quotient map.
+    Then there is a bijection between the set of ideals $J \subseteq R$ containing $I$ and the set of ideals in $R/I$.
+    The bijection is given by $J \mapsto q(J) = J/I$ and the inverse $K \mapsto q^{-1}(K) = \set{r \in R | q(r) \in K}$.
 \end{nlemma}
+An ideal is \textbf{principal} if it is generated by one element, e.g.\ $6\Z = \langle6 \rangle$.
+Note if $a,b\in R$ then
+\begin{equation*}
+    \langle b \rangle \subseteq \langle a \rangle \iff b \in \langle a \rangle \iff a \mid b.
+\end{equation*}
+If all ideals are principal the ring is called a \textbf{Principal Ideal Domain} or \textbf{PID}.
+For example, $\Z$ is a PID.
+
+A \textbf{field} is a commutative ring (i.e.\ multiplication is commutative) with a multiplicative identity such that every nonzero element has a multiplicative inverse, e.g.\ $\Q$, $\R$, $\F_2$ and $\Z_5 = \F_5$, but not $\Z$ or $\Z_{10}$.
+Note if $\F$ is a field then the polynomial ring $\F[X]$ (the set of polynomials in $X$ with coefficients in $\F$) is a PID.
+\begin{eg}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $R = \Z$ and $I = 6\Z$. Then
+            \begin{equation*}
+                6\Z \subseteq J \subseteq \Z \iff J = \Z, 2\Z, 3\Z, 6\Z.
+            \end{equation*}
+        \item $R = \F_2[X]$ and $I = \langle X^3 + 1 \rangle$. Then
+            \begin{equation*}
+                \langle X^3 + 1 \rangle \subseteq J \subseteq F_2[X] \iff J = \langle 1 \rangle, \langle X+1 \rangle, \langle X^2 + X + 1 \rangle , \langle X^3 + 1 \rangle.
+            \end{equation*}
+    \end{enumerate}
+\end{eg}
+\begin{thm} \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item Let $K$ be a finite field. Then $K \supseteq \F_p$ for some prime $p$ and $\abs{K} = p^r$ for some $r \geq 1$.
+        \item Let $q = p^r$, a prime power. Then, up to isomorphism, there exists a unique field $\F_q$ with $q$ elements.
+    \end{enumerate}
+\end{thm}
+\begin{warning}
+    $\F_p \cong \Z_p$ but if $q = p^r$ and $r \geq 2$ then $\F_q \ncong \Z_q$.
+\end{warning}
+\begin{prop}
+    \begin{enumerate}[label=(\roman*)]
+        \item Let $q$ be a prime power. Then there exists $\alpha \in \F_q$ (not unique) such that $\F_q^* = \F_q \setminus \{0\} = \{1, \alpha, \dotsc, \alpha^{q-2}\}$ i.e.\ $\F_q^* \cong C_{q-1}$ under multiplication.
+            $\alpha$ is called a \textbf{primitive element}.
+        \item $\F_{p^r}$ is a subfield of $\F_{p^s}$ if and only if $r \mid s$.
+        \item Let $f(x) \in \F_q[X]$. Then there exists $r \geq 1$ such that $f(X)$ factors completely into linear factors in $\F_{q^r}[X]$.
+    \end{enumerate}
+\end{prop}
 \begin{nlemma}\label{lem:2.28}
+    Let $\F$ be a field and \begin{equation*}f(X) = \sum_{i=0}^\infty a_i X^i \in \F[X].\end{equation*}
+    Define \begin{equation*}f'(X) = \sum_{i=1}^\infty i a_i X^{i-1} \in \F[X].\end{equation*}
+    Let $a \in \F$. If $(X-a)^2$ divides $f(X)$ then $f(a) = f'(a) = 0$.
 \end{nlemma}
+\begin{proof}
+    We have $f(X) = (X-a)^2 g(X)$ and $f'(X) = 2(X-a)g(X) + (X-a)^2 g'(X)$. Then $f(a) = f'(a) = 0$.
+\end{proof}
+
+In particular we consider $X^N - 1 \in \F_2[X]$ for $N$ odd.
+Then there exists a field $K \supseteq \F_2$ such that $X^N - 1$ factorises into linear factors in $K$.
+Furthermore, $X^N - 1$ has $N$ distinct roots by \cref{lem:2.28}.
+The set $R$ of roots in $K$ form a group under multiplication and so is cyclic as it is a subgroup of $K^*$.
+An element $\alpha \in R$ is a primitive $N$-th root of unity if $\alpha^N=1$ and $\alpha^i \neq 1$ for $1 \leq i < N$, the other roots are $\alpha^2, \alpha^3, \dotsc, \alpha^N$.
+(Note if $N$ even we can have repeated roots, e.g.\ $X^2 - 1 = (X-1)^2 \in \F_2[X]$.)
 
 \subsection{Cyclic Codes}
 \begin{defi}
@@ -2022,7 +2079,7 @@ From now on $C$ identifies with $\mathcal{C}$.
 \end{nthm}
 \begin{proof}
     $\mathcal{C}$ is an ideal in $\F_2[X] / \langle X^n - 1 \rangle$.
-    By \cref{lem:2.27}, $\mathcal{C} = J/\langle X^n - \rangle$, for $\langle X^n - 1 \rangle \subseteq J \subseteq \F_2[X]$ and $J$ an ideal.
+    By \cref{lem:2.27}, $\mathcal{C} = J/\langle X^n - 1 \rangle$, for an ideal $J$ with $\langle X^n - 1 \rangle \subseteq J \subseteq \F_2[X]$.
     $F_2[X]$ is a PID, so $J = \langle g \rangle$ for some $g$. $X^n - 1 \in \langle g \rangle \implies g \mid X^n - 1$.
 \end{proof}
 Note generator polynomials are unique if we insist on $g$ monic.
@@ -2065,7 +2122,7 @@ But this is true over $\F_2$ for any $g$.
     \textbf{Spanning}: Say $p \in \F_2[X]$ representing an element of $C$. WLOG say $\deg p \leq n-1$.
     Then $p = f g$ for some $f \in \F_2[X]$ with $\deg f = \deg p - \deg g \leq n - k - 1$.
     Hence
-    \begin{equation*}p \in \mathrm{span}\{g, Xg, \dotsc, X^{n-k-1} g\}\end{equation*}.
+    \begin{equation*}p \in \mathrm{span}\{g, Xg, \dotsc, X^{n-k-1} g\}\qedhere\end{equation*}.
 \end{proof}
 \begin{cor}
     $C$ has rank $n-k$, and has generator matrix
@@ -2170,7 +2227,7 @@ Observe if $f, g \in C$ then $f + g \in C$ and $Xf \in C$. So $C$ is a cyclic co
 \begin{remark}
     $H$ is not the parity check matrix in the usual sense (entries are in $K$, not in $\F_2$).
 \end{remark}
-\begin{eg}
+\begin{eg}\leavevmode
     \begin{enumerate}[label=(\arabic*)]
         \item $n = 7$, $X^7 - 1 = (1+X)(1 + X + X^3)(1 + x^2 + X^3)$ is the factorisation into irreducibles in $\F_2[X]$.
             Suppose $g(X) = 1 + X + X^3$, then $h(X) = 1 + X + X^2 + X^4$.
@@ -2273,7 +2330,7 @@ This determines $e$ and we decode as $r-e$.
     \begin{equation*}
         f(x_0, \dotsc, x_{d-1}) = (x_1, \dotsc, x_{d-1}, c(x_0, \dotsc, x_{d-1}))
     \end{equation*}
-    where $c:\F_2^d \to F_2$.
+    where $c:\F_2^d \to \F_2$.
 \end{defi}
 \begin{defi}[Linear feedback shift register]
     A \textbf{linear feedback shift register} is a function $f: \F_2^d \to \F_2^d$ as above with $c$ linear i.e.\
