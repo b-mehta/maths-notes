@@ -2325,14 +2325,14 @@ This determines $e$ and we decode as $r-e$.
     Both have constant term $1$ so $\sigma = \tilde{\sigma}$.
 \end{proof}
 \subsection{Shift registers}
-\begin{defi}[General feedback shift register]
+\begin{defi}[General feedback shift register]\hypertarget{def:fsr}
     A \textbf{general feedback shift register} is a fucntion $f:\F_2^d \to \F_2^d$ of the form
     \begin{equation*}
         f(x_0, \dotsc, x_{d-1}) = (x_1, \dotsc, x_{d-1}, c(x_0, \dotsc, x_{d-1}))
     \end{equation*}
     where $c:\F_2^d \to \F_2$.
 \end{defi}
-\begin{defi}[Linear feedback shift register]
+\begin{defi}[Linear feedback shift register]\hypertarget{def:lfsr}
     A \textbf{linear feedback shift register} is a function $f: \F_2^d \to \F_2^d$ as above with $c$ linear i.e.\
     \begin{equation*}
         c(x_0, \dotsc, x_{d-1}) = a_0 x_0 + \dotsb + a_{d-1} x_{d-1} \quad \text{for some } a_0, \dotsc, a_{d-1} \in \F^2.
@@ -2377,5 +2377,186 @@ The feedback (auxiliary) polynomial is
         \item Decoding BCH codes.
     \end{enumerate}
     both involve recognising a power series as a quotient of polynomials.
+\end{remark}
+% Lecture 18
+\subsubsection*{Berlekamp-Massey algorithm}
+Let $x_0, x_1, \dotsc$ be the output of a binary LFSR.
+We can find the unknown $d$ and $a_0, \dotsc, a_{d-1}$ such that
+\begin{equation*}
+    x_n + \sum_{i=1}^d a_{d-i} x_{n-i} = 0.
+\end{equation*}
+In this case
+\begin{equation*}
+    \begin{pmatrix}
+        x_d & x_{d-1} & \dots & x_1 & x_0 \\
+        x_{d+1} & x_d & \dots & x_2 & x_1 \\
+        \vdots & \vdots & \ddots & \vdots & \vdots \\
+        x_{2d} & x_{2d-1} & \dots & x_{d+1} & x_d
+    \end{pmatrix}
+    \begin{pmatrix}
+        1 \\ a_{d-1} \\ \vdots \\ a_0
+    \end{pmatrix}
+    = \vec{0} \label{eq:18star} \tag{$*$}
+\end{equation*}
+
+We look successively at the matrices
+\begin{equation*}
+    A_0 =
+    \begin{pmatrix}
+        x_0
+    \end{pmatrix}, \quad
+    A_1 =
+    \begin{pmatrix}
+        x_1 & x_0 \\ x_2 & x_1
+    \end{pmatrix}, \quad
+    A_2 =
+    \begin{pmatrix}
+        x_2 & x_1 & x_0 \\
+        x_3 & x_2 & x_1 \\
+        x_4 & x_3 & x_2
+    \end{pmatrix}
+\end{equation*}
+Start at $A_r$, if we know $d \geq r$.
+For each $i$, compute $\det(A_i)$.  If $\det(A_i) \neq 0$, then $d \neq i$.
+If $\det(A_i) = 0$, we solve \eqref{eq:18star} assuming that $d=i$.
+
+We then check our candidate for $a_0, \dotsc, a_{d-1}$ over as many terms of the sequence as we wish.
+
+If this fails we know $d > i$, so start again with $A_{i+1}$.
+\begin{remark}
+    It is easier to use Gaussian elimination rather than expanding rows/columns.
+\end{remark}
+
+\clearpage
+\section{Cryptography}
+Idea: Modify the message to make them unintelligible to all but the intended recipient.
+
+Terminology: unencrypted message is called the \textbf{plain text}, and the encrypted message is referred to as the \textbf{cipher text}.
+Before transmission, the parties share some secret information known as a \textbf{key}.
+Let
+\begin{align*}
+    \mathcal{M} &= \{\text{all possible unencrypted messages}\} \\
+    \mathcal{C} &= \{\text{all possible encrypted messages}\} \\
+    \mathcal{K} &= \{\text{all possible keys}\} \\
+\end{align*}
+
+\begin{defi}[Cryptosystem]
+    A \textbf{cryptosystem} consists of sets $\mathcal{M}, \mathcal{C}, \mathcal{K}$ and functions
+    \begin{align*}
+        e&: \mathcal{M} \times \mathcal{K} \to \mathcal{C} \\
+        d&: \mathcal{C} \times \mathcal{K} \to \mathcal{M}
+    \end{align*}
+    such that $d(e(m, k), k) = m$, encoding and decoding functions.
+\end{defi}
+\begin{eg}
+    Take $\mathcal{M} = \mathcal{C} = \{A, B, \dotsc, Z\}^* = \Sigma^*$.
+    \begin{enumerate}[label=(\roman*)]
+        \item Simple substitution:
+            \begin{equation*}
+                \mathcal{K} = \{\text{perms of } \Sigma\}
+            \end{equation*}
+            Each letter is encoded by replacing by its image under the permutation.
+        \item Vigen\`{e}re cipher:
+
+            Identify $\Sigma = \Z/26\Z$. Also let $K = \Sigma^d$.
+            Then write out the key $k$ below $m$ and add up letters.
+            (For $d=1$ this is a Caesar cipher, but for $d > 1$, a letter in $m$ gets encrypted differently depending on its place in $m$. So not as weak to frequency analysis.)
+    \end{enumerate}
+\end{eg}
+What does is mean to `break' a cryptosystem?
+We assume the enemy \textit{may} know:
+\begin{itemize}
+    \item $d$ and $e$
+    \item probability distribution of $\mathcal{M}$ and $\mathcal{K}$
+\end{itemize}
+but does not know the key.
+
+We consider three possible levels of attack:
+\begin{enumerate}[label=\textbf{Level \arabic*},leftmargin=2cm]
+    \item Cipher text only\\
+        The enemy only knows some piece of cipher text.
+    \item Known plaintext\\
+        The enemy has some $m$ and $e(m, k)$ (but not $k$).
+    \item Chosen plaintext\\
+        The enemy has the ability to generate $e(m, k)$ for any $m$ (but still doesn't know $k$).
+\end{enumerate}
+\begin{remark}\leavevmode
+    \begin{enumerate} [label=(\arabic*)]
+        \item Substitution and Vigen\`{e}re fail at level 1 if messages are in English (highly predictable) and are sufficiently long. But even for quite random plaintext, they both fail at level 2.
+        \item For modern applications, level 3 is desirable. Note exhaustive searches are possible for all systems, so the only hope is to make such a method take a prohibitively long time.
+    \end{enumerate}
+\end{remark}
+\subsection{Unicity distance}
+Take $(\mathcal{M}, \mathcal{K}, \mathcal{C})$ a cryptosystem.
+Say $m,k$ are random variables taking values in $\mathcal{M},\mathcal{K}$.
+Also let $c = e(m, k)$ (also random). Then define:
+\begin{defi}[Equivocation]\leavevmode
+    \begin{enumerate} [label=(\arabic*)]
+        \item \hypertarget{def:keyEquiv}The \textbf{key equivocation} is $ H(k | c).  $
+        \item The \textbf{message equivocation} is $ H(m | c).  $
+    \end{enumerate}
+\end{defi}
+\begin{nlemma}\label{lem:3.1}
+    \begin{equation*}
+        H(m | c) \leq H(k | c)
+    \end{equation*}
+\end{nlemma}
+\begin{proof}
+    Note $m = d(c, k)$ so get $H(m | c,k) = 0$. Then
+    \begin{align*}
+        H(k | c) &= H(k,c) - H(c) \\
+                 &= H(m,k,c)-H(m|k,c) - H(c) \\
+                 &= H(m,k,c)-H(c) \\
+                 &= H(k|m,c)+H(m,c)-H(c) \\
+                 &= H(k|m,c) + H(m|c) \\
+                 &\geq H(m | c) \qedhere
+    \end{align*}
+\end{proof}
+\begin{remark}
+    Say $(\mathcal{M}, \mathcal{K}, \mathcal{C})$ has \textbf{perfect secrecy} if $H(m|c) = H(m)$.
+\end{remark}
+Suppose we send a sequence of messages $m^{(n)} = (m_1, \dotsc, m_n)$ using the same key.
+
+\begin{defi}[Unicity distance]\hypertarget{def:unicity}
+    The \textbf{unicity distance} is
+    \begin{equation*}
+        \mathcal{U} = \min\set{n | H(k | c^{(n)}) = 0};
+    \end{equation*}
+    i.e.\ the smallest $n$ such that $k$ becomes known.
+\end{defi}
+Note
+\begin{align*}
+    H(k|c^{(n)}) &= H(k, c^{(n)}) - H(c^{(n)}) \\
+                 &= H(k, m^{(n)}, c^{(n)}) - H(c^{(n)}) \\
+                 &\leq H(k) + H(m^{(n)}) - H(c^{(n)})
+\end{align*}
+We assume
+\begin{enumerate}[label=(\arabic*)]
+    \item All keys are uniformly likely, so $H(k) = \log \abs{\mathcal{K}}$
+    \item $H(m^{(n)})  = n H(m)$
+    \item All assumed ciphertext is equally likely. So get
+        \begin{equation*}
+            H(c^{(n)}) = n \log \abs{\Sigma}
+        \end{equation*}
+        with $\mathcal{C} = \Sigma^*$.
+\end{enumerate}
+
+So get
+\begin{gather*}
+    H(k | c^{(n)}) = \log \abs{\mathcal{K}} + n H(m) - n \log \abs{\Sigma} \\
+    \mathcal{U} = \frac{\log \abs{\mathcal{K}}}{\log \abs{\Sigma} - H(m)}
+\end{gather*}
+
+\begin{defi}
+    The \textbf{unicity distance} $\mathcal{U}$ of a system is the least length of ciphertext required to uniquely determine the key.
+\end{defi}
+
+\begin{remark}
+    To make $\mathcal{U}$ large:
+    \begin{itemize}
+        \item make key space large
+        \item send messages with little redundancy
+    \end{itemize}
+    Also to be secure, should not use a single key for more messages than the unicity distance.
 \end{remark}
 \end{document}
