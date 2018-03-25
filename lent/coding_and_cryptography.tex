@@ -2559,4 +2559,108 @@ So get
     \end{itemize}
     Also to be secure, should not use a single key for more messages than the unicity distance.
 \end{remark}
+% Lecture 19
+\subsection{Stream Cipher}
+Consider streams (sequences) in $\F_2$.
+\begin{align*}
+    \text{Plain text is} &p_0, p_1, p_2, \dotsc \\
+    \text{Key stream is} &k_0, k_1, k_2, \dotsc \\
+    \text{Cipher text is} &c_0, c_1, c_2, \dotsc, z=p+k. \\
+\end{align*}
+
+A \textbf{one time pad} is where $k$ is generated randomly.
+$k_i = 0,1$ with chance $\frac{1}{2}$ and $k_i$'s are iid.
+
+Then $z = p+k$ gives a stream of iid random variables with $z_i = 0,1$ with chance $\frac{1}{2}$ also.
+So without the key stream, deciphering is impossible.
+
+A one time pad has perfect secrecy.
+
+Problems:
+\begin{enumerate} [label=(\roman*)]
+    \item How to generate k? Quite difficult.
+    \item How do we share the key stream? Same as initial problem.
+\end{enumerate}
+
+In most applications a one time pad is not viable.
+Instead we share $k_0, \dotsc, k_{d-1}$ and also use a shared \hyperlink{def:fsr}{FSR} to generate $k$.
+
+\begin{nlemma}\label{lem:3.2}
+    Let $x_0, x_1, \dotsc$ be a sequence produced by a \hyperlink{def:lfsr}{LFSR}. Then $\exists M,N \leq 2^d - 1$ s.t.\ $x_{r+N} = x_r$ $\forall r \geq M$.
+\end{nlemma}
+\begin{proof}
+    Pigeonhole principle. If any of the first $2^d-1$ $d$-blocks is $0$, the sequence is 0 always.
+\end{proof}
+\begin{remark}
+    \begin{enumerate} [label=(\roman*)]
+        \item The same result holds for a general \hyperlink{def:fsr}{FSR} but $N,M \leq 2^d$.
+        \item The Berlekamp-Massey method gives that stream cipher are unsafe at level 2 (known plaintext).
+        \item Stream ciphers still get used, as they are cheap and easy, and can encrypt/decrypt on the fly.
+    \end{enumerate}
+\end{remark}
+
+\subsection{New key streams from old}
+Recall a stream produced by a \hyperlink{def:lfsr}{LFSR} of form
+\begin{equation*}
+    x_n = \sum_{i=1}^d a_{d-i} x_{n-i}
+\end{equation*}
+has feedback polynomial $P(X) = X^d + a_{d-1} X^{d-1} + \dotsb + a_0$.
+The solution of this recursion relation are linear combinations of the powers of the roots of $P(X)$.
+\begin{nlemma}\label{lem:3.3}
+    Let $x,y$ be \hyperlink{def:lfsr}{LFSR} streams from $P(X),Q(X)$ respectively.
+    Say $P(X)$ has roots $\alpha_1, \dotsc, \alpha_M$ and $Q(X)$ has roots $\beta_1, \dotsc, \beta_N$ in a field $K \supset \F_2$.
+    \begin{enumerate} [label=(\roman*)]
+        \item Then $x+y$ is the output from a LFSR with feedback poly $PQ$.
+        \item $(x_n y_n)_n$ is the output of a LFSR with feedback poly
+            \begin{equation*}
+                \prod_{i=1}^M \prod_{j=1}^N (X - \alpha_i \beta_j).
+            \end{equation*}
+    \end{enumerate}
+\end{nlemma}
+\begin{proof}[Proof (sketch)]
+    Assume (for simplicity) roots of $P,Q$ are distinct i.e.\ $\alpha_i \neq \beta_j \forall i,j$.
+    Then $x_n = \sum_{i=1}^M \lambda_i \alpha_i^n$, $y_n = \sum_{j=1}^N \mu_j \beta_j^n$ for some $\lambda_i, \mu_j \in K$.
+
+    \begin{equation*}
+        \text{(i)} x_n + y_n = \sum_{i=1}^M \lambda_i \alpha_i^n + \sum_{j=1}^N \mu_j \beta_j^n
+    \end{equation*}
+    So $x_n + y_n$ solves the difference equation with feedback polynomial $P(X) Q(X)$.
+    \begin{equation*}
+        \text{(ii)} x_n y_n = \sum_{i=1}^M \sum_{j=1}^N \lambda_i \mu_j (\alpha_i \beta_j)^n
+    \end{equation*}
+    solves the difference equation of $\prod_i \prod_j (X - \alpha_i \beta_j)$. (Check!)
+\end{proof}
+\begin{remark}
+    $x+y$ is from the LFSR of length $M+N$.
+    $xy$ is from LFSR of length $MN$.
+\end{remark}
+So, we conclude (i) adding streams is no better than calculating the stream from a single register, and (ii) $xy$ has $0$'s  75\% of the time, this predictability is not desirable.
+\begin{eg}
+    Say $x,y,z$ are streams from LFSRs. Let
+    \begin{equation*}
+        k_n =
+        \begin{cases}
+            x_n & z_n = 0 \\ y_n & z_n = 1
+        \end{cases}
+    \end{equation*}
+    This might look complicated compared to an LFSR, but
+    \begin{align*}
+        k&=yz+x(1+z)\\&=x+(x+y)z
+    \end{align*}
+    so $k$ is just a LFSR by \cref{lem:3.3}.
+\end{eg}
+\begin{remark}
+    Using an FSR stream is an example of a symmetric cryptosystem; i.e.\ one where the decryption algorithm equals or is easily deduced from the encryption algorithm.
+\end{remark}
+\subsection{Public Key Cryptography}
+We now use two keys: one for encryption and one for decryption.
+Then we aim to create a system such that even while knowing the encryption algorithm, decryption algorithm and public key, it should still be hard to find the private key and decrypt messages.
+Achieving this aim gives security at level 3.
+Note this system avoids the issue of key exchange.
+
+The idea is to use `one way' operations like
+\begin{itemize}
+    \item Factoring/multiplying
+    \item Discrete logs: Say $p$ is a large prime, $g$ a primitive element mod $p$, i.e.\ generates $\F_p^*$. Given $x$, find $a$ such that $x \equiv g^a \pmod{p}$.
+\end{itemize}
 \end{document}
