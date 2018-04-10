@@ -1220,7 +1220,47 @@ It now only remains to prove \nameref{lem:goldstine}.
 \begin{prop}
     A Banach space $E$ is separable iff $(\overline{B}_{E'}, \sigma(E', E))$ is metrisable.
 \end{prop}
-\begin{prop}[`Countable BAB']
+\begin{proof}
+  $(\Rightarrow)$ Take $\{f_n\}$ a countable sequence dense in $\overline{B}_E$. Then for $F,G \in \overline{B}_{E'}$, define
+  \begin{equation*}
+    D(F,G) \coloneqq \sum_{n \geq 1} \frac{|F(f_n) - G(f_n)|}{2^n}
+  \end{equation*}
+  This is well defined, as partial sums are bounded by $\|F-G\|_{E'}$.
+  It is a distance: The triangle inequality is obtained in the limit from partial sums. If $D(F,G) = 0$, then $F=G$ on $\{f_n\}$, hence they agree on $\overline{B}_E$, and hence on $E$.
+
+  Claim: $D$ metrizes $\sigma(E', E)$ on $\overline{B}_{E'}$.
+  For $F \in \overline{B}_E$, consider a $D$-neighbourhood
+  \begin{equation*}\set{G \in \overline{B}_{E'} | D(F,G) < \epsilon}.\end{equation*}
+  It contains the $\sigma(E', E)$-neighbourhood
+  \begin{equation*}\Set{G \in \overline{B}_{E'} | \left|G(f_i) - F(f_i)\right| < \frac{\epsilon}{2}\ \forall i=1,\dotsc,n_0}\end{equation*}
+  for $n_0$ satisfying $2 \sum_{n \geq n_0} \frac{1}{2^n} \leq \frac{\epsilon}{2}$.
+
+  Vice versa, given a $\sigma(E',E)$-neighbourhood of $F$
+  \begin{equation*}U\coloneqq\Set{G \in \overline{B}_{E'} | \left|G(g_i) - F(g_i)\right| < \epsilon\ \forall i=1,\dotsc,k}\end{equation*}
+  then, by density, for each $i=1,\dotsc,k$, $\exists n_i$ such that $\|f_{n_i} - g_i\|_E < \frac{\epsilon}{3}$ and
+  consider the $D$-neighbourhood
+  \begin{equation*}
+    V\coloneqq \Set{G \in \overline{B}_{E'} | D(F,G)< \frac{\epsilon}{3} \cdot 2^{-\max n_i}}.
+  \end{equation*}
+  If $G \in V$ then $D(F, G) < \frac{\epsilon}{3}\cdot2^{-\max n_i}$ implies $|F(f_{n_i}) - G(f_{n_i})| < \frac{\epsilon}{3}\ \forall i = 1\dotsc k$ hence
+  \begin{equation*}
+    |G(g_i) - F(g_i)| \leq \underbrace{|G(g_i)-G(f_{n_i})|}_{< \frac{\epsilon}{3}} + |G(f_{n_i})-F(f_{n_i})| + \underbrace{|F(f_{n_i})-F(g_i)|}_{< \frac{\epsilon}{3}} < \epsilon.
+  \end{equation*}
+  so $V \subset U$, as required.
+
+  $(\Leftarrow)$ Conversely suppose $D$ is a distance on $(\overline{B}_{E'}, \sigma(E', E))$. For all $n \geq 1$,
+  \begin{equation*}
+    U_n \coloneqq \Set{G \in \overline{B}_E | D(G, 0) < \frac{1}{n}}
+  \end{equation*}
+  is open around $0$, so there is
+  \begin{equation*}
+    V_n = \set{G \in \overline{B}_E | \abs{G(f)}< \epsilon_n,\, f \in C_n} \subset U_n
+  \end{equation*}
+  with $\epsilon_n > 0$ and $C_n \subset E$ finite.
+  Then $C_\infty \coloneqq \bigcup_{n \geq 1} C_n$ is countable, and $\bigcap_{n \geq 1} V_n = \{0\}$.
+  Since $F|_{C_\infty} \equiv 0$ implies $F \in \bigcap_{n \geq 1} V_n$ i.e.\ $F \equiv 0$, it follows that $C_\infty$ is dense in $E$, following the argument at the end of the previous proof.
+\end{proof}
+\begin{prop}[`Countable BAB']\leavevmode
     \begin{enumerate}[label=(\roman*)]
         \item Take $E$ a Banach separable space, then closed bounded subsets of $E'$ are sequentially weak-$*$ compact ($\sigma(E', E)$).
         \item Take $E$ a Banach reflexive, then closed bounded subsets of $E$ are sequentially weakly compact ($\sigma(E, E')$).
