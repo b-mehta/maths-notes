@@ -1227,6 +1227,59 @@ It now only remains to prove \nameref{lem:goldstine}.
     \end{enumerate}
 \end{prop}
 
+% missing things
+\begin{proof}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+      \item Enough to prove that any $(F_n)$ sequence of $\overline{B}_E$ has a converging subsequence in $\sigma(E', E)$.
+        Take $(f_k)$ dense in $E$, then $\forall k \geq 1$, $(F_n(f_k))_{k \geq 1}$ is a real sequence in $[-\|f_k\|,\|f_k\|]$.
+        Hence by Bolzano-Weierstrass it has a converging subsequence.
+
+        Using the Cantor diagonal process, $\exists \theta:\mathbb{N} \to \mathbb{N}$ strictly increasing such that $\forall k \geq 1$, $(F_{\theta(n)}(f_k))_{n \geq 1}$ converges.
+
+        Let $f \in E$, then for any $\epsilon > 0$, there is $f_{k_0}$ such that $\|f - f_{k_0}\|_E \leq \frac{\epsilon}{3}$ by density.
+        $(F_{\theta(n)}(f_{k_0}))_{n \geq 1}$ is Cauchy, so $\exists N \in \mathbb{N}$ such that
+        \begin{equation*}
+          \forall n_1, n_2 \geq N, \ \abs{F_{\theta(n_1)}(f_{k_0}) - F_{\theta(n_2)}(f_{k_0})} \leq \frac{\epsilon}{3}.
+        \end{equation*}
+        So using the triangle inequality,
+        \begin{equation*}
+          \forall n_1, n_2 \geq N, \ \abs{F_{\theta(n_1)}(f) - F_{\theta(n_2)}(f)} \leq \epsilon.
+        \end{equation*}
+        Hence, $(F_{\theta(n)}(f))$ is Cauchy in $\mathbb{R}$ and hence convergent, so $(F_{\theta(n)})$ is weak-$*$ convergent.
+        \item Enough to prove $(f_n)$ sequence in $\overline{B}_E$ has a converging subsequence in $\sigma(E, E')$.
+            Let $L$ be the closure of $\spn\{f_n\}$ in $E$. This is separable (take rational linear combinations).
+            It is reflexive: $(\overline{B}_L, \sigma(L, L'))$ is weakly compact by restriction, and use \nameref{thm:kaku}.
+            Then $(\overline{B}_L, \sigma(L, L'))$ identifies with $(\overline{B}_{L''}, \sigma(L'', L'))$ and $L'$ is separable so part (i) implies $(\overline{B}_{L''}, \sigma(L'', L'))$ is sequentially compact, hence so is $(\overline{B}_L, \sigma(L, L'))$.
+    \end{enumerate}
+\end{proof}
+\subsection{Concrete functional spaces}
+We have shown $L^p(\R)$ is separable for $p \in [1, \infty)$, and a Banach space.
+\begin{thm}[Riesz representation]
+    $L^p(\R)$ for $p \in (1, \infty)$ is reflexive.
+    Moreover its dual identifies isometrically with $L^{p'}(\R)$ with $p' = \frac{p}{p-1} \in (1, \infty)$, with $g \in L^{p'}(\R) \mapsto F_g \in L^p(\R)'$, where $F_g(f) \coloneqq \int_\R f g \, d\mu$.
+\end{thm}
+\begin{proof}
+    In the case $p \in [2,\infty)$, use the first Clarkson inequality:
+    \begin{equation*}
+        \abs{\frac{x+y}{2}}^p + \abs{\frac{x-y}{2}}^p \leq \frac{\abs{x}^p + \abs{y}^p}{2}
+    \end{equation*}
+    which extends the parallelogram identity.
+    Proof:
+    Let $\theta \in [0, 1]$. $\theta^{\frac{p}{2}} + (1-\theta)^{\frac{p}{2}} \leq \theta + (1-\theta) = 1$, so for $a, b \geq 0$ not both zero, $a^p + b^p \leq (a^2 + b^2)^{\frac{p}{2}}$.
+    Taking $a = \abs{\frac{x+y}{2}}$, $b = \abs{\frac{x-y}{2}}$,
+    \begin{align*}
+        \abs{\frac{x+y}{2}}^p + \abs{\frac{x-y}{2}}^p &\leq (\abs{\frac{x+y}{2}}^2 + \abs{\frac{x-y}{2}}^2)^{\frac{p}{2}} \\
+                                                      &\leq \left(\frac{x^2+y^2}{2}\right)^{\frac{p}{2}} \\
+                                                      &\leq \frac{\abs{x}^p + \abs{y}^p}{2} \\
+    \end{align*}
+    where the parallelogram identity was used and the convexity of $\theta(r) = r^{p/2}$.
+
+    Integrate with `$x=f$', `$y=g$':
+    \begin{equation*}
+        \forall f, g \in L^p(\R) \quad \norm{\frac{f+g}{2}}^p_{L^p} + \norm{\frac{f-g}{2}}^p_{L^p} \leq \frac{\norm{f}^p_{L^p} + \norm{g}^p_{L^p}}{2}
+    \end{equation*}
+    % missing end
+\end{proof}
 % Chapter 2
 % I) Recalls on normed vector spaces (LA)
 % II) Hahn-Banach (LA)
