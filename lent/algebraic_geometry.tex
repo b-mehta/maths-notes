@@ -12,14 +12,18 @@
 \usepackage{tikz}
 \usepackage{stmaryrd}
 \usepackage{tikz-cd}
+\usepackage{mathrsfs}
 \newcommand{\A}{\mathbb{A}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\proj}{\mathbb{P}}
+\newcommand{\diff}{\,\textrm{d}}
 \DeclareMathOperator{\Mat}{Mat}
 \DeclareMathOperator{\chara}{char}
 \DeclareMathOperator{\Mor}{Mor}
 \DeclareMathOperator{\Gal}{Gal}
 \DeclareMathOperator{\Der}{Der}
+\DeclareMathOperator{\trdim}{trdim}
+\DeclareMathOperator{\Div}{Div}
 %\setcounter{section}{-1}
 % and here we go!
 
@@ -28,6 +32,7 @@
 \tableofcontents
 
 \section*{Introduction}
+\color{gray}
 Consider $E = \set{(x, y) \in \C^2 | y^2 = x^3 - x}$. Let's first draw this when $(x, y) \in \R^2$.
 If $y \in \R$, $y^2 \geq 0$, so if $x \in \R$, $x^3 - x = x(x^2 - 1) \geq 0$ so $x \geq 1$ or $-1 \leq x \leq 0$.
 
@@ -51,6 +56,7 @@ Think of (the picture below) by adding a point at $\infty$, so it lives on the R
 Take another copy, flip it over and glue back.
 (this section is in the process of tidying)
 
+\color{black}
 \clearpage
 % I
 \section{Dictionary between algebra and geometry}
@@ -199,18 +205,36 @@ More generally,
 $Z( f_1^{a_1}, \dotsc, f_r^{a_r}) = Z(f_1, f_2, \dotsc, f_r)$,
 but it turns out this kind of thing is the only problem.
 This is called Hilbert's `Nullstellensatz', and we will see it soon.
-\begin{defi}[Reducible]
-    An affine variety $Y$ is \textbf{reducible} if there are \hyperlink{def:Z}{affine varieties} $Y_1, Y_2$, $Y_i \neq Y$ with $Y = Y_1 \cup Y_2$, and \textbf{irreducible} otherwise. It is called \textbf{disconnected} if $Y_1 \cap Y_2 = \emptyset$.
+\begin{defi}[Reducible]\hypertarget{def:reducible}
+    An affine variety $Y$ is \textbf{reducible} if there are \hyperlink{def:Z}{affine varieties} $Y_1, Y_2$, $Y_i \neq Y$ with $Y = Y_1 \cup Y_2$, and \textbf{irreducible} otherwise.
+    It is called \textbf{disconnected} if $Y_1 \cap Y_2 = \emptyset$.
 \end{defi}
 
-% UP TO HERE
-\color{gray}
-
-% picsss
-So $Z(xy) = Z(x) \cup Z(y)$, reducible.
-$Z(y(y-1), x(y-1)) = Z(x,y) \cup Z(y-1)$ reducible and disconnected.
+\begin{eg}
+    \leavevmode
+    \begin{center}
+    \begin{tikzpicture}
+        \node [left] at (-1, 0) {$\hyperlink{def:Z}{Z}(xy)=$};
+        \draw (-1, 0) -- (1, 0);
+        \draw (0, -1) -- (0, 1);
+        \node [right] at (1, 0) {$=Z(x) \cup Z(y)$, \hyperlink{def:reducible}{reducible}};
+    \end{tikzpicture}
+    \end{center}
+    Also,
+    \begin{center}
+        \begin{tikzpicture}
+            \node [right] at (-2.25, 1) {$Z(y(y-1), x(y-1))=Z(y-1)\cup Z(x,y)$, reducible and \hyperlink{def:reducible}{disconnected}};
+            \draw (-1, 0.25) -- (1, 0.25);
+            \filldraw (0, -0.25) circle (1pt) {};
+            \node at (1.3, 0) {$=$};
+            \draw (1.6, 0) -- (3.6, 0);
+            \node at (3.9, 0) {$\cup$};
+            \filldraw (4.5, 0) circle (1pt) {};
+        \end{tikzpicture}
+    \end{center}
+\end{eg}
 \begin{prop}
-    Any affine variety is a finite union of irreducible affine varieties.
+    Any \hyperlink{def:Z}{affine variety} is a finite union of \hyperlink{def:reducible}{irreducible} affine varieties.
 \end{prop}
 \begin{remark}
     This is very different from usual manifolds.
@@ -218,52 +242,65 @@ $Z(y(y-1), x(y-1)) = Z(x,y) \cup Z(y-1)$ reducible and disconnected.
 \begin{proof}
     If not, $Y$ is not irreducible, so $Y = Y_1 \cup Y_1'$ and one of $Y_1, Y_1'$, (say $Y_1$) is not the finite union of irreducible affine varieties, so
     \begin{equation*}
-        Y_1 = Y_2 \cup Y_2', \dotsc
+        Y_1 = Y_2 \cup Y_2',\quad Y_2 = Y_3 \cup Y_3',\quad \dotsc
     \end{equation*}
     and so we get an infinite chain of affine varities $Y \supsetneq Y_1 \supsetneq Y_2 \supsetneq \dotsb$.
-    But each $Y_i = Z(I_i)$ for some ideal $I_l$. Let $W = \bigcap Y_l = Z(\sum I_i) = Z(I)$.
-    $I = \sum I_i$ is an ideal. As the ideal $I$ is finitely generated $I = \langle f_1, \dotsc, f_r \rangle$ for some $f_i$.
-    $f_i \in I_{a_i}$ for some $a_1, \dotsc, a_r$ so $I = I_{a_1} + \dotsb + I_{a_r}$, $W = Y_{i_1} \cap \dotsb \cap Y_{i_r}$ contradicting $Y_N \subsetneq Y_{a_1} \cap \dotsb \cap Y_{a_r}$ if $N > r$.
+    But each $Y_i = Z(I_i)$ for some ideals $I_i$.  Let
+    \begin{equation*}
+        W = \bigcap Y_i = Z\left(\sum I_i\right) = Z(I)
+    \end{equation*}
+    where $I \coloneqq \sum I_i$ is certainly an ideal.
+    Ideals are finitely generated, by the Hilbert basis theorem, so $I = \langle f_1, \dotsc, f_r \rangle$ for some $f_i$.
+    $f_i \in I_{a_i}$ for some $a_1, \dotsc, a_r$ so $I = I_{a_1} + \dotsb + I_{a_r}$.
+    Then $W = Y_{a_1} \cap \dotsb \cap Y_{a_r}$, contradicting $Y_N \subsetneq Y_{a_1} \cap \dotsb \cap Y_{a_r}$ if $N > \max(a_1, \dotsc, a_r)$.
 \end{proof}
 \begin{ex}
-    If $Y$ is a subvariety of $\A^N$, then we can write $Y = Y_1 \cup \dotsb \cup Y_r$ with $Y_i$ irreducible, and $r$ minimal, uniquely up to reordering. Call the $Y_i$ the irreducible components of $Y$.
+    If $Y$ is a \hyperlink{def:Z}{subvariety} of $\A^n$, then we can write $Y = Y_1 \cup \dotsb \cup Y_r$ with $Y_i$ \hyperlink{def:reducible}{irreducible}, and $r$ minimal, uniquely up to reordering.
+    Call the $Y_i$ the \textbf{irreducible components} of $Y$.
 \end{ex}
+\begin{defi}[Prime ideal]\hypertarget{def:prime}
+    A proper ideal $I$ of a ring $R$ is \textbf{prime} if $ab \in I$ for some $a, b \in R$, then either $a \in I$ or $b \in I$.
+\end{defi}
 \begin{prop}
-    $Y$ is irreducible $\iff I(Y)$ is a prime ideal in $k[\A^n] = k[x_1, \dotsc, x_n]$.
+    An \hyperlink{def:Z}{affine variety} $Y$ is \hyperlink{def:reducible}{irreducible} $\iff \hyperlink{def:I}{I}(Y)$ is a \hyperlink{def:prime}{prime ideal} in $\hyperlink{def:polys}{k[\A^n]} = k[x_1, \dotsc, x_n]$.
 \end{prop}
 \begin{eg}
     \leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item $(x y)$ is not a prime ideal.
-        \item Exercise: Let $R$ be a UFD, $f \in R$, $f \neq 0$, $f$ irreducible $\iff (f)$ a prime ideal.
+        \item $\langle x y\rangle$ is not a \hyperlink{def:prime}{prime ideal}.
+        \item Exercise: Let $R$ be a UFD, $f \in R$, $f \neq 0$, then $f$ is an irreducible polynomial $\iff \langle f \rangle$ a prime ideal.
         \item Exercise: $k[x_1, \dotsc, x_n]$ is a UFD.
-            Hence $Z(y^2 - x^3 + x)$ is irreducible, $Z(y-x^2)$ is irreducible.
+            Hence $Z(y^2 - x^3 + x)$ is \hyperlink{def:reducible}{irreducible}, and $Z(y-x^2)$ is irreducible.
     \end{enumerate}
 \end{eg}
 \begin{proof}
-    If $Y = Y_1 \cup Y_2$ is reducible, $\exists p \in Y_1 \setminus Y_2$ so $\exists f \in I(Y_2)$ such that $f(p) \neq 0$ and similarly, $\exists q \in Y_2 \setminus Y_1$ so $\exists g \in I(Y_1)$ such that $g(q) \neq 0$.
-    Then $fg \in I(Y_1) \cap I(Y_2) = I(Y)$. But $f \notin I(Y)$, $g \notin I(Y)$ so not prime.
+    If $Y = Y_1 \cup Y_2$ is reducible, $\exists p \in Y_1 \setminus Y_2$, so $\exists f \in I(Y_2)$ such that $f(p) \neq 0$.
+    Similarly, $\exists q \in Y_2 \setminus Y_1$ so $\exists g \in I(Y_1)$ such that $g(q) \neq 0$.
+    Then $fg \in I(Y_1) \cap I(Y_2) = I(Y)$, but $f \notin I(Y)$, $g \notin I(Y)$ so $I(Y)$ is not prime.
     \begin{center}
         \begin{tikzpicture}
             \node [left] at (-1, 1.3) {$Y_1$};
             \node [left] at (-1, -1) {$Y_2$};
-            \path (-1,1.3) edge [bend left=30] node[pos=1] {$p$} (1.4,-1) ;
-            \draw (-1,-1) to[bend left=30] (2,1.5);
+            \path (-1,1.3) edge [bend left=30] node [circle, fill, inner sep=0.7pt, pos=0.7, label=right:{$p$}] {} (1.4,-1) ;
+            \path (-1,-1) edge [bend left=30] node [circle, fill, inner sep=0.7pt, pos=0.8, label=above:{$q$}] {} (2,1.5);
         \end{tikzpicture}
     \end{center}
 
-    Conversely, if $I(Y)$ is not prime $\exists f_1 f_2 \in k[\A^n]$ such that $f_1, f_2 \notin I(Y)$ but $f_1 f_2 \in I(Y)$.
-    Let $Y_i = Y \cap Z(f_i) = \set{p \in Y | f_i(p) = 0}$. $Y_1 \cup Y_2 = Y$, as $p \in Y \implies f_1 f_2 (p) = 0 \implies f_1(p) = 0$ or $f_2(p) = 0$.
-    $Y_i \neq Y$ as $f_i \notin I(Y)$ (i.e. $\exists p_l \in Y$ such that $f_i(p_i) \neq 0$ so $p_i \notin Y_i$).
+    Conversely, if $I(Y)$ is not prime $\exists f_1, f_2 \in k[\A^n]$ such that $f_1, f_2 \notin I(Y)$ but $f_1 f_2 \in I(Y)$.
+    Let \begin{equation*}Y_i \coloneqq Y \cap Z(f_i) = \set{p \in Y | f_i(p) = 0}.\end{equation*} $Y_1 \cup Y_2 = Y$, as $p \in Y \Rightarrow f_1 f_2 (p) = 0$ so either $f_1(p) = 0$ or $f_2(p) = 0$.
+    Finally we must show $Y_i \neq Y$. But $f_i \notin I(Y)$, so $\exists p_i \in Y$ such that $f_i(p_i) \neq 0$ so $p_i \notin Y_i$.
 \end{proof}
 \begin{lemma}
-    $X$ irreducible affine subvariety of $\A^n$, $\mathcal{U} \subseteq X$ open and non-empty $\implies \overline{\mathcal{U}} = X$.
+    Take $X$ \hyperlink{def:reducible}{irreducible} affine \hyperlink{def:Z}{subvariety} of \hyperlink{def:affineSpace}{$\A^n$}. Then, $\mathcal{U} \subseteq X$ \hyperlink{def:zariski}{Zariski open} and non-empty $\Rightarrow \overline{\mathcal{U}} = X$.
 \end{lemma}
 \begin{proof}
-    Let $Y = X - \mathcal{U}$, closed. Then $\overline{\mathcal{U}} \cup Y = X$, and $\mathcal{U} \neq \emptyset \implies Y \neq X$. But $X$ is irreducible, so $\overline{\mathcal{U}} = X$.
+    Let $Y = X - \mathcal{U}$, which is closed.
+    Then $\overline{\mathcal{U}} \cup Y = X$, and $\mathcal{U} \neq \emptyset \Rightarrow Y \neq X$.
+    But $X$ is irreducible, so $\overline{\mathcal{U}} = X$.
 \end{proof}
-
-Application: Cayley-Hamilton Theorem
+% UP TO HERE
+\color{gray}
+\subsubsection*{Application: Cayley-Hamilton Theorem}
 $A \in \Mat_n(k)$, an $n \times n$ matrix, with
 \begin{equation*}
     \chara_A(x) = \det(x I - A) \in k[x]
@@ -326,6 +363,7 @@ Cayley-Hamilton theorem says that $\forall A \in \Mat_n(k)$, $\chara_A(A) = 0$. 
     So $A \in \mathcal{U} \iff D(\chara_A(x)) \neq 0$ is a polynomial in matrix coefficients of $A$.
 \end{proof}
 
+\color{black}
 \subsection{Nullstellensatz}
 Suppose $Y \subseteq \A^n$ is a subvariety,
 let $I(Y) = \set{f \in k[x_1, \dotsc, x_n] | f(Y) = 0}$.
@@ -337,41 +375,61 @@ Recall we have maps
                          & \{\text{functions from } Y \to k\}
     \end{tikzcd}
 \end{equation*}
-where the composite is constructed by restricting a function from $\A^n \to k$ to $Y \to k$. Also note that the top map is injective if $\#k = \infty$.
+where the composite is constructed by restricting a function from $\A^n \to k$ to $Y \to k$.
+Also note that the top map is injective if $k$ is infinite.
 
-\begin{defi}[Polynomial functions on subvariety]
-    Let $k[Y] = k[x_1, \dotsc, x_n]/I(Y)$ by the \textbf{polynomial functions on $Y$}, also called \textbf{regular functions}.
+\begin{defi}[Polynomial functions on subvariety]\hypertarget{def:kx}
+    Let \begin{equation*}k[Y] \coloneqq \hyperlink{def:polys}{k[x_1, \dotsc, x_n]}/\hyperlink{def:I}{I(Y)}\end{equation*} called the \textbf{polynomial functions on $Y$}, also called \textbf{regular functions}.
 \end{defi}
-We just observed that $k[Y] \to \{\text{all functions from } Y \to k\}$ is injective if $\#k = \infty$.
-We've seen $Y$ irreducible $\iff I(Y)$ is prime $\iff k[Y]$ is an integral domain.
-Now let $p \in Y$. We have a map $k[Y] \to k$, given by $f \mapsto f(p)$.
-This is an algebra homomorphism, so the kernel
+We just observed that $\hyperlink{def:kx}{k[Y]} \to \{\text{all functions from } Y \to k\}$ is injective if $k$ is infinite.
+We've also seen $Y$ \hyperlink{def:reducible}{irreducible} $\iff \hyperlink{def:I}{I(Y)}$ is \hyperlink{def:prime}{prime} $\iff \hyperlink{def:kx}{k[Y]}$ is an integral domain.
+
+Now let $p \in Y$. We have a map
+\begin{align*}
+    k[Y] &\longrightarrow k \\
+    f &\longmapsto f(p)
+\end{align*}
+This is a $k$-algebra homomorphism, so the kernel
 \begin{equation*}
-    m_p = \set{f \in k[Y] | f(p) = 0}
+    \mathfrak{m}_p = \set{f \in k[Y] | f(p) = 0}
 \end{equation*}
-is an ideal. (The homomorphism is surjective as constants go to constants).
-This is a maximal ideal, as $R/M$ a field $\iff M$ is a maximal ideal in $R$ and we have $k[Y]/m_p = k$.
+is an ideal.
+In particular, it is a maximal ideal, since here we have $k[Y]/\mathfrak{m}_p = k$, a field.
+(The homomorphism is surjective as constants go to constants).
 
-A natural question to ask now is whether or not there are any other maximal ideals in $k[Y]$?
-In particular, what are the possible surjetive algebra homomorphisms
+A natural question to ask now is: are any other maximal ideals in $\hyperlink{def:kx}{k[Y]}$?
+In particular, what are the possible surjective $k$-algebra homomorphisms
 \begin{equation*}
-    k[x_1, \dotsc, x_n] \twoheadrightarrow L, \quad k \subseteq L, L \text{ field}.
+    \begin{tikzcd}
+        k[x_1, \dotsc, x_n] \ar[r, two heads] & L
+    \end{tikzcd}
 \end{equation*}
+with $k \subseteq L$ and $L$ a field.
 
-For example, suppose $Y = Z(x^2+1)$ and $k=\R$. Then $k[Y] = \frac{\R[x]}{x^2 + 1}$ is not of the above form, since it is $\C$ instead of $\R$.
+For instance, taking $k=\R$, we can take the homomorphism given by the quotient map $\R[x] \twoheadrightarrow \R[x]/\langle x^2 + 1 \rangle$.
+This is surjective, and has image isomorphic to $\C$, so we have a new $k$-algebra homomorphism whose image is not just $k$.
+% For example, suppose $Y = \hyperlink{def:Z}{Z(x^2+1)}$ and $k=\R$. Then $k[Y] = \frac{\R[x]}{x^2 + 1}$ is not of the above form, since it is $\C$ instead of $\R$.
 
-Claim: This is the only issue. If $k = \overline{k}$, there are no other algebra homomorphisms $k[Y] \to k$ other than evaluating at points $p \in Y$, and if $k \neq \overline{k}$ you just get for $L$ algebraic extensions of $k$, as in the above example.
+Claim:
+If $k$ is algebraically closed, there are no $k$-algebra homomorphisms $\hyperlink{def:kx}{k[Y]} \to k$ other than evaluating at points $p \in Y$, (so the only surjections are onto $k$), and if $k \neq \overline{k}$ the only additional homomorphisms have $L$ an algebraic extension of $k$.
 
-\begin{thm}[Nullstellensatz, v1]
-    Let $m \subseteq k[x_1, \dotsc, x_n]$ be a maximal ideal, and $A=k[x_1, \dotsc, x_n]/m$. Then $A$ is finite dimensional over $k$.
-\end{thm}
 \begin{remark}
-    $A$ is finite dimensional over $k \iff$ every $a \in A$ is algebraic over $k$.
-    (Proof: $\Rightarrow$ clear, as $1, a, a^2, \dotsc$ can't all be linearly independent over $k$. $\Leftarrow$ image of $x_1, \dotsc, x_n$ in $A$ each satisfy an algebraic relation over $k$ and they generate $A$).
+    Take $\mathfrak{m} \subseteq \hyperlink{def:polys}{k[x_1, \dotsc, x_n]}$ be a maximal ideal, and take $A=k[x_1, \dotsc, x_n]/\mathfrak{m}$. Then $A$ is finite dimensional over $k \iff$ every $a \in A$ is algebraic over $k$.
 \end{remark}
+\begin{proof}[Proof of remark]
+    ($\Rightarrow$) is clear, as $1, a, a^2, \dotsc$ can't all be linearly independent over $k$.
+
+    ($\Leftarrow$) The images of $x_1, \dotsc, x_n$ in $A$ each satisfy an algebraic relation over $k$ and they generate $A$.
+\end{proof}
+
+\begin{thm}[Nullstellensatz, version 1]
+    Let $\mathfrak{m} \subseteq \hyperlink{def:polys}{k[x_1, \dotsc, x_n]}$ be a maximal ideal, and set $A=k[x_1, \dotsc, x_n]/\mathfrak{m}$. Then $A$ is finite dimensional over $k$.
+\end{thm}
 \begin{cor}
-    If $k$ is algebraically closed, then $k \hookrightarrow A$ is an iso, ie $A \cong k$, that is, every maximal ideal is of the form $M= (x_1 - p_1, \dotsc, x_n - p_n)$ for $p \in k^n$.
+    If $k$ is algebraically closed, then $k \hookrightarrow A$ is an isomorphism, i.e.\ $A \cong k$.
+    That is, every maximal ideal is of the form $\mathfrak{m}= \langle x_1 - p_1, \dotsc, x_n - p_n \rangle$ for $p \in k^n$.
 \end{cor}
+\color{gray}
 \begin{proof}
     $M$ a maximal ideal $\implies A$ a field, but if $k \subseteq \overline{k}$ that means $k = \overline{k}$ algebraic over $k$. Now let $a_i$ be the image of $x_i$ in $A$, and $M$ is as stated.
     So if $k = \overline{k}$, solutions of equations $I \longleftrightarrow$ max ideal $M \subseteq k[Y] \longleftrightarrow$ alg homomorphisms $k[Y] \to k$ and if $k \neq \overline{k}$, then they are `galois orbits of solutions over bigger fields'.
@@ -387,21 +445,24 @@ We can interpret this in the case $k \neq \overline{k}$ as saying: to study solu
     So they are linearly independent, but there are uncountably many $\lambda \in k$, a contradiction.
 \end{proof}
 
+\color{black}
 \begin{cor}
-    If $k = \overline{k}$, take $I \leq k[x_1, \dotsc, x_n]$ an ideal.
-    Then $Z(I) \neq \emptyset \iff I \neq k[x_1, \dotsc, x_n]$. More generally, $I \leq k[Y]$, $Z(I) \neq \emptyset \iff I \neq k[Y]$.
+    For $k = \overline{k}$, take $I \leq k[x_1, \dotsc, x_n]$ an ideal.
+    Then \begin{equation*}Z(I) \neq \emptyset \iff I \neq k[x_1, \dotsc, x_n].\end{equation*}
+    More generally, for $I \leq k[Y]$, \begin{equation*}Z(I) \neq \emptyset \iff I \neq k[Y].\end{equation*}
 \end{cor}
-Note if $k \neq \overline{k}$, this is obviously false.
+Note if $k \neq \overline{k}$, this is obviously false (for instance, $I=\langle x^2 + 1 \rangle \in \R[x]$).
 
 \begin{proof}
     For $I \leq k[Y] = k[x_1, \dotsc, x_n]/I(Y)$, replace $I$ by its inverse image in $k[x_1, \dotsc, x_n]$ to see it suffices to prove the specific case instead of the general case.
 
-    If $I \neq k[x_1, \dotsc, x_n]$, then $I \subseteq m \subsetneq k[x_1, \dotsc, x_n]$ for $m$ a maximal ideal. $I$ is contained in some maximal ideal. But Nullstellensatz gives $Z(m) = \{p\}$ for some $p \in k^n$.
-    So $Z(I) \supseteq Z(m) = \{p\} \neq 0$.
+    If $I \neq k[x_1, \dotsc, x_n]$, then $I \subseteq \mathfrak{m} \subsetneq k[x_1, \dotsc, x_n]$ for $\mathfrak{m}$ a maximal ideal, since $I$ is contained in some maximal ideal.
+    But Nullstellensatz gives $Z(\mathfrak{m}) = \{p\}$ for some $p \in k^n$.
+    Then $Z(I) \supseteq Z(\mathfrak{m}) = \{p\} \neq 0$.
 \end{proof}
 
 \begin{remark}
-    This means, any ideal of equations which aren't all the equations have a simultaneous solutions.
+    This means any ideal of equations which aren't all the equations have a simultaneous solution.
     This is equivalent to the Nullstellensatz.
 \end{remark}
 \begin{defi}[Radical ideal]
@@ -419,16 +480,19 @@ Note if $k \neq \overline{k}$, this is obviously false.
 \end{proof}
 
 \begin{eg}
+    \leavevmode
     \begin{enumerate}[label=(\arabic*)]
-        \item $\sqrt{(x^n)} = (x)$ in $k[x]$.
-        \item if $J$ is a prime ideal, $\sqrt{J} = J$.
-        \item if $f \in k[x_1, \dotsc, x_n]$ is irreducible, then $(f)$ is prime as $k[x_1, \dotsc, x_n]$ is a UFD, so $\sqrt{(f)} = (f)$.
+        \item $\sqrt{\langle x^n \rangle} = \langle x \rangle$ in $k[x]$.
+        \item If $J$ is a prime ideal, $\sqrt{J} = J$.
+        \item if $f \in k[x_1, \dotsc, x_n]$ is an irreducible, then $\langle f \rangle$ is prime as $k[x_1, \dotsc, x_n]$ is a UFD, so $\sqrt{ \langle f \rangle} = \langle f \rangle$.
     \end{enumerate}
 \end{eg}
-Observe $Z(\sqrt{J}) = Z(J)$.
-\begin{thm}[Nullstellensatz, v2]
+Observe also that $Z(\sqrt{J}) = Z(J)$.
+\begin{thm}[Nullstellensatz, version 2]
     If $k = \overline{k}$, $I(Z(J)) = \sqrt{J}$.
 \end{thm}
+
+\color{gray}
 \begin{proof}
     Let $f \in I(Z(J))$, i.e. $f(p) = 0 \forall p \in Z(J)$. We must show that $\exists n$ such that $f^n \in J$.
     Consider $k[x_1, \dotsc, x_n, t]/tf-1 \coloneqq k[x_1, \dotsc, x_n, \frac{1}{f}]$.
@@ -444,20 +508,30 @@ Observe $Z(\sqrt{J}) = Z(J)$.
     This proof uses $k[x_1, \dotsc, x_n, t]/tf-1 \twoheadleftarrow k[\A^{n+1}]$. This is $k[Y]$, where $Y = Z(tf-1) \subseteq \A^{n+1}$ and $Z(tf-1) = \set{(p, t_0) | f(p) t_0 = 1}$.
     Clearly $Y \overset{\sim}{\rightarrow} \set{p \in \A^n | f(p) \neq 0} = \A^n \setminus Z(f)$.
 \end{remark}
-We will return to this, but first lets deduce some consequences of Nullstellensatz version 2.
+\color{black}
+We will return to this, but first deduce some consequences of Nullstellensatz version 2.
 \begin{cor}
     If $k = \overline{k}$, $Z(I) = Z(J) \iff I(Z(I)) = I(Z(J)) \iff \sqrt{I} = \sqrt{J}$.
     So we have a bijection
-    % missing thing
+    \begin{equation*}
+        \begin{tikzcd}
+            \left\{\parbox{3cm}{\centering \hyperlink{def:zariski}{Zariski closed} subvarieties of \hyperlink{def:affineSpace}{$\A^n$}}\right\}
+            \ar[r, bend right, hookrightarrow, "\hyperlink{def:I}{I}", start anchor=south, end anchor=south]&
+            \left\{\parbox{4cm}{\centering Ideals $I \leq k[x_1, \dotsc, x_n]$ such that $\sqrt{I}=I$}\right\}
+            \ar[l, bend right, two heads, "\hyperlink{def:Z}{Z}", start anchor=north, end anchor=north] \\ \\
+            \text{irreducible varieties} \ar[r, leftrightarrow] & \text{prime ideals} \\
+            \text{points} \rar[leftrightarrow] & \text{maximal ideals} \\
+        \end{tikzcd}
+    \end{equation*}
 \end{cor}
 The intrinsic definition of affine varieties is a consequence (doesn't depend on the embedding of $X \hookrightarrow \A^n$).
-
 \begin{defi}[Nilpotent]
     In a ring $R$, an element $y \in R$ is \textbf{nilpotent} if $y^n = 0$ for some $n > 0$.
 \end{defi}
 \begin{eg}
     In $k[x]/x^7$, $x$ is nilpotent.
 \end{eg}
+\color{gray}
 \begin{ex}
     Let $J \leq k[x_1, \dotsc, x_n]$ be an ideal, $R = k[x_1, \dotsc, x_n]/J$. Then $J = \sqrt{J} \iff R$ has no non-zero nilpotent elements.
 \end{ex}
@@ -539,29 +613,56 @@ That is, you should think of this as saying the Zariski open $X \setminus Z(f)$ 
 \end{warning}
 
 \clearpage
+\color{black}
 \section{Projective space}
 We will define it first as a set, then as an algebraic variety (but not an affine one).
-Take $V$ a vector space over $k$, $\dim V = n+1$ for $n \geq 0$.
+Take $V$ a vector space over $k$ and $\dim V = n+1$ for $n \geq 0$.
 \begin{align*}
     \mathbb{P}V = \mathbb{P}^n &= \{\text{set of lines through } 0 \text{ in } V\} \\
                                &= (V \setminus \{0\}) /k^\times
 \end{align*}
 That is, if $v \in V$, $v \neq 0$ then $k v = \set{\lambda v | \lambda \in k}$ is a line through $0$, and conversely if $l \in \mathbb{P}V$ is a line, $l = kv$ for any $v \in l \setminus 0$.
-Choose a basis $e_0, \dotsc, e_n$ of $V$, write $V \overset{\sim}{\leftarrow} k^{n+1}$, $\sum x_i e_i \mapsfrom (x_0, \dotsc, x_n)$. If $(x_0, \dotsc, x_n) \neq (0, \dotsc, 0)$, write $[x_0: \dotsc: x_n]$ for the corresponding point in $\mathbb{P}^n$ so $[\lambda x_0: \dotsc: \lambda x_n] = [x_0: \dotsc : x_n]$.
-Claim: $\mathbb{P}^n = \A^n \amalg \mathbb{P}^{n-1}$.
-Proof: Consider $[x_0 : \dotsc : x_n] \in \mathbb{P}^n$. Either $x_n = 0$ or $x_n \neq 0$.
-If $x_n = 0$, $p = [x_0 : \dotsc : x_{n-1} : 0]$, and $p = p' = [x_0' : \dotsc : x_n']$ if and only if $x_n' =0$ and $\lambda(x_0, \dotsc, x_{n-1}) = (x_0', \dotsc, x_{n-1}')$ for some $\lambda \in k^\infty$, i.e. $p = p' \in \mathbb{P}^{n-1}$.
-If $x_n \neq 0$, then we can rescale $(x_0, \dotsc, x_n) = x_n \cdot (\frac{x_0}{x_n}, \dotsc, \frac{x_{n-1}}{x_n}, 1)$, so get $\set{p \in \mathbb{P}^n | x_n \neq 0} \cong \A^n$. sending $[X_0 : \dotsc : X_n] \to (\frac{X_0}{X_n}, \dotsc, \frac{X_{n-1}}{X_n})$.
+
+Choose a basis $e_0, \dotsc, e_n$ of $V$, write $V \overset{\sim}{\leftarrow} k^{n+1}$, $\sum x_i e_i \mapsfrom (x_0, \dotsc, x_n)$.
+If $(x_0, \dotsc, x_n) \neq (0, \dotsc, 0)$, write $[x_0: \dotsc: x_n]$ for the corresponding point in $\mathbb{P}^n$ so $[\lambda x_0: \dotsc: \lambda x_n] = [x_0: \dotsc : x_n]$.
+
+\begin{lemma}
+    $\mathbb{P}^n = \A^n \sqcup \mathbb{P}^{n-1}$.
+\end{lemma}
+\begin{proof}
+    Consider $[x_0 : \dotsc : x_n] \in \mathbb{P}^n$. Either $x_n = 0$ or $x_n \neq 0$.
+
+    If $x_n = 0$, $p = [x_0 : \dotsc : x_{n-1} : 0]$, and $p = p' = [x_0' : \dotsc : x_n']$ if and only if $x_n' =0$ and $\lambda(x_0, \dotsc, x_{n-1}) = (x_0', \dotsc, x_{n-1}')$ for some $\lambda \in k^\times$, i.e.\ $p = p' \in \mathbb{P}^{n-1}$.
+
+    If $x_n \neq 0$, then we can rescale $(x_0, \dotsc, x_n) = x_n \cdot (\frac{x_0}{x_n}, \dotsc, \frac{x_{n-1}}{x_n}, 1)$, so
+    \begin{equation*}\set{p \in \mathbb{P}^n | x_n \neq 0} \simeq \A^n,\end{equation*}
+    using the map sending
+    \begin{equation*}[x_0 : \dotsc : x_n] \to \left(\frac{x_0}{x_n}, \dotsc, \frac{x_{n-1}}{x_n}\right).\end{equation*}\qedhere
+\end{proof}
 \begin{eg}
-    $\mathbb{P}^1 = \A^1 \amalg \{\infty\}$ % picture
-    Also, $\mathbb{P}^2 = \A^2 \amalg \mathbb{P}^1 = \A^2 \amalg \A^1 \amalg \A^0$.
-    If $k = \F^q$, the number of points in $\mathbb{P}^n$ is $1 + q + \dotsc + q^n = \frac{q^{n+1}-1}{q-1}$.
+    \textbf{picture missing}
+    \begin{equation*}\mathbb{P}^1 = \A^1 \sqcup \{\infty\}\end{equation*}
+    \begin{equation*}
+        \mathbb{P}^2 = \A^2 \sqcup \mathbb{P}^1 = \A^2 \sqcup \A^1 \sqcup \A^0
+    \end{equation*}
+    If $k = \F_q$, the number of points in $\mathbb{P}^n$ is $1 + q + \dotsc + q^n = \frac{q^{n+1}-1}{q-1}$.
 \end{eg}
-To phrase the above claim without coordinates, choose $H \leq V$ a vector subspace of codimension 1, and $w_0 \in V \setminus H$.
-Then we have maps $\mathbb{P}H \hookrightarrow \mathbb{P} V \hookleftarrow H$ where the first map is $kv \mapsto kv$ and the second has $k(w_0 + h) \mapsfrom h$.
-This gives $\mathbb{P}V \setminus \mathbb{P}H \overset{\sim}{\leftarrow} H$, in particular $\mathbb{P}V \setminus \mathbb{P}H \cong \A^n$.
-So decomposition $\mathbb{P}V = \mathbb{P}H \amalg$ a space isomorphic to $\A^n$ depends only on the choice of a hyperplane $H$ but the isomorphism $\A^n \to \mathbb{P}V \setminus \mathbb{P}H$ depends on choice of $w_0 \in V \setminus H$.
-Exercise: How does changing $w_0$ to $w_0'$ change the isomorphism?
+To phrase the above lemma without coordinates, choose $H \leq V$ a vector subspace of codimension 1, and $w_0 \in V \setminus H$.
+For instance, we could use $H = \set{(x_0, \dotsc, x_n) \in V | x_n = 0}$ and $w_0 = (0, 0, \dotsc, 0, 1)$.
+Then we have maps
+
+\begin{equation*}
+    \begin{tikzcd}[row sep=tiny]
+        \proj H \rar[hook] & \proj V & H \lar[hook'] \\
+        kv \rar[mapsto] & k v \\
+                        & k(w_0 + h) \rar[mapsfrom] & h
+    \end{tikzcd}
+\end{equation*}
+This gives $\mathbb{P}V \setminus \mathbb{P}H \xleftarrow{\sim} H$, in particular $\mathbb{P}V \setminus \mathbb{P}H \simeq \A^n$.
+So the decomposition $\mathbb{P}V = \mathbb{P}H \sqcup$ (a space isomorphic to $\A^n$) depends only on the choice of a hyperplane $H$ but the isomorphism $\A^n \to \mathbb{P}V \setminus \mathbb{P}H$ depends on the choice of $w_0 \in V \setminus H$.
+\begin{ex}
+How does changing $w_0$ to $w_0'$ change the isomorphism?
+\end{ex}
 
 % Lecture 7
 
@@ -572,29 +673,61 @@ Exercise: How does changing $w_0$ to $w_0'$ change the isomorphism?
 % GLn acts transitively on (n+1) hyperplanes when things intersect
 
 % repeat for P2, taking A real again
-So, $P^2 \twoheadleftarrow U_0 \amalg U_1 \amalg U_2$.
-We have $U_i \cap U_j = \set{[x_0:\dotsm:x_n] | x_i \neq 0, x_j \neq 0} \cong \A^{n+1} \times (\A^1 \setminus \{0\})$.
-The congruence here follows by embedding $U_i \cap U_j \hookrightarrow U_i$, and the image is points where $x_j/x_i \neq 0$.
-In particular, we have $U_i \xrightarrow{\sim} \A^n$, with $x \mapsto (\frac{x_0}{x_i}, \dotsc, \frac{x_n}{x_i})$, where $1=x_i/x_i$ is omitted.
+\textbf{Pictures missing}
+
+% From this, $P^2 \twoheadleftarrow U_0 \sqcup U_1 \sqcup U_2$.
+Define
+\begin{align*}
+    H_i       &= \set{(x_0, \dotsc, x_n) | x_i = 0} \subset k^{n+1} \\
+    \proj H_i &= \set{ x\in \proj^n | x_i = 0} \\
+    U_i       &= \set{x \in \proj^n | x_i \neq 0} = \proj^n \setminus \proj H_i
+\end{align*}
+We have
+\begin{equation*}U_i \cap U_j = \set{[x_0:\dotsm:x_n] | x_i \neq 0, x_j \neq 0} \cong \A^{n+1} \times (\A^1 \setminus \{0\}).\end{equation*}
+The congruence here follows by embedding $U_i \cap U_j \hookrightarrow U_i$; the image is points where $x_j/x_i \neq 0$.
+In particular,
+\begin{equation*}
+    \begin{tikzcd}[row sep=small]
+        U_i \rar["~"] & \A^n \\
+        x \rar[mapsto] & \left(\dfrac{x_0}{x_i}, \dotsc, \dfrac{x_n}{x_i}\right)
+    \end{tikzcd}
+\end{equation*}
+where $1=x_i/x_i$ is omitted.
 So, this lets us see projective space as covered by open sets (analogous to charts on a manifold).
 % finitary data
 % done in the handout apparently
 \begin{defi}
-    $X \subseteq \proj^n$ is Zariski closed if $X \cap U_i$ is Zariski closed in $U_i=\A^n$ for each $i=0, \dotsc, n$.
+    $X \subseteq \proj^n$ is Zariski closed if $X \cap U_i$ is Zariski closed in $U_i\simeq \A^n$ for each $i=0, \dotsc, n$.
 \end{defi}
-Recall $E_0 = \set{(x, y) \in A^2 | y^2 = x^3 - x}$. Sit this inside $P^2 = [X:Y:Z]$ via $\A^2 \xrightarrow{\sim} U_2 = \{Z \neq 0\} \subseteq \proj^2$.
-That is, $[X:Y:Z] \mapsto (x/z, y/z)$.
-So, $x = \frac{X}{Z}$ and $y=\frac{Y}{Z}$. The equation $y^2 = x^3 - x$ becomes $Y^2/Z^2 = X^3 / Z^3 - X/Z$, and $Z \neq 0$ so the equation is $Y^2 Z = X^3 - XZ^2$ (for $Z \neq 0$).
-Hence, $E_0 = \set{[X:Y:Z] | Y^2 Z = X^3 - X Z^2, Z \neq 0} \in \proj^2$.
+Recall $E_0 = \set{(x, y) \in \A^2 | y^2 = x^3 - x}$. Sit this inside $\proj^2$ with coordinates $[X:Y:Z]$ by considering the map
+\begin{equation*}
+    \begin{tikzcd}[row sep=tiny]
+        U_2 = \set{[X:Y:Z] | Z \neq 0} \subseteq \proj^2 \rar["~"] & \A^2 \\
+        {[X:Y:Z]} \rar[mapsto] & (X/Z, Y/Z)
+    \end{tikzcd}
+\end{equation*}
+
+So, the inverse gives $x = \frac{X}{Z}$ and $y=\frac{Y}{Z}$.
+The equation $y^2 = x^3 - x$ becomes
+\begin{align*}
+    Y^2/Z^2 &= X^3 / Z^3 - X/Z \\
+    \implies Y^2 Z &= X^3 - XZ^2 \qquad (\text{for } Z \neq 0)
+\end{align*}
+Hence,
+\begin{equation*}
+E_0 = \set{[X:Y:Z] | Y^2 Z = X^3 - X Z^2, Z \neq 0} \in \proj^2.
+\end{equation*}
 
 % complement of three lines, so chart Y!=0 needs to miss out third line
-On the chart $Z \neq 0$, we have the original equation $y^2 = x^3 - x$.
-On $Y \neq 0$, take $x = \frac{X}{Y}$, $z = Z/Y$, i.e. set $Y=1$, get $z = x^3 - xz^2$ for $z \neq 0$.
-For the chart $X \neq 0$, take $y = Y/X$, $z = Z/X$ get $y^2 z = 1 - z^2$ and $z \neq 0$.
+\begin{itemize}[label=--]
+    \item On the chart $Z \neq 0$, we have the original equation $y^2 = x^3 - x$.
+    \item On $Y \neq 0$, take $x = \frac{X}{Y}$, $z = \frac{Z}{Y}$, i.e. set $Y=1$, get $z = x^3 - xz^2$ for $z \neq 0$.
+    \item For the chart $X \neq 0$, take $y = Y/X$, $z = Z/X$ get $y^2 z = 1 - z^2$ and $z \neq 0$.
+\end{itemize}
 So now take the closure of $E^0$ in $\proj^2$, which means ignore the condition $z \neq 0$. What, if any, extra points have we added?
 On the chart $Y \neq 0$, if $Z = 0$ get $x^3 = 0$ the unique extra point $[0:1:0]$ % adding Z=0, Y!=0 back in gave one extra point
 On the chart $X \neq 0$, if $Z=0$ get $1 = 0$, no solutions, so no extra points are added.
-So, the closure of $E^0$ is $E_0 \amalg *$, just as we wanted.
+So, the closure of $E^0$ is $E_0 \sqcup *$, just as we wanted.
 
 More generally, if we have $I \leq k[x_1, \dotsc, x_n]$ an ideal, $Z = Z(I) \subseteq \A^n$, we can ask what the closure of $Z$ is in $\proj^n$ using $\A^n \to \proj^n$ given by $(x_1, \dotsc, x_n) \mapsto [1:x_1:\dotsm:x_n]$.
 
@@ -718,23 +851,24 @@ Let $X \subseteq \A^n$ be an affine variety, $p \in X$. Write $X = Z(I)$, $I = \
 We would like to think about the tangent space to $X$ at $p$, a vector space.
 Our tentative definition is
 \begin{align*}
-    T_p X &= \set{v \in \A^n | \sum v_i \frac{\partial f_j}{\partial x_i}(p) = 0, j = 1,\dotsc, r} \\
-    &= \set{v \in \A^n | \sum v_i \frac{\partial f}{\partial x_i}(p) = 0, \forall f \in I}
+    T_p X &= \Set{v \in \A^n | \sum v_i \frac{\partial f_j}{\partial x_i}(p) = 0, j = 1,\dotsc, r} \\
+    &= \Set{v \in \A^n | \sum v_i \frac{\partial f}{\partial x_i}(p) = 0, \forall f \in I}
 \end{align*}
 For example, take $I = \langle y^2 - x^3 \rangle$.
 % pic
 Then
 \begin{equation*}
-    T_{(p_1, p_2)} X = \set{(v_1, v_2) | v_1 (-3p_1^2) + v_2 (2 p_2) = 0, -3p_1^2 v_1 + 2p_2 v_2 = 0}
+    T_{(p_1, p_2)} X = \Set{(v_1, v_2) | v_1 (-3p_1^2) + v_2 (2 p_2) = 0}.
 \end{equation*}
 So if $(p_1, p_2) \neq (0, 0)$ then $T_{(p_1, p_2)} X$ is a line, and if $(p_1, p_2) = (0, 0)$ then $T_{(p_1, p_2)} X = \A^2$.
 \begin{remark}
     You can think of $T_p X$ as sitting at $p \in X$, by translating $v \mapsto v + p$.
     So,
     \begin{equation*}
-        \simeq \set{v \in \A^n | \sum (v_i - p_i) \frac{\partial f}{\partial x_i} (p) = 0, \forall f \in I}
+        T_p X \simeq \set{v \in \A^n | \sum_i (v_i - p_i) \frac{\partial f}{\partial x_i} (p) = 0, \forall f \in I}.
     \end{equation*}
-    We can think of this as a linear approximation to the variety, $f(x) = f(p) + \sum (x_i - p_i) \frac{\partial f}{\partial x_i} + $ higher order terms.
+    We can think of this as a linear approximation to the variety:
+    \begin{equation*}f(x) = f(p) + \sum_i (x - p_i) \frac{\partial f}{\partial x_i} + \text{ higher order terms}.\end{equation*}
 \end{remark}
 \begin{lemma}
     \begin{equation*}
@@ -743,48 +877,55 @@ So if $(p_1, p_2) \neq (0, 0)$ then $T_{(p_1, p_2)} X$ is a line, and if $(p_1, 
     is a Zariski closed subvariety of $X$, for all $d \geq 0$.
 \end{lemma}
 \begin{proof}
+    Let $X = Z(I)$, where $I = \langle f_1, \dotsc, f_r \rangle$. Then write
     \begin{equation*}
-        T_p X = \ker
-        \begin{bmatrix}
+        T_p X = \ker A, \quad
+        A =
+        \begin{pmatrix}
             \frac{\partial f_1}{\partial x_1} & \dots & \frac{\partial f_1}{\partial x_n} \\
             \vdots & \ddots & \vdots \\
             \frac{\partial f_r}{\partial x_1} & \dots & \frac{\partial f_r}{\partial x_n} \\
-        \end{bmatrix}
+        \end{pmatrix}
     \end{equation*}
-    and recall $\dim(\ker A) + r(A) = 0$.
-    So, $\dim \ker \geq d \iff n - \text{rank} \geq d \iff rank \leq n - d$.
-    But the rank of a matrix is greater than $a \iff$ exists some $a \times a$ submatrix with non-zero determinant.
-    So, $\text{rank}(\frac{\partial f_j}{\partial x_i}) \leq d \iff \text{all } (n - d + 1) \times (n - d + 1)$ subminors have zero determinant which is a collection of polynomial equations.
-    That is, $I \set{p \in X | \dim T_p X \geq d} = \langle f_1, \dotsc, f_r, \text{ determinants of all subminors} \rangle$.
+    where $A: k^n \to k^r$ is a linear map.
+    Recall $\dim(\ker A) + \text{rank}(A) = 0$ by the rank-nullity theorem.  So,
+    \begin{align*}
+        \dim \ker A \geq d &\iff n - \text{rank} A \geq d \\&\iff \text{rank} A \leq n - d.
+    \end{align*}
+    But the rank of a matrix is greater than $a$ if and only if there exists some $a \times a$ submatrix with non-zero determinant.
+    So, $\text{rank}(A) \leq d \Leftrightarrow \text{all } (n - d + 1) \times (n - d + 1)$ subminors have zero determinant which is a collection of polynomial equations.
+    That is,
+    \begin{equation*}I (\set{p \in X | \dim T_p X \geq d}) = \langle f_1, \dotsc, f_r, \text{ determinants of all subminors} \rangle.\end{equation*}
 \end{proof}
 The problem with the definition from earlier was that it depends on an embedding, and we want a definition of $T_p X$ which doesn't depend on embedding $X \hookrightarrow \A^n$.
 \begin{defi}\hypertarget{def:derivation}
-    Take $A$ an algebra over $k$, and $\phi: A \to k$ a homomorphism. (For example, take $A = k[X]$, $\phi = \text{ev}_p: f \mapsto f(p)$.)
-    A \textbf{derivation} `centered at $\phi$' is a $k$-linear map $D: A \to k$ such that
+    Take $A$ an algebra over $k$, and $\varphi: A \to k$ a homomorphism. (For example, consider $A = k[X]$, $\varphi = \text{ev}_p: f \mapsto f(p)$.)
+
+    A \textbf{derivation} `centered at $\varphi$' is a $k$-linear map $D: A \to k$ such that
     \begin{equation*}
-        D(fg) = D f \phi (g) + \phi(f) Dg \tag{Leibniz rule}
+        D(fg) = D f \varphi (g) + \varphi(f) Dg \tag{Leibniz rule}
     \end{equation*}
-    Write $\Der(A, \phi)$ for the set of such derivations, a vector space over $k$.
+    Write $\Der(A, \varphi)$ for the set of such derivations, a vector space over $k$.
 \end{defi}
 \begin{eg}
     Take $A = k[x_1, \dotsc, x_n]$, $p \in \A^n$.
     If $(v_1, \dotsc, v_n) \in \A^n$, then $D(f) = \sum v_i \frac{\partial f}{\partial x_i} (p)$ is a \hyperlink{def:derivation}{derivation} centered at $\text{ev}_p$.
-    Moreover, it is the unique derivation with $D(x_i) = v_i$.
+    Moreover, it is the unique derivation with $D(x_i) = v_i$. Exercise: Show it is unique.
+
+    Conversely, given $D \in \Der(A, \dotsc, x_n], ev_p)$, we get $v_i = D(x_i)$ so $\Der(A, \text{ev}_p) = T_p \A^n$.
 \end{eg}
-\begin{ex}
-    Show it is unique.
-\end{ex}
-Conversely, given $D \in \Der(k[x_1, \dotsc, x_n], \text{ev}_p)$, get $v_i = D(x_i)$ so $\Der(k[x_1, \dotsc, x_n], \text{ev}_p) = T_p \A^n$.
 More generally,
 \begin{lemma}
     Let $A = \hyperlink{def:polys}{k[x_1, \dotsc, x_n]}/\langle f_1, \dotsc, f_r \rangle = k[X]$ and take $p \in X$.
-    \begin{equation*}
-        \Der(A, \text{ev}_p) = \set{D = \sum v_i \frac{\partial}{\partial x_i} |_p | D \langle f_1, \dotsc, f_r \rangle = 0 \text{ in } k[X]}
-    \end{equation*}
+    \begin{align*}
+        \Der(A, \text{ev}_p) &= \Set{D = \sum_i v_i \frac{\partial}{\partial x_i}\Big\rvert_p | D \langle f_1, \dotsc, f_r \rangle = 0 \text{ in } k[X]} \\
+                             &= \Set{D = \sum_i v_i \frac{\partial}{\partial x_i}\Big\rvert_p | \sum_i v_i \frac{\partial f_j}{\partial x_i}(p) = 0 \ \forall j}
+    \end{align*}
 \end{lemma}
 \begin{proof}
     Can be seen as above.
-    Alternatively, $\Der(k[X], \text{ev}_p)$ determines $\tilde{D} \in \Der(k[x_1, \dotsc, x_n], \text{ev}_p)$ and then the condition $\tilde{D}$ descends to a map $k[X] \to k$ is the condition $D\langle f_1, \dotsc, f_r \rangle = 0$.
+    Alternatively, $D \in \Der(k[X], \text{ev}_p)$ determines $\tilde{D} \in \Der(k[x_1, \dotsc, x_n], \text{ev}_p)$ and then the condition $\tilde{D}$ descends to a map $k[X] \to k$ is the condition $D\langle f_1, \dotsc, f_r \rangle = 0$.
+    % more details?
 \end{proof}
 This gives us a better definition of tangent space:
 \begin{defi}[Intrinsic definition of tangent space]
@@ -794,19 +935,21 @@ This gives us a better definition of tangent space:
 \end{defi}
 We can almost immediately conclude that this gives a definition for any algebraic variety.
 \begin{ex}
-    Let $V = X \setminus Z(f)$, $f \in k[X]$ be a Zariski open affine subvariety of $X$, i.e.\
+    Let $V = X \setminus Z(f)$, for $f \in k[X]$ be a Zariski open affine subvariety of $X$, i.e.\
     \begin{equation*}
-        k[V] = k[X][\frac{1}{f}].
+        k[V] = k[X]\left[\frac{1}{f}\right].
     \end{equation*}
-    Show $T_p X \cong T_p X$ a canoncial isomorphism, i.e. that $\Der(k[X][\frac{1}{f}], \text{ev}_p) \xrightarrow{\sim} \Der(k[X], \text{ev}_p)$.
+    Show that $T_p V \cong T_p X$ under a canonical isomorphism, i.e.\ that
+    \begin{equation*}\Der\left(k[X]\left[\frac{1}{f}\right], \text{ev}_p\right) \xrightarrow{\sim} \Der(k[X], \text{ev}_p)\end{equation*}
+    for $f(p) \neq 0$.
 \end{ex}
 So now $T_p X = T_p U$, for $U$ any Zariski open subvariety: the tangent space is Zariski local.
 % pic
 
 \begin{eg}
-    Take $X = \proj^n$, $p = [p_0: p_1: \dotsb: p_n]$. If $p_0 \neq 0$, $p = [1: \frac{p_1}{p_0} : \dotsb : \frac{p_n}{p_0}] = \iota(\bar{p})$, the embedding of some $\bar{p} \in \A^n \hookrightarrow \proj^n$. THen
+    Take $X = \proj^n$, $p = [p_0: p_1: \dotsb: p_n]$. If $p_0 \neq 0$, $p = [1: \frac{p_1}{p_0} : \dotsb : \frac{p_n}{p_0}] = \iota(\bar{p})$, the embedding of some $\bar{p} \in \A^n \hookrightarrow \proj^n$. Then
     \begin{equation*}
-        T_p \proj^n = T_{\bar{p}} \A^n = \A^n
+        T_p \proj^n = T_{\bar{p}} \A^n = \A^n.
     \end{equation*}
 \end{eg}
 \begin{defi}
@@ -820,7 +963,7 @@ So now $T_p X = T_p U$, for $U$ any Zariski open subvariety: the tangent space i
 \end{eg}
 If $X$ is not irreducible, the dimension is not such a great concept.
 \begin{defi}
-    If $X$ is arbitrary, $\dim X \coloneqq \max{\dim X_i | X_i \text{ a \hyperlink{def:component}{component} of } X}$.
+    If $X$ is arbitrary, $\dim X \coloneqq \max\set{\dim X_i | X_i \text{ a \hyperlink{def:component}{component} of } X}$.
 \end{defi}
 \begin{defi}
     If $X$ is irreducible, $p \in X$ is \textbf{smooth} if $\dim T_p X = \dim X$, and singular otherwise and we've shown singular points in $X$ form a Zariski closed subvariety, whose complement is non-empty. % (lemma from earlier in lecture)
@@ -870,8 +1013,8 @@ There are two other notions of dimension:
         \begin{enumerate}[label=(\roman*)]
             \item $k(\A^n) = k(x_1, \dotsc, x_n)$
             \item $k(\proj^n) = k(\frac{x_1}{x_0}, \dotsc, \frac{x_n}{x_0}) \simeq k(\frac{x_0}{x_n}, \dotsc, \frac{x_{n-1}}{x_n})$ since $\frac{x_i}{x_0} \cdot \frac{x_0}{x_n} = \frac{x_i}{x_n}$.
-            \item if $E = \set{(x, y) | y^2 = x^3 - x}$, then $k(E) = k(x)[y]/y^2 = x^3 - x$
-            \item $X = \set{(x, y) | y^2 = x^3}$, $k(X) = k(x)[y] / y^2 = x^3$
+            \item if $E = \set{(x, y) | y^2 = x^3 - x}$, then $k(E) = k(x)[y]/\langle y^2 = x^3 - x \rangle$
+            \item $X = \set{(x, y) | y^2 = x^3}$, $k(X) = k(x)[y] / \langle y^2 = x^3 \rangle$
         \end{enumerate}
 
         Now we can define $\text{trdim} X =$ the transcendance dimension of extension $k \subseteq k(X)$.
@@ -912,7 +1055,7 @@ In this situation, we have a lemma
     (a). Let $U = \set{y \in Y | a_N(y) \neq 0} = Y \setminus Z(a_N)$ is Zariski open.
 \end{proof}
 \begin{ex}
-    If $f: X \to Y$ is a morphism of affine varieties then we get $\forall p \in X$, a map $df: T_p X \to T f(p) Y$
+    If $f: X \to Y$ is a morphism of affine varieties then we get $\forall p \in X$, a map $df: T_p X \to T_{f(p)} Y$
 \end{ex}
 \begin{prop}
     In the same situation as above, exists a Zariski open $U \subseteq Y$ such that $\forall (y_0, t_0) \in X$ such that $y_0 \in U$, and the natural map $T_{(y_0, t_0)} X \to T_{y_0} Y$ is an isomorphism.
@@ -920,7 +1063,7 @@ In this situation, we have a lemma
 \begin{proof}
     Let $Y \subseteq \A^n$, so $T_{y_0} Y = \set{v \in \A^n | \sum v_i \frac{\partial h}{\partial x_i}(y_0) = 0, \forall h \in I(Y)}$ and
     \begin{equation*}
-        T_{(y_0, t_0)} X = \set{(v, \gamma) \in \A^n \times \A^1 | \sum v_i \frac{\partial h}{\partial x_i}(y_0) = 0, \forall h \in I(Y), \text{and } \sum v_i \frac{\partial f}{\partial x_i} (y_0, t_0) + \gamma \frac{\partial f}{\partial t}(y_0, t_0) = 0}.
+        T_{(y_0, t_0)} X = \Set{(v, \gamma) \in \A^n \times \A^1 | \sum v_i \frac{\partial h}{\partial x_i}(y_0) = 0, \forall h \in I(Y), \text{and } \sum v_i \frac{\partial f}{\partial x_i} (y_0, t_0) + \gamma \frac{\partial f}{\partial t}(y_0, t_0) = 0}.
     \end{equation*}
     as $I(X) = \langle I(Y), f \rangle$ but this is
     \begin{equation*}
@@ -1032,7 +1175,7 @@ Noether normalisation restate: $A$ is a finitely generated algebra over a field 
 \end{enumerate}
 Moreoever, if $k$ is perfect, then $F_i$ can be chosen to be separable.
 \begin{defi}[Perfect]
-    A field $k$ is perfect if $\char k = p > 0$ and $x \mapsto x^p$ is a surjection.
+    A field $k$ is perfect if $\chara k = p > 0$ and $x \mapsto x^p$ is a surjection.
 \end{defi}
 \begin{remark}
     In particular, $A \supseteq B \coloneqq k[x_1, \dotsc, x_d]$ and $B \subseteq A$ is an integral ring extension.
@@ -1103,6 +1246,7 @@ What follows is an algebraic replacement for this.
         \item $\bigcap_{n \geq 1} \mathfrak{m}^n = \{0\}$.
     \end{enumerate}
 \end{thm}
+(This is a replacement for implicit function theorem)
 \begin{proof}
     Let $X_0 \subseteq X$ be an affine open neighbourhood of $p$, i.e.\ $p \in X_0$, $k[X_0] = k[x_1, \dotsc, x_n] / I$ and $X_0$ is a curve.
     We can assume, by changing variables, that $p = (0, 0, \dotsc, 0)$.
