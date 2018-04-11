@@ -1147,6 +1147,13 @@ It now only remains to prove \nameref{lem:goldstine}.
     \end{equation*}
 \end{proof}
 
+\begin{remark}
+  We proved that $\hyperlink{def:refl}{\Phi}(\overline{B}_E)$ is \hyperlink{def:weakStar}{weak-$*$} dense in $\overline{B}_{E''}$.
+  Observe it is also strongly closed in \hyperlink{def:doubleDual}{$E''$}: If $\Phi(f_n)$ is convergent in $(E'', \|\cdot\|_{E''})$, it is Cauchy.
+  $\Phi$ is an isometry, so $f_n$ is also Cauchy in $E$, hence converges.
+  So, $\lim \Phi(f_n) = \Phi(\lim f_n) \in \Phi(\overline{B}_E)$, and so $\Phi(\overline{B}_E)$ is never dense in $\overline{B}_{E''}$ when $E$ is not reflexive.
+\end{remark}
+
 \begin{cor}\leavevmode
     \begin{enumerate}[label=(\roman*)]
         \item A closed subspace of a \hyperlink{def:refl}{reflexive} Banach space is reflexive.
@@ -1155,13 +1162,16 @@ It now only remains to prove \nameref{lem:goldstine}.
 \end{cor}
 \begin{proof}\leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item Take $M$ a closed subspace of $E$, then check (exercise) $\sigma(E, E') \cap M = \sigma(M, M')$, and that $\overline{B}_M$ is $\sigma(E, E')$ closed.
-            By the Kakutani theorem, $\overline{B}_E$ is $\sigma(E, E')$ compact, so $\overline{B}_M$ is precompact hence compact in $\sigma(M, M')$.
-            Again using Kakutani, this gives that $M$ is reflexive.
-        \item First show that $E$ reflexive $\implies E'$ is reflexive, the identification $\Phi$ of $E$ with $E''$ shows $\sigma(E', E) = \sigma(E', E'')$.
-            Thus BAB shows $\overline{B}_E'$ is compact in $\sigma(E', E'')$ so $\sigma(E', E)$ compact. Hence by Kakutani, $E'$ is reflexive.
-            Conversely, if $E'$ is reflexive then by the previous case, $E''$ is reflexive, and $\Phi(E)$ is a closed subspace of $E''$ hence reflexive.
-            $E$ is isometric to it, so is reflexive.
+        \item Take $M$ a closed subspace of $E$, then check (exercise) $\sigma(E, E') \cap M = \sigma(M, M')$.
+            In addition, $\overline{B}_M$ is strongly closed, hence is $\sigma(E, E')$ closed (see sheet 2, question 2(ii)).
+            By \nameref{thm:kaku}, $\overline{B}_E$ is $\sigma(E, E')$ compact, and hence $\overline{B}_M$ is a closed subset of a compact set, hence compact in $\sigma(E, E')$ and so compact in $\sigma(M, M')$.
+            Again using \nameref*{thm:kaku}, this gives that $M$ is reflexive.
+        \item ($\Rightarrow$) The identification $\Phi$ of $E$ with $E''$ shows $\sigma(E', E) = \sigma(E', E'')$.
+            Thus \nameref{thm:bab} shows $\overline{B}_{E'}$ is compact in $\sigma(E', E'')$ so also $\sigma(E', E)$ compact.
+            Hence by \nameref{thm:kaku}, $E'$ is reflexive.
+
+            ($\Leftarrow$) Conversely, if $E'$ is reflexive then by the ($\Rightarrow$) direction, $E''$ is reflexive, and $\Phi(E)$ is a closed subspace of $E''$ hence reflexive.
+            $E$ is isometric to it, so is reflexive. \qedhere
     \end{enumerate}
 \end{proof}
 
