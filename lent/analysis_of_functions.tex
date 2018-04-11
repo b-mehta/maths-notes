@@ -1057,8 +1057,15 @@ and weak-$*$ refers to the topology $\sigma(E', E)$.
 \begin{thm}[Kakutani's theorem]\label{thm:kaku}
     A Banach space $E$ is \hyperlink{def:refl}{reflexive} iff its closed unit ball is weakly compact. (Compact in \hyperlink{def:weak}{$\sigma(E, E')$}).
 \end{thm}
-\begin{proof}
-    $(\Rightarrow)$. $B_E(0, 1)$ is $\Phi^{-1}(B_{E''}(0, 1))$ so it is enough to prove that $\Phi^{-1}$ is continuous:
+
+Denote the closed unit ball in some space $M$ as by $\overline{B}_M$.
+For one direction of this result, we make use of an important lemma by Goldstine:
+\begin{lemma}[Goldstine's lemma]\label{lem:goldstine}
+  For a Banach space $E$, $\hyperlink{def:refl}{\Phi(}\overline{B}_E)$ is dense in $\overline{B}_{E''}$ with the \hyperlink{def:weakStar}{weak-$*$} topology $\sigma(E'', E')$.
+\end{lemma}
+We defer the proof of this.
+\begin{proof}[Proof of \nameref{thm:kaku}]
+    $(\Rightarrow)$ By \hyperlink{def:refl}{reflexivity} (and isometry), $\overline{B}_E=\Phi^{-1}(\overline{B}_{E''})$ so it is enough to prove that
     \begin{equation*}
         \Phi^{-1}: (E'', \sigma(E'', E')) \longrightarrow (E, \sigma(E, E'))
     \end{equation*}
@@ -1076,12 +1083,21 @@ and weak-$*$ refers to the topology $\sigma(E', E)$.
                                  &= F(f) \\
                                  &=\varphi_f(F) = \varphi(F).
     \end{align*}
-    The map $\psi_F: \varphi \in E'' \longmapsto \varphi(F)$ is one of the maps generating $\sigma(E', E')$, hence continuous in this topology.
+    Hence $\psi_F \coloneqq F \circ \Phi^{-1}: \varphi \in E'' \mapsto \varphi(F)$, which is one of the maps generating $\sigma(E'', E')$, hence continuous in this topology.
 
-    $(\Leftarrow)$. The reverse implication relies on a lemma by Goldstine:
-    \begin{lemma}
-        For a Banach space $E$, $\Phi(B_E(0, 1))$ is dense in $B_E''(0, 1)$ for the weak-$*$ topology $\sigma(E'', E')$.
-    \end{lemma}
+    $(\Leftarrow)$ The reverse implication relies on \nameref{lem:goldstine}, which gives that $\Phi(\overline{B}_E) \subset \overline{B}_{E''}$ is weak-$*$ dense.
+    If it is weak-$*$ closed we are done, and we prove the stronger fact that it is compact (compact sets in a Hausdorff space are closed).
+    We have that $\overline{B}_E$ is weakly compact, so it is enough to have that
+    \begin{equation*}
+        \Phi: (E, \sigma(E, E')) \longrightarrow (E'', \sigma(E'', E'))
+    \end{equation*}
+    is continuous. First we show $\Phi: (E, \sigma(E, E')) \to (E'', \sigma(E'', E'''))$ is continuous.
+    This is equivalent to the statement that $\zeta \circ \Phi: (E, \sigma(E, E')) \to \R$ is continuous $\forall \zeta \in E'''$.
+
+    However $\zeta: (E'', \norm{\cdot}_{E''}) \to \R$ is continuous, and $\Phi: (E, \norm{\cdot}_E) \to (E'', \norm{\cdot}_{E''})$ is continuous, so $\zeta \circ \Phi: (E, \norm{\cdot}_E) \to \R$ is continuous.
+    Hence, $\zeta \circ \Phi \in E'$, so $\zeta \circ \Phi: (E, \sigma(E, E')) \to \R$ is continuous, by definition of the weak topology.
+
+    Moreover, since the weak-$*$ topology is weaker than the weak topology, this implies that $\Phi: (E, \sigma(E, E')) \to (E'', \sigma(E'', E'))$ is continuous, giving the required result.
     % $\Phi$ is continuous $E \to E''$ with the strong topologies, so it is continuous for the weak topologies $(E, \sigma(E, E')) \longrightarrow (E'', \sigma(E'', E'''))$.
     % This means $\forall \zeta \in E'''$,
     % some missing things
@@ -1101,10 +1117,34 @@ It now only remains to prove \nameref{lem:goldstine}.
 \begin{proof}[Proof of \nameref{lem:goldstine}]
     Consider $\varphi \in \overline{B}_{E''}$ and $V$ a neighbourhood of $\varphi$ for $\sigma(E'', E')$ that we take to be (wlog)
     \begin{equation*}
-        V = \set{\psi \in E'' | \abs{\psi(F_i) - \phi(F_i)} < \epsilon} \quad \text{for some $\epsilon > 0$, $F_1, \dotsc, F_k \in E'$}
+        V = \Set{\psi \in E'' | \abs{\psi(F_i) - \varphi(F_i)} < \epsilon} \quad \text{for some $\epsilon > 0$, $F_1, \dotsc, F_k \in E'$}
     \end{equation*}
-    Our goal is to find $f \in B_E$ such that $\abs{\varphi_f(F_i) - \varphi(F_i)} < \epsilon$, $i = 1, \dotsc, k$.
-    (end of argument coming soon).
+    Denote $\alpha_i \coloneqq \varphi(F_i)$. Our goal is to show
+    \begin{align*}
+        \exists f \in \overline{B}_E: \quad |\varphi_f(F_i) - \varphi(F_i)| &< \epsilon, \quad i = 1, \dotsc, k \tag{$*$}\label{2.4star}\\
+        |F_i(f) - \alpha_i| &< \epsilon.
+    \end{align*}
+    Now observe that $\forall \vec{\beta} \in \R^k$,
+    \begin{equation*}
+        \abs{\vec{\alpha} \cdot \vec{\beta}} = \abs{\sum \beta_i \alpha_i} = \abs{\varphi\left(\sum \beta_i F_i\right)} \leq \norm{\sum_{i=1}^k \beta_i F_i}_{E'}
+    \end{equation*}
+    since $\norm{\varphi}_{E''} \leq 1$.
+
+    Define the linear continuous map
+    \begin{align*}
+        H : E &\longrightarrow \R^k \\
+        f &\longmapsto (F_1(f), \dotsc, F_k(f)),
+    \end{align*}
+    If property \eqref{2.4star} fails, then $\vec{\alpha} \notin \overline{H(\overline{B}_E)}$.
+    But observe $\overline{H(\overline{B}_E)}$ is a closed, bounded convex subset of $\R^k$.
+    Separation in $\R^k$ gives that $\exists \vec{\beta} \in \R^k$, $\gamma \in \R$ such that
+    \begin{equation*}
+        \forall f \in \overline{B}_E \quad H(f) \cdot \vec{\beta} < \gamma < \vec{\alpha} \cdot \vec{\beta}.
+    \end{equation*}
+    But this contradicts the earlier observation, since
+    \begin{equation*}
+        \norm{\sum_{i=1}^k \beta_i F_i}_{E'} = \sup_{\norm{f}_E \leq 1} \left(H(f) \cdot \vec{\beta}\right) \leq \gamma < \vec{\alpha} \cdot \vec{\beta}. \qedhere
+    \end{equation*}
 \end{proof}
 
 \begin{cor}\leavevmode
