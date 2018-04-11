@@ -16,6 +16,7 @@
 \usepackage{bbm}
 \usepackage{bm}
 \usepackage{wrapfig}
+\usepackage{xfrac}
 \usetikzlibrary{arrows,decorations.pathmorphing,decorations.markings,positioning}
 % \renewcommand{\thesection}{\Roman{section}}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
@@ -29,6 +30,7 @@
 \newcommand{\1}[1]{\mathbbm{1}_{#1}}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\RM}{RM}
+\DeclareMathOperator{\ord}{ord}
 % and here we go!
 
 \begin{document}
@@ -2659,8 +2661,192 @@ Achieving this aim gives security at level 3.
 Note this system avoids the issue of key exchange.
 
 The idea is to use `one way' operations like
-\begin{itemize}
+\begin{enumerate}[label=(\arabic*)]
     \item Factoring/multiplying
     \item Discrete logs: Say $p$ is a large prime, $g$ a primitive element mod $p$, i.e.\ generates $\F_p^*$. Given $x$, find $a$ such that $x \equiv g^a \pmod{p}$.
-\end{itemize}
+\end{enumerate}
+% Lecture 20
+\begin{defi}
+    An algorithm runs in \textbf{polynomial time} if the number of operations is $\leq C n^d$ for $n$ the size of input and $C$,$d$ are some constants.
+\end{defi}
+\begin{eg}
+    If $N$ is input into an algorithm for factoring $N$, and $N$ is written in binary, then the size of the input is $|log_2N$, i.e.\ the number of digits used in binary.
+
+    Some polynomial time algorithms:
+    \begin{itemize}
+        \item Arithmetic on integers, i.e.\ $+, \times, -, \div$ with remainder.
+        \item Computing gcd (Euclid's algorithm)
+        \item Modular exponentiation (via repeated squaring method).
+        \item Testing primality - (Agrawal, Kayal, Saxena, `02). Their algorithm was the first to be:
+            \begin{itemize}
+                \item General
+                \item Polynomial time
+                \item Deterministic
+                \item Not conditional (e.g.\ not based on the Riemann hypothesis).
+            \end{itemize}
+    \end{itemize}
+    No polynomial time algorithms are known for (1) or (2) from earlier, however there are some elementary methods:
+    \begin{enumerate}[label=(\arabic*)]
+        \item Dividing by primes $\leq \sqrt{N}$. Works in $\mathcal{O}(\sqrt{N}) = \mathcal{O}(2^{\frac{B}{2}})$ time ($B = \log_2 N$).
+        \item Shanks' Baby-step giant-step method: Say $m = \ceil{\sqrt{p}}$, $a = qm + r$, $0 \leq q , r < m$.
+            \begin{equation*}
+                g^a \equiv x \pmod{p} \iff (g^m)^q \equiv x g^{-r} \pmod{p}
+            \end{equation*}
+            So make lists for $(g^m)^q$ and $x g^{-r} \pmod{p}$, for $q,r=0, \dotsc, m-1$. Then look for a match.
+            Takes $\mathcal{O}(\sqrt{p} \log p)$ time.
+    \end{enumerate}
+\end{eg}
+
+\subsection{Rabin-Williams Cryptosystem (1979)}
+Private key: $p, q$ large distinct primes with $p,q \equiv 3 \pmod{4}$.
+Public key: $N = pq$, $\mathcal{M}, \mathcal{C}=\{0, \dotsc, N-1\}$.
+Encrypt $m \in \mathcal{M}$ as $c \equiv m^2 \pmod{N}$. The cipher text is $c$.
+(Note we should avoid using $m < \sqrt{N}$ and $(m, N) \neq 1$).
+
+\begin{nlemma}\label{lem:3.4}
+    Suppose $p = 4k-1$ a prime, and $d$ an integer. If $x^2 \equiv d \pmod{p}$ is soluble, then $x \equiv d^k \pmod{p}$ is a solution.
+\end{nlemma}
+\begin{proof}
+    \begin{equation*}
+        (d^k)^2 \equiv d \cdot (x^2)^{2k-1} \equiv d x^{p-1} \equiv d \pmod{p}. \qedhere
+    \end{equation*}
+\end{proof}
+So if we know $p,q$ and receive $c$, we can find $x_1, x_2$ such that $x_1^2 \equiv c \pmod{p}$, $x_2^2 \equiv c \pmod{q}$.
+Then CRT gives $x$ such that $x^2 = c \pmod{N}$.
+\begin{nlemma}\label{lem:3.5}
+    Suppose $p = 4k-1$ prime, $d\equiv 0 \pmod{p}$ an integer.
+    \begin{enumerate} [label=(\roman*)]
+        \item If $x^2 \equiv d \pmod{p}$ is soluble, then there are exactly 2 solutions.
+        \item Hence if $N=pq$, $p,q$ distinct odd primes and $\gcd(d, N) = 1$. If $x^2 \equiv d \pmod{N}$ soluble, there are exactly four solutions.
+    \end{enumerate}
+\end{nlemma}
+\begin{proof}\leavevmode
+    \begin{enumerate} [label=(\roman*)]
+        \item If $x$ is a solution, $-x \pmod{p}$ is also a solution.
+        \item Say $x_0^2 \equiv d \pmod{N}$. Then for any choice of signs, $x$ such that
+            \begin{equation*}
+                \begin{cases}
+                    x \equiv \pm x_0 \pmod{p} \\
+                    x \equiv \pm x_0 \pmod{q}
+                \end{cases}
+            \end{equation*}
+            is also a solution, so there exactly four solutions. \qedhere
+    \end{enumerate}
+\end{proof}
+To decrypt RW, we compute all four solutions. Our message should involve sufficient redundancy such that only one solution makes sense.
+\begin{nthm}\label{thm:3.6}
+    Breaking RW code is essentially equivalent to factoring $N$.
+\end{nthm}
+\begin{proof}
+    It is clear that factoring $N$ allows decryption.
+    Conversely, suppose we have a decryption algorithm, i.e.\ an algorithm for finding square roots mod $N$.
+    Pick $x \bmod{N}$ randomly.
+    Use this algorithm to find $y$ such that $y^2 \equiv x^2 \pmod{N}$.
+    With probability $\frac{1}{2}$, $x \not\equiv \pm y \pmod{N}$ by \cref{lem:3.5}.
+
+    Then in this case $\gcd(x-y, N)$ is a non-trivial factor of $N$. If $y \equiv \pm x$ repeat with another $x$.
+    After $r$ trials, probability of failure is $\frac{1}{2^r}$, which can be made arbitrarily small.
+\end{proof}
+
+\subsection{RSA}
+Suppose $N = pq$, for $p,q$ large distinct primes. Recall
+\begin{equation*}
+    \phi(N) = \#\set{1 \leq x \leq N | \gcd(x, N) = 1} = (p-1)(q-1).
+\end{equation*}
+By Euler-Fermat, if $(x, N) = 1$ then $x^{\phi(N)} \equiv 1 \pmod{N}$.
+We pick an integer $e$ such that $\gcd(e, \phi(N)) = 1$. Then find $d$ such that $de \equiv 1 \pmod{\phi(N)}$.
+Then the public key is $(N, e)$ and the private key is $(N, d)$.
+
+Given a message $m$, it is encrypted as $c \equiv m^e \pmod{N}$, then decrypted as $m' \equiv c^d \pmod{N}$.
+By Euler-Fermat, $m \equiv m' \pmod{N}$.
+Note the probability that $(m, N) \equiv 1$ is so small we neglect this possibility.
+\begin{notation}
+    $\ord_p(x)=$ order of $x$ in $\F_p^\times = (\Z/p\Z)^\times$.
+\end{notation}
+\begin{nthm}\label{thm:3.7}
+    Let $N = p,q$ as above. Suppose $\phi(N) | 2^a b$, for $b$ odd. Also let $1 \leq x \leq N$, $\gcd(x, N) = 1$.
+    \begin{enumerate}[label=(\roman*)]
+        \item If $\ord_p(x^b) \neq \ord_q(x^b)$ then $\exists 0 \leq t < a$ such that $\gcd(x^{2^t b}-1, N)$ is a non-trivial factor of $N$.
+        \item Let $X = \#\set{x \in (\Z/N\Z)^\times | \ord_p(x^b) \neq \ord_q(x^b)}$. Then $X \geq \frac{1}{2} \phi(N)$.
+    \end{enumerate}
+\end{nthm}
+\begin{proof}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item Say $y \equiv x^b \pmod{N}$. Euler-Fermat $\implies y^{2^a} \equiv 1 \pmod{N}$, so $\ord_p(y), \ord_q(y)$ are powers of 2.
+            Note also $\ord_p(y) \neq \ord_q(y)$ by hypothesis.
+            Swapping $p$ and $q$ if needed, we get that for some $0 \leq t < a$
+            \begin{gather*}
+                \begin{aligned}
+                y^{2^t} &\equiv 1 \pmod{p} \\
+                y^{2^t} &\not\equiv 1 \pmod{q}
+                \end{aligned}
+                \implies \gcd(y^{2^t} - 1, N) = p.
+            \end{gather*}
+        \item Recall $(\Z/N\Z)^\times = \set{x + N \Z | x, N \text{ coprime}}$. Also note CRT gives a bijection
+            \begin{align*}
+                \left({\Z}/{N\Z}\right)^\times & \longleftrightarrow \left({\Z}/{p\Z}\right)^\times \times \left({\Z}/{q\Z}\right)^\times \\
+                x & \longleftrightarrow (x \bmod{p}, x \bmod{q})
+            \end{align*}
+            We will partition $(\Z/p\Z)^\times$ into sets of elements where $\ord_p(x^b)$ is the same.
+
+            Claim: each set in this partition has size $\leq \frac{p-1}{2}$.
+
+            Assuming the claim, we note then that if $y \in (\Z/q\Z)^\times$, by the claim,
+            \begin{equation*}
+                \# \set{x \in (\Z/p\Z)^\times | \ord_p(x^b) \neq \ord_q(y^b)} \geq \frac{1}{2}(p-1)
+            \end{equation*}
+            which implies $X \geq \frac{1}{2}(p-1)(q-1)$, by reverse CRT.
+
+            Proof of claim:
+            We find a partition set of size $\frac{p-1}{2}$.
+            Let $g$ be a primitive root mod $p$.
+            Then $(g^b)^{2^a} \equiv 1 \pmod{p}$, so $\ord_p(g^b)$ is a power of 2.
+
+            Say $x \equiv g^\delta$. Then $x^b = g^{\delta b}$. So $\ord_p(x^b) = \ord_p(g^b)$ in the case $\delta$ odd, or $\ord_p(x^b) \leq \frac{1}{2} \ord_p(g^b)$ for $\delta$ even.
+            Hence $\set{g^{\delta b} \pmod{p} | \delta \text{ odd}}$ is the required subset. \qedhere
+    \end{enumerate}
+\end{proof}
+\begin{cor}
+    Finding $(N, d)$ from $(N, e)$ is essentially as difficult as factoring $N$.
+\end{cor}
+\begin{proof}
+    If we know $N$'s factors, can easily get keys.
+    Conversely, if we know $d$ and $e$ then $de \equiv 1 \pmod{\phi(N)}$ if and only if $\phi(N) \mid de-1 = 2^a b$ for some $a, b$.
+    Then we can use \cref{thm:3.7} to factor $N$. The probability of failure after $r$ attempts is $< \frac{1}{2^r}$.
+\end{proof}
+
+\begin{remark}
+    We have shown that finding $(N, d)$ from $(N, e)$ is as hard as factoring $N$.
+    But it is not known whether \emph{decrypting messages} sent via RSA is as hard as factoring.
+\end{remark}
+
+RSA avoids the issue of key sharing, but it is slow. Symmetric systems are often faster.
+So we are still interested in sharing keys.
+Shamir proposed the following analogy of the `padlock example':
+
+$A$ chooses $a \in (\Z/p\Z)^*$, computes $a'$ such that $a' a \equiv 1 \pmod{p-1}$
+
+$B$ chooses $b \in (\Z/p\Z)^*$, and computes $b'$ such that $b' b \equiv 1 \pmod{p-1}$.
+\begin{equation*}
+    \begin{tikzcd}
+        m \rar["A"'] & m^a \rar["B"'] & m^{ab} \rar["A"'] & m^{aba'} \rar["B"'] & m^{aba'b'} \equiv m \pmod{p}
+    \end{tikzcd} \\
+\end{equation*}
+
+\subsection{Diffie-Hellman key exchange}
+$A$ and $B$ wish to agree on a secret key for communication.
+Let $p$ be a large prime, $g$ a primitive root mod $p$. Then:
+
+$A$ chooses $\alpha$ and sends $g^\alpha \pmod{p}$ to $B$
+
+$B$ chooses $\beta$ and sends $g^\beta \pmod{p}$ to $A$.
+
+Both parties then compute $K=g^{\alpha \beta}$, and use this as the secret key.
+An attacker has the problem of computing $g^{\alpha\beta}$ from $g$, $g^\alpha$ and $g^\beta$.
+It is conjectured that this is as difficult as the discrete log problem.
+
+\subsection{Authenticity and signatures}
+Say $A$, $B$ send messages.
+
+% monday
 \end{document}
