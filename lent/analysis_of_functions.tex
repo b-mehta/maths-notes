@@ -1175,8 +1175,23 @@ It now only remains to prove \nameref{lem:goldstine}.
     \end{enumerate}
 \end{proof}
 
-\begin{defi}
-    A Banach space $E$ is called uniformly convex $\forall \epsilon > 0$, $\exists \delta > 0$ such that $\forall f, g \in \overline{B}_E$, $\norm{f-g}_E > \epsilon \implies \norm{\frac{f+g}{2}}_E$.
+\color{gray}
+\begin{remark}[Not lectured]
+  Alternate proof of (i): Let $\tilde{\varphi} \in M''$, and define $\varphi \in E''$ by $\varphi(F) = \tilde{\varphi}(F|_M)$.
+  $E$ is reflexive, so $\varphi = \Phi(f_0)$ for some $f_0 \in E$.
+  If $f_0 \notin M$, use Hahn-Banach (III) to separate $M$ and $\{f_0\}$, giving $F \in E'$ such that $\forall f \in M$, $F(f) < \alpha < F(f_0)$, hence $F|_M \equiv 0$.
+  Then $0 = \tilde{\varphi}(0) = \tilde{\varphi}(F|_M) = \varphi(F) = \Phi(f_0)(F) = F(f_0) > 0$, a contradiction.
+  It remains to show $\Phi|_M(f_0) = \tilde{\varphi}$. Let $\tilde{F} \in M'$, and use Hahn-Banach to extend to $F \in E'$, then
+  \begin{align*}
+    \Phi|_M(f_0)(\tilde{F}) &= \tilde{F}(f_0) = F(f_0)\\
+                                  &= \Phi(f_0)(F) = \varphi(F) \\
+                                  &= \tilde{\varphi}(F|_M) = \tilde{\varphi}(\tilde{F})
+  \end{align*}
+\end{remark}
+\color{black}
+
+\begin{defi}[Uniform convexity]\hypertarget{def:uc}
+    A Banach space $E$ is called \textbf{uniformly convex} if $\forall \epsilon > 0$, $\exists \delta > 0$ such that $\forall f, g \in \overline{B}_E$, $\norm{f-g}_E > \epsilon \implies \norm{\frac{f+g}{2}}_E < 1 - \delta$.
 \end{defi}
 \begin{eg}
   The supremum norm and the $1$ norm in $\mathbb{R}^n$ are not reflexive, but the $p$ norm for $p \in (1, \infty)$ is.
@@ -1196,19 +1211,22 @@ It now only remains to prove \nameref{lem:goldstine}.
     \end{equation*}
     By definition of $\|\cdot\|_{E''}$, $\exists F \in \overline{B}_{E'}$ such that $|\varphi(F)| > 1 - \frac{\delta}{2}$.
 
-    An open neighbourhood in $\sigma(E'', E')$ can be written as $V = \set{\psi \in E'' | \abs{\psi(F) - \varphi(F)} < \frac{\delta}{2}}$.
-    Recall Goldstine's lemma ($\Phi(\overline{B}_E)$ is dense in $\overline{B}_{E''}$ for $\sigma(E'', E')$).
-    $\exists f \in \overline{B}_E$ such that $\Phi(f) \in V)$. If $\norm{\Phi(f) - \varphi}_{E''} \leq \epsilon$, we are done.
-    If not, $\varphi \in W \coloneqq (\Phi(f) + \epsilon \overline{B}_{E''})^c$ which is open in $\sigma(E'', E')$.
-    So, $V \cap W$ is open and non-empty (contains $\varphi$). Using Goldstine, $\exists g \in \overline{B}_E$, $\Phi(g) \in W \cap V$.
+    The set $V = \set{\psi \in E'' | \abs{\psi(F) - \varphi(F)} < \frac{\delta}{2}}$ is $\sigma(E'', E')$ open.
+    \nameref{lem:goldstine} gives that $\exists f \in \overline{B}_E$ such that $\Phi(f) \in V$.
+    If $\norm{\Phi(f) - \varphi}_{E''} \leq \epsilon$, we are done.
 
-    \begin{align*}
-        \abs{\underbrace{\Phi(f)(F) - \varphi(F)}}_{F(f)} &< \frac{\delta}{2} \\
-        \abs{\underbrace{\Phi(g)(F) - \varphi(F)}}_{F(g)} &< \frac{\delta}{2} \\
-        \norm{f-g} > \epsilon
-    \end{align*}
-    The first two give $2 \varphi(F) \leq F(f+g) + \delta$, so $\abs{\varphi(F)} \leq \norm{\frac{f+g}{2}}_E + \delta$ and $\norm{\frac{f+g}{2}}_E \geq 1 - \delta$.
-    But this together with $\norm{f-g} > \epsilon$ contradict uniform convexity.
+    If not, define $\varphi \in W \coloneqq (\Phi(f) + \epsilon \overline{B}_{E''})^c$.
+    Observe $\overline{B}_{E''} = \bigcap_{\|F\|_{E'} \leq 1} T_F^{-1}([-1, 1])$, where $T_F(\varphi) = \varphi(F)$, so $T_F$ weak-$*$ continuous and so $\overline{B}_{E''}$ is $\sigma(E'', E')$ closed.
+
+    Hence, $W$ is open in $\sigma(E'', E')$, so, $V \cap W$ is open and non-empty (contains $\varphi$).
+    Using \nameref*{lem:goldstine} again, $\exists g \in \overline{B}_E$, $\Phi(g) \in V \cap W$.
+    \begin{gather*}
+        \Phi(f) \in V \implies \bigg|\underbrace{\Phi(f)(F)}_{F(f)} - \varphi(F)\bigg| < \frac{\delta}{2} \\
+        \Phi(g) \in V \implies \bigg|\underbrace{\Phi(g)(F)}_{F(g)} - \varphi(F)\bigg| < \frac{\delta}{2} \\
+        \Phi(g) \in W \implies \norm{f-g} > \epsilon
+    \end{gather*}
+    The first two give $2 \varphi(F) \leq F(f+g) + \delta$, so $|\varphi(F)| \leq \left\|\frac{f+g}{2}\right\|_E + \frac{\delta}{2}$ and $\norm{f+g \over 2}_E \geq 1 - \delta$.
+    But this together with $\norm{f-g} > \epsilon$ contradicts uniform convexity.
 \end{proof}
 \begin{notation}
     For a sequence $(f_n)$ in $E$, $f_n \weakconv f$ means $f_n$ converges to $f$ in the weak $(\sigma(E, E'))$ topology.
@@ -1231,10 +1249,13 @@ It now only remains to prove \nameref{lem:goldstine}.
     \end{equation*}
     since these are just converging sequences.
 
-    Thus $\frac{g_n + g}{2} \weakconv g$ (linearity).
-    Claim: Then $\norm{g} \leq \liminf_{n} \norm{\frac{g_n + g}{2}}$.
-    % justify - \norm{g} \leq 1, \frac{g_n + g}{2} \eq 1
-    Hence $\norm{\frac{g_n+g}{2}} \to 1$, and UC implies that $\norm{g_n - g} \to 0$ and finally $\norm{f_n - f} \to 0$.
+    Thus $\frac{g_n + g}{2} \weakconv g$ by linearity.
+    Claim: Then $1=\norm{g} \leq \liminf_{n} \norm{\frac{g_n + g}{2}}$.
+    Hence $\norm{\frac{g_n+g}{2}} \to 1$, as $\norm{\frac{g_n+g}{2}} \leq 1$ and UC implies that $\norm{g_n - g} \to 0$ and finally $\norm{f_n - f} \to 0$.
+
+    It remains to prove the claim: If $h_n \weakconv h$ then $\norm{h}_E \leq \liminf \norm{h_n}_E$.
+    Given $\epsilon > 0$, $\exists F \in \overline{B}_{E'}$ such that $F(h) \geq \norm{h}_E - \epsilon$, and so $\norm{h}_E \leq \epsilon + \lim F(h_n)$.
+    But since $F(h_n) \leq \norm{h_n}_E$, this gives $\norm{h}_E \leq \epsilon + \liminf \norm{h_n}_E$ for any $\epsilon > 0$, proving the claim.
 \end{proof}
 
 \clearpage
