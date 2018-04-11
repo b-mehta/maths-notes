@@ -2849,4 +2849,88 @@ It is conjectured that this is as difficult as the discrete log problem.
 Say $A$, $B$ send messages.
 
 % monday
+% beginning missing?
+\subsection{Authenticity using RSA}
+Suppose $A$ has private key $(N, d)$ and public key $(N, e)$.
+$A$ now uses the private key $(N, d)$ for encryption.
+Anyone can decrypt using the public key $(N, e)$, but cannot forge messages sent by $A$.
+If $B$ sends a random message and then receives back a message from $A$ which upon decryption ends in $\mu$, then $B$ knows they are in communication with $A$.
+
+Some examples to show integrity is important.
+\textbf{Homomorphism attack}: A bank creates a message of the form $(M_1, M_2)$ where $M_1$ is the client name and $M_2$ is the amount to be credited to their account.
+Messages are encoded using RSA as $(z_1, z_2) = (M_1^e \pmod{N}, M_2^e \bmod{N})$.
+
+I enter into a transaction which credits \pounds 100 to my account.
+I intercept the resulting $(z_1, z_2)$ and then send $(z_1, z_2^3)$.
+I become a millionaire without having to break RSA.
+
+\textbf{Copying}: Even if I didn't know RSA was being used, I could still repeatedly transmit $(z_1, z_2)$ - can stop this by time-stamping.
+
+\begin{remark}
+    We consider the `signature of a message', not the signature of a sender.
+\end{remark}
+
+We suppose all users have a private key and a public key.
+We have a map $s: \mathcal{M} \times \mathcal{K} \to \mathcal{S}$, where $\mathcal{M}$ is the set of all messages, $\mathcal{K}$ is the set of all keys and $\mathcal{S}$ is the set of all possible signatures.
+$A$ signs a message $m$ with $s(m, K_a)$ where $K_A$ where $K_A$ is $A$'s private key.
+Then $B$ checks the signature using $A$'s public key. $s$ should be a `trapdoor function' (one-way) i.e.\ no-one can sign a message from $A$ without $A$'s private key.
+
+For example using RSA, $A$ has private key $(N, d)$ and public key $(N, e)$.
+$A$ signs message $m$ with $s = m^d \pmod{N}$.
+Anyone can verify that $(m, s)$ is a valid signed message using $A$'s public key.
+\begin{remark}[Existential forgery]
+    Anyone can sign a message of the form $(s^e \pmod{N}, s)$, but we hope such a message will not be meaningful.
+\end{remark}
+
+In practice, rather than sign a message $m$ we sign $h(m)$ where $h: \mathcal{M} \to \{1, \dotsc, N-1\}$ is a collision-resistant hash function, i.e.\ a publicly known function chosen so that it is easy to verify that some input data maps to
+a given hash value, but if the input data is unknown it is deliberately difficult to reconstruct it, or find another input that maps to the same hash value.
+
+Thus if the message is changed, then it is very likely that the hash value will also change. So we can use the hash value to test the integrity of a message, e.g.\ combat a homomorphism attack.
+
+\subsection{El-Gamal Signature Scheme}
+Take $p$ a large prime, $g$ a primitive root mod $p$.
+$A$ chooses a random integer $1 < u < p$.
+
+Now, the public key is $p, g, y = g^u \pmod{p}$, and the private key is $u$.
+Let $h: \mathcal{M} \to \{1, 2, \dotsc, p-1\}$ be a collision-resistant hash-function.
+
+To send a message, $A$ chooses a random exponent $k$, with $(k, p-1)=1$ and computes $1 \leq r \leq p-1$ and $1 \leq s \leq p-2$ satisfying
+\begin{enumerate}[label=(\roman*)]
+    \item $r \equiv g^k \pmod{p}$
+    \item $h(m) \equiv ur + k s \pmod{p-1}$
+\end{enumerate}
+(note: $(k, p-1) = 1$, so $k$ has an inverse mod $p-1$, so can solve for $s$).
+$A$ signs the message $m$ with $(r, s)$.
+
+$B$ accepts the signature if
+\begin{equation*}
+    g^{h(m)} \equiv y^r r^s \pmod{p}
+\end{equation*}
+Now,
+\begin{align*}
+    g^{h(m)} &\equiv g^{ur + ks} \pmod{p} \\
+             &\equiv (g^u)^r (g^k)^s \\
+             &\equiv y^r r^s \pmod{p}
+\end{align*}
+It is believed that the only way to forge signatures is to find $u$ from $y \equiv g^u \pmod{p}$, i.e.\ by solving the discrete log problem.
+
+\textbf{Choice of $k$}. It is essential that a different choice of $k$ is used to sign each message, otherwise messages $m_1$, $m_2$ are signed $(r, s_1)$ and $(r, s_2)$ with
+\begin{align*}
+    h(m_1) &\equiv ur + ks_1 \pmod{p-1} \\
+    h(m_2) &\equiv ur + ks_2 \pmod{p-1} \\
+    \implies h(m_1) - h(m_2) &\equiv k(s_1 - s_2) \pmod{p-1}
+\end{align*}
+Let $d = (s_1 - s_2, p-1)$, and put
+\begin{equation*}
+    h' \equiv \frac{h(m_1) - h(m_2)}{d}, \quad s' \equiv \frac{s_1 - s_2}{d}, \quad p\ \equiv \frac{p-1}{d}
+\end{equation*}
+Then $h' \equiv k s' \pmod{p'}$.
+
+As $(s', p') = 1$, we can solve for $k \pmod{p'}$.
+So $k \equiv k_0 \pmod{p'}$ for some $k_0$. Then $k \equiv k_0 + \lambda p' \pmod{p-1}$ for some $0 \leq \lambda \leq d-1$.
+For those $d$ possibilities determine correct value of $k$ using
+\begin{equation*}
+    g^k \equiv r \pmod{p}.
+\end{equation*}
+Similarly we solve $h(m) \equiv ur + ks \pmod{p-1}$ for $u$, which is $A$'s private key.
 \end{document}
