@@ -1152,11 +1152,11 @@ Motivating problem: Which $n \geq 1$ can be written as a sum of 2 integer square
 \end{nthm}
 
 \begin{proof}
-    ($\implies$) Suppose $N = x^2 + y^2$. Let $p \mid N$, $p \equiv 3 \pmod{4}$.
+    ($\Rightarrow$) Suppose $N = x^2 + y^2$. Let $p \mid N$, $p \equiv 3 \pmod{4}$.
     Then $x^2 \equiv -y^2 \pmod{p}$, so $x \equiv 0 \equiv y \pmod{p}$, since otherwise $\exists z \in \Z$ with $y z \equiv 1 \pmod{p}$ and $(xz)^1 \equiv 1 \pmod{p}$, but $\legendre{-1}{p} = -1$.
     So $p^2 \mid N$ and $N/p^2 = (x / p)^2 + (y / p)^2$, then repeat until no prime factor $p \equiv 3 \pmod{4}$ remains.
 
-    ($\impliedby$) Write $N = M^2 N_1$, where $N_1$ is a product of distinct primes, each either 2 or $\equiv1 \pmod{4}$.
+    ($\Leftarrow$) Write $N = M^2 N_1$, where $N_1$ is a product of distinct primes, each either 2 or $\equiv1 \pmod{4}$.
     It suffices to show $N_1 = x^2 + y^2$.
 
     As $(x^2 + y^2)(z^2 + t^2) = (xz - yt)^2 + (xt + yz)^2$ and $2 = 1^2 + 1^2$, it's enough to show if $p \equiv 1 \pmod{4}$ then $p = x^2 + y^2$, which is done later (in lecture 11).
@@ -2911,7 +2911,7 @@ Better than trial division $(10^k)$ but not by much.
     If $(N, x+y) = 1$ then $(x+y)(x-y) \equiv 0 \pmod{N}$, hence $x-y \equiv 0 \pmod{N}$, i.e. $x \equiv y \pmod{N}$, a contradiction.
 \end{proof}
 
-Finding squares which are congruent mod $N$ is difficult.
+FInding squares which are congruent mod $N$ is difficult.
 Instead try to find many integers $x_i$ such that $x_i^2 \equiv c_i \pmod{N}$, where $c_i$ is divisible only by small powers.
 Then hope to multiply some $x_i$ together to get a solution to $x^2 \equiv y^2 \pmod{N}$.
 
@@ -2973,6 +2973,7 @@ In practice, generate the $x_i$ first and then choose the factor base $B$.
 \begin{eg}[Worked example]
     $N=1829$. Choose factor base
     \begin{equation*}B = \{-1, 2, 3, 5, 7, 11, 13, 17, 19\}\end{equation*}
+    \def\arraystretch{1.5}
     \begin{center}
         \begin{tabular}{c|c|c|c|c|c|c|c}
             $x_i$ & 42 & 43 & 60 & 61 & 74 & 75 & 85 \\
@@ -2998,4 +2999,102 @@ In practice, generate the $x_i$ first and then choose the factor base $B$.
 \end{remark}
 
 Computational result: In step 2, we chose $B$ to contain small primes and check whether $x_i$ is a $B$-number using trial division or using Euclid's algorithm on $\prod_{p_i \in B} p_i$.
+
+There is a better way to find $B$-numbers:
+\begin{nlemma}\label{lem:7.9}
+    Let $\frac{p_n}{q_n}$ be a convergent in the CF expansion of $\sqrt{N}$.
+    Then $\abs{p_n^2 - N q_n^2} \leq 2 \sqrt{N}$.
+\end{nlemma}
+
+\begin{proof}
+    \begin{align*}
+        \abs{p_n^2 - N q_n^2} &= q_n^2 \abs{\sqrt{N} - \frac{p_n}{q_n}}\abs{\sqrt{N} + \frac{p_n}{q_n}}  \\
+                              &< q_n^2 \times \left(\frac{1}{q_n q_{n+1}}\right) \left(2 \sqrt{N} + \frac{1}{q_n q_{n+1}}\right) \text{ by \cref{thm:6.4}} \\
+                              &= \frac{1}{q_{n+1}} \left(2 q_n \sqrt{N} + \frac{1}{q_{n+1}}\right) < \frac{1}{q_{n+1}} (2 q_n + 1) \sqrt{N} \leq 2 \sqrt{N} \text{ as } q_{n+1} > q_n. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{remark}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item So $\langle p_n^2 \rangle \leq 2 \sqrt{N}$, so $p_n$ has a good chance of being a $B$-number.
+        \item Continued fraction factoring method will then work by trying convergents to see if $p_n$ is a $B$-number.
+            Only need to know $p_n$ and $N$, so can compute this by $p_{n+1} = a_{n+1} p_n + p_{n-1}$ working mod $N$.
+    \end{enumerate}
+\end{remark}
+
+\begin{eg}
+    Take $N=12403$, and $\sqrt{N} = [111, \overline{2, 1, 2, 2, 7, 1, \dotsc}]$, with period 16.
+    \def\arraystretch{1.5}
+    \begin{center}
+        \begin{tabular}{c|ccccccc}
+            $p_n \pmod{N}$ & 111 & 223 & 334 & 891 & 2116 & 3309 & 5416 \\
+            \hline
+            $\langle p_n^2 \rangle$ & $-82$ & 117 & $-71$ & 89 & $-27$ & 166 & $-39$ \\
+            factorisation & $-2\cdot41$ & $3^2 \cdot 13$ & $-71$ & $89$ & $-3^3$ & $2 \cdot 83$ & $-3 \cdot 13$ \\
+                          &             & \cmark         &       &      & \cmark &              & \cmark
+        \end{tabular}
+    \end{center}
+    \begin{align*}
+        \implies (223 \times 2116 \times 5416)^2 \equiv (3^3 \cdot 13)^2 \pmod{N} \\
+        \implies 11341^2 \equiv 351^2 \pmod{N}
+    \end{align*}
+    so we have factors $(N, 10990) = 157$ and $(N, 11692) = 79$.
+\end{eg}
+How quick is this?
+We need to compute enough $p_n$s to find enough $B$-numbers, then (step 3 of the previous algorithm) find subsets of these such that
+\begin{equation*}
+    \prod_{i \in I} \langle x_i^2 \rangle = c_I = \prod c_i
+\end{equation*}
+is a square.
+Writing down all products and using the pigeonhole principle (as in \cref{lem:7.8}) is \textit{much} too slow - there are $2^k$ numbers, where $k = |I|$.
+Even if $k \approx \log N$ (which is in practice not enough), this is still $\approx N$.
+
+A far better approach is to look for $k$-tuples $\gamma = (\gamma_1, \dotsc, \gamma_n)$ such that $\prod_{i=1}^k c_i^{\gamma_i}$ is a square.
+If
+\begin{equation*}
+    c_i = (-1)^{a_{i, 0}} \prod_{j=1}^r p_j^{a_{ij}} \quad (p_j \in B)
+\end{equation*}
+this is equivalent to the congruence
+\begin{equation*}
+    \forall j=0,\dotsc,r \quad \sum_{i=1}^k \gamma_i \alpha_{ij} \equiv 0 \pmod{2}
+\end{equation*}
+i.e.\ solving the vector equation $\gamma \cdot \left(\alpha_{ij}\right) \equiv 0 \pmod{2}$.
+This can be done with linear algebra (mod 2) by usual Gaussian elimination in $\sim k^3$ operations, and there are faster ways.
+The final outcome is that this has an expected running time $C \cdot e^{2 \sqrt{\log n} \cdot \sqrt{\log \log n}}$.
+This is asymptotically smaller than any $N^\epsilon$ for $\epsilon > 0$, but asymptotically bigger than any $(\log N)^A$ for $A > 0$.
+\begin{remark}
+    The `quadratic sieve' and `number field sieve' are better still, and they give $e^{\sqrt{\log N} \sqrt{\log \log N}}$ and $e^{b (\log N)^{\frac{1}{3}} (\log \log N)^{\frac{2}{3}}}$ respectively where $b = \left(\frac{64}{9}\right)^{\frac{1}{3}} \approx 1.92$.
+\end{remark}
+
+For `special numbers', we can do better:
+\subsubsection*{Pollard's $(p-1)$-method}
+Suppose $N = p N_0$, $(p, N_0) = 1$ and $p-1$ is a product of small primes.
+Consider $a^{p-1} - 1 \pmod{N}$ for $(a, N) = 1$. Then $a^{p-1} - 1 \equiv 0 \pmod{p}$, and probably $\not\equiv 0 \pmod{N_0}$.
+Of course, we don't know $p-1$ yet, so can't compute this immediately.
+
+$p = \gcd(a^{p-1}-1, N)$, but $p-1$ is a product of small primes $\leq m$, say.
+Then let $k = \operatorname{lcm}(1,\dotsc, m)$ (so divisible by all prime powers $q^r \leq m$).
+\begin{itemize}[label=--]
+    \item Choose random $a \geq 2$ with $(a,N) = 1$ (e.g.\ $a=2$)
+    \item find $\gcd(a^k-1, N)$ and hope it is a factor of $N$.
+\end{itemize}
+If all prime powers dividing $p-1$ are $\leq m$, then $a^k \equiv 1 \pmod{p}$ as $p-1 \mid k$ and unless we are unlucky, $a^k \not\equiv 1 \pmod{N_0}$.
+(We can compute $(a \mod N)^k$ by repeated squaring.)
+
+\begin{eg}
+    Take $N = 540143$. Try $k = \operatorname{lcm}(1,\dotsc,m) = 2^3 \cdot 3 \cdot 5 \cdot 7 = 840$.
+    Try $a=2$. $2^k = 2^{105 \times 8} = (2^{64 + 32 + 8 + 1)})^8 \equiv 53047 \pmod{N}$ and $(540143, 53046) = 421 = p$.
+    $N$ factors as $421 \times 1283$. $p-1 = 420 = 2^2 \cdot 3 \cdot 5 \cdot 7$.
+\end{eg}
+
+This has two variants:
+\begin{enumerate}[label=(\arabic*)]
+    \item $(p+1)$-method, i.e.\ hoping that $p+1$ is a product of small primes.
+        This uses the field with $p^2$ elements, whose multiplicative group has order $p^2 - 1$.
+    \item Elliptic curve method uses `elliptic curves' instead of finite fields.
+        This has no special restrictions on $p$, and takes $\sim e^{b \sqrt{\log p} \sqrt{\log \log p}}$, so is better than general methods if $p$ is relatively small, e.g.\ $N \approx 2^{1000}$, $p \approx 2^{100}$.
+\end{enumerate}
+
+Finally Shor's algorithm, sometimes called `quantum factoring', will factor in polynomial time on a fully-functional quantum computer.
+So far, the highest number is has factored is $21$.
 \end{document}
