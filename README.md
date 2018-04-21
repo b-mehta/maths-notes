@@ -1,9 +1,9 @@
 # Part II notes
 
 ## Lent
-- [Algebraic Geometry](lent/algebraic_geometry.pdf) up to lecture 12
-- [Analysis of Functions](lent/analysis_of_functions.pdf) up to lecture 9
-- [Coding and Cryptography](lent/coding_and_cryptography.pdf) up to lecture 13
+- [Algebraic Geometry](lent/algebraic_geometry.pdf) very incomplete
+- [Analysis of Functions](lent/analysis_of_functions.pdf) up to section 2.6
+- [Coding and Cryptography](lent/coding_and_cryptography.pdf)
 
 Rough parts are marked in grey - these may still contain typos and errors.
 
