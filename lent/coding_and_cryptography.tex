@@ -18,7 +18,6 @@
 \usepackage{wrapfig}
 \usepackage{xfrac}
 \usetikzlibrary{arrows,decorations.pathmorphing,decorations.markings,positioning}
-% \renewcommand{\thesection}{\Roman{section}}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \pgfplotsset{width=7cm}
@@ -41,7 +40,6 @@
 \section*{Introduction to communication channels and coding}
 For example, given a message $m$=`Call me!' which we wish to send by email, first encode as binary strings using ASCII.
 So, $f(C) = 1000011, f(a) = 1100001$, and $f^*(m) = 1000011\ 1100001 \dots 0100001$.
-% picture
 \tikzstyle{block} = [rectangle, draw, fill=YellowOrange!20,
     text width=4em,
     text centered,
@@ -206,7 +204,7 @@ Further, $\abs{x_1 \dotsc x_r y_1 \dotsc y_s} = r+s$, the length of the string.
 \end{defi}
 \begin{eg}
     \leavevmode
-    \begin{enumerate}[label=\arabic*)] % 1)
+    \begin{enumerate}[label=\arabic*)]
         \item
             \hypertarget{ex:greekFire}{Greek fire} \hyperlink{def:code}{code}:
             \begin{align*}
@@ -215,7 +213,7 @@ Further, $\abs{x_1 \dotsc x_r y_1 \dotsc y_s} = r+s$, the length of the string.
             \end{align*}
             so, $\alpha \mapsto 11, \beta \mapsto 12, \dotsc, \omega \mapsto 54$.
         \item
-            $\Sigma_1 = $ \{all words in the dictionary\}, and $\Sigma_2 = \{A, B, \dotsc, Z, [space]\}$ % add space symbol
+            $\Sigma_1 = $ \{all words in the dictionary\}, and $\Sigma_2 = \{A, B, \dotsc, Z, [space]\}$
             and $f$=`spell the word and a space'\hypertarget{ex:comma-code}.
     \end{enumerate}
 \end{eg}
@@ -783,10 +781,13 @@ Roughly, $nH$ is the number of bits required to encode $(X_1, \dotsc, X_n)$.
         \begin{aligned}
             \implies \Prob((x_1, \dotsc, x_n) \in A_n \cap T_n) &\leq 2^{-n (H-\epsilon)} \abs{A_n} \\
             \implies \frac{\log \Prob(A_n \cap T_n)}{n} &\leq -(H-\epsilon) + \frac{\log \abs{A_n}}{n} \\
-                                                    &\to -(H-\epsilon) + (H-2 \epsilon) = -\epsilon \quad \text{as } n \to \infty. \qedhere
+                                                    &\to -(H-\epsilon) + (H-2 \epsilon) = -\epsilon \quad \text{as } n \to \infty \\
+            \implies \log \Prob(A^n \cap T_n) &\to -\infty \\
+            \implies \Prob(A_n \cap T_n) &\to 0
         \end{aligned}
     \end{gather*}
-    % A few things missing here - make sure to fill in!
+    But $\Prob(T_n) \to 1$ as $n \to \infty$ and $\Prob(A_n) \to 1$ as $n \to \infty$, a contradiction.
+    So, the source is not reliably encodable at rate $H-2\epsilon$, and so the information rate is $H$.
 \end{proof}
 
 % Lecture 6
@@ -1106,7 +1107,6 @@ Let $C$ be an \hyperlink{def:nmdCode}{$[n,m,d]$-code}.
         }}{\leq}
         \frac{2^n}{V(n, \floor{\frac{n-1}{2}})}
     \end{equation*}
-    % label the inequalities - GSV on left, Hamming on right
 \end{nprop}
 \begin{proof}
     Let $C$ be a code of length $n$ and \hyperlink{def:minimumDistanceCode}{minimum distance} $d$ of largest possible size.
@@ -1970,7 +1970,6 @@ By convention, the empty wedge product is $v_0$.
     \end{enumerate}
 \end{remark}
 
-% handout
 \subsubsection*{Algebraic aside}
 A \textbf{ring} $R$ is a set with two operations, $+$ and $\times$. $(R, +)$ is an additive group and $\times$ is distributive over addition i.e.\ $a(b+c)=ab+ac$. Think of $\Z$ or $\Z_{10}$.
 
@@ -2846,10 +2845,15 @@ An attacker has the problem of computing $g^{\alpha\beta}$ from $g$, $g^\alpha$ 
 It is conjectured that this is as difficult as the discrete log problem.
 
 \subsection{Authenticity and signatures}
-Say $A$, $B$ send messages.
+Say $A$, $B$ send messages. Possible aims include:
+\begin{itemize}
+    \item Secrecy: $A$ and $B$ can be sure that no third party can read the message.
+    \item Integrity: $A$ and $B$ can be sure that no third party can alter the message.
+    \item Authenticity: $B$ can be sure $A$ sent the message.
+    \item Non-repudiation: $B$ can prove to a third party that $A$ sent the message.
+\end{itemize}
+So for, we have only considered secrecy.
 
-% monday
-% beginning missing?
 \subsection{Authenticity using RSA}
 Suppose $A$ has private key $(N, d)$ and public key $(N, e)$.
 $A$ now uses the private key $(N, d)$ for encryption.
@@ -2933,4 +2937,91 @@ For those $d$ possibilities determine correct value of $k$ using
     g^k \equiv r \pmod{p}.
 \end{equation*}
 Similarly we solve $h(m) \equiv ur + ks \pmod{p-1}$ for $u$, which is $A$'s private key.
+
+\subsection*{Bit Commitment}
+$A$ and $B$ play a game. They decide who goes first by simulating a coin toss.
+$A,B$ choose Head or Tails, and if $A=B$, $A$ wins, otherwise $B$ wins.
+To prevent cheating, Alice puts her choice into a sealed envelope before $B$ reveals his choice.
+
+This gives us a general aim: Alice will send a message to Bob in such a way that:
+\begin{enumerate}[label=\arabic*)]
+    \item $B$ can't read the message until $A$ sends more information.
+    \item $B$ can be sure that $A$ cannot change the message.
+\end{enumerate}
+
+Solutions:
+\begin{enumerate}[label=\roman*)]
+    \item Use RSA: Bob cannot read the message until Alice sends private key.
+    \item Use coding theory.
+    \begin{center}
+        \begin{tikzpicture}[node distance=3cm]
+            \node (a) at (3, 0) [rectangle, draw, font=\large, minimum size=1cm] {$A$};
+            \node (b) at (8, 0) [rectangle, draw, font=\large, minimum size=1cm] {$B$};
+            \draw [->, shorten > =0.1em, thick, red, decorate, decoration={
+                segment length=6mm, snake, post length=1mm}]
+                (a.30) -- (b.150)
+                node [above=0.5em,align=center,midway] {noisy};
+
+            \draw [->, shorten > =0.1em, thick, blue] (a.-30) -- (b.-150)
+                node [below=0.5em,align=center,midway] {clear};
+        \end{tikzpicture}
+    \end{center}
+    The noisy channel is a \hyperlink{def:bsc}{BSC} with error probability $p$.
+    Bob chooses a \hyperlink{def:linearCode}{linear code} $C$ of length $d$, with suitable \hyperlink{def:weight}{weight} $d$.
+
+    Alice chooses a linear map $\phi: C \to \F_2$.
+    So, to send a bit $m \in \F_2$, Alice chooses a codeword $c \in C$ such that $\phi(c) = m$.
+    She sends $c$ to Bob over the noisy channel, so $B$ receives $r \in \F_2^n$.
+    Later Alice sends $c$ over clear channel.
+    Bob checks $d(r, c) \approx n p.$.
+
+    \begin{enumerate}[label=\arabic*)]
+        \item Why can't Bob read the message? Since $C$ is chosen such that $d \ll np$, $B$ cannot recover $c$ from $r$.
+        \item Why can't Alice cheat? She wants to substitute $c' \in C$ for $c$.
+            She also knows $d(r,c) \approx np$, but does not know $r$.
+            So she must cheat by using a $c'$ such that $d(r, c') \approx np$.
+            But for $d$ large enough, since $c' \in C$, she has only one option - to send $c$.
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Secret sharing via simultaneous linear equations}
+Say there is a secret room that has an entry code $S \in \mathbb{N}$, known only to one person.
+Say we also have a group of $n$ other people, who should be able to access the room, but only if $k$ or more of them are present.
+
+How can we implement this? By Shamir, we get the system:
+Suppose $0 < S < N$, and choose prime $p > N$.
+Also, choose $a_1, a_2, \dotsc, a-{k-1}$, and distinct $x_1, \dotsc, x_n$ with $) \leq a_j \leq p-1$, $1 \leq x_j \leq p-1$ at random.
+Also set $a_0 = S$, the key.
+Define
+\begin{equation*}
+    P(r) = a_0 + \sum_{i=1}^{k-1} a_i x_r^i \pmod{p}.
+\end{equation*}
+We give the $r$th person the pair
+\begin{equation*}
+    (x_r, P(r))
+\end{equation*}
+called the shadow pair, which they keep secret. Everyone knows the prime $p$.
+Suppose $k$ members are together with shadow pairs $(y_j, Q(j)) = (x_{r_j}, P(r_j))$ for $1 \leq j \leq k$.
+
+By Van der Monde,
+\begin{equation*}
+    \det
+    \begin{pmatrix}
+        1 & y_1 & \dots & y_1^{k-1} \\
+        1 & y_2 & \dots & y_1^{k-1} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        1 & y_k & \dots & y_k^{k-1}
+    \end{pmatrix}
+    = \prod_{1 \leq i < j \leq k-1} (y_i - y_j)
+    \not \equiv 0 \pmod{p}.
+\end{equation*}
+Thus can uniquely solve the system of $k$ equations
+\begin{align*}
+    z_0 + y_1 z_1 + y_1^2 z_2 + \dotsc + y_1^{k-1} z_{k-1} &\equiv Q(1) \pmod{p} \\
+    \vdots \\
+    z_0 + y_k z_1 + y_k^2 z_2 + \dotsc + y_k^{k-1} z_{k-1} &\equiv Q(k) \pmod{p}
+\end{align*}
+to get $z_0 = S$.
+
+But for $k-1$ or fewer people, note by Van der Monde again for any value of $z_0$, the system gives solutions for $z_1, \dotsc, z_{k-1}$.
 \end{document}
