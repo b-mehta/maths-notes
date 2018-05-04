@@ -2432,16 +2432,18 @@ If this fails we know $d > i$, so start again with $A_{i+1}$.
 \section{Cryptography}
 Idea: Modify the message to make them unintelligible to all but the intended recipient.
 
-Terminology: unencrypted message is called the \textbf{plain text}, and the encrypted message is referred to as the \textbf{cipher text}.
+\begin{notation}\hypertarget{def:text}
+The unencrypted message is called the \textbf{plain text}, and the encrypted message is referred to as the \textbf{cipher text}.
 Before transmission, the parties share some secret information known as a \textbf{key}.
 Let
 \begin{align*}
-    \mathcal{M} &= \{\text{all possible unencrypted messages}\} \\
+    \mathcal{M} &= \{\text{all possible unencrypted \hyperlink{def:text}{messages}}\} \\
     \mathcal{C} &= \{\text{all possible encrypted messages}\} \\
-    \mathcal{K} &= \{\text{all possible keys}\} \\
+    \mathcal{K} &= \{\text{all possible \hyperlink{def:text}{keys}}\}
 \end{align*}
+\end{notation}
 
-\begin{defi}[Cryptosystem]
+\begin{defi}[Cryptosystem]\hypertarget{def:cryptosystem}
     A \textbf{cryptosystem} consists of sets $\mathcal{M}, \mathcal{C}, \mathcal{K}$ and functions
     \begin{align*}
         e&: \mathcal{M} \times \mathcal{K} \to \mathcal{C} \\
@@ -2454,17 +2456,17 @@ Let
     \begin{enumerate}[label=(\roman*)]
         \item Simple substitution:
             \begin{equation*}
-                \mathcal{K} = \{\text{perms of } \Sigma\}
+                \hyperlink{def:text}{\mathcal{K}} = \{\text{perms of } \Sigma\}
             \end{equation*}
             Each letter is encoded by replacing by its image under the permutation.
         \item Vigen\`{e}re cipher:
 
-            Identify $\Sigma = \Z/26\Z$. Also let $K = \Sigma^d$.
+            Identify $\Sigma = \Z/26\Z$. Also let $\mathcal{K} = \Sigma^d$.
             Then write out the key $k$ below $m$ and add up letters.
             (For $d=1$ this is a Caesar cipher, but for $d > 1$, a letter in $m$ gets encrypted differently depending on its place in $m$. So not as weak to frequency analysis.)
     \end{enumerate}
 \end{eg}
-What does is mean to `break' a cryptosystem?
+What does it mean to `break' a \hyperlink{def:cryptosystem}{cryptosystem}?
 We assume the enemy \textit{may} know:
 \begin{itemize}
     \item $d$ and $e$
@@ -2474,9 +2476,9 @@ but does not know the key.
 
 We consider three possible levels of attack:
 \begin{enumerate}[label=\textbf{Level \arabic*},leftmargin=2cm]
-    \item Cipher text only\\
+    \item \hyperlink{def:text}{Cipher text} only\\
         The enemy only knows some piece of cipher text.
-    \item Known plaintext\\
+    \item Known \hyperlink{def:text}{plaintext}\\
         The enemy has some $m$ and $e(m, k)$ (but not $k$).
     \item Chosen plaintext\\
         The enemy has the ability to generate $e(m, k)$ for any $m$ (but still doesn't know $k$).
@@ -2488,77 +2490,72 @@ We consider three possible levels of attack:
     \end{enumerate}
 \end{remark}
 \subsection{Unicity distance}
-Take $(\mathcal{M}, \mathcal{K}, \mathcal{C})$ a cryptosystem.
-Say $m,k$ are random variables taking values in $\mathcal{M},\mathcal{K}$.
+Take $(\mathcal{M}, \mathcal{K}, \mathcal{C})$ a \hyperlink{def:cryptosystem}{cryptosystem}.
+Say $m,k$ are random variables taking values in \hyperlink{def:text}{$\mathcal{M},\mathcal{K}$}.
 Also let $c = e(m, k)$ (also random). Then define:
-\begin{defi}[Equivocation]\leavevmode
-    \begin{enumerate} [label=(\arabic*)]
-        \item \hypertarget{def:keyEquiv}The \textbf{key equivocation} is $ H(k | c).  $
-        \item The \textbf{message equivocation} is $ H(m | c).  $
-    \end{enumerate}
-\end{defi}
+% \begin{defi}[Equivocation]\leavevmode
+%     \begin{enumerate} [label=(\arabic*)]
+%         \item \hypertarget{def:keyEquiv}The \textbf{key equivocation} is $ \hyperlink{def:condH}{H(k \mid c)}.  $
+%         \item The \textbf{message equivocation} is $ H(m \mid c).  $
+%     \end{enumerate}
+% \end{defi}
 \begin{nlemma}\label{lem:3.1}
     \begin{equation*}
-        H(m | c) \leq H(k | c)
+        \hyperlink{def:condH}{H(m \mid c)} \leq H(k \mid c)
     \end{equation*}
 \end{nlemma}
 \begin{proof}
-    Note $m = d(c, k)$ so get $H(m | c,k) = 0$. Then
+    Note $m = d(c, k)$ so get $\hyperlink{def:condH}{H(m \mid  c,k)} = 0$. Then
     \begin{align*}
-        H(k | c) &= H(k,c) - H(c) \\
-                 &= H(m,k,c)-H(m|k,c) - H(c) \\
+        H(k \mid  c) &= \hyperlink{def:jointEntropy}{H(k,c)} - H(c) \\
+                 &= H(m,k,c)-H(m\mid k,c) - H(c) \\
                  &= H(m,k,c)-H(c) \\
-                 &= H(k|m,c)+H(m,c)-H(c) \\
-                 &= H(k|m,c) + H(m|c) \\
-                 &\geq H(m | c) \qedhere
+                 &= H(k\mid m,c)+H(m,c)-H(c) \\
+                 &= H(k\mid m,c) + H(m\mid c) \\
+                 &\geq H(m \mid  c). \qedhere
     \end{align*}
 \end{proof}
 \begin{remark}
-    Say $(\mathcal{M}, \mathcal{K}, \mathcal{C})$ has \textbf{perfect secrecy} if $H(m|c) = H(m)$.
+    Say $(\mathcal{M}, \mathcal{K}, \mathcal{C})$ has \textbf{perfect secrecy} if $\hyperlink{def:condH}{H(m\mid c)} = H(m)$.
 \end{remark}
 Suppose we send a sequence of messages $m^{(n)} = (m_1, \dotsc, m_n)$ using the same key.
 
 \begin{defi}[Unicity distance]\hypertarget{def:unicity}
     The \textbf{unicity distance} is
     \begin{equation*}
-        \mathcal{U} = \min\set{n | H(k | c^{(n)}) = 0};
+        \mathcal{U} = \min\set{n | \hyperlink{def:condH}{H(k \mid c^{(n)})} = 0}
     \end{equation*}
     i.e.\ the smallest $n$ such that $k$ becomes known.
 \end{defi}
 Note
 \begin{align*}
-    H(k|c^{(n)}) &= H(k, c^{(n)}) - H(c^{(n)}) \\
+    \hyperlink{def:condH}{H(k\mid c^{(n)})} &= \hyperlink{def:jointH}{H(k, c^{(n)})} - H(c^{(n)}) \\
                  &= H(k, m^{(n)}, c^{(n)}) - H(c^{(n)}) \\
-                 &\leq H(k) + H(m^{(n)}) - H(c^{(n)})
+                 &= H(k, m^{(n)}) - H(c^{(n)}) \\
+                 &= H(k) + H(m^{(n)}) - H(c^{(n)})
 \end{align*}
+where the last step used independence of $k$ and $m^{(n)}$.
 We assume
 \begin{enumerate}[label=(\arabic*)]
     \item All keys are uniformly likely, so $H(k) = \log \abs{\mathcal{K}}$
     \item $H(m^{(n)})  = n H(m)$
-    \item All assumed ciphertext is equally likely. So get
-        \begin{equation*}
-            H(c^{(n)}) = n \log \abs{\Sigma}
-        \end{equation*}
-        with $\mathcal{C} = \Sigma^*$.
+    \item All assumed ciphertext is equally likely. So $ H(c^{(n)}) = n \log \abs{\Sigma} $ with $\mathcal{C} = \Sigma^*$.
 \end{enumerate}
 
 So get
 \begin{gather*}
-    H(k | c^{(n)}) = \log \abs{\mathcal{K}} + n H(m) - n \log \abs{\Sigma} \\
-    \mathcal{U} = \frac{\log \abs{\mathcal{K}}}{\log \abs{\Sigma} - H(m)}
+    \hyperlink{def:condH}{H(k \mid c^{(n)})} = \log \abs{\mathcal{K}} + n H(m) - n \log \abs{\Sigma} \\
+    \hyperlink{def:unicity}{\mathcal{U}} = \frac{\log \abs{\mathcal{K}}}{\log \abs{\Sigma} - H(m)}
 \end{gather*}
 
-\begin{defi}
-    The \textbf{unicity distance} $\mathcal{U}$ of a system is the least length of ciphertext required to uniquely determine the key.
-\end{defi}
-
 \begin{remark}
+    The \hyperlink{def:unicity}{unicity distance }$\mathcal{U}$ of a system is the least length of ciphertext required to uniquely determine the key.
     To make $\mathcal{U}$ large:
     \begin{itemize}
         \item make key space large
         \item send messages with little redundancy
     \end{itemize}
-    Also to be secure, should not use a single key for more messages than the unicity distance.
+    Also to be secure, should not use a single key for more messages than the \hyperlink{def:unicity}{unicity distance}.
 \end{remark}
 % Lecture 19
 \subsection{Stream Cipher}
