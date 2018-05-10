@@ -8,8 +8,6 @@
 \input{header}
 
 % preamble
-\pagecolor[rgb]{0,0,0}
-\color[rgb]{1,1,1}
 \setcounter{section}{-1}
 \newcommand{\K}{\mathbb{K}}
 \renewcommand{\emptyset}{\varnothing}
@@ -1261,7 +1259,7 @@ When is a subset of $\hyperlink{def:cx}{C(K)}$ compact?
         \item $X$ has the Heine-Borel property: any open cover of $X$ has a finite subcover.
         \item $X$ is sequentially compact: any sequence in $X$ has a convergent subsequence.
         \item \hypertarget{def:totBound}$X$ is complete and totally bounded: for $\epsilon > 0$ there is a finite $\epsilon$-net for $X$.
-            This is a finite set $M \subset X$ such that for any $x \in X$ there exists $m \in M$ with $d(x, m) < \epsilon$.
+            \hypertarget{def:enet}This is a finite set $M \subset X$ such that for any $x \in X$ there exists $m \in M$ with $d(x, m) < \epsilon$.
     \end{enumerate}
 \end{prop}
 
@@ -1270,12 +1268,17 @@ When is a subset of $\hyperlink{def:cx}{C(K)}$ compact?
 \begin{proof}
     The first two are equivalent from Analysis II and Metric and Topological spaces. It is easy to check (i) and (ii) give (iii), so we only check (iii) $\Rightarrow$ (ii).
 
-    Let $(x_n) \subset X$ be a sequence. We need to find a convergent subsequence. Let $M_n$ be a finite $\frac{1}{n}$-net for $X$.
+    Let $(x_n) \subset X$ be a sequence. We need to find a convergent subsequence. Let $M_n$ be a \hyperlink{def:enet}{finite $\frac{1}{n}$-net} for $X$.
     Let $m_1 \in M_1$ be such that $B_1(m_1)$ contains infinitely many of the $(x_n)$. Let $n_1$ be the first $n$ such that $x_n \in B_1(m_1)$.
 
-    Given $m_1 \in M_1, \dotsc, m_k \in M_k$, $n_1, \dotsc, n_k$ such that $B_\frac{1}{k}(M_i)$ contains infinitely many points from $(x_n) \cap B_\frac{1}{i}(m_i)$ for all $i \leq j$ and $x_{n_l} \in \bigcap_{j=1}^l B_\frac{1}{j}(m_j)$ $\forall l < k$,
-    let $m_{k+1}$ be such that $B_\frac{1}{k+1}(m_{k+1})$ contains infinitely many points from $(x_n) \cap \bigcap_{j=1}^n B_\frac{1}{j} (m_j)$ and $n_{k+1}$ be the first $n > n_k$ such that $x_{n_{k+1}} \in \bigcap_{i=1}^{k+1} B_{v_j} (m_j)$.
-
+    Given $m_1 \in M_1, \dotsc, m_k \in M_k$, $n_1, \dotsc, n_k$ such that $B_\frac{1}{j}(m_j)$ contains infinitely many points from $(x_n) \cap B_\frac{1}{i}(m_i)$ for all $i \leq j$ and $x_{n_l} \in \bigcap_{j=1}^l B_\frac{1}{j}(m_j)$ $\forall l < k$,
+    let
+    \begin{align*}
+        \begin{cases*}
+            m_{k+1} & be such that $B_\frac{1}{k+1}(m_{k+1})$ contains inf. many points from $(x_n) \cap \bigcap_{j=1}^k B_\frac{1}{j} (m_j)$ \\
+            n_{k+1} & be the first $n > n_k$ such that $x_{n_{k+1}} \in \bigcap_{i=1}^{k+1} B_{\frac{1}{j}} (m_j)$.
+        \end{cases*}
+    \end{align*}
     It follows that
     \begin{equation*}
         d(x_{n_k}, x_{n_l}) \leq d(x_{n_k}, m_k) + d(x_{n_l}, m_k) \leq \frac{1}{k} + \frac{1}{k} \; \text{for} \; l \geq k
@@ -1294,7 +1297,7 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
     Let $K$ be compact \hyperlink{def:hausdorff}{Hausdorff} and $\mathcal{F} \subset \hyperlink{def:cx}{C(K)}$. Then the following are equivalent:
     \begin{enumerate}[label=(\roman*)]
         \item $\mathcal{F}$ is \hyperlink{def:relCompact}{relatively compact}
-        \item $\mathcal{F}$ is bounded and equicontinuous, i.e. $\sup_{f \in \mathcal{F}} \|f\|_\infty < \infty$ and $\forall \epsilon > 0 \; \forall x \in K$, $\exists U$ a neighbourhood of $x$ such that
+        \item \hypertarget{def:equicontinuous}$\mathcal{F}$ is bounded and equicontinuous, i.e. $\sup_{f \in \mathcal{F}} \|f\|_\infty < \infty$ and $\forall \epsilon > 0 \; \forall x \in K$, $\exists U$ a neighbourhood of $x$ such that
             \begin{equation*}
                 \forall f \in \mathcal{F}, \; \abs{f(x) - f(y)} < \epsilon \quad \text{for all } y \in U.
             \end{equation*}
@@ -1316,11 +1319,12 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
     \begin{equation*}
         \abs{f(x) - f(y)} \leq \min_i(\abs{f(x) - f(y)} + \abs{f_i(x) - f_i(y)} + \abs{f(y) - f_i(y)}) < 3\epsilon \quad \text{for all } f \in \mathcal{F}.
     \end{equation*}
-    Thus $f$ is equicontinuous.
+    Thus $f$ is \hyperlink{def:equicontinuous}{equicontinuous}.
 
     (ii) $\Leftarrow$  (i):
-    Let $\mathcal{F}$ be bounded and equicontinuous. For every $\epsilon > 0$, we construct a finite $\epsilon$-net for $\mathcal{F}$. Let $\epsilon > 0$.
-    For $x \in K$, let $U_x$ be an open neighbourhood of $x$ such that $\abs{f(x) - f(y)} < \epsilon$ if $f \in \mathcal{F}$, $y \in U_x$ (by equicontinuity). Since $K$ is compact, there are $x_1, \dotsc x_n \in K$ such that
+    Let $\mathcal{F}$ be bounded and equicontinuous. For every $\epsilon > 0$, we construct a \hyperlink{def:enet}{finite $\epsilon$-net} for $\mathcal{F}$. Let $\epsilon > 0$.
+    For $x \in K$, let $U_x$ be an open neighbourhood of $x$ such that $\abs{f(x) - f(y)} < \epsilon$ if $f \in \mathcal{F}$, $y \in U_x$ (by equicontinuity).
+    Since $K$ is compact, there are $x_1, \dotsc x_n \in K$ such that
     \begin{equation*}
         K = \bigcup_{i=1}^n U_{x_i}.
     \end{equation*}
@@ -1349,7 +1353,7 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
 % new lec (12)
 
 \begin{eg}
-    Let $K = [0, 1]$ and $\mathcal{F} = \set{f \in C^1[0, 1]|\|f\|_\infty + \|f'\|_\infty < 1}$.
+    Let $K = [0, 1]$ and $\mathcal{F} = \set{f \in \hyperlink{def:ckx}{C^1[0, 1]}|\|f\|_\infty + \|f'\|_\infty < 1}$.
     Then $\mathcal{F}$ is relatively compact in $C^0[0, 1]$.
     Indeed $\mathcal{F}$ is bounded (in $C^0$) and
     \begin{equation*}
@@ -1361,8 +1365,8 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
 \end{eg}
 
 \subsection{Application: Peano Existence Theorem}
-\begin{thm}[Picard-Lindel{\"o}f]
-    Let $f: \R \to \R$ be locally Lipschitz continous. Then for any $x_0 \in R$ there exists a maximal interval $(T_1, T_2) \subset \R$ with $T_1 = -\infty$ and $T_2 = +\infty$ allowed such that
+\begin{thm}[Picard-Lindel{\"o}f]\hypertarget{thm:picard}
+    Let $f: \R \to \R$ be locally Lipschitz continuous. Then for any $x_0 \in R$ there exists a maximal interval $(T_1, T_2) \subset \R$ (with $T_1 = -\infty$ and $T_2 = +\infty$ allowed) such that
     \begin{equation*}
         \begin{cases}
             x'(t) = f(x(t)) \\
@@ -1370,11 +1374,11 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
         \end{cases}
         \tag{$*$} \label{eq:diffEq}
     \end{equation*}
-    has a unique $C^1$ solution $x:(T_1, T_2) \to \R$ (that is not the restriction of such a solution to a larger interval).
+    has a unique \hyperlink{def:ckx}{$C^1$} solution $x:(T_1, T_2) \to \R$ (that is not the restriction of such a solution to a larger interval).
     Moreover, if $T_2 \neq +\infty$, for any bounded $K \subset \R$ there exists $t < T_2$ such that $x([t, T_2)) \cap K = \emptyset$ and similarly if $T_1 \neq -\infty$.
 \end{thm}
 
-\begin{thm}[Peano]
+\begin{thm}[Peano]\hypertarget{thm:peano}
     Let $f: \R \to \R$ be continuous. Then for any $x_0 \in \R$, $\exists T > 0$ and a solution $x : (-T, T) \to \R$ for \eqref{eq:diffEq}.
 \end{thm}
 
@@ -1385,7 +1389,7 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
 \begin{lemma}
     Assume that $b > 0$, $m > 0$ such that
     \begin{equation*}
-        \abs{f(x)} \leq M \quad \text{for } \abs{x - x_0} \leq b. \tag{$@$} \label{eq:2}
+        \abs{f(x)} \leq M \quad \text{for } \abs{x - x_0} \leq b. \tag{$**$} \label{eq:2}
     \end{equation*}
     Then if $T \leq \frac{b}{M}$, and $x$ is any $C^1$ solution to \eqref{eq:diffEq} for $\abs{t} \leq T$, it follows that $\abs{x(t) - x_0} \leq b$ and $\abs{x'(t)} \leq M$.
 \end{lemma}
@@ -1405,41 +1409,38 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
     Then, $I = [0, T]$.
 \end{proof}
 
-\begin{proof}[Proof of Peano's Theorem]
-    Let $B = \set{f + \tilde{g} | \tilde{g} \in C^0, \|\tilde{g\|} \leq 1}$ and choose $M, b > 0$ such that \eqref{eq:2} holds for all $g \in B$.
-    For any $f \in B \cap C^1$ there is a local solution to \eqref{eq:diffEq} by the Picard-Lindel\"of Theorem.
+\begin{proof}[Proof of \hyperlink{thm:peano}{Peano's Theorem}]
+    Let $B = \set{f + \tilde{g} | \tilde{g} \in C^0, \|\tilde{g}\| \leq 1}$ and choose $M, b > 0$ such that \eqref{eq:2} holds for all $g \in B$.
+    For any $f \in B \cap C^1$ there is a local solution to \eqref{eq:diffEq} by the \hyperlink{thm:picard}{Picard-Lindel\"of Theorem}.
     The lemma implies that these solutions are defined on $[-T,T]$ with $T$ as in the lemma.
     Define
     \begin{align*}
-        S:B \cap C^1 \longrightarrow C^1[-T, T] \\
-        f \longmapsto x \quad \text{where $x$ is the solution to \eqref{eq:diffEq}.}
+        S:B \cap C^1 &\longrightarrow C^1[-T, T] \\
+        f &\longmapsto x \quad \text{where $x$ is the solution to \eqref{eq:diffEq}.}
     \end{align*}
 
     By the lemma, $S(B \cap C^1)$ is bounded in $C^1[-T, T]$ with norm $\|x\|_\infty + \|x'\|_\infty$.
-
-    By Arzel\`a-Ascoli, the embedding $C^1[-T, T] \to C^0 [-T, T]$ is compact so $S(B \cap C^1)$ is relatively compact in $C^0[-T, T]$.
+    By \hyperlink{thm:aa}{Arzel\`a-Ascoli}, the embedding $C^1[-T, T] \to C^0 [-T, T]$ is compact so $S(B \cap C^1)$ is \hyperlink{def:relCompact}{relatively compact} in $C^0[-T, T]$.
     Let $g_i \in B \cap C^1$ be such that $g_i \to f$ is $C^0$, i.e. $\|f - g_i\|_\infty \to 0$.
     (The existence of such $g_i$ follows from the Weierstrass approximation theorem in the next section.)
 
     By relative compactness of $S(B \cap C')$ in $C^0$ there is a subsequence such that $x_i = S g_i$ converges to some $x \in C^0[-T, T]$.
-
     Claim: $x \in C^1[-T, T]$ and \eqref{eq:diffEq} holds.
-
     Since $g_i \xrightarrow{C^0} f$ and $x_i \xrightarrow{C^0} x$ (along the subsequence), also $g_i \circ x_i \xrightarrow{C^0} f \circ x$
-    \begin{equation*}
+    \begin{gather*}
         \implies x_i' = g_i \circ x_i \to f \circ x \text{ uniformly in } \abs{t} \leq T \\
-        \implies x \in C^1 \text{ and } x' = f \circ x.
-    \end{equation*}
+        \implies x \in C^1 \text{ and } x' = f \circ x. \qedhere
+    \end{gather*}
 \end{proof}
 
 % new lec (13)
 
 \subsection{Stone-Weierstrass Theorem}
 
-\begin{thm}[Stone-Weierstrass Approximation Theorem]
-    The set of polynomials with real coefficients is dense in $C([a,b], \R)$, in the uniform topology.
+\begin{thm}[Weierstrass Approximation Theorem]\hypertarget{thm:weier}
+    The set of polynomials with real coefficients is \hyperlink{def:dense}{dense} in $C([a,b], \R)$, in the uniform topology.
 \end{thm}
-\begin{lemma}
+\begin{lemma}\hypertarget{lem:abs}
     There is a sequence of polynomials $P_n:[-1, 1] \to [0, 1]$ such that $P_n(s) \to \abs{s}$ uniformly in $s \in [-1, 1]$ as $n \to \infty$.
 \end{lemma}
 
@@ -1450,7 +1451,7 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
         q(t) &= \frac{1}{2}(t + q(t)^2) \tag{$*$} \label{eq:13-1} \\
         \implies (1-q(t))^2 &= 1-t \\
         \implies 1 - q(t) &= \sqrt{1 - t} \\
-        \implies \abs{t} = 1 - q(1-t^2).
+        \implies \abs{t} &= 1 - q(1-t^2).
     \end{align*}
 
     To approximate $q$, define polynomials $Q_n : [0, 1] \to [0, 1]$ by
@@ -1477,67 +1478,67 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
     Let $m \to \infty$:
     \begin{align*}
         0 \leq 1 - \sqrt{1 - t^2} - Q_n(t) &\leq 1 - Q_n(1) \\
-        \implies \|1 - Q_n - \sqrt{1-t\|}_\infty &\leq 1 - Q_n(1) \to 0.
+        \implies \|1 - Q_n - \sqrt{1-t}\|_\infty &\leq 1 - Q_n(1) \to 0.
     \end{align*}
-    Set $P_n(t) = 1 - Q(1-t^2)$. Then $\|P_n - \abs{\cdot\|}_\infty \to 0$.
+    Set $P_n(t) = 1 - Q(1-t^2)$. Then $\|P_n - |\cdot|\|_\infty \to 0$.
 \end{proof}
 
 \begin{ex}
-    Using the lemma, prove the Weierstrass Approximation Theorem for piecewise linear functions. Then deduce the general case.
+    Using the lemma, prove the \hyperlink{thm:weier}{Weierstrass Approximation Theorem} for piecewise linear functions.
+    Then deduce the general case.
 \end{ex}
 
-\begin{defi}
+\begin{defi}\leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item A real (complex) \textbf{algebra} is a real (complex) vector space $A$ with a bilinear map $A \times A \to A$, $(a, b) \mapsto ab$ called product such that
+        \item \hypertarget{def:alg}A real (complex) \textbf{algebra} is a real (complex) vector space $A$ with a bilinear map $A \times A \to A$, $(a, b) \mapsto ab$ called `product' such that
             \begin{equation*}
-                (ab)c = a(bc) \text{ for all } a, b, c \in A \tag{(associativity)}.
+                (ab)c = a(bc) \text{ for all } a, b, c \in A \tag{associativity}.
             \end{equation*}
-        \item If $A$ is a normed vector space and
+        \item If $A$ is a \hyperlink{def:nvs}{normed vector space} and
             \begin{equation*}
                 \|ab\| \leq \|a\| \|b\| \text{ for all } a, b \in A
             \end{equation*}
             then $A$ is called a \textbf{normed algebra}.
-            If $A$ is a Banach space then $A$ is called a \textbf{Banach algebra}.
+            If $A$ is a \hyperlink{def:banach}{Banach space} then $A$ is called a \textbf{Banach algebra}.
         \item If $ab=ba$ for all $a,b  \in A$ then $A$ is \textbf{commutative}.
-        \item If there exist an element $1 \in A \setminus \{0\}$ such that $1a =a1=a$ for all $a \in A$ then $A$ is \textbf{unital} (and $1$ is called a \textbf{unit}).
+        \item If there exists an element $1 \in A \setminus \{0\}$ such that $1a =a1=a$ for all $a \in A$ then $A$ is \textbf{unital} (and $1$ is called a \textbf{unit}).
     \end{enumerate}
 \end{defi}
 
-\begin{eg}
+\begin{eg}\leavevmode
     \begin{itemize}
-        \item $C(K, \R)$ is commutative unital Banach algebra with product
+        \item $\hyperlink{def:cx}{C(K, \R)}$ is a \hyperlink{def:alg}{commutative unital Banach algebra} with product
             \begin{equation*}
                 (fg)(x) = f(x) g(x) \quad \forall x \in K
             \end{equation*}
             and unit $1(x) = 1$ for all $x \in K$.
-        \item $\mathcal{B}(V, V)$ where $V$ is a normal vector space is a normed unital algebra with product given by composition and unit by the identity operation.
-            Then if $V$ is a Banach space, $\mathcal{B}(V, V)$ is a Banach algebra.
+        \item $\hyperlink{def:bvw}{\mathcal{B}(V, V)}$ where $V$ is a \hyperlink{def:nvs}{normed vector space} is a \hyperlink{def:alg}{normed unital algebra} with product given by composition and unit by the identity operation.
+            Then if $V$ is a \hyperlink{def:banach}{Banach space}, $\mathcal{B}(V, V)$ is a \hyperlink{def:alg}{Banach algebra}.
     \end{itemize}
 \end{eg}
 
-\begin{thm}[Stone-Weierstrass]
-    Let $A \subset C(K, \R)$ be a subalgebra that
+\begin{thm}[Stone-Weierstrass]\hypertarget{thm:sw}
+    Let $A \subset \hyperlink{def:cx}{C(K, \R)}$ be a subalgebra that
     \begin{itemize}
-        \item separates points: for all $x, y \in K$, $x \neq y$, there is $f \in A$ such that $f(x) \neq f(y)$.
-        \item vanishes nowhere: for all $x \in K$, there is $f \in A$ such that $f(x) \neq 0$.
+        \item \hypertarget{def:sep}separates points: for all $x, y \in K$, $x \neq y$, there is $f \in A$ such that $f(x) \neq f(y)$.
+        \item \hypertarget{def:vanish}vanishes nowhere: for all $x \in K$, there is $f \in A$ such that $f(x) \neq 0$.
     \end{itemize}
-    Then $A$ is dense in $C(K, \R)$, i.e. $\overline{A} = C(K, \R)$.
+    Then $A$ is \hyperlink{def:dense}{dense} in $C(K, \R)$, i.e. $\overline{A} = C(K, \R)$.
 \end{thm}
 
 \begin{eg}
-    Let $U \subset \R^n$ be bounded and open.
+    Let $U \subset \R^n$ be \hyperlink{def:boundedSubs}{bounded} and open.
     Let $A$ be the set of polynomials in $x_1, \dotsc, x_n$.
-    Then $A$ is an algebra $\subset C(\overline{U}, \R)$, separates points, and contains the constant polynomials, so vanishes nowhere.
-    Thus the Stone-Weierstrass Theorem implies that $\overline{A} = C(\overline{U}, \R)$.
-    In particular $C^\infty(\overline{U})$ is dense in $C(\overline{U})$.
+    Then $A$ is an algebra $\subset C(\overline{U}, \R)$, which \hyperlink{def:sep}{separates points}. It also contains the constant polynomials, so \hyperlink{def:vanish}{vanishes nowhere}.
+    Thus the \hyperlink{thm:sw}{Stone-Weierstrass Theorem} implies that $\overline{A} = C(\overline{U}, \R)$.  In particular $C^\infty(\overline{U})$ is dense in $C(\overline{U})$.
 \end{eg}
 
-\begin{defi}
-    A \textbf{lattice} is a poset $L$ with the property that for any $u, v \in L$, there is a least upper bound (join) $u \vee v$ for $\{u, v\}$ and a greatest lower bound (meet) $u \wedge v$.
+\begin{defi}\hypertarget{def:lattice}
+    A \textbf{lattice} is a \hyperlink{def:poset}{poset} $L$ with the property that for any $u, v \in L$, there is a least upper bound (join) $u \vee v$ for $\{u, v\}$ and a greatest lower bound (meet) $u \wedge v$.
 \end{defi}
 
 \begin{eg}
-    $C(K, \R)$ is a lattice with partial order $f \leq g$ iff $f(x) \leq g(x)$ for all $x \in K$, and
+    $\hyperlink{def:cx}{C(K, \R)}$ is a \hyperlink{def:lattice}{lattice} with partial order $f \leq g$ iff $f(x) \leq g(x)$ for all $x \in K$, and
     \begin{align*}
         (f \vee g)(x) &= \max\{f(x), g(x)\} \\
         (f \wedge g)(x) &= \min\{f(x), g(x)\}.
@@ -1545,76 +1546,73 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
 \end{eg}
 
 \begin{lemma}
-    Let $\overline{A} \subset C(K, \R)$ be a closed subalgebra.
-    Then $\overline{A}$ is a lattice in $C(K, \R)$.
+    Let $\overline{A} \subset \hyperlink{def:cx}{C(K, \R)}$ be a closed \hyperlink{def:alg}{subalgebra}.
+    Then $\overline{A}$ is a \hyperlink{def:lattice}{lattice} in $C(K, \R)$.
 \end{lemma}
 
 \begin{proof}
     \begin{align*}
         (f \vee g)(x) &= \frac{1}{2}\left(f(x) + g(x) + \abs{f(x) - g(x)}\right) \\
-        (f \wedge g)(x) &= \frac{1}{2}\left(f(x) + g(x) - \abs{f(x) - g(x)}\right) \\
+        (f \wedge g)(x) &= \frac{1}{2}\left(f(x) + g(x) - \abs{f(x) - g(x)}\right)
     \end{align*}
     Thus it suffices to show that if $f \in \overline{A}$ then $\abs{f} \in \overline{A}$.
 
     Let $f \in \overline{A} \setminus \{0\}$ and $\epsilon > 0$.
     Replacing $f$ by $\frac{f}{\|f\|_\infty}$ we may assume that $f$ takes values in $[-1, 1]$.
-    By the lemma at the beginning of this section (link?), there is a polynomial $P: [-1, 1] \to [0, 1]$ such that
+    By the \hyperlink{lem:abs}{lemma} at the beginning of this section, there is a polynomial $P: [-1, 1] \to [0, 1]$ such that
     \begin{align*}
         \sup_{\abs{t} \leq 1} \abs{P(t) - \abs{t}} &< \epsilon \\
         \implies \|P \circ f - \abs{f\|} &< \epsilon.
     \end{align*}
-    Since $P \circ f \in \overline{A}$ and since $\overline{A}$ is closed therefore $\abs{f} \in \overline{A}$.
+    Since $P \circ f \in \overline{A}$ and $\overline{A}$ is closed, $\abs{f} \in \overline{A}$.
 \end{proof}
 
 % new lec (14)
 
 \begin{lemma}
-    Let $L \subset C(K, \R)$ be a sublattice, i.e. $f,g \in L \implies f \wedge g, f \vee g \in L$.
-    Let $g \in C(K, \R)$ such that
+    Let $L \subset \hyperlink{def:cx}{C(K, \R)}$ be a \hyperlink{def:lattice}{sublattice}, i.e. $f,g \in L \Longrightarrow f \wedge g, f \vee g \in L$.
+    Let $g \in \hyperlink{def:cx}{C(K, \R)}$ such that
     \begin{equation*}
-        \forall \epsilon > 0: \forall x, y \in K: \exists f_{xy} \in L, \text{ such that } \abs{f_{xy}(x) - g(x)} < \epsilon \text{ and } \abs{f_{xy}(y) - g(y)} < \epsilon. \label{eq:14star} \tag{$*$}
+        \forall\epsilon>0,\forall x,y\in K:\exists f_{xy}\in L\text{ such that }|f_{xy}(x)-g(x)|<\epsilon\text{ and }|f_{xy}(y)-g(y)|<\epsilon. \label{eq:14star} \tag{$*$}
     \end{equation*}
-
     Then $g \in \overline{L}$. In particular, if \eqref{eq:14star} holds for all $g \in C(K, \R)$, Then $\overline{L} = C(K, \R)$.
 \end{lemma}
 
 \begin{proof}
-    Let $g \in C(K, \R)$ be as in the assumption $\epsilon > 0$.
+    Let $g \in \hyperlink{def:cx}{C(K, \R)}$ be as in the assumption and take $\epsilon > 0$.
     We will construct $f \in L$ such that $\|f-g\| < \epsilon$.
 
     For $x, y \in K$, let $f_{xy}$ be as in \eqref{eq:14star}.
     By continuity, there is some open $U_{xy}$ containing $y$ such that $\abs{f_{xy}(z) - g(z)} < \epsilon$ $\forall z \in U_{xy}$.
 
     Then for fixed $x$, these form an open cover of $K$ so $\exists y_1, \dotsc, y_n$ such that $\bigcup_{i=1}^n U_{x, y_i} \supseteq K$.
-
     Now let $f_x = f_{xy_1} \wedge f_{xy_2} \wedge \dotsb \wedge f_{xy_n}$.
-    Since $f_{xy_i}(z) < g(z) + \epsilon \forall z$, we have $f_x(z) < g(z) + \epsilon$.
+    Since $f_{xy_i}(z) < g(z) + \epsilon\ \forall z$, we have $f_x(z) < g(z) + \epsilon$.
 
-    On the other hand, $\abs{f_x(x) - g(x)} < \epsilon$.
-    By continuity of $f_x$, $\exists V_x \ni x$ open such that $\abs{f_x(w) - g(w)} < \epsilon \quad \forall w \in V_x$.
-    Then $(V_x)$ is an open cover of $K$ so
+    On the other hand, notice $\abs{f_x(x) - g(x)} < \epsilon$.
+    By continuity of $f_x$, $\exists V_x \ni x$ open such that $\abs{f_x(w) - g(w)} < \epsilon \ \forall w \in V_x$.
+    Then $(V_x)$ is an open cover of $K$ so there are
     \begin{equation*}
         x_1, \dotsc, x_m \text{ such that } \bigcup_{j=1}^m V_{x_j} \supseteq K.
     \end{equation*}
 
-    Then if $f = f_{x_1} \vee f_{x_2} \vee \dotsb \vee f_{x_m}$, we have $f(z) > g(z) - \epsilon \quad \forall z$, and our first bound $f(z) < g(z) + \epsilon$ still holds, so $\|f - g\| < \epsilon$. % check the norm here
+    Then if $f = f_{x_1} \vee f_{x_2} \vee \dotsb \vee f_{x_m}$, we have $f(z) > g(z) - \epsilon \ \forall z$, and our first bound $f(z) < g(z) + \epsilon$ still holds, so $\|f - g\| < \epsilon$. % check the norm here
 \end{proof}
 
-\begin{proof}[Proof of Stone-Weierstrass Theorem]
-    By continuous of addition and multiplication, the closure $\overline{A}$ is a sublattice of $C(K, \R)$.
+\begin{proof}[Proof of \hyperlink{thm:sw}{Stone-Weierstrass Theorem}]
+    By continuity of addition and multiplication, the closure $\overline{A}$ is a \hyperlink{def:lattice}{sublattice} of $\hyperlink{def:cx}{C(K, \R)}$.
     We apply the last lemma.
     Let $g \in C(K, \R)$, $x, y \in K$. We will find $f \in A$ such that $f(x) = g(x)$ and $f(y) = g(y)$.
     In particular, \eqref{eq:14star} holds.
 
     By assumption, $A$ vanishes nowhere and separates points:
-    \begin{gather*}
-        \forall x \in K \quad \exists f_x \in A \text{ s.t. } f_x(x) \neq 0 \\
-        \forall x, y \in K, \; x \neq y, \; f_{xy} \in A \text{ s.t. } f_{xy}(x) \neq f_{xy}(y).
-    \end{gather*}
+    \begin{align*}
+        \forall x \in K \quad \exists f_x \in A \text{ s.t. } &f_x(x) \neq 0 \\
+        \forall x, y \in K, x \neq y, \quad \exists f_{xy} \in A \text{ s.t. } &f_{xy}(x) \neq f_{xy}(y).
+    \end{align*}
 
     If $x = y$, we can take $f = \frac{g(x)}{f_x(x)} f_x \in A$.
     Thus assume $x \neq y$.
-
     Claim: There are $\alpha, \beta, \gamma \in \R$ such that
     \begin{equation*}
         h = \alpha f_x + \beta f_y + \gamma f_{xy} \label{eq:14dagger} \tag{$\dagger$}
@@ -1630,7 +1628,6 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
         f_{xy}(x) &= 1 & f_y(x) &= C \\
         f_{xy}(y) &= 0 & f_y(y) &= 1.
     \end{align*}
-
     Take $\alpha = 0$, $\beta=1$, $\gamma=2-C$ in \eqref{eq:14dagger}.
     This gives the claim since
     \begin{equation*}
@@ -1643,31 +1640,31 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
         (g(x), g(y)) = t(h(x), h(y)) + s(h(x)^2, h(y)^2) = (f(x), f(y))
     \end{equation*}
     with $f = th + sh^2 \in A$.
-
     Thus \eqref{eq:14star} holds for all $g \in C(K, \R)$.
     So we have shown $\overline{A} = C(K, \R)$.
 \end{proof}
 
 \begin{cor}
-    Let $U \subset \R^n$ be a bounded open domain. Then $C(\overline{U})$ is separable, i.e. there is a countable dense subset.
+    \hypertarget{def:separable}Let $U \subset \R^n$ be a bounded open domain.
+    Then $C(\overline{U})$ is separable, i.e. there is a countable dense subset.
 \end{cor}
 
 \begin{proof}
-    By the Weierstrass approximation theorem, the set of polynomials with real coefficients is dense in $C(U)$.
+    By the \hyperlink{thm:weier}{Weierstrass approximation} theorem, the set of polynomials with real coefficients is dense in $C(U)$.
     But every polynomial with real coefficients can be approximated by one with rational coefficients.
     These are countable.
 \end{proof}
 
 \begin{remark}
-    For $p \in [1, \infty)$, $\ell^p$ is separable, but $\ell^\infty$ is not separable.
+    For $p \in [1, \infty)$, $\hyperlink{def:lpspace}{\ell^p}$ is \hyperlink{def:separable}{separable}, but $\ell^\infty$ is not separable.
 \end{remark}
 
-\begin{proof}[Proof that $l^\infty$ is not separable.]
+\begin{proof}[Proof that $\hyperlink{def:lpspace}{l^\infty}$ is not \hyperlink{def:separable}{separable}.]
     Let $X = \set{(x_n) \in \ell^\infty | x_n \in \{0, 1\} \text{ for all } n}$.
     Then $X$ is not countable.
 
-    Note that $\abs{x - y}_\infty = 1, \; \forall x \neq y$, $x, y \in X$.
-    Assume $\ell^\infty$ was separable, i.e. there is a dense countable subset $(y^k)_{k \in \N}$.
+    Note that $\|x - y\|_\infty = 1, \; \forall x \neq y$, $x, y \in X$.
+    Assume $\ell^\infty$ was \hyperlink{def:separable}{separable}, i.e. there is a dense countable subset $(y^k)_{k \in \N}$.
     Then for any $x \in X$, there is $k \in \N$ such that $\|x - y^k\| \leq \frac{1}{2}$ and $\|y - y^k\| \geq \frac{1}{2}$ for all $y \in X$, $y \neq x$.
     This gives a bijection $\N \to X$, a contradiction. % the bijection might be the other way around
 \end{proof}
@@ -1676,32 +1673,32 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
 % 8 nov
 
 \subsection{Complex Stone-Weierstrass}
-\begin{thm}
-    Let $A \subset C(K, \mathbb{C})$ be a subalgebra such that
+\begin{thm}\hypertarget{thm:csw}
+    Let $A \subset \hyperlink{def:cx}{C(K, \mathbb{C})}$ be a subalgebra such that
     \begin{itemize}
-        \item $A$ separates points
-        \item $A$ vanishes nowhere
+        \item $A$ \hyperlink{def:sep}{separates points}
+        \item $A$ \hyperlink{def:vanish}{vanishes nowhere}
         \item $A$ is closed under complex conjugation, i.e., $\overline{f} \in A$ if $f \in A$.
     \end{itemize}
     Then $\overline{A} = C(K, \mathbb{C})$.
 \end{thm}
 
-\begin{defi}[$C^*$-algebra]
-    A $C^*$ algebra is a complex unital Banach algebra $A$ with antilinear involution $a \mapsto a^*$ such that
+\begin{defi}[$C^*$-algebra]\hypertarget{def:cstar}
+    A $C^*$ algebra is a complex \hyperlink{def:alg}{unital Banach algebra} $A$ with antilinear involution $a \mapsto a^*$ such that
     \begin{align*}
         (ab)^* = b^* a^*, \quad 1^* = 1, \quad a^{**} = a, \quad (\lambda a)^* = \overline{\lambda} a^*, \quad \|a^*\| = \|a\|
     \end{align*}
 \end{defi}
 
 \begin{cor}
-    If $A \subset C(K, \C)$ is a $C^*$-subalgebra that separates points, then $\overline{A} = C(K, \C)$.
+    If $A \subset \hyperlink{def:cx}{C(K, \C)}$ is a \hyperlink{def:cstar}{$C^*$-subalgebra} that \hyperlink{def:sep}{separates points}, then $\overline{A} = C(K, \C)$.
 \end{cor}
 
 \begin{eg}
     \leavevmode
     \begin{itemize}
-        \item $C(K, \C)$ is a commutative $C^*$-algebra with $f^* = \overline{f}$.
-        \item $\mathcal{B}(H, H)$ where $H$ is a Hilbert space is a $C^*$ algebra (later).
+        \item $\hyperlink{def:cx}{C(K, \C)}$ is a \hyperlink{def:cstar}{commutative $C^*$-algebra} with $f^* = \overline{f}$.
+        \item $\hyperlink{def:bvw}{\mathcal{B}(H, H)}$ where $H$ is a Hilbert space is a $C^*$ algebra (later).
     \end{itemize}
 \end{eg}
 
@@ -1710,9 +1707,9 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
     \begin{equation*}
         f \in A \implies \Re f = \frac{1}{2} (f + \overline{f}) \in A, \quad \Im f = \frac{1}{2i}(f - \overline{f}) \in A
     \end{equation*}
-    Let $A_\R$ be the subalgebra of $C(K, \R)$ generated by $\Re f$, $\Im f$, $f \in A$.
-    Then $A_\R$ vanishes nowhere and separates points, since $A$ has these properties.
-    So the real version of the Stone-Weierstrass Theorem implies $\overline{A}_\R = C(K, \R)$.
+    Let $A_\R$ be the \hyperlink{def:alg}{subalgebra} of $C(K, \R)$ generated by $\Re f$, $\Im f$, $f \in A$.
+    Then $A_\R$ \hyperlink{def:vanish}{vanishes nowhere} and \hyperlink{def:sep}{separates points}, since $A$ has these properties.
+    So the real version of the \hyperlink{thm:sw}{Stone-Weierstrass Theorem} implies $\overline{A}_\R = C(K, \R)$.
 
     Let $f = u + i v \in C(K, \C)$ with $u, v \in C(K, \R)$. There are $u_j, v_j \in A_\R$ such that $u_j + i v_j \to f$ (with norm $\|\cdot\|_\infty$).
     Since $u_j + i v_j \in A$, hence $\overline{A} = C(K, \C)$.
@@ -1730,16 +1727,16 @@ For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|
 \end{eg}
 
 \subsection{Application: Convergence of Fourier Series}
-Let $\mathbb{T} = \mathbb{R}/2\pi\mathbb{Z}$ be the circle, ie $[\pi, \pi]$ with its endpoints identified.
+Let $\mathbb{T} = \mathbb{R}/2\pi\mathbb{Z}$ be the circle, i.e.\ $[\pi, \pi]$ with its endpoints identified.
 Let $A$ be the vector space spanned by $\{e^{i n x}\}_{n \in \Z}$.
 Its elements are called trigonometric polynomials.
-It is an algebra, it separates points, vanishes nowhere (contains constants), and is closed under complex conjugation since $\overline{e^{i n x}} = e^{-i n x}$.
-Thus $\overline{A} = C(\mathbb{T}, \C)$ by Stone-Weierstrass.
+It is an \hyperlink{def:alg}{algebra}, it separates points, vanishes nowhere (contains constants), and is closed under complex conjugation since $\overline{e^{i n x}} = e^{-i n x}$.
+Thus $\overline{A} = C(\mathbb{T}, \C)$ by \hyperlink{thm:csw}{Stone-Weierstrass}.
 
 \begin{eg}[Example sheet]
     There exists $f \in C(\mathbb{T})$ such that $S_nf(0) \not\to f(0)$ as $n \to \infty$, where
     \begin{equation*}
-        S_nf = \sum_{k = -n}^{n} \hat{f_k} e^{i k x}, \qquad \hat{f_k} = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-i k x} \, dx
+        S_nf = \sum_{k = -n}^{n} \hat{f_k} e^{i k x}, \qquad \hat{f_k} = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-i k x} \, dx.
     \end{equation*}
 \end{eg}
 
@@ -1752,7 +1749,7 @@ However, we can show that $S_nf \to f$ in $L^2$.
     \end{equation*}
 \end{prop}
 \begin{proof}
-    By the complex Stone-Weierstrass Theorem, for any $\epsilon > 0$, there is a trig poly $P \in A$ such that $\|f-P\|_\infty < \epsilon$.
+    By the \hyperlink{thm:csw}{complex Stone-Weierstrass} Theorem, for any $\epsilon > 0$, there is a trigonometric polynomial $P \in A$ such that $\|f-P\|_\infty < \epsilon$.
     Note that $S_n P = P$ if $n$ is larger than the degree of $P$.
     \begin{align*}
         &\implies \abs{f - S_n f} \leq \abs{f - P} + \abs{S_n f - S_n p} \qquad \text{for $n$ large enough}\\
@@ -1766,20 +1763,20 @@ However, we can show that $S_nf \to f$ in $L^2$.
     for any $g \in C(\mathbb{T})$.
 \end{proof}
 
-\subsection{Aside: Radon measures and the weak-$*$ topology}
-\begin{defi}[Positive functional]
-    An element $\mu \in C(K)^*$ is called positive if $\mu(f) \geq 0$ for every $f \in C(K)$ with $f(x) \geq 0$ for all $x \in K$.
+\subsection{Aside: Radon measures and the weak-\texorpdfstring{$*$}{star} topology}
+\begin{defi}[Positive functional]\hypertarget{def:positive}
+    An element $\hyperlink{def:dualSpace}{\mu \in C(K)^*}$ is called \textbf{positive} if $\mu(f) \geq 0$ for every $f \in \hyperlink{def:cx}{C(K)}$ with $f(x) \geq 0$ for all $x \in K$.
 \end{defi}
 \begin{eg}
-    Let $K = [0, 1]$. Then,
+    Let $K = [0, 1]$. Then
     \begin{itemize}
-        \item $\mu(f) = \int_0^1 f(x) \, dx$ defines a positive functional.
-        \item for any $x \in K$, $\delta_x(f) = f(x)$ defines a positive functional.
+        \item $\mu(f) = \int_0^1 f(x) \, dx$ defines a \hyperlink{def:positive}{positive functional}.
+        \item for any $x \in K$, $\delta_x(f) = f(x)$ defines a \hyperlink{def:positive}{positive functional}.
     \end{itemize}
 \end{eg}
 
 \begin{thm}[Riesz-Markov]
-    Let $K$ be compact Hausdorff. Then for any positive $\mu \in C(K)^*$, there is a unique regular Borel measure $d\mu$ such that
+    Let $K$ be compact \hyperlink{def:hausdorff}{Hausdorff}. Then for any \hyperlink{def:positive}{positive} $\mu \in \hyperlink{def:dualSpace}{C(K)^*}$, there is a unique regular Borel measure $d\mu$ such that
     \begin{equation*}
         \mu(f) = \int_K f(x) \, d\mu(x) \qquad \text{for all } f \in C(K).
     \end{equation*}
@@ -1790,12 +1787,11 @@ However, we can show that $S_nf \to f$ in $L^2$.
 \end{proof}
 
 \begin{eg}
-    Let $x, y \in K$, $x \neq y$. Then $\|\delta_x - \delta_y\|_{C(K)^*)} = 2$ using Urysohn's Theorem.
-    % picture
+    Let $x, y \in K$, $x \neq y$. Then $\|\delta_x - \delta_y\|_{\hyperlink{def:dualSpace}{C(K)^*}} = 2$ using \hyperlink{prop:urysohn}{Urysohn's Theorem}.
     In particular, the map $x \in K \mapsto \delta_x \in C(K)^*$ is not continuous in the norm topology.
 \end{eg}
 
-\begin{defi}
+\begin{defi}\hypertarget{def:weaktop}
     Let $V$ be a normed vector space.
     \begin{itemize}
         \item The topology on $V$ induced by the sets $\Omega_{l, U} = l^{-1}(U)$, $l \in V^*$, $U \subset \R$ open is called the \textbf{weak topology} on $V$.
@@ -1803,9 +1799,8 @@ However, we can show that $S_nf \to f$ in $L^2$.
     \end{itemize}
 \end{defi}
 
-The weak topology makes $V$ be a locally convex topological vector space (and it does not come from a norm). On $V^*$, we now have three topologies.
-
-The weak-$*$ topology is `weaker' than the weak topology on $V^*$, as we are restricting our attention to the subset of $V^{**}$ induced by the includsion map $V \hookrightarrow V^{**}$.
+The \hyperlink{def:weaktop}{weak topology} makes $V$ be a locally convex \hyperlink{def:tVS}{topological vector space} (and it does not come from a norm). On $V^*$, we now have three topologies.
+The \hyperlink{def:weaktop}{weak-$*$ topology} is `weaker' than the weak topology on $V^*$, as we are restricting our attention to the subset of $V^{**}$ induced by the inclusion map $V \hookrightarrow V^{**}$.
 
 % new lec (16)
 
@@ -1813,7 +1808,7 @@ Equivalently, we can define the weak topology on $V^*$ as the weakest topology t
 Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the maps $f_v \in V^{**}$ continuous for all $v \in V$, where $f_v \in V^{**}$ is defined by $f_v(l) = l(v)$.
 
 \begin{eg}
-    Let $K$ be compact Hausdorff. Then the map $x \in K \mapsto \delta_x \in C(K)^*$ is continuous with respect to the weak topology on $C(K)^*$:
+    Let $K$ be compact \hyperlink{def:hausdorff}{Hausdorff}. Then the map $x \in K \mapsto \delta_x \in \hyperlink{def:dualSpace}{C(K)^*}$ is continuous with respect to the weak topology on $C(K)^*$:
     \begin{equation*}
         x \to y \implies \delta_x(f) - \delta_y(f) = f(x) - f(y) \to 0 \quad \text{if } f \in C(K)
     \end{equation*}
@@ -1821,20 +1816,20 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
 \end{eg}
 
 \begin{thm}
-    A normed vector space $V$ is separable iff the weak-$*$ topology on the closed unit ball in $V^*$ is metrisable.
+    A \hyperlink{def:nvs}{normed vector space} $V$ is \hyperlink{def:separable}{separable} iff the \hyperlink{def:weaktop}{weak-$*$ topology} on the closed unit ball in $V^*$ is metrisable.
 \end{thm}
 
 \begin{proof}
     See example sheet 3, question 9.
 \end{proof}
 
-\begin{thm}[Banach-Alaogla]
-    Let $V$ be a (separable) normed space.
-    Then the closed unit ball in $V^*$ is compact with respect to the weak-$*$ topology. (Similar to Arzel\`a-Ascoli).
+\begin{thm}[Banach-Alaoglu]\hypertarget{thm:bab}
+    Let $V$ be a (separable) \hyperlink{def:nvs}{normed space}.
+    Then the closed unit ball in $\hyperlink{def:dualSpace}{V^*}$ is compact with respect to the \hyperlink{def:weaktop}{weak-$*$ topology}. (Similar to \hyperlink{thm:aa}{Arzel\`a-Ascoli}).
 \end{thm}
 
 \begin{thm}
-    Let $V$ be a (separable) normed space. Let $K$ be the closed unit ball in $V^*$ with the weak-$*$ topology.
+    Let $V$ be a (separable) normed space. Let $K$ be the closed unit ball in $\hyperlink{def:dualSpace}{V^*}$ with the \hyperlink{def:weaktop}{weak-$*$ topology}.
     Then
     \begin{equation*}
         \Phi: V \to C(K), \qquad v \mapsto f_v \quad \text{where} \quad f_v(l) = l(v) \text{ for } l \in V^*
@@ -1843,8 +1838,8 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
 \end{thm}
 
 \begin{proof}
-    That $f_v \in C(K)$ holds exactly by definition of the weak-$*$ topology.
-    Linearity is clear. That $\Phi$ is isometric follows from Hahn-Banach:
+    That $f_v \in C(K)$ holds exactly by definition of the \hyperlink{def:weaktop}{weak-$*$ topology}.
+    Linearity is clear. That $\Phi$ is isometric follows from \hyperlink{thm:hahnBanach}{Hahn-Banach:}
     \begin{equation*}
         \|f_v\| = \sup_{l \in \K} \abs{f_v(l)} = \sup_{\|l\| \leq 1} \abs{l(v)} = \|v\|. \qedhere
     \end{equation*}
@@ -1866,10 +1861,10 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
 \begin{proof}
     Fix $x_0 \in K$ and define $\mu_n \in P(K)$ by
     \begin{equation*}
-        \mu_n(f) = \frac{1}{n} \sum_{k=0}^{n-1} f(\phi \circ \dotsb \circ \phi (x_0)) \text{ for } f \in C(K).
+        \mu_n(f) = \frac{1}{n} \sum_{k=0}^{n-1} f(\underbrace{\phi \circ \dotsb \circ \phi}_{k \text{ times}} (x_0)) \text{ for } f \in C(K).
     \end{equation*}
-    Since $K$ is metric, $C(K)$ is separable (example sheet 3). Also by example sheet 3, $\|\mu_n\| \leq 1$.
-    By the Banach-Alaoglu Theorem, there exists a weak-$*$ convergent subsequence $(\mu_n)_{n \in \Lambda}$.
+    Since $K$ is metric, $\hyperlink{def:cx}{C(K)}$ is \hyperlink{def:separable}{separable} (example sheet 3). Also by example sheet 3, $\|\mu_n\| \leq 1$.
+    By the \hyperlink{thm:bab}{Banach-Alaoglu} Theorem, there exists a \hyperlink{def:weaktop}{weak-$*$} convergent subsequence $(\mu_n)_{n \in \Lambda}$.
     Its limit satisfies
     \begin{equation*}
         \mu(1) = \lim_{\substack{n \to \infty \\ n \in \Lambda}} \mu_n(1) = 1, \quad \mu(f) \geq 0 \text{ if } f \geq 0.
@@ -1878,14 +1873,14 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
     \begin{align*}
         \mu(f \circ \phi) &= \lim_{\substack{n \to \infty \\ n \in \Lambda}} \frac{1}{n} \sum_{k=1}^n f(\underbrace{\phi \circ \dotsb \circ \phi}_{k \text{ times}} (x_0)) \\
                           &= \lim_{\substack{n \to \infty \\ n \in \Lambda}} \frac{1}{n} \sum_{k=0}^{n-1} f(\underbrace{\phi \circ \dotsb \circ \phi}_{k \text{ times}} (x_0)) \\
-                          &= \mu(f).
+                          &= \mu(f).\qedhere
     \end{align*}
 \end{proof}
 
 \clearpage
 \section{Euclidean vector spaces and Hilbert spaces}
 \subsection{Definitions and Examples}
-\begin{defi}
+\begin{defi}[Inner product]\hypertarget{def:ip}
     Let $V$ be a vector space (real or complex).
     Then an \textbf{inner product} is a map $(\cdot, \cdot): V \times V \to \K$ such that
     \begin{enumerate}[label=(\roman*)]
@@ -1896,8 +1891,8 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
     A vector space together with an inner product is called an \textbf{inner product space}.
 \end{defi}
 
-\begin{prop}[Cauchy-Schwarz inequality]
-    Let $V$ be an inner product space. Then
+\begin{prop}[Cauchy-Schwarz inequality]\hypertarget{thm:cs}
+    Let $V$ be an \hyperlink{def:ip}{inner product space}. Then
     \begin{equation*}
         \abs{(v, w)} \leq (v,v)^\frac{1}{2} (w, w)^\frac{1}{2} \quad \forall v, w \in V
     \end{equation*}
@@ -1905,16 +1900,17 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
 \end{prop}
 
 \begin{cor}
-    Let $V$ be an inner product space. Then $\|v\| = (v,v)^\frac{1}{2}$ is a norm.
+    Let $V$ be an \hyperlink{def:ip}{inner product space}. Then $\|v\| = (v,v)^\frac{1}{2}$ is a norm.
 \end{cor}
 
-\begin{defi}
-    A normed vector space whose norm is induced by an inner product is called a \textbf{Euclidean space}.
-    If it is also Banach, then it is a \textbf{Hilbert space}.
+\begin{defi}[Euclidean, Hilbert spaces]\hypertarget{def:euclidean}
+    A \hyperlink{def:nvs}{normed vector space} whose norm is induced by an \hyperlink{def:ip}{inner product} is called a \textbf{Euclidean space}.
+    If it is also \hyperlink{def:banach}{Banach}, then it is a \textbf{Hilbert space}.
 \end{defi}
 
 \begin{fact}
-    Let $V$ be Euclidean. Then there is a unique inner product such that $\|v\| = (v,v)^\frac{1}{2}$.
+    Let $V$ be \hyperlink{def:euclidean}{Euclidean}.
+    Then there is a unique \hyperlink{def:ip}{inner product} such that $\|v\| = (v,v)^\frac{1}{2}$.
 \end{fact}
 
 \begin{proof}
@@ -1923,12 +1919,13 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
     If $V$ is a complex vector space, then also $\|v + iw\|^2 = \|v\|^2 + \|w\|^2 + 2 \Re(v, iw)$. But $\Re(v, iw) = -\Re i (v, w) = + \Im(v, w)$.
     \begin{align*}
         (v, w) &= \Re (v, w) + i \Im (v, w)  \\
-               &= \frac{1}{2} (\|v+w\|^2 + i \|v + i w\|^2 - (i+1) (\|v\|^2 + \|w\|^2)).
+               &= \frac{1}{2} (\|v+w\|^2 + i \|v + i w\|^2 - (i+1) (\|v\|^2 + \|w\|^2)).\qedhere
     \end{align*}
 \end{proof}
 
 \begin{fact}
-    Let $V$ be Euclidean. Then the unique inner product $(\cdot, \cdot)$ inducing the norm is continuous.
+    Let $V$ be \hyperlink{def:euclidean}{Euclidean}.
+    Then the unique \hyperlink{def:ip}{inner product} $(\cdot, \cdot)$ inducing the norm is continuous.
 \end{fact}
 
 % new lec (17)
@@ -1936,12 +1933,12 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
 \begin{eg}
     \leavevmode
     \begin{itemize}
-        \item $\ell^2 = \set{(x_n) \in K | \sum_{n=1}^\infty \abs{x_n}^2 < \infty}$ is a Hilbert space with inner product $(x, y) = \sum_{n=1}^\infty x_n \overline{y_n}$.
-        \item $C[a, b]$ iwth norm
+        \item $\hyperlink{def:lpspace}{\ell^2} = \set{(x_n) \in K | \sum_{n=1}^\infty \abs{x_n}^2 < \infty}$ is a \hyperlink{def:euclidean}{Hilbert space} with \hyperlink{def:ip}{inner product} $(x, y) = \sum_{n=1}^\infty x_n \overline{y_n}$.
+        \item $\hyperlink{def:cx}{C[a, b]}$ with norm
             \begin{equation*}
-                \|f\|_2 = (\int_a^b \abs{f(x)}^2\, dx )^\frac{1}{2}
+                \|f\|_2 = \left(\int_a^b \abs{f(x)}^2\, dx \right)^\frac{1}{2}
             \end{equation*}
-            (and inner product $\int_a^b f(x) g(x) \, dx$) is a Euclidean vector space, but it is not complete.
+            (and inner product $\int_a^b f(x) g(x) \, dx$) is a \hyperlink{def:euclidean}{Euclidean vector space}, but it is not complete.
             Its completion can be identified with the Lebesgue space $L^2[a, b]$.
     \end{itemize}
 \end{eg}
@@ -1950,21 +1947,22 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
     Any metric space $X$ can be completed.
     For two Cauchy sequences $(x_n)$, $(y_n) \subset X$, set $(x_n) \sim (y_n)$ if $d(x_n, y_n) \to 0$.
     This is an equivalence relation. Denote the equivalence class of a Cauchy sequence $x = (x_n)$ by $\overline{x}$.
+
     Define
     $\overline{X} = \set{\overline{x} | x \text{ is a Cauchy sequence in } X}.$
-    Then $\overline{d}(\overline{x}, \overline{y}) = \lim_{n \to \infty}$ exists (exercise), it is well-defined, i.e. independent of the sequences representing $\overline{x}$, $\overline{y}$ and one can check that $\overline{d}$ is a metric on $\overline{X}$.
+    Then $\overline{d}(\overline{x}, \overline{y}) = \lim_{n \to \infty} d(x_n,y_n)$ exists (exercise), it is well-defined, i.e. independent of the sequences representing $\overline{x}$, $\overline{y}$ and one can check that $\overline{d}$ is a metric on $\overline{X}$.
 
     The metric space $\overline{X}$ is complete: if $(\overline{x}^k) \subset \overline{X}$ is a Cauchy sequence in $\overline{X}$ and $(x^k_n)_n \subset X$ is a representative for $\overline{x}^k$, choose $n_k$ such that $d(x_i^k, x_j^k) \leq 2^{-k}$ for $i, j \geq n_k$.
     Define $(x_k) \subset X$ by $x_k = x_{n_k}^k$. Then $x = (x_k) \subset X$ is a Cauchy sequence and $\overline{x}^k \to \overline{x}$ in $\overline{X}$.
 
     The space $X$ is isometrically embedded in $\overline{X}$ by the map that sends $x \in X$ to the equivalence class of the constant sequence $(x, x, \dotsc)$.
     Thus we can regard $X$ as a subspace of $\overline{X}$.
-    One can check that $X$ is dense in $\overline{X}$.
+    One can check that $X$ is \hyperlink{def:dense}{dense} in $\overline{X}$.
 \end{remark}
 
 \begin{ex}
-    Let $X$ be a normed vector space (inner product space).
-    Then the norm (inner product) extends uniquely from $X$ to its completion, making it a Banach (Hilbert) space.
+    Let $X$ be a \hyperlink{def:nvs}{normed vector space} (\hyperlink{def:ip}{inner product} space).
+    Then the norm (inner product) extends uniquely from $X$ to its completion, making it a \hyperlink{def:banach}{Banach} (\hyperlink{def:euclidean}{Hilbert}) space.
 \end{ex}
 
 \begin{eg}
@@ -1976,24 +1974,25 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
 \end{eg}
 
 \subsection{Orthogonal complements and projections}
-\begin{defi}
-    Let $V$ be a Euclidean vector space.
+\begin{defi}[Orthogonal]\hypertarget{def:ortho}
+    Let $V$ be a \hyperlink{def:euclidean}{Euclidean vector space}.
     \begin{itemize}
         \item $v,w \in V$ are \textbf{orthogonal} if $(v, w) = 0$.
-        \item The \textbf{orthogonal complement} of a set $S \subset V$ is $S^\perp = \set{v \in V | (v, w) = 0 \forall w \in S}$.
+        \item The \textbf{orthogonal complement} of a set $S \subset V$ is
+            \begin{equation*}S^\perp \coloneqq \set{v \in V | (v, w) = 0\ \forall w \in S}.\end{equation*}
     \end{itemize}
 \end{defi}
 
 \begin{fact}
-    If $v, w \in V$ are orthogonal, then $\|v+w\|^2 = \|v\|^2 + \|w\|^2$.
+    If $v, w \in V$ are \hyperlink{def:ortho}{orthogonal}, then $\|v+w\|^2 = \|v\|^2 + \|w\|^2$.
 \end{fact}
 
 \begin{fact}
-    $S^\perp$ is a closed subspace of $V$, and $(\overline{\spn S})^\perp = S^\perp$.
+    $S^{\hyperlink{def:ortho}{\perp}}$ is a closed subspace of $V$, and $(\overline{\spn S})^\perp = S^\perp$.
 \end{fact}
 
 \begin{proof}
-    $S^\perp = \bigcup_{w \in S} f_w^{-1}(0)$ where $f_w(v) = (v, w)$ is continuous.
+    $S^{\hyperlink{def:ortho}{\perp}} = \bigcup_{w \in S} f_w^{-1}(0)$ where $f_w(v) = (v, w)$ is continuous.
     Thus $S^\perp$ is the intersection of closed sets, so closed. It is clear that $S^\perp$ is a linear subspace.
     Clearly,
     \begin{equation*}
@@ -2004,41 +2003,39 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
     Then $(v, w) = \lim_{k \to \infty} (v, w_k) = 0$, so $v \in (\spn S)^\perp$.
 \end{proof}
 
-For $W \subset V$ a linear subspace, $W^\perp \cap W = \{0\}$. Thus the sum $W + W^\perp$ is direct, and we write $W + W^\perp = W \oplus W^\perp$.
+\hypertarget{def:oplus}For $W \subset V$ a linear subspace, $W^\perp \cap W = \{0\}$. Thus the sum $W + W^\perp$ is direct, and we write $W + W^\perp = W \oplus W^\perp$.
 
 \begin{eg}
     \leavevmode
     \begin{itemize}
-        \item If $X$ is finite-dimensional, then $V = W \oplus W^\perp$ for any linear subspace $W \subset V$.
+        \item If $X$ is finite-dimensional, then $V = W \hyperlink{def:oplus}{\oplus} W^{\hyperlink{def:ortho}{\perp}}$ for any linear subspace $W \subset V$.
         \item Let $V = C[0,1]$ with $(f,g) = \int_0^1 f \overline{g} \, dx$ and $W = C^1[0,1] \subset C[0,1]$.
-            Then $W^\perp = \{0\}$, since $\int_0^1 f \overline{g} \, dx = 0 \forall g \in C^1$ implies $f = 0$. Thus $V \neq W \oplus W^\perp$.
+            Then $W^\perp = \{0\}$, since $\int_0^1 f \overline{g} \, dx = 0 \ \forall g \in C^1$ implies $f = 0$. Thus $V \neq W \oplus W^\perp$.
     \end{itemize}
 \end{eg}
 
 \begin{thm}
-    Let $W \subset V$ be a complete subspace. Then $W \oplus W^\perp = V$.
+    Let $W \subset V$ be a complete subspace. Then $W \hyperlink{def:oplus}{\oplus} W^{\hyperlink{def:ortho}{\perp}} = V$.
     Moreover, given $v \in V$, its unique decomposition $v = v_\parallel + v_\perp$ with $v_\parallel \in W$ and $v_\perp \in W^\perp$ is characterised by
     \begin{equation*}
         \|v_\perp\| = \|v - v_\parallel\| = \inf_{w \in W} \|v - w\| \tag{$*$} \label{eq:17star}.
     \end{equation*}
 \end{thm}
 
-The assumption that $W$ is complete holds in particular if $V$ is a Hilbert space and $W \subset V$ is closed.
+The assumption that $W$ is complete holds in particular if $V$ is a \hyperlink{def:euclidean}{Hilbert space} and $W \subset V$ is closed.
 
 \begin{proof}
     Let $v \in V$, and $D = \inf_{w \in W} \|v - w\|$. Choose any sequence $(w_k) \subset W$ such that $\|v - w_k\| \to D$.
 
     Claim: $(w_k)$ is Cauchy.
     By the parallelogram identity, $\|x - y\|^2 + \|x+y\|^2 = 2 \|x\|^2 + 2 \|y\|^2$, with $x = v-w_j$ and $y = v+w_k$, we get
-    \begin{gather}
+    \begin{gather*}
         \|w_j - w_k\|^2 + \|2v - w_j - w_k\|^2 = 2 \|v - w_j\|^2 + 2 \|v - w_k\|^2 \\
         \implies \|w_j - w_k\|^2 = 2 \underbrace{\|v - w_j\|^2}_{\to D^2} + 2 \underbrace{\|v - w_k\|^2}_{\to D^2} - 4 \underbrace{\norm{v - \frac{1}{2}(w_j + w_k)}^2}_{\geq D^2} \\
         \leq 4(D^2 + \epsilon) - 4D^2 \text{ for $i, k$ sufficiently large} \\
         = 4\epsilon
-    \end{gather}
+    \end{gather*}
     So, $(w_j)$ is Cauchy, and by completeness of $W$, $w_j \to v_\parallel$ for some $v_\parallel$ in $W$.
-
-    % new lec (18)
 
     Claim: $v_\perp = v - v_\parallel \in W^\perp$. If not, $\exists \tilde{w} \in W$ such that $(\tilde{w}, v_\perp) > 0$.
     \begin{align*}
@@ -2053,7 +2050,6 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
     by definition of $D$, a contradiction.
 
     Thus, $v_\perp \in W^\perp$ and $v = v_\parallel + v_\perp$, $v_\parallel \in W$, $v_\perp \in W^\perp$.
-
     To show that the decomposition is characterised by \eqref{eq:17star}, suppose
     \begin{equation*}
         v = \tilde{v}_\perp + \tilde{v}_\parallel \text{ for } \tilde{v}_\perp \in W^\perp, \tilde{v}_\parallel \in W.
@@ -2062,25 +2058,26 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
 \end{proof}
 
 \begin{cor}
-    Let $H$ be a Hilbert space and $S \subset H$.
-    Then $\overline{\spn S} = ((\overline{\spn S})^\perp)^\perp  = (S^\perp)^\perp$.
+    Let $H$ be a \hyperlink{def:euclidean}{Hilbert space} and $S \subset H$.
+    Then $\overline{\spn S} = ((\overline{\spn S})^{\hyperlink{def:ortho}{\perp}})^\perp  = (S^\perp)^\perp$.
 \end{cor}
 
-\begin{thm}[Riesz Representation Theorem]
-    let $H$ be a Hilbert space.
-    Then for any $l \in H^*$ there is a unique $v_l \in H$ such that $l(w) = (w, v_l)$ for all $w \in H$.
+\begin{thm}[Riesz Representation Theorem]\hypertarget{def:riesz}
+    Let $H$ be a \hyperlink{def:euclidean}{Hilbert space}.
+    Then for any $l \in \hyperlink{def:dualSpace}{H^*}$ there is a unique $v_l \in H$ such that $l(w) = (w, v_l)$ for all $w \in H$.
     Moreover, $\|l\| = \|v_l\|$.
 \end{thm}
 
 \begin{cor}
     The antilinear map $H \to H^*$, $v \mapsto (\cdot, v)$ is bijective and isometric.
-    Thus $H$ and $H^*$ can be identified.
-    In particular, $H^*$ is a Hilbert space.
-    For $l, l' \in H^*$ the inner product on $H^*$ is $(l, l') = (v_l', v_l)$.
+    Thus $H$ and $\hyperlink{def:dualSpace}{H^*}$ can be identified.
+    In particular, $H^*$ is a \hyperlink{def:euclidean}{Hilbert space}.
+    For $l, l' \in H^*$ the \hyperlink{def:ip}{inner product} on $H^*$ is $(l, l') = (v_l', v_l)$.
 \end{cor}
 
-\begin{proof}[Proof of Riesz Representation Theorem]
-    Let $l \in H^*$, $l \neq 0$. Then $\ker L$ is closed and the previous theorem implies the existence of the orthogonal decomposition $H = \ker l \oplus (\ker l)^\perp$.
+\begin{proof}[Proof of \hyperlink{def:riesz}{Riesz Representation Theorem}]
+    Let $l \in \hyperlink{def:dualSpace}{H^*}$, $l \neq 0$.
+    Then $\ker L$ is closed and the previous theorem implies the existence of the \hyperlink{def:ortho}{orthogonal decomposition} $H = \ker l \oplus (\ker l)^{\hyperlink{def:ortho}{\perp}}$.
     Since $l \neq 0$, $(\ker l)^\perp \neq \{0\}$.
 
     Claim: There is $v_0 \in H$ such that $(\ker l)^\perp = \spn \{v_0\}$ and $\|v_0\| = 1$.
@@ -2100,17 +2097,17 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
     Since $l$ and $(\cdot, v_l)$ are linear and agree on $\ker l$ and $(\ker l)^\perp$, they must also agree on $\ker l \oplus (\ker l)^\perp = H$.
 
     Norm: $\|l\| = \sup_{\|v\| \leq 1} \abs{l(v)} = \sup_{\|v\| \leq 1} \abs{(v, v_l)} = \|v_l\|$
-    where the last equality follows from taking $v = \frac{v_l}{\|v_l\|}$ and Cauchy-Schwarz.
+    where the last equality follows from taking $v = \frac{v_l}{\|v_l\|}$ and \hyperlink{thm:cs}{Cauchy-Schwarz}.
 
     Uniqueness: If $(v, v_l) = (v, \tilde{v}_l)$ for all $v \in H$, then
     \begin{align*}
-        (v, v_l - \tilde{v}_l) = 0 \quad \forall v \\
-        \implies (v_l - \tilde{v}_l, v_l - \tilde{v}_l) = 0 \implies \tilde{v}_l = v_l.
+        (v, v_l - \tilde{v}_l) &= 0 \quad \forall v \\
+        \implies (v_l - \tilde{v}_l, v_l - \tilde{v}_l) &= 0 \implies \tilde{v}_l = v_l. \qedhere
     \end{align*}
 \end{proof}
 
-\begin{defi}
-    Let $V$ be a Euclidean vector space.
+\begin{defi}[Projection]\hypertarget{def:proj}
+    Let $V$ be a \hyperlink{def:euclidean}{Euclidean vector space}.
     \begin{itemize}
         \item A linear operator $P:V \to V$ is a \textbf{projection} if $P^2 = P$.
         \item $P$ is an \textbf{orthogonal projection} if $P^2 = P$ and $(Pv,w) = (v, Pw)$ for all $v, w \in V$ ($P$ is self-adjoint)
@@ -2118,24 +2115,24 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
 \end{defi}
 
 \begin{fact}
-    Let $P$ be an orthogonal projection. Then $\|P\| = 1$ or $\|P\| = 0$.
+    Let $P$ be an \hyperlink{def:proj}{orthogonal projection}. Then $\|P\| = 1$ or $\|P\| = 0$.
 \end{fact}
 
 \begin{proof}
     Let $v \in V$, $Pv \neq 0$. Then
-    \begin{align*}
-        \|Pv\| = \frac{(Pv, Pv)}{\|Pv\|} = \frac{(v, P^2v)}{\|Pv\|} = \frac{(v, Pv)}{\|Pv\|} \leq \|v\|.
-        \|P\| \leq 1.
-    \end{align*}
+    \begin{gather*}
+        \|Pv\| = \frac{(Pv, Pv)}{\|Pv\|} = \frac{(v, P^2v)}{\|Pv\|} = \frac{(v, Pv)}{\|Pv\|} \leq \|v\| \\
+        \implies \|P\| \leq 1.
+    \end{gather*}
 
     On the other hand, if $\|P\| \neq 0$, there is $v$ such that $Pv \neq 0$. Let $w = Pv$. Then $\|Pw\| = \|Pv\| = \|w\| \implies \|P\| \geq 1$.
 \end{proof}
 
 \begin{cor}
-    Let $W \subset V$ be complete (i.e. closed if $V$ is a Hilbert space).
-    Then there is an orthogonal projection $P:V \to V$ with
+    Let $W \subset V$ be complete (i.e. closed if $V$ is a \hyperlink{def:euclidean}{Hilbert space}).
+    Then there is an \hyperlink{def:proj}{orthogonal projection} $P:V \to V$ with
     \begin{equation*}
-        \im P = W, \ker P = W^\perp
+        \im P = W,\ \ker P = W^{\hyperlink{def:ortho}{\perp}}
     \end{equation*}
 \end{cor}
 
@@ -2143,12 +2140,12 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
     Let $Pv = v_\parallel$ with $v_\parallel \in W$ and $v_\perp = v - v_\parallel \in W^\perp$ as in the theorem.
     Then $P$ is linear since
     \begin{gather*}
-        v = v_\parallel + v_\perp, \quad w = w_\parallel + w_\perp, \quad v_\parallel, w_\parallel \in W, \quad v_\perp, w_\perp \in W^\perp
-        \implies \lambda v + \mu w = \underbrace{(\lambda v_\parallel + \mu w_\parallel)}_{\in W} + \underbrace{(\lambda v_\perp + \mu_\perp)}_{\in W^\perp}
+        v = v_\parallel + v_\perp, \quad w = w_\parallel + w_\perp, \quad v_\parallel, w_\parallel \in W, \quad v_\perp, w_\perp \in W^\perp \\
+        \implies \lambda v + \mu w = \underbrace{(\lambda v_\parallel + \mu w_\parallel)}_{\in W} + \underbrace{(\lambda v_\perp + \mu_\perp)}_{\in W^\perp} \\
         \implies P(\lambda v + \mu w) = \lambda P v + \mu P w
     \end{gather*}
-    by uniqueness of the orthogonal decomposition.
-    Clearly, $P^2 = P$ and $(Pv, w) = (v_\parallel, w_\parallel + w_\perp) = (v_\parallel, w_\parallel) = (v_\parallel + v_\perp, w_\parallel) = (v, Pw)$ so $P$ is orthogonal.
+    by uniqueness of the \hyperlink{def:ortho}{orthogonal decomposition}.
+    Clearly, $P^2 = P$ and $(Pv, w) = (v_\parallel, w_\parallel + w_\perp) = (v_\parallel, w_\parallel) = (v_\parallel + v_\perp, w_\parallel) = (v, Pw)$ so $P$ is \hyperlink{def:proj}{orthogonal}.
 \end{proof}
 
 \begin{eg}
@@ -2161,14 +2158,14 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
     \begin{equation*}
         S_n f(x) = \sum_{k=-n}^n \hat{f}_k e^{ikx}, \quad \hat{f}_k = \frac{1}{2\pi} \int_{-\pi}^\pi f(x) e^{-ikx} \, dx
     \end{equation*}
-    is the orthogonal projection with image $W = \spn \{e^{ikx}\}_{\abs{k}\leq n}$ (which is finite dimensional and thus complete).
+    is the \hyperlink{def:proj}{orthogonal projection} with image $W = \spn \{e^{ikx}\}_{\abs{k}\leq n}$ (which is finite dimensional and thus complete).
 \end{eg}
 
 \begin{proof}
     Let $e_k(x) = e^{ikx}$. Then $\hat{f}_k = (f, e_k)$ so $S_n f = \sum_{k = -n}^n e_k(f, e_k)$.
     If $f \in W$, i.e., $f = \sum_{k=-n}^n a_k e_k$, $a_k \in \C$, then
     \begin{equation*}
-        S_n f = \sum_{\abs{k} \leq n} e_k (\sum_{\abs{k}\leq n} a_l e_l, e_k) = f \text{ since } (e_k, e_l) =
+        S_n f = \sum_{\abs{k} \leq n} e_k \left(\sum_{\abs{k}\leq n} a_l e_l, e_k\right) = f \text{ since } (e_k, e_l) =
         \begin{cases}
             1 & \text{if } k = l \\
             0 & \text{if } k \neq l
@@ -2176,14 +2173,14 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
     \end{equation*}
 
     If $f \in W^\perp$ then $(f, e_k) = 0$ for all $\abs{k} \leq n$, so $S_n f= 0$.
-
-    $\implies S_n$ is a projection with image $W$. Also, $(S_n f, g) = (f, S_n g)$ for all $f,g$ so $S_n$ is orthogonal.
+    Thus $S_n$ is a projection with image $W$.
+    Also, $(S_n f, g) = (f, S_n g)$ for all $f,g$ so $S_n$ is orthogonal.
 \end{proof}
 
 % new lec (19)
 
 \subsection{Orthonormal systems}
-\begin{defi}[Orthonormal system]\hypertarget{def:orthonormalsystem}
+\begin{defi}[Orthonormal system]\hypertarget{def:ons}
     \leavevmode
     \begin{itemize}
         \item Let $V$ be a Euclidean vector space. A set $\{e_\alpha\}_\alpha \subset V$ of unit vectors is an \textbf{orthonormal system} (ONS) if $(e_\alpha, e_\beta) = 0$ for all $\alpha \neq \beta$.
@@ -2192,14 +2189,17 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
     \end{itemize}
 \end{defi}
 \begin{fact}
-    Let $H$ be a Hilbert space and $S$ an orthonormal system. Then $S$ is a Hilbert basis if and only if $\overline{\spn S} = H$.
+    Let $H$ be a \hyperlink{def:euclidean}{Hilbert space} and $S$ an \hyperlink{def:ons}{orthonormal system}.
+    Then $S$ is a \hyperlink{def:ons}{Hilbert basis} if and only if $\overline{\spn S} = H$.
 \end{fact}
 
 \begin{proof}
-    Let $W = \overline{\spn S}$. Then $W$ is complete, so $H = W \oplus W^\bot$. Suppose that $W^\bot \neq \{0\}$.
+    Let $W = \overline{\spn S}$.
+    Then $W$ is complete, so $H = W \hyperlink{def:oplus}{\oplus} W^{\hyperlink{def:ortho}{\perp}}$.
+    Suppose that $W^\bot \neq \{0\}$.
     Then there exists $0 \neq v \in W^\bot = S^\bot$, so $S \cup \{\frac{v}{\|v\|}\}$ is an orthonormal system. Thus
     \begin{equation*}
-        \overline{\spn S} \neq H \iff W^\bot \neq \{0\} \iff S \text{ is not maximal.} \qedhere
+        \overline{\spn S} \neq H \iff W^\bot \neq \{0\} \iff S \text{ is not \hyperlink{def:ons}{maximal}.} \qedhere
     \end{equation*}
 \end{proof}
 
@@ -2216,12 +2216,12 @@ The assumption that $W$ is complete holds in particular if $V$ is a Hilbert spac
 \end{proof}
 
 \begin{cor}
-    Let $H$ be a \textbf{separable} Hilbert space. Then there is a countable Hilbert basis.
+    Let $H$ be a \hyperlink{def:separable}{separable} \hyperlink{def:euclidean}{Hilbert space}. Then there is a countable \hyperlink{def:ons}{Hilbert basis}.
 \end{cor}
-Thus from now on, we will always take Hilbert bases to be countable if $H$ is separable.
+Thus from now on, we will always take \hyperlink{def:ons}{Hilbert bases} to be countable if $H$ is \hyperlink{def:separable}{separable}.
 
-\begin{prop}[Bessel inequality]
-    Let $V$ be a Euclidean vector space and $\{e_i\}_{i=1}^N$ an orthonormal system (with $N=\infty$ permitted). Then
+\begin{prop}[Bessel inequality]\hypertarget{prop:bessel}
+    Let $V$ be a \hyperlink{def:euclidean}{Euclidean vector space} and $\{e_i\}_{i=1}^N$ an \hyperlink{def:ons}{orthonormal system} (with $N=\infty$ permitted). Then
     \begin{equation*}
         \sum_{i=1}^N \abs{(v, e_i)}^2 \leq \|v\|^2 \quad \text{for all } v \in V.
     \end{equation*}
@@ -2233,20 +2233,20 @@ Thus from now on, we will always take Hilbert bases to be countable if $H$ is se
     \begin{equation*}
         (Pv, w) = \sum_{i=1}^N (v, e_i) \overline{(v, e_i)} = (v, Pw) \quad \text{for all } v, w \in V.
     \end{equation*}
-    Thus $P$ is an orthogonal projection $\implies \sum_{i=1}^N \abs{(v, e_i)}^2 = \|Pv\|^2 \leq \|v\|^2$ for all $v \in V$.
+    Thus $P$ is an \hyperlink{def:proj}{orthogonal projection} $\implies \sum_{i=1}^N \abs{(v, e_i)}^2 = \|Pv\|^2 \leq \|v\|^2$ for all $v \in V$.
 \end{proof}
 
 \begin{prop}
-    Let $H$ be a \textbf{separable} (infinite-dimensional) Hilbert space with Hilbert basis $\{e_i\}_{i=1}^\infty$. Then
+    Let $H$ be a separable (infinite-dimensional) \hyperlink{def:euclidean}{Hilbert space} with \hyperlink{def:ons}{Hilbert basis} $\{e_i\}_{i=1}^\infty$. Then
     \begin{enumerate}[label=(\roman*)]
-        \item For any $x \in H$, set $x_i = (x, e_i)$. Then $(x_i) \in \ell^2$ and
+        \item For any $x \in H$, set $x_i = (x, e_i)$. Then $(x_i) \in \hyperlink{def:lpspace}{\ell^2}$ and
             \begin{equation*}
                 x = \sum_{i=1}^\infty x_i e_i.
             \end{equation*}
         \item Conversely, if $(x_i) \in \ell^2$ then there is $x \in H$ such that $(x, e_i) = x_i$ for all $i$.
         \item For any $x, y \in H$,
             \begin{equation*}
-                (x, y) = \sum_{i=1}^\infty \qquad \text{(Parseval identity)}.
+                (x, y) = \sum_{i=1}^\infty x_i \overline{y_i} \qquad \text{(Parseval identity)}.
             \end{equation*}
     \end{enumerate}
     In particular, the map
@@ -2264,7 +2264,8 @@ Thus from now on, we will always take Hilbert bases to be countable if $H$ is se
             \begin{equation*}
                 \|s_m - s_n\|^2 = \norm{\sum_{i=n}^m x_i e_i}^2 = \sum_{i=n}^m \abs{x_i}^2 \leq \sum_{i=n}^\infty \abs{x_i}^2 \to 0 \text{ as } n \to \infty
             \end{equation*}
-            since $(x_i) \in \ell^2$ by Bessel's inequality. By completeness of $H$, there is $s \in H$ such that $s_n \to s$.
+            since $(x_i) \in \hyperlink{def:lpspace}{\ell^2}$ by \hyperlink{prop:bessel}{Bessel's inequality}.
+            By completeness of $H$, there is $s \in H$ such that $s_n \to s$.
 
             Now claim $s = x$.
             For any $i$,
@@ -2289,12 +2290,12 @@ Thus from now on, we will always take Hilbert bases to be countable if $H$ is se
 From now on, Banach and Hilbert spaces are always complex.
 
 \subsection{Spectrum and resolvent}
-\begin{defi}
-    Let $X$ be a (complex) Banach space and $T \in \mathcal{B}(X)$ where from now on $\mathcal{B}(X) = \mathcal{B}(X, X)$.
+\begin{defi}\hypertarget{def:spectrum}
+    Let $X$ be a (complex) \hyperlink{def:banach}{Banach space} and $T \in \mathcal{B}(X)$ where from now on $\mathcal{B}(X) \coloneqq \hyperlink{def:bvw}{\mathcal{B}(X, X)}$.
     \begin{itemize}
         \item The \textbf{resolvent set} of $T$ is
             \begin{equation*}
-                \rho (T) = \set{z \in \C | T - z \text{ is bijective and } (T-z)^{-1} \in \mathcal{B}(X)}.
+                \rho (T) = \set{z \in \C | T - z \text{ is bijective and } (T-z)^{-1} \in \hyperlink{def:spectrum}{\mathcal{B}(X)}}.
             \end{equation*}
             $T - z$ denotes the operator $T - z \id$.
         \item The \textbf{spectrum} of $T$ is
@@ -2309,11 +2310,12 @@ From now on, Banach and Hilbert spaces are always complex.
 \end{defi}
 
 \begin{remark}
-    If $T$ is bounded above and $T-z$ is bijective, then $T-z \in \mathcal{B}(X)$ is automatic by the \hyperlink{thm:omt}{open mapping theorem}.
+    If $T$ is bounded above and $T-z$ is bijective, then $T-z \in \hyperlink{def:bx}{\mathcal{B}(X)}$ is automatic by the \hyperlink{thm:omt}{open mapping theorem}.
 \end{remark}
 
 \begin{fact}
-    Let $T \in \mathcal{B}(X)$ with $\|T\| \leq 1$. Then the series $\sum_{n=0}^\infty T^n$ converges in $\mathcal{B}(X)$ and
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(X)}$ with $\|T\| \leq 1$.
+    Then the series $\sum_{n=0}^\infty T^n$ converges in $\mathcal{B}(X)$ and
     \begin{equation*}
         (\id -T)^{-1} = \sum_{n=0}^\infty T^n, \; \norm{(\id - T)^{-1}} \leq \frac{1}{1 - \|T\|}.
     \end{equation*}
@@ -2326,63 +2328,63 @@ From now on, Banach and Hilbert spaces are always complex.
     \end{equation*}
     Thus $S = \lim_{n \to \infty} S_n \in \mathcal{B}(X)$ exists and $\|S\| \leq \lim_{n \to \infty} \sum_{k=0}^n \|T\|^k \leq \frac{1}{1 - \|T\|}$ and
     \begin{equation*}
-        S(1-T) = \sum_{k=0}^\infty T^k - \sum_{k=1}^\infty T^k = \id.
+        S(1-T) = \sum_{k=0}^\infty T^k - \sum_{k=1}^\infty T^k = \id. \qedhere
     \end{equation*}
 \end{proof}
 
 % new lec (20)
 
 \begin{prop}
-    Let $z_0 \in \rho(T)$. Then $\rho(T)$ contains the disk
+    Let $z_0 \in \hyperlink{def:spectrum}{\rho(T)}$. Then $\rho(T)$ contains the disk
     \begin{equation*}
-        D = \set{z \in \C | \abs{z - z_0} \|R_T(z_0)\| < 1}.
+        D = \set{z \in \C | \abs{z - z_0} \|\hyperlink{def:spectrum}{R_T}(z_0)\| < 1}.
     \end{equation*}
-    In particular, $\rho(T)$ is open, $\sigma(T)$ is closed.
-    Moreover, the map $R_T : \rho(T) \to \mathcal{B}(X)$ is analytic (can be represented by an absolutely convergent power series in any small enough disk).
+    In particular, $\rho(T)$ is open, $\hyperlink{def:spectrum}{\sigma(T)}$ is closed.
+    Moreover, the map $R_T : \rho(T) \to \hyperlink{def:bx}{\mathcal{B}(X)}$ is analytic (can be represented by an absolutely convergent power series in any small enough disk).
 \end{prop}
 
 \begin{proof}
     For $z \in D$,
     \begin{align*}
         T - z &= (T-z_0) - (z - z_0) \\
-              &= (T - z_0)(\id - \underbrace{R_T(z_0)(z - z_0)}_{\|\cdot\| < 1 \text{ by definition of $D$.}})
+              &= (T - z_0)(\id - \underbrace{\hyperlink{def:spectrum}{R_T(z_0)}(z - z_0)}_{\mathclap{\|\cdot\| < 1 \text{ by definition of $D$.}}})
     \end{align*}
     \begin{align*}
-        \implies (\id - R_T(z_0)(z-z_0))^{-1} &= \sum_{n=0}^\infty (z-z_0)^n R_T(z_0)^n \in \mathcal{B}(X) \\
+        \implies (\id - R_T(z_0)(z-z_0))^{-1} &= \sum_{n=0}^\infty (z-z_0)^n R_T(z_0)^n \in \hyperlink{def:bx}{\mathcal{B}(X)} \\
         \implies (T-z)^{-1} &= \sum_{n=0}^\infty (z-z_0)^n R_T(z_0)^{n+1} \in \mathcal{B}(X) \\
-        \implies z &\in \rho(T). \\
+        \implies z &\in \hyperlink{def:spectrum}{\rho(T)}.
     \end{align*}
     Therefore, $D \subset \rho(T)$. Moreover, $R_T$ is analytic on $\rho(T)$.
 \end{proof}
 
 \begin{cor}
-    $\sigma(T) \neq \emptyset$ and $\sigma(T) \subseteq \Set{z \in \C | \abs{z} \leq \|T\|}$.
+    $\hyperlink{def:spectrum}{\sigma(T)} \neq \emptyset$ and $\sigma(T) \subseteq \Set{z \in \C | \abs{z} \leq \|T\|}$.
 \end{cor}
 
 \begin{proof}
     For any $\abs{z} > \|T\|$,
     \begin{equation*}
-        R_T(z) = \frac{1}{z} \frac{1}{1 - T/z} = \frac{1}{z} \sum_{n=0}^\infty \frac{T^n}{z^n} \in \mathcal{B}(X).
+        \hyperlink{def:spectrum}{R_T(z)} = \frac{1}{z} \frac{1}{1 - T/z} = \frac{1}{z} \sum_{n=0}^\infty \frac{T^n}{z^n} \in\hyperlink{def:spectrum}{ \mathcal{B}(X)}.
     \end{equation*}
 
-    Thus $\sigma(T) \subseteq \set{z \in \C | \abs{z} \leq \|T\|}$ and $\|R_T(z)\| \to 0$ as $\abs{z} \to \infty$.
+    Thus $\hyperlink{def:spectrum}{\sigma(T)} \subseteq \set{z \in \C | \abs{z} \leq \|T\|}$ and $\|R_T(z)\| \to 0$ as $\abs{z} \to \infty$.
     If $\sigma(T) = \emptyset$ then $R_T: \C \to \mathcal{B}(X)$ would be entire.
     By Liouville's Theorem it would have to be constant, thus $0$ (since it tends to $0$ as $\abs{z} \to \infty$).
-    But $R_T(z)$ is not identically $0$, since e.g. $z R_T(z) \xrightarrow{\abs{z} \to \infty} \id$.
+    But $R_T(z)$ is not identically $0$, since e.g.\ $z R_T(z) \rightarrow \id$ as $|z| \to \infty$.
 \end{proof}
 
 \subsection{Classification of the spectrum}
 \begin{prop}
-    Let $X$ be a Banach space, $Y$ a normed space, $T \in \mathcal{B}(X,Y)$.
-    Then $T^{-1} \in \mathcal{B}(Y,X)$ iff $\im T$ is dense in $Y$ and $T$ is bounded below:
+    Let $X$ be a \hyperlink{def:banach}{Banach space}, $Y$ a normed space, $T \in \hyperlink{def:bvw}{\mathcal{B}(X,Y)}$.
+    Then $T^{-1} \in \mathcal{B}(Y,X)$ iff $\im T$ is \hyperlink{def:dense}{dense} in $Y$ and $T$ is bounded below:
     \begin{equation*}
         \exists \epsilon > 0 \text{ s.t. } \forall x \in X \setminus \{0\}, \ \|T x\| > \epsilon \|x\|.
     \end{equation*}
 \end{prop}
 
 \begin{proof}
-    The direction $T^{-1} \in \mathcal{B}(Y, X) \implies$ ($\im T$ dense and $T$ bounded below) is clear.
-    Thus assume that $T \in \mathcal{B}(X, Y)$ is such that $\im T$ is dense and $T$ bounded below.
+    The ($\Rightarrow$) direction is clear.
+    Thus assume that $T \in \hyperlink{def:bvw}{\mathcal{B}(X, Y)}$ is such that $\im T$ is \hyperlink{def:dense}{dense} and $T$ bounded below.
     Then $T$ is injective, so bijective onto its image.
     Let $S: \im T \to X$ be its inverse.
     Since $T$ is bounded below, $S$ is bounded.
@@ -2396,21 +2398,21 @@ From now on, Banach and Hilbert spaces are always complex.
     as claimed.
 \end{proof}
 
-\begin{defi}
+\begin{defi}[Spectrum]\hypertarget{def:eigen}\leavevmode
     \begin{itemize}
-        \item $\sigma_p(T) = \set{\lambda \in \C | T - \lambda \text{ is not injective}}$ is the \textbf{point spectrum} or the set of eigenvalues.
-        \item $\sigma_c(T) = \set{\lambda \in \sigma(T) | T - \lambda \text{ is injective and $\im (T - \lambda)$ is dense}}$ is the \textbf{continuous spectrum}.
+        \item $\sigma_p(T) = \set{\lambda \in \mathbb{C} | T - \lambda \text{ is not injective}}$ is the \textbf{point spectrum} or the set of eigenvalues.
+        \item $\sigma_c(T) = \set{\lambda \in \hyperlink{def:spectrum}{\sigma(T)} | T - \lambda \text{ is injective and $\im (T - \lambda)$ is dense}}$ is the \textbf{continuous spectrum}.
         \item $\sigma_r(T) = \set{\lambda \in \sigma(T) | T - \lambda \text{ is injective and } \im(T - \lambda) \text{ is not dense}}$ is the \textbf{residual spectrum}.
     \end{itemize}
 \end{defi}
 
 \begin{remark}
-    By the previous proposition, if $\lambda \in \sigma_c(T)$, then $T-\lambda$ is not bounded below. Then there exists a sequence $(x_k) \subset X$ with $\|x_k\|=1$ such that
+    By the previous proposition, if $\lambda \in \hyperlink{def:spectrum}{\sigma_c(T)}$, then $T-\lambda$ is not bounded below.
+    Then there exists a sequence $(x_k) \subset X$ with $\|x_k\|=1$ such that
     \begin{equation*}
         T x_k - \lambda x_k \to 0 \, : \quad \lambda \text{ is an approximate eigenvalue.}
     \end{equation*}
-
-    The set $\sigma_{ap}(T) = \set{\lambda \in \sigma(T) | \lambda \text{ is an approximate eigenvalue}}$ is the approximate point spectrum.
+    \hypertarget{def:ap}The set $\sigma_{ap}(T) = \set{\lambda \in \sigma(T) | \lambda \text{ is an approximate eigenvalue}}$ is the approximate point spectrum.
 \end{remark}
 
 \begin{eg}
@@ -2419,20 +2421,21 @@ From now on, Banach and Hilbert spaces are always complex.
         \item $T - \lambda$ is injective
         \item $T - \lambda$ is surjective
     \end{itemize}
-    so $\sigma(T) = \sigma_p(T)$. Moreover, $\sigma_p(T) = \set{\lambda \in \C | \det(T - \lambda) =0}$ contains at most $\dim X$ points.
+    so $\hyperlink{def:spectrum}{\sigma(T)} = \hyperlink{def:eigen}{\sigma_p(T)}$.
+    Moreover, $\sigma_p(T) = \set{\lambda \in \C | \det(T - \lambda) =0}$ contains at most $\dim X$ points.
 \end{eg}
 
 \subsection{Normal linear operators on a Hilbert space}
-Recall that given $T: H \to H$ we defined the adjoint $T^* : H^* \to H^*$ by $(T^* l)(x) = l(T x)$ for any $l \in H^*$ and $x \in H$.
-In a Hilbert space, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$. Explicitly,
+\hypertarget{def:tstar}Recall that given $T: H \to H$ we defined the \hyperlink{def:dualMap}{adjoint} $T^* : \hyperlink{def:dualSpace}{H^*} \to H^*$ by $(T^* l)(x) = l(T x)$ for any $l \in H^*$ and $x \in H$.
+In a \hyperlink{def:euclidean}{Hilbert space}, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$. Explicitly,
 \begin{equation*}
     (Tx, y) = (x, T^* y) \quad \text{for } x, y \in H.
 \end{equation*}
 
-\begin{defi}
-    $T \in \mathcal{B}(H)$ is
+\begin{defi}[Normal, self-adjoint, unitary maps]\hypertarget{def:normalMap}
+    $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ is
     \begin{itemize}
-        \item \textbf{normal} if $T T^* = T^* T$
+        \item \textbf{normal} if $T \hyperlink{def:tstar}{T^*} = T^* T$
         \item \textbf{self-adjoint} if $T = T^*$
         \item \textbf{unitary} if $T T^* = T^* T = \id$
     \end{itemize}
@@ -2442,41 +2445,42 @@ In a Hilbert space, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$.
 % new lec (21)
 
 \begin{ex}
-    Let $T \in \mathcal{B}(H)$ be normal.
-    Then $\|Tx\| = \|T^* x\| \ \forall x \in H$ and $\ker T = \ker T^* = (\im T)^\perp = (\im T^*)^\perp$.
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{normal}.
+    Then $\|Tx\| = \|\hyperlink{def:tstar}{T^*} x\| \ \forall x \in H$ and $\ker T = \ker T^* = (\im T)^\perp = (\im T^*)^\perp$.
     Also
     \begin{equation*}
-        \overline{\im T} = (\im T)^{\perp \perp} = (\ker T)^\perp = (\ker T^*)^\perp = \overline{\im T^*}
+        \overline{\im T} = (\im T)^{\perp \perp} = (\ker T)^\perp = (\ker T^*)^\perp = \overline{\im T^*}.
     \end{equation*}
 \end{ex}
 
 \begin{cor}
-    For $T$ normal, $\sigma_r(T) = \emptyset$ and $\sigma(T) = \sigma_{ap}(T)$.
+    For $T$ \hyperlink{def:normalMap}{normal}, $\hyperlink{def:eigen}{\sigma_r(T)} = \emptyset$ and $\hyperlink{def:spectrum}{\sigma(T)} = \hyperlink{def:ap}{\sigma_{ap}}(T)$.
 \end{cor}
 
 \begin{cor}
-    For $T$ normal, if $Tx = \lambda x$ then $T^* x = \overline{\lambda} x$.
-    In particular, $\overline{\sigma_p(T)} = \sigma_p(T^*)$ and similarly $\overline{\sigma_c(T)} = \sigma_c(T^*)$.
+    For $T$ \hyperlink{def:normalMap}{normal}, if $Tx = \lambda x$ then $\hyperlink{def:tstar}{T^*} x = \overline{\lambda} x$.
+    In particular, $\overline{\hyperlink{def:eigen}{\sigma_p}(T)} = \sigma_p(T^*)$ and similarly $\overline{\hyperlink{def:eigen}{\sigma_c}(T)} = \sigma_c(T^*)$.
 \end{cor}
 
 \begin{proof}
-    If $T$ is normal, then so is $T - \lambda$ and $(T-\lambda)^* = T^* - \overline{\lambda}$.
+    If $T$ is \hyperlink{def:normalMap}{normal}, then so is $T - \lambda$ and $(T-\lambda)^* = \hyperlink{def:tstar}{T^*} - \overline{\lambda}$.
     Thus $\|(T-\lambda)x\| = \|(T-\lambda)^* x\| = \norm{(T^* - \overline{\lambda}) x}$ so $Tx = \lambda x \iff T^* x = \overline{\lambda} x$ and more generally
     \begin{equation*}
-        (T - \lambda) x_j \to 0 \iff (T^* - \overline{\lambda}) x_j \ to 0.
+        (T - \lambda) x_j \to 0 \iff (T^* - \overline{\lambda}) x_j \to 0. \qedhere
     \end{equation*}
 \end{proof}
 
 \begin{cor}
-    Let $T$ be self-adjoint. Then $\sigma(T) \subset \R$.
+    Let $T$ be \hyperlink{def:normalMap}{self-adjoint}. Then $\hyperlink{def:spectrum}{\sigma(T)} \subset \R$.
 \end{cor}
 
 \begin{ex}
-    Let $T$ be unitary. Then $\sigma(T) \subset S^1 = \set{z \in \C | \abs{z} = 1}$.
+    Let $T$ be \hyperlink{def:normalMap}{unitary}.
+    Then $\hyperlink{def:spectrum}{\sigma(T)} \subset S^1 = \set{z \in \C | |z| = 1}$.
 \end{ex}
 
 \begin{eg}
-    Let $T \in \mathcal{B}(H)$ be self-adjoint. Then for all $t \in \R$,
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}. Then for all $t \in \R$,
     \begin{equation*}
         e^{itT} = \sum_{n=0}^\infty \frac{1}{n!} (itT)^n \in \mathcal{B}(H)
     \end{equation*}
@@ -2493,7 +2497,7 @@ In a Hilbert space, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$.
 \end{eg}
 
 \begin{lemma}
-    Let $T \in \mathcal{B}(H)$ be self-adjoint. Then
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}. Then
     \begin{equation*}
         \|T\| = \sup_{\|x\| \leq 1} \sup_{\|y\| \leq 1} \abs{(Tx, y)} = \sup_{\|x\| \leq 1} \abs{(Tx, x)}.
     \end{equation*}
@@ -2515,7 +2519,7 @@ In a Hilbert space, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$.
     \end{equation*}
     On the other hand $\abs{(x, Ty)} \leq \|T\|$ for $\|x\| \leq 1$, $\|y\| \leq 1$, showing the first equality.
 
-    To show the second equality, first note $\sup_{\|x\| \leq 1} \abs{(Tx,x)} \leq \sup_{\|x\| leq 1} \sup_{\|y\| \leq 1} \abs{(Tx, y)}$ is clear. On the other hand,
+    To show the second equality, first note $\sup_{\|x\| \leq 1} \abs{(Tx,x)} \leq \sup_{\|x\| \leq 1} \sup_{\|y\| \leq 1} \abs{(Tx, y)}$ is clear. On the other hand,
     \begin{align*}
         \abs{(x, Ty)} &= \frac{1}{4} \abs{((T(x+y),x+y) - (T(x-y),x-y))} \\
         &\leq \frac{1}{4} \sup_{\|x\| \leq 1} \abs{(Tx,x)} (\underbrace{\|x+y\|^2 + \|x-y\|^2}_{\leq 2 \|x\|^2 + 2 \|y\|^2}) \\
@@ -2525,7 +2529,7 @@ In a Hilbert space, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$.
 \end{proof}
 
 \begin{lemma}
-    Let $T$ be self-adjoint. Then at least one of $\|T\|$ and $-\|T\|$ must be an approximate eigenvalue.
+    Let $T$ be \hyperlink{def:normalMap}{self-adjoint}. Then at least one of $\|T\|$ and $-\|T\|$ must be an \hyperlink{def:ap}{approximate eigenvalue}.
 \end{lemma}
 
 \begin{proof}
@@ -2533,20 +2537,21 @@ In a Hilbert space, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$.
     \begin{equation*}
         \|T\| = \sup_{\|x\| \leq 1} \abs{(x, Tx)} = \sup_{\|x\| \leq 1} (x, Tx).
     \end{equation*}
-    THen there is $(x_i) \subset H$, $\|x_i\| = 1$ such that $(x_i, T x_i) \to \|T\| = \lambda$.
+    Then there is $(x_i) \subset H$, $\|x_i\| = 1$ such that $(x_i, T x_i) \to \|T\| = \lambda$.
     \begin{equation*}
-        \implies \|T x_i - \lambda x_i\|^2 = \underbrace{\|T x_i\|^2}_{\leq \lambda^2} - 2 \lambda \underbrace{(x_i, T x_i)}_{\to \lambda} + \lambda^2 \to 0.
+        \implies \|T x_i - \lambda x_i\|^2 = \underbrace{\|T x_i\|^2}_{\leq \lambda^2} - 2 \lambda \underbrace{(x_i, T x_i)}_{\to \lambda} + \lambda^2 \to 0. \qedhere
     \end{equation*}
 \end{proof}
 
 \subsection{Spectral Theorem for compact self-adjoint operators}
-\begin{defi}
-    Let $X, Y$ be normed vector spaces.
-    Then $T \in \mathcal{B}(X, Y)$ is compact if $T(B)$ is relatively compact for any bounded $B \subset X$.
+\begin{defi}[Compact operator]\hypertarget{def:compact}
+    Let $X, Y$ be \hyperlink{def:nvs}{normed vector spaces}.
+    Then $T \in \mathcal{B}(X, Y)$ is \textbf{compact} if $T(B)$ is \hyperlink{def:relCompact}{relatively compact} for any \hyperlink{def:boundedSubs}{bounded} $B \subset X$.
 \end{defi}
 
 \begin{lemma}
-    Let $T$ be compact. Then any nonzero approximate eigenvalue of $T$ is an eigenvalue.
+    Let $T$ be \hyperlink{def:compact}{compact}.
+    Then any nonzero \hyperlink{def:ap}{approximate eigenvalue} of $T$ is an \hyperlink{def:eigen}{eigenvalue}.
 \end{lemma}
 
 \begin{proof}
@@ -2559,17 +2564,18 @@ In a Hilbert space, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$.
 \end{proof}
 
 \begin{cor}
-    Let $T \in \mathcal{B}(H)$ be self-adjoint and compact. Then $\|T\|$ or $- \|T\|$ is an eigenvalue.
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint} and \hyperlink{def:compact}{compact}.
+    Then $\|T\|$ or $- \|T\|$ is an \hyperlink{def:eigen}{eigenvalue}.
 \end{cor}
 
-\begin{notation}
+\begin{notation}\hypertarget{def:espace}
     $E_\lambda = \ker(T - \lambda)$.
 \end{notation}
 Strategy: repeat corollary with $T$ replaced by $T|_{E_{\lambda_1}^\perp}$, $\abs{\lambda_i} = \|T\|$.
 
 \begin{lemma}
-    Let $T \in \mathcal{B}(H)$ be self-adjoint.
-    Then for eigenvalues $\lambda \neq \mu$, the spaces $E_\lambda$ and $E_\mu$ are orthogonal.
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}.
+    Then for \hyperlink{def:eigen}{eigenvalues} $\lambda \neq \mu$, the spaces \hyperlink{def:espace}{$E_\lambda$} and $E_\mu$ are \hyperlink{def:ortho}{orthogonal}.
 \end{lemma}
 
 \begin{proof}
@@ -2577,59 +2583,62 @@ Strategy: repeat corollary with $T$ replaced by $T|_{E_{\lambda_1}^\perp}$, $\ab
     Then
     \begin{gather*}
         (x,y) = \frac{1}{\lambda} (T x,y) = \frac{1}{\lambda} (x, T y) = \frac{\mu}{\lambda} (x,y) \\
-        \implies \mu = \lambda \text{ or } (x, y) = 0.
+        \implies \mu = \lambda \text{ or } (x, y) = 0. \qedhere
     \end{gather*}
 \end{proof}
 
 % new lec (22)
 
 \begin{lemma}
-    Let $T \in \mathcal{B}(H)$ be self-adjoint. For any non-zero eigenvalues $\{\lambda_i\}_{i \in I}$,
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}.
+    For any non-zero \hyperlink{def:eigen}{eigenvalues} $\{\lambda_i\}_{i \in I}$,
     \begin{equation*}
-        T((\bigoplus_{i \in I} E_{\lambda_i})^\perp) \subset (\bigoplus_{i \in I} E_{\lambda_i})^\perp.
+        T\left(\left(\bigoplus_{i \in I} \hyperlink{def:espace}{E_{\lambda_i}}\right)^\perp\right) \subset \left(\bigoplus_{i \in I} E_{\lambda_i}\right)^\perp.
     \end{equation*}
 \end{lemma}
 
 \begin{proof}
-    Let $y \in (\bigoplus_{i \in I} E_{\lambda_i})^\perp$. Then for any $x \in E_{\lambda_i}$,
+    Let $y \in \left(\bigoplus_{i \in I} \hyperlink{def:espace}{E_{\lambda_i}}\right)^\perp$. Then for any $x \in E_{\lambda_i}$,
     \begin{gather*}
         0 = (x,y) = \frac{1}{\lambda_i} (T x, y) = \frac{1}{\lambda_i} (x, T y) \\
         \implies (x, T y) = 0 \quad \forall x \in \bigoplus_{i \in I} E_{\lambda_i} \\
-        \implies T((\bigoplus_{i \in I} E_{\lambda_i})^\perp) \subset (\bigoplus_{i \in I} E_{\lambda_i})^\perp. \qedhere
+        \implies T\left(\left(\bigoplus_{i \in I} E_{\lambda_i}\right)^\perp\right) \subset \left(\bigoplus_{i \in I} E_{\lambda_i}\right)^\perp. \qedhere
     \end{gather*}
 \end{proof}
 
 \begin{lemma}
-    Let $T \in \mathcal{B}(H)$ be self-adjoint and compact.
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint} and \hyperlink{def:compact}{compact}.
     Then, for any $\epsilon > 0$,
     \begin{equation*}
-        \bigoplus_{\substack{\lambda \in \sigma_p(T) \\ \abs{\lambda} > \epsilon}} E_\lambda
+        \bigoplus_{\substack{\lambda \in \hyperlink{def:eigen}{\sigma_p(T)} \\ \abs{\lambda} > \epsilon}} \hyperlink{def:espace}{E_\lambda}
     \end{equation*}
     is finite dimensional.
 \end{lemma}
 
 \begin{proof}
-    Otherwise there are infinitely many eigenvectors $(x_i)$ such that $\|x_i\| = 1$ and $(x_i, x_j) = 0$ for $i \neq j$ and
+    Otherwise there are infinitely many eigenvectors $(x_i)$ such that $\|x_i\| = 1$ and
+    \begin{equation*}(x_i, x_j) = 0\end{equation*}
+    for $i \neq j$ so
     \begin{equation*}
         \|T x_i - T x_j\|^2 = \|T x_i\|^2 + \|T x_j\|^2 \geq 2 \epsilon.
     \end{equation*}
-    This is a contradiction to compactness of $T$.
+    This is a contradiction to \hyperlink{def:compact}{compactness} of $T$.
 \end{proof}
 
 \begin{thm}[Hilbert-Schmidt]
-    Let $T \in \mathcal{B}(H)$ be self-adjoint and compact.
-    Then there are at most countably many eigenvalues $(\lambda_i)$ which can accumulate to $0$.
-    The eigenspaces $E_{\lambda_i}$ and $E_{\lambda_j}$ are orthogonal for $i \neq j$, $E_{\lambda_i}$ is finite-dimensional for $\lambda_i \neq 0$ and
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint} and \hyperlink{def:compact}{compact}.
+    Then there are at most countably many \hyperlink{def:eigen}{eigenvalues} $(\lambda_i)$ which can accumulate to $0$.
+    The \hyperlink{def:espace}{eigenspaces} $E_{\lambda_i}$ and $E_{\lambda_j}$ are orthogonal for $i \neq j$, $E_{\lambda_i}$ is finite-dimensional for $\lambda_i \neq 0$ and
     \begin{equation*}
         T = \sum_{j = 1}^\infty \lambda_j P_{\lambda_j} \text{ in } \mathcal{B}(H), \quad H = \ker T \oplus E_{\lambda_1} \oplus \dotsb
     \end{equation*}
-    where $P_{\lambda_j}$ is the orthogonal projection onto $E_{\lambda_j}$.
+    \hypertarget{def:p}where $P_{\lambda_j}$ is the orthogonal projection onto $E_{\lambda_j}$.
 \end{thm}
 
 \begin{proof}
     By the previous lemmas, there is an eigenvalue $\lambda_1$ such that $\abs{\lambda_1} = \|T\|$.
-    Given $\abs{\lambda_1} \geq \abs{\lambda_2} \geq \dotsb \geq \abs{\lambda_k}$ such that $T$ has no eigenvalue with magnitude $> \abs{\lambda_k}$, let $H_k = (\bigoplus_{i=1}^k E_{\lambda_i})^\perp$.
-    Then $H_k \subset H$ is closed, so itself a Hilbert space.
+    Given $\abs{\lambda_1} \geq \abs{\lambda_2} \geq \dotsb \geq \abs{\lambda_k}$ such that $T$ has no eigenvalue with magnitude $> \abs{\lambda_k}$, let $H_k = \left(\bigoplus_{i=1}^k E_{\lambda_i}\right)^\perp$.
+    Then $H_k \subset H$ is closed, so itself a \hyperlink{def:euclidean}{Hilbert space}.
     Also,
     \begin{equation*}
         T|_{H_k} : H_k \to H_k, \quad \norm{T|_{H_k}} \leq \abs{\lambda_k}.
@@ -2652,15 +2661,15 @@ Strategy: repeat corollary with $T$ replaced by $T|_{E_{\lambda_1}^\perp}$, $\ab
 \end{proof}
 
 \begin{cor}
-    Let $H$ be separable and $T \in \mathcal{B}(H)$ self-adjoint and compact.
-    Then there is an orthonormal (Hilbert) bases for $H$ of $T$ eigenvectors.
+    Let $H$ be \hyperlink{def:separable}{separable} and $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ \hyperlink{def:normalMap}{self-adjoint} and \hyperlink{def:compact}{compact}.
+    Then there is an \hyperlink{def:basis}{orthonormal (Hilbert) basis} for $H$ of $T$ eigenvectors.
 \end{cor}
 \begin{proof}
-    Apply Gram-Schmidt to the eigenspaces and the kernel.
+    Apply Gram-Schmidt to the \hyperlink{def:espace}{eigenspaces} and the kernel.
 \end{proof}
 
 \begin{cor}
-    $\sigma(T) \setminus \{0\} = \sigma_p(T) \setminus \{0\}$.
+    $\hyperlink{def:spectrum}{\sigma(T)} \setminus \{0\} = \hyperlink{def:eigen}{\sigma_p(T)} \setminus \{0\}$.
 \end{cor}
 
 \begin{proof}
@@ -2668,9 +2677,9 @@ Strategy: repeat corollary with $T$ replaced by $T|_{E_{\lambda_1}^\perp}$, $\ab
     \begin{align*}
         T_n - \mu &= \sum_{i=1}^n (\lambda_i - \mu) P_{\lambda_i} - \mu \sum_{i=n+1}^\infty P_{\lambda_i} \\
         \implies (T_n - \mu)^{-1} &= \sum_{i=1}^n (\lambda_i - \mu)^{-1} P_{\lambda_i} - \mu^{-1} \sum_{i=n+1}^\infty P_{\lambda_i} \text{ exists and} \\
-        \norm{(T_n - \mu)^{-1}} &\leq \max\{\abs{\mu}^{-1}, \abs{\lambda_i-\mu}^{-1}\}.
-        \implies T - \mu = T_n - \mu + T - T_n = (T_n - \mu)(1 + \underbrace{(T_n - \mu)}_{<C}^{-1}\underbrace{(T-T_n)}_{\|\cdot\| \to 0}) \\
-        \implies (T-\mu)^{-1} \in \mathcal{B}(H) \implies \mu \notin \sigma(T)
+        \norm{(T_n - \mu)^{-1}} &\leq \max\{\abs{\mu}^{-1}, \abs{\lambda_i-\mu}^{-1}\}. \\
+        \implies T - \mu = T_n - \mu + T - T_n &= (T_n - \mu)(1 + \underbrace{(T_n - \mu)}_{<C}^{-1}\underbrace{(T-T_n)}_{\|\cdot\| \to 0}) \\
+        \implies (T-\mu)^{-1} &\in \mathcal{B}(H) \implies \mu \notin \sigma(T). \qedhere
     \end{align*}
 \end{proof}
 
@@ -2680,7 +2689,6 @@ Let $T$ be the 1D Schr\"odinger operator acting on $C^2[a,b]$ by
     Tu(x) = -u''(x) + V(x) u(x)
 \end{equation*}
 with boundary condition $u(a) = u(b) = 0$ and $V$ is a continuous function.
-
 More generally, we could consider a Sturm-Liouville operator
 \[Tu(x) = -\frac{d}{dx}\left(a(x) \frac{d}{dx} u(x)\right) + V(x)\]
 where $a(x)>0$ is in $C^1$, $V$ is continuous, and
@@ -2761,28 +2769,27 @@ where $a(x)>0$ is in $C^1$, $V$ is continuous, and
 \end{lemma}
 
 \begin{proof}
-    By Cauchy-Schwarz,
+    By \hyperlink{thm:cs}{Cauchy-Schwarz},
     \begin{equation*}
-        \|Kf\|_\infty \leq \sup_x \int \abs{k(x,y)} \abs{f(y)} \, dy \leq \underbrace{\sup_x (\int \abs{k(x,y)}^2 \, dy)^\frac{1}{2}}_{\leq C} \|f\|_2
+        \|Kf\|_\infty \leq \sup_x \int \abs{k(x,y)} \abs{f(y)} \, dy \leq \underbrace{\sup_x \left(\int \abs{k(x,y)}^2 \, dy\right)^\frac{1}{2}}_{\leq C} \|f\|_2
     \end{equation*}
     so $K$ is bounded from $(C[a,b],\|\cdot\|_2)$ to $(C[a,b],\|\cdot\|_\infty)$.
     Also $\set{K f | f \in C[a,b], \|f\|_2 \leq 1}$ is equicontinuous:
     \begin{equation*}
-        \abs{K f(x) - K f(y)} \leq (\underbrace{\int_a^b \abs{k(x,z) - k(y,z)}^2 \, dz}_{\to 0 \text{ as } x \to y})^\frac{1}{2} \|f\|_2 \to 0
+        \abs{K f(x) - K f(y)} \leq \left(\underbrace{\int_a^b \abs{k(x,z) - k(y,z)}^2 \, dz}_{\to 0 \text{ as } x \to y}\right)^\frac{1}{2} \|f\|_2 \to 0
     \end{equation*}
     uniformly in $f$.
-
-    Thus compactness follows from the Arzel\`a-Ascoli Theorem.
+    Thus compactness follows from the \hyperlink{thm:aa}{Arzel\`a-Ascoli} Theorem.
 \end{proof}
 
 \begin{cor}
-    $K$ is bounded and compact from $(C[a,b], \|\cdot\|_2)$ to $(C[a,b], \|\cdot\|_2)$.
+    $K$ is bounded and \hyperlink{def:compact}{compact} from $(C[a,b], \|\cdot\|_2)$ to $(C[a,b], \|\cdot\|_2)$.
 \end{cor}
 
 \begin{proof}
     This follows from
     \begin{equation*}
-        \|Kf\|_2 \leq (\int_a^b \abs{K f(x)}^2 \, dx)^\frac{1}{2} \leq \sqrt{\abs{a-b}} \|K f\|_\infty. \qedhere
+        \|Kf\|_2 \leq \left(\int_a^b \abs{K f(x)}^2 \, dx\right)^\frac{1}{2} \leq \sqrt{\abs{a-b}} \|K f\|_\infty. \qedhere
     \end{equation*}
 \end{proof}
 
@@ -2790,22 +2797,21 @@ Let $H = L^2[a,b]$ be the completion of $(C[a,b], \|\cdot\|_2)$.
 In particular, $C[a,b]$ is dense in $L^2[a,b]$.
 
 \begin{fact}[Example sheet 4]
-    Let $X,Y$ be Banach spaces and $D \subset X$ a dense subspace.
-    Then a bounded (compact) operator $T:D \to Y$ extends uniquely to a bounded (compact) operator $T:X \to Y$ with the same norm (BLT thoerem).
+    Let $X,Y$ be \hyperlink{def:banach}{Banach spaces} and $D \subset X$ a \hyperlink{def:dense}{dense} subspace.
+    Then a bounded (\hyperlink{def:compact}{compact}) operator $T:D \to Y$ extends uniquely to a bounded (compact) operator $T:X \to Y$ with the same norm (BLT thoerem).
 \end{fact}
-
 \begin{cor}
-    $K$ extends uniquely to a compact self-adjoint operator $K: H \to H$.
+    $K$ extends uniquely to a \hyperlink{def:compact}{compact} \hyperlink{def:normalMap}{self-adjoint} operator $K: H \to H$.
     Moreover, $Kf \in C[a,b]$ for any $f \in H$.
 \end{cor}
 
 \begin{proof}
-    That $K$ is compact follows from the previous fact.
-    That $K$ is self-adjoint follows from the symmetry of $k$.
+    That $K$ is \hyperlink{def:compact}{compact} follows from the previous fact.
+    That $K$ is \hyperlink{def:normalMap}{self-adjoint} follows from the symmetry of $k$.
 
     That $Kf \in C[a,b]$ for any $f \in H$ follows from the fact that $K$ is also bounded from $(C[a,b], \|\cdot\|_2)$ to $(C[a,b],\|\cdot\|_\infty)$ and thus from $H$ to $(C[a,b], \|\cdot\|_\infty)$ by the previous fact.
 
-    By the spectral theorem, there exists an orthonormal system $(f_n) \subset H$, $(\mu_n) \subset \R$ with $\mu_n \to 0$ such that
+    By the spectral theorem, there exists an \hyperlink{def:ons}{orthonormal system} $(f_n) \subset H$, $(\mu_n) \subset \R$ with $\mu_n \to 0$ such that
     \begin{equation*}
         Kf = \sum_{n=1}^\infty \mu_n (f, f_n) f_n \text{  in } H.
     \end{equation*}
@@ -2813,7 +2819,7 @@ In particular, $C[a,b]$ is dense in $L^2[a,b]$.
     By the last corollary, if $\mu_n \neq 0$, $f_n = \frac{1}{\mu_n} K f_n \in C[a,b]$ and in fact then $f_n \in C^2 [a,b]$ since $Kf \in C^2$ if $f \in C^0$.
 \end{proof}
 
-Assuming $\ker(K) = 0$, there is thus a Hilbert basis of $C^2$ eigenfunctions of $K$.
+Assuming $\ker(K) = 0$, there is thus a \hyperlink{def:basis}{Hilbert basis} of $C^2$ eigenfunctions of $K$.
 With $\lambda_n = \frac{1}{\mu_n}$, then
 \begin{equation*}
     T f_n = \lambda_n T K f_n = \lambda_n f_n,
@@ -2825,27 +2831,26 @@ In QM, the vectors $f \in H$ describe the state of a system and $\abs{f(x)}^2$ t
 % new lec (24)
 
 \subsection{Continuous functional calculus}
-Let $T \in \mathcal{B}(H)$ be self-adjoint compact with spectral resolution
+Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint} compact with \textbf{spectral resolution}
 \begin{equation*}
-    T = \sum_{\lambda \in \sigma(T)} \lambda P_\lambda.
+    T = \sum_{\lambda \in \hyperlink{def:spectrum}{\sigma(T)}} \lambda \hyperlink{def:p}{P_\lambda}.
 \end{equation*}
-
-For $f \in C(\sigma(T))$ define
+For $f \in C(\hyperlink{def:spectrum}{\sigma(T)})$ define
 \begin{equation*}
     f(T) = \sum_{\lambda \in \sigma(T)} f(\lambda) P_\lambda \in \mathcal{B}(H).
 \end{equation*}
 
 \begin{thm}
-    The map $\Phi: C(\sigma(T)) \to \mathcal{B}(H)$, $f \mapsto f(T)$ is a $*$-homomorphism (a homomorphism of $C^*$ algebras):
+    The map $\Phi: C(\sigma(T)) \to \hyperlink{def:bx}{\mathcal{B}(H)}$, $f \mapsto f(T)$ is a $*$-homomorphism (a homomorphism of \hyperlink{def:cstar}{$C^*$ algebras}):
     \begin{equation*}
         \Phi(fg) = \Phi(f) \Phi(g), \quad \Phi(\lambda f) = \lambda \Phi(f), \quad \Phi(f)^* = \Phi(\overline{f}), \quad \Phi(1) = \id
         \tag{$*$} \label{eq:24star}
     \end{equation*}
     and it has the following properties:
-    \begin{enumerate}[label=\alph*]
+    \begin{enumerate}[label=(\alph*)]
         \item $\|\Phi(f)\| \leq \|f\|$ (in particular $\Phi$ is continuous)
         \item if $f(t) = t$ for all $t$ then $f(T) = T$
-        \item if $T x = \lambda x$ then $f(T) x) = f(\lambda) x$
+        \item if $T x = \lambda x$ then $f(T) x = f(\lambda) x$
         \item $\sigma(f(T)) = f(\sigma(T)) = \set{f(\lambda) | \lambda \in \sigma(T)}$
         \item if $f \geq 0$ then $f(T) \geq 0$, i.e. $(x, f(T) x) \geq 0$ for all $x \in H$.
     \end{enumerate}
@@ -2857,7 +2862,7 @@ For $f \in C(\sigma(T))$ define
 \end{remark}
 
 \begin{thm}
-    Let $T \in \mathcal{B}(H)$ be self-adjoint.
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}.
     Then there is a unique $*$-homomorphism $\Phi: C(\sigma(T)) \to \mathcal{B}(H)$ with all properties (a)-(e).
 \end{thm}
 
@@ -2877,7 +2882,7 @@ For $f \in C(\sigma(T))$ define
 \begin{proof}
     Let $\lambda \in \sigma(T)$ and write $P(t) - P(\lambda) = (t-\lambda) Q(t)$ for a polynomial $Q$.
     \begin{align*}
-        \implies& P(T) - P(\lambda) = \underbrace{(T-\lambda)}_{\mathllap{\text{not invertible since } \lambda \in \sigma(T)}} Q(T) = Q(T) (T - \lambda) \\
+        \implies& P(T) - P(\lambda) = \underbrace{(T-\lambda)}_{\mathclap{\text{not invertible since } \lambda \in \sigma(T)}} Q(T) = Q(T) (T - \lambda) \\
         \implies& P(T) - P(\lambda) \text{ is not invertible} \\
         \implies& P(\lambda) \in \sigma(P(T))
     \end{align*}
@@ -2894,9 +2899,9 @@ For $f \in C(\sigma(T))$ define
 \end{proof}
 
 \begin{lemma}
-    Let $T \in \mathcal{B}(H)$ be self-adjoint. Then
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}. Then
     \begin{equation*}
-        \|T\| = \sup_{\lambda \in \sigma(T)} \abs{\lambda}. \label{eq:24dagger} \tag{$\dagger$}
+        \|T\| = \sup_{\lambda \in \hyperlink{def:spectrum}{\sigma(T)}} \abs{\lambda}. \label{eq:24dagger} \tag{$\dagger$}
     \end{equation*}
     In particular, together with the previous lemma,
     \begin{equation*}
@@ -2916,7 +2921,7 @@ For $f \in C(\sigma(T))$ define
                                                                &= \|P(T)^* P(T)\| \\
                                                                &= \norm{(\overline{P}P) (T)} \\
                                                                &\overset{\dagger}{=} \sup_{\lambda \in \sigma(\overline{P}P(T))} \abs{\lambda} \\
-                                                               &\overset{\mathclap{\text{lemma}}}{=} \sup_{\lambda \in \sigma(T)} \abs{\overline{P} P (\lambda)} = (\sup_{\lambda \in \sigma(T)} \abs{P(\lambda)})^2.
+                                                               &\overset{\mathclap{\text{lemma}}}{=} \sup_{\lambda \in \sigma(T)} \abs{\overline{P} P (\lambda)} = \left(\sup_{\lambda \in \sigma(T)} \abs{P(\lambda)}\right)^2. \qedhere
     \end{align*}
 \end{proof}
 
@@ -2926,7 +2931,7 @@ For $f \in C(\sigma(T))$ define
     \begin{equation*}
         \|\Phi(P)\|_{\mathcal{B}(H)} = \|P\|_{C(\sigma(T))}.
     \end{equation*}
-    By the complex Stone-Weierstrass Theorem, $A$ is dense in $C(\sigma(T), \C)$.
+    By the \hyperlink{thm:csw}{complex Stone-Weierstrass Theorem}, $A$ is dense in $C(\sigma(T), \C)$.
     Thus $\Phi$ extends uniquely to a map $\Phi: C(\sigma(T), \C) \to \mathcal{B}(H)$.
 
     Properties \eqref{eq:24star}, (a), (b) hold by construction (and approximation by polynomials).
@@ -2935,34 +2940,34 @@ For $f \in C(\sigma(T))$ define
     \begin{equation*}
         f(T) x = \lim_{n \to \infty} f_n(T) x = \lim_{n \to \infty} f_n(\lambda) x = f(\lambda) x.
     \end{equation*}
-
     For (d), we have for any $f \in C(\sigma(T), \C)$:
     \begin{equation*}
         f(T)^* f(T) = \overline{f}(T) f(T) = \overline{f}f(T) = f \overline{f}(T) = f(T) f(T)^*
     \end{equation*}
-    so $f(T)$ is normal (self-adjoint if $f$ is real-valued).
+    so $f(T)$ is \hyperlink{def:normalMap}{normal} (\hyperlink{def:normalMap}{self-adjoint} if $f$ is real-valued).
     To show that $\sigma(f(T)) \subseteq f(\sigma(T))$ define for $\mu \notin f(\sigma(T))$ the continuous function
     \begin{align*}
         g(\lambda) &= \frac{1}{\mu - f(\lambda)}, \quad \lambda \in \sigma(T) \\
-        \implies \id = g(T) (\mu - f(T)) \implies \mu \notin \sigma(f(T)).
+        \implies \id &= g(T) (\mu - f(T)) \implies \mu \notin \sigma(f(T)).
     \end{align*}
     The direction $\sigma(f(T)) \subseteq f(\sigma(T))$ take $f_n \in A$ such that $f_n \to f$.
     By the previous lemma then $f_n(\sigma(T)) = \sigma(f_n(T))$.
     Thus for $\lambda \in \sigma(T)$ there are $(x_n)$ with $\|x_n\| = 1$ such that $f_n(T) x_n - f_n(\lambda) x_n \to 0$.
     \begin{align*}
         &\implies (f(T) - f(\lambda)) x_n = (\underbrace{f_n(T) - f_n(\lambda)}_{\to 0}) x_n + (\underbrace{f(T) - f_n(T)}_{\to 0}) x_n + (\underbrace{f_n(\lambda) - f(\lambda)}_{\to 0}) x_n \to 0 \\
-        &\implies f(\lambda) \in \sigma(f(T)) \implies f(\sigma(T)) \subseteq \sigma(f(T)).
+        &\implies f(\lambda) \in \sigma(f(T)) \implies f(\sigma(T)) \subseteq \sigma(f(T)). \qedhere
     \end{align*}
 \end{proof}
 
 \begin{cor}
-    Let $T \geq 0$, i.e. $\sigma(T) \subset [0, \infty)$. Then there is $\sqrt{T} \in \mathcal{B}(H)$ such that $\sqrt{T} \sqrt{T} =T$.
+    Let $T \geq 0$, i.e. $\hyperlink{def:spectrum}{\sigma(T)} \subset [0, \infty)$.
+    Then there is $\sqrt{T} \in \hyperlink{def:bx}{\mathcal{B}(H)}$ such that $\sqrt{T} \sqrt{T} =T$.
 \end{cor}
 
 \begin{cor}
-    The resolvent satisfies
+    The \hyperlink{def:spectrum}{resolvent} satisfies
     \begin{equation*}
-        \|R_T(z)\| = \frac{1}{\mathrm{dist}(z, \sigma(T))}.
+        \|\hyperlink{def:spectrum}{R_T(z)}\| = \frac{1}{\mathrm{dist}(z, \sigma(T))}.
     \end{equation*}
 \end{cor}
 \end{document}
