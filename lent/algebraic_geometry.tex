@@ -1226,34 +1226,42 @@ In this specific situation, we have a lemma:
     But this is immediate if $\frac{\partial f}{\partial t}$ isn't the zero polynomial, and our assumption of separability implies this.
 \end{proof}
 
-\begin{enumerate}[label=(\arabic*)]
-    \item Note the assumption of separability is necessary. For instance, take $k = \overline{\mathbb{F}_p}$, $Y = \A^1$, $X = \set{(y, t) | y = t^p}$.
-        \begin{equation*}
-            T_{(y_0, t_0)} X = \set{(v, \gamma)} X = \set{(v, \gamma) | v - p t_0^{p-1} \cdot \gamma = 0} = \set{(0, \gamma) | \gamma \in \A^1}
-        \end{equation*}
-        and map $T_{y_0, t_0} X \to T_{y_0} \A^1$ by $(0, \gamma) \mapsto 0$.
-    \item $\dim X = \dim Y$, $\trdim X = \trdim Y$. The second equality is clear as this is a separable algebraic extension of fields.
-        To prove the first, let $Y^{sm}$ be the smooth points of $Y$. $Y$ irreducible, so $Y^{sm} \cap U$ is open and Zariski dense. and $\dim T_p Y = \dim Y$ if $y \in Y^{sm} \cap U$.
-        but $\varphi^{-1} (Y^{sm} \cap U)$ is open in $X$, so $\dim X = \dim T_{(p, t)} X$ any $(p, )$ in this set.
-\end{enumerate}
+\begin{remark}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item Note the assumption of separability is necessary. For instance, take $k = \overline{\mathbb{F}_p}$, $Y = \A^1$, $X = \set{(y, t) | y = t^p}$.
+            \begin{equation*}
+                T_{(y_0, t_0)} X = \set{(v, \gamma) | v - p t_0^{p-1} \cdot \gamma = 0} = \set{(0, \gamma) | \gamma \in \A^1}
+            \end{equation*}
+            and map
+            \begin{align*}
+                T_{y_0,t_0} X &\longrightarrow T_{y_0} \A^1 \\
+                (0,y) &\longmapsto 0.
+            \end{align*}
+        \item $\dim X = \dim Y$, $\trdim X = \trdim Y$. The second equality is clear as this is a separable algebraic extension of fields.
+            To prove the first, let $Y^{\text{sm}}$ be the smooth points of $Y$.
+            $Y$ irreducible, so $Y^{\text{sm}} \cap U$ is open and Zariski dense, and $\dim T_p Y = \dim Y$ if $y \in Y^{\text{sm}} \cap U$.
+            But $\varphi^{-1} (Y^{\text{sm}} \cap U)$ is open in $X$, so $\dim X = \dim T_{(p, t)} X$ for any $(p, t)$ in this set.
+    \end{enumerate}
+\end{remark}
 
-Finally, note morphisms as above with $a_N = 1$, i.e.\ $f$ a monic polynomial, are even nicer. $\varphi$ is surjective.
+Finally, note morphisms as above with $a_N = 1$, i.e.\ $f$ a monic polynomial, are even nicer as $\varphi$ is surjective.
 
 % new lecture
-Suppose we have affine varieties $X$ and $Y$ with morphism $k[X] = k[Y][t]/f(t) \leftarrow k[Y]$.
+To recap:
+Suppose we have affine varieties $X$ and $Y$ with a morphism \begin{equation*}k[X] = k[Y][t]/f(t) \leftarrow k[Y].\end{equation*}
 We noticed that if $f \in k[Y][t]$ is a monic polynomial, then the map of algebraic varities $X \xrightarrow{\varphi} Y$ is surjective with finite $\varphi^{-1}(y)$ $\forall y \in Y$.
 
-\begin{defi}
-    $B \subseteq A$ is an integral ring extension if $\forall a \in A$, $\exists$ a monic polynomial $f \in B[t]$ with $f(a) = 0$.
+\begin{defi}[Integral extension]\hypertarget{def:intExt}
+    $B \subseteq A$ is an \textbf{integral ring extension} if $\forall a \in A$, $\exists$ a monic polynomial $f \in B[t]$ with $f(a) = 0$.
 \end{defi}
-\begin{lemma}
+\begin{lemma}\leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item If $f$ is a monic polynomial, then $B \subseteq B[t]/\langle f(t) \rangle$ is an integral extension of $B$.
+        \item If $f$ is a monic polynomial, then $B \subseteq B[t]/\langle f(t) \rangle$ is an \hyperlink{def:intExt}{integral extension} of $B$.
         \item If $C \subseteq B \subseteq A$ are integral ring extensions, so is $C \subseteq A$.
     \end{enumerate}
 \end{lemma}
-\begin{defi}
-    If $\phi^*: k[Y] \to k[X]$ is an integral inclusion of rings, we say $\varphi: X \to Y$ is a \textbf{finite morphism}.
+\begin{defi}[Finite morphism]
+    If $\phi^*: k[Y] \to k[X]$ is an \hyperlink{def:intExt}{integral inclusion} of rings, we say $\varphi: X \to Y$ is a \textbf{finite morphism}.
 \end{defi}
 \begin{thm}[Noether normalisation lemma]
     Let $X$ be an affine variety. Then there exists a finite surjective morphism $X \to \A^d$ for some $d$.
@@ -1261,13 +1269,15 @@ We noticed that if $f \in k[Y][t]$ is a monic polynomial, then the map of algebr
     Let $A$ be a finitely generated algebra over $k$ and an integral domain. Then $\exists x_1, \dotsc, x_N$ which generate $A$ as a $k$-algebra such that
     \begin{enumerate}[label=(\roman*)]
         \item $x_1, \dotsc, x_d$ algebraically independent over $k$
-        \item for each $i > d$, $x_i$ is separable algebraic with monic polynomial $F_i[t] \in k[x_1, \dotsc, x_{i-1}][t]$. That is, $k[x_1, \dotsc, x_{i-1}] \subseteq k[x_1, \dotsc, x_i]$ is an integral extension for $i > d$.
+        \item for each $i > d$, $x_i$ is separable algebraic with monic polynomial
+            \begin{equation*}F_i[t] \in k[x_1, \dotsc, x_{i-1}][t].\end{equation*} That is, $k[x_1, \dotsc, x_{i-1}] \subseteq k[x_1, \dotsc, x_i]$ is an integral extension for $i > d$.
     \end{enumerate}
 \end{thm}
 Notice, by the lemma (i) and (ii), this says that $k[x_1, \dotsc, x_d] \subseteq A$ is an integral ring extension.
 \begin{cor}
     $\trdim X = \dim X$.
 \end{cor}
+\color{gray}
 \begin{proof}
     We showed last time $\trdim \A^d = d = \dim \A^d$, and that if $\varphi: X \to Y$ had this nice form, then $\trdim X = \trdim Y$, $\dim X = \dim Y$.
 \end{proof}
@@ -1359,6 +1369,8 @@ Recall
 % \begin{note}
 %     Projective $n$-space is compact. In particular, $\proj^n(\C)$
 % \end{note}
+\leavevmode
+\color{black}
 \section{Algebraic Curves}
 From now on assume $k = \overline{k}$.
 \begin{defi}
@@ -1373,7 +1385,7 @@ For $\dim X = 1$:
     If $F = F(X_0, X_1, X_2)$, an irreducible homogeneous polynomial, then $Z(F) \subseteq \proj^2$ is an irreducible projective curve.
 \end{eg}
 \begin{warning}
-    Not all curves can be embedded inside $\proj^2$ (in fact, most curves are not plane curves).
+    Not all curves can be embedded inside $\proj^2$ (in fact, `most' curves are not plane curves).
 \end{warning}
 \begin{defi}
     If $X$ is an algebraic variety, and $p \in X$. Define
