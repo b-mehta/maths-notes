@@ -1,12 +1,12 @@
 # Part II notes
 
 ## Michaelmas
-- [Algebraic Topology](mich/algebraic_topology.pdf) very incomplete
+- [Algebraic Topology](mich/algebraic_topology.pdf) very incomplete. I'll be using [these notes](https://www.dpmms.cam.ac.uk/~or257/teaching/notes/at.pdf) instead.
 - [Galois Theory](mich/galois_theory.pdf)
 - [Graph Theory](mich/graph_theory.pdf)
 - [Linear Analysis](mich/linear_analysis.pdf)
 - [Number Theory](mich/number_theory.pdf)
-- [Probability and Measure](mich/probability_and_measure.pdf) very incomplete
+- [Probability and Measure](mich/probability_and_measure.pdf) very incomplete. I'll be using [these notes](http://www.statslab.cam.ac.uk/~james/Lectures/pm.pdf) instead.
 
 ## Lent
 - [Algebraic Geometry](lent/algebraic_geometry.pdf) very incomplete
