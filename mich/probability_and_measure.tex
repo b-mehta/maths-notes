@@ -5,6 +5,7 @@
 \def\nterm {Michaelmas}
 \def\nlecturer{E.\ Brieuillard}
 \def\ncourse{Probability and Measure}
+\def\draft{Incomplete}
 \input{header}
 % efjb2@cam.ac.uk
 
@@ -17,6 +18,9 @@
 \newcommand{\E}{\mathbb{E}}
 \DeclareMathOperator{\supp}{supp}
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \renewcommand{\thenthm}{\arabic{nthm}}
 % and here we go!
@@ -1586,7 +1590,7 @@ Throughout this section, take $(\Omega, \mathcal{F}, \Prob)$ a \hyperlink{def:pr
                                                                 &= \Prob(\forall i \; X_i \leq x_i).
     \end{align*}
     \begin{align*}
-        \text{independence } &\iff \forall x_i \in \R, \quad \Prob(\forall i \l X_i \leq x) = \prod_{i=1}^n \Prob(X_i \leq x_i) \\
+        \text{independence } &\iff \forall x_i \in \R, \quad \Prob(\forall i \; X_i \leq x) = \prod_{i=1}^n \Prob(X_i \leq x_i) \\
                              &\iff \mu_{(X_1, \dotsc, X_n)} (\prod_{i=1}^n (-\infty, x_i]) = \prod \mu_{x_i} ((-\infty, x_i]) \qedhere
     \end{align*}
 \end{proof}
@@ -1608,12 +1612,12 @@ Throughout this section, take $(\Omega, \mathcal{F}, \Prob)$ a \hyperlink{def:pr
     \end{equation*}
 \end{proof}
 
-\begin{lem}[1st Borel-Cantelli lemma]
+\begin{lemma}[1st Borel-Cantelli lemma]
     $(\Omega, \mathcal{F}, \Prob)$ a probability space.
     Let $(A_n)_{n \geq 1}$ be a sequence of events.
     Assume $\sum_{n \geq 1} \Prob(A_n) < \infty$.
     Then $\Prob(\lim \sup A_n) = 0$.
-\end{lem}
+\end{lemma}
 \begin{proof}
     \begin{align*}
         \lim \sup A_n &\coloneqq \bigcap_{m \geq 1} \bigcup_{n \geq m} A_n \\
@@ -1636,10 +1640,10 @@ Throughout this section, take $(\Omega, \mathcal{F}, \Prob)$ a \hyperlink{def:pr
     \end{equation}
 \end{eg}
 
-\begin{lem}[2nd Borel-Cantelli lemma]
+\begin{lemma}[2nd Borel-Cantelli lemma]
     Conversely to the first, assume that the events $(A_n)_{n \geq 1}$ are independent and $\sum_{n \geq 1} \Prob(A_n) = + \infty$.
     Then $\Prob(\lim \sup A_n) = 1$.
-\end{lem}
+\end{lemma}
 
 \begin{remark}
     The conclusion fails without the assumption of independence, for instance $A_n = [0, \frac{1}{n}] \subseteq \Omega = [0, 1]$, for which $\sum \Prob(A_n) = \sum \frac{1}{n} = \infty$, but $\lim \sup A_n = \{0\}$.
@@ -1858,7 +1862,7 @@ $E^*$ is a Banach space (completeness follows by that of $\C$) with norm $\norm{
     So, $l(y) = \langle y, \frac{x_0}{\norm{x_0}^2}$.
 \end{proof}
 
-\begin{theroem}[Jensen's inequality]
+\begin{thm}[Jensen's inequality]
     Let $\Omega \subseteq \R^d$ be a convex set.
     Let $\phi: \Omega \to \R$ be a convex (continuous) function.
     Let $X$ be an integrable $\R^n$ valued random variable such that $X \in \Omega$ almost surely.
@@ -1866,7 +1870,7 @@ $E^*$ is a Banach space (completeness follows by that of $\C$) with norm $\norm{
     \begin{equation*}
         \E(\phi(X)) \geq \phi(\E X)
     \end{equation*}
-\end{theroem}
+\end{thm}
 
 \begin{remark}
     \leavevmode
