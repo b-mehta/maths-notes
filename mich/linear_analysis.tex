@@ -1,0 +1,2973 @@
+\documentclass{article}
+
+\def\npart {II}
+\def\nyear {2017}
+\def\nterm {Michaelmas}
+\def\nlecturer{Dr R.\ Bauerschmidt}
+\def\ncourse{Linear Analysis}
+\input{header}
+
+% preamble
+\setcounter{section}{-1}
+\newcommand{\K}{\mathbb{K}}
+\renewcommand{\emptyset}{\varnothing}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\im}{im}
+\newtheorem*{idea}{Idea}
+\usepackage{xfrac}
+\usepackage{bbm}
+\usepackage{cancel}
+\usetikzlibrary{cd}
+% and here we go!
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+% statslab.cam.ac.uk/~rb812/teaching/la2017
+\section{Introduction}
+As the name suggests, Linear Analysis is the study of linear spaces of functions, mostly infinite dimensional. In particular, properties like convexity, completeness, closedness are of interest here.
+Like any pure course, we start with a lot of definitions which come out of nowhere, and then clear them up, but functional analysis is not devoid of interesting theorems.
+In particular, in the field of differential equations both ordinary and partial it is often useful to view the differential operators as a linear operator on a space of functions.
+Markov processes can also be seen using a transition operator, and dynamical processes are given by a measure preserving map, all fitting into the realm of linear maps.
+Quantum mechanics to a certain extent is the study of the spectrum of certain self-adjoint linear operators on a Hilbert space, and so requires functional analysis.
+As much as possible, examples of applications will be given briefly.
+
+\clearpage
+\section{Normed vector spaces}
+Unless stated, vector spaces will be either over the real numbers or the complex numbers, denoted by $\K$ to represent $\R$ or $\C$.
+
+\subsection{Topology of vector spaces}
+\begin{defi}[Normed vector space]\hypertarget{def:nvs}
+    A \textbf{normed vector space} is a vector space $V$ with a norm $\|\cdot\|: V \to \R$ satisfying
+    \begin{enumerate}[label=\roman*.]
+        \item $\|v\| \geq 0$ for all $v \in V$ and $\|v\| = 0$ if $v=0$. (Positive definite)
+        \item $\|\lambda v\| = \abs{\lambda} \|v\|$ for every $v \in V$ and $\lambda \in K$. (Positive homogeneous)
+        \item $\|v + w\| \leq \|v\| + \|w\|$ for all $v, w \in V$. (Triangle inequality)
+    \end{enumerate}
+\end{defi}
+\hypertarget{def:metricOnVS}In particular, a metric on $V$ is defined by $d(v, w) = \|v - w\|$.
+
+\begin{fact}
+    The \hyperlink{def:nvs}{vector space} operations of scalar multiplication and vector addition are continuous on a normed vector space.
+    \begin{align*}
+        \K \times V &\to V & (\lambda, v) &\mapsto \lambda v \\
+        V \times V &\to V & (v, w) &\mapsto v + w
+    \end{align*}
+\end{fact}
+
+\begin{proof}
+    We only check that scalar multiplication is continuous. Since $\K$ and $V$ are \hyperlink{def:metricOnVS}{metric spaces}, it suffices to show that $\lambda_j \to \lambda$ and $v_j \to v$ implies $\lambda_j v_j \to \lambda v$. But
+    \begin{align*}
+        \|\lambda_j v_j - \lambda v\| &= \|(\lambda_j - \lambda) v_j + \lambda(v_j - v)\| \\
+                                      &\leq \underbrace{|\lambda_j - \lambda|}_{\to 0} \underbrace{\|v_j\|}_\text{bounded} + |\lambda| \underbrace{\|v_j - v\|}_{\to 0}. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    Translations $(v \mapsto v + v_0)$ and dilations $(v \mapsto \lambda v, \lambda \ne 0)$ are homomorphisms.
+\end{cor}
+
+\begin{defi}[Topological vector space]\hypertarget{def:tVS}
+    A \textbf{topological vector space} is a vector space together with a topology that makes the vector space operations continuous and in which points are closed.
+\end{defi}
+% (Prop: A topological vector space is Hausdorff)
+
+\begin{notation}
+    For a subset $C$ of a vector space $V$ over $\K$ and $t \in \K$, we write $t C$ for the following subset:
+    \begin{equation*}
+        t C \coloneqq \Set{t v | v \in C}.
+    \end{equation*}
+\end{notation}
+
+\begin{defi}[Convex subset]\hypertarget{def:convexSubs}
+    Let $V$ be a vector space and $C \subset V$ a subset.  We say that $C$ is \textbf{convex} if and only if $t C + (1-t) C \subset C$ for all $t \in [0, 1]$. Specifically, this means $t v + (1-t) w \in C$ for all $v, w \in C$ and $t \in [0, 1]$.
+\end{defi}
+
+\begin{fact}
+    Let $V$ be a \hyperlink{def:nvs}{normed vector space}. Then $B_1(0)$ is \hyperlink{def:convexSubs}{convex}.
+\end{fact}
+
+\begin{fact}
+    If $C$ is \hyperlink{def:convexSubs}{convex}, then $v + \lambda C$ is convex for all $\lambda \in K$ and $v \in V$.
+\end{fact}
+
+\begin{defi}[Locally convex space]\hypertarget{def:locallyConvex}
+    A \hyperlink{def:tVS}{topological vector space} is \textbf{locally convex} if its topology has a basis of \hyperlink{def:convexSubs}{convex} sets.
+\end{defi}
+
+\begin{defi}[Bounded subset]\hypertarget{def:boundedSubs}
+    Let $V$ be a \hyperlink{def:tVS}{topological vector space} and $B \subset V$. We say that $B$ is \textbf{bounded} if for every open neighbourhood $U$ of $0$, there exists $t > 0$ such that $s U \supset B$ for all $s \geq t$.
+\end{defi}
+
+\begin{defi}[Balanced subset]\hypertarget{def:balancedSubs}
+    Let $V$ be a vector space, and $C \subset V$ a subset. Call $C$ \textbf{balanced} if for all $\abs{\lambda} \leq 1$, we have $\lambda C \subset C$.
+\end{defi}
+
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item \hyperlink{def:balancedSubs}{Balanced sets} in $\R$ are sets of the form $[-t, t]$, $(-t, t)$, $\{0\}$ or all of $\R$, and $\Q$ is not balanced in $\R$.
+        \item In $\C$, the only balanced sets are $\{0\}$, $\C$, and the open or closed balls centred at $0$.
+        \item There are more interesting examples of balanced sets in $\R^2$, for instance the open disk or any ellipse centred at $0$.
+    \end{enumerate}
+\end{eg}
+
+\begin{lemma}
+    Let $V$ be a \hyperlink{def:tVS}{topological vector space} and $C \subset V$ be a \hyperlink{def:boundedSubs}{bounded}, \hyperlink{def:convexSubs}{convex} neighbourhood of $0$.
+    Then there exists a bounded, \hyperlink{def:balancedSubs}{balanced}, {convex} neighbourhood $\widetilde C$ of $0$.
+\end{lemma}
+
+\begin{proof}
+    Exercise (on example sheet 1).
+\end{proof}
+
+\begin{prop}
+    Let $V$ be a \hyperlink{def:tVS}{topological vector space} and $C \subset V$ be a \hyperlink{def:boundedSubs}{bounded}, \hyperlink{def:convexSubs}{convex} neighbourhood of $0$. Then the topology on $V$ is induced by a norm.
+\end{prop}
+
+\begin{proof}
+    Use the previous lemma to construct $\widetilde C$. Let
+    \begin{equation*}
+        \mu_{\widetilde C}(v) = \inf\set{t > 0 | v \in t \widetilde C}
+    \end{equation*}
+    referred to as the Minkowski functional of $\widetilde C$.
+    We claim that $\|v\| = \mu_{\widetilde C}(v)$ is a norm on $V$ and that the topology induced by it is the same as the original topology.
+    Check the \hyperlink{def:nvs}{norm axioms} in turn:
+    \begin{enumerate}[label=\roman*.]
+        \item We clearly have positivity, and $\mu_{\widetilde C}(v) = 0$ if and only if $v = 0$ since $\widetilde C$ is \hyperlink{def:boundedSubs}{bounded}.
+        \item Since $\widetilde C$ is \hyperlink{def:balancedSubs}{balanced},
+            \begin{align*}
+                \mu_{\widetilde C} (\lambda v) &= \inf\Set{t > 0 | \lambda v \in t \widetilde C} \\
+                &= \inf\Set{t > 0 | v \in \frac{t}{\abs{\lambda}} \widetilde C} \\
+                &= \inf\Set{\abs{\lambda} \frac{t}{\abs{\lambda}} > 0 | v \in \frac{t}{\abs{\lambda}} \widetilde C} \\
+                &= \abs{\lambda} \mu_{\widetilde C}(v).
+            \end{align*}
+        \item Given $v, w \in V$, write $v = \lambda v_0$ and $w = \mu w_0$ with $\lambda, \mu > 0$, $v_0, w_0 \in \widetilde C$.
+            Since $\widetilde C$ is \hyperlink{def:convexSubs}{convex},
+            \begin{align*}
+                &\frac{\lambda v_0 + \mu w_0}{\lambda + \mu} \in \widetilde C \\
+                \implies \mu_{\widetilde C} \bigg(&\frac{\lambda v_0 + \mu w_0}{\lambda + \mu}\bigg) \leq 1.
+            \end{align*}
+            Therefore,
+            \begin{align*}
+                \mu_{\widetilde C} (v + w) &= (\lambda + \mu) \ \mu_{\widetilde C} \left(\frac{\lambda v_0 + \mu w_0}{\lambda + \mu}\right) \\
+                &\leq \lambda + \mu \\
+                &\leq \mu_{\widetilde C}(v) + \mu_{\widetilde C}(w). \qedhere
+            \end{align*}
+    \end{enumerate}
+\end{proof}
+
+% new lec (2)
+
+\begin{cor}
+    A \hyperlink{def:tVS}{topological vector space} is normable if and only if it is \hyperlink{def:locallyConvex}{locally convex} and locally bounded (that is, there exists a bounded convex neighbourhood of $0$).
+\end{cor}
+
+\begin{defi}[\hypertarget{def:banach}{Banach space}]
+    A \textbf{Banach} space is a \hyperlink{def:nvs}{normed vector space} that is \emph{complete} as a metric space, i.e.\ any Cauchy sequence converges.
+\end{defi}
+
+\begin{eg} \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item Any finite dimensional vector space is a \hyperlink{def:banach}{Banach space} (with any norm).
+        \item \hypertarget{def:bx}{Let $X$ be a set}, and $\mathcal{B}(X)$ the set of \textbf{bounded $\K$-valued functions} on $X$.
+            Then $\mathcal{B}(X)$ is a Banach space with norm
+            \begin{equation*}
+                \|f\|_\infty = \sup_{x \in X} \abs{f(x)},\quad f \in \mathcal{B}(X)
+            \end{equation*}
+        \item \hypertarget{def:cx}{Let} $X$ be a \emph{compact} Hausdorff space (e.g.\ $X = [0, 1]$) and $C(X)$ be the \textbf{space of continuous functions} on $X$.
+            Then $C(X) \subset \hyperlink{def:bx}{\mathcal{B}(X)}$ since every continuous function on a compact space is bounded.
+            In addition, $C(X)$ is a Banach space, as the uniform limit of a sequence of continuous functions is continuous.
+        \item \hypertarget{def:ckx}Let $U \subset \R^n$ be an open, bounded subset, and let $C^k(\bar{U})$ be the space of \textbf{$k$-times continuously differentiable functions} $f: \bar{U} \to \K$ with norm defined as follows:
+            \begin{equation*}
+                D^\alpha f(x) = \frac{\partial^{\abs{\alpha}}}{\partial x_1^{\alpha_1} \dots \partial x_n^{\alpha_n}} f(x)
+            \end{equation*}
+            for any multi-index $\alpha = (\alpha_1, \dotsc \alpha_n) \in \N_0^n$, and where $\abs{\alpha} = \sum_{i=1}^n \alpha_i$.  From here, we use the norm
+            \begin{equation*}
+                \|f\|_{C^k(\bar{U})} = \max_{\abs{\alpha} \leq k} \|D^\alpha f\|_\infty
+            \end{equation*}
+            Then $C^k(\bar{U})$ is a Banach space.
+        \item \hypertarget{def:lpspace}{For} a sequence $x = (x_1, x_2, \dotsc) \subset \K$, define
+            \begin{equation*}
+                \|x\|_p = \left(\sum_{i=1}^\infty \abs{x_i}^p\right)^{1/p}
+            \end{equation*}
+            for $p \in [1, \infty)$, and $\|x\|_\infty = \sup_i \abs{x_i}$.  Then $\ell^p = \set{x | \|x\|_p < \infty}$ for $p \in [1, \infty]$ is a Banach space.  Note for $p<1$, this does not generate a norm.
+        \item Let $U \subset \R^n$ be open (not necessarily bounded) and denote by $C(U)$ the space of continuous functions on $U$ (not necessarily bounded).
+            Then $C(U)$ is a \hyperlink{def:tVS}{topological vector space} with topology generated as follows.
+
+            Let $K_i \subset U$ be compact subsets such that $K_i \subset K_{i+1}$ and $\bigcup_{i=1}^\infty K_i = U$.
+            Let $V(i, n) = \Set{f | \|f\|_{\mathcal{C}(K_i)} < \frac1n}$ where we use $\|f\|_{\mathcal{C}(K_i)}$ to denote $\sup_{x \in K_i} \abs{f(x)}$.
+
+            Then the topology generated by the $V(i, n)$ and their translates makes $C(U)$ a \hyperlink{def:locallyConvex}{locally convex} \hyperlink{def:tVS}{topological vector space}, and the topology on $C(U)$ is generated by the metric
+            \begin{equation*}
+                d(f, g) = \sum_{i=1}^\infty 2^{-i} \frac{\|f-g\|_{C(K_i)}}{1 + \|f-g\|_{C(K_i)}}
+            \end{equation*}
+            This is not a Banach space, but it is a Fr\'echet space.
+
+        \item Let $X = \set{f : [0, 1] \to \K \; \text{continuous}}$. Then
+            \begin{equation*}
+                \|f\|_p = \left(\int_0^1 \abs{f(x)}^p dx\right)^\frac1p
+            \end{equation*}
+            for $p \in [1, \infty)$ is a norm on $X$. However, $X$ is not complete with this norm.
+    \end{enumerate}
+\end{eg}
+
+\subsection{Bounded linear maps and the dual space}
+
+\begin{fact}
+    In any \hyperlink{def:tVS}{topological vector spaces} $V, W$, a linear map $T: V \to W$ is continuous if and only if it is continuous at $0$.
+\end{fact}
+
+\begin{proof}
+    Let $T$ be continuous at $0$ and $v \in V$. Let $w = Tv$ and $U \subset W$ an open neighbourhood of $w$. Then $U - w$ is an open neighbourhood of $0 \in W$. Since $T$ is continuous at $0$, $T^{-1}(U - w)$ contains an open neighbourhood $U' \subset V$ of $0$.
+    By linearity, $T(v + U') = Tv + T(U') \subset Tv + U - w = U$.  Since $v + U'$ is an open neighbourhood of $v$ this means that $T$ is continuous at $v$.
+\end{proof}
+
+\begin{defi}[\hypertarget{def:boundedLinearMap}{Bounded linear map}]
+    Let $V, W$ be \hyperlink{def:tVS}{topological vector spaces} and $T: V \to W$ a linear map.
+    Then $T$ is \textbf{bounded} if $T(B)$ is \hyperlink{def:boundedSubs}{bounded} for any bounded $B \subset V$.
+\end{defi}
+
+\begin{fact}
+    If $V, W$ are \hyperlink{def:nvs}{normed vector spaces}, a linear map $T: V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} if and only if there is $\lambda > 0$ such that
+    \begin{equation*}
+        T(B_1(0)) \subset B_\lambda(0) \quad \text{i.e.} \quad \|Tv\| < \lambda \; \text{if} \; \|v\| \le 1
+    \end{equation*}
+\end{fact}
+
+% new lec (3)
+
+\begin{defi}[\hypertarget{def:opNorm}{Operator norm}]
+    Let $V, W$ be \hyperlink{def:nvs}{normed vector spaces}. The \textbf{operator norm} of a linear map $T: V \to W$ is
+    \begin{equation*}
+        \|T\| = \sup_{\|v\| = 1} \|T v\| =\sup_{\|v\| \leq 1} \|T v\|
+    \end{equation*}
+\end{defi}
+
+\hypertarget{def:lvw}{\hypertarget{def:bvw}{Denote}} by $\mathcal{L}(V,W)$ the space of linear maps $V \to W$ and by $\mathcal{B}(V, W)$ the space of \hyperlink{def:boundedLinearMap}{bounded linear maps} $V \to W$.
+
+\begin{fact}
+    The \hyperlink{def:opNorm}{operator norm} $\|\cdot\|$ is a norm on $\hyperlink{def:bvw}{\mathcal{B}(V, W)}$.
+\end{fact}
+
+\begin{prop}
+    Let $V, W$ be \hyperlink{def:nvs}{normed vector spaces}. Then a linear map $T: V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} if and only if it is continuous.
+\end{prop}
+
+\begin{proof}
+    \leavevmode
+    \begin{itemize}
+        \item[($\Rightarrow$)]
+            Assume $\|v_k - v\| \to 0$. Then
+            \begin{equation*}
+                \|T v_k - T v\| \leq \underbrace{\|T\|}_{< \infty} \underbrace{\|v_k - v\|}_{\to 0} \to 0
+            \end{equation*}
+        \item[($\Leftarrow$)]
+
+            Since $T$ is continuous, $T^{-1} (B_1(0))$ contains an open ball $B_\epsilon(0) \subset V$. Thus
+            \begin{equation*}
+                T(B_1(0)) = \epsilon^{-1} T(B_\epsilon(0)) \subset \epsilon^{-1} B_1(0) = B_{\epsilon^{-1}}(0)
+            \end{equation*}
+            so $T$ is bounded. \qedhere
+    \end{itemize}
+\end{proof}
+
+\begin{defi}[\hypertarget{def:dualSpace}{Dual space}]
+    Let $V$ be a \hyperlink{def:tVS}{topological vector space}.
+    The (topological) \textbf{dual space} of $V$ is the space of continuous linear maps $V \to \K$, denoted by $V^*$.
+    In a \hyperlink{def:nvs}{normed space}, $V^* = \hyperlink{def:bvw}{\mathcal{B}(V, \K)}$.
+    (We call $\hyperlink{def:lvw}{\mathcal{L}(V, \K)}$ the algebraic dual of $V$.)
+\end{defi}
+
+\begin{prop}
+    Let $V$ be a \hyperlink{def:nvs}{normed vector space} and $W$ a \hyperlink{def:banach}{Banach space}.
+    Then $\hyperlink{def:bvw}{\mathcal{B}(V, W)}$ is a Banach space.
+\end{prop}
+
+\begin{proof}
+    Let $(T_i) \subset \hyperlink{def:bvw}{\mathcal{B}(V, W)}$ be a Cauchy sequence.
+    We aim to show that there is some $T \in \mathcal{B}(V, W)$ such that $T_i \to T$.
+    For any vector $v \in V$, the sequence $(T_i v) \subset W$ is Cauchy:
+    \begin{equation*}
+        \|T_i v - T_j v\| \leq \underbrace{\|T_i - T_j\|}_{\leq \epsilon} \cdot \|v\|
+    \end{equation*}
+    Since $W$ is complete, $T_i v$ converges so define $T v$ as this pointwise limit.
+    \begin{itemize}
+        \item $T$ is linear:
+            \begin{align*}
+                T(\lambda v + \mu w) &= \lim_{i \to \infty} T_i (\lambda v + \mu w) \\
+                                     &= \lambda \lim_{i \to \infty} T_i v + \mu \lim_{i \to \infty} T_i w \\
+                                     &= \lambda T v + \mu T w.
+            \end{align*}
+        \item $T$ is bounded:
+            For $\|v\| \leq 1$,
+            \begin{align*}
+                \|Tv\| &\leq \underbrace{\|T_i v\|}_{\leq \|T_i\|} + \underbrace{\|T_i v - T v\|}_{<1 \; \text{for} \; i > N(v)} \\
+                &\leq \sup_i \|T_i\| + 1\\
+                &< \infty.
+            \end{align*}
+
+        \item $T_i \to T$ in norm:
+            \begin{align*}
+                \|T_i v - T v\| &\leq \underbrace{\|T_i v - T_j v\|}_{\leq \|T_i - T_j\|} + \underbrace{\|T_j v - T v\|}_{< \epsilon \; \text{for} \; j > N(\epsilon, v),\, j \geq i} \\
+                \implies \|T_i - T\| &\to 0 \; \text{as} \; i \to \infty. \qedhere
+            \end{align*}
+    \end{itemize}
+\end{proof}
+
+\begin{cor}
+    Let $V$ be a \hyperlink{def:nvs}{normed vector space}. Then $\hyperlink{def:dualSpace}{V^*}$ is a \hyperlink{def:banach}{Banach space}.
+\end{cor}
+
+\begin{defi}[Dual Map]\hypertarget{def:dualMap}
+    Let $V, W$ be \hyperlink{def:nvs}{normed vector spaces} and $T \in \hyperlink{def:bvw}{\mathcal{B}(V, W)}$.
+    Then the \textbf{adjoint} or \textbf{dual map} $T^*: \hyperlink{def:dualSpace}{W^*} \to V^*$ is defined by
+    \begin{equation*}
+        [T^* f] v = f(T v) \quad f \in W^*, \, v \in V
+    \end{equation*}
+\end{defi}
+
+\begin{fact}
+    We can easily see $T^* f$ is in $V^* = \mathcal{B}(V, \K)$ and we can check $\|T^*\| \leq \|T\|$:
+\end{fact}
+
+\begin{proof}
+    \begin{align*}
+        \|(T^* f) v\| &= \|f(T v)\| \\
+                         &\leq \|f\| \|Tv\| \\
+                         &\leq \|f\| \|T\| \|v\| \\
+        \implies \|T^* f\| &\leq \|f\| \|T\| \\
+        \implies \|T^*\| &\leq \|T\|
+    \end{align*}
+    \hypertarget{pf:dualMapNorm}{\hyperlink{pf:dualMapEq}{Later}} we will see this last inequality is in fact equality.
+\end{proof}
+
+\begin{defi}[Double dual]\hypertarget{def:doubleDual}
+    Let $V$ be a \hyperlink{def:nvs}{normed vector space}. The \textbf{double dual} of $V$ is the \hyperlink{def:dualSpace}{dual space} of $V^*$, that is $V^{**} = (V^*)^*$.
+\end{defi}
+
+\begin{fact}\hypertarget{def:evMap}
+    The map $\Phi: V \to \hyperlink{def:doubleDual}{V^{**}}, v \mapsto \widetilde v$ where $\widetilde v(f) = f(v)$, $f \in \hyperlink{def:dualSpace}{V^*}$ is \hyperlink{def:boundedLinearMap}{bounded} and linear.
+\end{fact}
+
+\begin{remark}
+    The \hyperlink{thm:hahnBanach}{Hahn-Banach Theorem} implies that \hyperlink{def:evMap}{$\Phi$} is isometric (injective), so $V$ can be considered a subspace of $V^{**}$. In general, $\Phi$ is not surjective.
+    % come fix this link
+\end{remark}
+
+\begin{defi}[Reflexive space]\hypertarget{def:reflexive}
+    A Banach space is \textbf{reflexive} if \hyperlink{def:evMap}{$\Phi$} is a bijection.
+\end{defi}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item Let $V, W$ be finite-dimensional vector spaces.
+            Then any linear map $T:V \to W$ is \hyperlink{def:boundedLinearMap}{bounded} with respect to any \hyperlink{def:nvs}{norms} on $V, W$ and $T$ can be represented by a matrix while \hyperlink{def:dualMap}{$T^*$} is represented by the transpose of $T$.
+            Finite dimensional normed vector spaces are \hyperlink{def:reflexive}{reflexive}.
+        \item The map $T : \hyperlink{def:lpspace}{\ell^p} \to \ell^p, \; (x_1, x_2, \dotsc) \mapsto (0, x_1, x_2, \dotsc)$ is \hyperlink{def:boundedLinearMap}{bounded}, $\|T\| = 1$, injective but not surjective.
+            % new lec (4)
+        \item The derivative map $D: \hyperlink{def:ckx}{C^1 [0, 1]} \to C^0 [0, 1]$ is
+            \begin{itemize}[label={}]
+                \item bounded as a map $(C^1 [0, 1], \|\cdot\|_\infty + \|\cdot\|_\infty) \to (C^0[0, 1], \|\cdot\|_\infty)$
+                \item unbounded as a map $(C^1 [0, 1], \|\cdot\|_\infty) \to (C^0[0, 1], \|\cdot\|_\infty)$
+            \end{itemize}
+        \item The map $\id: (C^1[0, 1], \|\cdot\|_\infty) \to (C^1[0, 1], \|\cdot\|_\infty + \|\cdot\|'_\infty)$ is unbounded.
+    \end{itemize}
+\end{eg}
+
+\subsection{Finite-dimensional normed spaces}
+\begin{fact}
+    Any finite dimensional vector space can be identified with $\K^n$ for some $n$ by choosing a basis.
+\end{fact}
+
+\begin{defi}[Norm equivalence]\hypertarget{def:eqNorms}
+    Two norms $\|\cdot\|_1$ and $\|\cdot\|_2$ on a vector space $V$ are \textbf{equivalent} if there exists $C > 0$ such that
+    \begin{equation*}
+        \forall v \in V, \quad C^{-1} \|v\|_2 \leq \|v\| \leq C \|v\|_2.
+    \end{equation*}
+\end{defi}
+
+\begin{prop}
+    All norms on a finite dimensional space are \hyperlink{def:eqNorms}{equivalent}.
+\end{prop}
+
+\begin{proof}
+    If suffices to check that any norm $\|\cdot\|$ on $\K^n$ is equivalent to $\|\cdot\|_1$ where
+    \begin{equation*}
+        \|v\|_1 = \sum_{i=1}^n \abs{v_i}
+    \end{equation*}
+
+    \begin{itemize}
+        \item $\|v\| \leq C \|v\|_1$: Let $e_i = (0, \dotsc, 0, 1, 0, \dotsc) \in \K^n$. Then
+            \begin{equation*}
+            \|v\| = \left\|\sum_{i=1}^n v_i e_i\right\| \leq \sum_{i=1}^n \|v_i\| \|e_i\| \leq \left(\max_{i=1,\dotsc,n} \|e_i\|\right) \|v\|_1
+            \end{equation*}
+
+        \item $\|v\|_1 \leq c \|v\|$: Let $S = \set{v \in \K^n | \|v\|_1 = 1}$ and $f : S \to \R$, given by $v \mapsto \|v\|$.
+            \begin{enumerate}
+                \item $f$ is continuous with respect to the $\|\cdot\|_1$ topology:
+                    \begin{equation*}
+                        \abs{f(v) - f(w)} = \big|\|v\| - \|w\|\big| \leq \|v - w\| \leq C \|v-w\|_1
+                    \end{equation*}
+                \item $S$ is compact with respect to $\|\cdot\|_1$ topology:
+                    It is closed as the inverse image of $\{1\}$ under $\|\cdot\|_1$, and it is bounded by definition.
+            \end{enumerate}
+            So, $f$ is a continuous function on a compact set, and hence attains its minimum.
+            Since $\|\cdot\|$ and $\|\cdot\|_1$ are norms (positive definite), this minimum must be strictly positive.
+            So, \begin{equation*}\|v\| = f(v) \geq f(v_0) = c\end{equation*} for all $\|v\|_1 = 1$.
+            For arbitrary $v \in \K^n$, we have
+            \begin{equation*}
+            \|v\| = \|v\|_1 \left\|\frac{v}{\|v\|_1}\right\| = \|v\|_1 f\left(\frac{v}{\|v\|_1}\right) \geq c \|v\|_1. \qedhere
+            \end{equation*}
+    \end{itemize}
+\end{proof}
+
+\begin{cor}
+    In any finite-dimensional \hyperlink{def:nvs}{normed space}, the closed unit ball is compact.
+\end{cor}
+
+\begin{cor}
+    Every finite-dimensional \hyperlink{def:nvs}{normed space} is a \hyperlink{def:banach}{Banach space}.
+\end{cor}
+
+\begin{proof}
+    Let $(v_i)$ be Cauchy, then $(v_i)$ is bounded, that is $(v_i) \subset \overline{B_R(0)}$ for some $R > 0$. But then $\overline{B_R(0)}$ is compact, so $(v_i)$ converges.
+\end{proof}
+
+\begin{cor}
+    Let $V$ be a \hyperlink{def:nvs}{normed space}, $W \subset V$ a finite-dimensional subspace. Then $W$ is closed.
+\end{cor}
+
+\begin{cor}
+    Let $V$ be a \hyperlink{def:nvs}{normed space}, $W$ be a finite-dimensional normed space and $T: W \to V$ is linear, then $T$ is \hyperlink{def:boundedLinearMap}{bounded}.
+\end{cor}
+
+\begin{proof}
+    Since $\Im T$ is finite dimensional, we can assume without loss of generality that $V$ is finite dimensional.
+    Moreover, we can assume $V = (\K^m, \|\cdot\|_\infty)$ and $W = (\K^n, \|\cdot\|_1)$.
+    Let $(T_{ij})$ be the matrix associated to $T$.
+
+    \begin{equation*}
+        T(w_1, \dotsc, w_n)= \left(\sum_{i=1}^n T_{1i} w_i, \dotsc, \sum_{i=1}^n T_{mi} w_i\right) \in V \\
+    \end{equation*}
+    \begin{align*}
+        \implies \|Tw\|_\infty &= \max_{j = 1, \dotsc, m} \abs{(Tw)_j} \\
+                                  &= \max_{j = 1, \dotsc, m} \abs{\sum_{i=1}^n T_{ji} w_i} \\
+                                  &\leq \max_{i,j} \abs{T_{ji}} \sum_{i=1}^n \abs{w_i} \\
+                                  &= C(T) \|w\|_1. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    Let $V$ be a \hyperlink{def:nvs}{normed vector space} such that $\overline{B_1(0)}$ is compact. Then $V$ is finite-dimensional.
+\end{thm}
+
+\begin{proof}
+    Since $\overline{B_1(0)}$ is compact, there are $w_1, \dotsc, w_n \in V$ such that
+    \begin{equation*}
+        \overline{B_1(0)} \subset \bigcup_{i=1}^n B_{\frac12} (w_i)
+    \end{equation*}
+    Let $W = \mathrm{span}\{w_1, \dotsc, w_n\}$. Note that $\dim W \leq n$. Our goal is to show $W = V$.
+    \begin{align*}
+        B_1(0) &\subset W + B_{\frac{1}{2}} (0) \\
+        B_1(0) &\subset W + \frac{1}{2}\left(W + B_{\frac{1}{2}} (0)\right) = W + B_{\frac{1}{4}}(0) \\
+        \shortintertext{so by induction,}
+        \forall i \in \mathbb{N}, \quad B_1(0) & \subset W + B_{2^{-i}} (0).
+    \end{align*}
+    Hence $B_1(0) \subset \overline{W} = W$.
+    Since $V$ is a vector space, $V \subset W$, and so $\dim V \leq n$.
+\end{proof}
+
+\clearpage
+
+% new lec (5)
+
+\section{The Hahn-Banach Theorem}
+
+\begin{defi}[Extends]\hypertarget{def:extend}
+    Given vector spaces $W \subset V$, and linear maps $g: W \to \K$, $f: V \to \K$, we say that $f$ \textbf{extends} $g$ if $f|_W = g$, that is $f(v) = g(v)$ for every $v \in W$.
+\end{defi}
+
+When can one \hyperlink{def:extend}{extend} a linear map in a continuous way?
+
+\subsection{Finite codimension}
+
+Let $V$ be a \emph{real} vector space.
+
+\begin{defi}[Sublinear]\hypertarget{def:sublinear}
+    A map $p: V \to \R$ is \textbf{sublinear} if
+    \begin{enumerate}
+        \item $p(\alpha v) = \alpha p(v)$ for all $v \in V$, $\alpha \geq 0$
+        \item $p(v + w) \leq p(v) + p(w)$ for all $v, w \in V$.
+    \end{enumerate}
+\end{defi}
+
+\begin{eg}
+    Any norm is \hyperlink{def:sublinear}{sublinear}.
+\end{eg}
+
+\begin{lemma}[Codimension $1$ case of the Hahn-Banach Theorem]\hypertarget{lem:smallHahn}
+    Let $W \subset V$ be a subspace of codimension 1, i.e.\ there exists $v_1 \in V \setminus W$ such that
+    \begin{equation*}
+        V = \set{v + t v_1 | v \in W, \, t \in \R}
+    \end{equation*}
+    Let $p: V \to \R$ be \hyperlink{def:sublinear}{sublinear}, and $g: W \to \R$ linear with $ g(v) \leq p(v) $ for all $v \in W$.
+    Then there exists a linear map $f: V \to \R$ that \hyperlink{def:extend}{extends} $g$ and $f(v) \leq p(v)$ for all $v \in V$.
+\end{lemma}
+
+\begin{proof}
+    We will find $\alpha \in \R$ such that $f_\alpha: V \to \R$ defined by
+    \begin{equation*}
+        f_\alpha(v + tv_1) = g(v) + t\alpha
+    \end{equation*}
+    for all $v \in W$, $t \in \R$ is the asserted linear extension of $g$. Let
+    \begin{equation*}
+        \alpha = \sup_{v \in W} (g(v) - p(v - v_1)).
+    \end{equation*}
+
+    We proceed with a sequence of claims which will complete the proof.
+
+    \textbf{Claim}: $\alpha < \infty$.
+    By linearity of $g$ and \hyperlink{def:sublinear}{sublinearity} of $p$,
+    \begin{align*}
+        \forall v,w \in W \quad g(v) + g(w) = g(v + w) &\leq p(v + w) \leq p(v - v_1) + p(w + v_1) \tag{$*$} \label{eq:2.1star} \\
+        \shortintertext{so}
+        g(v) - p(v-v_1) &\leq p(w + v_1) - g(w)
+    \end{align*}
+    hence $\alpha \leq p(w + v_1) - g(w) < \infty$.
+
+    \textbf{Claim}: $f_\alpha(v - v_1) \leq p(v - v_1)$ for all $v \in W$.
+    \begin{align*}
+        f_\alpha(v - v_1) &= g(v) - \alpha \\
+                          &= \underbrace{g(v) - p(v - v_1)}_{\leq \alpha} - \alpha + p(v - v_1) \\
+                          &\leq p(v - v_1).
+    \end{align*}
+
+    \textbf{Claim}: $f_\alpha(w + v_1) \leq p(w + v_1)$ for all $w \in W$.
+    By \eqref{eq:2.1star},
+    \begin{align*}
+        f_\alpha(w + v_1) &= g(w) + \alpha \\
+                          &\leq \underbrace{\alpha - (g(v) - p(v-v_1))}_{\sup = 0} + p(w + v_1) \\
+        \implies f_\alpha(w + v_1) &\leq p(w + v_1).
+    \end{align*}
+
+    \textbf{Claim}: $f_\alpha(v + t v_1) \leq p(v + t v_1)$ for all $v \in W$, $t \in \R$.
+    By linearity of $f$ and positive homogeneity of $p$, for any $t > 0$,
+    \begin{align*}
+        f(v \pm t v_1) &= t f\left(\frac vt \pm v_1\right) \\
+                       &\leq t p\left(\frac vt \pm v_1\right) \\
+                       &= p(v \pm t v_1).\qedhere
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    The same statement holds if $W \subset V$ is a subspace of \emph{finite} codimension.
+\end{cor}
+
+\begin{proof}
+    Induction.
+\end{proof}
+
+\subsection{Zorn's Lemma}
+
+\begin{defi}[Poset]\hypertarget{def:poset}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item A partially ordered set (\textbf{poset}) is a set $p$ with a binary relation $\leq$ such that for all $x, y \in P$ either $x \leq y$ or $x \nleq y$, and
+            \begin{align*}
+                x &\leq x & \text{(reflexive)} \\
+                x &\leq y, \, y \leq z \implies x \leq z & \text{(transitive)} \\
+                x &\leq y, \, y \leq x \implies x = y & \text{(antisymmetric)}
+            \end{align*}
+
+        \item Let $P$ be a poset. A subset $T \subset P$ is called \textbf{totally ordered} (or a chain) if $x \nleq y \implies y \leq x$, that is, at least one of $x \leq y$ or $y \leq x$ must hold.
+
+        \item Let $P$ be a poset and $U \subseteq$ a subset. Then
+            \begin{itemize}
+                \item $b \in P$ is an \textbf{upper bound} for $U$ if $x \leq b$ for all $x \in U$
+                \item $l \in P$ is a \textbf{least upper bound} for $U$ if $l$ is an upper bound and any other upper bound $b$ for $U$ satisfies $l \leq b$.
+            \end{itemize}
+
+        \item Let $P$ be a poset. An element $m \in P$ is \textbf{maximal} if $m \leq x \implies m = x$.
+    \end{enumerate}
+\end{defi}
+
+\begin{lemma}[Zorn's Lemma]\hypertarget{lem:zorn}
+    Let $P$ be a \hyperlink{def:poset}{poset} with the property that every non-empty \hyperlink{def:poset}{totally ordered} subset has a \hyperlink{def:poset}{least upper bound}.
+    Then $P$ has at least one \hyperlink{def:poset}{maximal element}.
+\end{lemma}
+
+\begin{remark}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item \hyperlink{lem:zorn}{Zorn's Lemma} is trivial if $P$ is finite.
+        \item In infinite \hyperlink{def:poset}{posets}, it is equivalent to the Axiom of Choice (assuming the usual other axioms of set theory).
+    \end{enumerate}
+\end{remark}
+
+Recall that in a vector space $V$, elements $v_1, \dotsc, v_k$ are linearly independent if
+\begin{equation*}
+    \sum_{i=1}^k \alpha_i v_i = 0 \implies \alpha_1 = \alpha_2 = \dotsb \alpha_k = 0
+\end{equation*}
+\hypertarget{def:li}A set $S \subset V$ is linearly independent if any \emph{finite} subset is.
+\hypertarget{def:basis}A basis of $V$ is a set $B \subset V$ that is linearly independent and such that every element of $V$ is a \emph{finite} linear combination of elements of $B$.
+
+% new lec (6)
+\begin{prop}
+    Let $V \neq \{0\}$ be a vector space and $S \subset V$ \hyperlink{def:li}{linearly independent}. Then $V$ has a \hyperlink{def:basis}{basis} $B$ containing $S$.
+\end{prop}
+
+\begin{proof}
+    Let
+    \begin{equation*}P = \set{T \subset V | T \supset S, T \text{ \hyperlink{def:li}{linearly independent}}}.\end{equation*}
+    Then $P$ is a \hyperlink{def:poset}{poset} with partial order $\subseteq$, i.e.\ $T_1 \leq T_2$ if and only if $T_1 \subseteq T_2$.
+    For any $L \subseteq P$ that is \hyperlink{def:poset}{totally ordered}, set $T_b = \bigcup_{T \in L} T$.
+
+    We claim $T_b \in P$ and $T_b$ is a \hyperlink{def:poset}{least upper bound} for $L$. Clearly, $S \subseteq T_b$.
+    Let $\alpha_i \in K$ and $v_i \in T_b$ such that $\sum_{i=1}^m \alpha_i v_i = 0$.
+    Since $L$ is totally ordered and $m < \infty$, there must be $T \in L$ such that $v_1, \dotsc, v_m \in T$.
+    Since $T$ is linearly independent, we have $\alpha_1 = \dotsb = \alpha_m = 0$. Thus $T_b$ is linearly independent.
+    Thus, $T_b \in P$ and clearly a least upper bound for $L$.
+
+    By \hyperlink{lem:zorn}{Zorn's Lemma}, there exists a maximal element $B$ in $P$.
+    Claim: $B$ is a \hyperlink{def:basis}{basis} for $V$. By definition of $P$, $B$ is linearly independent. We need to check that $B$ spans $V$.
+    Suppose otherwise. Then there exists $v \in V \setminus \spn{B}$ and $B \cup \{v\}$ is linearly independent.
+    This contradicts the maximality of $B$, so $B$ is a basis for $V$.
+\end{proof}
+
+\subsection{The Hahn-Banach Theorem}
+
+\begin{thm}[Hahn-Banach]\hypertarget{thm:hahnBanach}
+    Let $V$ be a \emph{real} vector space, $W \subset V$ a subspace, $p: V \to \R$ sublinear, and $g: W \to \R$ linear such that $g(v) \leq p(v)$ for all $v \in W$.
+
+    Then there exists $f: V \to \R$ linear such that $f|_W = g$ and $f(v) \leq p(v)$ for all $v \in V$.
+\end{thm}
+
+\begin{proof}
+    Let
+    \begin{equation*}
+        P = \set{(N, h) | N \subset V \text{ subspace}, \, W \subset N, h: N \to \R \text{ linear}, \, h(v) \leq p(v) \, \forall v \in N}
+    \end{equation*}
+
+    For $(N, h), \, (N', h') \in P$, set $(N, h) \leq (N', h')$ if and only if $N \subset N'$ and $h' |_N = h$.
+    Then $P$ is a poset, $P \neq \emptyset$ because $(W, g) \in P$. We want to apply \hyperlink{lem:zorn}{Zorn's Lemma}.
+
+    Let $(N_i, h_i)_{i \in I} \subseteq P$ be a totally ordered subset of $P$. Set
+    \begin{equation*}
+        N = \bigcup_{i \in I} N_i, \quad h(v) = h_i(v) \; \text{if } v \in N_i
+    \end{equation*}
+
+    This is well-defined since $(N_i, h_i)_{i \in I}$ is totally ordered. Moreover, $N \subseteq V$ is a subspace and $h: N \to \R$ is linear. Also $h(v) \leq p(v)$ for all $v \in \N$. Thus, $(N, h) \in P$. Clearly, $(N, h)$ is a least upper bound for $(N_i, h_i)_{i \in I}$.
+
+    By Zorn's Lemma, there is a maximal element $(M, f)$ in $P$.
+    Claim: $M=V$.
+    Suppose not, then the \hyperlink{lem:smallHahn}{codimension $1$ case} gives $(M', f')$ with $(M, f) \lneq (M', f')$, a contradiction of maximality of $(M, f)$.
+\end{proof}
+
+\begin{cor}
+    Let $V$ be a \hyperlink{def:nvs}{normed vector space} (real or complex), $W \subseteq V$ a subspace.
+    For any $g \in \hyperlink{def:dualSpace}{W^*}$, there exists $f \in V^*$ such that $f |_W = g$, $\hyperlink{def:opNorm}{\|f\|} \leq \|g\|$.
+\end{cor}
+
+\begin{proof}
+    Assume that $V$ is real. The complex case is treated on an example sheet.
+    Then $p(v) = \|v\| \|g\|$ is sublinear and the claim follows directly from the \hyperlink{thm:hahnBanach}{general Hahn-Banach Theorem}.
+\end{proof}
+
+\begin{cor}
+    Let $V$ be a \hyperlink{def:nvs}{normed vector space}, and $v \in V$.
+    Then there exists $f_v \in V^*$ such that $\hyperlink{def:opNorm}{\|f_v\|} = 1$ and $f_v(v) = \|v\|$.
+    Such an $f_v$ is called a \textbf{support functional} for $v$.
+\end{cor}
+
+\begin{proof}
+    Let $W = \set{t v | t \in K}$.
+    Define $g \in \hyperlink{def:dualSpace}{W^*}$ by $g(tv) = t \|v\|$. Then $\|g\| = 1$ and $g(v) = \|v\|$.
+    By \hyperlink{thm:hahnBanach}{Hahn-Banach}, there is $f = f_v$ as desired.
+\end{proof}
+
+\begin{remark}
+    In concrete examples, one can often construct $f_v$ by hand.
+\end{remark}
+
+\begin{cor}
+    Let $V$ be a \hyperlink{def:nvs}{normed vector space} and $v \in V$.
+    Then $v = 0 \Longleftrightarrow f(v) = 0$ for all $f \in \hyperlink{def:dualSpace}{V^*}$.
+    In particular, $V^* \neq \{0\}$.
+\end{cor}
+
+\begin{cor}
+    Let $V$ be a \hyperlink{def:nvs}{normed space}, $v, w \in V$, $v \neq w$. Then $\exists f \in \hyperlink{def:dualSpace}{V^*}$ such that $f(v) \neq f(w)$.
+\end{cor}
+
+\begin{proof}
+    Take $f = f_{v - w}$.
+\end{proof}
+
+\begin{cor}
+    The map $\Phi: V \to \hyperlink{def:doubleDual}{V^{**}}$ given by $\Phi(v) f = f(v)$ is an isometry:
+    \begin{equation*}
+        \forall v \in V, \quad \hyperlink{def:opNorm}{\|\phi(v)\|} = \|v\|
+    \end{equation*}
+\end{cor}
+
+\begin{proof}
+    First check $\hyperlink{def:opNorm}{\|\Phi(v)\|} \leq \|v\|$:
+    \begin{align*}
+        \|\Phi(v)\| &= \sup_{\|f\| = 1} \abs{\Phi(v) f} \\
+                       &= \sup_{\|f\| = 1} \abs{f(v)} \\
+                       &\leq \|v\|.
+    \end{align*}
+    On the other hand,
+    \begin{equation*}
+        \abs{\Phi(v) f_v} = \abs{f_v(v)} = \|v\| \implies \|\phi(v)\| \geq \|v\|.\qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{cor}
+    Let $V, W$ be \hyperlink{def:nvs}{normed spaces}.
+    For any $T \in \hyperlink{def:bvw}{\mathcal{B}(V, W)}$, the \hyperlink{def:dualMap}{dual map} $T^* \in \mathcal{B}(\hyperlink{def:dualSpace}{W^*}, V^*)$ satisfies $\hyperlink{def:opNorm}{\|T^*\|} = \|T\|$.
+\end{cor}
+
+\begin{proof}\hypertarget{pf:dualMapEq}
+    We have \hyperlink{pf:dualMapNorm}{already seen} $\hyperlink{def:opNorm}{\|T^*\|} \leq \|T\|$. Now, with $f = f_{T_v} \in \hyperlink{def:dualSpace}{W^*}$, $[T^* f] v = f(T v) = \|Tv\| $ so
+    \begin{align*}
+        \|T^*\| &= \sup_{\|f\| \leq 1} \|T^* f\| \\
+                   &\geq \|T^* f_{T_v}\| \\
+                   &= \sup_{\|v\| \leq 1} \|[T^* f_{T_v}] v\| \\
+                   &\geq \sup_{\|v\| \leq 1} \|T v\| \\
+                   &= \|T\|. \qedhere
+    \end{align*}
+\end{proof}
+
+\clearpage
+
+% new lec (7)
+
+\section{Completeness and the Baire Category Theorem}
+\subsection{Baire Category}
+
+\begin{defi}[Dense]\hypertarget{def:dense}
+    Recall that if $X$ is a metric space, a subset $Y \subset X$ is \textbf{dense} if $\overline{Y} = X$.
+    Equivalently $Y \cap B_r(X) \neq \emptyset$ for any $x \in X$, $r > 0$.
+\end{defi}
+
+\begin{thm}[Baire Category Theorem]\hypertarget{thm:baireCategory}
+    Let $X$ be a complete metric space.
+    For any sequence of open and \hyperlink{def:dense}{dense} sets $U_j \subset X$, $\bigcap_j U_j$ is dense in $X$.
+\end{thm}
+
+\begin{proof}
+    Let $U = \bigcap_j U_j$. Given any $x \in X$, $r > 0$, we need to show that $B_r(x) \cap U \neq \emptyset$.
+    Since $U_1$ is \hyperlink{def:dense}{dense} and open, there exists $x_1 \in X$, $r_1 \in (0, 1)$ such that
+    \begin{equation*}
+        B_r(x) \cap U_1 \supset B_{2r_1}(x_1) \supset \overline{B_{r_1}(x_1)}
+    \end{equation*}
+    Likewise, choose $x_2 \in X$, $r_2 \in (0, \frac{1}{2})$ such that
+    \begin{equation*}
+        \overline{B_{r_2}(x_2)} \subset B_{r_1}(x_1) \cap U_2
+    \end{equation*}
+    and in general $x_n \in X$, $r_n \in (0, 2^{-n})$ such that
+    \begin{equation*}
+        \overline{B_{r_n}(x_n)} \subset B_{r_{n-1}}(x_{n-1}) \cap U_n
+    \end{equation*}
+
+    Then $r_n \to 0$ and $B_{r_1}(x_1) \supset B_{r_2}(x_2) \supset \dotsb$ so $d(x_n, x_m) < r_n \ \forall m \geq n$.
+    So, $(x_n)$ is a Cauchy sequence, and since $X$ is complete, $\exists y \in X$ such that $x_n \to y$.
+    Note that $y \in \overline{B_{r_k}(x_k)} \cap U_{k+1}$ for all $k \implies y \in \bigcap_k U_k$ and $y \in B_r(x)$.
+\end{proof}
+
+\begin{cor}
+    Let $X$ be a complete metric space.
+    Let $A_j \subset X$ be a sequence of closed subsets of such that $\bigcup_j A_j$ has nonempty interior, that is, contains some ball.
+    Then at least one of the $A_j$ has nonempty interior.
+\end{cor}
+
+\begin{proof}
+    Let $U_j = X \setminus A_j$.
+    Since $\bigcup_j A_j$ has nonempty interior, $X \setminus \bigcup_j A_j = \bigcap_j U_j$ is not \hyperlink{def:dense}{dense}.
+    Since the $U_j$ are open, the \hyperlink{thm:baireCategory}{Baire Category Theorem} implies that there must be at least one $U_j$ that is not dense.
+    Thus $A_j = X \setminus U_j$ has nonempty interior.
+\end{proof}
+
+\begin{defi}[Meagre sets]\hypertarget{def:meagre}
+    Let $X$ be a metric space.
+    \begin{enumerate}[label=(\roman*)]
+        \item A subset $Y \subset X$ is \textbf{nowhere dense} if $\interior(\overline{Y}) = \emptyset$, equivalently $Y$ is not \hyperlink{def:dense}{dense} in any ball.
+        \item A subset $Z \subset X$ is \textbf{meagre} or of the \textbf{first category} if there are countably many sets $Y_j \subset X$ that are nowhere dense and $Z = \bigcup_j Y_j$.
+        \item A subset $U \subset X$ is \textbf{nonmeagre} or of the \textbf{second category} if it is not meagre.
+        \item A subset $R \subset X$ is \textbf{residual} if $X \setminus R$ is meagre.
+    \end{enumerate}
+\end{defi}
+
+\begin{fact}
+    $Y \subset X$ is \hyperlink{def:meagre}{nowhere dense} $\iff \overline{Y}$ is nowhere dense $\iff X \setminus \overline{Y}$ is open and \hyperlink{def:dense}{dense}.
+\end{fact}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item $\Q$ is \hyperlink{def:meagre}{meagre} in $\R$
+        \item Any countable union of meagre sets is meagre.
+    \end{itemize}
+\end{eg}
+
+\begin{remark}
+    There is similarity between the concepts of \hyperlink{def:meagre}{meagre}, nonmeagre, residual with those of null sets, sets of positive measure and sets of full measure in measure theory.
+    For metric spaces that are also measure spaces (for instance $\R$ with the Lebesgue measure), one could ask if there is a closer correspondence.
+    The answer is negative in general.
+    There exists a meagre set $A$ in $\R$ and a Lebesgue null set $B$ such that $\R = A \cup B$.
+\end{remark}
+
+\begin{cor}
+    Let $X$ be a complete metric space. Then $X$ is of the \hyperlink{def:meagre}{second category}.
+\end{cor}
+
+\begin{proof}
+    Let $Y_j \subset X$ be \hyperlink{def:meagre}{nowhere dense} sets. It suffices to show that $X \neq \bigcup_j \overline{Y_j}$.
+    But $U_j = X \setminus \overline{Y_j}$ is open \hyperlink{def:dense}{dense}.
+    So $\bigcap_j U_j = X \setminus \bigcup_j \overline{Y_j}$ is dense by the \hyperlink{thm:baireCategory}{Baire Category Theorem}.
+    So in particular, $\bigcap_j U_j \neq \emptyset$, that is, $\bigcup_j Y_j \neq X$.
+\end{proof}
+
+\begin{cor}
+    Let $X$ be a complete metric space. Then \hyperlink{def:meagre}{residual sets} are \hyperlink{def:meagre}{nonmeagre} and \hyperlink{def:dense}{dense}.
+\end{cor}
+
+\begin{proof}
+    Let $Z \subset X$ \hyperlink{def:meagre}{meagre} and suppose that $R = X \setminus Z$. Assume $R$ was meagre.
+    Then $X = R \cup Z$ would be the union of two meagre sets, so meagre.
+    But since $X$ is complete, it is not meagre, a contradiction.
+
+    To show $R$ is \hyperlink{def:dense}{dense}, we can suppose that $Z = \bigcup_j Y_j$ with $Y_j$ \hyperlink{def:meagre}{nowhere dense}.
+    Then $U_j = X \setminus \overline{Y_j}$ is dense and open.
+    So, $\bigcap_j U_j$ is dense.
+    But $R \supset \bigcap_j U_j$, so $R$ is dense.
+\end{proof}
+
+% new lec (8)
+
+\begin{cor}
+    Let $X$ be a complete metric space and $U \subset X$ open. Then $U = \emptyset$ or $U$ is of the \hyperlink{def:meagre}{second category}.
+\end{cor}
+
+\begin{proof}
+    Assume that $U$ is open and \hyperlink{def:meagre}{meagre}.
+    Then $X \setminus U$ is closed and \hyperlink{def:meagre}{residual}, so dense, so $X \setminus U = X$, so $U = \emptyset$.
+\end{proof}
+
+\subsection{Principle of Uniform Boundedness}
+
+\begin{thm}\hypertarget{thm:pub}
+    Let $X$ be a complete metric space and let $(f_\lambda)_{\lambda \in \Lambda}$ be a family of continuous functions, $f_\lambda:X \to \R$.
+    If $(f_\lambda)_{\lambda \in \Lambda}$ is pointwise bounded:
+    \begin{equation*}
+        \forall x \in X \quad \sup_{\lambda \in \Lambda} \abs{f_\lambda(x)} < \infty
+    \end{equation*}
+    then there is a ball $B_r(x_0) \subset X$ such that $(f_\lambda)$ is uniformly bounded on $B_r(x_0)$:
+    \begin{equation*}
+        \sup_{\lambda \in \Lambda} \sup_{x \in B_r(x_0)} \abs{f_\lambda(x)} < \infty.
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let
+    \begin{align*}
+        A_k &= \Set{x \in X | \abs{f_\lambda(x)} \leq k \ \text{for every} \ \lambda \in \Lambda} \\
+            &= \bigcap_{\lambda \in \Lambda} \Set{x \in X | \abs{f_\lambda(x)} \leq k}.
+    \end{align*}
+    Since the $f_\lambda$ are continuous, $A_k$ is closed as the intersection of closed sets.
+    Since $(f_\lambda)$ are pointwise bounded,
+    \begin{equation*}
+        \bigcup_{n \in \N} A_n = X.
+    \end{equation*}
+    By the \hyperlink{thm:baireCategory}{Baire Category Theorem}, at least one of the $A_k$ must contain a ball $B_r(x_0)$.
+    Therefore, $(f_\lambda)$ is uniformly bounded (by $k$) on that ball.
+\end{proof}
+
+\begin{thm}[Banach-Steinhaus]\hypertarget{thm:banachSteinhaus}
+    Let $V$ be a \hyperlink{def:banach}{Banach} space, and $W$ a \hyperlink{def:nvs}{normed space}.
+    Let $(T_\lambda)_{\lambda \in \Lambda} \subset \hyperlink{def:bvw}{\mathcal{B}(V, W)}$ be pointwise bounded:
+    \begin{equation*}
+        \sup_{\lambda \in \Lambda} \|T_\lambda v\| < \infty \quad \forall v \in V.
+    \end{equation*}
+    Then $(T_\lambda)$ is uniformly bounded:
+    \begin{equation*}
+        \sup_{\lambda \in \Lambda} \hyperlink{def:opNorm}{\|T_\lambda\|} < \infty.
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let $f_\lambda: V \to \R$, given by $v \mapsto \|T_\lambda v\|$.
+    Then $f_\lambda$ is continuous and $(f_\lambda)$ is pointwise bounded.
+    By the \hyperlink{thm:pub}{principle of uniform boundedness}, there is a ball $B_r(v_0) \subset V$ such that $(f_\lambda)$ is uniformly bounded on $B_r(v_0)$, i.e.
+    \begin{equation*}
+        \sup_{\lambda \in \Lambda} \sup_{\|v - v_0\| < r} \|T_\lambda v\| < \infty.
+    \end{equation*}
+    Since the $T_\lambda$ are linear, for any $v \in V$ with $\|v\| = 1$,
+    \begin{align*}
+        \|T_\lambda v\| &= \|T_\lambda(v_0 + v) - T_\lambda v_0\| \\
+                           &\leq \frac{1}{r} \sup_{\lambda \in \Lambda} \sup_{\|v - v_0\| < r} \|T_\lambda v\| + \sup_{\lambda} \|T_\lambda v_0\| \\
+                           &\eqqcolon M < \infty
+                           \text{ independent of $\lambda$ and $v$ for $\|v\| = 1$} \\
+        \implies \sup_{\lambda \in \Lambda} \|T_\lambda\| &\leq M \qedhere
+    \end{align*}
+\end{proof}
+
+\subsection{Open Mapping Theorem}
+\begin{defi}[Open map]\hypertarget{def:openMap}
+    A map between topological spaces is \textbf{open} if and only if it maps open sets to open sets.
+\end{defi}
+
+\begin{eg}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $f:\R \to \R$, $x \mapsto x^2$ is continuous but not open, as e.g. $f((-1, 1)) = [0, 1)$ is not open.
+        \item $f:\R^2 \to \R$, $(x, y) \mapsto x + \mathrm{sgn}(y)$ is open but not continuous.
+    \end{enumerate}
+\end{eg}
+
+\begin{thm}[Open Mapping Theorem]\hypertarget{thm:omt}
+    Let $V, W$ be \hyperlink{def:banach}{Banach} spaces and $T \in \hyperlink{def:bvw}{\mathcal{B}(V, W)}$.
+    \begin{enumerate}[label=(\roman*)]
+        \item If $T$ is surjective, then $T$ is open.
+        \item If $T$ is bijective, then $T^{-1} \in \mathcal{B}(W, V)$.
+    \end{enumerate}
+\end{thm}
+
+\begin{lemma}
+    Let $V$, $W$ be \hyperlink{def:nvs}{normed spaces}. Then $T: V \to W$ is \hyperlink{def:openMap}{open} if $T(B_1(0)) \supset B_r(0)$ for $r > 0$.
+\end{lemma}
+
+\begin{proof}
+    Let $U \subset V$ be open and $v \in U$. Using that $U$ is open, choose $\delta > 0$ such that $B_\delta(v) \subset U$. Then
+    \begin{align*}
+        T(U) &\supset T(v + B_\delta(0)) \\
+             &=Tv + \delta T(B_1(0)) \\
+             &\supset T v + \delta r B_1(0).
+    \end{align*}
+    Therefore $T(U)$ contains a ball around any element $Tv$, so $T$ is \hyperlink{def:openMap}{open}.
+\end{proof}
+
+\begin{lemma}
+    Let $V$ be a \hyperlink{def:banach}{Banach space}, $W$ a \hyperlink{def:nvs}{normed space}, $T \in \hyperlink{def:bvw}{\mathcal{B}(V, W)}$. Then
+    \begin{equation*}
+        \overline{T(\underbrace{B_1(0)}_{\subset V})} \supset \underbrace{B_1(0)}_{\subset W} \implies T(B_1(0)) \supset B_1(0).
+    \end{equation*}
+\end{lemma}
+
+\begin{proof}
+    Let $w_0 \in B_1(0) \subset W$. We need to find $v \in B_1(0) \subset V$ such that $T v = w_0$. We construct $v$ as the limit of a Cauchy sequence.
+    Let $v_1 \in B_{\frac{1}{2}}(0) \subset V$ such that
+    \begin{equation*}\|Tv_1 - w_0\| < \frac{1}{2}.\end{equation*}
+    This is possible since there is $\widetilde{w}_0 \in B_{\frac{1}{2}}(0)$ with $\|w_0 - \widetilde{w}_0\| < \frac{1}{2}$ and we can find $v_1 \in B_\frac{1}{2}(0)$ such that $\|Tv_1 - \widetilde{w}_0\|$ arbitrarily small by $\overline{T(B_\frac{1}{2}(0))} \supset B_\frac{1}{2}(0)$ (assumption rescaled).
+
+    Set $w_1 = w_0 - T v_1 \in B_\frac{1}{2}(0)$.
+    By induction, if $w_1, \dotsc, w_k$ and $v_1, \dotsc, v_k$ are given such that $\|v_i\| < 2^{-i}$,
+    \begin{equation*}
+        w_i = w_{i-1} - T v_i \in B_{2^{-i}}(0) \subset W, \; 1 \leq i \leq k
+    \end{equation*}
+    then choose $v_{k+1} \in B_{2^{-k-1}}(0) \subset V$ such that
+    \begin{equation*}
+        w_{k+1} = w_k - T v_{k+1} \in B_{2^{-k-1}}(0).
+    \end{equation*}
+
+    This gives
+    \begin{equation*}
+    \sum_{k=1}^\infty \|v_k\| < 1 \; \text{and} \; v \coloneqq \sum_{k=1}^\infty v_k \in B_1(0) \text{ exists}
+    \end{equation*}
+    since $V$ is complete.
+    \begin{align*}
+        \implies w_0 - Tv &= \lim_{n \to \infty} \left(w_0 - \sum_{k=1}^n T v_k\right) \\
+                          &= \lim_{n \to \infty} \left(w_1 - \sum_{k=2}^n T v_k\right) \\
+                          &\shortvdotswithin{=}
+                          &= \lim_{n \to \infty} w_n = 0 \\
+        \implies w_0 \in T(B_1(0)) &\text{ for any } w_0 \in B_1(0) \\
+        \implies T(B_1(0)) &\supset B_1(0). \qedhere
+    \end{align*}
+\end{proof}
+
+%new lec (9)
+
+We now return to prove the \hyperlink{thm:omt}{Open Mapping Theorem}.
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item By the previous two lemmas, it suffices to prove that $\overline{T(B_1(0))} \supset B_r(0)$ for some $r > 0$. We use the \hyperlink{thm:baireCategory}{Baire Category Theorem} to do this. Since $T$ is surjective,
+            \begin{equation*}
+                W = \bigcup_{k=1}^\infty \overline{T(B_k(0))}.
+            \end{equation*}
+
+            Since $W$ is complete, the Baire Category Theorem implies that there is a $k_0 \in \N$ such that $\overline{T(B_{k_0}(0))}$ has nonempty interior, i.e. there is $r_0 > 0$, $w_0 = T v_0$ such that
+            \begin{equation*}
+                B_{r_0}(w_0) \subset \overline{T(B_{k_0}(0))}.
+            \end{equation*}
+
+            By linearity,
+            \begin{align*}
+                B_{r_0}(0) &= B_{r_0}(w_0) - T v_0 \\
+                           &\subset \overline{T(B_{r_0}(0))} - T v_0 \\
+                           &= \overline{T(B_{r_0}(-v_0))} \\
+                           &\subset \overline{T(B_{k_0 + l_0}(0))} \\
+                           &= (k_0 + l_0) \overline{T(B_1(0))} \quad \text{(if $l_0 \geq \|v_0\|$)}
+            \end{align*}
+            \begin{equation*}
+                \implies B_r(0) \subset \overline{T(B_r(0))} \; \text{for} \; r = \frac{r_0}{k_0 + l_0}.
+            \end{equation*}
+
+        \item If $T$ is bijective, that $T$ is \hyperlink{def:openMap}{open} means that $T^{-1}$ is continuous, that is, $T^{-1} \in \mathcal{B}(W, V)$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\begin{eg}
+    Let \begin{equation*}c_c = \set{(x_n) | x_n = 0 \text{ except for finitely many } n},\end{equation*} with norm $\|x\|_\infty = \max_n \abs{x_n}$.
+    Define $T: c_c \to c_c$ by $(T x)_n = \frac{x_n}{n}$.
+    Then $T$ is \hyperlink{def:boundedLinearMap}{bounded} and bijective, but $(T^{-1} x)_n = n x_n$ is unbounded.
+\end{eg}
+
+\begin{remark}
+    The basic problem in linear PDEs is the following one.
+    Given $f \in W = L^2 (\Omega)$ for some bounded nice domain $\Omega \subset \R^n$, and a linear partial differential operator $L: V \to W$, say $V = H_0^2(\Omega)$ and $L = \Delta$, is there a unique solution to $Lu = f$?
+    The typical procedure is to show that for $f$ `nice', say $f \in C^\infty(\overline{\Omega})$, spanning a dense subspace of $U$, there exists a unique solution with
+    \begin{equation*}\|u\| \leq C \|f\|.\end{equation*}
+
+    Such an \emph{a priori} bound allows to solve $L u = f$ for general $f \in W$ by approximation.
+    This implies that $L$ is surjective.
+    The \hyperlink{thm:omt}{Open Mapping Theorem} guarantees that this strategy works, provided that $L$ is surjective.
+\end{remark}
+
+\subsection{Closed Graph Theorem}
+\begin{thm}[Closed Graph Theorem]\hypertarget{thm:cgt}
+    Let $V, W$ be \hyperlink{def:banach}{Banach} spaces, $T:V\to W$ linear.
+    Then $T$ is \hyperlink{def:boundedLinearMap}{bounded} if and only if the graph $\Gamma = \set{(v, Tv) | v \in V} \subset V \times W$ is closed.
+\end{thm}
+
+\begin{proof}
+    Let $T$ be \hyperlink{def:boundedLinearMap}{bounded} and $(v_k, w_k) \subset \Gamma$ be a sequence such that
+    \begin{equation*}
+        v_k \to v \ , \quad w_k = Tv_k \to w.
+    \end{equation*}
+    Since $T$ is continuous, $w = Tv$ so $(v, w) \in \Gamma$, so $\Gamma$ is closed.
+
+    Conversely, assume that $\Gamma$ is closed.
+    Since $V \times W$ is a \hyperlink{def:banach}{Banach} space with norm $\|(v, w)\| = \|v\| + \|w\|$, and since $\Gamma$ is a closed subspace, $\Gamma$ itself is also a Banach space with induced norm.
+    The projections
+    \begin{equation*}
+        \begin{tikzcd}[row sep=tiny]
+            \pi_v : \Gamma \rar & V & & \pi_w : \Gamma \rar & W \\
+            (v,Tv) \rar[mapsto] & v & & (v,Tv) \rar[mapsto] & T v
+        \end{tikzcd}
+    \end{equation*}
+    are continuous, and $\pi_v$ is a bijection.
+    By the \hyperlink{thm:omt}{Open Mapping Theorem}, $\pi_v^{-1} \in \hyperlink{def:bvw}{\mathcal{B}(V, \Gamma)}$.
+    Thus $T = \pi_w \circ \pi_v^{-1} \in \mathcal{B}(V, W)$.
+\end{proof}
+
+\begin{remark}
+    As a consequence of the \hyperlink{thm:cgt}{Closed Graph Theorem}, to prove that $T: V \to W$ is \hyperlink{def:boundedLinearMap}{bounded}, if $V, W$ are \hyperlink{def:banach}{Banach} spaces, it suffices to check
+    \begin{align*}
+        \begin{rcases}
+            v_k \to v \\
+            Tv_k \to w
+        \end{rcases}
+        \implies Tv = w
+    \end{align*}
+    instead of
+    \begin{equation*}
+        v_k \to v \implies
+        \begin{cases}
+            T v_k \to w \\
+            Tv = w.
+        \end{cases}
+    \end{equation*}
+\end{remark}
+
+\clearpage
+\section{The space of continuous functions on a compact space}
+
+\subsection{Normal topological space}
+\hypertarget{def:hausdorff}Recall that a topological space is \textbf{Hausdorff} if and only if for any $x, y \in X$, $x \neq y$, there exist open neighbourhoods $U$ of $x$ and $V$ of $y$ such that $U \cap V = \emptyset$.
+
+\begin{prop}
+    Let $X$ be \hyperlink{def:hausdorff}{Hausdorff} and $K_1, K_2 \subset X$ compact sets with $K_1 \cap K_2 = \emptyset$.
+    Then there exist open $U_1 \supset K_1$ and $U_2 \supset K_2$ such that $U_1 \cap U_2 = \emptyset$.
+\end{prop}
+
+\begin{proof}
+    For any $x \in K_1$ and $y \in K_2$, let $U_{xy}$ and $V_{xy}$ be open neighbourhoods such that $x \in U_{xy}$, $y \in V_{xy}$ and $U_{xy} \cap V_{xy} = \emptyset$ (using that $X$ is \hyperlink{def:hausdorff}{Hausdorff}).
+
+    Then $\bigcup_{x \in K_1} U_{xy} \supset K_1$. Since $K_1$ is compact, there are finitely many points $x_1, \dotsc, x_n \in K_1$ such that $\bigcup_{i=1}^n U_{x_i y} \supset K_1$. Set
+    \begin{equation*}
+        U_y = \bigcup_{i=1}^n U_{x_i y} \; \text{and} \; V_y = \bigcap_{i=1}^n V_{x_i y}.
+    \end{equation*}
+    Then $U_y \cap V_y = \emptyset$ and $U_y \supset K_1$ and $y \in V_y$. Thus $\bigcup_{y \in K_2} V_y \supset K_2$.
+
+    Again by compactness, there are $y_1, \dotsc, y_n \in K_2$ such that $\bigcup_{i=1}^n V_{y_i} \supset K_2$. Set
+    \begin{equation*}
+        V = \bigcup_{i=1}^n V_{y_i} \; \text{and} \; U = \bigcap_{i=1}^n U_{y_i}.
+    \end{equation*}
+    These sets are open, $V \cap U = \emptyset$ and $U \supset K_1$ and $V \supset K_2$.
+\end{proof}
+
+\begin{defi}[Normal space]\hypertarget{def:normal}
+    A \hyperlink{def:hausdorff}{Hausdorff} topological space is \textbf{normal} if for any closed sets $A_1, A_2 \subset X$ such that $A_1 \cap A_2 = \emptyset$, there exist open sets $U_1 \supset A_1$, $U_2 \supset A_2$ such that $U_1 \cap U_2 =\emptyset$.
+\end{defi}
+
+\begin{cor}
+    Any compact \hyperlink{def:hausdorff}{Hausdorff} space is \hyperlink{def:normal}{normal}.
+\end{cor}
+
+\begin{proof}
+    Closed subsets of a compact space are compact.
+\end{proof}
+
+% new lec (10)
+
+\begin{fact}
+    Let $X$ be \hyperlink{def:normal}{normal}.
+    Then for every closed $A \subset X$ and open $U \supset A$, there exist an open set $V$ and a closed set $B$ such that $A \subset V \subset B \subset U$.
+\end{fact}
+
+\begin{proof}
+    Set $A' = X\setminus U$. Then $A$ and $A'$ are disjoint. So, since $X$ is \hyperlink{def:normal}{normal}, there are open sets $V, V' \subset X$ such that
+    \begin{equation*}
+        V \supset A, \; V' \supset A', \; V \cap V' = \emptyset.
+    \end{equation*}
+    Take $B = X \setminus V'$. Then $A \subset V \subset B \subset U$.
+\end{proof}
+
+\begin{prop}[Urysohn's Lemma]\hypertarget{prop:urysohn}
+    Let $X$ be \hyperlink{def:normal}{normal}. For every closed $A \subset X$ and open $U \supset A$, there exists a continuous $f: X \to [0, 1]$ such that
+    \begin{equation*}
+        f(x) =
+        \begin{cases}
+            1 & x \in A \\
+            0 & x \notin U.
+        \end{cases}
+    \end{equation*}
+    % TODO diagram
+\end{prop}
+
+\begin{center}
+    \begin{tikzpicture}[scale=2]
+        \draw [thick] (0,0) to (1,0) to[out=0,in=180] (2,1) to (3,1) to[out=0,in=180] (4,0) to (5,0);
+        \draw (2.03,0.1) -- (2,0.1) -- (2,-0.1) -- (2.03,-0.1);
+        \draw (2.96,0.1) -- (3,0.1) -- (3,-0.1) -- (2.96,-0.1);
+        \draw (1.03,0.1) to[in=90,out=-120] (1,0) to[in=120,out=-90] (1.03,-0.1);
+        \draw (3.97,0.1) to[in=90,out=-60] (4,0) to[in=60,out=-90] (3.97,-0.1);
+        \node at (2.5,-0.2) {$A$};
+        \node at (4,-0.2) {$U$};
+        \draw (0,0) -- (5,0);
+    \end{tikzpicture}
+\end{center}
+
+\begin{proof}
+    Let $A_1 = A$ and $U_0 = U$. Since $A_1 \subset U_0$ there exists an open set $U_\frac{1}{2}$ and a closed set $A_\frac{1}{2}$ such that
+    \begin{equation*}
+        A_1 \subset U_\frac{1}{2} \subset A_\frac{1}{2} \subset U_0.
+    \end{equation*}
+    Applying this procedure again with $A_1 \subset U_\frac{1}{2}$ and with $A_\frac{1}{2} \subset U_0$,
+    \begin{equation*}
+        A_1 \subset U_\frac{3}{4} \subset A_\frac{3}{4} \subset U_\frac{1}{2} \subset A_\frac{1}{2} \subset U_\frac{1}{4} \subset A_\frac{1}{4} \subset U_0.
+    \end{equation*}
+    Iterating this procedure, there are open sets $U_q$ and $A_q$ for
+    \begin{equation*}
+        q \in \set{m 2^{-n} | n, m \in \N_0, 0 < m < 2^n} = D
+    \end{equation*}
+    such that
+    \begin{gather*}
+        U_q \supset U_q' \ \text{and} \ A_q \supset A_q' \text{ for } q' > q, \\
+        U_q \subset A_q \text{ for all } q \in D, \\
+        A_q' \subset U_q \text{ for } q' > q.
+    \end{gather*}
+
+    Define $f(x) = \sup\set{q \in D | x \in U_q} = \inf\set{q \in D | x \notin A_q}$, where $\inf \emptyset = 1$ and $\sup \emptyset = 0$.
+
+    Clearly $0 \leq f \leq 1$. If $x \notin U = U_0$ then $f(x) = 0$. If $x \in A = A_1$, then also $x \in U_q$ for $q \in D$ and $f(x) = 1$.
+    To show continuity, note that, for $t \in R$,
+    \begin{align*}
+        \set{x | f(x) > t} &= \bigcup_{q > t} U_q \text{ is open} \\
+        \set{x | f(x) < t} &= \bigcup_{q > t} X \setminus A_q \text{ is open}.
+    \end{align*}
+    Thus, the preimage of any open interval is open. Thus $f$ is continuous.
+\end{proof}
+
+\begin{cor}\hypertarget{cor:urysohnCor}
+    Let $X$ be \hyperlink{def:normal}{normal} and $A_0, A_1 \subset X$ closed and disjoint.
+    Then there is a continuous $f: X \to [0, 1]$ such that
+    \begin{equation*}
+        f|_{A_0} = 0 \, , \; f|_{A_1} = 1.
+    \end{equation*}
+\end{cor}
+
+\begin{proof}
+    Take $A = A_1$ and $U = X \setminus A_0$ in \hyperlink{prop:urysohn}{Urysohn's Lemma}.
+\end{proof}
+
+\begin{cor}
+    Let $K$ be a compact \hyperlink{def:hausdorff}{Hausdorff} space.
+    Then $\hyperlink{def:cx}{C(K)}$ separates points, i.e.\ for all $x, y \in K, \; x \neq y$, there is $f \in C(K)$ such that $f(x) \neq f(y)$.
+\end{cor}
+
+\begin{thm}[Tietze-Urysohn Extension Theorem]\hypertarget{thm:urysohnExt}
+    Let $X$ be \hyperlink{def:normal}{normal}, $A \subset X$ be closed, $g: A \to \K$ continuous.
+    Then there exists a continuous extension $f: X \to \K$ such that $f|_A = g$ and if $\|g\|_\infty < \infty$ then $\|f\|_\infty \leq \|g\|_\infty$.
+\end{thm}
+
+\begin{proof}We first assume that $g$ takes values in $[0, 1]$. Let $g_0 = g$.
+    Let $A_0 = g^{-1}([0, \frac{1}{3}])$ and $B_0 = g^{-1}([\frac{2}{3}, 1])$. Then $A_0, B_0$ are closed and disjoint.
+    By the \hyperlink{cor:urysohnCor}{corollary} to Urysohn's Lemma, there is $h_0: X \to [0, \frac{1}{3}]$ continuous such that
+    \begin{equation*}
+        h_0|_{A_0} = 0 \, , \; h_0|_{B_0} = \frac{1}{3}.
+    \end{equation*}
+    Let $g_1 = g_0 - h_0|_A$. Then $g_1(x) \in [0, \frac{2}{3}]$ for $x \in A$.
+    By induction, assume that $g_i: A \to [0, (\frac{2}{3})^i]$ is given and set
+    \begin{equation*}
+        A_i = g_i^{-1} \left(\left[0, \left(\tfrac{2}{3}\right)^i \tfrac{1}{3}\right]\right) \quad B_i = g_i^{-1} \left(\left[\left(\tfrac{2}{3}\right)^i \tfrac{2}{3}, \left(\tfrac{2}{3}\right)^i \right]\right)
+    \end{equation*}
+    and a continuous function $h_i|A_i = 0$ and $h_i|B_i = \frac{1}{3} (\frac{2}{3})^i$. Set $g_{i+1} = g_i - h_i|_A$, so
+    \begin{equation*}
+        g = g_0 = \sum_{i=0}^\infty h_i|_A \text{ uniformly on } A.
+    \end{equation*}
+    Set $\widetilde{f} = \sum_{i=0}^\infty h_i$ uniformly on X, so $\widetilde{f}$ is continuous and $\|f\|_\infty \leq 1$.
+
+    If $g$ takes values in $\R$ but is not bounded, we can apply the above to $\frac{1}{2} + \frac{1}{\pi} \arctan \circ g$ which does take values in $[0, 1]$ to obtain an extension $\widetilde{f}$.
+
+    If $g$ takes values in $\C$, we apply this separately to the real and imaginary parts to obtain an extension $\widetilde{f}:X \to \C$.
+    Finally, define
+    \begin{equation*}
+        \begin{cases}
+            \widetilde{f}(x) & \text{if } \abs{\widetilde{f}(x)} \leq \|g\|_\infty \\
+            e^{i \arg \widetilde{f(x)}} \|g\|_\infty & \text{otherwise.}
+        \end{cases}
+    \end{equation*}
+
+    This $f$ is still an extension of $g$ and $\|f\| \leq \|g\|$.
+\end{proof}
+
+% here
+\subsection{Arzel\'a-Ascoli Theorem}
+When is a subset of $\hyperlink{def:cx}{C(K)}$ compact?
+
+\begin{prop}
+    A metric space $X$ is compact if any of the following equivalent conditions hold:
+    \begin{enumerate}[label=(\roman*)]
+        \item $X$ has the Heine-Borel property: any open cover of $X$ has a finite subcover.
+        \item $X$ is sequentially compact: any sequence in $X$ has a convergent subsequence.
+        \item \hypertarget{def:totBound}$X$ is complete and totally bounded: for $\epsilon > 0$ there is a finite $\epsilon$-net for $X$.
+            \hypertarget{def:enet}This is a finite set $M \subset X$ such that for any $x \in X$ there exists $m \in M$ with $d(x, m) < \epsilon$.
+    \end{enumerate}
+\end{prop}
+
+% new lec (11)
+
+\begin{proof}
+    The first two are equivalent from Analysis II and Metric and Topological spaces. It is easy to check (i) and (ii) give (iii), so we only check (iii) $\Rightarrow$ (ii).
+
+    Let $(x_n) \subset X$ be a sequence. We need to find a convergent subsequence. Let $M_n$ be a \hyperlink{def:enet}{finite $\frac{1}{n}$-net} for $X$.
+    Let $m_1 \in M_1$ be such that $B_1(m_1)$ contains infinitely many of the $(x_n)$. Let $n_1$ be the first $n$ such that $x_n \in B_1(m_1)$.
+
+    Given $m_1 \in M_1, \dotsc, m_k \in M_k$, $n_1, \dotsc, n_k$ such that $B_\frac{1}{j}(m_j)$ contains infinitely many points from $(x_n) \cap B_\frac{1}{i}(m_i)$ for all $i \leq j$ and $x_{n_l} \in \bigcap_{j=1}^l B_\frac{1}{j}(m_j)$ $\forall l < k$,
+    let
+    \begin{align*}
+        \begin{cases*}
+            m_{k+1} & be such that $B_\frac{1}{k+1}(m_{k+1})$ contains inf. many points from $(x_n) \cap \bigcap_{j=1}^k B_\frac{1}{j} (m_j)$ \\
+            n_{k+1} & be the first $n > n_k$ such that $x_{n_{k+1}} \in \bigcap_{i=1}^{k+1} B_{\frac{1}{j}} (m_j)$.
+        \end{cases*}
+    \end{align*}
+    It follows that
+    \begin{equation*}
+        d(x_{n_k}, x_{n_l}) \leq d(x_{n_k}, m_k) + d(x_{n_l}, m_k) \leq \frac{1}{k} + \frac{1}{k} \; \text{for} \; l \geq k
+    \end{equation*}
+    so $(x_{n_k})$ is a Cauchy sequence. $X$ is complete, so $(x_{n_k})_k$ converges.
+\end{proof}
+
+\begin{cor}
+    Let $X$ be a complete metric space.
+    \hypertarget{def:relCompact}Then $Y \subset X$ is relatively compact (i.e.\ has compact closure in $X$) if and only if $Y$ is \hyperlink{def:totBound}{totally bounded}.
+\end{cor}
+
+For $K$ compact, we always assume that $\hyperlink{def:cx}{C(K)}$ has $\|\cdot\|_\infty$-norm, making it a \hyperlink{def:banach}{Banach space}.
+
+\begin{thm}[Arzel\'a-Ascoli]\hypertarget{thm:aa}
+    Let $K$ be compact \hyperlink{def:hausdorff}{Hausdorff} and $\mathcal{F} \subset \hyperlink{def:cx}{C(K)}$. Then the following are equivalent:
+    \begin{enumerate}[label=(\roman*)]
+        \item $\mathcal{F}$ is \hyperlink{def:relCompact}{relatively compact}
+        \item \hypertarget{def:equicontinuous}$\mathcal{F}$ is bounded and equicontinuous, i.e. $\sup_{f \in \mathcal{F}} \|f\|_\infty < \infty$ and $\forall \epsilon > 0 \; \forall x \in K$, $\exists U$ a neighbourhood of $x$ such that
+            \begin{equation*}
+                \forall f \in \mathcal{F}, \; \abs{f(x) - f(y)} < \epsilon \quad \text{for all } y \in U.
+            \end{equation*}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    (i) $\Rightarrow$ (ii):
+    Let $\mathcal{F}$ be \hyperlink{def:relCompact}{relatively compact}, i.e.\ \hyperlink{def:totBound}{totally bounded}.
+    Thus for any $\epsilon > 0$, there is $f_1, \dotsc, f_n \in \mathcal{F}$ such that $\forall f \in \mathcal{F}$
+    \begin{equation*}
+        \min_{i=1, \dotsc, n} \|f - f_i\|_\infty < \epsilon.
+    \end{equation*}
+    Thus $\|f\|_\infty \leq \epsilon + \max_{i = 1, \dotsc, n} \|f_i\|_\infty = M$ for all $f \in \mathcal{F}$, so $\mathcal{F}$ is bounded.
+
+    Let $\epsilon > 0$ and $x \in K$.
+    Since the $f_i$ are continuous, there exist neighbourhoods $U_i$ of $x$ such that $\abs{f_i(x) - f_i(y)} < \epsilon$ for $y \in U_i$.
+    Let $U = \bigcap_{i=1}^k U_i$. Then $U$ is a neighbourhood of $x$ and for $y \in U$,
+    \begin{equation*}
+        \abs{f(x) - f(y)} \leq \min_i(\abs{f(x) - f(y)} + \abs{f_i(x) - f_i(y)} + \abs{f(y) - f_i(y)}) < 3\epsilon \quad \text{for all } f \in \mathcal{F}.
+    \end{equation*}
+    Thus $f$ is \hyperlink{def:equicontinuous}{equicontinuous}.
+
+    (ii) $\Leftarrow$  (i):
+    Let $\mathcal{F}$ be bounded and equicontinuous. For every $\epsilon > 0$, we construct a \hyperlink{def:enet}{finite $\epsilon$-net} for $\mathcal{F}$. Let $\epsilon > 0$.
+    For $x \in K$, let $U_x$ be an open neighbourhood of $x$ such that $\abs{f(x) - f(y)} < \epsilon$ if $f \in \mathcal{F}$, $y \in U_x$ (by equicontinuity).
+    Since $K$ is compact, there are $x_1, \dotsc x_n \in K$ such that
+    \begin{equation*}
+        K = \bigcup_{i=1}^n U_{x_i}.
+    \end{equation*}
+    Since $\mathcal{F}$ is uniformly bounded, the vectors $(f(x_1), \dotsc, f(x_n)) \in \K^n$, $f \in \mathcal{F}$ are bounded in any norm on $\K^n$. We take the $\|\cdot\|_\infty$ on $\K^n$. Thus
+    \begin{equation*}
+        F = \set{(f(x_1), f(x_2), \dotsc, f(x_n)) | f \in \mathcal{F}}
+    \end{equation*}
+    is relatively compact in $\K^n$.
+    Thus there are $f_1, \dotsc f_m \in \mathcal{F}$ such that
+    \begin{equation*}
+        \set{(f_i(x_1), \dotsc, f_i(x_n)) | 1 \leq i \leq m} \subset \K^n
+    \end{equation*}
+    is a finite $\epsilon$-net for $F$.
+
+    Now claim $f_1, \dotsc, f_m$ are a finite $3\epsilon$-net for $\mathcal{F}$.
+
+    \begin{align*}
+        \abs{f(x) - f_i(x)} &\leq \underbrace{\abs{f(x) - f(x_j)}}_{< \epsilon \text{ if } x \in U_{x_j}} +
+        \underbrace{\abs{f(x_j) - f_i(x_j)}}_{< \epsilon \text{ for some } i \in \{1, \dotsc, m\}} +
+        \underbrace{\abs{f_i(x_i) - f_i(x)}}_{< \epsilon \text{ if } U_{x_i} \ni x} \\
+            &< 3 \epsilon
+    \end{align*}
+    for some choice of $j$.
+\end{proof}
+
+% new lec (12)
+
+\begin{eg}
+    Let $K = [0, 1]$ and $\mathcal{F} = \set{f \in \hyperlink{def:ckx}{C^1[0, 1]}|\|f\|_\infty + \|f'\|_\infty < 1}$.
+    Then $\mathcal{F}$ is relatively compact in $C^0[0, 1]$.
+    Indeed $\mathcal{F}$ is bounded (in $C^0$) and
+    \begin{equation*}
+        \abs{f(x) - f(y)} \leq \|f'\|_\infty \abs{x - y} \leq \abs{x-y} \leq \epsilon \quad \text{whenever} \abs{x - y} \leq \epsilon
+    \end{equation*}
+    for any $f \in \mathcal{F}$.
+
+    Since $\mathcal{F}$ is the unit ball of $C^1[0, 1]$, this means that the identity map $C^1[0, 1] \to C^0[0, 1]$, is a compact embedding: it is continuous and maps bounded sets to relatively compact sets.
+\end{eg}
+
+\subsection{Application: Peano Existence Theorem}
+\begin{thm}[Picard-Lindel{\"o}f]\hypertarget{thm:picard}
+    Let $f: \R \to \R$ be locally Lipschitz continuous. Then for any $x_0 \in R$ there exists a maximal interval $(T_1, T_2) \subset \R$ (with $T_1 = -\infty$ and $T_2 = +\infty$ allowed) such that
+    \begin{equation*}
+        \begin{cases}
+            x'(t) = f(x(t)) \\
+            x(0) = x_0
+        \end{cases}
+        \tag{$*$} \label{eq:diffEq}
+    \end{equation*}
+    has a unique \hyperlink{def:ckx}{$C^1$} solution $x:(T_1, T_2) \to \R$ (that is not the restriction of such a solution to a larger interval).
+    Moreover, if $T_2 \neq +\infty$, for any bounded $K \subset \R$ there exists $t < T_2$ such that $x([t, T_2)) \cap K = \emptyset$ and similarly if $T_1 \neq -\infty$.
+\end{thm}
+
+\begin{thm}[Peano]\hypertarget{thm:peano}
+    Let $f: \R \to \R$ be continuous. Then for any $x_0 \in \R$, $\exists T > 0$ and a solution $x : (-T, T) \to \R$ for \eqref{eq:diffEq}.
+\end{thm}
+
+\begin{remark}
+    The solution is not necessarily unique, e.g. $f(x) = \sqrt{\abs{x}}$.
+\end{remark}
+
+\begin{lemma}
+    Assume that $b > 0$, $m > 0$ such that
+    \begin{equation*}
+        \abs{f(x)} \leq M \quad \text{for } \abs{x - x_0} \leq b. \tag{$**$} \label{eq:2}
+    \end{equation*}
+    Then if $T \leq \frac{b}{M}$, and $x$ is any $C^1$ solution to \eqref{eq:diffEq} for $\abs{t} \leq T$, it follows that $\abs{x(t) - x_0} \leq b$ and $\abs{x'(t)} \leq M$.
+\end{lemma}
+
+\begin{proof}
+    Assume that $x$ is a $C^1$ solution to \eqref{eq:diffEq} for $\abs{t} \leq T' < T$ such that $\abs{x(t) - x_0} \leq b$.
+    \begin{equation*}
+        \abs{x'(t)} = \abs{f(x(t))} \leq M, \ \abs{x(t) - x_0} = \abs{\int_0^t f(x(s)) \, ds} \leq Mt \lneqq b \text{ for } \abs{t} \leq T'. \tag{$\dagger$} \label{eq:3}
+    \end{equation*}
+
+    This allows us to extend the solution beyond $T'$ by `continuous induction':
+    Let $I = \set{T' \in [0, T] | \abs{x(t) - x_0} \leq b \text{ for } \abs{t} \leq T'}$. Note $I \neq \emptyset$ and that $I$ is closed (both by continuity of $x$).
+
+    We now claim that $\sup I = T$.
+    Otherwise, $\abs{x(t) - x_0} < b$ by \eqref{eq:3} for $\abs{t} \leq \sup I$.
+    But by continuity, a neighbourhood of $\sup I$ must also then be in $T$, a contradiction.
+    Then, $I = [0, T]$.
+\end{proof}
+
+\begin{proof}[Proof of \hyperlink{thm:peano}{Peano's Theorem}]
+    Let $B = \set{f + \tilde{g} | \tilde{g} \in C^0, \|\tilde{g}\| \leq 1}$ and choose $M, b > 0$ such that \eqref{eq:2} holds for all $g \in B$.
+    For any $f \in B \cap C^1$ there is a local solution to \eqref{eq:diffEq} by the \hyperlink{thm:picard}{Picard-Lindel\"of Theorem}.
+    The lemma implies that these solutions are defined on $[-T,T]$ with $T$ as in the lemma.
+    Define
+    \begin{align*}
+        S:B \cap C^1 &\longrightarrow C^1[-T, T] \\
+        f &\longmapsto x \quad \text{where $x$ is the solution to \eqref{eq:diffEq}.}
+    \end{align*}
+
+    By the lemma, $S(B \cap C^1)$ is bounded in $C^1[-T, T]$ with norm $\|x\|_\infty + \|x'\|_\infty$.
+    By \hyperlink{thm:aa}{Arzel\`a-Ascoli}, the embedding $C^1[-T, T] \to C^0 [-T, T]$ is compact so $S(B \cap C^1)$ is \hyperlink{def:relCompact}{relatively compact} in $C^0[-T, T]$.
+    Let $g_i \in B \cap C^1$ be such that $g_i \to f$ is $C^0$, i.e. $\|f - g_i\|_\infty \to 0$.
+    (The existence of such $g_i$ follows from the Weierstrass approximation theorem in the next section.)
+
+    By relative compactness of $S(B \cap C')$ in $C^0$ there is a subsequence such that $x_i = S g_i$ converges to some $x \in C^0[-T, T]$.
+    Claim: $x \in C^1[-T, T]$ and \eqref{eq:diffEq} holds.
+    Since $g_i \xrightarrow{C^0} f$ and $x_i \xrightarrow{C^0} x$ (along the subsequence), also $g_i \circ x_i \xrightarrow{C^0} f \circ x$
+    \begin{gather*}
+        \implies x_i' = g_i \circ x_i \to f \circ x \text{ uniformly in } \abs{t} \leq T \\
+        \implies x \in C^1 \text{ and } x' = f \circ x. \qedhere
+    \end{gather*}
+\end{proof}
+
+% new lec (13)
+
+\subsection{Stone-Weierstrass Theorem}
+
+\begin{thm}[Weierstrass Approximation Theorem]\hypertarget{thm:weier}
+    The set of polynomials with real coefficients is \hyperlink{def:dense}{dense} in $C([a,b], \R)$, in the uniform topology.
+\end{thm}
+\begin{lemma}\hypertarget{lem:abs}
+    There is a sequence of polynomials $P_n:[-1, 1] \to [0, 1]$ such that $P_n(s) \to \abs{s}$ uniformly in $s \in [-1, 1]$ as $n \to \infty$.
+\end{lemma}
+
+\begin{proof}
+    We use the Babylonian method to construct square roots.
+    Note that if $q : [0, 1] \to [0, 1]$ is a function that satisfies
+    \begin{align*}
+        q(t) &= \frac{1}{2}(t + q(t)^2) \tag{$*$} \label{eq:13-1} \\
+        \implies (1-q(t))^2 &= 1-t \\
+        \implies 1 - q(t) &= \sqrt{1 - t} \\
+        \implies \abs{t} &= 1 - q(1-t^2).
+    \end{align*}
+
+    To approximate $q$, define polynomials $Q_n : [0, 1] \to [0, 1]$ by
+    \begin{equation*}
+        Q_0(t) = 0, \; Q_{n+1}(t) = \frac{1}{2}(t + Q_n(t))^2.
+    \end{equation*}
+
+    If $Q_n(t)$ converges to some $q(t)$ then $q(t) \in [0, 1]$ and \eqref{eq:13-1} must hold.
+    To show that $Q_n$ does converge, note that for any $t \in [0, 1]$,
+    \begin{equation*}
+        Q_{n+1}(t) \geq Q_n(t).
+    \end{equation*}
+    Indeed,
+    \begin{equation*}
+        Q_{n+1}(t) - Q_n(t) = \frac{1}{2} \left(Q_n(t)^2 - Q_{n-1}(t)^2\right) = \frac{1}{2}\underbrace{(Q_n(t) - Q_{n-1}(t))}_{\geq 0 \text{ by induction}} \underbrace{(Q_n(t) + Q_{n-1}(t)).}_{\geq 0}
+    \end{equation*}
+
+    Also, $Q_n(t)$ is increasing in $t \in [0, 1]$, and the last equality implies that also $Q_{n+1}(t) - Q_n(t)$ is increasing in $t \in [0, 1]$.
+    \begin{align*}
+        &\implies Q_{n+1}(t) - Q_n(t) \leq Q_{n+1}(1) - Q_n(1) \\
+        &\implies Q_m(t) - Q_n(t) \leq Q_m(1) - Q_n(1) \quad \text{for } m \geq n, \quad t \in [0, 1].
+    \end{align*}
+
+    Let $m \to \infty$:
+    \begin{align*}
+        0 \leq 1 - \sqrt{1 - t^2} - Q_n(t) &\leq 1 - Q_n(1) \\
+        \implies \|1 - Q_n - \sqrt{1-t}\|_\infty &\leq 1 - Q_n(1) \to 0.
+    \end{align*}
+    Set $P_n(t) = 1 - Q(1-t^2)$. Then $\|P_n - |\cdot|\|_\infty \to 0$.
+\end{proof}
+
+\begin{ex}
+    Using the lemma, prove the \hyperlink{thm:weier}{Weierstrass Approximation Theorem} for piecewise linear functions.
+    Then deduce the general case.
+\end{ex}
+
+\begin{defi}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item \hypertarget{def:alg}A real (complex) \textbf{algebra} is a real (complex) vector space $A$ with a bilinear map $A \times A \to A$, $(a, b) \mapsto ab$ called `product' such that
+            \begin{equation*}
+                (ab)c = a(bc) \text{ for all } a, b, c \in A \tag{associativity}.
+            \end{equation*}
+        \item If $A$ is a \hyperlink{def:nvs}{normed vector space} and
+            \begin{equation*}
+                \|ab\| \leq \|a\| \|b\| \text{ for all } a, b \in A
+            \end{equation*}
+            then $A$ is called a \textbf{normed algebra}.
+            If $A$ is a \hyperlink{def:banach}{Banach space} then $A$ is called a \textbf{Banach algebra}.
+        \item If $ab=ba$ for all $a,b  \in A$ then $A$ is \textbf{commutative}.
+        \item If there exists an element $1 \in A \setminus \{0\}$ such that $1a =a1=a$ for all $a \in A$ then $A$ is \textbf{unital} (and $1$ is called a \textbf{unit}).
+    \end{enumerate}
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{itemize}
+        \item $\hyperlink{def:cx}{C(K, \R)}$ is a \hyperlink{def:alg}{commutative unital Banach algebra} with product
+            \begin{equation*}
+                (fg)(x) = f(x) g(x) \quad \forall x \in K
+            \end{equation*}
+            and unit $1(x) = 1$ for all $x \in K$.
+        \item $\hyperlink{def:bvw}{\mathcal{B}(V, V)}$ where $V$ is a \hyperlink{def:nvs}{normed vector space} is a \hyperlink{def:alg}{normed unital algebra} with product given by composition and unit by the identity operation.
+            Then if $V$ is a \hyperlink{def:banach}{Banach space}, $\mathcal{B}(V, V)$ is a \hyperlink{def:alg}{Banach algebra}.
+    \end{itemize}
+\end{eg}
+
+\begin{thm}[Stone-Weierstrass]\hypertarget{thm:sw}
+    Let $A \subset \hyperlink{def:cx}{C(K, \R)}$ be a subalgebra that
+    \begin{itemize}
+        \item \hypertarget{def:sep}separates points: for all $x, y \in K$, $x \neq y$, there is $f \in A$ such that $f(x) \neq f(y)$.
+        \item \hypertarget{def:vanish}vanishes nowhere: for all $x \in K$, there is $f \in A$ such that $f(x) \neq 0$.
+    \end{itemize}
+    Then $A$ is \hyperlink{def:dense}{dense} in $C(K, \R)$, i.e. $\overline{A} = C(K, \R)$.
+\end{thm}
+
+\begin{eg}
+    Let $U \subset \R^n$ be \hyperlink{def:boundedSubs}{bounded} and open.
+    Let $A$ be the set of polynomials in $x_1, \dotsc, x_n$.
+    Then $A$ is an algebra $\subset C(\overline{U}, \R)$, which \hyperlink{def:sep}{separates points}. It also contains the constant polynomials, so \hyperlink{def:vanish}{vanishes nowhere}.
+    Thus the \hyperlink{thm:sw}{Stone-Weierstrass Theorem} implies that $\overline{A} = C(\overline{U}, \R)$.  In particular $C^\infty(\overline{U})$ is dense in $C(\overline{U})$.
+\end{eg}
+
+\begin{defi}\hypertarget{def:lattice}
+    A \textbf{lattice} is a \hyperlink{def:poset}{poset} $L$ with the property that for any $u, v \in L$, there is a least upper bound (join) $u \vee v$ for $\{u, v\}$ and a greatest lower bound (meet) $u \wedge v$.
+\end{defi}
+
+\begin{eg}
+    $\hyperlink{def:cx}{C(K, \R)}$ is a \hyperlink{def:lattice}{lattice} with partial order $f \leq g$ iff $f(x) \leq g(x)$ for all $x \in K$, and
+    \begin{align*}
+        (f \vee g)(x) &= \max\{f(x), g(x)\} \\
+        (f \wedge g)(x) &= \min\{f(x), g(x)\}.
+    \end{align*}
+\end{eg}
+
+\begin{lemma}
+    Let $\overline{A} \subset \hyperlink{def:cx}{C(K, \R)}$ be a closed \hyperlink{def:alg}{subalgebra}.
+    Then $\overline{A}$ is a \hyperlink{def:lattice}{lattice} in $C(K, \R)$.
+\end{lemma}
+
+\begin{proof}
+    \begin{align*}
+        (f \vee g)(x) &= \frac{1}{2}\left(f(x) + g(x) + \abs{f(x) - g(x)}\right) \\
+        (f \wedge g)(x) &= \frac{1}{2}\left(f(x) + g(x) - \abs{f(x) - g(x)}\right)
+    \end{align*}
+    Thus it suffices to show that if $f \in \overline{A}$ then $\abs{f} \in \overline{A}$.
+
+    Let $f \in \overline{A} \setminus \{0\}$ and $\epsilon > 0$.
+    Replacing $f$ by $\frac{f}{\|f\|_\infty}$ we may assume that $f$ takes values in $[-1, 1]$.
+    By the \hyperlink{lem:abs}{lemma} at the beginning of this section, there is a polynomial $P: [-1, 1] \to [0, 1]$ such that
+    \begin{align*}
+        \sup_{\abs{t} \leq 1} \abs{P(t) - \abs{t}} &< \epsilon \\
+        \implies \|P \circ f - \abs{f\|} &< \epsilon.
+    \end{align*}
+    Since $P \circ f \in \overline{A}$ and $\overline{A}$ is closed, $\abs{f} \in \overline{A}$.
+\end{proof}
+
+% new lec (14)
+
+\begin{lemma}
+    Let $L \subset \hyperlink{def:cx}{C(K, \R)}$ be a \hyperlink{def:lattice}{sublattice}, i.e. $f,g \in L \Longrightarrow f \wedge g, f \vee g \in L$.
+    Let $g \in \hyperlink{def:cx}{C(K, \R)}$ such that
+    \begin{equation*}
+        \forall\epsilon>0,\forall x,y\in K:\exists f_{xy}\in L\text{ such that }|f_{xy}(x)-g(x)|<\epsilon\text{ and }|f_{xy}(y)-g(y)|<\epsilon. \label{eq:14star} \tag{$*$}
+    \end{equation*}
+    Then $g \in \overline{L}$. In particular, if \eqref{eq:14star} holds for all $g \in C(K, \R)$, Then $\overline{L} = C(K, \R)$.
+\end{lemma}
+
+\begin{proof}
+    Let $g \in \hyperlink{def:cx}{C(K, \R)}$ be as in the assumption and take $\epsilon > 0$.
+    We will construct $f \in L$ such that $\|f-g\| < \epsilon$.
+
+    For $x, y \in K$, let $f_{xy}$ be as in \eqref{eq:14star}.
+    By continuity, there is some open $U_{xy}$ containing $y$ such that $\abs{f_{xy}(z) - g(z)} < \epsilon$ $\forall z \in U_{xy}$.
+
+    Then for fixed $x$, these form an open cover of $K$ so $\exists y_1, \dotsc, y_n$ such that $\bigcup_{i=1}^n U_{x, y_i} \supseteq K$.
+    Now let $f_x = f_{xy_1} \wedge f_{xy_2} \wedge \dotsb \wedge f_{xy_n}$.
+    Since $f_{xy_i}(z) < g(z) + \epsilon\ \forall z$, we have $f_x(z) < g(z) + \epsilon$.
+
+    On the other hand, notice $\abs{f_x(x) - g(x)} < \epsilon$.
+    By continuity of $f_x$, $\exists V_x \ni x$ open such that $\abs{f_x(w) - g(w)} < \epsilon \ \forall w \in V_x$.
+    Then $(V_x)$ is an open cover of $K$ so there are
+    \begin{equation*}
+        x_1, \dotsc, x_m \text{ such that } \bigcup_{j=1}^m V_{x_j} \supseteq K.
+    \end{equation*}
+
+    Then if $f = f_{x_1} \vee f_{x_2} \vee \dotsb \vee f_{x_m}$, we have $f(z) > g(z) - \epsilon \ \forall z$, and our first bound $f(z) < g(z) + \epsilon$ still holds, so $\|f - g\| < \epsilon$. % check the norm here
+\end{proof}
+
+\begin{proof}[Proof of \hyperlink{thm:sw}{Stone-Weierstrass Theorem}]
+    By continuity of addition and multiplication, the closure $\overline{A}$ is a \hyperlink{def:lattice}{sublattice} of $\hyperlink{def:cx}{C(K, \R)}$.
+    We apply the last lemma.
+    Let $g \in C(K, \R)$, $x, y \in K$. We will find $f \in A$ such that $f(x) = g(x)$ and $f(y) = g(y)$.
+    In particular, \eqref{eq:14star} holds.
+
+    By assumption, $A$ vanishes nowhere and separates points:
+    \begin{align*}
+        \forall x \in K \quad \exists f_x \in A \text{ s.t. } &f_x(x) \neq 0 \\
+        \forall x, y \in K, x \neq y, \quad \exists f_{xy} \in A \text{ s.t. } &f_{xy}(x) \neq f_{xy}(y).
+    \end{align*}
+
+    If $x = y$, we can take $f = \frac{g(x)}{f_x(x)} f_x \in A$.
+    Thus assume $x \neq y$.
+    Claim: There are $\alpha, \beta, \gamma \in \R$ such that
+    \begin{equation*}
+        h = \alpha f_x + \beta f_y + \gamma f_{xy} \label{eq:14dagger} \tag{$\dagger$}
+    \end{equation*}
+    satisfies
+    \begin{equation*}
+        h(x) \neq 0, \quad h(y) \neq 0, \quad h(x) \neq h(y).
+    \end{equation*}
+
+    Indeed, if $f_{xy}(x) \neq 0$ and $f_{xy}(y) \neq 0$, we can take $h = f_{xy}$.
+    Otherwise, without loss of generality $f_{xy}(y) = 0$, and by rescaling assume that
+    \begin{align*}
+        f_{xy}(x) &= 1 & f_y(x) &= C \\
+        f_{xy}(y) &= 0 & f_y(y) &= 1.
+    \end{align*}
+    Take $\alpha = 0$, $\beta=1$, $\gamma=2-C$ in \eqref{eq:14dagger}.
+    This gives the claim since
+    \begin{equation*}
+        h(x) = C + \gamma = 2, h(y) = 1.
+    \end{equation*}
+
+    The claim implies that $(h(x), h(y))$ and $(h(x)^2, h(y)^2)$ are linearly independent in $\R^2$.
+    Thus there exist $t, s \in \R$ such that
+    \begin{equation*}
+        (g(x), g(y)) = t(h(x), h(y)) + s(h(x)^2, h(y)^2) = (f(x), f(y))
+    \end{equation*}
+    with $f = th + sh^2 \in A$.
+    Thus \eqref{eq:14star} holds for all $g \in C(K, \R)$.
+    So we have shown $\overline{A} = C(K, \R)$.
+\end{proof}
+
+\begin{cor}
+    \hypertarget{def:separable}Let $U \subset \R^n$ be a bounded open domain.
+    Then $C(\overline{U})$ is separable, i.e. there is a countable dense subset.
+\end{cor}
+
+\begin{proof}
+    By the \hyperlink{thm:weier}{Weierstrass approximation} theorem, the set of polynomials with real coefficients is dense in $C(U)$.
+    But every polynomial with real coefficients can be approximated by one with rational coefficients.
+    These are countable.
+\end{proof}
+
+\begin{remark}
+    For $p \in [1, \infty)$, $\hyperlink{def:lpspace}{\ell^p}$ is \hyperlink{def:separable}{separable}, but $\ell^\infty$ is not separable.
+\end{remark}
+
+\begin{proof}[Proof that $\hyperlink{def:lpspace}{l^\infty}$ is not \hyperlink{def:separable}{separable}.]
+    Let $X = \set{(x_n) \in \ell^\infty | x_n \in \{0, 1\} \text{ for all } n}$.
+    Then $X$ is not countable.
+
+    Note that $\|x - y\|_\infty = 1, \; \forall x \neq y$, $x, y \in X$.
+    Assume $\ell^\infty$ was \hyperlink{def:separable}{separable}, i.e. there is a dense countable subset $(y^k)_{k \in \N}$.
+    Then for any $x \in X$, there is $k \in \N$ such that $\|x - y^k\| \leq \frac{1}{2}$ and $\|y - y^k\| \geq \frac{1}{2}$ for all $y \in X$, $y \neq x$.
+    This gives a bijection $\N \to X$, a contradiction. % the bijection might be the other way around
+\end{proof}
+
+% new lec (15)
+% 8 nov
+
+\subsection{Complex Stone-Weierstrass}
+\begin{thm}\hypertarget{thm:csw}
+    Let $A \subset \hyperlink{def:cx}{C(K, \mathbb{C})}$ be a subalgebra such that
+    \begin{itemize}
+        \item $A$ \hyperlink{def:sep}{separates points}
+        \item $A$ \hyperlink{def:vanish}{vanishes nowhere}
+        \item $A$ is closed under complex conjugation, i.e., $\overline{f} \in A$ if $f \in A$.
+    \end{itemize}
+    Then $\overline{A} = C(K, \mathbb{C})$.
+\end{thm}
+
+\begin{defi}[$C^*$-algebra]\hypertarget{def:cstar}
+    A $C^*$ algebra is a complex \hyperlink{def:alg}{unital Banach algebra} $A$ with antilinear involution $a \mapsto a^*$ such that
+    \begin{align*}
+        (ab)^* = b^* a^*, \quad 1^* = 1, \quad a^{**} = a, \quad (\lambda a)^* = \overline{\lambda} a^*, \quad \|a^*\| = \|a\|
+    \end{align*}
+\end{defi}
+
+\begin{cor}
+    If $A \subset \hyperlink{def:cx}{C(K, \C)}$ is a \hyperlink{def:cstar}{$C^*$-subalgebra} that \hyperlink{def:sep}{separates points}, then $\overline{A} = C(K, \C)$.
+\end{cor}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item $\hyperlink{def:cx}{C(K, \C)}$ is a \hyperlink{def:cstar}{commutative $C^*$-algebra} with $f^* = \overline{f}$.
+        \item $\hyperlink{def:bvw}{\mathcal{B}(H, H)}$ where $H$ is a Hilbert space is a $C^*$ algebra (later).
+    \end{itemize}
+\end{eg}
+
+\begin{proof}[Proof of theorem]
+    Note
+    \begin{equation*}
+        f \in A \implies \Re f = \frac{1}{2} (f + \overline{f}) \in A, \quad \Im f = \frac{1}{2i}(f - \overline{f}) \in A
+    \end{equation*}
+    Let $A_\R$ be the \hyperlink{def:alg}{subalgebra} of $C(K, \R)$ generated by $\Re f$, $\Im f$, $f \in A$.
+    Then $A_\R$ \hyperlink{def:vanish}{vanishes nowhere} and \hyperlink{def:sep}{separates points}, since $A$ has these properties.
+    So the real version of the \hyperlink{thm:sw}{Stone-Weierstrass Theorem} implies $\overline{A}_\R = C(K, \R)$.
+
+    Let $f = u + i v \in C(K, \C)$ with $u, v \in C(K, \R)$. There are $u_j, v_j \in A_\R$ such that $u_j + i v_j \to f$ (with norm $\|\cdot\|_\infty$).
+    Since $u_j + i v_j \in A$, hence $\overline{A} = C(K, \C)$.
+\end{proof}
+
+\begin{eg}[Hardy Space]
+    The assumption that $A$ is closed under complex conjugation is necessary.
+    Let $K = \overline{\mathbb{D}} = \set{z \in C | \abs{z} \leq 1}$.
+    Then
+    \begin{equation*}
+        A = \set{f \in C(\overline{\mathbb{D}}, \C) | f \text{ analytic in } \mathbb{D}}
+    \end{equation*}
+    is an algebra.
+    It separates points and vanishes nowhere. But $\overline{A} \neq C(\overline{\mathbb{D}}, \C)$ since $\overline{z} \notin A$.
+\end{eg}
+
+\subsection{Application: Convergence of Fourier Series}
+Let $\mathbb{T} = \mathbb{R}/2\pi\mathbb{Z}$ be the circle, i.e.\ $[\pi, \pi]$ with its endpoints identified.
+Let $A$ be the vector space spanned by $\{e^{i n x}\}_{n \in \Z}$.
+Its elements are called trigonometric polynomials.
+It is an \hyperlink{def:alg}{algebra}, it separates points, vanishes nowhere (contains constants), and is closed under complex conjugation since $\overline{e^{i n x}} = e^{-i n x}$.
+Thus $\overline{A} = C(\mathbb{T}, \C)$ by \hyperlink{thm:csw}{Stone-Weierstrass}.
+
+\begin{eg}[Example sheet]
+    There exists $f \in C(\mathbb{T})$ such that $S_nf(0) \not\to f(0)$ as $n \to \infty$, where
+    \begin{equation*}
+        S_nf = \sum_{k = -n}^{n} \hat{f_k} e^{i k x}, \qquad \hat{f_k} = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-i k x} \, dx.
+    \end{equation*}
+\end{eg}
+
+Thus the trigonometric polynomials that provide a uniform approximation to a given $f \in C(\mathbb{T})$ cannot always be taken to be the partial Fourier sum $S_nf$.
+However, we can show that $S_nf \to f$ in $L^2$.
+\begin{prop}
+    For every $f \in C(\mathbb{T})$,
+    \begin{equation*}
+        \lim_{n \to \infty} \int_{-\pi}^\pi \abs{f - S_nf}^2 \, dx = 0
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    By the \hyperlink{thm:csw}{complex Stone-Weierstrass} Theorem, for any $\epsilon > 0$, there is a trigonometric polynomial $P \in A$ such that $\|f-P\|_\infty < \epsilon$.
+    Note that $S_n P = P$ if $n$ is larger than the degree of $P$.
+    \begin{align*}
+        &\implies \abs{f - S_n f} \leq \abs{f - P} + \abs{S_n f - S_n p} \qquad \text{for $n$ large enough}\\
+        &\implies \abs{f - S_n f}^2 \leq 2\abs{f - P}^2 + 2 \abs{S_n f - S_n P}^2 \quad \text{since } (a+b)^2 \leq 2a^2 + 2b^2 \\
+        &\implies \int_{-\pi}^{\pi} \abs{f - S_n f}^2 \, dx \leq 4 \int_{-\pi}{\pi} \abs{f - P}^2 \, dx \leq 8 \pi \epsilon^2
+    \end{align*}
+    The first inequality here is called Bessel's inequality:
+    \begin{equation*}
+        \int_{-\pi}^\pi \abs{S_n g}^2 \, dx \leq \int_{-\pi}^\pi \abs{g}^2 \, dx
+    \end{equation*}
+    for any $g \in C(\mathbb{T})$.
+\end{proof}
+
+\subsection{Aside: Radon measures and the weak-\texorpdfstring{$*$}{star} topology}
+\begin{defi}[Positive functional]\hypertarget{def:positive}
+    An element $\hyperlink{def:dualSpace}{\mu \in C(K)^*}$ is called \textbf{positive} if $\mu(f) \geq 0$ for every $f \in \hyperlink{def:cx}{C(K)}$ with $f(x) \geq 0$ for all $x \in K$.
+\end{defi}
+\begin{eg}
+    Let $K = [0, 1]$. Then
+    \begin{itemize}
+        \item $\mu(f) = \int_0^1 f(x) \, dx$ defines a \hyperlink{def:positive}{positive functional}.
+        \item for any $x \in K$, $\delta_x(f) = f(x)$ defines a \hyperlink{def:positive}{positive functional}.
+    \end{itemize}
+\end{eg}
+
+\begin{thm}[Riesz-Markov]
+    Let $K$ be compact \hyperlink{def:hausdorff}{Hausdorff}. Then for any \hyperlink{def:positive}{positive} $\mu \in \hyperlink{def:dualSpace}{C(K)^*}$, there is a unique regular Borel measure $d\mu$ such that
+    \begin{equation*}
+        \mu(f) = \int_K f(x) \, d\mu(x) \qquad \text{for all } f \in C(K).
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Not proved in this course.
+\end{proof}
+
+\begin{eg}
+    Let $x, y \in K$, $x \neq y$. Then $\|\delta_x - \delta_y\|_{\hyperlink{def:dualSpace}{C(K)^*}} = 2$ using \hyperlink{prop:urysohn}{Urysohn's Theorem}.
+    In particular, the map $x \in K \mapsto \delta_x \in C(K)^*$ is not continuous in the norm topology.
+\end{eg}
+
+\begin{defi}\hypertarget{def:weaktop}
+    Let $V$ be a normed vector space.
+    \begin{itemize}
+        \item The topology on $V$ induced by the sets $\Omega_{l, U} = l^{-1}(U)$, $l \in V^*$, $U \subset \R$ open is called the \textbf{weak topology} on $V$.
+        \item The topology on $V^*$ by $\Omega_{v, U} = f_v^{-1}(U)$, $v \in V$, $U \subset \R$ open, $f_v \in V^{**}$, $f_v(l) = l(v)$ is called the \textbf{weak-$*$ topology} on $V^*$.
+    \end{itemize}
+\end{defi}
+
+The \hyperlink{def:weaktop}{weak topology} makes $V$ be a locally convex \hyperlink{def:tVS}{topological vector space} (and it does not come from a norm). On $V^*$, we now have three topologies.
+The \hyperlink{def:weaktop}{weak-$*$ topology} is `weaker' than the weak topology on $V^*$, as we are restricting our attention to the subset of $V^{**}$ induced by the inclusion map $V \hookrightarrow V^{**}$.
+
+% new lec (16)
+
+Equivalently, we can define the weak topology on $V^*$ as the weakest topology that makes every bounded linear $l: V \to \K$ continuous.
+Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the maps $f_v \in V^{**}$ continuous for all $v \in V$, where $f_v \in V^{**}$ is defined by $f_v(l) = l(v)$.
+
+\begin{eg}
+    Let $K$ be compact \hyperlink{def:hausdorff}{Hausdorff}. Then the map $x \in K \mapsto \delta_x \in \hyperlink{def:dualSpace}{C(K)^*}$ is continuous with respect to the weak topology on $C(K)^*$:
+    \begin{equation*}
+        x \to y \implies \delta_x(f) - \delta_y(f) = f(x) - f(y) \to 0 \quad \text{if } f \in C(K)
+    \end{equation*}
+    % check this - online notes had something different
+\end{eg}
+
+\begin{thm}
+    A \hyperlink{def:nvs}{normed vector space} $V$ is \hyperlink{def:separable}{separable} iff the \hyperlink{def:weaktop}{weak-$*$ topology} on the closed unit ball in $V^*$ is metrisable.
+\end{thm}
+
+\begin{proof}
+    See example sheet 3, question 9.
+\end{proof}
+
+\begin{thm}[Banach-Alaoglu]\hypertarget{thm:bab}
+    Let $V$ be a (separable) \hyperlink{def:nvs}{normed space}.
+    Then the closed unit ball in $\hyperlink{def:dualSpace}{V^*}$ is compact with respect to the \hyperlink{def:weaktop}{weak-$*$ topology}. (Similar to \hyperlink{thm:aa}{Arzel\`a-Ascoli}).
+\end{thm}
+
+\begin{thm}
+    Let $V$ be a (separable) normed space. Let $K$ be the closed unit ball in $\hyperlink{def:dualSpace}{V^*}$ with the \hyperlink{def:weaktop}{weak-$*$ topology}.
+    Then
+    \begin{equation*}
+        \Phi: V \to C(K), \qquad v \mapsto f_v \quad \text{where} \quad f_v(l) = l(v) \text{ for } l \in V^*
+    \end{equation*}
+    is an isometric isomorphism onto its image.
+\end{thm}
+
+\begin{proof}
+    That $f_v \in C(K)$ holds exactly by definition of the \hyperlink{def:weaktop}{weak-$*$ topology}.
+    Linearity is clear. That $\Phi$ is isometric follows from \hyperlink{thm:hahnBanach}{Hahn-Banach:}
+    \begin{equation*}
+        \|f_v\| = \sup_{l \in \K} \abs{f_v(l)} = \sup_{\|l\| \leq 1} \abs{l(v)} = \|v\|. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{eg}
+    Let $K$ be a compact metric space and
+    \begin{equation*}
+        P(K) = \set{\mu \in C(K)^* | \mu \text{ is positive}, \; \mu(\mathbbm{1}) = 1}
+    \end{equation*}
+    (where $\mathbbm{1}$ denotes the constant function $\mathbbm{1}(x) = 1$) be the set of Borel probability measures.
+    Let $\phi: K \to K$ be a homeomorphism. Then there exists a $\phi$-invariant probability measure, i.e., $\mu \in P(K)$ such that
+    \begin{equation*}
+        \mu(f) = \mu(f \circ \phi) \text{ for any }f \in C(K).
+    \end{equation*}
+    % picture?
+\end{eg}
+
+\begin{proof}
+    Fix $x_0 \in K$ and define $\mu_n \in P(K)$ by
+    \begin{equation*}
+        \mu_n(f) = \frac{1}{n} \sum_{k=0}^{n-1} f(\underbrace{\phi \circ \dotsb \circ \phi}_{k \text{ times}} (x_0)) \text{ for } f \in C(K).
+    \end{equation*}
+    Since $K$ is metric, $\hyperlink{def:cx}{C(K)}$ is \hyperlink{def:separable}{separable} (example sheet 3). Also by example sheet 3, $\|\mu_n\| \leq 1$.
+    By the \hyperlink{thm:bab}{Banach-Alaoglu} Theorem, there exists a \hyperlink{def:weaktop}{weak-$*$} convergent subsequence $(\mu_n)_{n \in \Lambda}$.
+    Its limit satisfies
+    \begin{equation*}
+        \mu(1) = \lim_{\substack{n \to \infty \\ n \in \Lambda}} \mu_n(1) = 1, \quad \mu(f) \geq 0 \text{ if } f \geq 0.
+    \end{equation*}
+    Thus $\mu \in P(K)$. Moreover, for any $f \in C(K)$,
+    \begin{align*}
+        \mu(f \circ \phi) &= \lim_{\substack{n \to \infty \\ n \in \Lambda}} \frac{1}{n} \sum_{k=1}^n f(\underbrace{\phi \circ \dotsb \circ \phi}_{k \text{ times}} (x_0)) \\
+                          &= \lim_{\substack{n \to \infty \\ n \in \Lambda}} \frac{1}{n} \sum_{k=0}^{n-1} f(\underbrace{\phi \circ \dotsb \circ \phi}_{k \text{ times}} (x_0)) \\
+                          &= \mu(f).\qedhere
+    \end{align*}
+\end{proof}
+
+\clearpage
+\section{Euclidean vector spaces and Hilbert spaces}
+\subsection{Definitions and Examples}
+\begin{defi}[Inner product]\hypertarget{def:ip}
+    Let $V$ be a vector space (real or complex).
+    Then an \textbf{inner product} is a map $(\cdot, \cdot): V \times V \to \K$ such that
+    \begin{enumerate}[label=(\roman*)]
+        \item $(v, w) = \overline{(w, v)}$ for all $v, w \in V$ (skew-symmetry)
+        \item $(\lambda_1 v_1 + \lambda_2 v_2, w) = \lambda_1 (v_1, w) + \lambda_2(v_2, w)$ for all $v_i, w \in V$, $\lambda_i \in \K$ (linear in first argument)
+        \item $(v, v) \geq 0$ with $(v,v) = 0$ iff $v = 0$ (positive definite).
+    \end{enumerate}
+    A vector space together with an inner product is called an \textbf{inner product space}.
+\end{defi}
+
+\begin{prop}[Cauchy-Schwarz inequality]\hypertarget{thm:cs}
+    Let $V$ be an \hyperlink{def:ip}{inner product space}. Then
+    \begin{equation*}
+        \abs{(v, w)} \leq (v,v)^\frac{1}{2} (w, w)^\frac{1}{2} \quad \forall v, w \in V
+    \end{equation*}
+    with equality iff $v = \lambda w$ for some $\lambda \in \K$ or $w = 0$.
+\end{prop}
+
+\begin{cor}
+    Let $V$ be an \hyperlink{def:ip}{inner product space}. Then $\|v\| = (v,v)^\frac{1}{2}$ is a norm.
+\end{cor}
+
+\begin{defi}[Euclidean, Hilbert spaces]\hypertarget{def:euclidean}
+    A \hyperlink{def:nvs}{normed vector space} whose norm is induced by an \hyperlink{def:ip}{inner product} is called a \textbf{Euclidean space}.
+    If it is also \hyperlink{def:banach}{Banach}, then it is a \textbf{Hilbert space}.
+\end{defi}
+
+\begin{fact}
+    Let $V$ be \hyperlink{def:euclidean}{Euclidean}.
+    Then there is a unique \hyperlink{def:ip}{inner product} such that $\|v\| = (v,v)^\frac{1}{2}$.
+\end{fact}
+
+\begin{proof}
+    $\|v\|^2 = (v,v)$ implies $\|v+w\|^2 = \|v\|^2 + \|w\|^2 + 2 \Re(v, w)$.
+    If $V$ is a real vector space, then $(v, w) = \frac{1}{2}(\|v+w\|^2 - \|v\|^2 - \|w\|^2)$.
+    If $V$ is a complex vector space, then also $\|v + iw\|^2 = \|v\|^2 + \|w\|^2 + 2 \Re(v, iw)$. But $\Re(v, iw) = -\Re i (v, w) = + \Im(v, w)$.
+    \begin{align*}
+        (v, w) &= \Re (v, w) + i \Im (v, w)  \\
+               &= \frac{1}{2} (\|v+w\|^2 + i \|v + i w\|^2 - (i+1) (\|v\|^2 + \|w\|^2)).\qedhere
+    \end{align*}
+\end{proof}
+
+\begin{fact}
+    Let $V$ be \hyperlink{def:euclidean}{Euclidean}.
+    Then the unique \hyperlink{def:ip}{inner product} $(\cdot, \cdot)$ inducing the norm is continuous.
+\end{fact}
+
+% new lec (17)
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item $\hyperlink{def:lpspace}{\ell^2} = \set{(x_n) \in K | \sum_{n=1}^\infty \abs{x_n}^2 < \infty}$ is a \hyperlink{def:euclidean}{Hilbert space} with \hyperlink{def:ip}{inner product} $(x, y) = \sum_{n=1}^\infty x_n \overline{y_n}$.
+        \item $\hyperlink{def:cx}{C[a, b]}$ with norm
+            \begin{equation*}
+                \|f\|_2 = \left(\int_a^b \abs{f(x)}^2\, dx \right)^\frac{1}{2}
+            \end{equation*}
+            (and inner product $\int_a^b f(x) g(x) \, dx$) is a \hyperlink{def:euclidean}{Euclidean vector space}, but it is not complete.
+            Its completion can be identified with the Lebesgue space $L^2[a, b]$.
+    \end{itemize}
+\end{eg}
+
+\begin{remark}
+    Any metric space $X$ can be completed.
+    For two Cauchy sequences $(x_n)$, $(y_n) \subset X$, set $(x_n) \sim (y_n)$ if $d(x_n, y_n) \to 0$.
+    This is an equivalence relation. Denote the equivalence class of a Cauchy sequence $x = (x_n)$ by $\overline{x}$.
+
+    Define
+    $\overline{X} = \set{\overline{x} | x \text{ is a Cauchy sequence in } X}.$
+    Then $\overline{d}(\overline{x}, \overline{y}) = \lim_{n \to \infty} d(x_n,y_n)$ exists (exercise), it is well-defined, i.e. independent of the sequences representing $\overline{x}$, $\overline{y}$ and one can check that $\overline{d}$ is a metric on $\overline{X}$.
+
+    The metric space $\overline{X}$ is complete: if $(\overline{x}^k) \subset \overline{X}$ is a Cauchy sequence in $\overline{X}$ and $(x^k_n)_n \subset X$ is a representative for $\overline{x}^k$, choose $n_k$ such that $d(x_i^k, x_j^k) \leq 2^{-k}$ for $i, j \geq n_k$.
+    Define $(x_k) \subset X$ by $x_k = x_{n_k}^k$. Then $x = (x_k) \subset X$ is a Cauchy sequence and $\overline{x}^k \to \overline{x}$ in $\overline{X}$.
+
+    The space $X$ is isometrically embedded in $\overline{X}$ by the map that sends $x \in X$ to the equivalence class of the constant sequence $(x, x, \dotsc)$.
+    Thus we can regard $X$ as a subspace of $\overline{X}$.
+    One can check that $X$ is \hyperlink{def:dense}{dense} in $\overline{X}$.
+\end{remark}
+
+\begin{ex}
+    Let $X$ be a \hyperlink{def:nvs}{normed vector space} (\hyperlink{def:ip}{inner product} space).
+    Then the norm (inner product) extends uniquely from $X$ to its completion, making it a \hyperlink{def:banach}{Banach} (\hyperlink{def:euclidean}{Hilbert}) space.
+\end{ex}
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item $L^2[a,b]$ is the completion of $C[a, b]$ with inner product $(f,g) = \int_a^n f \overline{g} \, dx$.
+        \item The Sobolev space $H^1[a,b]$ is the completion of $C^\infty$ with inner product $(f, g) = \int_a^b f(x) \overline{g(x)} \, dx + \int_a^b f'(x) \overline{g'(x)} \, dx$.
+    \end{itemize}
+\end{eg}
+
+\subsection{Orthogonal complements and projections}
+\begin{defi}[Orthogonal]\hypertarget{def:ortho}
+    Let $V$ be a \hyperlink{def:euclidean}{Euclidean vector space}.
+    \begin{itemize}
+        \item $v,w \in V$ are \textbf{orthogonal} if $(v, w) = 0$.
+        \item The \textbf{orthogonal complement} of a set $S \subset V$ is
+            \begin{equation*}S^\perp \coloneqq \set{v \in V | (v, w) = 0\ \forall w \in S}.\end{equation*}
+    \end{itemize}
+\end{defi}
+
+\begin{fact}
+    If $v, w \in V$ are \hyperlink{def:ortho}{orthogonal}, then $\|v+w\|^2 = \|v\|^2 + \|w\|^2$.
+\end{fact}
+
+\begin{fact}
+    $S^{\hyperlink{def:ortho}{\perp}}$ is a closed subspace of $V$, and $(\overline{\spn S})^\perp = S^\perp$.
+\end{fact}
+
+\begin{proof}
+    $S^{\hyperlink{def:ortho}{\perp}} = \bigcup_{w \in S} f_w^{-1}(0)$ where $f_w(v) = (v, w)$ is continuous.
+    Thus $S^\perp$ is the intersection of closed sets, so closed. It is clear that $S^\perp$ is a linear subspace.
+    Clearly,
+    \begin{equation*}
+        S^\perp \supseteq (\spn S)^\perp \supseteq (\overline{\spn S})^\perp.
+    \end{equation*}
+
+    On the other hand, let $v \in S^\perp$ and $w \in \overline{\spn S}$, i.e. $w = \lim_{k \to \infty} w_k$ with $w_k \in \spn S$.
+    Then $(v, w) = \lim_{k \to \infty} (v, w_k) = 0$, so $v \in (\spn S)^\perp$.
+\end{proof}
+
+\hypertarget{def:oplus}For $W \subset V$ a linear subspace, $W^\perp \cap W = \{0\}$. Thus the sum $W + W^\perp$ is direct, and we write $W + W^\perp = W \oplus W^\perp$.
+
+\begin{eg}
+    \leavevmode
+    \begin{itemize}
+        \item If $X$ is finite-dimensional, then $V = W \hyperlink{def:oplus}{\oplus} W^{\hyperlink{def:ortho}{\perp}}$ for any linear subspace $W \subset V$.
+        \item Let $V = C[0,1]$ with $(f,g) = \int_0^1 f \overline{g} \, dx$ and $W = C^1[0,1] \subset C[0,1]$.
+            Then $W^\perp = \{0\}$, since $\int_0^1 f \overline{g} \, dx = 0 \ \forall g \in C^1$ implies $f = 0$. Thus $V \neq W \oplus W^\perp$.
+    \end{itemize}
+\end{eg}
+
+\begin{thm}
+    Let $W \subset V$ be a complete subspace. Then $W \hyperlink{def:oplus}{\oplus} W^{\hyperlink{def:ortho}{\perp}} = V$.
+    Moreover, given $v \in V$, its unique decomposition $v = v_\parallel + v_\perp$ with $v_\parallel \in W$ and $v_\perp \in W^\perp$ is characterised by
+    \begin{equation*}
+        \|v_\perp\| = \|v - v_\parallel\| = \inf_{w \in W} \|v - w\| \tag{$*$} \label{eq:17star}.
+    \end{equation*}
+\end{thm}
+
+The assumption that $W$ is complete holds in particular if $V$ is a \hyperlink{def:euclidean}{Hilbert space} and $W \subset V$ is closed.
+
+\begin{proof}
+    Let $v \in V$, and $D = \inf_{w \in W} \|v - w\|$. Choose any sequence $(w_k) \subset W$ such that $\|v - w_k\| \to D$.
+
+    Claim: $(w_k)$ is Cauchy.
+    By the parallelogram identity, $\|x - y\|^2 + \|x+y\|^2 = 2 \|x\|^2 + 2 \|y\|^2$, with $x = v-w_j$ and $y = v+w_k$, we get
+    \begin{gather*}
+        \|w_j - w_k\|^2 + \|2v - w_j - w_k\|^2 = 2 \|v - w_j\|^2 + 2 \|v - w_k\|^2 \\
+        \implies \|w_j - w_k\|^2 = 2 \underbrace{\|v - w_j\|^2}_{\to D^2} + 2 \underbrace{\|v - w_k\|^2}_{\to D^2} - 4 \underbrace{\norm{v - \frac{1}{2}(w_j + w_k)}^2}_{\geq D^2} \\
+        \leq 4(D^2 + \epsilon) - 4D^2 \text{ for $i, k$ sufficiently large} \\
+        = 4\epsilon
+    \end{gather*}
+    So, $(w_j)$ is Cauchy, and by completeness of $W$, $w_j \to v_\parallel$ for some $v_\parallel$ in $W$.
+
+    Claim: $v_\perp = v - v_\parallel \in W^\perp$. If not, $\exists \tilde{w} \in W$ such that $(\tilde{w}, v_\perp) > 0$.
+    \begin{align*}
+        \norm{v_\perp - t \tilde{w}}^2 &= \|v_\perp\|^2 - 2 t (v_\perp, \tilde{w}) + t^2 \norm{\tilde{w}}^2 \\
+                                       &= D^2 - t\underbrace{(2 (v_\perp, \tilde{w}) - t \|w\|^2)}_{>0 \text{ for $t$ small}} \\
+                                       &< D^2 \text{ for $t$ small.}
+    \end{align*}
+    But also,
+    \begin{equation*}
+        \norm{v_\perp - t \tilde{w}}^2 = \norm{v - (v_\parallel + t \tilde{w})}^2 \geq D^2
+    \end{equation*}
+    by definition of $D$, a contradiction.
+
+    Thus, $v_\perp \in W^\perp$ and $v = v_\parallel + v_\perp$, $v_\parallel \in W$, $v_\perp \in W^\perp$.
+    To show that the decomposition is characterised by \eqref{eq:17star}, suppose
+    \begin{equation*}
+        v = \tilde{v}_\perp + \tilde{v}_\parallel \text{ for } \tilde{v}_\perp \in W^\perp, \tilde{v}_\parallel \in W.
+    \end{equation*}
+    Then $\tilde{v}_\parallel = v_\parallel + w$, $w = v_\perp - \tilde{v}_\perp \in W^\perp$ but also $w = \tilde{v}_\parallel - v_\parallel \in W$. Thus $w \in W \cap W^\perp = \{0\}$.
+\end{proof}
+
+\begin{cor}
+    Let $H$ be a \hyperlink{def:euclidean}{Hilbert space} and $S \subset H$.
+    Then $\overline{\spn S} = ((\overline{\spn S})^{\hyperlink{def:ortho}{\perp}})^\perp  = (S^\perp)^\perp$.
+\end{cor}
+
+\begin{thm}[Riesz Representation Theorem]\hypertarget{def:riesz}
+    Let $H$ be a \hyperlink{def:euclidean}{Hilbert space}.
+    Then for any $l \in \hyperlink{def:dualSpace}{H^*}$ there is a unique $v_l \in H$ such that $l(w) = (w, v_l)$ for all $w \in H$.
+    Moreover, $\|l\| = \|v_l\|$.
+\end{thm}
+
+\begin{cor}
+    The antilinear map $H \to H^*$, $v \mapsto (\cdot, v)$ is bijective and isometric.
+    Thus $H$ and $\hyperlink{def:dualSpace}{H^*}$ can be identified.
+    In particular, $H^*$ is a \hyperlink{def:euclidean}{Hilbert space}.
+    For $l, l' \in H^*$ the \hyperlink{def:ip}{inner product} on $H^*$ is $(l, l') = (v_l', v_l)$.
+\end{cor}
+
+\begin{proof}[Proof of \hyperlink{def:riesz}{Riesz Representation Theorem}]
+    Let $l \in \hyperlink{def:dualSpace}{H^*}$, $l \neq 0$.
+    Then $\ker L$ is closed and the previous theorem implies the existence of the \hyperlink{def:ortho}{orthogonal decomposition} $H = \ker l \oplus (\ker l)^{\hyperlink{def:ortho}{\perp}}$.
+    Since $l \neq 0$, $(\ker l)^\perp \neq \{0\}$.
+
+    Claim: There is $v_0 \in H$ such that $(\ker l)^\perp = \spn \{v_0\}$ and $\|v_0\| = 1$.
+    Let $v_0 \in (\ker l)^\perp$, $\|v_0\| = 1$. Then for any $w \in H$,
+    \begin{equation*}
+        w = \underbrace{\left(w - \frac{l(w)}{l(v_0)} v_0\right)}_{\in \ker l} + \underbrace{\frac{l(w)}{l(v_0)} v_0}_{\in \spn \{v_0\} \subset (\ker l)^\perp}
+    \end{equation*}
+
+    Claim: Define $v_l = \overline{l(v_0)} v_0$.
+    Then $l(v) = (v, v_l)$ for any $v \in H$.
+    If $v \in \ker l$, then $l(v) = 0$ and $(v, v_l) = l(v_0) (v,v_0) = 0$.
+    If $v \in (\ker l)^\perp$, i.e. $v = \lambda v_0$, $\lambda \in \K$, then
+    \begin{equation*}
+        (v, v_l) = \lambda l(v_0) (v_0, v_0) = \lambda l(v_0) = l(v).
+    \end{equation*}
+
+    Since $l$ and $(\cdot, v_l)$ are linear and agree on $\ker l$ and $(\ker l)^\perp$, they must also agree on $\ker l \oplus (\ker l)^\perp = H$.
+
+    Norm: $\|l\| = \sup_{\|v\| \leq 1} \abs{l(v)} = \sup_{\|v\| \leq 1} \abs{(v, v_l)} = \|v_l\|$
+    where the last equality follows from taking $v = \frac{v_l}{\|v_l\|}$ and \hyperlink{thm:cs}{Cauchy-Schwarz}.
+
+    Uniqueness: If $(v, v_l) = (v, \tilde{v}_l)$ for all $v \in H$, then
+    \begin{align*}
+        (v, v_l - \tilde{v}_l) &= 0 \quad \forall v \\
+        \implies (v_l - \tilde{v}_l, v_l - \tilde{v}_l) &= 0 \implies \tilde{v}_l = v_l. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{defi}[Projection]\hypertarget{def:proj}
+    Let $V$ be a \hyperlink{def:euclidean}{Euclidean vector space}.
+    \begin{itemize}
+        \item A linear operator $P:V \to V$ is a \textbf{projection} if $P^2 = P$.
+        \item $P$ is an \textbf{orthogonal projection} if $P^2 = P$ and $(Pv,w) = (v, Pw)$ for all $v, w \in V$ ($P$ is self-adjoint)
+    \end{itemize}
+\end{defi}
+
+\begin{fact}
+    Let $P$ be an \hyperlink{def:proj}{orthogonal projection}. Then $\|P\| = 1$ or $\|P\| = 0$.
+\end{fact}
+
+\begin{proof}
+    Let $v \in V$, $Pv \neq 0$. Then
+    \begin{gather*}
+        \|Pv\| = \frac{(Pv, Pv)}{\|Pv\|} = \frac{(v, P^2v)}{\|Pv\|} = \frac{(v, Pv)}{\|Pv\|} \leq \|v\| \\
+        \implies \|P\| \leq 1.
+    \end{gather*}
+
+    On the other hand, if $\|P\| \neq 0$, there is $v$ such that $Pv \neq 0$. Let $w = Pv$. Then $\|Pw\| = \|Pv\| = \|w\| \implies \|P\| \geq 1$.
+\end{proof}
+
+\begin{cor}
+    Let $W \subset V$ be complete (i.e. closed if $V$ is a \hyperlink{def:euclidean}{Hilbert space}).
+    Then there is an \hyperlink{def:proj}{orthogonal projection} $P:V \to V$ with
+    \begin{equation*}
+        \im P = W,\ \ker P = W^{\hyperlink{def:ortho}{\perp}}
+    \end{equation*}
+\end{cor}
+
+\begin{proof}
+    Let $Pv = v_\parallel$ with $v_\parallel \in W$ and $v_\perp = v - v_\parallel \in W^\perp$ as in the theorem.
+    Then $P$ is linear since
+    \begin{gather*}
+        v = v_\parallel + v_\perp, \quad w = w_\parallel + w_\perp, \quad v_\parallel, w_\parallel \in W, \quad v_\perp, w_\perp \in W^\perp \\
+        \implies \lambda v + \mu w = \underbrace{(\lambda v_\parallel + \mu w_\parallel)}_{\in W} + \underbrace{(\lambda v_\perp + \mu_\perp)}_{\in W^\perp} \\
+        \implies P(\lambda v + \mu w) = \lambda P v + \mu P w
+    \end{gather*}
+    by uniqueness of the \hyperlink{def:ortho}{orthogonal decomposition}.
+    Clearly, $P^2 = P$ and $(Pv, w) = (v_\parallel, w_\parallel + w_\perp) = (v_\parallel, w_\parallel) = (v_\parallel + v_\perp, w_\parallel) = (v, Pw)$ so $P$ is \hyperlink{def:proj}{orthogonal}.
+\end{proof}
+
+\begin{eg}
+    Let $V = C(\mathbb{T}, \mathbb{C})$ with inner product
+    \begin{equation*}
+        (f, g) = \frac{1}{2\pi} \int_{-\pi}^\pi f \overline{g} \, dx.
+    \end{equation*}
+
+    Then $S_n : V \to V$ defined by the partial Fourier sum
+    \begin{equation*}
+        S_n f(x) = \sum_{k=-n}^n \hat{f}_k e^{ikx}, \quad \hat{f}_k = \frac{1}{2\pi} \int_{-\pi}^\pi f(x) e^{-ikx} \, dx
+    \end{equation*}
+    is the \hyperlink{def:proj}{orthogonal projection} with image $W = \spn \{e^{ikx}\}_{\abs{k}\leq n}$ (which is finite dimensional and thus complete).
+\end{eg}
+
+\begin{proof}
+    Let $e_k(x) = e^{ikx}$. Then $\hat{f}_k = (f, e_k)$ so $S_n f = \sum_{k = -n}^n e_k(f, e_k)$.
+    If $f \in W$, i.e., $f = \sum_{k=-n}^n a_k e_k$, $a_k \in \C$, then
+    \begin{equation*}
+        S_n f = \sum_{\abs{k} \leq n} e_k \left(\sum_{\abs{k}\leq n} a_l e_l, e_k\right) = f \text{ since } (e_k, e_l) =
+        \begin{cases}
+            1 & \text{if } k = l \\
+            0 & \text{if } k \neq l
+        \end{cases}
+    \end{equation*}
+
+    If $f \in W^\perp$ then $(f, e_k) = 0$ for all $\abs{k} \leq n$, so $S_n f= 0$.
+    Thus $S_n$ is a projection with image $W$.
+    Also, $(S_n f, g) = (f, S_n g)$ for all $f,g$ so $S_n$ is orthogonal.
+\end{proof}
+
+% new lec (19)
+
+\subsection{Orthonormal systems}
+\begin{defi}[Orthonormal system]\hypertarget{def:ons}
+    \leavevmode
+    \begin{itemize}
+        \item Let $V$ be a Euclidean vector space. A set $\{e_\alpha\}_\alpha \subset V$ of unit vectors is an \textbf{orthonormal system} (ONS) if $(e_\alpha, e_\beta) = 0$ for all $\alpha \neq \beta$.
+        \item An orthonormal system is \textbf{maximal} if it cannot be extended to a larger orthonormal system.
+        \item Let $H$ be a Hilbert space. Then a maximal orthonormal system is called a \textbf{complete} orthonormal system or a \textbf{Hilbert basis} (or simply a basis).
+    \end{itemize}
+\end{defi}
+\begin{fact}
+    Let $H$ be a \hyperlink{def:euclidean}{Hilbert space} and $S$ an \hyperlink{def:ons}{orthonormal system}.
+    Then $S$ is a \hyperlink{def:ons}{Hilbert basis} if and only if $\overline{\spn S} = H$.
+\end{fact}
+
+\begin{proof}
+    Let $W = \overline{\spn S}$.
+    Then $W$ is complete, so $H = W \hyperlink{def:oplus}{\oplus} W^{\hyperlink{def:ortho}{\perp}}$.
+    Suppose that $W^\bot \neq \{0\}$.
+    Then there exists $0 \neq v \in W^\bot = S^\bot$, so $S \cup \{\frac{v}{\|v\|}\}$ is an orthonormal system. Thus
+    \begin{equation*}
+        \overline{\spn S} \neq H \iff W^\bot \neq \{0\} \iff S \text{ is not \hyperlink{def:ons}{maximal}.} \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{fact}[Gram-Schmidt]
+    Let $V$ be Euclidean and $\{v_i\}_{i=1}^N$ linear independent (with $N = \infty$ permitted).
+    Then there is an orthonormal system $\{e_i\}_{i=1}^N$ with $\spn \{e_i\}_{i=1}^N$ with $\spn \{v_i\}_{i=1}^k$ for all $k \leq N$.
+\end{fact}
+
+\begin{proof}
+    Let $e_1 = \frac{v_1}{\|v_1\|}$ and given $e_1, \dotsc, e_k$, set
+    \begin{equation*}
+        e_{k+1} = \frac{x_{k+1} - \sum_{i=1}^k e_i (v_{k+1}, e_i)}{\norm{x_{k+1} - \sum_{i=1}^k e_i (v_{k+1}, e_i)}}.\qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{cor}
+    Let $H$ be a \hyperlink{def:separable}{separable} \hyperlink{def:euclidean}{Hilbert space}. Then there is a countable \hyperlink{def:ons}{Hilbert basis}.
+\end{cor}
+Thus from now on, we will always take \hyperlink{def:ons}{Hilbert bases} to be countable if $H$ is \hyperlink{def:separable}{separable}.
+
+\begin{prop}[Bessel inequality]\hypertarget{prop:bessel}
+    Let $V$ be a \hyperlink{def:euclidean}{Euclidean vector space} and $\{e_i\}_{i=1}^N$ an \hyperlink{def:ons}{orthonormal system} (with $N=\infty$ permitted). Then
+    \begin{equation*}
+        \sum_{i=1}^N \abs{(v, e_i)}^2 \leq \|v\|^2 \quad \text{for all } v \in V.
+    \end{equation*}
+    In particular, if $N = \infty$, then $(v_i) \in \ell^2$ where $v_i = (v, e_i)$.
+\end{prop}
+
+\begin{proof}
+    By taking a limit, we may assume that $N < \infty$. Define $Pv = \sum_{i=1}^N (v, e_i) e_i$. Then $P^2 = P$,
+    \begin{equation*}
+        (Pv, w) = \sum_{i=1}^N (v, e_i) \overline{(v, e_i)} = (v, Pw) \quad \text{for all } v, w \in V.
+    \end{equation*}
+    Thus $P$ is an \hyperlink{def:proj}{orthogonal projection} $\implies \sum_{i=1}^N \abs{(v, e_i)}^2 = \|Pv\|^2 \leq \|v\|^2$ for all $v \in V$.
+\end{proof}
+
+\begin{prop}
+    Let $H$ be a separable (infinite-dimensional) \hyperlink{def:euclidean}{Hilbert space} with \hyperlink{def:ons}{Hilbert basis} $\{e_i\}_{i=1}^\infty$. Then
+    \begin{enumerate}[label=(\roman*)]
+        \item For any $x \in H$, set $x_i = (x, e_i)$. Then $(x_i) \in \hyperlink{def:lpspace}{\ell^2}$ and
+            \begin{equation*}
+                x = \sum_{i=1}^\infty x_i e_i.
+            \end{equation*}
+        \item Conversely, if $(x_i) \in \ell^2$ then there is $x \in H$ such that $(x, e_i) = x_i$ for all $i$.
+        \item For any $x, y \in H$,
+            \begin{equation*}
+                (x, y) = \sum_{i=1}^\infty x_i \overline{y_i} \qquad \text{(Parseval identity)}.
+            \end{equation*}
+    \end{enumerate}
+    In particular, the map
+    \begin{align*}
+        \phi: H &\longrightarrow \ell^2 \\
+        x &\longmapsto ((x, e_i))_{i=1}^\infty \in \ell^2
+    \end{align*}
+    is an isometric isomorphism. This is sometimes called the Riesz-Fischer Theorem.
+\end{prop}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item Let $s_n = \sum_{i=1}^n x_i e_i$. Then $(s_n)$ is Cauchy: for $m \geq n$,
+            \begin{equation*}
+                \|s_m - s_n\|^2 = \norm{\sum_{i=n}^m x_i e_i}^2 = \sum_{i=n}^m \abs{x_i}^2 \leq \sum_{i=n}^\infty \abs{x_i}^2 \to 0 \text{ as } n \to \infty
+            \end{equation*}
+            since $(x_i) \in \hyperlink{def:lpspace}{\ell^2}$ by \hyperlink{prop:bessel}{Bessel's inequality}.
+            By completeness of $H$, there is $s \in H$ such that $s_n \to s$.
+
+            Now claim $s = x$.
+            For any $i$,
+            \begin{gather*}
+                (s-x, e_i) = \lim_{n \to \infty} (s_n - x, e_i) = x_i - x_i = 0 \\
+                \implies s-x \in (\spn \{e_i\})^\bot = \overline{\spn \{e_i\}}^\bot = H^\bot = \{0\} \implies s = x.
+            \end{gather*}
+        \item If $(x_i) \in \ell^2$, then the sum $x = \sum_{i=1}^\infty x_i e_i$ converges by the argument in (i).
+            \begin{equation*}
+                \implies (x, e_i) = \lim_{n \to \infty} \left(\sum_{j=1}^n x_j e_j, e_i\right) = x_i.
+            \end{equation*}
+        \item Similarly.
+            \begin{equation*}
+            (x, y) = \lim_{\substack{n \to \infty \\ m \to \infty}} \left(\sum_{i=1}^n x_i e_i, \sum_{j=1}^m y_j e_j\right) = \sum_{i=1}^\infty x_i \overline{y_i}
+            \end{equation*}
+            where the infinite sum converges absolutely since $(x_i), (y_i) \in \ell^2$. \qedhere
+    \end{enumerate}
+\end{proof}
+
+\clearpage
+\section{Spectral theory}
+From now on, Banach and Hilbert spaces are always complex.
+
+\subsection{Spectrum and resolvent}
+\begin{defi}\hypertarget{def:spectrum}
+    Let $X$ be a (complex) \hyperlink{def:banach}{Banach space} and $T \in \mathcal{B}(X)$ where from now on $\mathcal{B}(X) \coloneqq \hyperlink{def:bvw}{\mathcal{B}(X, X)}$.
+    \begin{itemize}
+        \item The \textbf{resolvent set} of $T$ is
+            \begin{equation*}
+                \rho (T) = \set{z \in \C | T - z \text{ is bijective and } (T-z)^{-1} \in \hyperlink{def:spectrum}{\mathcal{B}(X)}}.
+            \end{equation*}
+            $T - z$ denotes the operator $T - z \id$.
+        \item The \textbf{spectrum} of $T$ is
+            \begin{equation*}
+                \sigma(T) = \C \setminus \rho(T).
+            \end{equation*}
+        \item The \textbf{resolvent} of $T$ is the map $R_T : \rho(T) \to \mathcal{B}(X)$,
+            \begin{equation*}
+                R_T(z) = (T-z)^{-1}.
+            \end{equation*}
+    \end{itemize}
+\end{defi}
+
+\begin{remark}
+    If $T$ is bounded above and $T-z$ is bijective, then $T-z \in \hyperlink{def:bx}{\mathcal{B}(X)}$ is automatic by the \hyperlink{thm:omt}{open mapping theorem}.
+\end{remark}
+
+\begin{fact}
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(X)}$ with $\|T\| \leq 1$.
+    Then the series $\sum_{n=0}^\infty T^n$ converges in $\mathcal{B}(X)$ and
+    \begin{equation*}
+        (\id -T)^{-1} = \sum_{n=0}^\infty T^n, \; \norm{(\id - T)^{-1}} \leq \frac{1}{1 - \|T\|}.
+    \end{equation*}
+\end{fact}
+
+\begin{proof}
+    Let $S_n = \sum_{k=0}^n T^k$. Then $(S_n)$ is Cauchy in $\mathcal{B}(X)$:
+    \begin{equation*}
+        \|S_n - S_m\| \leq \sum_{k=n}^\infty \|T\|^k \to 0 \text{ as } n \to \infty.
+    \end{equation*}
+    Thus $S = \lim_{n \to \infty} S_n \in \mathcal{B}(X)$ exists and $\|S\| \leq \lim_{n \to \infty} \sum_{k=0}^n \|T\|^k \leq \frac{1}{1 - \|T\|}$ and
+    \begin{equation*}
+        S(1-T) = \sum_{k=0}^\infty T^k - \sum_{k=1}^\infty T^k = \id. \qedhere
+    \end{equation*}
+\end{proof}
+
+% new lec (20)
+
+\begin{prop}
+    Let $z_0 \in \hyperlink{def:spectrum}{\rho(T)}$. Then $\rho(T)$ contains the disk
+    \begin{equation*}
+        D = \set{z \in \C | \abs{z - z_0} \|\hyperlink{def:spectrum}{R_T}(z_0)\| < 1}.
+    \end{equation*}
+    In particular, $\rho(T)$ is open, $\hyperlink{def:spectrum}{\sigma(T)}$ is closed.
+    Moreover, the map $R_T : \rho(T) \to \hyperlink{def:bx}{\mathcal{B}(X)}$ is analytic (can be represented by an absolutely convergent power series in any small enough disk).
+\end{prop}
+
+\begin{proof}
+    For $z \in D$,
+    \begin{align*}
+        T - z &= (T-z_0) - (z - z_0) \\
+              &= (T - z_0)(\id - \underbrace{\hyperlink{def:spectrum}{R_T(z_0)}(z - z_0)}_{\mathclap{\|\cdot\| < 1 \text{ by definition of $D$.}}})
+    \end{align*}
+    \begin{align*}
+        \implies (\id - R_T(z_0)(z-z_0))^{-1} &= \sum_{n=0}^\infty (z-z_0)^n R_T(z_0)^n \in \hyperlink{def:bx}{\mathcal{B}(X)} \\
+        \implies (T-z)^{-1} &= \sum_{n=0}^\infty (z-z_0)^n R_T(z_0)^{n+1} \in \mathcal{B}(X) \\
+        \implies z &\in \hyperlink{def:spectrum}{\rho(T)}.
+    \end{align*}
+    Therefore, $D \subset \rho(T)$. Moreover, $R_T$ is analytic on $\rho(T)$.
+\end{proof}
+
+\begin{cor}
+    $\hyperlink{def:spectrum}{\sigma(T)} \neq \emptyset$ and $\sigma(T) \subseteq \Set{z \in \C | \abs{z} \leq \|T\|}$.
+\end{cor}
+
+\begin{proof}
+    For any $\abs{z} > \|T\|$,
+    \begin{equation*}
+        \hyperlink{def:spectrum}{R_T(z)} = \frac{1}{z} \frac{1}{1 - T/z} = \frac{1}{z} \sum_{n=0}^\infty \frac{T^n}{z^n} \in\hyperlink{def:spectrum}{ \mathcal{B}(X)}.
+    \end{equation*}
+
+    Thus $\hyperlink{def:spectrum}{\sigma(T)} \subseteq \set{z \in \C | \abs{z} \leq \|T\|}$ and $\|R_T(z)\| \to 0$ as $\abs{z} \to \infty$.
+    If $\sigma(T) = \emptyset$ then $R_T: \C \to \mathcal{B}(X)$ would be entire.
+    By Liouville's Theorem it would have to be constant, thus $0$ (since it tends to $0$ as $\abs{z} \to \infty$).
+    But $R_T(z)$ is not identically $0$, since e.g.\ $z R_T(z) \rightarrow \id$ as $|z| \to \infty$.
+\end{proof}
+
+\subsection{Classification of the spectrum}
+\begin{prop}
+    Let $X$ be a \hyperlink{def:banach}{Banach space}, $Y$ a normed space, $T \in \hyperlink{def:bvw}{\mathcal{B}(X,Y)}$.
+    Then $T^{-1} \in \mathcal{B}(Y,X)$ iff $\im T$ is \hyperlink{def:dense}{dense} in $Y$ and $T$ is bounded below:
+    \begin{equation*}
+        \exists \epsilon > 0 \text{ s.t. } \forall x \in X \setminus \{0\}, \ \|T x\| > \epsilon \|x\|.
+    \end{equation*}
+\end{prop}
+
+\begin{proof}
+    The ($\Rightarrow$) direction is clear.
+    Thus assume that $T \in \hyperlink{def:bvw}{\mathcal{B}(X, Y)}$ is such that $\im T$ is \hyperlink{def:dense}{dense} and $T$ bounded below.
+    Then $T$ is injective, so bijective onto its image.
+    Let $S: \im T \to X$ be its inverse.
+    Since $T$ is bounded below, $S$ is bounded.
+    Since $\im T$ is dense in $Y$, for every $y \in Y$, there are $(y_k) \subset \im T$ such that $y_k \to y$.
+    Define $T^{-1} y = \lim_{k \to \infty} Sy_k$.
+    The limit exists since $S$ is bounded and $X$ is complete, $T^{-1} y$ is linear in $y$ and independent of the approximating sequence.
+    Moreover, $T^{-1} \in \mathcal{B}(Y, X)$,
+    \begin{equation*}
+        T T^{-1} y = \lim_{k \to \infty} T S Y_k = \lim_{k \to \infty} y_k = y,
+    \end{equation*}
+    as claimed.
+\end{proof}
+
+\begin{defi}[Spectrum]\hypertarget{def:eigen}\leavevmode
+    \begin{itemize}
+        \item $\sigma_p(T) = \set{\lambda \in \mathbb{C} | T - \lambda \text{ is not injective}}$ is the \textbf{point spectrum} or the set of eigenvalues.
+        \item $\sigma_c(T) = \set{\lambda \in \hyperlink{def:spectrum}{\sigma(T)} | T - \lambda \text{ is injective and $\im (T - \lambda)$ is dense}}$ is the \textbf{continuous spectrum}.
+        \item $\sigma_r(T) = \set{\lambda \in \sigma(T) | T - \lambda \text{ is injective and } \im(T - \lambda) \text{ is not dense}}$ is the \textbf{residual spectrum}.
+    \end{itemize}
+\end{defi}
+
+\begin{remark}
+    By the previous proposition, if $\lambda \in \hyperlink{def:spectrum}{\sigma_c(T)}$, then $T-\lambda$ is not bounded below.
+    Then there exists a sequence $(x_k) \subset X$ with $\|x_k\|=1$ such that
+    \begin{equation*}
+        T x_k - \lambda x_k \to 0 \, : \quad \lambda \text{ is an approximate eigenvalue.}
+    \end{equation*}
+    \hypertarget{def:ap}The set $\sigma_{ap}(T) = \set{\lambda \in \sigma(T) | \lambda \text{ is an approximate eigenvalue}}$ is the approximate point spectrum.
+\end{remark}
+
+\begin{eg}
+    Let $X$ be finite dimensional. Then equivalently
+    \begin{itemize}
+        \item $T - \lambda$ is injective
+        \item $T - \lambda$ is surjective
+    \end{itemize}
+    so $\hyperlink{def:spectrum}{\sigma(T)} = \hyperlink{def:eigen}{\sigma_p(T)}$.
+    Moreover, $\sigma_p(T) = \set{\lambda \in \C | \det(T - \lambda) =0}$ contains at most $\dim X$ points.
+\end{eg}
+
+\subsection{Normal linear operators on a Hilbert space}
+\hypertarget{def:tstar}Recall that given $T: H \to H$ we defined the \hyperlink{def:dualMap}{adjoint} $T^* : \hyperlink{def:dualSpace}{H^*} \to H^*$ by $(T^* l)(x) = l(T x)$ for any $l \in H^*$ and $x \in H$.
+In a \hyperlink{def:euclidean}{Hilbert space}, $H \cong H^*$ and thus regard $T^*$ as a map $T^*: H \to H$. Explicitly,
+\begin{equation*}
+    (Tx, y) = (x, T^* y) \quad \text{for } x, y \in H.
+\end{equation*}
+
+\begin{defi}[Normal, self-adjoint, unitary maps]\hypertarget{def:normalMap}
+    $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ is
+    \begin{itemize}
+        \item \textbf{normal} if $T \hyperlink{def:tstar}{T^*} = T^* T$
+        \item \textbf{self-adjoint} if $T = T^*$
+        \item \textbf{unitary} if $T T^* = T^* T = \id$
+    \end{itemize}
+    In particular, self-adjoint and unitary operators are normal.
+\end{defi}
+
+% new lec (21)
+
+\begin{ex}
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{normal}.
+    Then $\|Tx\| = \|\hyperlink{def:tstar}{T^*} x\| \ \forall x \in H$ and $\ker T = \ker T^* = (\im T)^\perp = (\im T^*)^\perp$.
+    Also
+    \begin{equation*}
+        \overline{\im T} = (\im T)^{\perp \perp} = (\ker T)^\perp = (\ker T^*)^\perp = \overline{\im T^*}.
+    \end{equation*}
+\end{ex}
+
+\begin{cor}
+    For $T$ \hyperlink{def:normalMap}{normal}, $\hyperlink{def:eigen}{\sigma_r(T)} = \emptyset$ and $\hyperlink{def:spectrum}{\sigma(T)} = \hyperlink{def:ap}{\sigma_{ap}}(T)$.
+\end{cor}
+
+\begin{cor}
+    For $T$ \hyperlink{def:normalMap}{normal}, if $Tx = \lambda x$ then $\hyperlink{def:tstar}{T^*} x = \overline{\lambda} x$.
+    In particular, $\overline{\hyperlink{def:eigen}{\sigma_p}(T)} = \sigma_p(T^*)$ and similarly $\overline{\hyperlink{def:eigen}{\sigma_c}(T)} = \sigma_c(T^*)$.
+\end{cor}
+
+\begin{proof}
+    If $T$ is \hyperlink{def:normalMap}{normal}, then so is $T - \lambda$ and $(T-\lambda)^* = \hyperlink{def:tstar}{T^*} - \overline{\lambda}$.
+    Thus $\|(T-\lambda)x\| = \|(T-\lambda)^* x\| = \norm{(T^* - \overline{\lambda}) x}$ so $Tx = \lambda x \iff T^* x = \overline{\lambda} x$ and more generally
+    \begin{equation*}
+        (T - \lambda) x_j \to 0 \iff (T^* - \overline{\lambda}) x_j \to 0. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{cor}
+    Let $T$ be \hyperlink{def:normalMap}{self-adjoint}. Then $\hyperlink{def:spectrum}{\sigma(T)} \subset \R$.
+\end{cor}
+
+\begin{ex}
+    Let $T$ be \hyperlink{def:normalMap}{unitary}.
+    Then $\hyperlink{def:spectrum}{\sigma(T)} \subset S^1 = \set{z \in \C | |z| = 1}$.
+\end{ex}
+
+\begin{eg}
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}. Then for all $t \in \R$,
+    \begin{equation*}
+        e^{itT} = \sum_{n=0}^\infty \frac{1}{n!} (itT)^n \in \mathcal{B}(H)
+    \end{equation*}
+    converges in $\mathcal{B}(H)$ and $U(t) = e^{itT}$ is characterised by the ODE
+    \begin{equation*}
+        -i \frac{\partial}{\partial t} U(t) = T U(t), \quad U(0) = \id.
+    \end{equation*}
+    Any solution to the Schr\"odinger equation
+    \begin{equation*}
+        -i \frac{\partial}{\partial t} \Psi(t) = t \Psi(t), \quad \Psi(0) = \psi_0
+    \end{equation*}
+    is given by $\Psi(t) = U(t) \psi_0$. For any $t \in \R$, $e^{itT}$ is unitary.
+    In Quantum Mechanics, $T$ is called the Hamiltonian and $\Psi$ the wave function.
+\end{eg}
+
+\begin{lemma}
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}. Then
+    \begin{equation*}
+        \|T\| = \sup_{\|x\| \leq 1} \sup_{\|y\| \leq 1} \abs{(Tx, y)} = \sup_{\|x\| \leq 1} \abs{(Tx, x)}.
+    \end{equation*}
+\end{lemma}
+
+\begin{proof}
+    Assume $T \neq 0$. By definition,
+    \begin{equation*}
+        \|T\| = \sup_{\|x\| \leq 1} (Tx,Tx)^\frac{1}{2}.
+    \end{equation*}
+    Let $(x_i) \subset H$, $\|x_i\| = 1$ be such that $(T x_i, T x_i) \to \|T\|^2$.
+    \begin{align*}
+        \|T\| = \frac{1}{\|T\|} \lim_{i \to \infty} (T x_i, T x_i) &= \frac{1}{\|T\|} \lim_{i \to \infty} (x_i, T^2 x_i) \\
+                                                                         &= \lim_{i \to \infty} \frac{1}{\|T x_i\|} (x_i, T^2 x_i) = \lim_{i \to \infty} (x_i, T y_i)
+    \end{align*}
+    where $y_i = \frac{T x_i}{\|T x_i\|}$. Thus,
+    \begin{equation*}
+        \|T\| \leq \sup_{\|x\| \leq 1} \sup_{\|y\| \leq 1} (x, Ty).
+    \end{equation*}
+    On the other hand $\abs{(x, Ty)} \leq \|T\|$ for $\|x\| \leq 1$, $\|y\| \leq 1$, showing the first equality.
+
+    To show the second equality, first note $\sup_{\|x\| \leq 1} \abs{(Tx,x)} \leq \sup_{\|x\| \leq 1} \sup_{\|y\| \leq 1} \abs{(Tx, y)}$ is clear. On the other hand,
+    \begin{align*}
+        \abs{(x, Ty)} &= \frac{1}{4} \abs{((T(x+y),x+y) - (T(x-y),x-y))} \\
+        &\leq \frac{1}{4} \sup_{\|x\| \leq 1} \abs{(Tx,x)} (\underbrace{\|x+y\|^2 + \|x-y\|^2}_{\leq 2 \|x\|^2 + 2 \|y\|^2}) \\
+        &\leq \sup_{\|x\| \leq 1} \abs{(Tx,x)} \text{ for }\|x\|, \|y\| \leq 1
+    \end{align*}
+    as required.
+\end{proof}
+
+\begin{lemma}
+    Let $T$ be \hyperlink{def:normalMap}{self-adjoint}. Then at least one of $\|T\|$ and $-\|T\|$ must be an \hyperlink{def:ap}{approximate eigenvalue}.
+\end{lemma}
+
+\begin{proof}
+    Replacing $T$ by $-T$ if necessary, assume
+    \begin{equation*}
+        \|T\| = \sup_{\|x\| \leq 1} \abs{(x, Tx)} = \sup_{\|x\| \leq 1} (x, Tx).
+    \end{equation*}
+    Then there is $(x_i) \subset H$, $\|x_i\| = 1$ such that $(x_i, T x_i) \to \|T\| = \lambda$.
+    \begin{equation*}
+        \implies \|T x_i - \lambda x_i\|^2 = \underbrace{\|T x_i\|^2}_{\leq \lambda^2} - 2 \lambda \underbrace{(x_i, T x_i)}_{\to \lambda} + \lambda^2 \to 0. \qedhere
+    \end{equation*}
+\end{proof}
+
+\subsection{Spectral Theorem for compact self-adjoint operators}
+\begin{defi}[Compact operator]\hypertarget{def:compact}
+    Let $X, Y$ be \hyperlink{def:nvs}{normed vector spaces}.
+    Then $T \in \mathcal{B}(X, Y)$ is \textbf{compact} if $T(B)$ is \hyperlink{def:relCompact}{relatively compact} for any \hyperlink{def:boundedSubs}{bounded} $B \subset X$.
+\end{defi}
+
+\begin{lemma}
+    Let $T$ be \hyperlink{def:compact}{compact}.
+    Then any nonzero \hyperlink{def:ap}{approximate eigenvalue} of $T$ is an \hyperlink{def:eigen}{eigenvalue}.
+\end{lemma}
+
+\begin{proof}
+    Assume that $T x_i - \lambda x_i \to 0$ with $\|x_i\| = 1$, $\lambda \neq 0$.
+    By compactness there is a subsequence $\Lambda$ such that $T x_i \to y$ ($i \in \Lambda$, $i \to \infty$)
+    \begin{equation*}
+        \implies T y = T(\lim T x_i) = \lim T (\lambda x_i) = \lambda y.
+    \end{equation*}
+    Moreover if $\lambda \neq 0$ then $y \neq 0$.
+\end{proof}
+
+\begin{cor}
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint} and \hyperlink{def:compact}{compact}.
+    Then $\|T\|$ or $- \|T\|$ is an \hyperlink{def:eigen}{eigenvalue}.
+\end{cor}
+
+\begin{notation}\hypertarget{def:espace}
+    $E_\lambda = \ker(T - \lambda)$.
+\end{notation}
+Strategy: repeat corollary with $T$ replaced by $T|_{E_{\lambda_1}^\perp}$, $\abs{\lambda_i} = \|T\|$.
+
+\begin{lemma}
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}.
+    Then for \hyperlink{def:eigen}{eigenvalues} $\lambda \neq \mu$, the spaces \hyperlink{def:espace}{$E_\lambda$} and $E_\mu$ are \hyperlink{def:ortho}{orthogonal}.
+\end{lemma}
+
+\begin{proof}
+    Assume $T x = \lambda x$ and $T y = \mu y$, for some $x,y$, $\lambda \neq \mu$ and say $\lambda \neq 0$.
+    Then
+    \begin{gather*}
+        (x,y) = \frac{1}{\lambda} (T x,y) = \frac{1}{\lambda} (x, T y) = \frac{\mu}{\lambda} (x,y) \\
+        \implies \mu = \lambda \text{ or } (x, y) = 0. \qedhere
+    \end{gather*}
+\end{proof}
+
+% new lec (22)
+
+\begin{lemma}
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}.
+    For any non-zero \hyperlink{def:eigen}{eigenvalues} $\{\lambda_i\}_{i \in I}$,
+    \begin{equation*}
+        T\left(\left(\bigoplus_{i \in I} \hyperlink{def:espace}{E_{\lambda_i}}\right)^\perp\right) \subset \left(\bigoplus_{i \in I} E_{\lambda_i}\right)^\perp.
+    \end{equation*}
+\end{lemma}
+
+\begin{proof}
+    Let $y \in \left(\bigoplus_{i \in I} \hyperlink{def:espace}{E_{\lambda_i}}\right)^\perp$. Then for any $x \in E_{\lambda_i}$,
+    \begin{gather*}
+        0 = (x,y) = \frac{1}{\lambda_i} (T x, y) = \frac{1}{\lambda_i} (x, T y) \\
+        \implies (x, T y) = 0 \quad \forall x \in \bigoplus_{i \in I} E_{\lambda_i} \\
+        \implies T\left(\left(\bigoplus_{i \in I} E_{\lambda_i}\right)^\perp\right) \subset \left(\bigoplus_{i \in I} E_{\lambda_i}\right)^\perp. \qedhere
+    \end{gather*}
+\end{proof}
+
+\begin{lemma}
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint} and \hyperlink{def:compact}{compact}.
+    Then, for any $\epsilon > 0$,
+    \begin{equation*}
+        \bigoplus_{\substack{\lambda \in \hyperlink{def:eigen}{\sigma_p(T)} \\ \abs{\lambda} > \epsilon}} \hyperlink{def:espace}{E_\lambda}
+    \end{equation*}
+    is finite dimensional.
+\end{lemma}
+
+\begin{proof}
+    Otherwise there are infinitely many eigenvectors $(x_i)$ such that $\|x_i\| = 1$ and
+    \begin{equation*}(x_i, x_j) = 0\end{equation*}
+    for $i \neq j$ so
+    \begin{equation*}
+        \|T x_i - T x_j\|^2 = \|T x_i\|^2 + \|T x_j\|^2 \geq 2 \epsilon.
+    \end{equation*}
+    This is a contradiction to \hyperlink{def:compact}{compactness} of $T$.
+\end{proof}
+
+\begin{thm}[Hilbert-Schmidt]
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint} and \hyperlink{def:compact}{compact}.
+    Then there are at most countably many \hyperlink{def:eigen}{eigenvalues} $(\lambda_i)$ which can accumulate to $0$.
+    The \hyperlink{def:espace}{eigenspaces} $E_{\lambda_i}$ and $E_{\lambda_j}$ are orthogonal for $i \neq j$, $E_{\lambda_i}$ is finite-dimensional for $\lambda_i \neq 0$ and
+    \begin{equation*}
+        T = \sum_{j = 1}^\infty \lambda_j P_{\lambda_j} \text{ in } \mathcal{B}(H), \quad H = \ker T \oplus E_{\lambda_1} \oplus \dotsb
+    \end{equation*}
+    \hypertarget{def:p}where $P_{\lambda_j}$ is the orthogonal projection onto $E_{\lambda_j}$.
+\end{thm}
+
+\begin{proof}
+    By the previous lemmas, there is an eigenvalue $\lambda_1$ such that $\abs{\lambda_1} = \|T\|$.
+    Given $\abs{\lambda_1} \geq \abs{\lambda_2} \geq \dotsb \geq \abs{\lambda_k}$ such that $T$ has no eigenvalue with magnitude $> \abs{\lambda_k}$, let $H_k = \left(\bigoplus_{i=1}^k E_{\lambda_i}\right)^\perp$.
+    Then $H_k \subset H$ is closed, so itself a \hyperlink{def:euclidean}{Hilbert space}.
+    Also,
+    \begin{equation*}
+        T|_{H_k} : H_k \to H_k, \quad \norm{T|_{H_k}} \leq \abs{\lambda_k}.
+    \end{equation*}
+
+    Thus there is an eigenvalue $\lambda_{k + 1}$ different from the $\lambda_i$, $i \leq k$, with $\abs{\lambda_{k+1}} = \norm{T|_{H_k}} \leq \abs{\lambda_k}$ and there is no other eigenvalue $\mu$ with $\abs{\lambda_{k+1}} < \abs{\mu} \geq \abs{\lambda_k}$.
+    This defines a sequence (possibly finite) $(\lambda_i)$ with $\abs{\lambda_{k+1}} \leq \abs{\lambda_k}$.
+    Since
+    $\bigoplus_{\abs{\lambda_j} > \epsilon} E_{\lambda_j}$ is finite dimensional, this sequence can only accumulate at 0.
+    In particular, $(\lambda_k)$ is finite or countable with $\lambda_k \to 0$.
+
+    Since $T|_{(\overline{\bigoplus_{i=1}^\infty E_{\lambda_i}})^\perp}$ cannot have a nonzero eigenvalue, $\norm{T|_{(\overline{\bigoplus_{i=1}^\infty E_{\lambda_i}})^\perp}} = 0$ and $H = \ker T \oplus (\overline{\bigoplus_{i=1}^\infty E_{\lambda_i}})$.
+
+    It follows that
+    \begin{gather*}
+        \norm{T x - \sum_{i=1}^n \lambda_i P_{\lambda_i} x} = \|T x - T P_n x\| \leq \abs{\lambda_n} \|x\| \\
+        \implies \norm{T - \sum_{i=1}^n \lambda_i P_{\lambda_i}} \leq \abs{\lambda_n} \to 0 \implies T = \sum_{i=1}^\infty \lambda_i P_{\lambda_i} \in \mathcal{B}(H)
+    \end{gather*}
+    where $P_n = \sum_{i=1}^n P_{\lambda_i}$.
+\end{proof}
+
+\begin{cor}
+    Let $H$ be \hyperlink{def:separable}{separable} and $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ \hyperlink{def:normalMap}{self-adjoint} and \hyperlink{def:compact}{compact}.
+    Then there is an \hyperlink{def:basis}{orthonormal (Hilbert) basis} for $H$ of $T$ eigenvectors.
+\end{cor}
+\begin{proof}
+    Apply Gram-Schmidt to the \hyperlink{def:espace}{eigenspaces} and the kernel.
+\end{proof}
+
+\begin{cor}
+    $\hyperlink{def:spectrum}{\sigma(T)} \setminus \{0\} = \hyperlink{def:eigen}{\sigma_p(T)} \setminus \{0\}$.
+\end{cor}
+
+\begin{proof}
+    Let $T_n = \sum_{i=1}^n \lambda_i P_{\lambda_i}$. We will show that if $\mu \notin \sigma_p(T) \cup \{0\}$ then $\mu \notin \sigma(T)$.
+    \begin{align*}
+        T_n - \mu &= \sum_{i=1}^n (\lambda_i - \mu) P_{\lambda_i} - \mu \sum_{i=n+1}^\infty P_{\lambda_i} \\
+        \implies (T_n - \mu)^{-1} &= \sum_{i=1}^n (\lambda_i - \mu)^{-1} P_{\lambda_i} - \mu^{-1} \sum_{i=n+1}^\infty P_{\lambda_i} \text{ exists and} \\
+        \norm{(T_n - \mu)^{-1}} &\leq \max\{\abs{\mu}^{-1}, \abs{\lambda_i-\mu}^{-1}\}. \\
+        \implies T - \mu = T_n - \mu + T - T_n &= (T_n - \mu)(1 + \underbrace{(T_n - \mu)}_{<C}^{-1}\underbrace{(T-T_n)}_{\|\cdot\| \to 0}) \\
+        \implies (T-\mu)^{-1} &\in \mathcal{B}(H) \implies \mu \notin \sigma(T). \qedhere
+    \end{align*}
+\end{proof}
+
+\subsection{Application: Boundary Value Problem}
+Let $T$ be the 1D Schr\"odinger operator acting on $C^2[a,b]$ by
+\begin{equation*}
+    Tu(x) = -u''(x) + V(x) u(x)
+\end{equation*}
+with boundary condition $u(a) = u(b) = 0$ and $V$ is a continuous function.
+More generally, we could consider a Sturm-Liouville operator
+\[Tu(x) = -\frac{d}{dx}\left(a(x) \frac{d}{dx} u(x)\right) + V(x)\]
+where $a(x)>0$ is in $C^1$, $V$ is continuous, and
+\begin{align*}
+    A_1 u(a) + A_2 u'(a) &= 0, & (A_1, A_2) &\neq (0,0) \\
+    B_1 u(b) + B_2 u'(b) &= 0, & (B_1, B_2) &\neq (0,0).
+\end{align*}
+
+% new lec (23)
+\begin{thm}
+    There exists a continuous function (Green's function) $k: [a,b]^2 \to \R$ such that the unique solution $u \in C^2 [a,b]$ to the boundary value problem
+    \begin{equation}
+    \begin{aligned}
+        Tu(x) &= f(x), \quad f \text{ continuous} \\
+        u(a) &= u(b) = 0
+    \end{aligned}
+    \tag{$*$}\label{eq:23star}
+    \end{equation}
+    is given by $u(x) = \int_a^b k(x,y) f(y) \, dy$ and $k(x,y) = k(y,x)$.
+\end{thm}
+
+\begin{proof}
+    By the theory of linear ODEs, there are $C^2$ functions $u_a:[a,b] \to \R$ and $u_b:[a,b] \to \R$ such that any solution to
+    \begin{equation*}
+        -u''(x) + V(x) u(x) = 0, \quad u(a) = 0
+    \end{equation*}
+    is a multiple of $u_a$ and any solution to
+    \begin{equation*}
+        -u''(x) + V(x) u(x) = 0, \quad u(b) = 0
+    \end{equation*}
+    is a multiple of $u_b$. Define
+    \begin{equation*}
+        k(x,y) =
+        \begin{cases}
+            u_a(y) u_b(x) & \text{if } a \leq y \leq x \leq b \\
+            u_a(x) u_b(y) & \text{if } a \leq x \leq y \leq b
+        \end{cases}
+    \end{equation*}
+
+    Claim: $u(x) = \int k(x,y) f(y) \, dy$ solves \eqref{eq:23star}.
+    \begin{align*}
+        u(x) ={}& \int_a^x u_a(y) u_b(x) f(y) \, dy + \int_x^b u_a(x) u_b(y) f(y) \, dy \\
+        \begin{split}
+            \implies u'(x) ={}& \cancel{u_a(x) u_b(x) f(x)} + \int_a^x u_a(y) u_b'(x) f(y) \, dy \\
+                              &-\cancel{u_a(x) u_b(x) f(x)} + \int_x^b u_a'(x) u_b(y) f(y) \, dy
+        \end{split} \\
+        \begin{split}
+            \implies u''(x) ={}& u_a(x) u_b'(x) f(x) + \int_a^x u_a(y) u_b''(x) f(y) \, dy \\
+                               &-u_a'(x) u_b(x) f(x) + \int_x^b u_a''(x) u_b(y) f(y) \, dy
+        \end{split} \\
+        ={}& \underbrace{(u_a u_b' - u_a' u_b)(x)}_{\eqqcolon W(x)} f(x) + V(x) u(x) \\
+        W'(x) ={}& (u_a u_b'' - u_a'' u_b)(x) \\
+              ={}& V(x) (u_a u_b - u_a u_b)(x) = 0 \implies W(x) = C
+    \end{align*}
+    Thus,
+    \begin{equation*}
+        u''(x) = C f(x) + V(x) u(x).
+    \end{equation*}
+    Multiplying $u_a$ by a constant, we can assume $C=-1$. Then
+    \begin{equation*}
+        -u''(x) + V(x) u(x) = f(x).
+    \end{equation*}
+    Also,
+    \begin{align*}
+        u(a) &= \int_a^b k(a,y) f(y) \, dy = u_a(a) \int_a^b u_b(y) f(y) \, dy = 0 \\
+        u(b) &= \int_a^b k(b,y) f(y) \, dy = u_b(b) \int_a^b u_a(y) f(y) \, dy = 0 \\
+        \text{and } k(x,y) &= k(y,x). \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{lemma}
+    Let $k:[a,b]^2 \to \R$ be continuous.
+    Then the integral operator defined by
+    \begin{equation*}
+        K f(x) = \int_a^b k(x,y) f(y) \, dy
+    \end{equation*}
+    is bounded and compact from $(C[a,b],\|\cdot\|_2)$ to $(C[a,b],\|\cdot\|_\infty)$.
+\end{lemma}
+
+\begin{proof}
+    By \hyperlink{thm:cs}{Cauchy-Schwarz},
+    \begin{equation*}
+        \|Kf\|_\infty \leq \sup_x \int \abs{k(x,y)} \abs{f(y)} \, dy \leq \underbrace{\sup_x \left(\int \abs{k(x,y)}^2 \, dy\right)^\frac{1}{2}}_{\leq C} \|f\|_2
+    \end{equation*}
+    so $K$ is bounded from $(C[a,b],\|\cdot\|_2)$ to $(C[a,b],\|\cdot\|_\infty)$.
+    Also $\set{K f | f \in C[a,b], \|f\|_2 \leq 1}$ is equicontinuous:
+    \begin{equation*}
+        \abs{K f(x) - K f(y)} \leq \left(\underbrace{\int_a^b \abs{k(x,z) - k(y,z)}^2 \, dz}_{\to 0 \text{ as } x \to y}\right)^\frac{1}{2} \|f\|_2 \to 0
+    \end{equation*}
+    uniformly in $f$.
+    Thus compactness follows from the \hyperlink{thm:aa}{Arzel\`a-Ascoli} Theorem.
+\end{proof}
+
+\begin{cor}
+    $K$ is bounded and \hyperlink{def:compact}{compact} from $(C[a,b], \|\cdot\|_2)$ to $(C[a,b], \|\cdot\|_2)$.
+\end{cor}
+
+\begin{proof}
+    This follows from
+    \begin{equation*}
+        \|Kf\|_2 \leq \left(\int_a^b \abs{K f(x)}^2 \, dx\right)^\frac{1}{2} \leq \sqrt{\abs{a-b}} \|K f\|_\infty. \qedhere
+    \end{equation*}
+\end{proof}
+
+Let $H = L^2[a,b]$ be the completion of $(C[a,b], \|\cdot\|_2)$.
+In particular, $C[a,b]$ is dense in $L^2[a,b]$.
+
+\begin{fact}[Example sheet 4]
+    Let $X,Y$ be \hyperlink{def:banach}{Banach spaces} and $D \subset X$ a \hyperlink{def:dense}{dense} subspace.
+    Then a bounded (\hyperlink{def:compact}{compact}) operator $T:D \to Y$ extends uniquely to a bounded (compact) operator $T:X \to Y$ with the same norm (BLT thoerem).
+\end{fact}
+\begin{cor}
+    $K$ extends uniquely to a \hyperlink{def:compact}{compact} \hyperlink{def:normalMap}{self-adjoint} operator $K: H \to H$.
+    Moreover, $Kf \in C[a,b]$ for any $f \in H$.
+\end{cor}
+
+\begin{proof}
+    That $K$ is \hyperlink{def:compact}{compact} follows from the previous fact.
+    That $K$ is \hyperlink{def:normalMap}{self-adjoint} follows from the symmetry of $k$.
+
+    That $Kf \in C[a,b]$ for any $f \in H$ follows from the fact that $K$ is also bounded from $(C[a,b], \|\cdot\|_2)$ to $(C[a,b],\|\cdot\|_\infty)$ and thus from $H$ to $(C[a,b], \|\cdot\|_\infty)$ by the previous fact.
+
+    By the spectral theorem, there exists an \hyperlink{def:ons}{orthonormal system} $(f_n) \subset H$, $(\mu_n) \subset \R$ with $\mu_n \to 0$ such that
+    \begin{equation*}
+        Kf = \sum_{n=1}^\infty \mu_n (f, f_n) f_n \text{  in } H.
+    \end{equation*}
+
+    By the last corollary, if $\mu_n \neq 0$, $f_n = \frac{1}{\mu_n} K f_n \in C[a,b]$ and in fact then $f_n \in C^2 [a,b]$ since $Kf \in C^2$ if $f \in C^0$.
+\end{proof}
+
+Assuming $\ker(K) = 0$, there is thus a \hyperlink{def:basis}{Hilbert basis} of $C^2$ eigenfunctions of $K$.
+With $\lambda_n = \frac{1}{\mu_n}$, then
+\begin{equation*}
+    T f_n = \lambda_n T K f_n = \lambda_n f_n,
+\end{equation*}
+so these $(f_n)$ are also eigenfunctions of $T$, and $\lambda_n \to \infty$.
+
+In QM, the vectors $f \in H$ describe the state of a system and $\abs{f(x)}^2$ the probability density of finding a particle at $x \in [a,b]$. The $(\lambda_n)$ are the quantized energy levels of the system.
+
+% new lec (24)
+
+\subsection{Continuous functional calculus}
+Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint} compact with \textbf{spectral resolution}
+\begin{equation*}
+    T = \sum_{\lambda \in \hyperlink{def:spectrum}{\sigma(T)}} \lambda \hyperlink{def:p}{P_\lambda}.
+\end{equation*}
+For $f \in C(\hyperlink{def:spectrum}{\sigma(T)})$ define
+\begin{equation*}
+    f(T) = \sum_{\lambda \in \sigma(T)} f(\lambda) P_\lambda \in \mathcal{B}(H).
+\end{equation*}
+
+\begin{thm}
+    The map $\Phi: C(\sigma(T)) \to \hyperlink{def:bx}{\mathcal{B}(H)}$, $f \mapsto f(T)$ is a $*$-homomorphism (a homomorphism of \hyperlink{def:cstar}{$C^*$ algebras}):
+    \begin{equation*}
+        \Phi(fg) = \Phi(f) \Phi(g), \quad \Phi(\lambda f) = \lambda \Phi(f), \quad \Phi(f)^* = \Phi(\overline{f}), \quad \Phi(1) = \id
+        \tag{$*$} \label{eq:24star}
+    \end{equation*}
+    and it has the following properties:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\|\Phi(f)\| \leq \|f\|$ (in particular $\Phi$ is continuous)
+        \item if $f(t) = t$ for all $t$ then $f(T) = T$
+        \item if $T x = \lambda x$ then $f(T) x = f(\lambda) x$
+        \item $\sigma(f(T)) = f(\sigma(T)) = \set{f(\lambda) | \lambda \in \sigma(T)}$
+        \item if $f \geq 0$ then $f(T) \geq 0$, i.e. $(x, f(T) x) \geq 0$ for all $x \in H$.
+    \end{enumerate}
+\end{thm}
+
+\begin{remark}
+    For any $x \in H$, $f \in C(\sigma(T)) \mapsto \mu_x(f) = (x, f(T) x)$ defines a positive linear functional on $C(\sigma(T))$, i.e. a measure.
+    This is the spectral measure of $x \in H$.
+\end{remark}
+
+\begin{thm}
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}.
+    Then there is a unique $*$-homomorphism $\Phi: C(\sigma(T)) \to \mathcal{B}(H)$ with all properties (a)-(e).
+\end{thm}
+
+\begin{idea}
+    \eqref{eq:24star} and (b) determine $\Phi$ uniquely for any polynomial $f$.
+    Since the set of polynomials is dense in $C(\sigma(T))$, the main task is to prove (a).
+    Assuming (a), the existence and uniqueness follow by approximation (BLT theorem).
+\end{idea}
+
+\begin{lemma}
+    Let $P(t) = \sum_{n=0}^N a_n t^n$, $P(T) = \sum_{n=0}^N a_n T^n$. Then (d) holds for $f = P$:
+    \begin{equation*}
+        \sigma(P(T)) = \set{P(\lambda) | \lambda \in \sigma(T)} = P(\sigma(T)).
+    \end{equation*}
+\end{lemma}
+
+\begin{proof}
+    Let $\lambda \in \sigma(T)$ and write $P(t) - P(\lambda) = (t-\lambda) Q(t)$ for a polynomial $Q$.
+    \begin{align*}
+        \implies& P(T) - P(\lambda) = \underbrace{(T-\lambda)}_{\mathclap{\text{not invertible since } \lambda \in \sigma(T)}} Q(T) = Q(T) (T - \lambda) \\
+        \implies& P(T) - P(\lambda) \text{ is not invertible} \\
+        \implies& P(\lambda) \in \sigma(P(T))
+    \end{align*}
+
+    Let $\mu \in \sigma(P(T))$, let $\lambda_1, \dotsc, \lambda_n$ be roots of $P(\lambda) - \mu$ (with multiplicity).
+    \begin{equation*}
+        \implies P(t) - \mu = a_N (t-\lambda_1) \dotsm (t - \lambda_n).
+    \end{equation*}
+    If $\lambda_1, \dotsc, \lambda_n \notin \sigma(T)$ then
+    \begin{equation*}
+        (P(T) - \mu)^{-1} = a_N^{-1} (T - \lambda_1)^{-1} \dotsm (T - \lambda_n)^{-1} \in \mathcal{B}(H) \text{ i.e. } \mu \notin \sigma(P(T)).
+    \end{equation*}
+    Thus some $\lambda \in \sigma(T)$, so $\mu = P(\lambda_i)$ for some $\lambda_i$, i.e. $\mu \in P(\sigma(T))$.
+\end{proof}
+
+\begin{lemma}
+    Let $T \in \hyperlink{def:bx}{\mathcal{B}(H)}$ be \hyperlink{def:normalMap}{self-adjoint}. Then
+    \begin{equation*}
+        \|T\| = \sup_{\lambda \in \hyperlink{def:spectrum}{\sigma(T)}} \abs{\lambda}. \label{eq:24dagger} \tag{$\dagger$}
+    \end{equation*}
+    In particular, together with the previous lemma,
+    \begin{equation*}
+        \|P(T)\| = \sup_{\lambda \in \sigma(T)} \abs{P(\lambda)}.
+    \end{equation*}
+\end{lemma}
+
+\begin{proof}
+    We have proved before that $\|T\| \in \sigma(T)$ or $-\|T\| \in \sigma(T)$.
+    Thus $\|T\| \leq \sup_{\lambda \in \sigma(T)} \abs{\lambda}$.
+    We also saw that $\sigma(T) \subset \set{z \in \C | \abs{z} \leq \|T\|}$.
+    Thus $\|T\| \geq \sup_{\lambda \in \sigma(T)} \abs{\lambda}$.
+
+    Now:
+    \begin{align*}
+        \|P(T)\|^2 = \sup_{\|x\| \leq 1} \|P(T) x\|^2 &= \sup_{\|x\| \leq 1} (x, P(T)^* P(T) x) \\
+                                                               &= \|P(T)^* P(T)\| \\
+                                                               &= \norm{(\overline{P}P) (T)} \\
+                                                               &\overset{\dagger}{=} \sup_{\lambda \in \sigma(\overline{P}P(T))} \abs{\lambda} \\
+                                                               &\overset{\mathclap{\text{lemma}}}{=} \sup_{\lambda \in \sigma(T)} \abs{\overline{P} P (\lambda)} = \left(\sup_{\lambda \in \sigma(T)} \abs{P(\lambda)}\right)^2. \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{proof}[Proof of theorem]
+    Let $A \subset C(\sigma(T), \C)$ be the algebra of complex polynomials.
+    For $P(A)$, set $\Phi(P) = P(T)$.  Then
+    \begin{equation*}
+        \|\Phi(P)\|_{\mathcal{B}(H)} = \|P\|_{C(\sigma(T))}.
+    \end{equation*}
+    By the \hyperlink{thm:csw}{complex Stone-Weierstrass Theorem}, $A$ is dense in $C(\sigma(T), \C)$.
+    Thus $\Phi$ extends uniquely to a map $\Phi: C(\sigma(T), \C) \to \mathcal{B}(H)$.
+
+    Properties \eqref{eq:24star}, (a), (b) hold by construction (and approximation by polynomials).
+    Also, (c) is clearly true if $f$ is a polynomial and by approximation for $f \in C(\sigma(T), \C)$:
+    if $Tx = \lambda x$ then for $f_n \in A$, $f_n \to f$,
+    \begin{equation*}
+        f(T) x = \lim_{n \to \infty} f_n(T) x = \lim_{n \to \infty} f_n(\lambda) x = f(\lambda) x.
+    \end{equation*}
+    For (d), we have for any $f \in C(\sigma(T), \C)$:
+    \begin{equation*}
+        f(T)^* f(T) = \overline{f}(T) f(T) = \overline{f}f(T) = f \overline{f}(T) = f(T) f(T)^*
+    \end{equation*}
+    so $f(T)$ is \hyperlink{def:normalMap}{normal} (\hyperlink{def:normalMap}{self-adjoint} if $f$ is real-valued).
+    To show that $\sigma(f(T)) \subseteq f(\sigma(T))$ define for $\mu \notin f(\sigma(T))$ the continuous function
+    \begin{align*}
+        g(\lambda) &= \frac{1}{\mu - f(\lambda)}, \quad \lambda \in \sigma(T) \\
+        \implies \id &= g(T) (\mu - f(T)) \implies \mu \notin \sigma(f(T)).
+    \end{align*}
+    The direction $\sigma(f(T)) \subseteq f(\sigma(T))$ take $f_n \in A$ such that $f_n \to f$.
+    By the previous lemma then $f_n(\sigma(T)) = \sigma(f_n(T))$.
+    Thus for $\lambda \in \sigma(T)$ there are $(x_n)$ with $\|x_n\| = 1$ such that $f_n(T) x_n - f_n(\lambda) x_n \to 0$.
+    \begin{align*}
+        &\implies (f(T) - f(\lambda)) x_n = (\underbrace{f_n(T) - f_n(\lambda)}_{\to 0}) x_n + (\underbrace{f(T) - f_n(T)}_{\to 0}) x_n + (\underbrace{f_n(\lambda) - f(\lambda)}_{\to 0}) x_n \to 0 \\
+        &\implies f(\lambda) \in \sigma(f(T)) \implies f(\sigma(T)) \subseteq \sigma(f(T)). \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{cor}
+    Let $T \geq 0$, i.e. $\hyperlink{def:spectrum}{\sigma(T)} \subset [0, \infty)$.
+    Then there is $\sqrt{T} \in \hyperlink{def:bx}{\mathcal{B}(H)}$ such that $\sqrt{T} \sqrt{T} =T$.
+\end{cor}
+
+\begin{cor}
+    The \hyperlink{def:spectrum}{resolvent} satisfies
+    \begin{equation*}
+        \|\hyperlink{def:spectrum}{R_T(z)}\| = \frac{1}{\mathrm{dist}(z, \sigma(T))}.
+    \end{equation*}
+\end{cor}
+\end{document}

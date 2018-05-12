@@ -1,0 +1,37 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+% (from header.tex)
+\theoremstyle{definition}
+\newtheorem{nthm}{Theorem}[section]
+\newtheorem{nprop}[nthm]{Proposition}
+% (end of header.tex)
+
+\usepackage{chngcntr}
+\counterwithout{nthm}{section}
+
+\begin{document}
+
+\section{First}
+
+\begin{nprop}
+    Proposition 1 goes here
+\end{nprop}
+
+\begin{nthm}
+    Theorem 2 goes here
+\end{nthm}
+
+\section{Second}
+
+\begin{nthm}
+    Theorem 3 goes here
+\end{nthm}
+
+\begin{nprop}
+    Proposition 4 goes here
+\end{nprop}
+
+\end{document}
