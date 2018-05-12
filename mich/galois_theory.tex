@@ -122,7 +122,7 @@ Suppose $K \leq L$ is a \hyperlink{def:fieldExt}{field extension}. Then $L$ is a
     Then the linear indepedence of $e_j$ forces $\lambda_{ij}$ all to be zero, as required.
 \end{proof}
 
-The \hyperlink{def:towerLaw}{Tower Law} will not be proved for \hyperlink{def:degreeOfFieldExt}{infinite} extensions, but observe that if $M$ is an infinite extension of $L$ then it is an infinite extension of $K$, and similarly if $L$ is an infinite extension of $K$ then the larger field $M$ must also be an infinite extension of $K$.
+The \nameref{thm:towerLaw} will not be proved for \hyperlink{def:degreeOfFieldExt}{infinite} extensions, but observe that if $M$ is an infinite extension of $L$ then it is an infinite extension of $K$, and similarly if $L$ is an infinite extension of $K$ then the larger field $M$ must also be an infinite extension of $K$.
 
 \subsection{Motivatory Example}
 Observe $\Q \hyperlink{def:fieldExt}{\leq} \Q\left(\sqrt{2}\right) \leq \Q\left(\sqrt{2}, i\right)$
@@ -269,7 +269,7 @@ We'll also prove the Primitive Element Theorem, which in the context of finite e
     Suppose $K \leq L$ is a \hyperlink{def:fieldExt}{field extension} and $\alpha \in L$ is \hyperlink{def:algebraic}{algebraic} over $K$.  Then
     \begin{enumerate}[label=(\roman*)]
         \item  $\hyperlink{def:genField}{K(\alpha)} = K[\alpha]$
-        \item $\hyperlink{def:degree}{\abs{K(\alpha) : K}} = \deg f_\alpha(t)$ where $f_\alpha(t)$ is the \hyperlink{def:minimalPoly}{minimal polynomial} of $\alpha$ over $K$.
+        \item $\hyperlink{def:degreeOfFieldExt}{\abs{K(\alpha) : K}} = \deg f_\alpha(t)$ where $f_\alpha(t)$ is the \hyperlink{def:minimalPoly}{minimal polynomial} of $\alpha$ over $K$.
     \end{enumerate}
 \end{nthm}
 
@@ -625,7 +625,7 @@ We can use this final construction to produce splitting fields in general.
 \end{proof}
 
 \begin{nthm}[Uniqueness of splitting fields]\label{thm:1.24}
-    If $K$ is a field and $f(t) \in K[t]$, then the \hyperlink{def:splitting}{splitting field} for $f$ over $K$ is unique up to \hyperlink{not:hom}{$K$-isomorphism}, that is, if there are two such splitting fields $L$ and $L'$, there is a $K$-isomorphism $\phi: L \to L'$.
+    If $K$ is a field and $f(t) \in K[t]$, then the \hyperlink{def:splitting}{splitting field} for $f$ over $K$ is unique up to \hyperlink{def:homo}{$K$-isomorphism}, that is, if there are two such splitting fields $L$ and $L'$, there is a $K$-isomorphism $\phi: L \to L'$.
 \end{nthm}
 
 % new lec (6)
@@ -941,7 +941,7 @@ We can use this final construction to produce splitting fields in general.
     Let $K \hyperlink{def:fieldExt}{\leq} N$ be a field extension with $\hyperlink{def:degreeOfFieldExt}{\abs{N:K}} = n$ and $N = \hyperlink{def:genField}{K(\alpha_1, \dotsc, \alpha_r)}$ say.
     Then the following are equivalent:
     \begin{enumerate}[label=(\roman*)]
-        \item $N$ is \hyperlink{def:separable}{separable} over $K$.
+        \item $N$ is \hyperlink{def:separableExt}{separable} over $K$.
         \item Each $\alpha_i$ is separable over $K(\alpha_1, \dotsc, \alpha_n)$.
         \item If $K \leq L$ is large enough there are exactly $n$ distinct \hyperlink{def:homo}{$K$-homomorphisms} $N \to L$.
     \end{enumerate}
@@ -950,7 +950,7 @@ We can use this final construction to produce splitting fields in general.
 \begin{proof}
     (i) $\Rightarrow$ (ii).
     $N$ is \hyperlink{def:separableExt}{separable} over $K \implies \alpha_i$ is separable over $K$.
-    The \hyperlink{def:minPoly}{minimal polynomial} of $\alpha_i$ over $K(\alpha_1, \dotsc, \alpha_{i-1})$ divides the minimal polynomial of $\alpha_i$ over $K$ (in $K(\alpha_1, \dotsc, \alpha_{i-1})[t]$).
+    The \hyperlink{def:minimalPoly}{minimal polynomial} of $\alpha_i$ over $K(\alpha_1, \dotsc, \alpha_{i-1})$ divides the minimal polynomial of $\alpha_i$ over $K$ (in $K(\alpha_1, \dotsc, \alpha_{i-1})[t]$).
 
     So if the latter has distinct roots in a splitting field then the former does.
     So $\alpha_i$ separable over $K \implies \alpha_i$ separable over $K(\alpha_1, \dotsc, \alpha_{i-1})$.
@@ -1378,7 +1378,7 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
 
 \begin{remark}\leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item Observe that $M \leq L$ is \hyperlink{def:galoisExt}{Galois} and so we could have written $\hyperlink{def:galoisGroup}{\Gal}(L/M)$ instead of $\hyperlink{def:autGroup}{\Aut}_M(L)$ in (i).
+        \item Observe that $M \leq L$ is \hyperlink{def:galoisExt}{Galois} and so we could have written $\hyperlink{def:galoisGroup}{\Gal}(L/M)$ instead of $\hyperlink{def:autGroup}{\Aut_M}(L)$ in (i).
             To see this: \hyperlink{def:separableExt}{separability} follows from \cref{lem:2.15}.
             \hyperlink{def:normal}{Normality}: If $\alpha \in L$, the \hyperlink{def:minimalPoly}{minimal polynomial} of $\alpha$ over $M$ divides the minimal polynomial of $\alpha$ over $K$.
             But the latter splits over $L$.
@@ -1418,10 +1418,12 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
                 \end{tikzpicture}
             \end{center}
             The subgroup $H$ of order 3 is normal but those of order 2 are not.
+            \begin{equation*}
+                \Q \leq \Q(\omega) \text{ is normal} \longleftrightarrow H \text{ of order } 3
+            \end{equation*}
             \begin{align*}
-                \Q \leq \Q(\omega) \text{ is normal} &\longleftrightarrow H \text{ of order } 3 \\
-                \Gal(\Q(\sqrt[3]{2}, \omega)/\Q) &\longrightarrow \Gal(\Q(\omega)/\Q) \\
-                D_6 &\longrightarrow C_2
+                \Gal(\Q(\sqrt[3]{2}, \omega)/\Q) &\longmapsto \Gal(\Q(\omega)/\Q) \\
+                D_6 &\longmapsto C_2
             \end{align*}
             This final mapping has kernel $H$, and the image is generated by conjugation.
     \end{enumerate}
@@ -1430,7 +1432,7 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
 % new lec (12)
 
 \begin{nthm}[Artin's Theorem]\label{thm:3.3}
-    Let $K \leq L$ be a \hyperlink{def:fieldExt}{field extension} and $H$ a finite subgroup of $\hyperlink{def:autGroup}{\Aut}_K(L)$.
+    Let $K \leq L$ be a \hyperlink{def:fieldExt}{field extension} and $H$ a finite subgroup of $\hyperlink{def:autGroup}{\Aut_K}(L)$.
     Let $M = \hyperlink{def:fixedField}{L^H}$.
     Then $M \leq L$ is a \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:galoisExt}{Galois} extension, and $H = \hyperlink{def:galoisGroup}{\Gal}(L/M)$.
 \end{nthm}
@@ -1510,7 +1512,7 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
 \begin{proof}[Proof of \nameref{thm:3.2}]
     \leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item Composing the maps $H \to L^H$ and $M \to \hyperlink{def:Gal}{\Gal}(L /M)$ gives $H \to H$ by \cref{thm:3.3}.
+        \item Composing the maps $H \to L^H$ and $M \to \hyperlink{def:galoisGroup}{\Gal}(L /M)$ gives $H \to H$ by \cref{thm:3.3}.
             Also $M \longrightarrow \Gal(L/M) \longrightarrow L^H$ where $H = \Gal(L/M)$ yields $M$ since $M \leq L^H$ where $H = \Gal(L/M)$ and
             \begin{equation*}
                 \abs{L:L^H} \underset{\begin{subarray}{c}(\ref{thm:2.24})\\(\ref{thm:3.3})\end{subarray}}{=} \abs{H} = \abs{\Gal(L/M)} \underset{(\ref{thm:2.24})}{=} \abs{L:M}
@@ -1818,7 +1820,7 @@ What we haven't shown yet is that for any $p^r$, there is a field $\F$ with $\F 
 \subsection{Cyclotomic extensions}
 \begin{ndef}[Cyclotomic extension]\hypertarget{def:cycloExt}
     Suppose $\chara K = 0$ or $p$ prime where $p \nmid m$.
-    The $m$th \textbf{cyclotomic extension} of $K$ is the \hyperlink{def:splittingField}{splitting field} $L$ of $t^m - 1$.
+    The $m$th \textbf{cyclotomic extension} of $K$ is the \hyperlink{def:splitting}{splitting field} $L$ of $t^m - 1$.
 \end{ndef}
 
 \begin{remark}
@@ -2150,16 +2152,51 @@ Now all the extensions $K \leq K(\Delta) \leq K(\Delta, \omega) \leq L(\omega)$ 
 So $f(t)$ is soluble by radicals.
 
 \subsubsection*{In practice}
-\textbf{coming soon}
+Given an irreducible cubic
+\begin{align*}
+    f(t) &= t^3 + at^2 + bt + c \\
+         &= (t-\alpha_1)(t-\alpha_2)(t-\alpha_3)
+\end{align*}
+we have $\alpha_1 + \alpha_2 + \alpha_3 = -a$.
 
-\subsection*{Quartics}
-As with the cubics by making a substitution of the form $\alpha_i' = \alpha_i + \frac{a}{4}$ we may assume the sum of the roots to be zero.
+Replace the $\alpha_i$s by $\alpha_i' = \alpha_i + \frac{a}{3}$ so that $\alpha_1' + \alpha_2' + \alpha_3' = 0$.
+They are roots of a polynomial $t^3 + pt + q$ and $K(\alpha_1,\alpha_2,\alpha_3) = K(\alpha_1',\alpha_2',\alpha_3')$.
+We have $\hyperlink{def:disc}{D(g)} = -4p^3 - 27q^2$.
+
+Set $\beta = \alpha_1' + \omega\alpha_2' + \omega^2\alpha_3'$, $\gamma = \alpha_1' + \omega^2 \alpha_2' + \omega \alpha_3'$. Then
+\begin{align*}
+    \beta\gamma &= \alpha_1' + \alpha_2' + \alpha_3' + (\omega + \omega^2) (\alpha_1'\alpha_2'+\alpha_1'\alpha_3'+\alpha_2'\alpha_3') \\
+                &= (\alpha_1'+\alpha_2'+\alpha_3')^2 - 3(\alpha_1'\alpha_2'+\alpha_1'\alpha_3'+\alpha_2'\alpha_3') \\
+                &= -3p
+\end{align*}
+and so $\beta^3 \gamma^3 = -27p^3$.
+\begin{align*}
+    \beta^3 + \gamma^3 &= (\alpha_1 + \omega \alpha_2' + \omega^2 \alpha_3')^3 + (\alpha_1' + \omega^2 \alpha_2' + \omega \alpha_3')^3 + (\alpha_1'+\alpha_2'+\alpha_3')^3 \\
+                       &= 3(\alpha_1'^3 + \alpha_2'^3+\alpha_3'^3) + 18\alpha_1'\alpha_2'\alpha_3' \\
+                       &= -27q
+\end{align*}
+since $\alpha_i'^3 = -p\alpha_i' - q$ and so $\alpha_1'^3 + \alpha_2'^3 + \alpha_3'^3 = -3q$.
+
+So $\beta^3$ and $\gamma^3$ are roots of a quadratic $t^2 + 27qt - 27p^3$, hence they are
+\begin{equation*}
+    -\frac{27}{2}q \pm \frac{3\sqrt{-3}}{2} \sqrt{-27q^3 - 4p^3} = -\frac{27}{2} q \pm \frac{3 \sqrt{3}}{2} \sqrt{D}.
+\end{equation*}
+We can solve for $\beta^3$ and $\gamma^3$ in $K(\sqrt{-3}, \sqrt{D}) = K(\omega,\Delta)$.
+We can get $\beta$ by adjoining a cube root of $\beta^3$, and then set $\gamma = \frac{-3p}{\beta}$.
+Finally we solve in $L(\omega)$ for $\alpha_1', \alpha_2', \alpha_3'$ (remembering $\alpha_1'+\alpha_2'+\alpha_3'=0)$, using
+\begin{equation*}
+    \alpha_1' = \frac{1}{3}(\beta+\gamma), \quad \alpha_2' = \frac{1}{3}(\omega^2 \beta+\omega \gamma), \quad \alpha_3' = \frac{1}{3}(\omega\beta+\omega^2\gamma).
+\end{equation*}
+
+\subsection{Quartics}
+As with the cubics by making a substitution of the form $\alpha_i' = \alpha_i + \frac{a}{4}$ we may assume the sum of the roots to be zero, and so the $t^3$ term is zero.
 
 \begin{align*}
     f(t) &= t^4 + b t^2 + ct + d \quad \text{monic irreducible} \\
          &= (t - \alpha_1)(t-\alpha_2)(t-\alpha_3)(t-\alpha_4)
 \end{align*}
-$L = K(\alpha_1, \alpha_2, \alpha_3, \alpha_4)$ splitting field for $f(t)$ over $K$.
+Let $L = K(\alpha_1, \alpha_2, \alpha_3, \alpha_4)$ be the \hyperlink{def:splitting}{splitting field} for $f(t)$ over $K$ and set $M = L^{G \cap V_4}$.
+The \nameref{thm:3.2} gives $\Gal(M/K) \cong \frac{G}{G \cap V_4}$.
 
 \begin{center}
     \begin{tikzpicture}[node distance=2cm]
@@ -2180,14 +2217,18 @@ $L = K(\alpha_1, \alpha_2, \alpha_3, \alpha_4)$ splitting field for $f(t)$ over 
     \end{tikzpicture}
 \end{center}
 
-Fundamental Theorem gives $\Gal(M/K) \cong \frac{G}{G \cap V_4}$.
 Take $\theta: S_4 \to S_3$ with $\ker \theta = V_4$, so $S_4 / V_4 \cong S_3$.
+Consider $\theta|_G : G \to S_3$, so $\ker \theta|_G = G \cap V_4$, and $\frac{G}{G \cap V_4} \cong \operatorname{im} \theta|_G \leq S_3$.
 
-$\theta|_G : G \to S_3$, so $\ker \theta|_G = G \cap V_4$, and $\frac{G}{G \cap V_4} \cong \operatorname{im} \theta|_G \leq S_3$.
+We therefore go looking for a cubic for which $M$ is the splitting field, called the resolvent cubic.
 
-We therefore go looking for a cubic for which $M$ is the splitting field (resolvent cubic).
-
-Set $x= \alpha_1 + \alpha_2$, $\gamma = \alpha_1 + \alpha_3$, $z = \alpha_1 + \alpha_4$ and so $\alpha_1 = \frac{1}{2}(x+y+z)$, $\alpha_2=\frac{1}{2}(x - y - z)$, $\alpha_3=\frac{1}{2}(-x+y-z)$, $\alpha_4=\frac{1}{2}(-x-y+z)$.
+Set $x= \alpha_1 + \alpha_2$, $\gamma = \alpha_1 + \alpha_3$, $z = \alpha_1 + \alpha_4$ and so
+\begin{align*}
+    \alpha_1 = \frac{1}{2}(x+y+z),
+    \alpha_2=\frac{1}{2}(x - y - z),
+    \alpha_3=\frac{1}{2}(-x+y-z),
+    \alpha_4=\frac{1}{2}(-x-y+z).
+\end{align*}
 Thus $K(\alpha_1, \alpha_2, \alpha_3, \alpha_4)=K(x,y,z)$.
 \begin{align*}
     x^2=(\alpha_1+\alpha_2)^2&=-(\alpha_1+\alpha_2)(\alpha_3+\alpha_4)\\
@@ -2195,9 +2236,12 @@ Thus $K(\alpha_1, \alpha_2, \alpha_3, \alpha_4)=K(x,y,z)$.
     z^2=(\alpha_1+\alpha_4)^2&=-(\alpha_1+\alpha_4)(\alpha_2+\alpha_3)
 \end{align*}
 
-These are distinct, e.g. if $y^2=z^2$ then $y=\pm z$ and so either $\alpha_3 = \alpha_4$ or $\alpha_1 = \alpha_2$.
-The $x^2,y^2,z^2$ are permuted by $G$ and are fixed by $G \cap V_4$. So $K(x^2, y^2, z^2) \leq M = L^{G \cap V_4}$.
-\textbf{Claim}: We have equality $M=K(x^2, y^2, z^2)$. Now consider the resolvent cubic $g(t) = (t-x^2)(t-y^2)(t-z^2) \in K[t]$.
+These are distinct, e.g.\ if $y^2=z^2$ then $y=\pm z$ and so either $\alpha_3 = \alpha_4$ or $\alpha_1 = \alpha_2$.
+The $x^2,y^2,z^2$ are permuted by $G$ and are fixed by $G \cap V_4$ by observation.
+So $K(x^2, y^2, z^2) \leq M = L^{G \cap V_4}$.
+
+\textbf{Claim}: We have equality $M=K(x^2, y^2, z^2)$.
+Consider the \textbf{resolvent cubic} $g(t) = (t-x^2)(t-y^2)(t-z^2) \in K[t]$.
 Note that its coefficients are fixed by $G$ and so lie in $K$.
 
 % Lecture 19
@@ -2210,14 +2254,13 @@ where each extension is degree 1 or 2.
 So $\abs{K(x,y,z):K(x^2,y^2,z^2)}$ divides 8.
 So, the elements of $\Gal(L/K(x^2,y^2,z^2))$ have order dividing 8.
 But $\Gal(L/K(x^2,y^2,z^2)) \leq G \cap A_4$, so $\Gal(L/K(x^2,y^2,z^2)) \leq G \cap V_4$.
-By the fundamental theorem, $M=K(x^2,y^2,z^2)$.
+By the \nameref{thm:3.2}, $M=K(x^2,y^2,z^2)$. \qed
 
-Consider the coefficients of $g(t)$: $x^2,y^2,z^2$ are permuted by $G$ and so the coefficients of $g(t)$ are fixed by $G$ and theorefore in $K$.
-
+Consider the coefficients of $g(t)$: $x^2,y^2,z^2$ are permuted by $G$ and so the coefficients of $g(t)$ are fixed by $G$ and therefore in $K$.
 \begin{align*}
     x^2+y^2+z^2&=-2b,\\
-    x^2y^2+x^2z^2+y^2z^2&=b^2-4d\\
-    xyz=-c \quad x^2y^2z^2&=c^2\\
+    x^2y^2+x^2z^2+y^2z^2&=b^2-4d,\\
+    xyz=-c, \quad x^2y^2z^2&=c^2,\\
     \text{So } g(t)&=t^3+2bt^2+(b^2-4d)t-c^2
 \end{align*}
 
@@ -2395,7 +2438,7 @@ hence $G_i / G_{i+1} \cong \Gal(L_{i+1}/L_i)$, which is abelian if $L_i \leq L_{
     \begin{equation*}
         K = L_0 \leq L_1 \leq \dotsb \leq L_m
     \end{equation*}
-    with each $L_i \leq L_{i+1}$ \hyperlink{def:cycloExt}{cyclotomic} or \hyperlink{def:kummer}{Kummer}.
+    with each $L_i \leq L_{i+1}$ \hyperlink{def:cycloExt}{cyclotomic} or \hyperlink{def:kummerExt}{Kummer}.
 
     With \cref{lem:4.24}, we may assume $L_m$ is \hyperlink{def:galoisExt}{Galois} over $K$.
     By \nameref{thm:3.2} there is a corresponding chain of subgroups of $\hyperlink{def:galoisGroup}{\Gal}(L_m/K)$.
@@ -2407,10 +2450,272 @@ hence $G_i / G_{i+1} \cong \Gal(L_{i+1}/L_i)$, which is abelian if $L_i \leq L_{
     But quotients of soluble groups are soluble, so $\Gal(L/K)$ is soluble.
 \end{proof}
 \begin{proof}[Proof of \cref{lem:4.24}]
-    We have $K = L_0 \leq L_1 \leq \dotsb \leq L_m$ with each $L_i \leq L_{i+1}$ \hyperlink{def:cycloExt}{cyclotomic} or \hyperlink{def:kummer}{Kummer},
+    We have $K = L_0 \leq L_1 \leq \dotsb \leq L_m$ with each $L_i \leq L_{i+1}$ \hyperlink{def:cycloExt}{cyclotomic} or \hyperlink{def:kummerExt}{Kummer},
     and we want to embed this into a \hyperlink{def:galoisExt}{Galois} extension of the same form.
 
     Assume $\chara K = 0$. By the primitive element theorem, $L_m = \hyperlink{def:genField}{K(\alpha_1)}$ for some $\alpha_1$.
     Let $g(t)$ be the \hyperlink{def:minimalPoly}{minimal polynomial} of $\alpha_1$ over $K$ with \hyperlink{def:splitting}{splitting field} $M$.
+    Thus $M = K(\alpha_1,\alpha_2,\dotsc,\alpha_n)$ where $\alpha_1, \dotsc, \alpha_n$ are roots of $g(t)$.
+
+    There are \hyperlink{def:homo}{$K$-homomorphisms}
+    \begin{align*}
+        \phi_i : M &\longrightarrow M \\
+        \alpha_1 &\longmapsto \alpha_i
+    \end{align*}
+    extending the $K$-homs $K(\alpha_1) \to K(\alpha_i) \leq M$.
+
+    The tower $K \leq \phi_i(K) \leq \phi_i(L_1) \leq \dotsb \leq \phi_i(L_m) = K(\alpha_i)$ with cyclotomic or Kummer extensions as before,
+    Consider $L_m = K(\alpha_1) \leq \phi_2(L_1)(\alpha_1) \leq \phi_2(L_2)(\alpha_1) \leq \dotsb \leq \phi_2(L_m)(\alpha_1) = K(\alpha_1,\alpha_2)$.
+
+    Consider the extension $\phi_2(L_j)(\alpha_1) \leq \phi_2(L_{j+1})(\alpha_1)$:
+    \begin{enumerate}[label={}]
+        \item \textbf{if $L_j \leq L_{j+1}$ is cyclotomic} then all the roots of unity adjoined are now in $L_m = K(\alpha_1)$ and so $\phi_2(L_j)(\alpha_1) = \phi_2(L_{j+1})(\alpha_1)$.
+        \item \textbf{if $L_j \leq L_{j+1}$ is Kummer} then we obtain $L_{j+1}$ by adjoining roots of an element of $L_j$ and so we obtain $\phi_2(L_{j+1})$ by adjoining roots of an element in $\phi_2(L_j)$.
+            Hence we get from $\phi_2(L_j)(\alpha_1)$ to $\phi_2(L_{j+1})(\alpha_1)$ by adjoining roots of an element of $\phi_2(L_j)$. So it's a Kummer extension.
+    \end{enumerate}
+
+    Now continue to get suitable chain $K(\alpha_1,\alpha_2) \leq \dotsb \leq K(\alpha_1, \alpha_2, \alpha_3)$.
+
+    Thus we get a suitable chain from $K$ to $K(\alpha_1, \dotsc, \alpha_n) = M$.
+    Observe that $K \leq M$ is Galois.
 \end{proof}
+
+\begin{proof}[Converse of \Cref{thm:4.22}]
+    Suppose $G = \hyperlink{def:ggPoly}{\Gal(f)}$ over $K$ is \hyperlink{def:soluble}{soluble} (and $\chara K=0$).
+    Let $L$ be the \hyperlink{def:splitting}{splitting field} of $f(t)$ over $K$ and so $|G| = |L:K| = n$.
+    Set $m = n!$ and let $\xi$ be a \hyperlink{def:primRoot}{primitive root of unity} and consider $L(\xi)$.
+    \begin{center}
+        \begin{tikzpicture}[node distance=2cm]
+            \node (v) at (0,0) {};
+            \node (Lx) [above of=v] {$L(\xi)$};
+            \node (Kx) [left of=v]  {$K(\xi)$};
+            \node (L)  [right of=v] {$L$};
+            \node (K)  [below of=v] {$K$};
+            \draw (Lx) -- (Kx) node[midway,anchor=south east]{$\leq n$} -- (K) -- (L) node[midway,anchor=north west]{$n$} -- (Lx);
+        \end{tikzpicture}
+    \end{center}
+    Our proof is similar to that used for cubics.
+    Observe that $|L(\xi):K(\xi)| \leq n$. By the \nameref{thm:2.17} $L=K(\alpha)$ for some $\alpha$ with \hyperlink{def:minimalPoly}{minimal polynomial} $g(t)$ say of degree $n$.
+    Then $L(\xi) = K(\xi)(\alpha)$ and the minimal polynomial of $\alpha$ over $K(\xi)$ divides $g(t)$ and so is of degree $\leq n$.
+
+    Then $\Gal(L(\xi)/K)$ is \hyperlink{def:soluble}{soluble} since $\Gal(L(\xi)/L)$ is soluble and $\Gal(L/K) \cong \frac{\Gal(L(\xi)/K)}{\Gal(L(\xi)/L)}$ soluble by \nameref{thm:3.2} and \Cref{lem:4.21}.
+    Then the subgroup $\Gal(L(\xi)/K(\xi)) \leq \Gal(L(\xi)/K)$ is soluble by \Cref{lem:4.21}.
+
+    Thus there is a chain of subgroups
+    \begin{equation*}
+        \Gal(L(\xi)/K(\xi)) = G_0 \rhd G_1 \rhd \dotsb \rhd G_m = \{e\},
+    \end{equation*}
+    with $G_i/G_{i+1}$ cyclic (using \Cref{lem:4.16}).
+
+    Now use the \nameref{thm:3.2} to get a corresponding chain of fields $K(\xi) \leq K_1 \leq \dotsb \leq K_m = L(\xi)$, with each $K_i \leq K_{i+1}$ \hyperlink{def:galoisExt}{Galois}, with \hyperlink{def:cyclic}{cyclic} Galois group.
+    By \Cref{thm:4.11}, all these extensions are Kummer (not all the extensions are of degree $\leq n$ and so we have the appropriate roots of unity).
+    Thus we've embedded $L$ in an \hyperlink{def:radicals}{extension of $K$ by radicals}.
+\end{proof}
+\begin{eg}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item Take $f(t)=t^4+4t^2+2$, irreducible over $\mathbb{Q}$ by \nameref{thm:1.16}, and it has roots $\pm \sqrt{-2\pm\sqrt{2}}$ (two conjugate pairs).
+            Complex conjugation gives double transposition.
+            The resolvent cubic is $g(t) = t^3 + 8t^2+8t$ which is reducible with roots $0, -4 \pm 2 \sqrt{2}$.
+
+            We have $L = K(\sqrt{-4+2 \sqrt{2}}, \sqrt{-4 - 2 \sqrt{2}})$, and $M = K(-4 + 2 \sqrt{2}, -4-2 \sqrt{2}) = K(\sqrt{2})$.
+            So $|L:K|=8$, and the Galois group is dihedral.
+        \item $f(t) = t^4 + 2t + 2$ is irreducible over $\mathbb{Q}$ by \nameref*{thm:1.16}.
+            Its discriminant is $101 \cdot 4^2$, not a square, and the resolvent cubic is $g(t) = t^3 - 8t - 4$, irreducible since it is $t^3 + 2t+1$ mod 5, irreducible.
+            So there is a 3-cycle in the \hyperlink{def:ggPoly}{Galois group}.
+
+            $\Gal(f)$ is a transitive subgroup of $S_4$ and not of $A_4$ containing a 3-cycle, so $\Gal(f)$ is $S_4$.
+        \item $f(t) = t^5-t-1$ is irreducible over $\mathbb{Q}$ since it is irreducible mod 5, and so the Galois group contains a 5-cycle and is a transitive subgroup of $S_5$.
+            Mod 2, it factorises as a product of an irreducible cubic and quadratic: $(t^3+t^2+1)(t^2+t+1)$. So $\Gal(\bar{f})$ is generated by an element of cycle type $3,2$, so $\Gal(f)$ contains an element of cycle type $3,2$, so $g^3$ is a transposition.
+            A subgroup of $S_5$ containing a 5-cycle and a transposition must be $S_5$ itself. So $\Gal(f) = S_5$ over $\mathbb{Q}$.
+    \end{enumerate}
+\end{eg}
+
+\clearpage
+\section{Final Thoughts}
+\subsection{Algebraic closure}
+\begin{ndef}[Algebraically closed]\hypertarget{def:closed}
+    A field $L$ is \textbf{algebraically closed} if any $f(t) \in L[t]$ \hyperlink{def:splitting}{splits} into a product of linear factors in $L[t]$.
+\end{ndef}
+\begin{remark}
+    This is equivalent to saying that any $f(t) \in L[t]$ has a root in $L$, or that any algebraic extension of $L$ is $L$ itself.
+\end{remark}
+\begin{ndef}[Algebraic closure]\hypertarget{def:closure}
+    An extension $K \leq L$ is an algebraic closure of $K$ if $K \leq L$ is \hyperlink{def:algebraic}{algebraic} and $L$ is \hyperlink{def:closed}{algebraically closed}.
+\end{ndef}
+\begin{nlemma}\label{lem:5.3}
+    If $K \leq L$ is \hyperlink{def:algebraic}{algebraic} and every polynomial in $K[t]$ \hyperlink{def:splitting}{splits} completely over $L$, then $L$ is an \hyperlink{def:closure}{algebraic closure} of $K$.
+\end{nlemma}
+\begin{proof}
+    We need to show $L$ is \hyperlink{def:closed}{algebraically closed}.
+    Suppose $L \leq L(\alpha)$ is a \hyperlink{def:degreeOfFieldExt}{finite extension}, and $f_\alpha(t) = t^n + a_{n-1} t^{n-1} + \dotsb + a_0$ is the \hyperlink{def:minimalPoly}{minimal polynomial} of $\alpha$ over $L$.
+    Let $M = K(a_0, a_1, \dotsc, a_{n-1})$.
+    Then $M \leq M(\alpha)$ is a finite extension.
+    But each $a_i$ is \hyperlink{def:algebraic}{algebraic} over $K$ and so $\hyperlink{def:degreeOfFieldExt}{|M:K|}<\infty$.
+    Hence $|M(\alpha):K| < \infty$ by \nameref{thm:towerLaw} and so $\alpha$ is algebraic over $K$.
+    The minimal polynomial over $K$ must split over $L$, and so $\alpha \in L$.
+    Thus any algebraic extension of $L$ is $L$ itself.
+\end{proof}
+\begin{eg}
+    $\mathbb{A} = \set{\alpha \in C | \alpha \text{ \hyperlink{def:algebraic}{algebraic} over } \mathbb{Q}}$
+    It is a subfield of $\mathbb{C}$: If $\alpha,\beta$ are \hyperlink{def:algebraic}{algebraic} over $\mathbb{Q}$ then $\hyperlink{def:degreeOfFieldExt}{|\mathbb{Q}(\alpha,\beta):\mathbb{Q}|} < \infty$ so if $\gamma = \alpha+\beta,\alpha-\beta,\alpha\beta$ or $\alpha/\beta$ (if $\beta\neq0$) we get $\mathbb{Q}(\gamma) \leq \mathbb{Q}(\alpha,\beta)$ and so $|\mathbb{Q}(\gamma):\mathbb{Q}<\infty$.
+    So $\gamma$ is algebraic over $\mathbb{Q}$ so $\gamma \in \mathbb{A}$. Therefore $\mathbb{A} = \overline{\mathbb{Q}}$ is an \hyperlink{def:closure}{algebraic closure} of $\mathbb{Q}$.
+\end{eg}
+If we want to prove existence and uniqueness of algebraic closures in general then we need to appeal to Zorn's Lemma.
+This appears in Logic and Set Theory, and it's equivalent to the Axiom of Choice and to the Well Ordering Principle.
+\begin{ndef}[Partial order]\hypertarget{def:poset}
+    $(\mathcal{S},\leq)$ is a \textbf{partial order} on $\mathcal{S}$ if
+    \begin{enumerate}[label=(\roman*)]
+        \item $\forall x \in \mathcal{S}$ $x \leq x$
+        \item $x \leq y$ and $y \leq z \implies x \leq z$.
+        \item if $x\leq y$ and $y \leq x$ then $x=y$.
+    \end{enumerate}
+    $\mathcal{S}$ is \textbf{totally ordered} if for any $x,y \in S$ either $x \leq y$ or $y \leq x$.
+    A \textbf{chain} is a partially ordered set $(\mathcal{S},\leq)$ that is a totally ordered subset.
+\end{ndef}
+\begin{nlemma}[Zorn's Lemma]\label{lem:zorn}
+    Let $(\mathcal{S},\leq)$ be a non-empty \hyperlink{def:poset}{partially ordered} set.
+    Suppose that any \hyperlink{def:poset}{chain} has an upper bound in $\mathcal{S}$.
+    Then $\mathcal{S}$ has a maximal element.
+\end{nlemma}
+\begin{nlemma}\label{lem:5.6}
+    Let $R$ be a ring. Then $R$ has a maximal ideal.
+\end{nlemma}
+\begin{proof}
+    Let $\mathcal{S}$ be the set of proper ideals of $R$.
+    This is is non-empty, since $(0)$ is proper.
+    Partially order $\mathcal{S}$ by inclusion.
+    Any ideal $I$ is proper $\Longleftrightarrow 1 \notin I$.
+    Any chain of proper ideals has an upper bound in $\mathcal{S}$, namely the union of the chain.
+    \nameref{lem:zorn} gives that $\mathcal{S}$ has a maximal element, i.e.\ a maximal ideal of $R$.
+\end{proof}
+
+\begin{nthm}[Existence of algebraic closures]\label{thm:5.7}
+    For any field $K$ there is an \hyperlink{def:closure}{algebraic closure}.
+\end{nthm}
+\begin{proof}
+    Let
+    \begin{equation*}
+        \mathcal{S} = \set{(f(t),j) | f(t) \text{ irreducible, monic in } K[t], 1 \leq j \leq \deg f}
+    \end{equation*}
+    For each pair $s = (f(t),j) \in \mathcal{S}$ we introduce an indeterminate $X_s = X_{f,j}$.
+    Consider the polynomial ring $K[X_s: s \in \mathcal{S}]$ and set
+    \begin{equation*}\tilde{f}(t) = f(t) - \prod_{j=1}^{\deg g} (t - X_{f,j}) \in K[X_s: s \in \mathcal{S}][t].\end{equation*}
+
+    Let $I \lhd K[X_s : s \in \mathcal{S}]$ generated by all the coefficients of all the $\tilde{f}(t)$.
+    Denote the coefficents of $\tilde{f}(t)$ by $a_{f,l}$ for $0 \leq l \leq \deg f$.
+
+    Claim: $I \neq K[X_s : s \in \mathcal{S}]$.
+    Proof: Suppose $1 \in I$ and aim for a contradiction.
+    \begin{equation*}
+        b_1 a_{f_1,l_1} + \dotsb + b_N a_{f_N,l_N} = 1 \quad \text{in } K[X_s : s \in \mathcal{S}]. \tag{$+$} \label{eq:plus}
+    \end{equation*}
+    Let $L$ be a \hyperlink{def:splitting}{splitting field} for $f_1(t) \dotsm f_N(t)$.
+
+    For each $i$, $f_i$ splits over $L$. $f_i(t) = \prod_{j=1}^{\deg f_i} (t-a_{ij})$.
+    Define a $K$-linear ring homomorphism, identity on $K$,
+    \begin{equation*}
+        \begin{tikzcd}[row sep=tiny]
+            \theta: K[X_s : s \in \mathcal{S}] \rar & L \\
+            X_{f_i,j} \rar[maps to] & \alpha_{ij} \\
+            X_s \rar[maps to] & 0 & \text{otherwise}.
+        \end{tikzcd}
+    \end{equation*}
+    This induces a map $K[X_s : s \in \mathcal{S}] \to L[t]$.
+    Then
+    \begin{align*}
+        \theta(\tilde{f}_i(t)) &= \theta(f_i(t)) - \prod_{j=1}^{\deg f_i} \theta(t - X_{f_i,j}) \\
+                               &= f_i(t) - \prod_{j=1}^{\deg f_i} (t - \alpha_{i,j}) = 0.
+    \end{align*}
+    But then $\theta(a_{f_i,j}) = 0$ since $a_{f_i,j}$ are the coefficients of $\tilde{f_i}(t)$.
+    But applying $\theta$ to \eqref{eq:plus} we get $0=1$.
+
+    Then $I$ is a proper ideal of $K[X_s : s \in \mathcal{S}]$. By \nameref{lem:zorn} there is a maximal ideal $P$ of $K[X_s : s \in \mathcal{S}]$ containing $I$.
+    Set $L_1 = K[X_s : s \in \mathcal{S}]/P$, a field.
+    Thus we have a field extension $K \leq L_1$.
+
+    Claim: $L_1$ is an \hyperlink{def:closure}{algebraic} closure of $K$.
+    First show $K \leq L_1$ is \hyperlink{def:algebraic}{algebraic}: $L_1$ is generated by the maps $x_{f,j}$ of the $X_{f,j}$.
+    However $\tilde{f}(t)$ has coefficients in $I$ and so its image $L_1[t]$ is the zero polynomial.
+    Thus in $L_1[t]$,
+    \begin{equation*}
+        f(t) = \prod (t - x_{f,j}) \label{eq:23star}\tag{$*$}
+    \end{equation*}
+    and so $f(x_{f,j}) = 0$. Thus the $x_{f,j}$ are algebraic.
+
+    Any element of $L_1$ involves only finitely many of the $x_{i,j}$ and so is \hyperlink{def:algebraic}{algebraic} over $K$.
+    Moreover from \eqref{eq:23star} any $f(t) \in K[t]$ splits completely over $L_1$.
+
+    The result follows from \Cref{lem:5.3}.
+\end{proof}
+\begin{nthm}\label{thm:5.8}
+    Suppose $\theta: K \to L$ is a ring homomorphism and $L$ is \hyperlink{def:closed}{algebraically closed}.
+    Suppose $K \leq M$ is an \hyperlink{def:algebraic}{algebraic extension}.
+    Then $\theta$ can be extended to a homomorphism $\theta: M \to L$ (i.e.\ $\phi|_K = \theta$).
+\end{nthm}
+\begin{proof}
+    Let
+    \begin{equation*}
+        \xi = \set{(N, \phi) | K \leq N \leq M, \phi \text{ a homomorphism } N \to L \text{ extending } \theta}.
+    \end{equation*}
+    Partially order $\xi$ with $(N_1, \phi_1) \leq (N_2, \phi_2)$ if $N_1 \leq N_2$ and $\phi_2|_{N_2} = \phi_1$.
+    $\xi$ is non-empty since $(K, \theta) \in \xi$.
+
+    If there is a chain $(N_1, \phi_1) \leq \dotsb$
+    then set $N = \bigcup N_\lambda$. This is a subfield of $M$, and we can define $\psi: N \to L$ as follows:
+    if $\alpha \in N$ then $\alpha \in N_\lambda$ for some $\lambda$ and we set $\psi(\alpha) = \phi_\lambda(\alpha)$. This is well defined.
+
+    Then $(N,\psi)$ is an upper bound for our chain $\xi$.
+
+    \nameref{lem:zorn} applies and gives a maximal element of $\xi$, $(N, \phi)$.
+    We now show $N=M$.
+    Given $\alpha \in M$, it is \hyperlink{def:algebraic}{algebraic} over $K$, and hence over $N$.
+    Let $f_\alpha(t)$ be its \hyperlink{def:minimalPoly}{minimal polynomial} over $N$.
+    But $\phi f(t)$ is in $L[t]$ and so splits completely over $L$, since $L$ is \hyperlink{def:closed}{algebraically closed}.
+
+    So $\phi f(t) = (t-\beta_1)\dotsm(t-\beta_r)$, say.
+    Since $\phi f(B_\gamma) = 0$ then there is a map
+    \begin{equation*}
+        \begin{tikzcd}
+            N(\alpha) \cong \frac{N[t]}{(f\alpha(t))} \rar & L \\
+            \alpha \rar[maps to] & \beta_1 & \text{extending} \phi
+        \end{tikzcd}
+    \end{equation*}
+    Maximality of $(N,\phi)$ implies that $N(\alpha) = N$. So $\alpha \in N$, so $N = M$.
+\end{proof}
+\begin{nthm}[Uniquness of algebraic closures]\label{thm:5.9}
+    If $K \leq L_1$, $L \leq L_2$ are two \hyperlink{def:closure}{algebraic closures} of $K$ then there exists an isomorphism $\phi:L_1 \to L_2$.
+\end{nthm}
+\begin{proof}
+    By \Cref{thm:5.8} there is a homomorphism $\phi:L_1 \to L_2$ extending the embedding of $K$ into $L_2$.
+    Since $K \leq L_2$ is algebraic, so too is $\phi(L_1)$. But $L_1$ is \hyperlink{def:closed}{algebraically closed} and so $\phi(L_1)$ is algebraically closed.
+    So $L_2 = \phi(L_1)$ and $\phi$ is an isomorphism.
+\end{proof}
+
+\subsection{Symmetric polynomials and invariant theory}
+In the buildup of the \nameref{thm:3.2} we met \nameref{thm:3.3}:
+Let $K \leq L$ and $H$ a finite group of $\hyperlink{def:autGroup}{\Aut_K}(L)$. Let $M = L^H$. Then $M \leq L$ is a \hyperlink{def:galoisExt}{Galois extension} and $H = \hyperlink{def:galoisGroup}{\Gal}(L/M)$.
+
+\begin{eg}
+    $L = K(X_1, \dotsc, X_n)$. Let $S_n$ permute the variables.
+    These permutations induce \hyperlink{def:homo}{$K$-automorphisms} of $L$.
+    By \nameref{thm:3.3}, if $M = L^{S_n} \leq L$ then it is \hyperlink{def:galoisExt}{Galois} and $\Gal(L/M) = S_n$.
+    Thus $S_n$ is a Galois group of some field extension.
+
+\end{eg}
+We know that we can regard any finite group $G$ as a subgroup of some $S_n$, and so we see that any finite group is a Galois group of some field extension (using \nameref{thm:3.2}).
+Let
+\begin{align*}
+    f(t) &= (t-X_1)(t-X_2)\dotsm (t-X_n) \in M[t] \\
+         &= t^n - s_1 t^{n-1} + s_2 t^{n-2} + \dotsb + (-1)^n s_n.
+\end{align*}
+Thus $s_1 = X_1 + \dotsb + X_n$, $s_2 = \sum_{i < j} X_i X_j$, and $s_n = X_1 X_2 \dotsm X_n$.
+\begin{ndef}[Elementary symmetric polynomials]\hypertarget{def:esp}
+    These $s_i$ are the elementary symmetric polynomials.
+\end{ndef}
+\begin{nthm}\label{thm:5.11}
+    The fixed field $M = L^{s_n} = K(s_1, \dotsc, s_n)$ and the $s_1, \dotsc, s_n$ are algebraically independent over $K$ (in $L$).
+\end{nthm}
+\begin{ndef}\hypertarget{def:indep}
+    $\alpha_1, \dotsc, \alpha_n$ are \textbf{algebraically independent} over $K$ if the ring homomorphism $K[Y_1, \dotsc, Y_n] \to K[\alpha_1, \dotsc, \alpha_n] \leq L$ is an isomorphism where $K[Y_1, \dotsc, Y_n]$ is the polynomial ring in $Y_1, \dotsc, Y_n$.
+\end{ndef}
 \end{document}
