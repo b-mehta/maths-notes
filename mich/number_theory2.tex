@@ -1123,8 +1123,14 @@ Note also that $0 < k < \frac{1}{2} + \frac{a j}{p} < \frac{a+1}{2}$.
         s &= \# \set{j | q_j \equiv 3 \bmod{4}}
     \end{align*}
 
-    (rest of the proof coming soon)
-    % TODO this!
+    So
+    \begin{align*}
+        \legendre{m}{n} &= \prod_{i=1}^k \prod_{j=1}^l \legendre{p_i}{q_j} \\
+                        &= \prod_{i=1}^k \prod_{j=1}^l \underbrace{(-1)^{\frac{p_i-1}{2}\frac{q_j-1}{2}}}_{\substack{+1 \text{ unless } \\p_i \equiv q_j \equiv 3 \bmod{4}}} \legendre{q_j}{p_i} \\
+                        &= (-1)^{rs} \legendre{n}{m}.
+    \end{align*}
+    Now $\frac{m-1}{2}\frac{n-1}{2}$ is odd if and only if $m \equiv n \equiv 3 \bmod{4}$ if and only if both $r, s$ are odd.
+    So $(-1)^{rs} = (-1)^{\frac{m-1}{2}\frac{n-1}{2}}$.
 \end{proof}
 
 For $p$ prime and $\hyperlink{def:gcd}{(a, p)} = 1$, $\hyperlink{def:legendre}{\legendre{a}{p}} = 1 \iff a$ is a square \hyperlink{def:mod}{mod $p$}.
