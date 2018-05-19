@@ -51,7 +51,7 @@ Suppose we have a subset $E \subset \R^d$.
     \item Does it make sense to measure every subset?
 
         This seems reasonable, but it turns out that assigning a measure to every subset can lead to logical contradictions.
-    \item What is a measure? It should be a function defined on subsets, in particular some assignment $E \to m(E) \in \R$.
+    \item What is a measure? It should be a function defined on subsets, in particular some assignment $E \mapsto m(E) \in \R$.
         It should satisfy some properties:
         \begin{itemize}
             \item Non-negativity: $m(E) \geq 0$ for all $E$
@@ -71,7 +71,7 @@ Suppose we have a subset $E \subset \R^d$.
         \end{equation*}
         and isometries $g_1, \dotsc, g_k$, $h_1, \dotsc, h_k$ such that
         \begin{equation*}
-            \bigcup g_i X_i = B = \bigcup h_i Y_i
+            \bigcup g_i X_i = B = \bigcup h_i Y_i.
         \end{equation*}
 \end{enumerate}
 
@@ -79,17 +79,16 @@ Suppose we have a subset $E \subset \R^d$.
 \section{Lebesgue measure}
 
 \begin{defi}[\hypertarget{def:boxJMeasure}{Jordan measure of a box}]
-    We define the \textbf{Jordan measure of the box} by $m(B) \coloneqq \prod_{i=1}^d |b_i - a_i|$.
+    Consider a box $B \subset \R^d$, given by $B = \prod_{i=1}^d I_i$, where $I_i = [a_i, b_i]$ are intervals in $\R$
+    From here, we can define the \textbf{Jordan measure} of the box by $m(B) \coloneqq \prod_{i=1}^d |b_i - a_i|$.
 \end{defi}
-Consider a box $B \subset \R^d$, given by $B = \prod_{i=1}^d I_i$, where $I_i = [a_i, b_i]$ are intervals in $\R$
-From here, we can define the Jordan measure of the box by $m(B) \coloneqq \prod_{i=1}^d |b_i - a_i|$.
 
-\begin{defi}\hypertarget{def:elemSubs}
+\begin{defi}[Elementary subset]\hypertarget{def:elemSubs}
     An \textbf{elementary subset} of $\R^d$ is a finite union of boxes.
 \end{defi}
 
 \begin{remark}
-    Every elementary set can be written as a finite union of disjoint boxes.
+    Every \hyperlink{def:elemSubs}{elementary set} can be written as a finite union of disjoint boxes.
     The family of elementary sets is stable under finite unions, finite intersections and set difference.
     The concern may arise that if the disjoint union can be taken in two different ways, then perhaps we could get different measures, but
     \begin{align*}
@@ -100,19 +99,19 @@ From here, we can define the Jordan measure of the box by $m(B) \coloneqq \prod_
     This means that \emph{makes sense} to define $m(E)$ as $\sum_1^N m(B_i)$, for elementary subsets.
 \end{remark}
 
-\begin{defi}\hypertarget{def:jMeasurable}
+\begin{defi}[Jordan measurable]\hypertarget{def:jMeasurable}
     A subset $E \subset \R^d$ is \textbf{Jordan measurable} if $\forall \epsilon > 0 \; \exists$ \hyperlink{def:elemSubs}{elementary sets} $A, B$ such that $A \subset E \subset B$ and $m(B\setminus A) < \epsilon$.
 \end{defi}
 
 \begin{remark}
-    If $E$ is Jordan measurable, then
+    If $E$ is \hyperlink{def:jMeasurable}{Jordan measurable}, then
     \begin{equation*}
-        \inf\Set{m(B)| E \subset B, B \,\; \text{elementary}} = \sup\Set{m(A)| A \subset E, A \;\, \text{elementary}}
+        \inf\Set{\hyperlink{def:boxJMeasure}{m}(B)| E \subset B, B \text{ \hyperlink{def:elemSubs}{elementary}}} = \sup\Set{m(A)| A \subset E, A \;\, \text{elementary}}
     \end{equation*}
     Proof is left as an exercise for the reader.
 \end{remark}
 
-\begin{defi}\hypertarget{def:jMeasure}
+\begin{defi}[Jordan measure]\hypertarget{def:jMeasure}
     We define the \textbf{Jordan measure} of $E$ as this supremum or infimum, and denote it by $m(E)$.
 \end{defi}
 
@@ -132,16 +131,16 @@ From here, we can define the Jordan measure of the box by $m(B) \coloneqq \prod_
     \begin{equation*}
         S(f, P) = \sum_{i=1}^{N-1} f(x_i) (t_{i+1} - t_i)
     \end{equation*}
-    where $x_i \in [t_i, t_{i+1}]$
+    where $x_i \in [t_i, t_{i+1}]$.
 \end{defi}
 
 \begin{prop}
-    $f$ is Riemann integrable if and only if
+    $f$ is \hyperlink{def:riemannIntegrable}{Riemann integrable} if and only if
     \begin{align*}
         E^+ &= \set{(x, t) \in \R^2 | 0 \leq t \leq f(x)} \\
         E^- &= \set{(x, t) \in \R^2 | f(x) \leq t \leq 0}
     \end{align*}
-    are both Jordan measurable.
+    are both \hyperlink{def:jMeasurable}{Jordan measurable}.
 \end{prop}
 
 However the \hyperlink{def:jMeasure}{Jordan measure} is not perfect. For instance, the complement of a \hyperlink{def:jMeasurable}{Jordan measurable} set is not Jordan measurable.
@@ -150,7 +149,7 @@ In addition, there are simple sets that are not Jordan measurable, and simple fu
 
 \begin{eg}
     \leavevmode
-    \begin{enumerate}[label=(\emph{\roman*})]
+    \begin{enumerate}[label=(\roman*)]
         \item
             \begin{equation*}
                 \1{\Q}(x) = \begin{cases}
@@ -198,11 +197,10 @@ The \hyperlink{def:lebOutMeas}{Lebesgue outer measure} satisfies
 \begin{eg}[Vitali's example]
     Let $E$ be a set of representations of the cosets of the subgroup $(\Q, +) \subset (\R, +)$. We can choose $E \subset [0, 1]$, such that
     \begin{equation*}
-        \forall x \in \R \; \exists! e \in E \; \text{such that} \; x - e \in \Q
+        \forall x \in \R \; \exists! e \in E \; \text{such that} \; x - e \in \Q.
     \end{equation*}
     So the family $\{E + r\}_{r \in \Q}$ is a disjoint family of subsets of $\R$, a partition.
     By translational invariance, \begin{equation*}m^*(E + r) = m^*(E) \quad \forall r \in \Q\end{equation*}
-
     If $m^*$ were additive, we can consider distinct $r_1, \dotsc, r_N \in \Q \cap [0, 1]$ so
     \begin{equation*}
         m^*\left(\bigcup_{i=1}^N E + r_i\right) = N m^*(E)
@@ -228,7 +226,7 @@ The \hyperlink{def:lebOutMeas}{Lebesgue outer measure} satisfies
     $E \subseteq \R^d$ is \textbf{Lebesgue measurable} if $\forall \epsilon > 0$, $\exists C \coloneqq \bigcup_{n} B_n$, a countable union of boxes such that $m^*(C \setminus E) < \epsilon$ and $E \subseteq C$.
 \end{defi}
 
-\begin{eg} [Middle-thirds Cantor set]
+\begin{eg}[Middle-thirds Cantor set]\hypertarget{def:cantor}
     This is a compact subset $C$ of $[0, 1]$, defined as follows.  Start with the interval $I_0 = [0, 1]$ and remove the middle third $\left(\frac13, \frac23\right)$, leaving $I_1 = \left[0, \frac13\right] \cup \left[\frac23, 1\right]$.
     Then remove the middle third of each interval here, giving $I_2 = \left[0, \frac19\right] \cup \left[\frac29, \frac13\right] \cup \left[\frac23, \frac79\right] \cup \left[\frac89, 1\right]$.
     Repeat, then define $C = \bigcap_{n \geq 0} I_n$.
@@ -236,7 +234,7 @@ The \hyperlink{def:lebOutMeas}{Lebesgue outer measure} satisfies
 \end{eg}
 
 \begin{remark}
-    $I_n$ is a finite union of intervals, so it is an \hyperlink{def:elemSubs}{elementary set} (link).
+    $I_n$ is a finite union of intervals, so it is an \hyperlink{def:elemSubs}{elementary set}.
     In particular, $m(I_n) = 2^n / 3^n \to 0$ as $n \to \infty$, so $C$ is \hyperlink{def:jMeasurable}{Jordan measurable} with measure $0$.
     Every Jordan measurable set is \hyperlink{def:lebMAble}{Lebesgue measurable} (clear from the definition).
 \end{remark}
@@ -335,7 +333,7 @@ Now we prove open and closed sets are Lebesgue measurable.
     \begin{align*}
         m^*(U_k \setminus F) &\leq \sum_{i \geq k} m^* (U_i \setminus U_{i+1}) \\
                              &\leq \sum_{i \geq k} \frac{1}{2^i} \\
-                             &\leq \frac{1}{2^{k-1}} \to 0
+                             &\leq \frac{1}{2^{k-1}} \to 0. \qedhere
     \end{align*}
 \end{proof}
 
@@ -412,7 +410,7 @@ So, let's prove a small lemma which helps with this.
 With that done, let's state and prove our proposition.
 
 \begin{prop}
-    $m$ is countably additive on $\mathcal{L}$, hence $(\R^d, \mathcal{L}, m)$ is a \hyperlink{def:measureSpace}{measure space}.
+    \hyperlink{def:lebMeas}{$m$} is countably additive on $\mathcal{L}$, hence $(\R^d, \mathcal{L}, m)$ is a \hyperlink{def:measureSpace}{measure space}.
 \end{prop}
 
 \begin{proof}
@@ -458,7 +456,7 @@ With that done, let's state and prove our proposition.
         \item In the general case, we reduce to the bounded case:
 
             Let $A_m = \set{x \in \R^d | m - 1 \leq \norm{x} < m}$, so we can write
-            $\R^d = \bigcup_{m \geq 1} A_m$, with $A_m$ compact. Apply the previous case to the countable family $(A_m \cup E_n)_{n, m}$.
+            $\R^d = \bigcup_{m \geq 1} A_m$, with $A_m$ compact. Apply the previous case to the countable family $(A_m \cup E_n)_{n, m}$.\qedhere
     \end{enumerate}
 \end{proof}
 
@@ -475,7 +473,7 @@ With that done, let's state and prove our proposition.
 \end{prop}
 
 \begin{proof}
-    We'll skip uniqueness for now, and see another proof later.
+    We'll skip this for now, and see another proof later.
 \end{proof}
 
 \begin{remark}
@@ -519,11 +517,11 @@ In an \hyperlink{lem:lebChar}{earlier lemma} we started to characterise \hyperli
     \end{itemize}
 \end{remark}
 
-\begin{eg}
+\begin{eg}\leavevmode
     \begin{itemize}
         \item Trivial Boolean algebra, $\mathcal{B} = \{\emptyset, X\}$.
         \item Discrete Boolean algebra, $\mathcal{B} = \mathcal{P}(X)$.
-        \item The elementary Boolean algebra, with $\mathcal{B}=$\{finite unions of boxes in $\R^d$, or complements of such\}.
+        \item \hypertarget{def:elemBoolAlg}The elementary Boolean algebra, with $\mathcal{B}=$\{finite unions of boxes in $\R^d$, or complements of such\}.
         \item Take a partition $X$ into finitely many pieces $X = \bigsqcup_{i=1}^N P_i$.
             \begin{equation*}
                 \mathcal{B} \coloneqq \Set{A \subseteq X | \exists I \subseteq \set{1, \dotsc, N}, \; A = \bigcup_{i\in I} P_i}.
@@ -534,13 +532,14 @@ In an \hyperlink{lem:lebChar}{earlier lemma} we started to characterise \hyperli
 
         \item Null algebra,
             \begin{equation*}
-                \mathcal{B} = \set{E \subseteq \R^d | m^*(E) = 0 \text{ or } m^*(E^c) = 0}
+                \mathcal{B} = \set{E \subseteq \R^d | m^*(E) = 0 \text{ or } m^*(E^c) = 0}.
             \end{equation*}
     \end{itemize}
 \end{eg}
 
 \begin{remark}
-    The intersection of any number of Boolean algebras on the same set $X$ is again a Boolean algebra. The same holds for $\sigma$-algebras.
+    The intersection of any number of Boolean algebras on the same set $X$ is again a Boolean algebra.
+    The same holds for $\sigma$-algebras.
 \end{remark}
 
 \begin{defi}[Generator of an algebra]\hypertarget{def:genAlg}
@@ -556,6 +555,7 @@ In an \hyperlink{lem:lebChar}{earlier lemma} we started to characterise \hyperli
     \begin{equation*}
         \bigcup_{\text{finite}} \bigcap_{\text{finite}} F \text{ or } F^c
     \end{equation*}
+    where $F \in \mathcal{F}$.
 \end{remark}
 
 Note a finite intersection of a finite union of sets from a family $\mathcal{F}$ is always a finite union of finite intersections of sets from $\mathcal{F}$. But, this is no longer true if you change finite to countable:
@@ -577,11 +577,11 @@ and there are more than countably many functions $\N \to \N$.
 
 Note, we've shown that every open subset $E \subseteq \R^d$ is \hyperlink{def:lebMAble}{Lebesgue measurable}, hence $\mathcal{B}(\R^d) \subseteq \mathcal{L}$. We might ask if we have equality.
 No. One can show that $\abs{\mathcal{B}(\R^d)} = 2^{\abs{\N}}$. But, remember that every null set is in $\mathcal{L}$, and the middle-thirds Cantor set is null.
-TODO: add end of the argument
+% TODO: add end of the argument
 
 % back to measures
 
-\begin{defi}[Null set]\hypertarget{def:null}
+\begin{defi}[Null set]\hypertarget{def:null2}
     \leavevmode
     \begin{itemize}
         \item \textbf{Null sets} of a measure space $(X, \mathcal{A}, \mu)$ are subsets in $\mathcal{A}$ with $\mu$-measure $0$.
@@ -590,7 +590,8 @@ TODO: add end of the argument
 \end{defi}
 
 \begin{defi}[Complete algebra]
-    The family $\mathcal{A}^*$ of subsets of $X$ of the form $A \cup N$ or $A \setminus N$ where $A \mathcal{A}$ and $N$ is a \hyperlink{def:null}{sub-null} set (with respect to $\mu$) is called the \textbf{completion}. If all sub-null sets are in $\mathcal{A}$, then $\mathcal{A}$ is called \textbf{complete}.
+    The family $\mathcal{A}^*$ of subsets of $X$ of the form $A \cup N$ or $A \setminus N$ where $A \in \mathcal{A}$ and $N$ is a \hyperlink{def:null2}{sub-null} set (with respect to $\mu$) is called the \textbf{completion}.
+    If all sub-null sets are in $\mathcal{A}$, then $\mathcal{A}$ is called \textbf{complete}.
 \end{defi}
 
 \begin{prop}
@@ -620,7 +621,7 @@ We can prove basic properties of measures on an arbitrary measure space.
 \begin{proof}
     This follows from countable additivity of $\mu$, say for b) consider
     \begin{equation*}
-        E_1 = \bigsqcup_{i \geq 1} E_i \setminus E_{i+1} \sqcup \bigcap_n E_n
+        E_1 = \bigsqcup_{i \geq 1} E_i \setminus E_{i+1} \sqcup \bigcap_n E_n. \qedhere
     \end{equation*}
 \end{proof}
 
@@ -630,7 +631,7 @@ We can prove basic properties of measures on an arbitrary measure space.
     To be able to extend a \hyperlink{def:measure}{measure} $\mu$ on a \hyperlink{def:boolAlg}{Boolean algebra} $\mathcal{B}$ to $\sigma(B)$, $\mu$ has to be $\sigma$-additive:
     If $B_n \in \mathcal{B}$ disjoint, and $\bigcup B_n \in \mathcal{B}$, then
     \begin{equation*}
-        \mu\left(\bigcup B_n\right) = \sum_{n \geq 1} \mu(B_n)
+        \mu\left(\bigcup B_n\right) = \sum_{n \geq 1} \mu(B_n).
     \end{equation*}
 \end{remark}
 
@@ -638,7 +639,7 @@ We can prove basic properties of measures on an arbitrary measure space.
     A \hyperlink{def:measure}{measure} $\mu$ on $X$ is called \textbf{$\sigma$-finite} if $X$ is a countable union of subsets each with finite $\mu$-measure.
 \end{defi}
 
-\begin{thm}[Caratheodory's Extension Theorem]\hypertarget{thm:caratheodory}
+\begin{thm}[Carath\'eodory's Extension Theorem]\hypertarget{thm:caratheodory}
     If $\mathcal{B}$ is a \hyperlink{def:boolAlg}{Boolean algebra} of subsets of $X$ and $\mu$ is a countably additive \hyperlink{def:measure}{measure} on $\mathcal{B}$,
     then $\mu$ extends to a measure on $\sigma(B)$.
 
@@ -650,12 +651,12 @@ The theorem has two parts - existence of the extension, and uniqueness.  Prove e
 \textbf{These proofs are non examinable, and are as such currently incomplete in these notes. They may be completed at some later date or removed entirely.}
 
 \begin{proof}[Proving existence of the extension]
-    % For an arbitrary subset $A \subseteq X$, define the following quantity:
-    % \begin{equation*}
-    %     \mu^*(A) = \inf\Set{\sum_{n \geq 1} \mu(B_n) | A \subseteq \bigcup_{n \geq 1} B_n, \; \text{each} \ B_n \in \mathcal{B}}
-    % \end{equation*}
-    % analogous to the \hyperlink{def:lebOutMeas}{Lebesgue outer measure} defined in terms of the \hyperlink{def:jMeasure}{Jordan measure}.
-
+    For an arbitrary subset $A \subseteq X$, define the following quantity:
+    \begin{equation*}
+        \mu^*(A) = \inf\Set{\sum_{n \geq 1} \mu(B_n) | A \subseteq \bigcup_{n \geq 1} B_n, \; \text{each} \ B_n \in \mathcal{B}}
+    \end{equation*}
+    analogous to the \hyperlink{def:lebOutMeas}{Lebesgue outer measure} defined in terms of the \hyperlink{def:jMeasure}{Jordan measure}.
+    We aim to show this is the required extension of $\mu$. \qedhere
     % The following three conditions are to be checked as an exercise
     % \begin{itemize}
     %     \item $\mu^*(\emptyset) = 0$
@@ -730,9 +731,24 @@ The theorem has two parts - existence of the extension, and uniqueness.  Prove e
 \begin{proof}[Proving uniqueness of the extension]
 \end{proof}
 
+\begin{ex}\leavevmode
+    \begin{itemize}
+        \item Recall $\mathcal{B}^* = \set{E \subseteq X | E \text{ is $\mu^*$-measurable}}$, where $E$ is $\mu^*$ measurable means that
+            \begin{equation*}
+                \forall A \subseteq X \quad \mu^*(A) = \mu^*(A \cap E) + \mu^*(A \cap E^c).
+            \end{equation*}
+        \item Every subset in $\mathcal{B}^*$ is of the form $E = A \cup N$ where $A \in \sigma(B)$ and $\mu^*(N) = 0$.
+        \item Show $\mathcal{B}^*$ is the completion of $\sigma(\mathcal{B})$ with respect to $\mu^*$.
+        \item When $\mathcal{B}$ is the \hyperlink{def:elemBoolAlg}{elementary Boolean algbera} of $\mathbb{R}^d$ then $\sigma(\mathcal{B})$ is the Borel $\sigma$-algebra, $\mathcal{B}^* = \mathcal{L} = \sigma$-algebra of \hyperlink{def:lebMAble}{Lebesgue measurable} sets.
+    \end{itemize}
+\end{ex}
+\begin{remark}
+    This means the \hyperlink{thm:caratheodory}{Carath\'eodory extension theorem} gives an alternative way to construct the $\sigma$-algebra of Lebesgue measurable sets in $\mathbb{R}^d$ and the Lebesgue measure.
+\end{remark}
+
 There is a much stronger uniqueness theorem:
 \begin{thm}
-    Suppose $X, \mathcal{A}$ is a \hyperlink{def:measurableSpace}{measurable space}, and $\mu_1$, $\mu_2$ are two finite measures on $(X, \mathcal{A})$ such that $\mu_1(X) = \mu(X)$.
+    Suppose $(X, \mathcal{A})$ is a \hyperlink{def:measurableSpace}{measurable space}, and $\mu_1$, $\mu_2$ are two finite measures on $(X, \mathcal{A})$ such that $\mu_1(X) = \mu_2(X)$.
     Suppose further that $\mu_1(A) = \mu_2(A)$ for all $A \in \mathcal{F}$ where $\mathcal{F}$ is a subfamily of $\mathcal{A}$ which generates $\mathcal{A}$ and is stable under finite intersections.
     Then $\mu_1 = \mu_2$.
 \end{thm}
@@ -747,6 +763,11 @@ There is a much stronger uniqueness theorem:
     Omitted here.
 \end{proof}
 
+We can prove the uniqueness theorem using \hyperlink{lem:dynkin}{Dynkin's Lemma}:
+\begin{proof}
+    Observe that if $\mathcal{C} = \set{A \in \mathcal{A} | \mu_1(A) = \mu_2(A)}$, then $\mathcal{C}$ satisfies the assumptions of Dynkin's lemma, so $\mathcal{C} = \mathcal{A}$. So $\mu_1 = \mu_2$.
+\end{proof}
+
 % todo proof of uniqueness theorem using dynkin
 
 \subsection{Measurable functions}
@@ -759,7 +780,7 @@ There is a much stronger uniqueness theorem:
 \end{defi}
 
 \begin{remark}
-    If $f$ is \hyperlink{def:measurableFunctoR}{$\mathcal{A}$-measurable}, then $f^{-1}(B) \in \mathcal{A}$ for all \hyperlink{def:borelAlg}{Borel subsets} $B \in \R$.
+    If $f$ is \hyperlink{def:measurableFunctoR}{$\mathcal{A}$-measurable}, then $f^{-1}(B) \in \mathcal{A}$ for all \hyperlink{def:borelAlg}{Borel subsets} $B \subseteq \R$.
     Indeed, $f^{-1}$ is functorial with respect to $\cup$, $\cap$ and complementation, so $\set{B \subset \R | f^{-1} (B) \in \mathcal{A}}$ is a \hyperlink{def:sigAlg}{$\sigma$-algebra}.
     If $f$ is measurable by definition, it contains $(-\infty, t) \ \forall t$ so it contains all intervals, hence all Borel sets.
 
@@ -811,31 +832,73 @@ More generally,
 \begin{remark}
     \leavevmode
     \begin{itemize}
-        \item If $X = \bigsqcup_{i=1}^N P_i$ is a partition of $X$ and $\mathcal{A}$ is the \hyperlink{def:atomicBooleanAlgebra}{atomic Boolean algebra} associated with the partition, then $f:X \to \R$ is $\mathcal{A}$-measurable if and only if $f$ is constant on each $P_i$.
+        \item If $X = \bigsqcup_{i=1}^N P_i$ is a partition of $X$ and $\mathcal{A}$ is the \hyperlink{def:atomicBooleanAlgebra}{atomic Boolean algebra} associated with the partition, then $f:X \to \R$ is \hyperlink{def:measurableFunctoR}{$\mathcal{A}$-measurable} if and only if $f$ is constant on each $P_i$.
             Equivalently,
             \begin{equation*}
                 f = \sum_{i=1}^N a_i \1{P_i},\quad a_i \in \R.
             \end{equation*}
 
-            The intuition of this is that $f$ being $\mathcal{A}$ measurable is a property that corresponds to $f(x)$ depends only on which subsets from $\mathcal{A}$ $x$ belongs to.
+            The intuition of this is that $f$ being $\mathcal{A}$-measurable is a property that corresponds to `$f(x)$ depends only on which subsets from $\mathcal{A}$ $x$ belongs to'.
         \item $E \in \mathcal{A} \iff \1{E}$ is $\mathcal{A}$-measurable for every $E \subseteq X$.
     \end{itemize}
 \end{remark}
 
-\begin{defi}
-    If $X$ is a topological space, a Borel function on $X$ is a function which is $\mathcal{B}(X)$ measurable, where $\mathcal{B}(X)$ is the \hyperlink{def:borelAlg}{Borel $\sigma$-algebra}, the $\sigma$-algebra generated by open sets.
+\begin{defi}[Borel function]\hypertarget{def:borelFunc}
+    If $X$ is a topological space, a \textbf{Borel function} on $X$ is a function which is $\mathcal{B}(X)$ measurable, where $\mathcal{B}(X)$ is the \hyperlink{def:borelAlg}{Borel $\sigma$-algebra}, the $\sigma$-algebra generated by open sets.
 \end{defi}
 
 \begin{remark}
     \leavevmode
     \begin{itemize}
-        \item The image of a Borel set under a continuous function may not be Bore, (can find examples in $\R^2$ under projection).
-        \item Devil's staircase (todo)
+        \item Caveat: If $f:X \to \mathbb{R}$ is \hyperlink{def:measurableFunctoR}{$\mathcal{A}$-measurable} then $f^{-1}(B) \in \mathcal{A}$ for all Borel-measurable subsets $B \subseteq \mathbb{R}$, but $f^{-1}(E)$ for $E$ Lebesgue measurable may not be in $\mathcal{A}$.
+        \item The image of a Borel set under a continuous function may not be Borel, (can find examples in $\R^2$ under projection).
     \end{itemize}
 \end{remark}
+\begin{eg}
+    The \textbf{Devil's staircase} is a non-decreasing function $\varphi:[0,1] \to [0,1]$ with $\varphi(0) = 0$, $\varphi(1) =1$ which is constant on each component of $[0,1] \setminus C$, where $C$ is the \hyperlink{def:cantor}{middle-thirds Cantor set}.
+    \begin{center}
+        \begin{tikzpicture}[scale=1.5]
+            \begin{scope}[xshift=0cm,scale=1.5]
+                \draw (0,0) rectangle (1,1);
+                \draw (0,0) -- (1/3,1/2) -- (2/3,1/2) -- (1,1);
+                \node at (0.5,-0.2) {$f_1$};
+            \end{scope}
+            \begin{scope}[xshift=2cm,scale=1.5]
+                \draw (0,0) rectangle (1,1);
+                \draw (1/3,1/2) -- (2/3,1/2);
+                \begin{scope}[xscale=1/3,yscale=1/2]
+                    \draw (0,0) -- (1/3,1/2) -- (2/3,1/2) -- (1,1);
+                    \draw[xshift=2cm,yshift=1cm] (0,0) -- (1/3,1/2) -- (2/3,1/2) -- (1,1);
+                \end{scope}
+                \node at (0.5,-0.2) {$f_2$};
+            \end{scope}
+            \begin{scope}[xshift=4cm,scale=1.5]
+                \draw (0,0) rectangle (1,1);
+                \draw (1/3,1/2) -- (2/3,1/2);
+                \foreach \x/\y in {0cm/0cm,2cm/1cm}{
+                    \begin{scope}[xscale=1/3,yscale=1/2, xshift=\x,yshift=\y]
+                        \draw (1/3,1/2) -- (2/3,1/2);
+                        \begin{scope}[xscale=1/3,yscale=1/2]
+                            \draw (0,0) -- (1/3,1/2) -- (2/3,1/2) -- (1,1);
+                            \draw[xshift=2cm,yshift=1cm] (0,0) -- (1/3,1/2) -- (2/3,1/2) -- (1,1);
+                        \end{scope}
+                    \end{scope}
+                }
+                \node at (0.5,-0.2) {$f_3$};
+            \end{scope}
+            \node at (6,0.75) {$\dots$};
+        \end{tikzpicture}
+    \end{center}
+    and we set $\varphi = \lim_{n \to \infty} f_n$, which converges uniformly.
+\end{eg}
 
-(todo) more caveats here and exercises
-% stuff after devil's staircase
+\begin{ex}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item Show that there exists a continuous increasing function $\varphi:[0,1] \to [0,1]$, $\varphi(0) = 0$, $\varphi(1) = 1$ and a subset $F \subseteq [0,1]$ of \hyperlink{def:lebMeas}{Lebesgue measure} zero such that $\varphi(F)$ has $> 0$ measure.
+        \item Show that (1) gives rise to a counterexample explaining the caveat above. Hint: show that $\exists A \subseteq \varphi(F)$ non-Lebesgue measurable, and set $f = \varphi^{-1}$, $E = f(A)$.
+            Hint: Show that every subset of $\mathbb{R}$ of $>0$ measure contains a non-Lebesgue measurable subset (modify Vitali's construction).
+    \end{enumerate}
+\end{ex}
 
 \clearpage
 
@@ -901,7 +964,7 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
         E_n = \set{x \in X | f_n(x) \leq (1 - \epsilon) g(x)}.
     \end{equation*}
     Note that $E_n \in \mathcal{A}$ and $E_n \subseteq E_{n+1}$ and $X =  \bigcup_{n \geq 1} E_n$.
-    So, we can apply \hyperlink{def:monotoneConvForSets}{upwards monotone convergence for sets} to the \hyperlink{def:measure}{measure} $m_g: \mathcal{A} \to \R$ given by
+    So, we can apply \hyperlink{prop:monotoneConvForSets}{upwards monotone convergence for sets} to the \hyperlink{def:measure}{measure} $m_g: \mathcal{A} \to \R$ given by
     \begin{equation*}
         m_g: E \longmapsto \mu(\1{E} \cdot g).
     \end{equation*}
@@ -930,8 +993,9 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
     \end{itemize}
 \end{cor}
 
-\begin{remark}
-    The term a.e. means almost everywhere.  A property $P(x)$ holds a.e. means that $\set{x \in X | P(x) \ \text{does not hold}}$ is (sub-)null set for $\mu$.
+\begin{remark}\hypertarget{def:ae}
+    The term a.e.\ means almost everywhere.
+    A property $P(x)$ holds a.e.\ means that $\set{x \in X | P(x) \ \text{does not hold}}$ is (sub-)null set for $\mu$.
 \end{remark}
 
 \begin{proof}
@@ -948,7 +1012,7 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
 
             Finally, every non-negative measurable function is a pointwise limit of simple functions. Indeed with
             \begin{gather*}
-                f_n(x) \coloneqq \min\left(n, \frac{1}{n^2} \left[n^2 f(x)\right]\right) \\
+                f_n(x) \coloneqq \min\left(n, \frac{1}{2^n} \left[2^n f(x)\right]\right) \\
                 \forall n \in \N, \, \forall x \in X, \; f_n(x) \leq f(x) \quad \text{and} \quad \lim_{n \to \infty} f_n(x) = f(x)
             \end{gather*}
             where $[x]$ refers to the integer part of $x$.
@@ -968,16 +1032,16 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
             \begin{equation*}
                 \frac{1}{n} \1{{E_n}} \leq f, \; \text{so} \ \frac{1}{n} \mu(E_n) \leq \mu(F).
             \end{equation*}
-            As $\mu(f) = 0$, we get $\mu(E_n) = 0$.
+            As $\mu(f) = 0$, we get $\mu(E_n) = 0$. \qedhere
     \end{itemize}
 \end{proof}
 
 \begin{remark}
-    If $f$ and $g$ are measurable, $f$ integrable and $f = g$ a.e., then $g$ is integrable and $\mu(f) = \mu(g)$.
+    If $f$ and $g$ are \hyperlink{def:measurableFunc}{measurable}, $f$ \hyperlink{def:integral}{integrable} and $f = g$ \hyperlink{def:ae}{a.e.}, then $g$ is integrable and $\mu(f) = \mu(g)$.
 \end{remark}
 
-\begin{thm}[Fatou's Lemma\label{thm:fatou}]
-    If $(f_n)_n$ is a sequence of measurable functions on $(X, \mathcal{A}, \mu)$ such that $f_n \geq 0$ $\forall n$.
+\begin{thm}[Fatou's Lemma\hypertarget{thm:fatou}]
+    If $(f_n)_n$ is a sequence of \hyperlink{def:measurableFunc}{measurable functions} on $(X, \mathcal{A}, \mu)$ such that $f_n \geq 0$ $\forall n$.
     Then
     \begin{equation*}
         \mu(\liminf_{n \to \infty} f_n) \leq \liminf_{n \to \infty} \mu(f_n).
@@ -985,7 +1049,7 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
 \end{thm}
 
 \begin{remark}
-    This inequality can be strict, for example in the following three types of moving bump examples.
+    This inequality can be strict, for example in the following three types of moving bump.
     \begin{enumerate}[label=(\alph*)]
         \item $X = [0, \infty)$ with Lebesgue measure, $f_i \coloneqq \1{[n, n+1]}$ then $\lim f_n = 0$ but $\mu(f_n) = 1 \; \forall n$.
         \item Take $f_n = \frac{1}{n} \1{[0, n]}$, then again $\lim f_n = 0$ but $\mu(f_n) = 1 \; \forall n$.
@@ -995,10 +1059,9 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
 
 \begin{proof}[Proof of Fatou's lemma]
     Let $g_n = \inf_{k \geq n} f_k$.
-
     Note
     \begin{equation*}
-        g_{n + 1} \geq g_n \geq 0 \forall n \implies \mu(g_n) \xrightarrow{n \to \infty} \mu(g_\infty)
+        g_{n + 1} \geq g_n \geq 0\quad \forall n \implies \mu(g_n) \xrightarrow{n \to \infty} \mu(g_\infty)
     \end{equation*}
     where $g_\infty = \lim_{n \to \infty} g_n$, and
     \begin{equation*}
@@ -1007,13 +1070,12 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
     Therefore $\mu(g_\infty) \leq \liminf_n \mu(f_n)$. But $g_\infty = \liminf_{n \to \infty} f_n$.
 \end{proof}
 
-\begin{thm}[Lebesgue dominated convergence theorem]\label{thm:dct}
-    Take $(X, \mathcal{A}, \mu)$ a measure space. Let $(f_n)_n$ be a sequence of measurable functions on $X$.
+\begin{thm}[Lebesgue dominated convergence theorem]\hypertarget{thm:dct}
+    Take $(X, \mathcal{A}, \mu)$ a \hyperlink{def:measureSpace}{measure space}. Let $(f_n)_n$ be a sequence of \hyperlink{def:measurableFunc}{measurable functions} on $X$.
     \begin{itemize}
         \item Assume that there exists a $\mu$-integrable function $g$ such that $\abs{f_n} < g \ \forall n$.
         \item Assume further that $f_n(x)$ converges pointwise $\forall x \in X$ to $f(x)$.
     \end{itemize}
-
     Then
     \begin{equation*}
         \mu(\lim_{n \to \infty} f_n) = \lim_{n \to \infty} \mu(f_n)
@@ -1024,7 +1086,7 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
 \begin{proof}[Proof of Lebesgue's theorem]
     Note $\abs{f_n} \leq g \implies \abs{f} \leq g$, where $f = \lim f_n$. So, $f$ is integrable and $\mu(\abs{f}) \leq \mu(g) < \infty$.
 
-    Now observe that $g + f_n$ is $\geq 0$. So apply \nameref{thm:fatou} to $(g + f_n)_n$. So
+    Now observe that $g + f_n$ is $\geq 0$. So apply \hyperlink{thm:fatou} to $(g + f_n)_n$. So
     \begin{align*}
         \mu(\liminf_{n \to \infty} g + f_n) &\leq \liminf \mu(g + f_n) \\
         \mu(g + f) &\leq \mu(g) + \liminf_n \mu(f_n)
@@ -1047,12 +1109,12 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
     \begin{itemize}
         \item Let $(f_n)_{n \geq 1}$ be a sequence of measurable functions, and assume $f_n \geq 0$ $\forall n$. Then
             \begin{equation*}
-                \mu(\sum_{n \geq 1} f_n) = \sum_{n \geq 1} \mu(f_n)
+                \mu\left(\sum_{n \geq 1} f_n\right) = \sum_{n \geq 1} \mu(f_n).
             \end{equation*}
 
-        \item Let $(f_n)_{n \geq 1}$ be any sequence of measurable sets, and assume $\sum_{n \geq 1} \abs{f_n}$ is $\mu$-integrable, then
+        \item Let $(f_n)_{n \geq 1}$ be any sequence of measurable functions, and assume $\sum_{n \geq 1} \abs{f_n}$ is $\mu$-integrable, then
             \begin{equation*}
-                \mu\left(\sum_{n \geq 1} f_n\right) = \sum_{n \geq 1} \mu(f_n)
+                \mu\left(\sum_{n \geq 1} f_n\right) = \sum_{n \geq 1} \mu(f_n).
             \end{equation*}
     \end{itemize}
 \end{cor}
@@ -1060,8 +1122,9 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
 \begin{proof}
     \leavevmode
     \begin{itemize}
-        \item Take $g_N = \sum_{n \geq 1}^N f_n$, the partial sums, and just apply the Monotone Convergence Theorem to $(g_N)_{N \geq 1}$.
-        \item Let $g = \sum_{n \geq 1} \abs{f_n}$ and define $g_N$ as above. Then $\forall N$, $\abs{g_N} \leq g$, $g$ is $\mu$-integrable by assumption, and simply apply the \nameref{thm:dct}.
+        \item Take $g_N = \sum_{n \geq 1}^N f_n$, the partial sums, and just apply the \hyperlink{def:monConv}{Monotone Convergence Theorem} to $(g_N)_{N \geq 1}$.
+        \item Let $g = \sum_{n \geq 1} \abs{f_n}$ and define $g_N$ as above.
+            Then $\forall N$, $\abs{g_N} \leq g$, $g$ is $\mu$-integrable by assumption, and simply apply the \hyperlink{thm:dct}{Dominated Convergence Theorem}. \qedhere
     \end{itemize}
 \end{proof}
 
@@ -1073,7 +1136,6 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
         (t, x) &\mapsto f(t, x)
     \end{align*}
     where $I$ is an open interval in $\R$.
-
     Assume
     \begin{itemize}
         \item $x \mapsto f(t, x)$ is $\mu$-integrable $\forall t \in I$
@@ -1083,27 +1145,25 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
     \end{itemize}
 
     Then $x \mapsto \frac{\partial f}{\partial t} (t, x)$ is $\mu$-integrable $\forall t \in I$.
-
     \begin{equation*}
-        t \mapsto \int_X f(t, x) d \mu \ \text{is differentiable and} \ \frac{\partial}{\partial t} \left( \int_X f(t, x) d \mu(x)\right) = \int_X \frac{\partial f}{\partial t} (t, x) d \mu(x)
+        t \mapsto \int_X f(t, x)\, d \mu \ \text{is differentiable and} \ \frac{\partial}{\partial t} \left( \int_X f(t, x)\, d \mu(x)\right) = \int_X \frac{\partial f}{\partial t} (t, x)\, d \mu(x).
     \end{equation*}
 \end{cor}
 
 \begin{proof}
-    This is a corollary of the \nameref{thm:dct}. Let $h_n \in \R$, $h_n \to 0$ as $n \to \infty$ and set
+    This is a corollary of the \hyperlink{thm:dct}{Dominated Convergence Theorem}. Let $h_n \in \R$, $h_n \to 0$ as $n \to \infty$ and set
     \begin{equation*}
         g_n(x) \coloneqq \frac{f(t + h_n, x) - f(t, x)}{h_n}
     \end{equation*}
     Then $g_n \to \frac{\partial f}{\partial t}$ pointwise.
 
     But $\exists \theta_n \in [t, t+h_n]$ such that \begin{equation*}g_n(x) = \frac{\partial f}{\partial t}(t, x) \bigg|_{t=\theta_n}.\end{equation*}
-    Then $\abs{g_n} \leq g$ and $g$ is integrable, so just apply the \nameref*{thm:dct}.
+    Then $\abs{g_n} \leq g$ and $g$ is integrable, so just apply the \hyperlink{thm:dct}{Dominated Convergence Theorem}. \qedhere
 \end{proof}
 
 
-In the proof of the Monotone Convergence Theorem, we've used the fact that if $g$ is a simple function then $A \mapsto \mu$ % TODO fix this
-is a measure.
-% finish maybe
+In the proof of the \hyperlink{def:monConv}{Monotone Convergence Theorem}, we've used the fact that if $g$ is a simple function then $A \mapsto \mu(g \1{A})$ is a measure for $A \in \mathcal{A}$.
+Now this is clear, reducing to the case $g = \1B$ by linearity, and it also holds $\forall g \geq 0$ measurable, but this is an exercise which may require the \hyperlink{def:monConv}{Monotone Convergence Theorem}.
 
 \begin{thm}[Egoroff's Theorem]\hypertarget{thm:egorov}
     Take $(X, \mathcal{A}, \mu)$ a \hyperlink{def:measureSpace}{measure space}. Assume $\mu(X) < \infty$.
@@ -1119,9 +1179,9 @@ is a measure.
     \begin{equation*}
         \sup_{k \geq n} \abs{f_k(x) - f(x)}
     \end{equation*}
-    we may assume that $f = 0$ and $0 \leq f_{n+!} \leq f_n$.
+    we may assume that $f = 0$ and $0 \leq f_{n+1} \leq f_n$.
 
-    Then $f_n(x) \to 0$, for all $x \in X$ so $\forall k$, $\exists n_k(x) \in \N$ such that $0 \leq f_{n_k}(x) \leq \frac{1}{k}$.
+    Then $f_n(x) \to 0$ for all $x \in X$, so $\forall k$, $\exists n_k(x) \in \N$ such that $0 \leq f_{n_k}(x) \leq \frac{1}{k}$.
     So $n_k(x) < \infty \quad \forall x$.
     So,
     \begin{equation*}
@@ -1134,13 +1194,15 @@ is a measure.
     by Monotone Convergence for sets.
 
     Let $T_k \in \N$ be such that $\mu(\set{x | n_k \leq T}) \leq \mu(X) - \frac{\epsilon}{2^k}$.
-
-    Take $A = \bigcap_{k \geq 1} \set{x | n_k(x) \leq T_k}$, by countable subadditivity of $\mu$, we get $\mu(X \setminus A) \leq \sum_{k \geq 1} \frac{\epsilon}{2^k} \leq \epsilon$.
-
-    But we have $\sup_{x \in A} f_n(x) \xrightarrow{n \to \infty} 0$ because $\sup_A f_{T_k} \leq \frac{1}{k} \forall k$ and $n \mapsto \sup_A f_n$ is non-increasing.
+    Take
+    \begin{equation*}A = \bigcap_{k \geq 1} \set{x | n_k(x) \leq T_k},\end{equation*}
+    by countable subadditivity of $\mu$, we get $\mu(X \setminus A) \leq \sum_{k \geq 1} \frac{\epsilon}{2^k} \leq \epsilon$.
+    But we have
+    \begin{equation*}\sup_{x \in A} f_n(x) \xrightarrow{n \to \infty} 0\end{equation*}
+    because $\sup_A f_{T_k} \leq \frac{1}{k}\ \forall k$ and $n \mapsto \sup_A f_n$ is non-increasing.
 \end{proof}
 
-\begin{thm}[Fundamental theorem of calculus]
+\begin{thm}[Fundamental Theorem of Calculus]\hypertarget{thm:ftoc}
     Take $f: [a, b] \to \R$ continuous and let
     \begin{equation*}
         F(x) = \int_{[a, x]} f\,d\mu
@@ -1161,7 +1223,7 @@ is a measure.
 \end{proof}
 
 \begin{remark}
-    There is a much more powerful version of the Fundamental Theorem of Calculus, namely:
+    There is a much more powerful version of the \hyperlink{thm:ftoc}{Fundamental Theorem of Calculus}, namely:
 \end{remark}
 
 \begin{thm}
@@ -1170,84 +1232,88 @@ is a measure.
     \begin{equation*}
         F(x) \coloneqq \int_{[a,x]} f \, d\mu.
     \end{equation*}
-    Then $F$ is differentiable a.e. with respect to $\mu$ and $F'(x) = f(x)$ $\mu$-almost everywhere.
+    Then $F$ is differentiable \hyperlink{def:ae}{a.e.} with respect to $\mu$ and $F'(x) = f(x)$ $\mu$-almost everywhere.
 \end{thm}
 
 \begin{thm}[Lebesgue differentiation theorem]
     Let $f: \R^d \to \R$ be a Lebesgue integrable function. Then
     \begin{equation*}
-        \frac{1}{\mu(B(x, r))} \int_{B(x, r)} f \, d\mu \xrightarrow{r \to 0} f(x) \quad \mu\text{-a.e.}
+        \frac{1}{\mu(B(x, r))} \int_{B(x, r)} f \, d\mu \xrightarrow{r \to 0} f(x) \quad \mu\text{-\hyperlink{def:ae}{a.e.}}
     \end{equation*}
     where $B(x,r) = \set{y \in \R^d | \norm{x - y} < r}$.
 \end{thm}
 
-\begin{remark}
+\begin{remark}\leavevmode
     \begin{itemize}
-        \item It can be the case that $F'(x) = f(x)$ almost everywhere but not everywhere: take $f = \1{[0, 1]}$, then $F(x) = \min{x, 1}$ for $x \geq 0$.
+        \item It can be the case that $F'(x) = f(x)$ \hyperlink{def:ae}{almost everywhere} but not everywhere: take $f = \1{[0, 1]}$, then $F(x) = \min\{x, 1\}$ for $x \geq 0$.
         % graph?
 
         \item The converse fails in general.
-            Namely, if $F:[a, b] \to \R$ is continuous and differentiable almost everywhere, then it's not always the case that $F(x) - F(a) = \int_a^x F'(t) \, dt$. % *
+            Namely, if $F:[a, b] \to \R$ is continuous and differentiable almost everywhere, then it's not always the case that
+            \begin{equation*}F(x) - F(a) = \int_a^x F'(t) \, dt. \tag{$*$}\label{eq:ftoc}\end{equation*}
             For instance, take $F(x) = x^2 \sin{\frac{1}{x^2}}$.
             $F'(x)$ exists $\forall x \in [0, 1]$ but it's not Lebesgue integrable on $[0, 1]$.
 
             Another example is given by the Devil's Staircase:
-            $F$ is a non-decreasing continuous function $[0, 1] \to [0, 1]$, with $F(0) = 0$ and $F(1) = 1$ but $F'(x) = 0 \;\, \quad \forall x \in (0, 1) \setminus C$, so $F'(x)$ exists and is $0$ almost everywhere.
+            $F$ is a non-decreasing continuous function $[0, 1] \to [0, 1]$, with $F(0) = 0$ and $F(1) = 1$ but $F'(x) = 0 \ \forall x \in (0, 1) \setminus C$, so $F'(x)$ exists and is $0$ almost everywhere so \eqref{eq:ftoc} fails for $F$.
 
-        \item If $F$ is assumed to be Lipschitz, then $F$ is a.e. differentiable. This is the Rademacher differentiation theorem, and is not proved here.
-            Note that % *
+        \item If $F$ is assumed to be Lipschitz, then $F$ is \hyperlink{def:ae}{a.e.} differentiable.
+            This is the Rademacher differentiation theorem, and is not proved here.
+            Note that \eqref{eq:ftoc}
             will hold for such $F$. Indeed, $F'(x) = \lim_{n \to \infty} F_n(X)$, with $F_n(x) \coloneqq n(F(x + \frac{1}{n}) - F(x))$.
-            but $F$ is $L$-Lipschitz, so $\abs{F_n(x)} \leq L \; \forall x$ so by the Lebesgue dom conv theorem,
+            But if $F$ is $L$-Lipschitz, then $\abs{F_n(x)} \leq L \ \forall x$ so by the \hyperlink{thm:dct}{Lebesgue Dominated Convergence theorem},
             \begin{equation*}
                 \int_a^b F(x) \, dx = \int_a^b \lim_n F_n(x) \, dx = \lim \int_a^b F_n(x) = F(b) - F(a)
             \end{equation*}
     \end{itemize}
 \end{remark}
 
-\begin{thm}If $U, V \subset \R^d$ are open sets and $\phi:U \to V$ is a $C^1$ diffeomorphism and $f: V \to \R$ is Lebesgue measurable. Assume either $f \geq 0$ or $f$ integrable. Then
+\begin{thm}
+    If $U, V \subset \R^d$ are open sets and $\varphi:U \to V$ is a $C^1$ diffeomorphism and $f: V \to \R$ is Lebesgue measurable. Assume either $f \geq 0$ or $f$ integrable. Then
     \begin{equation*}
-        \int_U f(\phi(x)) \abs{J_\phi(x)} \, dx = \int_V f(y) \, dy
+        \int_U f(\varphi(x)) \abs{J_\varphi(x)} \, dx = \int_V f(y) \, dy
     \end{equation*}
-    where $J_\phi(x) = \det(d \phi(x))$.
-    (both dx and dy are Lebesgue measure).
+    where $J_\varphi(x) = \det(d \varphi(x))$.
+    (both $dx$ and $dy$ are Lebesgue measure).
 \end{thm}
 
-\begin{remark}
-    \begin{enumerate}
-    We skip the proof. It can be proved first for a linear $\phi$, then approximate on small boxes around each point.
+\begin{remark}\leavevmode
+    \begin{itemize}
+        \item We skip the proof. It can be proved first for a linear $\varphi$, then approximate on small boxes around each point.
 
-    The theorem holds if $\phi$ is only assumed to be a Lipschitz homeomorphism.
+        \item The theorem holds if $\varphi$ is only assumed to be a Lipschitz homeomorphism.
 
-    When $U = [a, b]$ this is essentially the fundamental Theorem of Calculus.
+        \item When $U = [a, b]$ this is essentially the \hyperlink{thm:ftoc}{Fundamental Theorem of Calculus}.
 
-    This shows that Lebesgue measure is invariant under all affine maps $x \mapsto Ax + b$, $b \in \R^d$, $A \in GL_d(\R)$ with $\det A = 1$.
-    \end{enumerate}
+        \item This shows that Lebesgue measure is invariant under all affine maps $x \mapsto Ax + b$, $b \in \R^d$, $A \in GL_d(\R)$ with $\det A = 1$.
+    \end{itemize}
     % finish?
 \end{remark}
 
 % Product measures
-\begin{defi}[Product $\sigma$-algebra]
+\begin{defi}[Product $\sigma$-algebra]\hypertarget{def:productAlgebra}
     Let $(X, \mathcal{A})$ and $(Y, \mathcal{B})$ be \hyperlink{def:measurableSpace}{measurable spaces}.
-    On $X \times Y$ we define the \textbf{product $\sigma$-algebra}, denoted by $\mathcal{A} \otimes \mathcal{B}$ to be the $\sigma$-algebra generated by all $A \times B \subset X \times Y$, $A \in \mathcal{A}\, , \; B \in \mathcal{B}$.
+    On $X \times Y$ we define the \textbf{product $\sigma$-algebra}, denoted by $\mathcal{A} \otimes \mathcal{B}$ to be the $\sigma$-algebra \hyperlink{def:genAlg}{generated} by all $A \times B \subset X \times Y$, $A \in \mathcal{A}$, $B \in \mathcal{B}$.
 \end{defi}
 
-\begin{remark}
+\begin{remark}\leavevmode
     \begin{itemize}
         \item The projection maps
             \begin{align*}
-                \pi_X: X \times Y &\to X & &\text{and} & \pi_Y: X \times Y &\to Y \\
-                (x, y) &\mapsto x &&& (x, y) &\mapsto y
+                \pi_X: X \times Y &\longrightarrow X & &\text{and} & \pi_Y: X \times Y &\longrightarrow Y \\
+                (x, y) &\longmapsto x &&& (x, y) &\longmapsto y
             \end{align*}
-            are measurable when $X \times Y$ is endowed with $\mathcal{A} \otimes \mathcal{B}$.
+            are measurable when $X \times Y$ is endowed with $\hyperlink{def:productAlgebra}{\mathcal{A} \otimes \mathcal{B}}$.
             \begin{equation*}A \in \mathcal{A} \quad \pi_X^{-1} (A) = A \times Y
             \end{equation*}
-        \item In fact $\mathcal{A} \times \mathcal{B}$ is the smallest $\sigma$-algebra on $X \times Y$ for which both projections are measurable.
-        \item $B(\R^{d_1 + d_2}) = B(\R^{d_1}) \otimes B(\R^{d_2})$, in fact if $X$ and $Y$ are second-countable topological spaces then $B(X \times Y) = B(X) \otimes B(Y)$, where $B(X)$ is the Borel $\sigma$-algebra. But this is false in general.
+        \item In fact $\mathcal{A} \otimes \mathcal{B}$ is the smallest $\sigma$-algebra on $X \times Y$ for which both projections are measurable.
+        \item $\mathcal{B}(\R^{d_1 + d_2}) = \mathcal{B}(\R^{d_1}) \otimes \mathcal{B}(\R^{d_2})$, in fact if $X$ and $Y$ are second-countable topological spaces then $\mathcal{B}(X \times Y) = \mathcal{B}(X) \otimes B(Y)$, where $\mathcal{B}(X)$ is the \hyperlink{def:borelAlg}{Borel $\sigma$-algebra}.
+            But this is false in general.
     \end{itemize}
 \end{remark}
 
 \begin{lemma}
-    If $E \subset X \times Y$ belongs to $\mathcal{A} \otimes \mathcal{B}$ then
+    If $E \subset X \times Y$ belongs to $\hyperlink{def:productAlgebra}{\mathcal{A} \otimes \mathcal{B}}$ then
     \begin{align*}
         \forall x \in X \quad E_x &\in \mathcal{B} \\
         \forall y \in Y \quad E^y &\in \mathcal{A}
@@ -1262,11 +1328,11 @@ is a measure.
 \begin{proof}
     Set
     \begin{equation*}
-        \mathcal{C} \coloneqq \set{E \subseteq X \times Y | E_x \in \mathcal{B} and E^y \in \mathcal{A} \text{ for all } x \in X \text{ and } y \in Y}.
+        \mathcal{C} \coloneqq \set{E \subseteq X \times Y | E_x \in \mathcal{B}\text{ and }E^y \in \mathcal{A} \text{ for all } x \in X \text{ and } y \in Y}.
     \end{equation*}
     We can see that $\mathcal{C}$ is a $\sigma$-algebra, since $(E^c)_x = (E_x)^c$ and similarly for $E^y$, and
     \begin{equation*}
-        (\bigcup_n E_n)_x = \bigcup_n (E_n)_x.
+        \left(\bigcup_n E_n\right)_x = \bigcup_n (E_n)_x.
     \end{equation*}
     Also it is clear that $\mathcal{C}$ contains all subsets of the form $A \times B$ with $A \in \mathcal{A}$ and $B \in \mathcal{B}$.
     Hence $\mathcal{C} \supseteq A \otimes B$.
@@ -1274,38 +1340,37 @@ is a measure.
 
 Using this lemma, we can prove (exercise) that $\mathcal{L}(\R^{d_1}) \otimes \mathcal{L}(\R^{d_2}) \varsubsetneq \mathcal{L}(\R^{d_1 + d_2})$.
 
-\begin{prop}
-    Let $(X, \mathcal{A}, \mu)$ and $(Y, \mathcal{B}, \nu)$ be two $\sigma$-finite measure spaces.
-    Then there is a unique measure on $(X \times Y, \mathcal{A} \otimes \mathcal{B})$ denoted by $\mu \otimes \nu$ such that
+\begin{prop}\hypertarget{def:productMeasure}
+    Let $(X, \mathcal{A}, \mu)$ and $(Y, \mathcal{B}, \nu)$ be two \hyperlink{def:sigFinite}{$\sigma$-finite} \hyperlink{def:measureSpace}{measure spaces}.
+    Then there is a unique \hyperlink{def:measure}{measure} on $(X \times Y, \hyperlink{def:productAlgebra}{\mathcal{A} \otimes \mathcal{B}})$ denoted by $\mu \otimes \nu$ such that
     \begin{equation*}
-        \mu \otimes \nu (A \times B) = \mu(A) \cdot \nu(B) \tag{$*$}
+        (\mu \otimes \nu) (A \times B) = \mu(A) \cdot \nu(B) \tag{$*$}\label{eq:product}
     \end{equation*}
     for all $A \in \mathcal{A}$, $B \in \mathcal{B}$.
-    This is called the product measure.
+    This is called the \textbf{product measure}.
 \end{prop}
 
 \begin{proof}[Sketch of proof]
-    Let $\mathcal{B}_0$ be the Boolean algebra generated by the product sets $A \times B$, $A \in \mathcal{A}$, $B \in \mathcal{B}$.
-    % do the link properly
-    Note $\mathcal{B}_0$ is made of disjoint finite unions of product sets, and $(*)$ defines a measure on $\mathcal{B_0}$.
-    One needs to check countable additivity and then we can apply the Caratheodory extension theorem to claim existence and uniqueness of the extension to $\sigma(\mathcal{B_0}) = \mathcal{A} \otimes \mathcal{B}$.
+    Let $\mathcal{B}_0$ be the \hyperlink{def:genAlg}{Boolean algebra generated} by the product sets $A \times B$, $A \in \mathcal{A}$, $B \in \mathcal{B}$.
+    Note $\mathcal{B}_0$ is made of disjoint finite unions of product sets, and \eqref{eq:product} defines a measure on $\mathcal{B}_0$.
+    One needs to check countable additivity and then we can apply the \hyperlink{thm:caratheodory}{Carath\'eodory extension theorem} to claim existence and uniqueness of the extension to $\sigma(\mathcal{B}_0) = \mathcal{A} \otimes \mathcal{B}$.
 \end{proof}
 
 \begin{thm}[Tonelli-Fubini theorem]\hypertarget{thm:tonelliFubini}
-    Take $(X, \mathcal{A}, \mu),\ (Y, \mathcal{B}, \nu)$ be $\sigma$-finite measure spaces.
-    Let $f$ be a $\mathcal{A} \otimes \mathcal{B}$-measurable function on $X \times Y$.
+    Take $(X, \mathcal{A}, \mu)$, $(Y, \mathcal{B}, \nu)$ be \hyperlink{def:sigFinite}{$\sigma$-finite} \hyperlink{def:measureSpace}{measure spaces}.
+    Let $f$ be a $\hyperlink{def:productAlgebra}{\mathcal{A} \otimes \mathcal{B}}$-\hyperlink{def:measurableFunctoR}{measurable function} on $X \times Y$.
     \begin{itemize}
         \item Assume $f \geq 0$, then the functions
             \begin{align*}
                 f_X(y) \coloneqq \int_X f(x, y) d \mu(x) \\
                 f^Y(x) \coloneqq \int_Y f(x, y) d \nu(y)
             \end{align*}
-            and
+            and measurable with respect to $\mathcal{B}$ and $\mathcal{A}$ respectively, and
             \begin{equation*}
-                \int_{X \times Y} f(x, y) d \mu \otimes \nu (x, y) = \int_Y f_X(y) d \nu(y) = \int_X f^Y(x) d \mu(x)
-                \tag{$**$}\label{eq:name}
+                \int_{X \times Y} f(x, y) d \mu \otimes \nu (x, y) = \int_Y f_X(y) d \nu(y) = \int_X f^Y(x) d \mu(x).
+                \tag{$**$}\label{eq:tonelli}
             \end{equation*}
-        \item Now assume $f$ is $\mu \otimes \nu$-integrable. Then $f_X$ is $\nu$-integrable, $f^Y$ is $\mu$-integrable and \eqref{eq:name} holds.
+        \item Now assume $f$ is $\mu \otimes \nu$-integrable. Then $f_X$ is $\nu$-integrable, $f^Y$ is $\mu$-integrable and \eqref{eq:tonelli} holds.
     \end{itemize}
 \end{thm}
 
@@ -1319,35 +1384,27 @@ Using this lemma, we can prove (exercise) that $\mathcal{L}(\R^{d_1}) \otimes \m
 \end{remark}
 
 \begin{proof}[Sketch of proof]
-    Without loss of generality, we can assume that $\mu(X) < \infty$, $\nu(Y) < \infty$ since
-    \begin{equation*}
-        X = \bigcup_n E_n \quad \mu(E_n) < \infty.
-    \end{equation*}
+    Without loss of generality, we can assume that $\mu(X) < \infty$, $\nu(Y) < \infty$ by \hyperlink{def:sigFinite}{$\sigma$-finiteness}.
 
     Write $f$ as $\lim_n f_n$, a pointwise limit of simple functions, for instance
     \begin{equation*}
-        x % same min n^2 limit from before
+        f_n(x) \coloneqq \min\left(n, \frac{1}{2^n} \left[2^n f(x)\right]\right) \\
     \end{equation*}
-    which lets us reduce to the case for $f$ simple, using the monotone convergence theorem.
-
+    which lets us reduce to the case for $f$ simple, using the \hyperlink{def:monConv}{monotone convergence theorem}.
     By linearity we can reduce to the case where $f = \1{E}$ for some $E \in \mathcal{A} \otimes \mathcal{B}$ so we're left to show
     \begin{equation*}
-        \mu \otimes \nu(E) = \int_X \nu(E_x) d \mu = \int_Y \mu(E^y) d \nu \tag{$***$}
+        \mu \otimes \nu(E) = \int_X \nu(E_x)\,d\mu = \int_Y \mu(E^y)\,d\nu \tag{$***$}\label{eq:simpletonelli}
     \end{equation*}
-
-    Let $\mathcal{C} = \set{E \in \mathcal{A} \otimes B | \text{such that *** holds}}$
+    Let $\mathcal{C} = \set{E \in \mathcal{A} \otimes B | \text{such that \eqref{eq:simpletonelli} holds}}$.
     \begin{itemize}
         \item $A \times B \in \mathcal{C}$, $\forall A \in \mathcal{A}$, $\forall B \in \mathcal{B}$ by definition of $\mu \otimes \nu$.
-        \item $\mathcal{C}$ is stable under complement (because $\mu$, $\nu$ are finite, $(E_x)^c = (E^c)_x)$).
-        \item $\mathcal{C}$ is stable under countable disjoint unions ($(\bigcup E_n)_x = \bigcup(E_n)_x$)
+        \item $\mathcal{C}$ is stable under complement (because $\mu$, $\nu$ are finite, $(E_x)^c = (E^c)_x)$.
+        \item $\mathcal{C}$ is stable under countable disjoint unions: $(\bigcup E_n)_x = \bigcup(E_n)_x$
         \item $\mathcal{C}$ contains $\set{A \times B | A \in \mathcal{A}, B \in \mathcal{B}}$ which is stable under intersections.
     \end{itemize}
-    So we can apply Dynkin's lemma to $\mathcal{C}$ and conclude $\mathcal{C} = \mathcal{A} \otimes \mathcal{B}$.
-
-    If $f$ is only assumed integrable, $f = f^+ - f^-$, apply the above to $f^+$ and $f^-$.
+    So we can apply \hyperlink{lem:dynkin}{Dynkin's lemma} to $\mathcal{C}$ and conclude $\mathcal{C} = \mathcal{A} \otimes \mathcal{B}$.
+    If $f$ is only assumed integrable, write $f = f^+ - f^-$, apply the above to $f^+$ and $f^-$.
 \end{proof}
-
-% missing stuff
 
 % new lec
 \begin{defi}[Radon measure]\hypertarget{def:radon}
@@ -1361,39 +1418,39 @@ So, the map $T_\mu: C_c(X) \to \R$ is well defined and linear, defined by $f \ma
 Then $T_\mu$ is a linear functional such that $f \geq 0 \implies T_\mu(f) \leq 0$, and we say $T_\mu$ is positive.
 
 \begin{thm}[Riesz Representation Theorem]
-    If $X$ is locally compact and second countable (i.e. has a countable basis of open sets), then every positive functional on $C_c(X)$ is of the form $T_\mu$ for some unique Radon measure $\mu$ on $X$.
+    If $X$ is locally compact and second countable (i.e.\ has a countable basis of open sets), then every positive functional on $C_c(X)$ is of the form $T_\mu$ for some unique Radon measure $\mu$ on $X$.
 \end{thm}
 
 \section{Probability Theory}
-We can apply our knowledge of measures to probability, by using a space $\Omega$, $\mathcal{F}$ a set of observable/measurable events, a $\sigma$ algebra and $\mathbb{P}$ a \hyperlink{def:measure}{measure}.
+We can apply our knowledge of measures to probability, by using a space $\Omega$, $\mathcal{F}$ a set of observable/measurable events which forms a \hyperlink{def:sigAlg}{$\sigma$-algebra} and $\mathbb{P}$ a \hyperlink{def:measure}{measure}.
 We also have a continuity axiom: for $A_n \in \mathcal{F}$, $A_{n+1} \subseteq A_n$ such that $\bigcap_n A_n = \emptyset$ then $\Prob(A_n) \xrightarrow{n \to \infty} 0$.
 
 Formally,
 \begin{defi}[Probability measure]\hypertarget{def:probMeas}
-    Let $(X, \mathcal{A})$ be a measurable space. A measure $\mu$ on $X$ with $\mu(X) = 1$ is called a \textbf{probability measure}.
+    Let $(X, \mathcal{A})$ be a \hyperlink{def:measurableSpace}{measurable space}. A \hyperlink{def:measure}{measure} $\mu$ on $X$ with $\mu(X) = 1$ is called a \textbf{probability measure}.
 \end{defi}
 
 \begin{defi}[Random variable]\hypertarget{def:rv}
-    A measurable function $f: X \to \R$ is called a \textbf{random variable}.
+    A \hyperlink{def:measurableFunctoR}{measurable function} $f: X \to \R$ is called a \textbf{random variable}.
 \end{defi}
 
 \begin{defi}[Probability space]\hypertarget{def:probabilitySpace}
-    $(X, \mathcal{A}, \mu)$ is called a probability space when $\mu(X) = 1$.
+    $(X, \mathcal{A}, \mu)$ is called a \textbf{probability space} when $\mu(X) = 1$.
 \end{defi}
 
 \begin{notation}
     In the context of probability, we use the following interchangeably:
     \begin{equation*}
-        X \longleftrightarrow \Omega, \qquad \mathcal{A} \longleftrightarrow \mathcal{F}, \qquad \mu \longleftrightarrow \Prob
+        X \longleftrightarrow \Omega, \qquad \mathcal{A} \longleftrightarrow \mathcal{F}, \qquad \mu \longleftrightarrow \Prob.
     \end{equation*}
 \end{notation}
 
 \begin{defi}[Distribution]\hypertarget{def:law}
-    A random variable $X$ on $(\Omega, \mathcal{F}, \Prob)$ determines a measure $\mu_X$ on $(\R, \mathcal{B}(\R))$ given by
+    A \hyperlink{def:rv}{random variable} $X$ on $(\Omega, \mathcal{F}, \Prob)$ determines a \hyperlink{def:measure}{measure} $\mu_X$ on $(\R, \hyperlink{def:borelAlg}{\mathcal{B}(\R))}$ given by
     \begin{equation*}
         \mu_X(A) = \Prob(X \in A)
     \end{equation*}
-    for any $A \in \mathcal{B}(\R)$, and
+    for any $A \in \mathcal{B}(\R)$, where
     \begin{equation*}
         \Prob(X \in A) \coloneqq \Prob(\set{\omega \in \Omega | X(\omega) \in A}).
     \end{equation*}
@@ -1401,7 +1458,7 @@ Formally,
 \end{defi}
 
 \begin{notation}
-    The integral sign $\int \, d\mu$ is replaced by the expectation sign
+    The integral sign $\int d\mu$ is replaced by the expectation sign
     \begin{equation*}
         \mathbb{E}(X) = \int_\Omega X \, d \Prob
     \end{equation*}
@@ -1423,11 +1480,11 @@ Note $\mu_X$ is the image of $\Prob$ under $X: \Omega \to \R$.
 \end{defi}
 
 \begin{remark}
-    $F_X$ is non-decreasing right-continuous, and it determines $\mu_X$, and
+    $F_X$ is non-decreasing right-continuous, determines $\mu_X$, and
     \begin{equation*} \tag{$*$} \label{eq:cumLimits}
         \begin{aligned}
             \lim_{x \to -\infty} F_X &= 0 \\
-            \lim_{x \to +\infty} F_X &= 1
+            \lim_{x \to +\infty} F_X &= 1.
         \end{aligned}
     \end{equation*}
 \end{remark}
@@ -1436,12 +1493,12 @@ Note $\mu_X$ is the image of $\Prob$ under $X: \Omega \to \R$.
     Conversely, given a non-decreasing function $F: \R \to [0, 1]$ which is right-continuous and satisfies \eqref{eq:cumLimits}, then there exists a unique probability measure on $\R, \mathcal{B}(\R)$ such that $F(x) = \mu((-\infty, x])$ for all $x \in \R$.
 \end{thm}
 
-\begin{proof}[Sketch of proof]
+\begin{proof}[Sketch proof]
     \leavevmode
     \begin{itemize}
         \item Define $\mu$ on intervals $(a, b]$ as $\mu((a, b]) = F(b) - F(a)$.
         \item Extend it to finite unions of intervals.
-        \item Use Caratheodory Extension Theorem.
+        \item Use \hyperlink{def:caratheodory}{Carath\'eodory Extension Theorem}. \qedhere
     \end{itemize}
 \end{proof}
 
@@ -1460,18 +1517,18 @@ Note $\mu_X$ is the image of $\Prob$ under $X: \Omega \to \R$.
 \subsection{Independence}
 Throughout this section, take $(\Omega, \mathcal{F}, \Prob)$ a \hyperlink{def:probabilitySpace}{probability space}.
 \begin{defi}[Independent events]\hypertarget{def:independentEvents}
-    A sequence of events $(A_n)_{n \geq 1}$ is said to be (mutually) independent if $\forall I \subseteq \N$, $I$ a finite set,
+    A sequence of events $(A_n)_{n \geq 1}$ is said to be \textbf{(mutually) independent} if $\forall I \subseteq \N$, $I$ a finite set,
     \begin{equation*}
         \Prob\left(\bigcap_{i \in I} A_i\right) = \prod_{i \in I} \Prob(A_i).
     \end{equation*}
 \end{defi}
 
 \begin{defi}[Independent algebras]
-    A sequence of sub-$\sigma$-algebras $(\mathcal{A}_n)_{n \geq 1}$ of $\mathcal{F}$ is called independent if $\forall A_i \in \mathcal{A}_i \; \forall i \geq 1$, the family $(A_i)_{i \geq 1}$ is \hyperlink{def:independentEvents}{independent}.
+    A sequence of sub-$\sigma$-algebras $(\mathcal{A}_n)_{n \geq 1}$ of $\mathcal{F}$ is called \textbf{independent} if $\forall A_i \in \mathcal{A}_i \; \forall i \geq 1$, the family $(A_i)_{i \geq 1}$ is \hyperlink{def:independentEvents}{independent}.
 \end{defi}
 
 \begin{defi}[Independent random variables]
-    A sequence $(X_n)_{n \geq 1}$ of \hyperlink{def:rv}{random variables} is called (mutually independent) if the sequence $(\sigma(X_n))_{n \geq 1}$ is independent.
+    A sequence $(X_n)_{n \geq 1}$ of \hyperlink{def:rv}{random variables} is called \textbf{(mutually) independent} if the sequence $(\sigma(X_n))_{n \geq 1}$ is independent.
 \end{defi}
 
 \begin{notation}

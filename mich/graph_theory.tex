@@ -2397,8 +2397,8 @@ In fact, we can tighten the upper bound:
     This subgraph has maximum degree $\leq 2$ so each component is a path or a cycle.
     Moreover, $x,y_1,y_{k+1}$ have degree $\leq 1$ in this subgraph so $x_1, y_1, y_{k+1}$ are not all in the same component.
 
-    If $x,y_1$ in different $c c_1$ component, then swap $c,c_1$ on the component of $y_1$ and give $x y_1$ colour $i$.
-    Otherwise $x y_{k+1}$ in different components. In this case, uncolour $x y_{k+1}$ and recolour $x y_i$ with colour $i$ for $1 \leq i \leq k$.
+    If $x,y_1$ in different $c c_1$ component, then swap $c,c_1$ on the component of $y_1$ and give $x y_1$ colour $c$.
+    Otherwise $x, y_{k+1}$ in different components. In this case, uncolour $x y_{k+1}$ and recolour $x y_i$ with colour $c_i$ for $1 \leq i \leq k$.
     Then swap colours $c,c_1$ on the $c c_1$-component of $y_{k+1}$ and give $x y_{k+1}$ colour $c$.
 \end{proof}
 

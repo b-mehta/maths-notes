@@ -1105,7 +1105,7 @@ Let $C$ be an \hyperlink{def:nmdCode}{$[n,m,d]$-code}.
                 \draw[->] (A) to (0, 0.4);
             \end{tikzpicture}
         }}{\leq}
-        \frac{2^n}{V(n, \floor{\frac{n-1}{2}})}
+        \frac{2^n}{V(n, \floor{\frac{d-1}{2}})}
     \end{equation*}
 \end{nprop}
 \begin{proof}
@@ -2267,7 +2267,7 @@ Let
 \begin{defi}
     The \textbf{error locator polynomial} is
     \begin{equation*}
-        \sigma(X) = \prod{i \in \mathcal{E}} (1 - \alpha^i X).
+        \sigma(X) = \prod_{i \in \mathcal{E}} (1 - \alpha^i X).
     \end{equation*}
 \end{defi}
 Assuming $\deg(\sigma) = \abs{\mathcal{E}} \leq t$, our aim is to recover $\sigma(X)$ from $r(X)$.

@@ -705,7 +705,7 @@ For $a \equiv 0 \pmod{p}$, then there is one solution, $x \equiv 0 \pmod{p}$.
 For $a \not \equiv 0 \pmod{p}$, if $x$ is a solution then so is $-x$, and $-x \equiv x \pmod{p} \Leftrightarrow 2x \equiv 0 \pmod{p}$ but $a \not\equiv 0 \Rightarrow x \not\equiv 0 \pmod{p}$ so we have either $0$ or $2$ solutions.
 
 \begin{defi}[Quadratic residue]\hypertarget{def:qr}
-    $a \equiv 0 \hyperlink{def:mod}{\pmod{p}}$ is a \textbf{quadratic residue} mod $p$ if $x^2 \equiv a \pmod{p}$ is soluble, and a \textbf{quadratic non-residue} if not.
+    $a \not\equiv 0 \hyperlink{def:mod}{\pmod{p}}$ is a \textbf{quadratic residue} mod $p$ if $x^2 \equiv a \pmod{p}$ is soluble, and a \textbf{quadratic non-residue} if not.
 \end{defi}
 
 % Lecture 6
@@ -2516,7 +2516,7 @@ Clearly if the \hyperlink{def:cfa}{continued fraction algorithm} for $\theta$ te
         p_0 &= a_0 & p_1 &= a_1 a_0 + 1 & p_n &= a_n p_{n-1} + p_{n-2} \\
         q_0 &= 1   & q_1 &= a_1         & q_n &= a_n q_{n-1} + q_{n-2} \quad \text{ if } n \geq 2.
     \end{align*}
-    It is convenient also to define $p_{-1} = 0$, $q_{-1} = 0$ (so the recursion holds for $n \geq 1$).
+    It is convenient also to define $p_{-1} = 1$, $q_{-1} = 0$ (so the recursion holds for $n \geq 1$).
     If $[a_0, a_1, \dotsc]$ is the \hyperlink{def:cfa}{CF expansion} of $\theta$, say $\frac{p_n}{q_n}$ are the \textbf{convergents} to $\theta$.
 
     As $a_i \geq 1$ if $i > 0$, $1 \leq q_1 < q_2 < q_3 < \dotsb$ is an increasing sequence of positive integers.

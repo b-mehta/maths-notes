@@ -5,7 +5,9 @@
 \def\nterm {Michaelmas}
 \def\nlecturer{Dr C. Brookes}
 \def\ncourse{Galois Theory}
+\usepackage{imakeidx}
 \input{header}
+\makeindex[intoc]
 
 % preamble
 \setcounter{section}{-1}
@@ -72,7 +74,7 @@ The DPMMS website has a Galois Theory page with a long history of example sheets
 \clearpage
 
 \section{Field Extensions}\label{sec:1}
-\begin{ndef}[Field extension]\hypertarget{def:fieldExt}
+\begin{ndef}[Field extension]\index{field extension}\hypertarget{def:fieldExt}
     A \textbf{field extension} $K \leq L$ is the inclusion of a field $K$ into another field $L$ with the same $0$, $1$, and where the restriction of $+$ and $\cdot$ (in L) to $K$ gives the $+$ and $\cdot$ of $K$.
 \end{ndef}
 
@@ -88,7 +90,7 @@ The DPMMS website has a Galois Theory page with a long history of example sheets
 
 Suppose $K \leq L$ is a \hyperlink{def:fieldExt}{field extension}. Then $L$ is a $K$-vector space using the addition from the field structure and scalar multiplcation given by the multiplication in the field $L$.
 
-\begin{ndef}[Degree]\hypertarget{def:degreeOfFieldExt}
+\begin{ndef}[Degree]\index{degree}\hypertarget{def:degreeOfFieldExt}
     The \textbf{degree} of $L$ over $K$ is $\dim_K L$, the $K$-vector space dimension of $L$. This may not be finite. We typically denote this by $\abs{L:K}$.
     If $\abs{L:K} < \infty$, then the extension is \textbf{finite}, otherwise the extension is \textbf{infinite}.
 \end{ndef}
@@ -101,7 +103,7 @@ Suppose $K \leq L$ is a \hyperlink{def:fieldExt}{field extension}. Then $L$ is a
     \end{enumerate}
 \end{eg}
 
-\begin{nthm}[Tower law]\label{thm:towerLaw}
+\begin{nthm}[Tower law]\index{tower law}\label{thm:towerLaw}
     Suppose $K \leq L \leq M$ are \hyperlink{def:fieldExt}{field extensions}. Then $\hyperlink{def:degreeOfFieldExt}{\abs{M:K}}$ = $\abs{M:L}\abs{L:K}$.
 \end{nthm}
 
@@ -114,7 +116,7 @@ Suppose $K \leq L$ is a \hyperlink{def:fieldExt}{field extension}. Then $L$ is a
     \begin{equation*}
         m = \sum_{i=1}^b \sum_{j=1}^a \lambda_{ij} e_j f_i
     \end{equation*}
-    Thus $\Set{e_j f_i | 1 \leq j \leq a, 1 \leq i \leq a}$ span $M$.
+    Thus $\Set{e_j f_i | 1 \leq j \leq a, 1 \leq i \leq b}$ span $M$.
 
     Linear independence:
     It's enough to show that if $0 = m = \sum \sum \lambda_{ij} e_j f_i$ then $\lambda_{ij}$ are all zero.
@@ -192,7 +194,7 @@ In this example, all subgroups are normal and the extensions are normal.
 We'll also prove the Primitive Element Theorem, which in the context of finite extensions of $\Q$ tells us that they are necessarily of the form $\Q(\alpha)$ for some $\alpha$, for instance $\Q(i, \sqrt{2}) = \Q(i + \sqrt{2})$.
 
 \subsection{Review of GRM}
-\begin{ndef}[Algebraic]\hypertarget{def:algebraic}
+\begin{ndef}[Algebraic]\index{algebraic}\hypertarget{def:algebraic}
     Suppose $K \leq L$ is a field extension. Take $\alpha \in L$ and define
     \begin{equation*}
         I_\alpha = \set{f \in K[t] | f(\alpha) = 0}
@@ -223,7 +225,7 @@ We'll also prove the Primitive Element Theorem, which in the context of finite e
     $\alpha$ was arbitrary, so $L$ is algebraic over $K$.
 \end{proof}
 
-\begin{ndef}[Minimal polynomial]\hypertarget{def:minimalPoly}
+\begin{ndef}[Minimal polynomial]\index{minimal polynomial}\hypertarget{def:minimalPoly}
     The non-zero ideal $I_\alpha$ (where $\alpha$ is \hyperlink{def:algebraic}{algebraic} over $K$) is principal since $K[t]$ is a principal ideal domain.
     In particular, we can say $I_\alpha = (f_\alpha(t))$ where $f_\alpha(t)$ can be assumed to be monic.
     Such a monic $f_\alpha(t)$ is the \textbf{minimal polynomial} of $\alpha$ over $K$.
@@ -253,7 +255,7 @@ We'll also prove the Primitive Element Theorem, which in the context of finite e
     Recall from GRM that irreducible elements of $K[t]$ are prime and hence generate prime ideals of $K[t]$. So $I_\alpha$ is a prime ideal.
 \end{proof}
 
-\begin{ndef}[Simple extension]\hypertarget{def:genField}
+\begin{ndef}[Simple extension]\index{field extension!simple}\hypertarget{def:genField}
     Suppose $K\leq L$ is a \hyperlink{def:fieldExt}{field extension} and $\alpha \in L$.  $K(\alpha)$ is defined to be the smallest subfield of $L$ containing $K$ and $\alpha$.
     It's called the field \textbf{generated} by $K$ and $\alpha$.  We say that $L$ is a \textbf{simple extension} if $L = K(\beta)$ for some $\beta \in L$.
 
@@ -334,7 +336,7 @@ Assume we're given a set $P_0$ of points in $\R^2$, and we can formalise our ope
     \item \textbf{Compass operation} Draw a circle with the centre being a point in $P_0$ and radius the distance between a pair of points in $P_0$.
 \end{itemize}
 
-\begin{ndef}[Constructible]\hypertarget{def:constructible}
+\begin{ndef}[Constructible]\index{constructible}\hypertarget{def:constructible}
     The points of intersection of any two distinct lines or circles drawn using these operations are \textbf{constructible in one step} from $P_0$.
     More generally, a point $\vec{r} \in \R^2$ is \textbf{constructible} from $P_0$ if there is a finite sequence $\vec{r_1}, \vec{r_2}, \dotsc, \vec{r_n} = \vec{r}$ such that $\vec{r_i}$ is constructible in one step from $P_0 \cup \{\vec{r_1}, \dotsc, \vec{r_{i-1}}\}$.
 \end{ndef}
@@ -411,7 +413,7 @@ To use this for proofs about \hyperlink{def:constructible}{non-constructibility}
     A special case of Gauss' lemma from GRM.
 \end{proof}
 
-\begin{nthm}[Eisenstein's criterion]\label{thm:1.16}
+\begin{nthm}[Eisenstein's criterion]\index{Eisenstein's criterion}\label{thm:1.16}
     Let $f(t) = a_n t^n + a_{n-1} t^{n-1} + \dots + a_0 \in \Z[t]$.
     Suppose there is a prime $p$ such that
     \begin{enumerate}[label=(\roman*)]
@@ -469,21 +471,21 @@ Another method is to consider an integral polynomial $f(t) \pmod{p}$. If $f(t)$ 
 \begin{nlemma}\label{lem:1.19}
     Let $K \leq L$ be a \hyperlink{def:fieldExt}{field extension}. Then
     \begin{enumerate}[label=(\roman*)]
-        \item $\alpha_1, \dotsc, \alpha_n \in L$ are \hyperlink{def:algebraic}{algebraic} over $K$ if and only if $K \leq \hyperlink{def:genField}{K(\alpha_1, \dotsc \alpha_n)}$ is a \hyperlink{def:degreeOfFieldExt}{finite} field extension.
-        \item If $K \leq M \leq L$ such that $K \leq M$ is \hyperlink{def:degreeOfFieldExt}{finite}, then there exist $\alpha_1, \dotsc \alpha_n \in L$ such that $K(\alpha_1, \dotsc \alpha_n) = M$.
+        \item $\alpha_1, \dotsc, \alpha_n \in L$ are \hyperlink{def:algebraic}{algebraic} over $K$ if and only if $K \leq \hyperlink{def:genField}{K(\alpha_1, \dotsc, \alpha_n)}$ is a \hyperlink{def:degreeOfFieldExt}{finite} field extension.
+        \item If $K \leq M \leq L$ such that $K \leq M$ is \hyperlink{def:degreeOfFieldExt}{finite}, then there exist $\alpha_1, \dotsc, \alpha_n \in L$ such that $K(\alpha_1, \dotsc, \alpha_n) = M$.
     \end{enumerate}
 \end{nlemma}
 
 \begin{proof} \leavevmode
     \begin{enumerate}[label=(\roman*)]
         \item By \cref{cor:1.10}, $\alpha$ is algebraic over $K$ if and only if $K \leq K[\alpha]$ is a \hyperlink{def:degreeOfFieldExt}{finite} field extension.
-            $\alpha_i$ is algebraic over $K$ and hence algebraic over $K(\alpha_1, \dotsc \alpha_{i-1})$ and so
+            $\alpha_i$ is algebraic over $K$ and hence algebraic over $K(\alpha_1, \dotsc, \alpha_{i-1})$ and so
             \begin{equation*}\abs{K(\alpha_1, \dotsc, \alpha_i):K(\alpha_1, \dotsc, \alpha_{i-1})} < \infty.\end{equation*}
             By the \nameref{thm:towerLaw} applied to
-            \begin{equation*}K \leq K(\alpha_1) \leq K(\alpha_1, \alpha_2) \leq \dots \leq K(\alpha_1, \dotsc \alpha_n),\end{equation*} we get $\abs{K(\alpha_1, \dotsc \alpha_n):K} < \infty$.
+            \begin{equation*}K \leq K(\alpha_1) \leq K(\alpha_1, \alpha_2) \leq \dots \leq K(\alpha_1, \dotsc, \alpha_n),\end{equation*} we get $\abs{K(\alpha_1, \dotsc, \alpha_n):K} < \infty$.
 
-            Conversely, consider $K \leq K(\alpha_1) \leq K(\alpha_1, \dotsc \alpha_n)$.
-            Then the tower law says that if $\abs{K(\alpha_1, \dotsc, \alpha_n): K} < \infty$ then $\abs{K(\alpha_1):K} < \infty$ and by \cref{cor:1.10}, $\alpha$ is algebraic over $K$.
+            Conversely, consider $K \leq K(\alpha_i) \leq K(\alpha_1, \dotsc, \alpha_n)$.
+            Then the tower law says that if $\abs{K(\alpha_1, \dotsc, \alpha_n): K} < \infty$ then $\abs{K(\alpha_i):K} < \infty$ and by \cref{cor:1.10}, $\alpha_i$ is algebraic over $K$.
 
         \item If $\abs{M:K} = n$ then $M$ is an $n$-dimensional $K$-vector space, so there exists a $K$-basis $\alpha_1, \dotsc, \alpha_n$ over $M$.
             Then $K(\alpha_1, \dotsc, \alpha_n) \leq M$.
@@ -493,7 +495,7 @@ Another method is to consider an integral polynomial $f(t) \pmod{p}$. If $f(t)$ 
 
 % new lec (5)
 
-\begin{ndef}[Homomorphism over a field]\hypertarget{def:homo}
+\begin{ndef}[Homomorphism over a field]\index{K-homo@$K$-homomorphism}\hypertarget{def:homo}
     Suppose $K \leq L$, $K \leq L'$ are \hyperlink{def:fieldExt}{field extensions}.
     A $K$-\textbf{homomorphism} $\phi: L \to L'$ is a ring homomorphism such that $\phi\vert_K = \id$.
 
@@ -523,7 +525,7 @@ Another method is to consider an integral polynomial $f(t) \pmod{p}$. If $f(t)$ 
 %     If $K \leq L$ is a \hyperlink{def:fieldExt}{field extension} and $f(t) \in K[t]$, we denote the set of roots of $f$ in $L$ by $\Root_f(L)$.
 % \end{notation}
 
-\begin{ndef}[Splitting]\hypertarget{def:splitting}
+\begin{ndef}[Splitting]\index{splitting field}\hypertarget{def:splitting}
     Let $K \leq L$ be a field extension and $f(t) \in K[t]$. We say \textbf{$f$ splits over $L$} if
     \begin{equation*}
         f(t) = a (t-\alpha_1) (t - \alpha_2) \dotsm (t - \alpha_n)
@@ -604,7 +606,7 @@ Another method is to consider an integral polynomial $f(t) \pmod{p}$. If $f(t)$ 
 \end{eg}
 We can use this final construction to produce splitting fields in general.
 
-\begin{nthm}[Existence of splitting fields]\label{thm:1.23}
+\begin{nthm}[Existence of splitting fields]\index{splitting field!existence}\label{thm:1.23}
     Let $K$ be a field and $f(t) \in K[t]$. Then there exists a \hyperlink{def:splitting}{splitting field} for $f$ over $K$.
 \end{nthm}
 
@@ -624,7 +626,7 @@ We can use this final construction to produce splitting fields in general.
     Thus, we have a factorisation of $f(t)$ in $K(\alpha_1, \dotsc, \alpha_n)[t]$, and so $K(\alpha_1, \dotsc, \alpha_n)$ is a splitting field for $f$ over $K$.
 \end{proof}
 
-\begin{nthm}[Uniqueness of splitting fields]\label{thm:1.24}
+\begin{nthm}[Uniqueness of splitting fields]\index{splitting field!uniqueness}\label{thm:1.24}
     If $K$ is a field and $f(t) \in K[t]$, then the \hyperlink{def:splitting}{splitting field} for $f$ over $K$ is unique up to \hyperlink{def:homo}{$K$-isomorphism}, that is, if there are two such splitting fields $L$ and $L'$, there is a $K$-isomorphism $\phi: L \to L'$.
 \end{nthm}
 
@@ -664,7 +666,7 @@ We can use this final construction to produce splitting fields in general.
     and so we have a $K$-isomorphism $M(\alpha) \to M'(\alpha')$. This contradicts the maximality of $M$, since $M \lneqq M(\alpha)$.
 \end{proof}
 
-\begin{ndef}[Normal extension]\label{def:1.25}\hypertarget{def:normal}
+\begin{ndef}[Normal extension]\label{def:1.25}\index{field extension!normal}\hypertarget{def:normal}
     A \hyperlink{def:fieldExt}{field extension} $K \leq L$ is \textbf{normal} if for every $\alpha \in L$ the \hyperlink{def:minimalPoly}{minimal polynomial} $f_\alpha(t)$ of $\alpha$ over $K$ \hyperlink{def:splitting}{splits} over $L$.
 \end{ndef}
 
@@ -705,7 +707,7 @@ We can use this final construction to produce splitting fields in general.
 \clearpage
 \section{Separable, normal and Galois extensions}
 
-\begin{ndef}[Separable polynomial]\hypertarget{def:separablePoly}
+\begin{ndef}[Separable polynomial]\index{separable polynomial}\hypertarget{def:separablePoly}
     Let $K$ be a field and $f(t) \in K[t]$. Suppose $f(t)$ is irreducible in $K[t]$ and $L$ is a splitting field for $f(t)$ over $K$.
     Then $f(t)$ is \textbf{separable} over $K$ if $f(t)$ has no repeated roots in $L$.
 
@@ -716,7 +718,7 @@ We can use this final construction to produce splitting fields in general.
 
 % new lec (7)
 
-\begin{ndef}[Formal differentiation]\hypertarget{def:diff}
+\begin{ndef}[Formal differentiation]\index{formal derivative}\hypertarget{def:diff}
     If $K$ is a field then \textbf{formal differentiation}
     \begin{align*}
         D: K[t] &\to K[t] \\
@@ -759,7 +761,7 @@ We can use this final construction to produce splitting fields in general.
     If $K$ is a field and $f(t) \in K[t]$ is irreducible:
     \begin{enumerate}[label=(\roman*)]
         \item If the characteristic of $K$ is 0, then $f(t)$ is \hyperlink{def:separablePoly}{separable} over $K$.
-        \item If the characteristic of $K$ is greater than 0, then $f(t)$ is not separable if and only if $f(t) \in K[t^p]$.
+        \item If the characteristic of $K$ is $p>0$, then $f(t)$ is not separable if and only if $f(t) \in K[t^p]$.
     \end{enumerate}
 \end{ncor}
 
@@ -779,7 +781,7 @@ We can use this final construction to produce splitting fields in general.
     \end{enumerate}
 \end{proof}
 
-\begin{ndef}[Separable extension]\hypertarget{def:separableExt}
+\begin{ndef}[Separable extension]\index{field extension!separable}\hypertarget{def:separableExt}
     We say \textbf{$\alpha \in L$ is separable over $K$} if its \hyperlink{def:minimalPoly}{minimal polynomial} is \hyperlink{def:separablePoly}{separable} over $K$.
 
     \textbf{$L$ is separable over $K$} if all $\alpha \in L$ are separable over $K$.
@@ -797,7 +799,7 @@ We can use this final construction to produce splitting fields in general.
             But $t^p - X^p = (t-X)^p$ in $L[t]$ since the binomial expansion gives other terms divisible by $p$ and hence $0$ since the characteristic is $p$.
 
             However $f(t)$ is irreducible in $K[t]$:
-            Suppose $f(t) = g(t) h(t)$ in $K[t]$ and hence in $L[t]$. So we get $g(t) = (t-X)^r$ for some $0 \leq r < p$ if the factorisation is non-trivial.
+            Suppose $f(t) = g(t) h(t)$ in $K[t]$ and hence in $L[t]$. So we get $g(t) = (t-X)^r$ for some $0 < r < p$ if the factorisation is non-trivial.
             But this would mean $X^r$ was in $K$. However, $\exists$integers $a, b$ such that $ar + bp = 1$.
             So $(X^r)^a (X^p)^b \in K$ and so $X \in K$, thus we'd have $X = \frac{u(X^p)}{v(X^p)}$, a contradiction.
 
@@ -963,7 +965,7 @@ We can use this final construction to produce splitting fields in general.
     By \cref{cor:2.10}, $\phi$ extends to $\leq \abs{N:K(\beta)}$ extensions $\theta: N \to L$, and so there are $\lneqq\abs{N:K(\beta)}\abs{K(\beta):K}$ $K$-homomorphisms $N\to L$, contradiction.
 \end{proof}
 
-\begin{ndef}[Separably generated]\hypertarget{def:separableGen}
+\begin{ndef}[Separably generated]\index{field extension!separably generated}\hypertarget{def:separableGen}
     We say $M = \hyperlink{def:genField}{K(\alpha_1, \dotsc, \alpha_r)}$ is \textbf{separably generated} by $\alpha_1, \dotsc, \alpha_r$ over $K$ if each $\alpha_i$ is \hyperlink{def:separableExt}{separable} over $K$.
 \end{ndef}
 
@@ -995,7 +997,7 @@ We can use this final construction to produce splitting fields in general.
 
 % new lec (9)
 
-\begin{nthm}[Primitive Element Theorem]\label{thm:2.17}
+\begin{nthm}[Primitive Element Theorem]\index{primitive element theorem}\label{thm:2.17}
     Any \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:separableExt}{separable} extension $K \leq M$ is a \hyperlink{def:genField}{simple} extension, that is, $M = K(\alpha)$ for some $\alpha$, called a primitive element.
 \end{nthm}
 
@@ -1048,7 +1050,7 @@ We can use this final construction to produce splitting fields in general.
 
 \subsection{Trace and Norm}
 
-\begin{ndef}[Trace and norm]\hypertarget{def:trNorm}
+\begin{ndef}[Trace and norm]\index{trace}\index{norm}\hypertarget{def:trNorm}
     Let $K \leq M$ be a \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:fieldExt}{field extension}, and $\alpha \in M$.
     Multiplication by $\alpha$ gives a $K$-linear map $\theta_\alpha: M \to M$.
 
@@ -1226,11 +1228,11 @@ We restate \cref{def:1.25} and \cref{thm:1.26}:
 \end{proof}
 
 \begin{remark}
-    As for \hyperlink{def:separableExt}{separability}, the property of `\hyperlink{def:normal}{normality}' is equivalent to `normally generated'.
+    \index{field extension!normally generated}As for \hyperlink{def:separableExt}{separability}, the property of `\hyperlink{def:normal}{normality}' is equivalent to `normally generated'.
     In particular, a \hyperlink{def:degreeOfFieldExt}{finite extension} $K \leq L$ is normal if and only if $L = \hyperlink{def:genField}{K(\alpha_1, \dotsc, \alpha_r)}$, with each $\hyperlink{def:minimalPoly}{f_{\alpha_i}}(t)$ \hyperlink{def:splitting}{splitting} over $L$.
 \end{remark}
 
-\begin{ndef}[Automorphism group]\hypertarget{def:autGroup}
+\begin{ndef}[Automorphism group]\index{automorphism group}\hypertarget{def:autGroup}
     Let $K \leq M$ be a \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:fieldExt}{field extension}.
     Its \textbf{$K$-automorphism} group is $\Aut_K(M) = \set{\phi | \phi \text{ a \hyperlink{def:homo}{$K$-homomorphism} } M \to M}$.
 \end{ndef}
@@ -1252,13 +1254,13 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
     Then $\abs{\hyperlink{def:autGroup}{\Aut_K}(M)} = \hyperlink{def:degreeOfFieldExt}{\abs{M:K}}$ iff the extension is both \hyperlink{def:normal}{normal} and \hyperlink{def:separableExt}{separable}.
 \end{nthm}
 
-\begin{ndef}[Galois extension]\hypertarget{def:galoisExt}
+\begin{ndef}[Galois extension]\index{galois extension}\hypertarget{def:galoisExt}
     A \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:fieldExt}{field extension} that is \hyperlink{def:normal}{normal} and \hyperlink{def:separableExt}{separable} is a \textbf{Galois extension}.
 \end{ndef}
 
 % new lec (11)
 
-\begin{ndef}[Galois group]\hypertarget{def:galoisGroup}
+\begin{ndef}[Galois group]\index{galois group}\hypertarget{def:galoisGroup}
     Let $K \leq M$ be a \hyperlink{def:galoisExt}{Galois extension}.
     Then, the $K$-\hyperlink{def:autGroup}{automorphism group} of $M$ is the \textbf{Galois group} of $M$ over $K$.
     Write this as $\Gal(M / K)$.
@@ -1344,7 +1346,7 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
 \clearpage
 \section{Fundamental Theorem of Galois Theory}
 \subsection{Artin's Theorem}
-\begin{ndef}[Fixed field]\hypertarget{def:fixedField}
+\begin{ndef}[Fixed field]\index{fixed field}\hypertarget{def:fixedField}
     Let $K \leq L$ be a \hyperlink{def:fieldExt}{field extension} and $H \leq \hyperlink{def:autGroup}{\Aut_K}(L)$.
     The \textbf{fixed field} of $H$ is,
     \begin{equation*}
@@ -1356,7 +1358,7 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
     Check it is a field and $K \leq \hyperlink{def:fixedField}{L^H} \leq L$.
 \end{ex}
 
-\begin{nthm}[Fundamental Theorem of Galois Theory]\label{thm:3.2}
+\begin{nthm}[Fundamental Theorem of Galois Theory]\index{fundamental theorem}\label{thm:3.2}
     Let $K \leq L$ be a \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:galoisExt}{Galois extension}.
     Then
     \begin{enumerate}[label=(\roman*)]
@@ -1431,7 +1433,7 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
 
 % new lec (12)
 
-\begin{nthm}[Artin's Theorem]\label{thm:3.3}
+\begin{nthm}[Artin's Theorem]\index{Artin's theorem}\label{thm:3.3}
     Let $K \leq L$ be a \hyperlink{def:fieldExt}{field extension} and $H$ a finite subgroup of $\hyperlink{def:autGroup}{\Aut_K}(L)$.
     Let $M = \hyperlink{def:fixedField}{L^H}$.
     Then $M \leq L$ is a \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:galoisExt}{Galois} extension, and $H = \hyperlink{def:galoisGroup}{\Gal}(L/M)$.
@@ -1554,7 +1556,7 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
 \end{proof}
 
 \subsection{Galois groups of polynomials}
-\begin{ndef}[Galois group of polynomial]\hypertarget{def:ggPoly}
+\begin{ndef}[Galois group of polynomial]\index{galois group!of polynomial}\hypertarget{def:ggPoly}
     Let $f(t)$ be a \hyperlink{def:separablePoly}{separable} polynomial $\in K[t]$ and let $K \hyperlink{def:fieldExt}{\leq} L$ with $L$ a \hyperlink{def:splitting}{splitting field} for $f(t)$.
     Then the \textbf{Galois group of $f(t)$} over $K$ is
     \begin{equation*}
@@ -1643,7 +1645,7 @@ Since the Galois group of an irreducible polynomial acts transitively, and is a 
     From the intermediate value theorem, $f$ has at least three real roots, and by Rolle's theorem there are at most three real roots, so we are done.
 \end{proof}
 
-\begin{ndef}[Discriminant]\hypertarget{def:disc}
+\begin{ndef}[Discriminant]\index{discriminant}\hypertarget{def:disc}
     Let $f(t) \in K[t]$ with distinct roots $\alpha_1, \dotsc, \alpha_n$ in a splitting field (with $f(t)$ not necessarily irreducible).
     Let
     \begin{equation*}
@@ -1737,11 +1739,11 @@ Recall what we already know from \cref{sec:1}.
 From \cref{thm:1.27}, a finite field $\F$ is of characteristic $p>0$, $p$ necessarily prime, and $\abs{\F}=p^r$ for some $r$.
 The multiplicative group of $\F$ is cyclic (\cref{thm:1.28}).
 It is a splitting field for $t^n-1$ over $\F_p$ where $n = p^r - 1$.
-By the \nameref{thm:1.24}, this is unique.
+\index{finite field!uniqueness}By the \nameref{thm:1.24}, this is unique.
 Observe we could also describe $\F$ as the splitting field of $t^{p^r}-t$ over $\F_p$.
 What we haven't shown yet is that for any $p^r$, there is a field $\F$ with $\F = p^r$.
 
-\begin{ndef}[Frobenius automorphism]\hypertarget{def:frob}
+\begin{ndef}[Frobenius automorphism]\index{frobenius automorphism}\hypertarget{def:frob}
     Let $\F$ be a finite field of characteristic $p$.
     Then the \textbf{Frobenius automorphism} of $\F$ is
     \begin{align*}
@@ -1795,7 +1797,7 @@ What we haven't shown yet is that for any $p^r$, there is a field $\F$ with $\F 
     Set $n = \frac{r}{s}$.
 \end{proof}
 
-\begin{nthm}[Existence of finite fields]\label{thm:3.18}
+\begin{nthm}[Existence of finite fields]\index{finite field!existence}\label{thm:3.18}
     Let $p$ be a prime and $u \geq 1$.
     Then there is a field of order $p^u$, unique up to isomorphism.
 \end{nthm}
@@ -1818,7 +1820,7 @@ What we haven't shown yet is that for any $p^r$, there is a field $\F$ with $\F 
 \clearpage
 \section{Cyclotomic and Kummer extensions}
 \subsection{Cyclotomic extensions}
-\begin{ndef}[Cyclotomic extension]\hypertarget{def:cycloExt}
+\begin{ndef}[Cyclotomic extension]\index{field extension!cyclotomic}\hypertarget{def:cycloExt}
     Suppose $\chara K = 0$ or $p$ prime where $p \nmid m$.
     The $m$th \textbf{cyclotomic extension} of $K$ is the \hyperlink{def:splitting}{splitting field} $L$ of $t^m - 1$.
 \end{ndef}
@@ -1829,7 +1831,7 @@ What we haven't shown yet is that for any $p^r$, there is a field $\F$ with $\F 
     Thus, $L = K(\xi)$ is a \hyperlink{def:genField}{simple extension}.
 \end{remark}
 
-\begin{ndef}[Primitive $m$th root of unity]\hypertarget{def:primRoot}
+\begin{ndef}[Primitive $m$th root of unity]\index{primitive root}\hypertarget{def:primRoot}
     An element $\xi \in \mu_m$ is a \textbf{primitive $m$th root of unity} if $\mu_m = \langle \xi \rangle$.
 \end{ndef}
 Choosing a \hyperlink{def:primRoot}{primitive $m$th root of unity} determines $\mu_m \to \Z /m\Z$ an isomorphism.
@@ -1853,7 +1855,7 @@ Thus we get an injective map:
     Thus we regard $G$ as a subgroup of $(\Z/m\Z)^\times$.
 \end{ndef}
 
-\begin{ndef}[Cyclotomic polynomial]\hypertarget{def:cycloPoly}
+\begin{ndef}[Cyclotomic polynomial]\index{cyclotomic polynomial}\hypertarget{def:cycloPoly}
     The $m$th \textbf{cyclotomic polynomial} is
     \begin{equation*}
         \Phi_m(t) = \prod _{i \in (\Z/m\Z)^\times} (t - \xi^i),
@@ -1963,7 +1965,7 @@ What happens when $K = \Q$?
     Hence $\Phi_m(t)$ is irreducible over $\Q$.
 \end{proof}
 
-\begin{ndef}[Cyclic, abelian extension]\hypertarget{def:cyclic}
+\begin{ndef}[Cyclic, abelian extension]\index{field extension!cyclic}\hypertarget{def:cyclic}
     An extension $K \leq L$ is \textbf{cyclic} if the extension is \hyperlink{def:galoisExt}{Galois} and $\hyperlink{def:galoisGroup}{\Gal}(L/K)$ is cyclic.
     Similarly, it is called \textbf{abelian} if $\Gal(L/K)$ is abelian.
 \end{ndef}
@@ -2067,7 +2069,7 @@ We have a converse of \cref{thm:4.10}:
     If $\beta$ is a root of $t^m - \lambda$ in $L$, then $L = K(\beta)$.
 \end{nthm}
 
-\begin{ndef}[Kummer extension]\hypertarget{def:kummerExt}
+\begin{ndef}[Kummer extension]\index{field extension!Kummer}\hypertarget{def:kummerExt}
     A \hyperlink{def:cyclic}{cyclic} extension $K \leq L$ with $\abs{L:K} = m$, where $\chara K \nmid m$ and $K$ contains a \hyperlink{def:primRoot}{primitive $m$th root of unity} is a \textbf{Kummer extension}.
 \end{ndef}
 
@@ -2099,7 +2101,7 @@ The proof of \cref{thm:4.11} uses
     $t^m - \lambda$ is the \hyperlink{def:minimalPoly}{minimal polynomial} of $\beta$ over $K$ and hence is irreducible.
 \end{proof}
 
-\begin{ndef}[Extension by radicals]\hypertarget{def:radicals}
+\begin{ndef}[Extension by radicals]\index{field extension!by radicals}\hypertarget{def:radicals}
     A field extension $K \leq L$ is an \textbf{extension by radicals} if $\exists K = L_0 \leq L_1 \leq \dotsb \leq L_n = L$ such that each $L_i \leq L_{i+1}$ is either cyclotomic or Kummer extension.
     A polynomial $f(t) \in K[t]$ is \textbf{soluble by radicals} if its splitting field lies in an extension by radicals.
 \end{ndef}
@@ -2308,7 +2310,7 @@ However each extension $L_i \leq L_{i+1}$ is Galois and we know
 \end{equation*}
 hence $G_i / G_{i+1} \cong \Gal(L_{i+1}/L_i)$, which is abelian if $L_i \leq L_{i+1}$ is \hyperlink{def:cycloExt}{cyclotomic} and cyclic if $L_i \leq L_{i+1}$ is \hyperlink{def:kummerExt}{Kummer}.
 
-\begin{ndef}[Soluble group]\hypertarget{def:soluble}
+\begin{ndef}[Soluble group]\index{soluble}\hypertarget{def:soluble}
     A group is \textbf{soluble} if there is a chain of subgroups
     \begin{equation*}
         \{e\} = G_m \lhd G_{m-1} \lhd \dotsb \lhd G_1 \lhd G_0 = G
@@ -2340,8 +2342,8 @@ hence $G_i / G_{i+1} \cong \Gal(L_{i+1}/L_i)$, which is abelian if $L_i \leq L_{
     with $A_r / A_{r+1}$ cyclic.
     Thus if we have a chain with abelian factors $G_i/G_{i+1}$ we can refine it to have cyclic factors.
 \end{proof}
-\begin{ndef}[Derived subgroup]\hypertarget{def:derivedSub}
-    The \textbf{derived subgroup} $G'$ of a group $G$ is the subgroup generated by all the commutators $g_1 g_2 g_1^{-1} g_2^{-1}$ for $g_1 g_2 \in G$.
+\begin{ndef}[Derived subgroup]\index{derived subgroup}\hypertarget{def:derivedSub}
+    The \textbf{derived subgroup} $G'$ of a group $G$ is the subgroup generated by all the commutators $g_1 g_2 g_1^{-1} g_2^{-1}$ for $g_1, g_2 \in G$.
 \end{ndef}
 \begin{nlemma}\label{lem:4.18}
     Let $K \lhd G$. Then $G/K$ abelian $\iff \hyperlink{def:derivedSub}{G'} \leq K$.
@@ -2361,7 +2363,7 @@ hence $G_i / G_{i+1} \cong \Gal(L_{i+1}/L_i)$, which is abelian if $L_i \leq L_{
             For all $|G| = mn$ with $m,n$ coprime there is a subgroup of order $m$ iff $G$ is \hyperlink{def:soluble}{soluble}.
     \end{enumerate}
 \end{remark}
-\begin{ndef}[Derived series]\hypertarget{def:derivedSer}
+\begin{ndef}[Derived series]\index{derived series}\hypertarget{def:derivedSer}
     The \textbf{derived series} $\{G^{(m)}\}$ of $G$ is defined inductively:
     \begin{align*}
         G^{(0)} &= G \\
@@ -2533,13 +2535,13 @@ hence $G_i / G_{i+1} \cong \Gal(L_{i+1}/L_i)$, which is abelian if $L_i \leq L_{
 \clearpage
 \section{Final Thoughts}
 \subsection{Algebraic closure}
-\begin{ndef}[Algebraically closed]\hypertarget{def:closed}
+\begin{ndef}[Algebraically closed]\index{algebraically closed}\hypertarget{def:closed}
     A field $L$ is \textbf{algebraically closed} if any $f(t) \in L[t]$ \hyperlink{def:splitting}{splits} into a product of linear factors in $L[t]$.
 \end{ndef}
 \begin{remark}
     This is equivalent to saying that any $f(t) \in L[t]$ has a root in $L$, or that any algebraic extension of $L$ is $L$ itself.
 \end{remark}
-\begin{ndef}[Algebraic closure]\hypertarget{def:closure}
+\begin{ndef}[Algebraic closure]\index{algebraic closure}\hypertarget{def:closure}
     An extension $K \leq L$ is an algebraic closure of $K$ if $K \leq L$ is \hyperlink{def:algebraic}{algebraic} and $L$ is \hyperlink{def:closed}{algebraically closed}.
 \end{ndef}
 \begin{nlemma}\label{lem:5.3}
@@ -2562,7 +2564,7 @@ hence $G_i / G_{i+1} \cong \Gal(L_{i+1}/L_i)$, which is abelian if $L_i \leq L_{
 \end{eg}
 If we want to prove existence and uniqueness of algebraic closures in general then we need to appeal to Zorn's Lemma.
 This appears in Logic and Set Theory, and it's equivalent to the Axiom of Choice and to the Well Ordering Principle.
-\begin{ndef}[Partial order]\hypertarget{def:poset}
+\begin{ndef}[Partial order]\index{poset}\hypertarget{def:poset}
     $(\mathcal{S},\leq)$ is a \textbf{partial order} on $\mathcal{S}$ if
     \begin{enumerate}[label=(\roman*)]
         \item $\forall x \in \mathcal{S}$ $x \leq x$
@@ -2572,7 +2574,7 @@ This appears in Logic and Set Theory, and it's equivalent to the Axiom of Choice
     $\mathcal{S}$ is \textbf{totally ordered} if for any $x,y \in S$ either $x \leq y$ or $y \leq x$.
     A \textbf{chain} is a partially ordered set $(\mathcal{S},\leq)$ that is a totally ordered subset.
 \end{ndef}
-\begin{nlemma}[Zorn's Lemma]\label{lem:zorn}
+\begin{nlemma}[Zorn's Lemma]\index{Zorn's lemma}\label{lem:zorn}
     Let $(\mathcal{S},\leq)$ be a non-empty \hyperlink{def:poset}{partially ordered} set.
     Suppose that any \hyperlink{def:poset}{chain} has an upper bound in $\mathcal{S}$.
     Then $\mathcal{S}$ has a maximal element.
@@ -2589,7 +2591,7 @@ This appears in Logic and Set Theory, and it's equivalent to the Axiom of Choice
     \nameref{lem:zorn} gives that $\mathcal{S}$ has a maximal element, i.e.\ a maximal ideal of $R$.
 \end{proof}
 
-\begin{nthm}[Existence of algebraic closures]\label{thm:5.7}
+\begin{nthm}[Existence of algebraic closures]\index{algebraic closure!existence}\label{thm:5.7}
     For any field $K$ there is an \hyperlink{def:closure}{algebraic closure}.
 \end{nthm}
 \begin{proof}
@@ -2682,7 +2684,7 @@ This appears in Logic and Set Theory, and it's equivalent to the Axiom of Choice
     \end{equation*}
     Maximality of $(N,\phi)$ implies that $N(\alpha) = N$. So $\alpha \in N$, so $N = M$.
 \end{proof}
-\begin{nthm}[Uniquness of algebraic closures]\label{thm:5.9}
+\begin{nthm}[Uniquness of algebraic closures]\index{algebraic closure!uniqueness}\label{thm:5.9}
     If $K \leq L_1$, $L \leq L_2$ are two \hyperlink{def:closure}{algebraic closures} of $K$ then there exists an isomorphism $\phi:L_1 \to L_2$.
 \end{nthm}
 \begin{proof}
@@ -2709,7 +2711,7 @@ Let
          &= t^n - s_1 t^{n-1} + s_2 t^{n-2} + \dotsb + (-1)^n s_n.
 \end{align*}
 Thus $s_1 = X_1 + \dotsb + X_n$, $s_2 = \sum_{i < j} X_i X_j$, and $s_n = X_1 X_2 \dotsm X_n$.
-\begin{ndef}[Elementary symmetric polynomials]\hypertarget{def:esp}
+\begin{ndef}[Elementary symmetric polynomials]\index{elementary symmetric polynomials}\hypertarget{def:esp}
     These $s_i$ are the elementary symmetric polynomials.
 \end{ndef}
 \begin{nthm}\label{thm:5.11}
@@ -2718,4 +2720,5 @@ Thus $s_1 = X_1 + \dotsb + X_n$, $s_2 = \sum_{i < j} X_i X_j$, and $s_n = X_1 X_
 \begin{ndef}\hypertarget{def:indep}
     $\alpha_1, \dotsc, \alpha_n$ are \textbf{algebraically independent} over $K$ if the ring homomorphism $K[Y_1, \dotsc, Y_n] \to K[\alpha_1, \dotsc, \alpha_n] \leq L$ is an isomorphism where $K[Y_1, \dotsc, Y_n]$ is the polynomial ring in $Y_1, \dotsc, Y_n$.
 \end{ndef}
+\printindex
 \end{document}
