@@ -797,7 +797,7 @@ The relation \hyperlink{def:to}{$\to$} is an equivalence relation (Exercise.) % 
 \end{defi}
 
 \begin{defi}[Cycle]\hypertarget{def:cycle}
-    A \textbf{cycle} is a sequence $v_0, v_1, \dotsc, v_l$ of vertices of $G$ with $v_0, \dots, v_{l-1}$ distinct, $v_l = v_0$, $v_{i-1} \hypertarget{def:neighbour}{\sim} v_i$ for $1 \leq i \leq l$ and $l \leq 3$.
+    A \textbf{cycle} is a sequence $v_0, v_1, \dotsc, v_l$ of vertices of $G$ with $v_0, \dots, v_{l-1}$ distinct, $v_l = v_0$, $v_{i-1} \hyperlink{def:neighbour}{\sim} v_i$ for $1 \leq i \leq l$ and $l \leq 3$.
     We say that the length of the cycle is $l$.
     \begin{center}
         \begin{tikzpicture}[scale=1.5, every node/.style=node]
@@ -1556,7 +1556,7 @@ This turns out to be uninteresting, we can have $e(G)$ almost $\binom{n}{2}$ and
         }
         \node[node] (8) at (4, 1) {};
         \draw (6) -- (8);
-        \node at (0, -2.5) {$\hyperlink{def:kn}{K_{n-1}}$};
+        \node at (0, -2.5) {$\hyperlink{def:Kn}{K_{n-1}}$};
     \end{tikzpicture}
 \end{center}
 
@@ -1698,10 +1698,10 @@ We are only interested in \hyperlink{def:components}{connected} graphs: We could
 
     ($\Leftarrow$): use induction on $\hyperlink{def:eG}{e(G)}$. For $e(G) = 0$ it is clearly true.
 
-    Consider $e(G) > 0$. Let $v_0 v_1 \dotsc v_k = C$ be a \hyperlink{def:circuit}{circuit} in $G$ of maximal length.
+    Consider $e(G) > 0$. Let $v_0 v_1 \dotsc v_k = C$ be a \hyperlink{def:euler}{circuit} in $G$ of maximal length.
     If $C$ uses all edges of $G$ then we are done.
     If not, delete all edges used in $C$ from $G$ to form $H$.
-    In $H$, every vertex still has even degree. Let $H_1$ be a \hyperlink{def:component}{component} of $H$ with at least one edge.
+    In $H$, every vertex still has even degree. Let $H_1$ be a \hyperlink{def:components}{component} of $H$ with at least one edge.
 
     By induction hypothesis, $H_1$ has an Euler circuit $D$.
     Certainly $C, D$ meet at some vertex $v$.
@@ -1828,7 +1828,7 @@ But,
     \end{enumerate}
 \end{eg}
 
-Clearly if $\hyperlink{def:kn}{K_5} \subset G$ or $\hyperlink{def:knn}{K_{3,3}} \subset G$ then $G$ is not \hyperlink{def:drawing}{planar}.
+Clearly if $\hyperlink{def:Kn}{K_5} \subset G$ or $\hyperlink{def:knn}{K_{3,3}} \subset G$ then $G$ is not \hyperlink{def:drawing}{planar}.
 Remarkably, these are the only obstacles to planarity.
 Also, e.g.\
 \begin{center}
@@ -1852,7 +1852,7 @@ Also, e.g.\
 \end{defi}
 
 \begin{nthm}[Kuratowski's Theorem]\label{thm:19}
-    Let $G$ be a \hyperlink{def:graph}{graph}. Then $G$ \hyperlink{def:drawing}{planar} iff $G$ contains no \hyperlink{def:subdiv}{subdivision} of \hyperlink{def:kn}{$K_5$} or \hyperlink{def:knn}{$K_{3,3}$}.
+    Let $G$ be a \hyperlink{def:graph}{graph}. Then $G$ \hyperlink{def:drawing}{planar} iff $G$ contains no \hyperlink{def:subdiv}{subdivision} of \hyperlink{def:Kn}{$K_5$} or \hyperlink{def:knn}{$K_{3,3}$}.
 \end{nthm}
 
 Recall that a \hyperlink{def:tree}{tree} is a \hyperlink{def:components}{connected} \hyperlink{def:cycle}{acyclic} \hyperlink{def:graph}{graph}.
@@ -1907,7 +1907,7 @@ This is particularly useful for induction, for instance
 \end{remark}
 
 \begin{nthm}[Euler's Formula]\label{thm:23}
-    Take $G$ \hyperlink{def:component}{connected} and \hyperlink{def:drawing}{planar}.
+    Take $G$ \hyperlink{def:components}{connected} and \hyperlink{def:drawing}{planar}.
     Take $\hyperlink{def:order}{\abs{G}} = n \geq 1$, $\hyperlink{def:eG}{e(G)} = m$ with $l$ \hyperlink{def:face}{faces}.
     Then $n - m + l = 2$.
 \end{nthm}
@@ -2143,7 +2143,7 @@ But e.g.\ if $G = \hyperlink{def:knn}{K_{1,t}}$ then $\hyperlink{def:chromNum}{\
 
 For which graphs $G$ is \eqref{eq:greedystar} achieved?
 \begin{itemize}
-    \item $G$ complete: $\chi(\hyperlink{def:kn}{K_k}) = k$, $\Delta(K_k) = k-1$.
+    \item $G$ complete: $\chi(\hyperlink{def:Kn}{K_k}) = k$, $\Delta(K_k) = k-1$.
     \item $G$ an odd \hyperlink{def:Cn}{cycle}, e.g.\ a pentagon: $\chi(G) = 3$, $\Delta(G) = 2$.
 \end{itemize}
 
@@ -2155,7 +2155,7 @@ For which graphs $G$ is \eqref{eq:greedystar} achieved?
     Induction on \hyperlink{def:order}{$|G|$}. Write $\Delta = \hyperlink{def:degree}{\Delta}(G)$.
     We cannot have $\Delta = 0,1$ as $G \ncong \hyperlink{def:Kn}{K_1}, K_2$.
     If $\Delta = 2$ then $G$ is a \hyperlink{def:Pn}{path} or an even \hyperlink{def:Cn}{cycle}, so $\hyperlink{def:chromNum}{\chi}(G) = 2$.
-    So assume $\Delta \geq 3$. Pick $v \in G$ and let $H$ be a \hyperlink{def:component}{component} of $G - v$.
+    So assume $\Delta \geq 3$. Pick $v \in G$ and let $H$ be a \hyperlink{def:components}{component} of $G - v$.
 
     \textbf{Either} $\Delta(H) < \Delta$, in which case by greedy algorithm bound \eqref{eq:greedystar} we have \begin{equation*}\chi(H) \leq \Delta(H) + 1 \leq \Delta.\end{equation*}
     \textbf{Or} $\Delta(H) = \Delta$. Then $H$ is connected and not an odd cycle (as $\Delta \geq 3$).
@@ -2505,11 +2505,11 @@ Further extensions are possible, e.g.\
 \subsection{Connectivity}
 \begin{defi}[$k$-connectivity]\hypertarget{def:kConn}
     Let $k \geq 1$.
-    We say a \hyperlink{def:graph}{graph} $G$ is \textbf{$k$-connected} if whenever $W \subset \hyperlink{def:order}{V(G)}$ with $\hyperlink{def:order}{|W|} < k$ then $G-W$ is \hyperlink{def:component}{connected}.
+    We say a \hyperlink{def:graph}{graph} $G$ is \textbf{$k$-connected} if whenever $W \subset \hyperlink{def:order}{V(G)}$ with $\hyperlink{def:order}{|W|} < k$ then $G-W$ is \hyperlink{def:components}{connected}.
 \end{defi}
 (Assume for now that $G$ is not a complete graph).
 \begin{eg}
-    $G$ is \hyperlink{def:kConn}{1-connected} $\iff$ $G$ is \hyperlink{def:component}{connected}.
+    $G$ is \hyperlink{def:kConn}{1-connected} $\iff$ $G$ is \hyperlink{def:components}{connected}.
     $G$ is 2-connected $\iff G$ is connected and $G$ has no `cut vertex'.
         \begin{center}
             \begin{tikzpicture}
@@ -2619,8 +2619,13 @@ We now return to prove \Cref{thm:34}: that if every \hyperlink{def:abpath}{$AB$-
     Assume WLOG $x$ comes before $y$ in this path (if not, swap $x$ and $y$).
 
     Let $X = W \cup \{x\}$ and $Y = W \cup \{y\}$.
-    \textbf{missing end of proof}
-    % this is in lec 18
+    Let $U$ be an \hyperlink{def:abpath}{$AX$-separator} in $G-xy$. Then $U$ is an $AB$-separator in $G$, so $|U| \geq k$.
+    So by the induction hypothesis, we have $k$ \hyperlink{def:vertexDisjoint}{vertex-disjoint} $AX$-paths in $G-xy$, say $P_0, P_1, \dotsc, P_{k-1}$ ending at $x, w_1, \dotsc, w_{k-1}$ respectively.
+
+    Similarly, there are $k$ vertex-disjoint $YB$ paths in $G-xy$, say $Q_0, Q_1, \dotsc, Q_{k-1}$ starting at $y, w_1, w_2, \dotsc, w_{k-1}$ respectively.
+
+    Given \hyperlink{def:path}{path} $P=u_0 u_1 \dotsm u_l$ and $Q = v_0 v_1 \dotsm v_m$ meeting only at $u_l = v_0$, write $P \vee Q$ for the path $u_0 \dotsm u_l v_1 \dotsm v_m$.
+    Then $P_0 \vee xy \vee Q_)$ and $P_i \vee Q_i$ (for $1 \leq i \leq k-1$) are $k$ vertex-disjoint $AB$-paths in $G$.
 \end{proof}
 In fact, \nameref{thm:31} is also a consequence of \Cref{thm:34}.
 Let $G$ be a \hyperlink{def:bipartite}{bipartite} graph with bipartition $(X,Y)$ such that
