@@ -543,7 +543,7 @@ We have seen $\hyperlink{def:ramseyNum}{R(3) = 6}$; $R(3, 4) \leq 10$; $R(4) \le
 
 \begin{nthm}[Ramsey's Theorem]\label{thm:ramsey}
     \hyperlink{def:ramseyNum}{$R(s, t)$} exists for all $s, t \geq 2$.
-    Moreover, if $s, t \geq 2$ then $R(s, t) \leq R(s-1, t) + R(s, t-1)$.
+    Moreover, if $s, t > 2$ then $R(s, t) \leq R(s-1, t) + R(s, t-1)$.
 \end{nthm}
 
 \begin{proof}
@@ -555,7 +555,7 @@ We have seen $\hyperlink{def:ramseyNum}{R(3) = 6}$; $R(3, 4) \leq 10$; $R(4) \le
     Pick $v \in K_n$, which is in $a+b-1$ edges, so either $v$ is in \red{$a$ red edges}, or it is in \green{$b$ green edges}.
     \begin{itemize}
         \item If $v$ is in \red{$a$ red edges}, let $H$ be the $K_a$ joined to $v$ by \red{red} edges.  Now $a = R(s-1, t)$, so either $H$ has a \red{red $K_{s-1}$}, making a \red{red $K_s$} with $v$, or $H$ has a \green{green $K_t$}, so done.
-        \item If $v$ is in \green{$b$ green edges}, and we can make the same argument with colours reversed.
+        \item If $v$ is in \green{$b$ green edges}, and we can make the same argument with colours reversed. \qedhere
     \end{itemize}
 \end{proof}
 
@@ -2168,7 +2168,7 @@ For which graphs $G$ is \eqref{eq:greedystar} achieved?
     If there is a colour missing from $\hyperlink{def:neighbour}{\Gamma}(v)$, then use that colour at $v$, as required.
     So assume that is not the case.
 
-    So have $\Gamma(v) = \{x_1, ..., x_\Delta\}$ with $\forall i, c(x_i) = i$.
+    So have $\Gamma(v) = \{x_1, \dotsc, x_\Delta\}$ with $\forall i, c(x_i) = i$.
     We can also assume:
     \begin{enumerate}[label=(\roman*)]
         \item if $i \neq j$ then there is an \hyperlink{def:ijpath}{$ij$-path} $P_{ij}$ from $x_i$ to $x_j$,
@@ -2405,7 +2405,7 @@ In fact, we can tighten the upper bound:
 \clearpage
 \section{Connectivity}
 \subsection{The Marriage Problem}
-\textbf{Legal note}: This problem was first posed in 1935. Note 1935 < 2014, so marriage has 1 man and 1 woman.
+\textbf{Legal note}: This problem was first posed in 1935. Note $1935 < 2014$, so marriage has 1 man and 1 woman.
 
 Suppose we have $n$ women and $n$ men. For each woman, we have a list of `suitable' husbands. Can we marry everyone off?
 Reformulate this as a \hyperlink{def:bipartite}{bipartite graph}: $X$ is the set of women, $Y$ is the set of men, and an edge denotes suitability.

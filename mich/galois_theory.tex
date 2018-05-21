@@ -708,7 +708,7 @@ We can use this final construction to produce splitting fields in general.
 \section{Separable, normal and Galois extensions}
 
 \begin{ndef}[Separable polynomial]\index{separable polynomial}\hypertarget{def:separablePoly}
-    Let $K$ be a field and $f(t) \in K[t]$. Suppose $f(t)$ is irreducible in $K[t]$ and $L$ is a splitting field for $f(t)$ over $K$.
+    Let $K$ be a field and $f(t) \in K[t]$. Suppose $f(t)$ is irreducible in $K[t]$ and $L$ is a \hyperlink{def:splitting}{splitting field} for $f(t)$ over $K$.
     Then $f(t)$ is \textbf{separable} over $K$ if $f(t)$ has no repeated roots in $L$.
 
     For general $f(t)$ we say $f(t)$ is separable over $K$ if every irreducible factor in $K[t]$ is separable over $K$.
@@ -924,9 +924,9 @@ We can use this final construction to produce splitting fields in general.
     Using \cref{lem:2.8}, there are
     \begin{align*}
         \leq& \abs{M_1:M} \text{ extensions } \phi_1 : M_1 \to L \text{ of } \phi \\
-        \leq& \abs{M_2:M_1} \text{ extensions } \phi_2 : M_2 \to L \text{ of } \phi \\
+        \leq& \abs{M_2:M_1} \text{ extensions } \phi_2 : M_2 \to L \text{ of } \phi_1 \\
         \vdotswithin{\leq}\\
-        \leq& \abs{M_r:M_{r-1}} \text{ extensions } \phi_r : M_r \to L \text{ of } \phi
+        \leq& \abs{M_r:M_{r-1}} \text{ extensions } \phi_r : M_r \to L \text{ of } \phi_{r-1}
     \end{align*}
     By the \nameref{thm:towerLaw}, the number of extensions $\theta: N \to L$ (recall $N=M_r$) of $\phi:M \to L$ is
     \begin{equation*}
@@ -944,7 +944,7 @@ We can use this final construction to produce splitting fields in general.
     Then the following are equivalent:
     \begin{enumerate}[label=(\roman*)]
         \item $N$ is \hyperlink{def:separableExt}{separable} over $K$.
-        \item Each $\alpha_i$ is separable over $K(\alpha_1, \dotsc, \alpha_n)$.
+        \item Each $\alpha_i$ is separable over $K(\alpha_1, \dotsc, \alpha_{i-1})$.
         \item If $K \leq L$ is large enough there are exactly $n$ distinct \hyperlink{def:homo}{$K$-homomorphisms} $N \to L$.
     \end{enumerate}
 \end{nlemma}
@@ -959,7 +959,7 @@ We can use this final construction to produce splitting fields in general.
 
     (ii) $\Rightarrow$ (iii) follows from \cref{rem:2.11}.
 
-    (iii) $\Rightarrow$ (i). Assume (iii) is false and (i) true, aiming for a contradiction.
+    (iii) $\Rightarrow$ (i). Assume (iii) is true and (i) false, aiming for a contradiction.
     So, $\exists \beta \in N$ that is not \hyperlink{def:separableExt}{separable} over $K$, so there are $\lneqq\abs{K(\beta):K}$ $K$-homomorphisms $\phi:K(\beta) \to L$ by \cref{cor:2.7}.
 
     By \cref{cor:2.10}, $\phi$ extends to $\leq \abs{N:K(\beta)}$ extensions $\theta: N \to L$, and so there are $\lneqq\abs{N:K(\beta)}\abs{K(\beta):K}$ $K$-homomorphisms $N\to L$, contradiction.
