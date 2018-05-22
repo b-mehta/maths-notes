@@ -126,7 +126,7 @@ Suppose $K \leq L$ is a \hyperlink{def:fieldExt}{field extension}. Then $L$ is a
 
 The \nameref{thm:towerLaw} will not be proved for \hyperlink{def:degreeOfFieldExt}{infinite} extensions, but observe that if $M$ is an infinite extension of $L$ then it is an infinite extension of $K$, and similarly if $L$ is an infinite extension of $K$ then the larger field $M$ must also be an infinite extension of $K$.
 
-\subsection{Motivatory Example}
+\subsection{Motivatory Example}\label{sec:motivEg}
 Observe $\Q \hyperlink{def:fieldExt}{\leq} \Q\left(\sqrt{2}\right) \leq \Q\left(\sqrt{2}, i\right)$
 \begin{enumerate}[label=(\roman*)]
     \item $\Q\left(\sqrt{2}\right)$ has basis $1, \sqrt{2}$ over $\Q$.
@@ -143,7 +143,7 @@ Any intermediate field strictly between $\Q$ and $\Q\left(\sqrt{2}, i\right)$ mu
 
 What are these intermediate fields? There are $\Q\left(\sqrt{2}\right)$, $\Q(i)$ and $\Q\left(i\sqrt{2}\right)$, but are these all?
 
-The Galois correspodence arising in the Fundamental Theorem of Galois theory gives an order reversing bijection between the lattice of intermediate subfields and the subgroups of a group of ring automorphisms of the big field (in this case $\Q\left(i, \sqrt{2}\right)$) that fix the smaller field elementwise.
+The Galois correspodence arising in the Fundamental Theorem of Galois Theory gives an order reversing bijection between the lattice of intermediate subfields and the subgroups of a group of ring automorphisms of the big field (in this case $\Q\left(i, \sqrt{2}\right)$) that fix the smaller field elementwise.
 For instance, consider the ring automorphisms of $\Q\left(i, \sqrt{2}\right)$ that fix $\Q$:
 \begin{align*}
     e : \sqrt{2} &\longmapsto \sqrt{2} \\
@@ -997,7 +997,7 @@ We can use this final construction to produce splitting fields in general.
 
 % new lec (9)
 
-\begin{nthm}[Primitive Element Theorem]\index{primitive element theorem}\label{thm:2.17}
+\begin{nthm}[Primitive Element Theorem]\index{Primitive element theorem}\label{thm:2.17}
     Any \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:separableExt}{separable} extension $K \leq M$ is a \hyperlink{def:genField}{simple} extension, that is, $M = K(\alpha)$ for some $\alpha$, called a primitive element.
 \end{nthm}
 
@@ -1027,7 +1027,7 @@ We can use this final construction to produce splitting fields in general.
 \end{proof}
 
 \begin{eg}
-    From our example in (link) chapter 1, $\Q \leq \Q(\sqrt{2}, i)$, we had intermediate subfields.
+    From our example in \Cref{sec:motivEg}, $\Q \leq \Q(\sqrt{2}, i)$, we had intermediate subfields.
     \begin{center}
         \begin{tikzpicture}[node distance=2cm]
             \node (Q)                  {$\mathbb{Q}$};
@@ -1254,13 +1254,13 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
     Then $\abs{\hyperlink{def:autGroup}{\Aut_K}(M)} = \hyperlink{def:degreeOfFieldExt}{\abs{M:K}}$ iff the extension is both \hyperlink{def:normal}{normal} and \hyperlink{def:separableExt}{separable}.
 \end{nthm}
 
-\begin{ndef}[Galois extension]\index{galois extension}\hypertarget{def:galoisExt}
+\begin{ndef}[Galois extension]\index{Galois extension}\hypertarget{def:galoisExt}
     A \hyperlink{def:degreeOfFieldExt}{finite} \hyperlink{def:fieldExt}{field extension} that is \hyperlink{def:normal}{normal} and \hyperlink{def:separableExt}{separable} is a \textbf{Galois extension}.
 \end{ndef}
 
 % new lec (11)
 
-\begin{ndef}[Galois group]\index{galois group}\hypertarget{def:galoisGroup}
+\begin{ndef}[Galois group]\index{Galois group}\hypertarget{def:galoisGroup}
     Let $K \leq M$ be a \hyperlink{def:galoisExt}{Galois extension}.
     Then, the $K$-\hyperlink{def:autGroup}{automorphism group} of $M$ is the \textbf{Galois group} of $M$ over $K$.
     Write this as $\Gal(M / K)$.
@@ -1556,7 +1556,7 @@ From \cref{lem:1.21} we know that such \hyperlink{def:homo}{$K$-homomorphisms} a
 \end{proof}
 
 \subsection{Galois groups of polynomials}
-\begin{ndef}[Galois group of polynomial]\index{galois group!of polynomial}\hypertarget{def:ggPoly}
+\begin{ndef}[Galois group of polynomial]\index{Galois group!of polynomial}\hypertarget{def:ggPoly}
     Let $f(t)$ be a \hyperlink{def:separablePoly}{separable} polynomial $\in K[t]$ and let $K \hyperlink{def:fieldExt}{\leq} L$ with $L$ a \hyperlink{def:splitting}{splitting field} for $f(t)$.
     Then the \textbf{Galois group of $f(t)$} over $K$ is
     \begin{equation*}
@@ -2447,7 +2447,7 @@ hence $G_i / G_{i+1} \cong \Gal(L_{i+1}/L_i)$, which is abelian if $L_i \leq L_{
     Our previous discussion at the beginning of this section (before \cref{lem:4.13}) we know that $\Gal(L_m/K)$ is soluble.
 
     But $F \leq L \leq L_m$ with $K \leq L$ Galois.
-    By \nameref*{thm:3.2}, $\Gal(L/K) \cong \Gal(L_m/K)/\Gal(L_m/L)$.
+    By the \nameref*{thm:3.2}, $\Gal(L/K) \cong \Gal(L_m/K)/\Gal(L_m/L)$.
 
     But quotients of soluble groups are soluble, so $\Gal(L/K)$ is soluble.
 \end{proof}
@@ -2455,7 +2455,7 @@ hence $G_i / G_{i+1} \cong \Gal(L_{i+1}/L_i)$, which is abelian if $L_i \leq L_{
     We have $K = L_0 \leq L_1 \leq \dotsb \leq L_m$ with each $L_i \leq L_{i+1}$ \hyperlink{def:cycloExt}{cyclotomic} or \hyperlink{def:kummerExt}{Kummer},
     and we want to embed this into a \hyperlink{def:galoisExt}{Galois} extension of the same form.
 
-    Assume $\chara K = 0$. By the primitive element theorem, $L_m = \hyperlink{def:genField}{K(\alpha_1)}$ for some $\alpha_1$.
+    Assume $\chara K = 0$. By the \nameref{thm:2.17}, $L_m = \hyperlink{def:genField}{K(\alpha_1)}$ for some $\alpha_1$.
     Let $g(t)$ be the \hyperlink{def:minimalPoly}{minimal polynomial} of $\alpha_1$ over $K$ with \hyperlink{def:splitting}{splitting field} $M$.
     Thus $M = K(\alpha_1,\alpha_2,\dotsc,\alpha_n)$ where $\alpha_1, \dotsc, \alpha_n$ are roots of $g(t)$.
 

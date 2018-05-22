@@ -998,21 +998,21 @@ Note also that $0 < k < \frac{1}{2} + \frac{a j}{p} < \frac{a+1}{2}$.
     \end{equation*}
     and
     \begin{equation*}
-        S = \Set{(j, k) | 1 \leq j \leq \frac{p-1}{2}, 1 \leq k \leq \frac{q-1}{2}}
+        S = \Set{(j, k) | 1 \leq j \leq \frac{p-1}{2}, 1 \leq k \leq \frac{q-1}{2}}.
     \end{equation*}
-    By symmetry, $\legendre{p}{q} = (-1)^\nu$ where
+    Similarly, $\legendre{p}{q} = (-1)^\nu$ where
     \begin{equation*}
-        \nu =\#\Set{(j, k) \in S | 0 < jp - kq < \frac{p}{2}}
+        \nu =\#\Set{(j, k) \in S | 0 < jq - kp < \frac{q}{2}}.
     \end{equation*}
     Now, $\#S = \frac{p-1}{2} \frac{q-1}{2} = \mu + \nu + \#A + \#B$ where
     \begin{align*}
-        A = \Set{(j, k) \in S | kp - jq > \frac{p}{2}} \\
-        B = \Set{(j, k) \in S | jp - kq > \frac{p}{2}}
+        A &= \Set{(j, k) \in S | kp - jq > \frac{p}{2}} \\
+        B &= \Set{(j, k) \in S | jq - kp > \frac{q}{2}}.
     \end{align*}
     If $(j, k) \in S$, write $j' = \frac{p+1}{2} - j$, $k' = \frac{q+1}{2} - k$.
     Then $(j', k') \in S$, and
     \begin{equation*}
-        j'q - k'p = \left(\frac{p+1}{2} - j\right) q - \left(\frac{q+1}{2} - k\right) p = \left(kp - jq - \frac{p}{2}\right) + \frac{q}{2}
+        j'q - k'p = \left(\frac{p+1}{2} - j\right) q - \left(\frac{q+1}{2} - k\right) p = \left(kp - jq - \frac{p}{2}\right) + \frac{q}{2}.
     \end{equation*}
     So $(j, k) \in A \iff (j', k') \in B$, so $\#A = \#B$.
     Hence $\frac{p-1}{2} \frac{q-1}{2} = \mu + \nu + 2 \#A$ and
