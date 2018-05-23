@@ -357,13 +357,13 @@ Finally, we show that the complement of a set in $\mathcal{L}$ is in $\mathcal{L
 
 \section{Abstract Measure Theory}
 
-\begin{defi}[\hypertarget{def:sigAlg}{$\sigma$-algebra}]
-    Let $X$ be a set. A family $\mathcal{A}$ of subsets of $X$ which contains the empty set $\emptyset$ and is stable under countable unions and complementation
-    is called a \textbf{$\sigma$-algebra}.
+\begin{defi}[$\sigma$-algebra]\hypertarget{def:sigAlg}
+    Let $X$ be a set.
+    A family $\mathcal{A}$ of subsets of $X$ which contains the empty set $\emptyset$ and is stable under countable unions and complementation is called a \textbf{$\sigma$-algebra}.
 \end{defi}
 
 \begin{remark}
-    $\sigma$ stands for `countable'
+    $\sigma$ stands for `countable'.
 \end{remark}
 
 \begin{defi}[Measurable space]\hypertarget{def:measurableSpace}
@@ -1395,10 +1395,10 @@ Using this lemma, we can prove (exercise) that $\mathcal{L}(\R^{d_1}) \otimes \m
     \begin{equation*}
         \mu \otimes \nu(E) = \int_X \nu(E_x)\,d\mu = \int_Y \mu(E^y)\,d\nu \tag{$***$}\label{eq:simpletonelli}
     \end{equation*}
-    Let $\mathcal{C} = \set{E \in \mathcal{A} \otimes B | \text{such that \eqref{eq:simpletonelli} holds}}$.
+    Let $\mathcal{C} = \{E \in \mathcal{A} \otimes B \mid \text{such that } \eqref{eq:simpletonelli} \text{ holds} \}$.
     \begin{itemize}
-        \item $A \times B \in \mathcal{C}$, $\forall A \in \mathcal{A}$, $\forall B \in \mathcal{B}$ by definition of $\mu \otimes \nu$.
-        \item $\mathcal{C}$ is stable under complement (because $\mu$, $\nu$ are finite, $(E_x)^c = (E^c)_x)$.
+        \item $\forall A \in \mathcal{A}$, $\forall B \in \mathcal{B}$ we have $A \times B \in \mathcal{C}$, by definition of $\mu \otimes \nu$.
+        \item $\mathcal{C}$ is stable under complement (because $\mu$, $\nu$ are finite, $(E_x)^c = (E^c)_x$).
         \item $\mathcal{C}$ is stable under countable disjoint unions: $(\bigcup E_n)_x = \bigcup(E_n)_x$
         \item $\mathcal{C}$ contains $\set{A \times B | A \in \mathcal{A}, B \in \mathcal{B}}$ which is stable under intersections.
     \end{itemize}
@@ -1476,7 +1476,7 @@ Note $\mu_X$ is the image of $\Prob$ under $X: \Omega \to \R$.
 \end{notation}
 
 \begin{defi}[Cumulative probability function]\hypertarget{def:cdf}
-    The function $F_X = \Prob(X \leq x) = \mu_X(-\infty, x]$ is the \textbf{cumulative probability function}.
+    The function $F_X = \Prob(X \leq x) = \mu_X(-\infty, x]$ is the \textbf{cumulative probability function}.%)
 \end{defi}
 
 \begin{remark}
@@ -1490,15 +1490,15 @@ Note $\mu_X$ is the image of $\Prob$ under $X: \Omega \to \R$.
 \end{remark}
 
 \begin{thm}
-    Conversely, given a non-decreasing function $F: \R \to [0, 1]$ which is right-continuous and satisfies \eqref{eq:cumLimits}, then there exists a unique probability measure on $\R, \mathcal{B}(\R)$ such that $F(x) = \mu((-\infty, x])$ for all $x \in \R$.
+    Conversely, given a non-decreasing function $F: \R \to [0, 1]$ which is right-continuous and satisfies \eqref{eq:cumLimits}, then there exists a unique probability measure on $(\R, \mathcal{B}(\R))$ such that $F(x) = \mu((-\infty, x])$ for all $x \in \R$. %)
 \end{thm}
 
 \begin{proof}[Sketch proof]
     \leavevmode
     \begin{itemize}
-        \item Define $\mu$ on intervals $(a, b]$ as $\mu((a, b]) = F(b) - F(a)$.
+        \item Define $\mu$ on intervals $(a, b]$ as $\mu((a, b]) = F(b) - F(a)$. %))
         \item Extend it to finite unions of intervals.
-        \item Use \hyperlink{def:caratheodory}{Carath\'eodory Extension Theorem}. \qedhere
+        \item Use \hyperlink{thm:caratheodory}{Carath\'eodory Extension Theorem}. \qedhere
     \end{itemize}
 \end{proof}
 
@@ -1523,11 +1523,11 @@ Throughout this section, take $(\Omega, \mathcal{F}, \Prob)$ a \hyperlink{def:pr
     \end{equation*}
 \end{defi}
 
-\begin{defi}[Independent algebras]
+\begin{defi}[Independent algebras]\hypertarget{def:indepAlg}
     A sequence of sub-$\sigma$-algebras $(\mathcal{A}_n)_{n \geq 1}$ of $\mathcal{F}$ is called \textbf{independent} if $\forall A_i \in \mathcal{A}_i \; \forall i \geq 1$, the family $(A_i)_{i \geq 1}$ is \hyperlink{def:independentEvents}{independent}.
 \end{defi}
 
-\begin{defi}[Independent random variables]
+\begin{defi}[Independent random variables]\hypertarget{def:indepRV}
     A sequence $(X_n)_{n \geq 1}$ of \hyperlink{def:rv}{random variables} is called \textbf{(mutually) independent} if the sequence $(\sigma(X_n))_{n \geq 1}$ is independent.
 \end{defi}
 
@@ -1542,46 +1542,64 @@ Throughout this section, take $(\Omega, \mathcal{F}, \Prob)$ a \hyperlink{def:pr
 \begin{eg}
     \leavevmode
     \begin{itemize}
-        \item If $X$ takes only finitely many values $x_1, \dotsc, x_n$, then $\sigma(X)$ is a finite boolean algebra, whose atoms are $\set{\omega | X(\omega) = x_i}_{i=1,\dotsc,k}$.
-        \item Use $\Omega=\{\text{Heads}, \text{ Tails}\}^2$, representing two independent coin tosses $X_1, X_2$.
+        \item If $X$ takes only finitely many values $x_1, \dotsc, x_n$, then $\sigma(X)$ is a \textbf{finite Boolean algebra}, whose atoms are $\set{\omega | X(\omega) = x_i}_{i=1,\dotsc,k}$.
+        \item Use $\Omega=\{\text{Heads},\text{Tails}\}^2$, representing two independent coin tosses $X_1, X_2$.
             \begin{equation*}
-                \Prob(X_1 = \epsilon_1, X_2 = \epsilon_2) = \frac{1}{4} = \Prob(X_1 = \epsilon_1) \Prob(X_2 = \epsilon_2) \; \forall \epsilon_1, \epsilon_2 \in \{H, T\}.
+                \Prob(X_1 = \epsilon_1, X_2 = \epsilon_2) = \frac{1}{4} = \Prob(X_1 = \epsilon_1) \Prob(X_2 = \epsilon_2) \quad \forall \epsilon_1, \epsilon_2 \in \{H, T\}.
             \end{equation*}
-            $\mathcal{F}=$ discrete Boolean algebra on $\Omega$, and $\mathcal{F}=2^\Omega$. Then,
+            $\mathcal{F}=$ discrete Boolean algebra on $\Omega$, and $\mathcal{F}=2^\Omega$.
+            \begin{center}
+                \begin{tikzpicture}
+                    \foreach \x in {0,3,6}{
+                        \draw[xshift=\x cm] (0,0) circle [radius=1cm];
+                        \node[xshift=\x cm] at (0.4,0.4) {TH};
+                        \node[xshift=\x cm] at (-0.4,0.4) {HH};
+                        \node[xshift=\x cm] at (-0.4,-0.4) {HT};
+                        \node[xshift=\x cm] at (0.4,-0.4) {TT};
+                    }
+                    \draw (1,0) -- (-1,0);
+                    \draw (0,1) -- (0,-1);
+
+                    \draw (3,1) -- (3,-1);
+
+                    \draw (5,0) -- (7,0);
+
+                    \node at (0,-1.4) {$\Omega$};
+                    \node at (3,-1.4) {$\sigma(X_1)$};
+                    \node at (6,-1.4) {$\sigma(X_2)$};
+                \end{tikzpicture}
+            \end{center}
             \begin{align*}
                 \sigma(X_1)= \{\{H\} \times \{H, T\}, \{T\} \times \{H, T\}, \emptyset, \Omega\} \\
                 \sigma(X_2)= \{\{H, T\} \times \{H\}, \{H, T\} \times \{T\}, \emptyset, \Omega\}
             \end{align*}
-            as shown in the diagram.
-            % diagram
     \end{itemize}
 \end{eg}
 
 \begin{lemma}
-    Let $\mathcal{F}_i \subseteq A_i$ be a subfamily of events which is stable under finite intersection, such that $\sigma(\mathcal{F}_i) = \mathcal{A}_i$.
-
+    Let $\mathcal{F}_i \subseteq \mathcal{A}_i$ be a subfamily of events which is stable under finite intersection, such that $\sigma(\mathcal{F}_i) = \mathcal{A}_i$.
     Then to check that $(\mathcal{A}_i)_{i \geq 1}$ forms an independent family it is enough to check that
     \begin{equation*}
-        \Prob(\bigcap_{i \in I} A_i) = \prod_{i \in I} \Prob(A_i)
+        \Prob\left(\bigcap_{i \in I} A_i\right) = \prod_{i \in I} \Prob(A_i)
     \end{equation*}
     holds $\forall I \subseteq \N$ finite and $\forall A_i \in \mathcal{F}_i$.
 \end{lemma}
 
-\begin{eg}
+\begin{eg}\leavevmode
     \begin{enumerate}[label=(\alph*)]
-        \item Let $(X_1, \dotsc, X_n)$ be a \hyperlink{def:rv}{random variable}.
-            They are independent $\iff$
+        \item Let $(X_1, \dotsc, X_n)$ be \hyperlink{def:rv}{random variables}.
+            They are \hyperlink{def:indepRV}{independent} $\iff$
             \begin{equation*}
-                \forall x_1, \dotsc, x_n \in \R \quad \Prob(\forall i=1,\dotsc,n\; X_i \leq x_i) = \prod_{i=1}^n \Prob(X_i \leq x_i).
+                \forall x_1, \dotsc, x_n \in \mathbb{R} \quad \Prob(\forall i=1,\dotsc,n\; X_i \leq x_i) = \prod_{i=1}^n \Prob(X_i \leq x_i).
             \end{equation*}
             Indeed this is a special case of the lemma setting
             \begin{equation*}
-                \mathcal{F}_i = \set{X_i^{-1}((-\infty, x]) | x \in \R}
+                \mathcal{F}_i = \set{X_i^{-1}((-\infty, x]) | x \in \R} %)
             \end{equation*}
         \item If $X_1, \dotsc, X_n$ take only a finite set $E$ of values.
             $(X_1, \dotsc X_n)$ independent $\iff$
             \begin{equation*}
-                \forall e_1, \dotsc, e_n \in \E \quad \Prob(\forall i \; X_i = e_i) = \prod_{i=1}^n \Prob(X_i = e_i).
+                \forall e_1, \dotsc, e_n \in E \quad \Prob(\forall i \; X_i = e_i) = \prod_{i=1}^n \Prob(X_i = e_i).
             \end{equation*}
     \end{enumerate}
 \end{eg}
@@ -1589,7 +1607,7 @@ Throughout this section, take $(\Omega, \mathcal{F}, \Prob)$ a \hyperlink{def:pr
 \begin{proof}[Proof of lemma]
     For two $\sigma$-subalgebras $\mathcal{A}_1$ and $\mathcal{A}_2$, let $A_2 \in \mathcal{A}_2$ be such that
     \begin{equation*}
-        \Prob(A \cap A_2) = \Prob(A_1) \Prob(A_2) \tag{*}
+        \Prob(A \cap A_2) = \Prob(A) \Prob(A_2) \tag{$*$} \label{eq:indepstar}
     \end{equation*}
     holds for all $A \in \mathcal{F}_1$.
     Look at the two measures
@@ -1597,181 +1615,210 @@ Throughout this section, take $(\Omega, \mathcal{F}, \Prob)$ a \hyperlink{def:pr
         A &\longmapsto \Prob(A \cap A_2) \\
         A &\longmapsto \Prob(A) \Prob(A_2).
     \end{align*}
-    The two measures coincide on $\mathcal{F}_1$, hence they coincide on $\mathcal{A}_1$ (by Dynkin's lemma).
-    So (*) holds $\forall A \in \mathcal{A}_1$.
-
-    Now just reverse the roles of $\mathcal{A}_1$ and $\mathcal{A}_2$>
+    The two measures coincide on $\mathcal{F}_1$, hence they coincide on $\mathcal{A}_1$ (by \hyperlink{lem:dynkin}{Dynkin's lemma}).
+    So \eqref{eq:indepstar} holds $\forall A \in \mathcal{A}_1$.
+    Now just reverse the roles of $\mathcal{A}_1$ and $\mathcal{A}_2$.
 \end{proof}
 
 \begin{eg}
-    $\Omega = [0, 1]$, $\Prob =$ Lebesgue measure, $\mathcal{F} = \mathcal{B}(\R)$ the Borel $\sigma$-algebra.
-    Let $X_n(\omega)$ be the $n$th digit is the decimal expansion of $\omega \in [0, 1]$.
+    $\Omega = [0, 1]$, $\Prob =$ \hyperlink{def:lebMeas}{Lebesgue measure}, $\mathcal{F} = \mathcal{B}(\R)$ the \hyperlink{def:borelAlg}{Borel $\sigma$-algebra}.
+    Let $X_n(\omega)$ be the $n$th digit of the decimal expansion of $\omega \in [0, 1]$.
 
-    Claim $(X_n)_{n \geq 1}$ is independent. Then $X_n(\omega) \in \{0, 1, \dotsc, 9\}$.
+    Claim $(X_n)_{n \geq 1}$ is \hyperlink{def:indepRV}{independent}. We have $X_n(\omega) \in \{0, 1, \dotsc, 9\}$.
     Let
     \begin{align*}
         I_{\epsilon_1, \dotsc, \epsilon_n} &= \set{\omega \in \Omega | X_1(\omega) = \epsilon_1, \dotsc, X_n(\omega) = \epsilon_n} \\
-                                           &= \set{\omega \in [0, 1] | \floor{10^n \omega} = \epsilon_1, \dotsc, \epsilon_n}.
+                                           &= \set{\omega \in [0, 1] | \floor{10^n \omega} = \epsilon_1 \dotsm \epsilon_n}.
     \end{align*}
     We need to check that
     \begin{align*}
         \Prob(X_1(\omega) = \epsilon_1, \dotsc, X_n(\omega) = \epsilon_n) &= \prod_{i=1}^n \Prob(X_i(\omega) = \epsilon_i) \\
                                                                           &= \prod_{i=1}^n \frac{1}{10} = \frac{1}{10^n}
     \end{align*}
-    but it's clear $\Prob(\omega \in I_{\epsilon_1, \dotsc, \epsilon_n}) = \frac{1}{10^n}$.
+    but it is clear $\Prob(\omega \in I_{\epsilon_1, \dotsc, \epsilon_n}) = \frac{1}{10^n}$.
 \end{eg}
 
-\begin{remark}
+\begin{remark}\leavevmode
     \begin{itemize}
-        \item If $f_1, \dotsc, f_n$ are Borel measurable functions $\R \to \R$ and $X_1, \dotsc, X_n$ are independent random variables, then so are $f_1(X_1), \dotsc, f_n(X_n)$.
+        \item If $f_1, \dotsc, f_n$ are \hyperlink{def:borelFunc}{Borel measurable functions} $\R \to \R$ and $X_1, \dotsc, X_n$ are \hyperlink{def:indepRV}{independent} \hyperlink{def:rv}{random variables}, then so are $f_1(X_1), \dotsc, f_n(X_n)$.
             So $\sigma(f(X)) \subseteq \sigma(X)$.
-        \item Independence implies piecewise independence, but not conversely.
-            Consider Bernstein's example: take $X$,$Y$ two independent coin tosses.
+        \item \hyperlink{def:indepRV}{Independence} implies pairwise independence, but not conversely.
+            Consider Bernstein's example: Take $X$,$Y$ two independent coin tosses.
             $X=1$ for heads, $X=0$ for tails, same for $Y$.
             Set $Z=\abs{X-Y}$, then we have pairwise independence but not independence.
     \end{itemize}
 \end{remark}
 
 \begin{prop}
-    Let $X_1, \dotsc, X_n$ be $n$ random variables.
+    Let $X_1, \dotsc, X_n$ be $n$ \hyperlink{def:rv}{random variables}.
     \begin{equation*}
-        (X_1, \dotsc, X_n) \text{ are mutually independent} \iff \mu_{(X_1, \dotsc, X_n)} = \mu_{X_1} \otimes \dotsb \otimes \mu_{X_n}.
+        (X_1, \dotsc, X_n) \text{ are \hyperlink{def:indepRV}{mutually independent}} \iff \mu_{(X_1, \dotsc, X_n)} = \mu_{X_1} \otimes \dotsb \otimes \mu_{X_n}.
     \end{equation*}
-
-    Here $\mu_{(X_1, \dotsc, X_n)}$ is the law or distribution of $(X_1, \dotsc, X_n)$, and we say it's the joint law or joint distribution.
+    \hypertarget{def:jointLaw}Here $\mu_{(X_1, \dotsc, X_n)}$ is the \hyperlink{def:law}{law or distribution} of $(X_1, \dotsc, X_n)$, and we say it's the joint law or joint distribution.
 \end{prop}
 
 \begin{proof}
     \begin{align*}
-        \mu_{(X_1, \dotsc, X_n)} (\prod_{i=1}^n (-\infty, x_i]) &= \Prob((X_1, \dotsc, X_n) \in \prod_{i=1}^n (-\infty, x_i]) \\
-                                                                &= \Prob(\forall i \; X_i \leq x_i).
+        \mu_{(X_1, \dotsc, X_n)} \left(\prod_{i=1}^n (-\infty, x_i]\right) &= \Prob\left((X_1, \dotsc, X_n) \in \prod_{i=1}^n (-\infty, x_i]\right) \\
+                                                                &= \Prob(\forall i, X_i \leq x_i).
     \end{align*}
     \begin{align*}
-        \text{independence } &\iff \forall x_i \in \R, \quad \Prob(\forall i \; X_i \leq x) = \prod_{i=1}^n \Prob(X_i \leq x_i) \\
-                             &\iff \mu_{(X_1, \dotsc, X_n)} (\prod_{i=1}^n (-\infty, x_i]) = \prod \mu_{x_i} ((-\infty, x_i]) \qedhere
+        \text{independence } &\iff \forall x_i \in \R, \quad \Prob(\forall i, X_i \leq x) = \prod_{i=1}^n \Prob(X_i \leq x_i) \\
+                             &\iff \mu_{(X_1, \dotsc, X_n)} \left(\prod_{i=1}^n (-\infty, x_i]\right) = \prod_{i=1}^n \mu_{x_i} ((-\infty, x_i]) \qedhere %)
     \end{align*}
 \end{proof}
 
-% new lec
+% lecture 14
 
 \begin{prop}
-    Suppose $X$ and $Y$ are two independent random variables.
-    Assume $X$, $Y$ integrable ($\E(\abs{X}) < \infty,\ \E(\abs{Y}) < \infty$).
-    Then $XY$ is integrable and $\E(XY) = \E(X)\E(Y)$.
-    Moreover (*) holds also if $X$ and $Y$ are just assumed $\geq 0$.
+    Suppose $X$ and $Y$ are two \hyperlink{def:indepRV}{independent} \hyperlink{def:rv}{random variables}.
+    Assume $X$, $Y$ \hyperlink{def:integral}{integrable}, i.e.\ $\E(\abs{X}) < \infty,\ \E(\abs{Y}) < \infty$.
+    Then $XY$ is integrable and
+    \begin{equation*}\E(XY) = \E(X)\E(Y).\tag{$*$}\label{eq:indepExp}\end{equation*}
+    Moreover \eqref{eq:indepExp} holds also if $X$ and $Y$ are just assumed $\geq 0$.
 \end{prop}
 
 \begin{proof}
-    Recall that $X$, $Y$ are independent $\iff$ the joint law $\mu_{(X,Y)}$ is the product $\mu_{(X,Y)} = \mu_X \otimes \mu_Y$ where $\mu_X=$ law of $X$ and $\mu_Y=$ law of $Y$.
-    So we can apply Fubini: $\E(X) = \int_\R x \, d \mu_X$, $\E(Y) = \int_\R y \, d \mu_Y$.
+    Recall that $X$, $Y$ are independent $\iff$ the \hyperlink{def:jointLaw}{joint law} $\mu_{(X,Y)}$ is the product $\mu_{(X,Y)} = \mu_X \otimes \mu_Y$ where $\mu_X=$ \hyperlink{def:law}{law} of $X$ and $\mu_Y=$ law of $Y$.
+    So we can apply \hyperlink{thm:tonelliFubini}{Fubini}: $\E(X) = \int_\R x \, d \mu_X$, $\E(Y) = \int_\R y \, d \mu_Y$.
     \begin{equation*}
         \E(XY) = \int_{\R \times \R} xy \, d\mu_{(X,Y)}. \qedhere
     \end{equation*}
 \end{proof}
 
-\begin{lemma}[1st Borel-Cantelli lemma]
-    $(\Omega, \mathcal{F}, \Prob)$ a probability space.
+\begin{lemma}[1st Borel-Cantelli lemma]\hypertarget{lem:bc1}
+    Take $(\Omega, \mathcal{F}, \Prob)$ a \hyperlink{def:probabilitySpace}{probability space}.
     Let $(A_n)_{n \geq 1}$ be a sequence of events.
     Assume $\sum_{n \geq 1} \Prob(A_n) < \infty$.
     Then $\Prob(\lim \sup A_n) = 0$.
 \end{lemma}
 \begin{proof}
     \begin{align*}
-        \lim \sup A_n &\coloneqq \bigcap_{m \geq 1} \bigcup_{n \geq m} A_n \\
-        \Prob(\lim \sup A_n) &\leq \Prob(\bigcup_{n \geq m} A_n) \\
+        \limsup A_n &\coloneqq \bigcap_{m \geq 1} \bigcup_{n \geq m} A_n \\
+        \Prob(\limsup A_n) &\leq \Prob\left(\bigcup_{n \geq m} A_n\right) \\
                              &\leq \sum_{n \geq m} \Prob(A_n) \to 0 \text{ as } m \to \infty.\qedhere
     \end{align*}
 \end{proof}
 
 \begin{eg}
-    Take $\Omega = [0, 1]$. $\Prob=$ Lebesgue, $\mathcal{F}=$ Borel $\sigma$-algebra.
-    Define a number $\alpha \in \R$ is said to be very-well-approximated if $\exists \epsilon > 0$ such that there are infinitely many integers $p,q$ such that
+    Take $\Omega = [0, 1]$. $\Prob=$ \hyperlink{def:lebMeas}{Lebesgue}, $\mathcal{F}=$ \hyperlink{def:borelAlg}{Borel $\sigma$-algebra}.
+    A number $\alpha \in \R$ is said to be very-well-approximated if $\exists \epsilon > 0$ such that there are infinitely many integers $p,q$ such that
     \begin{equation*}
         \abs{\alpha - \frac{p}{q}} \leq \frac{1}{q^{2 + \epsilon}}.
     \end{equation*}
-
-    Claim: Lebesgue a.e. numbers $\alpha$ are not very-well-approximated.
-    Proof: (exercise) Apply Borel-Cantelli to the events
-    \begin{equation}
-        A_q = \set{x \in [0, 1] | d(q x, \Z) < \frac{1}{q^{1 + \epsilon}}}
-    \end{equation}
+    Claim: Lebesgue \hyperlink{def:ae}{a.e.}\ numbers $\alpha$ are not very-well-approximated.
+    Proof: (exercise) Apply \hyperlink{lem:bc1}{Borel-Cantelli} to the events
+    \begin{equation*}
+        A_q = \Set{x \in [0, 1] | d(q x, \Z) < \frac{1}{q^{1 + \epsilon}}}.
+    \end{equation*}
 \end{eg}
 
-\begin{lemma}[2nd Borel-Cantelli lemma]
-    Conversely to the first, assume that the events $(A_n)_{n \geq 1}$ are independent and $\sum_{n \geq 1} \Prob(A_n) = + \infty$.
-    Then $\Prob(\lim \sup A_n) = 1$.
+\begin{lemma}[2nd Borel-Cantelli lemma]\hypertarget{lem:bc2}
+    Conversely to the \hyperlink{lem:bc1}{first Borel-Cantelli lemma}, assume that the events $(A_n)_{n \geq 1}$ are \hyperlink{def:independentEvents}{independent} and $\sum_{n \geq 1} \Prob(A_n) = + \infty$.
+    Then $\Prob(\limsup A_n) = 1$.
 \end{lemma}
 
 \begin{remark}
-    The conclusion fails without the assumption of independence, for instance $A_n = [0, \frac{1}{n}] \subseteq \Omega = [0, 1]$, for which $\sum \Prob(A_n) = \sum \frac{1}{n} = \infty$, but $\lim \sup A_n = \{0\}$.
+    The conclusion fails without the assumption of independence, for instance take $A_n = [0, \frac{1}{n}] \subseteq \Omega = [0, 1]$, for which $\sum \Prob(A_n) = \sum \frac{1}{n} = \infty$, but $\lim \sup A_n = \{0\}$.
 \end{remark}
 
 \begin{proof}
     \begin{align*}
         \lim \sup A_n &= \bigcap_{m \geq 1} \bigcup_{n \geq m} A_m \\
-        (\lim \sup A_n)^C &= \bigcup_{m \geq 1} \bigcap_{n \geq m} (A_m)^c \\
+        (\lim \sup A_n)^c &= \bigcup_{m \geq 1} \bigcap_{n \geq m} (A_m)^c \\
     \end{align*}
-    but \textbf{coming soon}.
+    but $\forall m$,
+    \begin{align*}
+        \Prob\left(\bigcup_{n \geq m} A_n^c\right)&= \prod_{n \geq m} \Prob(A_n^c) = \prod_{n \geq m} 1-\Prob(A_n) \\
+                                                  &\leq \prod_{n \geq m} e^{-\Prob(A_n)} = e^{-\sum_{n \geq m} \Prob(A_n)} \\
+                                                  &\to e^{-\infty} = 0.
+    \end{align*}
 \end{proof}
 
-\begin{defi}
-    A random process is an infinite family of $(X_n)_{n \geq 1}$ of real random variables, where $n$ can be thought of as a time parameter.
-    We use $\mathcal{F}_n = \sigma(X_1, \dotsc, X_n) =$, the smallest sub-$\sigma$-algebra of $\mathcal{F}$ which makes all $X_i$, $i \leq n$ measurable.
-    We also have $\mathcal{F}_{n+1} \supseteq \mathcal{F}_n$, time filtration.
+\begin{defi}[Random process]\hypertarget{def:randomProcess}
+    A \textbf{random process} is an infinite family of $(X_n)_{n \geq 1}$ of real \hyperlink{def:rv}{random variables}, where $n$ can be thought of as a time parameter.
+    We use $\mathcal{F}_n = \sigma(X_1, \dotsc, X_n) =$ the smallest sub-$\sigma$-algebra of $\mathcal{F}$ which makes all $X_i$, $i \leq n$ measurable.
+    We also have $\mathcal{F}_{n+1} \supseteq \mathcal{F}_n$, the time filtration property.
 \end{defi}
 
-\begin{defi}
-    The tail $\sigma$-algebra of $(X_n)_{n \geq 1}$ is defined as
+\begin{defi}[Tail $\sigma$-algebra]\hypertarget{def:tailAlg}
+    The \textbf{tail $\sigma$-algebra} of $(X_n)_{n \geq 1}$ is defined as
     \begin{equation*}
-        \tau = \bigcap_{n \geq 1} \sigma(X_n, X_{n+1}, \dotsc)
+        \tau = \bigcap_{n \geq 1} \sigma(X_n, X_{n+1}, \dotsc).
     \end{equation*}
 \end{defi}
 
 \begin{eg}
-    The following events belong to $\tau$:
+    The following events belong to \hyperlink{def:tailAlg}{$\tau$}:
     \begin{equation*}
-        \{\lim \sup X_n \geq \tau\} \qquad \set{\omega \in \Omega | (X_n(\omega))_{n \geq 1} \text{ converges}}.
+        \{\lim \sup X_n \geq T\} \qquad \set{\omega \in \Omega | (X_n(\omega))_{n \geq 1} \text{ converges}}.
     \end{equation*}
 \end{eg}
 
-\begin{thm}[Kolmogorov 0-1 Law]
-    Suppose $(X_n)_{n \geq 1}$ is a sequence of independent random variables. Then the tail $\sigma$-algebra $\tau$ is trivial ($\forall A \in \tau, \Prob(A) \in \{0, 1\}$).
+\begin{thm}[Kolmogorov 0-1 Law]\hypertarget{thm:kol01}
+    Suppose $(X_n)_{n \geq 1}$ is a sequence of \hyperlink{def:indepRV}{independent} \hyperlink{def:rv}{random variables}.
+    Then the \hyperlink{def:tailAlg}{tail $\sigma$-algebra} $\tau$ is trivial ($\forall A \in \tau, \Prob(A) \in \{0, 1\}$).
 \end{thm}
 
 \begin{proof}
-    coming soon.
+    Let $A \in \tau$ and let $B \in \sigma(X_1, \dotsc, X_n)$.
+    Then $A$ and $B$ are independent, because $\sigma(X_1, \dotsc, X_n)$ and $\tau$ are independent.
+    So $\Prob(A \cap B) = \Prob(A) \cdot \Prob(B)$.
+
+    Now the measures
+    \begin{align*}
+        B & \longmapsto \Prob(A \cap B) \\
+        B & \longmapsto \Prob(A)\Prob(B)
+    \end{align*}
+    coincide on $\sigma(X_1, \dotsc, X_n)$ for all $n$, hence they coincide on $\sigma(X_1, \dotsc, X_n, \dotsc)$.
+    But $\tau \subseteq \sigma(X_1, \dotsc, X_n, \dotsc)$.
+    In particular $\Prob(A \cap A) = \Prob(A) \cdot \Prob(A)$ so $\Prob(A)=\Prob(A)^2$ hence $\Prob(A) = \{0,1\}$.
 \end{proof}
 
-\begin{eg}
+\begin{eg}\leavevmode
     \begin{itemize}
-        \item Take an iid space $(X_n)_{n \geq 1}$ of random variables such that $\forall T \geq 0$, $\Prob(X_1 < 1) < 1$.
+        \item Take an i.i.d.\ space $(X_n)_{n \geq 1}$ of \hyperlink{def:rv}{random variables} such that $\forall T \geq 0$, $\Prob(X_1 < 1) < 1$.
             Then almost surely $\lim \sup X_n = +\infty$.
 
             Indeed,
             \begin{equation*}
                 \sum_{k=1}^n \Prob(X_n \geq T) = n \Prob(X_1 \geq T) = n(1 - \Prob(X_1 < T)) \to \infty
             \end{equation*}
-            so the second borel cantelli lemma applies and $\Prob(\limsup A_n) = 1$.
-        \item Take $(\epsilon_n)_{n \geq 1}$ be iid RV $\Prob(\epsilon_1 = 1) = \Prob(\epsilon_1 = -1) \frac{1}{2}$.
-            Take $(a_n)_{n \geq 1}$
+            so the \hyperlink{lem:bc2}{second Borel-Cantelli lemma} applies and $\Prob(\limsup A_n) = 1$.
+        \item Take $(\epsilon_n)_{n \geq 1}$ be i.i.d.\ random variables with $\Prob(\epsilon_1 = 1) = \Prob(\epsilon_1 = -1) \frac{1}{2}$.
+            Take $(a_n)_{n \geq 1}$ some sequence of real numbers, and ask when does $\sum_{n \geq 1} \epsilon_n a_n$ converge?
+
+            The \hyperlink{thm:kol01}{Kolmogorov 0-1 law} tells us that this happens with probability $0$ or $1$ depending only on the sequence $(a_n)_{n \geq 1}$.
+            In fact, a theorem of Rademacher-Paley-Zygmund says
+            \begin{equation*}
+                \sum_{n=1}^\infty \epsilon_n a_n \text{converges a.s.} \iff \sum_{n=1}^\infty a_n^2 < \infty.
+            \end{equation*}
     \end{itemize}
 \end{eg}
+
+Take $\mu$ a \hyperlink{def:probMeas}{probability measure} on $\mathbb{R}$.
+Can you find a \hyperlink{def:probabilitySpace}{probability space} $(\Omega, \mathcal{F}, \Prob)$ and a \hyperlink{def:rv}{random variable} $X$ such that $\mu$ is the law of $X$?
+
+Yes: Take $\Omega = \R$, let $\mathcal{F}$ be the Borel sets, and set $\Prob = \mu$, and $X(\omega) = \omega$.
+
+\begin{defi}[Moment]\hypertarget{def:moment}
+    If $X$ is a \hyperlink{def:rv}{random variable}, the \textbf{$k$th moment} of $X$ is $\E(X^k)$ for $k \in \N$.
+\end{defi}
 % 8 nov
 
 Some additional basic terminology:
-For $X$ a random variable, $\mathbb{E}(X)$ is called the mean, and $\mathbb{E}((X - \mathbb{E}X)^2)$ is the variance of $X$.
+\hypertarget{def:mean}For $X$ a \hyperlink{def:rv}{random variable}, $\mathbb{E}(X)$ is called the mean, and $\mathbb{E}((X - \mathbb{E}X)^2)$ is the variance of $X$.
 
-\begin{remark}
-    \leavevmode
+\begin{remark}\leavevmode
     \begin{itemize}
-        \item $\Var(X) = \mathbb{E}(X^2) = (\mathbb{E}X)^2$
+        \item $\Var(X) = \mathbb{E}(X^2) - (\mathbb{E}X)^2$
         \item If $X, Y$ are independent then $\Var(X + Y) = \Var(X) + \Var(Y)$.
     \end{itemize}
 \end{remark}
 
-\begin{thm}[Strong law of large numbers (under a 4th moment assumption)]
-    Let $(X_n)_{n \geq 1}$ be a sequence of independent and identically distributed (iid) random variables with common law $\mu$.
-    Assume $\int_\R x^4 \, d\mu(x) < \infty (\iff \mathbb{E}(\abs{X_1}^4) < \infty)$
+\begin{thm}[Strong law of large numbers (under a \hyperlink{def:moment}{4th moment} assumption)]\hypertarget{thm:sll}
+    Let $(X_n)_{n \geq 1}$ be a sequence of \hyperlink{def:indepRV}{independent} and identically distributed (i.i.d.)\ \hyperlink{def:rv}{random variables} with common \hyperlink{def:law}{law} $\mu$.
+    Assume $\int_\R x^4 \, d\mu(x) < \infty$ (i.e.\ $\mathbb{E}(\abs{X_1}^4) < \infty$).
     Then
     \begin{equation*}
         \frac{1}{n} \sum_{k=1}^n X_k \xrightarrow{n \to \infty} \mathbb{E}(X_1)
@@ -1780,21 +1827,22 @@ For $X$ a random variable, $\mathbb{E}(X)$ is called the mean, and $\mathbb{E}((
 \end{thm}
 
 \begin{eg}
-    Take $\Omega = [0, 1]$ and $\mathbb{P} = Leb$. Write $\omega = 0.\epsilon_1 \epsilon_2 \dotsc \epsilon_n \dotsc$ with $\epsilon_i \in \{0, \dotsc, 9\}$ decimal expansion of $\omega$.
-    We observed that $(\epsilon_n(\omega))_{n \geq 1}$ were independent and uniformly distributed in $\{0, \dotsc, 9\}$.
-    Set $X_n^{(i)} (\omega) = \1{\epsilon_n(\omega) = i}$, these are iid RVs and $\abs{X_n^{(i)}} \leq 1$, so finite fourth moment.
-    So the SSL applies
+    Take $\Omega = [0, 1]$ and $\mathbb{P} = $ Lebesgue.
+    Write $\omega = 0.\epsilon_1 \epsilon_2 \dotsc \epsilon_n \dotsc$ with $\epsilon_i \in \{0, \dotsc, 9\}$, the decimal expansion of $\omega$.
+    We observed that $(\epsilon_n(\omega))_{n \geq 1}$ were \hyperlink{def:indepRV}{independent} and uniformly distributed in $\{0, \dotsc, 9\}$.
+    Set $X_n^{(i)} (\omega) = \1{\epsilon_n(\omega) = i}$, these are i.i.d.\ \hyperlink{def:rv}{random variables} and $\abs{X_n^{(i)}} \leq 1$, so finite fourth moment.
+    So the \hyperlink{thm:sll}{SLL} applies:
     \begin{equation*}
         \frac{1}{n} \sum_{k=1}^n X_k^{(i)} = \frac{1}{n} \# \{k \leq n, \epsilon_k(\omega) = i\} \implies \mathbb{E}(X_1^{(k)}) = \frac{1}{10}.
     \end{equation*}
-    for Lebesgue almost every $\omega$ the proportion of each digit is the same (a normal number).
+    So, for Lebesgue \hyperlink{def:ae}{almost every} $\omega$ the proportion of each digit is the same (a normal number).
 \end{eg}
 \begin{thm}[Borel]
-    Almost every number is a normal number.
+    \hyperlink{def:ae}{Almost every} number is a normal number.
 \end{thm}
 
 \begin{lemma}[Cauchy-Schwarz inequality]
-    Take $f, g$ square integrable functions on $(X, d, \mu)$ then $fg$ is integrable and
+    Take $f, g$ square integrable functions on $(X, \mathcal{A}, \mu)$ then $fg$ is integrable and
     \begin{equation*}
         \abs{\int fg \, d\mu} \leq \sqrt{\int f^2 \, d\mu} \sqrt{\int g^2 \, d \mu}.
     \end{equation*}
@@ -1809,30 +1857,45 @@ For $X$ a random variable, $\mathbb{E}(X)$ is called the mean, and $\mathbb{E}((
 \begin{proof}[Proof of the strong law of large numbers]
     Without loss of generality, assume that $\mathbb{E}(X_1) = 0$, because we can replace $X_n$ by $X_n - \mathbb{E}(X_1)$.
     This is allowed because $\mathbb{E}((X_n - \mathbb{E}X_1)^4) < \infty$.
-    Indeed, $(X_n - \mathbb{E}X_1)^4 $
-    % see pic
-
+    Indeed,
+    \begin{align*}
+        (X_n - \mathbb{E}X_1)^4 &= [(X_n - \mathbb{E}X_1)^2]^2 \\
+                                &\leq (2X_n^2 + 2(\mathbb{E}X_1)^2)^2 \\
+                                &\leq 8 [X_n^4 + (\mathbb{E}X_1)^4].
+    \end{align*}
     So we have $\mathbb{E}(X_n) = 0$ $\forall n$.
 
     Let $S_n = \frac{1}{n} (X_1 + \dotsb + X_n)$, so $S_n^4  = \frac{1}{n^4} (\sum_{i,j,k,l} X_i X_j X_k X_l)$.
-    By independence, $\mathbb{E}(X_i X_j X_k X_l) = 0$ if $i, j, k, l$ are distinct, or $k = l$ and $i \neq j \notin \{k, l\}$ or $k = l = j \neq i$.
+    By independence, $\mathbb{E}(X_i X_j X_k X_l) = 0$ if
+    \begin{itemize}[label=--]
+        \item $i, j, k, l$ are distinct, or
+        \item $k = l$ and $i \neq j \notin \{k, l\}$ or
+        \item $k = l = j \neq i$.
+    \end{itemize}
     So,
+    \begin{align*}
+        \mathbb{E}(S_n^4) &= \frac{1}{n^4} \left(\mathbb{E}X_1^4 + \dotsb + \mathbb{E}X_n^4 + 6 \sum_{i < j} \mathbb{E}X_i^2 \cdot \mathbb{E}X_j^2\right) \\
+                          &= \frac{1}{n^4} \left(n \mathbb{E}X_i^4 + 6 \frac{n(n-1)}{2} \left(\mathbb{E}(X_1^2)\right)^2\right) \\
+                          &= \mathcal{O}\left(\frac{1}{n^2}\right).
+    \end{align*}
+    So in conclusion,
     \begin{equation*}
-        \mathbb{E}(S_n^4) = \frac{1}{n^4} (\mathbb{E}X_1^4 + \dotsb \mathbb{E}X_n^4 + )
-        % add
+        \begin{aligned}
+            \sum_{n \geq 1} \E(S_n^4) = \E\left(\sum_{n \geq 1} S_n^4\right) < \infty
+        \end{aligned}
     \end{equation*}
-    % add conclusion
+    So $\sum_{n \geq 1} S_n^4 < \infty$ a.s. $\implies \lim_{n\to \infty} S_n = 0$ almost surely.
 \end{proof}
 
-Type of convergence of random variables.
-\begin{notation}
+\subsection{Type of convergence of random variables}
+\begin{notation}\hypertarget{def:cb}
     $C_b(\R^d)$ is the space of continuous and bounded real functionals on $\R^d$.
 \end{notation}
 
-\begin{defi}[Weak convergence]
-    A sequence of probability measure on $(\R^d, \mathcal{B}(\R^d))$, say $(\mu_n)_{n \geq 1}$ is said to converge weakly to a measure $\mu$ on $(\R^d, \mathcal{B}(R^d))$ if
+\begin{defi}[Weak convergence]\hypertarget{def:weakConv}
+    A sequence of \hyperlink{def:probMeas}{probability measures} on $(\R^d, \mathcal{B}(\R^d))$, say $(\mu_n)_{n \geq 1}$ is said to \textbf{converge weakly} to a measure $\mu$ on $(\R^d, \mathcal{B}(R^d))$ if
     \begin{equation*}
-        \forall f \in C_b(\R^d) \quad \mu_n(f) \xrightarrow{n \to \infty} \mu(f)
+        \forall f \in \hyperlink{def:cb}{C_b(\R^d)} \quad \mu_n(f) \xrightarrow{n \to \infty} \mu(f).
     \end{equation*}
 \end{defi}
 \begin{eg}
@@ -1845,27 +1908,164 @@ Type of convergence of random variables.
                     1 & x \in A \\
                     0 & x \notin A
                 \end{cases}
-                \text{ for } x \in \R^d
+                \quad \text{for } x \in \R^d
             \end{equation*}
             with $x_n \in \R^d$ with $x_n \to x \in \R^d$ then clearly $\mu_n \to \delta_x$ weakly.
-        \item $\mu_n = \mathcal{N}(0, \sigma_n^2)$, the centered Gaussian with standard deviation $\sigma_n$.
+        \item $\mu_n = \mathcal{N}(0, \sigma_x^2)$, the centered Gaussian with standard deviation $\sigma_x$. If $\sigma_x \to 0$ then $\mu_n \to \delta_0$ weakly.
     \end{itemize}
 \end{eg}
 
-\begin{defi}
-    A sequence of $\R^d$ random variables $(X_n)_{n \geq 1}$ is said to converge to $X$
+\begin{defi}[Convergence]\hypertarget{def:conv}
+    A sequence of $\R^d$-valued \hyperlink{def:rv}{random variables} $(X_n)_{n \geq 1}$ is said to converge to $X$
     \begin{enumerate}[label=(\alph*)]
-        \item almost surely if for $\mathbb{P}$ ae $\omega$ $X_n(\omega) \xrightarrow{n \to \infty} X(\Omega)$
-        \item in probability (or in measure) if $\forall \epsilon > 0$ $\mathbb{P}(\norm{X_n - X} > \epsilon) \xrightarrow{n \to \infty} 0$.
-        \item in distribution if $\mu_{x_n} \xrightarrow{n \to \infty} \mu_x$ weakly, with $\mu_{x_n}$ the law of $X_n$ on
+        \item \textbf{almost surely} if for $\mathbb{P}$ a.e.\ $\omega$, $X_n(\omega) \xrightarrow{n \to \infty} X(\omega)$
+        \item \textbf{in probability} (or in measure) if $\forall \epsilon > 0$, $\mathbb{P}(\norm{X_n - X} > \epsilon) \xrightarrow{n \to \infty} 0$.
+        \item \textbf{in distribution} if $\mu_{x_n} \xrightarrow{n \to \infty} \mu_x$ weakly, with $\mu_{x_n}$ the \hyperlink{def:law}{law} of $X_n$ on $\mathbb{R}^d$.
     \end{enumerate}
 \end{defi}
 
 \begin{remark}
-    (a) $\implies$ (b) $\implies$ (c) (but none of the reverse implications hold in general: check)
+    (a) $\Rightarrow$ (b) $\Rightarrow$ (c), but none of the reverse implications hold in general.
 
+    (a) $\Rightarrow$ (b): $\Prob(\|X_n-X\| > \epsilon) = \mathbb{E}(\1{\|X_n-X\| > \epsilon}) \xrightarrow{n \to \infty} 0$ by \hyperlink{thm:dct}{Lebesgue Dominated Convergence}.
+
+    (b) $\Rightarrow$ (c): Let $f \in \hyperlink{def:cb}{C_b(\R^d)}$. $f$ is uniformly continuous on compact subsets of $\R^d$.
+    So $\forall \epsilon>0$, $\exists \delta >0$ such that if $\|x\| < 1/\epsilon$ and $\|x-y\| < \delta$, then $|f(x) - f(y)| < \epsilon$. So
+    \begin{align*}
+        |\mu_n (f) - \mu(f)| &\leq \E(|f(X_n) - f(X)|)\\
+                             &
+        \begin{multlined}
+            \leq\E\left(\1{\|X_n-X\|<\delta}\1{\|X\|<\frac{1}{\epsilon}} |f(X_n) -f(X)|\right) \\
+            \hspace{10em} +2\|f\|_\infty \Prob\left(\|X_n-X\|>\delta \text{ or } \|X\|>\frac{1}{\epsilon}\right)
+        \end{multlined}
+        \\
+        &\leq \epsilon+2\|f\|_\infty [\Prob(\|X_n-X\|>\delta ) + \Prob(\|X\|>1/\epsilon)]
+    \end{align*}
+    So
+    \begin{align*}
+        \limsup_n |\mu_n(f) - \mu(f)| \leq \epsilon+2\|f\|_\infty \Prob(\|X\|>1/\epsilon) \xrightarrow{\epsilon \to 0} 0.
+    \end{align*}
+
+    When $d=1$, (c) is equivalent to saying that the \hyperlink{def:cdf}{distribution function} $F_{\mu_n} (X) \to F_\mu(x)$ for all $x \in \R$ where $F_\mu(x)$ is continuous.
+    Recall
+    \begin{align*}
+        F_\mu(x) \coloneqq \mu((-\infty,x]) \\ %)
+        F_{\mu_n}(x) \coloneqq \mu_n((-\infty,x]). %)
+    \end{align*}
+    For example, take $\mu_n = \delta_{1/n} \to \delta_0 = \mu$, so $F_{\mu_n} = \1{x \geq \frac{1}{n}}$, but $F_\mu = \1{x \geq 0}$.
+    Then $F_{\mu_n}(0) = 0$ while $F_\mu(0) = 1$, so $F_{\mu_n}(0) \not\to F_\mu(0)$.
 \end{remark}
 
+\begin{prop}
+    If $(X_n)_{n \geq 1}$ \hyperlink{def:conv}{converges in probability} to $X$, then $\exists$ a subsequence $(X_{n_k})_{k \geq 1}$ such that $X_{n_k} \xrightarrow{k \to \infty} X$ \hyperlink{def:conv}{almost surely}.
+\end{prop}
+\begin{proof}
+    For all $k$ we have
+    \begin{gather*}
+        \Prob\left(\|X_n - X\| > \frac{1}{k}\right) \xrightarrow{n \to \infty} 0\\
+        \implies \exists n_k \text{ such that } \mathbb{P}\left(\|X_{n_k}-X\| > \frac{1}{k}\right) \leq \frac{1}{2^k}.
+    \end{gather*}
+    So
+    \begin{equation*}
+        \sum \mathbb{P}\left(\|X_{n_k}-X\| > \frac{1}{k}\right) < \infty \implies \mathbb{P}\left(\limsup \|X_{n_k} - X\| > \frac{1}{k}\right) = 0.
+    \end{equation*}
+    by \hyperlink{lem:bc1}{Borel-Cantelli}.
+\end{proof}
+
+\begin{defi}[$L^1$ convergence]\hypertarget{def:l1}
+    A sequence of $\mathbb{R}^d$-valued \hyperlink{def:integral}{integrable} \hyperlink{def:rv}{random variables} $(X_n)_{n \geq 1}$ \textbf{converges in $L^1$} (or in mean)
+    towards an integrable random variable $X$ if
+    \begin{align*}
+            \E(\|X_n-X\|) \xrightarrow{n \to \infty} 0
+    \end{align*}
+    which we'll write $X_n \xrightarrow{L^1} X$.
+\end{defi}
+
+\begin{remark}\leavevmode
+    \begin{itemize}
+        \item if $X_n \hyperlink{def:l1}{\xrightarrow{L^1}} X$ then $X_n \to X$ in \hyperlink{def:conv}{probability}. Indeed, $\forall \epsilon>0$,
+            \begin{equation*}
+                    \epsilon \Prob(\|X_n-X\| > \epsilon) \leq \E(\|X_n - X\| \1{\|X_n-X\|>\varepsilon}) \leq \E(\|X_n-X\|).
+            \end{equation*}
+        \item This demonstrates the Markov inequality,
+            \begin{equation*}
+                    \epsilon\Prob(|X| \geq \epsilon) \leq \E(|X|)
+            \end{equation*}
+            holds for any \hyperlink{def:rv}{random variable} $X$ and any $\epsilon > 0$.
+        \item The Markov inequality gives also the Chebyshev inequality,
+            \begin{equation*}
+                    \epsilon^2 \Prob(|X-\E X| > \epsilon) \leq \Var X
+            \end{equation*}
+            holds for any \hyperlink{def:rv}{random variable} $X$ and any $\epsilon > 0$.
+    \end{itemize}
+\end{remark}
+
+In general, the converse does not hold, i.e.\ convergence in probability $\not \Rightarrow$ in $L^1$.
+\begin{eg}
+    For example, take $\Omega = [0,1]$, $\Prob =$ Lebesgue and $X_n = n \1{[0,\frac 1n]}$.
+    Then $X_n \to 0$ \hyperlink{def:conv}{in probability} (since $\Prob(|X_n| > \epsilon) = \frac{1}{n}$) but $\mathbb{E}(X_n) = 1$ for any $n$.
+\end{eg}
+
+If $\exists M \geq 0$ such that $\|X_n\| \leq M$ almost surely for all $n$, then the converse holds.
+\begin{align*}
+    \E(\|X_n - X\|) &= \E(\|X_n - X\|\1{\|X_n-X\| \leq \epsilon}) + \E(\|X_n - X\|\1{\|X_n-X\| > \epsilon}) \\
+    &\leq \epsilon + 2 M \Prob(\|X_n - X\| > \epsilon).
+\end{align*}
+so $\limsup \E(\|X_n - X\|) \leq \epsilon$.
+
+\begin{defi}[Uniform integrability]\hypertarget{def:ui}
+    A sequence of \hyperlink{def:integral}{integrable} \hyperlink{def:rv}{random variables} $(X_n)_{n \geq 1}$ is called \textbf{uniformly integrable} if
+    \begin{equation*}
+            \sup_{n \geq 1} \E(\|X_n\| \1{\|X_n\|>M}) \xrightarrow{M \to \infty} 0.
+    \end{equation*}
+\end{defi}
+
+\begin{remark}\leavevmode
+    \begin{itemize}
+        \item If $X_n = X$ for all $n$, and $X$ is \hyperlink{def:integral}{integrable}, then $(X_n)_n$ is \hyperlink{def:ui}{uniformly integrable}:
+            \begin{equation*}
+                \E(\|X\|\1{\|X\|\leq M}) \uparrow \E(\|X\|)
+            \end{equation*}
+            as $M \to \infty$ by \hyperlink{def:monConv}{monotone convergence}, so
+            \begin{equation*}
+                \E(\|X\| \1{\|X\|> M}) \xrightarrow{M \to \infty} 0
+            \end{equation*}
+
+        \item Suppose the $X_n$s are dominated, i.e.\ there is some $Y$ integrable \hyperlink{def:rv}{random variable} such that $\|X_n\|\leq Y$ for all $n$. Then $(X_n)_n$ are \hyperlink{def:ui}{uniformly integrable}:
+            \begin{equation*}
+                \E(\|X_n\| \1{\|X_n\| > M}) \leq \E(Y \1{Y>M}) \xrightarrow{M \to \infty} 0
+            \end{equation*}
+
+        \item If $X_n \xrightarrow{L^1} X$, then $(X_n)_n$ is \hyperlink{def:ui}{uniformly integrable}:
+            \begin{align*}
+                    \E(\|X_n\|\1{\|X_n\|>M}) &\leq \E(\|X_n-X\| \1{\|X_n\|>M}) + \E(\|X\| \1{\|X_n\|>M})\\
+                                             &
+                    \begin{aligned}
+                        \leq\E(\|X_n-X\|) &+ \E(\|X\|\1{\|X\|>M} \1{\|X_n\|>M}) \\
+                                      &+ \E(\|X\| \1{\|X\| < M} \1{\|X_n\|>M})
+                    \end{aligned}
+                    \\
+                                             &\leq \E(\|X_n-X\|) + \E(\|X\| \1{\|X\|>M}) + M\E(\1{\|X_n\| \geq M}) \\
+                                             &\leq \E(\|X_n-X\|) + \epsilon|M|
+            \end{align*}
+            So $M \Prob(\|X\|_n > M) \leq \E(\|X_n\|) \to \E(\|X\|)$.
+    \end{itemize}
+\end{remark}
+\begin{thm}
+    Let $(X_n)_{n \geq 1}$ be a sequence of \hyperlink{def:integral}{integrable} \hyperlink{def:rv}{random variables}, and let $Y$ be another random variable.
+    Then $(X_n)$ is \hyperlink{def:ui}{uniformly integrable} and \hyperlink{def:conv}{converges in probability} to $X$ if and only if $X$ is integrable and $X_n \hyperlink{def:l1}{\xrightarrow{L^1}} X$.
+\end{thm}
+\begin{proof}
+    ($\Rightarrow$). Suppose $(X_n)$ is \hyperlink{def:ui}{uniformly integrable} and \hyperlink{def:conv}{converges to $X$ in probability}.
+    We've shown that there is a subsequence $(X_{n_k})_k$ such that $X_{n_k} \xrightarrow{k \to \infty} X$ almost surely.
+    \begin{equation*}
+        \E(\|X\| \1{\|X\| \geq n}) \leq \liminf_{n \to \infty} \E(\|X_{n_k}\| \1{\|X_{n_k}\| > M}) = \epsilon |M|
+    \end{equation*}
+    by \hyperlink{thm:fatou}{Fatou's lemma}.
+
+    So $\E(\|X\|) = \E(\|X\|\1{\|X\| < M}) + \E(\|X\|\1{\|X\| \geq n}) \leq M + \epsilon M < \infty$ so $X$ is integrable.
+    Hence
+\end{proof}
 % missing a crapload
 
 \begin{cor}
