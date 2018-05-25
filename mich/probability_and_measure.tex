@@ -227,8 +227,9 @@ The \hyperlink{def:lebOutMeas}{Lebesgue outer measure} satisfies
 \end{defi}
 
 \begin{eg}[Middle-thirds Cantor set]\hypertarget{def:cantor}
-    This is a compact subset $C$ of $[0, 1]$, defined as follows.  Start with the interval $I_0 = [0, 1]$ and remove the middle third $\left(\frac13, \frac23\right)$, leaving $I_1 = \left[0, \frac13\right] \cup \left[\frac23, 1\right]$.
-    Then remove the middle third of each interval here, giving $I_2 = \left[0, \frac19\right] \cup \left[\frac29, \frac13\right] \cup \left[\frac23, \frac79\right] \cup \left[\frac89, 1\right]$.
+    This is a compact subset $C$ of $[0, 1]$, defined as follows.
+    Start with the interval $I_0 = [0, 1]$ and remove the middle third $\left(\frac 13, \frac 23\right)$, leaving $I_1 = \left[0, \frac 13\right] \cup \left[\frac 23, 1\right]$.
+    Then remove the middle third of each interval here, giving $I_2 = \left[0, \frac 19 \right] \cup \left[\frac 29, \frac 13\right] \cup \left[\frac 23, \frac 79\right] \cup \left[\frac 89, 1\right]$.
     Repeat, then define $C = \bigcap_{n \geq 0} I_n$.
     Equivalently, take a ternary expansion of $x \in [0, 1]$, and define $C$ as the set of $x$ which has \emph{none} of its digits equal to $2$.
 \end{eg}
@@ -1012,10 +1013,10 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
 
             Finally, every non-negative measurable function is a pointwise limit of simple functions. Indeed with
             \begin{gather*}
-                f_n(x) \coloneqq \min\left(n, \frac{1}{2^n} \left[2^n f(x)\right]\right) \\
+                f_n(x) \coloneqq n \wedge \frac{1}{2^n} \left[2^n f(x)\right] \\
                 \forall n \in \N, \, \forall x \in X, \; f_n(x) \leq f(x) \quad \text{and} \quad \lim_{n \to \infty} f_n(x) = f(x)
             \end{gather*}
-            where $[x]$ refers to the integer part of $x$.
+            where $[x]$ refers to the integer part of $x$ and $\wedge$ means minimum.
             So now just apply the Monotone Convergence Theorem to the sequence $(f_n)$.
 
         \item Recall $\mu(f)$ was defined as
@@ -1388,7 +1389,7 @@ Using this lemma, we can prove (exercise) that $\mathcal{L}(\R^{d_1}) \otimes \m
 
     Write $f$ as $\lim_n f_n$, a pointwise limit of simple functions, for instance
     \begin{equation*}
-        f_n(x) \coloneqq \min\left(n, \frac{1}{2^n} \left[2^n f(x)\right]\right) \\
+        f_n(x) \coloneqq n \wedge \frac{1}{2^n} \left[2^n f(x)\right] \\
     \end{equation*}
     which lets us reduce to the case for $f$ simple, using the \hyperlink{def:monConv}{monotone convergence theorem}.
     By linearity we can reduce to the case where $f = \1{E}$ for some $E \in \mathcal{A} \otimes \mathcal{B}$ so we're left to show
@@ -1807,7 +1808,7 @@ Yes: Take $\Omega = \R$, let $\mathcal{F}$ be the Borel sets, and set $\Prob = \
 % 8 nov
 
 Some additional basic terminology:
-\hypertarget{def:mean}For $X$ a \hyperlink{def:rv}{random variable}, $\mathbb{E}(X)$ is called the mean, and $\mathbb{E}((X - \mathbb{E}X)^2)$ is the variance of $X$.
+\hypertarget{def:mean}For $X$ a \hyperlink{def:rv}{random variable}, $\mathbb{E}(X)$ is called the mean, and $\mathbb{E}((X - \mathbb{E}X)^2)$ is the variance of $X$, denoted $\Var X$.
 
 \begin{remark}\leavevmode
     \begin{itemize}
@@ -1887,7 +1888,8 @@ Some additional basic terminology:
     So $\sum_{n \geq 1} S_n^4 < \infty$ a.s. $\implies \lim_{n\to \infty} S_n = 0$ almost surely.
 \end{proof}
 
-\subsection{Type of convergence of random variables}
+\clearpage
+\section{Type of convergence of random variables}
 \begin{notation}\hypertarget{def:cb}
     $C_b(\R^d)$ is the space of continuous and bounded real functionals on $\R^d$.
 \end{notation}
@@ -2028,46 +2030,227 @@ so $\limsup \E(\|X_n - X\|) \leq \epsilon$.
             \end{equation*}
             as $M \to \infty$ by \hyperlink{def:monConv}{monotone convergence}, so
             \begin{equation*}
-                \E(\|X\| \1{\|X\|> M}) \xrightarrow{M \to \infty} 0
+                \E(\|X\| \1{\|X\|> M}) \xrightarrow{M \to \infty} 0.
             \end{equation*}
 
-        \item Suppose the $X_n$s are dominated, i.e.\ there is some $Y$ integrable \hyperlink{def:rv}{random variable} such that $\|X_n\|\leq Y$ for all $n$. Then $(X_n)_n$ are \hyperlink{def:ui}{uniformly integrable}:
+        \item Suppose the $X_n$s are dominated, i.e.\ there is some $Y$ an integrable \hyperlink{def:rv}{random variable} such that $\|X_n\|\leq Y$ for all $n$. Then $(X_n)_n$ are \hyperlink{def:ui}{uniformly integrable}:
             \begin{equation*}
-                \E(\|X_n\| \1{\|X_n\| > M}) \leq \E(Y \1{Y>M}) \xrightarrow{M \to \infty} 0
+                \E(\|X_n\| \1{\|X_n\| > M}) \leq \E(Y \1{Y>M}) \xrightarrow{M \to \infty} 0.
             \end{equation*}
 
-        \item If $X_n \xrightarrow{L^1} X$, then $(X_n)_n$ is \hyperlink{def:ui}{uniformly integrable}:
+        \item If $X_n \hyperlink{def:l1}{\xrightarrow{L^1}} X$, then $(X_n)_n$ is \hyperlink{def:ui}{uniformly integrable}:
             \begin{align*}
                     \E(\|X_n\|\1{\|X_n\|>M}) &\leq \E(\|X_n-X\| \1{\|X_n\|>M}) + \E(\|X\| \1{\|X_n\|>M})\\
-                                             &
-                    \begin{aligned}
-                        \leq\E(\|X_n-X\|) &+ \E(\|X\|\1{\|X\|>M} \1{\|X_n\|>M}) \\
+                                             &\leq
+                    \begin{aligned}[t]
+                        \E(\|X_n-X\|) &+ \E(\|X\|\1{\|X\|>M} \1{\|X_n\|>M}) \\
                                       &+ \E(\|X\| \1{\|X\| < M} \1{\|X_n\|>M})
                     \end{aligned}
                     \\
                                              &\leq \E(\|X_n-X\|) + \E(\|X\| \1{\|X\|>M}) + M\E(\1{\|X_n\| \geq M}) \\
-                                             &\leq \E(\|X_n-X\|) + \epsilon|M|
+                                             &\leq \E(\|X_n-X\|) + \epsilon M.
             \end{align*}
-            So $M \Prob(\|X\|_n > M) \leq \E(\|X_n\|) \to \E(\|X\|)$.
+            % So $M \Prob(\|X_n\| > M) \leq \E(\|X_n\|) \to \E(\|X\|)$.
     \end{itemize}
 \end{remark}
 \begin{thm}
     Let $(X_n)_{n \geq 1}$ be a sequence of \hyperlink{def:integral}{integrable} \hyperlink{def:rv}{random variables}, and let $Y$ be another random variable.
     Then $(X_n)$ is \hyperlink{def:ui}{uniformly integrable} and \hyperlink{def:conv}{converges in probability} to $X$ if and only if $X$ is integrable and $X_n \hyperlink{def:l1}{\xrightarrow{L^1}} X$.
 \end{thm}
-\begin{proof}
-    ($\Rightarrow$). Suppose $(X_n)$ is \hyperlink{def:ui}{uniformly integrable} and \hyperlink{def:conv}{converges to $X$ in probability}.
+\begin{proof}[Proof of $(\Rightarrow$).]
+    Suppose $(X_n)$ is \hyperlink{def:ui}{uniformly integrable} and \hyperlink{def:conv}{converges to $X$ in probability}.
     We've shown that there is a subsequence $(X_{n_k})_k$ such that $X_{n_k} \xrightarrow{k \to \infty} X$ almost surely.
     \begin{equation*}
-        \E(\|X\| \1{\|X\| \geq n}) \leq \liminf_{n \to \infty} \E(\|X_{n_k}\| \1{\|X_{n_k}\| > M}) = \epsilon |M|
+        \E(\|X\| \1{\|X\| \geq M}) \leq \liminf_{n \to \infty} \E(\|X_{n_k}\| \1{\|X_{n_k}\| > M}) = \epsilon M
     \end{equation*}
     by \hyperlink{thm:fatou}{Fatou's lemma}.
 
-    So $\E(\|X\|) = \E(\|X\|\1{\|X\| < M}) + \E(\|X\|\1{\|X\| \geq n}) \leq M + \epsilon M < \infty$ so $X$ is integrable.
-    Hence
+    So $\E(\|X\|) = \E(\|X\|\1{\|X\| < M}) + \E(\|X\|\1{\|X\| \geq M}) \leq M + \epsilon M < \infty$ so $X$ is integrable.
+    Hence \textbf{rest of the proof missing}.
 \end{proof}
+\begin{remark}
+    This theorem subsumes the \hyperlink{thm:dct}{Lebesgue Dominated Convergence theorem}.
+    If $\exists C > 0$ and some $p>1$ such that $\E(\|X_n\|^p) \leq C$ for any $n$ then $(X_n)_n$ is \hyperlink{def:ui}{uniformly integrable}.
+    Indeed
+    \begin{align*}
+        M^{p-1} \E(\|X_n\| \1{\|X_n\| > M}) \leq \E(\|X_n\|^p) \leq C \\
+        \shortintertext{so}
+        \sup_n\E(\|X_n\| \1{\|X_n\| > M}) \leq \frac{C}{M^{p-1}} \xrightarrow{M \to \infty} 0.
+    \end{align*}
+\end{remark}
+\textbf{missing end of section}
+%For the $(\Leftarrow)$, need to show if $X_n \hyperlink{def:l1}{\xrightarrow{L^1}} X$ then $(X_n)_n$ is \hyperlink{def:ui}{uniformly integrable}.
+%Observe that $(X_n)_n$ is uniformly integrable if and only if
+%\begin{equation*}
+%    \limsup_{n \to \infty} \E(\|X_n\|\1{\|X_n\|>M}) \xrightarrow{M \to \infty} 0.
+%\end{equation*}
+%This is because for any finitely many $X_1, \dotsc, X_{n_0}$,
+
+\clearpage
+\section{\texorpdfstring{$L^p$}{Lp} spaces}
+\begin{prop}[H\"older inequality]\hypertarget{prop:holder}
+    Let $p,q \in [1,\infty]$ such that $\frac 1p + \frac 1q = 1$ (taking $\frac 1\infty \coloneqq 0$).
+    Let $f,g$ be \hyperlink{def:measurableFunc}{measurable functions} on a \hyperlink{def:measureSpace}{measure space} $(X, \mathcal{A},\mu)$. Then
+    \begin{equation*}
+        \int_X |fg| \, d\mu \leq \sqrt[p]{\int_X |f|^p \, d\mu}\sqrt[q]{\int_X |g|^q \, d\mu}
+    \end{equation*}
+    with equality iff $\exists a,b \in \mathbb{R}$ not both $0$ such that $a |f|^p = b |g|^q$ \hyperlink{def:ae}{$\mu$-almost everywhere}.
+\end{prop}
+\begin{proof}
+    Without loss of generality, assume $p,q \in (1,\infty)$ and $\int |f|^p \, d\mu = 1 = \int |g|^q \, d\mu$ (up to changing $f,g$ by a scalar).
+    The Young inequality for products gives
+    \begin{equation*}
+        \forall a,b \geq 0 \quad ab \leq \frac{1}{p} a^p + \frac{1}{q} b^q
+    \end{equation*}
+    (follows from convexity of $x \mapsto -\log x$, since
+    \begin{equation*}
+        \log(ta^p + (1-t) b^q) \geq t \log a^p + (1-t) \log b^q
+    \end{equation*}
+    and take $t = \frac{1}{p}$.)
+    Write $|f(x) g(x)| \leq \frac{1}{p} |f(x)|^p + \frac{1}{q} |g(x)|^q$ and integrate, giving
+    \begin{equation*}
+        \int |fg| \, d\mu \leq 1. \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{prop}[Minkowski inequality]\hypertarget{prop:mink}
+    Take $p \in [1, \infty]$ and $f,g$ \hyperlink{def:measurableFunc}{measurable} functions on a \hyperlink{def:measureSpace}{measure space} $(X, \mathcal{A},\mu)$. Then
+    \begin{equation*}
+        \sqrt[p]{\int|f+g|^p \, d\mu} \leq \sqrt[p]{\int|f|^p \, d\mu}+\sqrt[p]{\int|g|^p \, d\mu}.
+    \end{equation*}
+\end{prop}
+\begin{proof}
+    For $p=1$, this follows by linearity of $\int$ so take $p > 1$. Apply \hyperlink{prop:holder}{H\"older} to $|f||f+g|^{p-1}$ and $|g||f+g|^{p-1}$:
+    \begin{equation*}
+        \int |f+g|^p \leq \int (|f|+|g|) |f+g|^{p-1} \leq \left(\sqrt[p]{\int|f|^p}+\sqrt[p]{\int|g|^p}\right) \sqrt[q]{\int|f+g|^{q(p-1)}}
+    \end{equation*}
+    and $q(p-1) = p$.
+\end{proof}
+
+\begin{remark}
+    We need to check $\int |f+g|^p < \infty$ for this proof to make sense. But this follows from
+    \begin{equation*}
+        |f+g|^p \leq (2 \max\{|f|,|g|\})^p = 2^p \max \{|f|^p,|g|^p\} \leq 2^p (|f|^p + |g|^p)
+    \end{equation*}
+    so the integrability of $|f|^p$ and $|g|^p \implies \int |f+g|^p \, d\mu < \infty$.
+\end{remark}
+\begin{notation}
+    \hypertarget{def:lpspacewrong}Write
+    \begin{equation*}
+        \mathcal{L}^p(X, \mathcal{A},\mu) = \left\{\mathcal{A}\text{-measurable functions $f$ on $X$ such that }\int_X |f|^p \, d\mu < \infty\right\}.
+    \end{equation*}
+\end{notation}
+By the previous remark this is a real vector space.
+\begin{defi}\hypertarget{def:lpnorm}
+    The $L^p$-norm of $f$ is defined by $\|f\|_p =\sqrt[p]{\int|f|^p \, d\mu}$ for $1 \leq p < \infty$.
+\end{defi}
+The following hold:
+\begin{itemize}
+    \item $\|\alpha f \|_p = |\alpha| \|f\|_p$ for all $\alpha \in \mathbb{R}$
+    \item $\|f+g\|_p \leq \|f\|_p + \|g\|_p$ (from \hyperlink{prop:mink}{Minkowski})
+\end{itemize}
+\begin{remark}
+    If $\|f\|_p = 0$ then $f=0$ \hyperlink{def:ae}{$\mu$-a.e.}, so $\|\cdot\|_p$ is only a pseudo-norm on $\mathcal{L}^p(X, \mathcal{A},\mu)$.
+    Note
+    \begin{equation*}
+        \text{if} \quad
+        \begin{aligned}
+            f_1 &= f_2\ \mu\text{-a.e.}\\
+            g_1 &= g_2\ \mu\text{-a.e.}
+        \end{aligned}
+        \quad \text{then} \quad
+        \begin{aligned}
+            f_1+g_1 &= f_2+g_2\ \mu\text{-a.e.}\\
+            f_1 g_1 &= f_2 g_2\ \mu\text{-a.e.}
+        \end{aligned}
+    \end{equation*}
+    so if we say that two functions $f,g$ on $(X,\mathcal{A},\mu)$ are equivalent $f \sim_\mu g$ if $f-g = 0$ $\mu$-a.e. then this is an equivalence relation compatible with $+,\times$.
+\end{remark}
+
+\begin{defi}[$L^p$ space]\hypertarget{def:lpspace}
+    Let $L^p(X, \mathcal{A},\mu)$ be the set of equivalence classes of functions in $\hyperlink{def:lpspacewrong}{\mathcal{L}^p(X,\mathcal{A},\mu)}$.
+    Define $\|[f]\|_p = \|f\|_p$. This is a real vector space and $\|[f]\|_p$ is a genuine norm of $f$.
+
+    When $p=\infty$ and $f$ a measurable function,
+    \begin{equation*}
+        \|f\|_\infty \coloneqq \inf \set{t \geq 0 | |f(x)| \leq t \text{ for } \mu\text{-a.e.} x}.
+    \end{equation*}
+\end{defi}
+\begin{prop}[Completeness of \hyperlink{def:lpspace}{$L^p$ spaces}]
+    \hyperlink{def:lpspace}{$L^p(X, \mathcal{A},\mu)$} for $p \in [1,\infty]$ is complete, i.e.\ every Cauchy sequence converges.
+\end{prop}
+\begin{proof}
+    Let $(f_n)_{n \geq 1}$, $f_n \in \hyperlink{def:lpspacewrong}{\mathcal{L}^p(X, \mathcal{A},\mu)}$ and $\forall \epsilon\ \exists N$ with $\|f_n - f_m\|_p < \epsilon$ for all $n,m > N$.
+    Pick a subsequence $n_k$ such that $f_{n_{k+1}} - f_{n_k} \leq \frac{\epsilon}{2^k}$ so $\sum_{k \geq 1} \|f_{n_{k+1}}-f_{n_k}\| \leq \epsilon$.
+    By \hyperlink{prop:mink}{Minkowski},
+    \begin{equation*}
+        \left\|\sum_{k=1}^K \left|f_{n_{k+1}} - f_{n_k}\right| \right\|_p \leq \epsilon \quad \forall k < \infty.
+    \end{equation*}
+    Let $K \to \infty$ so by \hyperlink{def:monConv}{monotone convergence theorem} it holds also for $K = \infty$.
+    Thus \hyperlink{def:ae}{$\mu$-a.e.}
+    \begin{equation*}
+        \sum_{k=1}^\infty \left|f_{n_{k+1}} - f_{n_k}\right|(x) < \infty
+    \end{equation*}
+    so for \hyperlink{def:ae}{$\mu$-a.e.\ }$x$, $(f_{n_k}(x))_k$ converges (by completeness of $\mathbb{R}$), let $f(x)$ be the limit.
+    Outside this set of $x$s, just set $f(x) = 0$.
+
+    Finally,
+    \begin{equation*}
+        \|f_n-f\|_p = \left\|\lim_{k \to \infty} (f_n - f_{n_k})\right\|_p \leq \liminf_{k \to \infty} \|f_n - f_{n_k}\|
+    \end{equation*}
+    by \hyperlink{thm:fatou}{Fatou's lemma} but since $f_n$ is Cauchy this is $\leq \epsilon$ if $n$ is large enough.
+\end{proof}
+So, \hyperlink{def:lpspace}{$L^p$ space} is a Banach space.
+\begin{remark}[Approximation by simple functions]
+    The vector space of \hyperlink{def:simpleFunc}{simple functions} of the form
+    \begin{equation*}
+        \sum_{i=1}^N a_i \1{A_i} \quad \text{where } a_i \in \mathbb{R}, A_i \in \mathcal{A} \text{ such that } \mu(A_i) < \infty
+    \end{equation*}
+    is dense in $L^p(X,\mathcal{A},\mu)$ for all $p \in [1,\infty]$.
+    Namely if $f \in L^p(X,\mathcal{A},\mu)$ then let $f = f^+ - f^-$ and
+    \begin{equation*}
+        f_n^+ = \frac{2^n f^+}{2^n} \wedge n.
+    \end{equation*}
+    So $f_n^+$ a simple function. Similarly define $f_n^-$.
+    Then $f_n^+ \to f^+$ and $f_n^- \to f^-$ \hyperlink{def:ae}{a.e.} and $|f_n| < 2|f|$.
+    So when $p < \infty$ by \hyperlink{thm:dct}{dominated convergence} we get $\|f_n-f\|_p \xrightarrow{n \to \infty} 0$.
+    When $p=\infty$ $\|f-f_n\|\leq \frac{1}{2^n}$.
+
+    In particular $L^\infty \cap L^p$ is dense in $L^p$, since the simple functions are contained in $L^\infty \cap L^p$.
+\end{remark}
+\begin{remark}
+    Take $X=\mathbb{R}^d$, $\mathcal{A}$ the \hyperlink{def:borelAlg}{Borel $\sigma$-algebra} and $\mu$=\hyperlink{def:lebMeas}{Lebesgue}.
+    Then $C_c(\mathbb{R}^d)$ and $C_c^\infty (\mathbb{R}^d)$ are dense in $\hyperlink{def:lpspace}{L^p(\mathbb{R}^d, \mathcal{A},\mu)}$ when $p \in [1, \infty)$.
+    Recall $C_c(\mathbb{R}^d)$ is the set of continuous functions with compact support and $C_c^\infty(\mathbb{R}^d)$ are the smooth functions with compact support.
+
+    This fails for $p=\infty$, take for instance $f = \1{[0,1]}$
+    \begin{center}
+        \begin{tikzpicture}
+            \draw (-0.5,0) -- (0,0) -- (0,1) -- (1,1) -- (1,0) -- (2.6,0);
+            \node at (0,-0.2) {$0$};
+            \node at (1,-0.2) {$1$};
+        \end{tikzpicture}
+    \end{center}
+    then for any continuous $f$, $\|\1{[0,1]}-f\|_\infty \geq \frac 12$.
+    % missing content
+
+\end{remark}
+\subsection{Hilbert spaces}
+A vector space $\mathcal{H}$ over $\mathbb{R}$ or $\mathbb{C}$ is called a \textbf{Hilbert space} if it is endowed with an inner product
+\begin{align*}
+    \mathcal{H} \times \mathcal{H} &\longrightarrow \mathbb{R} \text{ or } \mathbb{C} \\
+    (x,y) &\longmapsto \langle x,y\rangle
+\end{align*}
+such that
+\begin{itemize}
+    \item $\langle x,x\rangle \in \mathbb{R}_+$ and $\langle x,x\rangle = 0 \implies x=0$
+    \item $\overline{\langle x,y\rangle} = \langle y,x \rangle$ for any $x,y \in \mathcal{H}$
+    \item $\langle x + \lambda x',y \rangle = \langle x+ y \rangle + \lambda \langle x',y\rangle$ $\forall \lambda \in \mathbb{R}$ or $\mathbb{C}$
+\end{itemize}
+and $\mathcal{H}$ is complete with respect to the norm $\|x\|\coloneqq \sqrt{\langle x,y\rangle}$.
 % missing a crapload
 
+\clearpage
 \begin{cor}
     $H = V \oplus V^\bot$ where $V^\bot = V^\bot = \set{y \in H| \langle x, y\rangle = 0 \; \forall x \in V}.$
 \end{cor}
