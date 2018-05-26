@@ -2236,18 +2236,39 @@ So, \hyperlink{def:lpspace}{$L^p$ space} is a Banach space.
 
 \end{remark}
 \subsection{Hilbert spaces}
-A vector space $\mathcal{H}$ over $\mathbb{R}$ or $\mathbb{C}$ is called a \textbf{Hilbert space} if it is endowed with an inner product
-\begin{align*}
-    \mathcal{H} \times \mathcal{H} &\longrightarrow \mathbb{R} \text{ or } \mathbb{C} \\
-    (x,y) &\longmapsto \langle x,y\rangle
-\end{align*}
-such that
-\begin{itemize}
-    \item $\langle x,x\rangle \in \mathbb{R}_+$ and $\langle x,x\rangle = 0 \implies x=0$
-    \item $\overline{\langle x,y\rangle} = \langle y,x \rangle$ for any $x,y \in \mathcal{H}$
-    \item $\langle x + \lambda x',y \rangle = \langle x+ y \rangle + \lambda \langle x',y\rangle$ $\forall \lambda \in \mathbb{R}$ or $\mathbb{C}$
-\end{itemize}
-and $\mathcal{H}$ is complete with respect to the norm $\|x\|\coloneqq \sqrt{\langle x,y\rangle}$.
+\begin{defi}[Hilbert space]\hypertarget{def:hilbert}
+    A vector space $\mathcal{H}$ over $\mathbb{R}$ or $\mathbb{C}$ is called a \textbf{Hilbert space} if it is endowed with an inner product
+    \begin{align*}
+        \mathcal{H} \times \mathcal{H} &\longrightarrow \mathbb{R} \text{ or } \mathbb{C} \\
+        (x,y) &\longmapsto \langle x,y\rangle
+    \end{align*}
+    such that
+    \begin{itemize}
+        \item $\langle x,x\rangle \in \mathbb{R}_+$ and $\langle x,x\rangle = 0 \implies x=0$
+        \item $\overline{\langle x,y\rangle} = \langle y,x \rangle$ for any $x,y \in \mathcal{H}$
+        \item $\langle x + \lambda x',y \rangle = \langle x+ y \rangle + \lambda \langle x',y\rangle$ $\forall \lambda \in \mathbb{R}$ or $\mathbb{C}$
+    \end{itemize}
+    and $\mathcal{H}$ is complete with respect to the norm $\|x\|\coloneqq \sqrt{\langle x,y\rangle}$.
+\end{defi}
+
+\begin{eg}
+    \begin{itemize}
+        \item $\mathcal{H}=\mathbb{R}^d$ with $\langle x,y\rangle = \sum_{i=1}^d x_i y_i$
+        \item $\mathcal{H}=\mathbb{C}^d$ with $\langle x,y\rangle = \sum_{i=1}^d x_i \overline{y_i}$
+        \item $\mathcal{H}=\hyperlink{def:lpspace}{L^2(X,\mathcal{A},\mu)}$ with $\langle f,g\rangle = \int_X fg \, d\mu$ as an $\mathbb{R}$ vector space.
+    \end{itemize}
+\end{eg}
+\begin{lemma}[Existence of orthogonal projection]
+    Let $\mathcal{H}$ be a \hyperlink{def:hilbert}{Hilbert space} and let $V$ be a closed vector subspace.
+    Then $\forall x \in \mathcal{H}$, $\exists! y \in V$ such that $d(x,V) = \|x-y\|$ (where $d(x,V) \coloneqq \inf\set{\|x-z\| | z \in V}$).
+\end{lemma}
+\begin{proof}
+    Pick a sequence $y_n \in V$ such that $\|x-y_n\| \to d(x,V)$. Then
+    \begin{equation*}
+        \left\|x-\frac{y_n+y_m}{2}\right\|^2
+    \end{equation*}
+\end{proof}
+
 % missing a crapload
 
 \clearpage
