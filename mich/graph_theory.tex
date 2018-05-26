@@ -1,8 +1,8 @@
 \documentclass{article}
 
-\def\npart {II}
-\def\nyear {2017}
-\def\nterm {Michaelmas}
+\def\npart{II}
+\def\nyear{2017}
+\def\nterm{Michaelmas}
 \def\nlecturer{Prof. P. Russell}
 \def\ncourse{Graph Theory}
 \input{header}
@@ -18,7 +18,7 @@
 
 \setcounter{section}{-1}
 \usetikzlibrary{positioning,decorations.pathmorphing, calc, backgrounds, fadings}
-\tikzset{node/.style = {circle,draw}}
+\tikzset{node/.style = {circle,draw,inner sep=0.8mm}}
 
 \counterwithout{nthm}{section}
 
@@ -34,6 +34,14 @@
     \renewcommand\themanualtheoreminner{#1}%
     \manualtheoreminner
 }{\endmanualtheoreminner}
+
+\newcommand{\red}[1]{\textcolor{bred}{#1}}
+\newcommand{\green}[1]{\textcolor{bgreen}{#1}}
+\newcommand{\blue}[1]{\textcolor{bblue}{#1}}
+\newcommand{\yellow}[1]{\textcolor{byellow}{#1}}
+\newcommand{\orange}[1]{\textcolor{borange}{#1}}
+\newcommand{\purple}[1]{\textcolor{bpurple}{#1}}
+
 % and here we go!
 
 \begin{document}
@@ -136,7 +144,7 @@ In this course, we make the following assumptions:
             We turn the problem into a graph problem - in particular, a multigraph to allow multiple edges between vertices.  The vertices of this graph are the four bits of the city, while the edges are the seven bridges.
             In terms of this graph, the problem becomes to walk around the edges of this graph precisely once, and return to the starting vertex.
             \begin{center}
-                \begin{tikzpicture}[every node/.style={node, inner sep=1mm}]
+                \begin{tikzpicture}[every node/.style=node]
                     \node (A) at (0, 0) {};
                     \node (B) at (0.4, 1) {};
                     \node (C) at (0.4,-1) {};
@@ -164,7 +172,7 @@ In this course, we make the following assumptions:
                         \draw [fill=bblue] (-5,0) circle [radius=4cm];
                         \draw [fill=bblue] ( 5,0) circle [radius=4cm];
                     \end{scope}
-                    \begin{scope}[yshift=-5cm, every node/.style={node,inner sep=1mm}]
+                    \begin{scope}[yshift=-5cm, every node/.style=node]
                         \node [fill=borange] (A) at (0,0) {};
                         \node [fill=bblue] (B) at (2,0) {};
                         \node [fill=bblue] (C) at (-2,0) {};
@@ -204,12 +212,11 @@ In this course, we make the following assumptions:
             \end{align*}
 
             It finally remains to show Schur's Theorem:
-
-            \begin{thm}[Schur's Theorem]\hypertarget{thm:schur}
-                Let $n$ be a positive integer. Then if $p$ is a sufficiently large positive integer, whenever $\{1, 2, \dots, p\}$ is partitioned into $n$ parts, we can solve $a + b = c$ with $a, b, c$ all in some part.
-            \end{thm}
     \end{enumerate}
 \end{eg}
+\begin{thm}[Schur's Theorem]\hypertarget{thm:schur}
+    Let $n$ be a positive integer. Then if $p$ is a sufficiently large positive integer, whenever $\{1, 2, \dots, p\}$ is partitioned into $n$ parts, we can solve $a + b = c$ with $a, b, c$ all in some part.
+\end{thm}
 
 \clearpage
 \section{Ramsey Theory}
@@ -295,13 +302,6 @@ Recall \hyperlink{thm:schur}{Schur's Theorem}:
 
 Can we prove this directly? First try $k=1$, where $n=2$ immediately works because $1+1=2$.
 
-\newcommand{\red}[1]{\textcolor{bred}{#1}}
-\newcommand{\green}[1]{\textcolor{bgreen}{#1}}
-\newcommand{\blue}[1]{\textcolor{bblue}{#1}}
-\newcommand{\yellow}[1]{\textcolor{byellow}{#1}}
-\newcommand{\orange}[1]{\textcolor{borange}{#1}}
-\newcommand{\purple}[1]{\textcolor{bpurple}{#1}}
-
 For $k=2$, use colours \red{red} and \green{green}, wlog we can take \red{$1$ red}.
 As $\red{1}+\red{1}=2$, we must have a \green{green $2$}.
 Similarly, \red{$4$} must be \red{red} otherwise $\green{2}+\green{2}=\green{4}$.
@@ -374,7 +374,7 @@ Suppose the edges of a \hyperlink{def:Kn}{complete graph} $K_6$ are coloured \re
 
 \begin{remark}
     Schur for $k=2$ now follows: Suppose $[5]$ are coloured \red{red}/\green{green}. Take a $K_6$ with vertices $\{0, 1, \dots, 5\}$. Colour edge $ij$, $(i<j)$ with the colour of $j-i$.
-    By the above proof, we have a monochromatic triangle $abc$ ($a<b<c$). Then $(c-b) + (b-a) = c-a$, and $c-b, b-a, c-a$ are all the same colour.
+    By the above proof, we have a monochromatic \hyperlink{def:triangle}{triangle} $abc$ ($a<b<c$). Then $(c-b) + (b-a) = c-a$, and $c-b, b-a, c-a$ are all the same colour.
     We cannot necessarily find a monochromatic triangle in $K_5$, so 6 vertices are necessary.
 
     \begin{center}
@@ -395,7 +395,7 @@ Suppose the edges of a \hyperlink{def:Kn}{complete graph} $K_6$ are coloured \re
 
 \begin{nprop}\label{prop:1}
     Let $k$ be a positive integer.
-    Then there is a positive integer $n$ such that whenever the edges of $\hyperlink{def:Kn}{K_n}$ are coloured with $k$ colours we can find a monochromatic triangle.
+    Then there is a positive integer $n$ such that whenever the edges of $\hyperlink{def:Kn}{K_n}$ are coloured with $k$ colours we can find a monochromatic \hyperlink{def:triangle}{triangle}.
 \end{nprop}
 
 \pgfmathsetseed{1}
@@ -403,18 +403,18 @@ Suppose the edges of a \hyperlink{def:Kn}{complete graph} $K_6$ are coloured \re
 \begin{proof}
     Induction on $k$. For $k=1$, $n=3$ works, so consider $k>1$.
 
-    By the induction hypothesis, there exists $m$ such that if $\hyperlink{def:Kn}{K_m}$ is $(k-1)$-coloured, then there is a monochromatic triangle.  Let $n = k(m-1) + 2$.
+    By the induction hypothesis, there exists $m$ such that if $\hyperlink{def:Kn}{K_m}$ is $(k-1)$-coloured, then there is a monochromatic \hyperlink{def:triangle}{triangle}.  Let $n = k(m-1) + 2$.
 
     Now $k$-colour the edges of $K_n$.  Pick vertex $v$.
-    The number of edges containing $v$ is $n-1 = k(m-1)+1$.  So some $m$ of them are the same colour, without loss of generality blue.
-    Let $H$ be a $K_m$ joined to $v$ by blue edges. If $H$ contains a blue edge, it makes a blue triangle with $v$.
+    The number of edges containing $v$ is $n-1 = k(m-1)+1$.  So some $m$ of them are the same colour, without loss of generality \red{red}.
+    Let $H$ be a $K_m$ joined to $v$ by \red{red edges}. If $H$ contains a \red{red edge}, it makes a \red{red triangle} with $v$.
     If not, $H$ is a $(k-1)$-coloured $K_m$ so by definition of $m$, it contains a monochromatic triangle.
     \begin{center}
         \begin{tikzpicture}[scale=0.5]
             \node [node, label=left:$v$] (v) at (0, 0) {};
 
             \foreach \theta in {25, 15, ..., -25}
-                \draw[bred] (v) -- (\theta+rand*3:6+rand*0.2);
+                \draw[bred] (v) -- (\theta+rand*3:6+rand*0.4);
 
             \begin{scope}[xshift=6.5cm, scale=3]
                 \draw plot [smooth cycle, tension=0.8] coordinates {(-180:1) (-120:1.2) (-60:0.8) (0:0.9) (60:1.1) (120:1.3)};
@@ -427,29 +427,33 @@ Suppose the edges of a \hyperlink{def:Kn}{complete graph} $K_6$ are coloured \re
 \begin{remark}
     \leavevmode
     \begin{enumerate}
-        \item Can think in terms of the following picture. Eventually, we will run out of colours and get a monochromatic triangle.
+        \item Can think in terms of the following picture. Eventually, we will run out of colours and get a monochromatic \hyperlink{def:triangle}{triangle}.
             \begin{center}
-                \begin{tikzpicture}[scale=0.6, inner sep=0.05cm]
+                \begin{tikzpicture}[scale=0.6]
                     \node [node] (a) at ( -7,  0) {};
                     \node [node] (b) at ( -4,  1) {};
                     \node [node] (c) at ( -1, -1) {};
                     \node [node] (d) at (1.7,  0) {};
 
                     \foreach \theta in {38, 36, ..., -36}{
-                        \pgfmathsetmacro\randa{rand}
-                        \pgfmathsetmacro\randb{rand}
-                        \pgfmathsetmacro\randc{rand}
-                        \pgfmathsetmacro\randd{rand}
-
-                        \draw [bred]    (a) -- ++(\theta     + \randb*1.4      : 3   + \randb*0.5);
-                        \draw [bgreen]  (b) -- ++(\theta     + \randd*1.3 - 10 : 3   + \randd*0.5);
-                        \draw [borange] (c) -- ++(\theta     + \randc*1.2 + 20 : 2.5 + \randc*0.5);
-                        \draw [bblue]   (d) -- ++(\theta*0.7 + \randa*1.2 +  5 : 2.3 + \randa*0.5);
-
-                        \draw [bred]    (a) -- (b);
-                        \draw [bgreen]  (b) -- (c);
-                        \draw [borange] (c) -- (d);
+                        \pgfmathsetmacro\rand{rand}
+                        \draw [bred]    (a) -- ++(\theta    +\rand*1.4   :  3+\rand*0.5);
                     }
+                    \foreach \theta in {30, 28, ..., -28}{
+                        \pgfmathsetmacro\rand{rand}
+                        \draw [bgreen]  (b) -- ++(\theta*1.1+\rand*1.3-15:  3+\rand*0.5);
+                    }
+                    \foreach \theta in {24, 22, ..., -22}{
+                        \pgfmathsetmacro\rand{rand}
+                        \draw [borange] (c) -- ++(\theta*1.4+\rand*1.2+20:2.5+\rand*0.5);
+                    }
+                    \foreach \theta in {14, 12, ..., -12}{
+                        \pgfmathsetmacro\rand{rand}
+                        \draw [bblue]   (d) -- ++(\theta*1.6+\rand*1.2+10:2.3+\rand*0.5);
+                    }
+                    \draw [bred]    (a) -- (b);
+                    \draw [bgreen]  (b) -- (c);
+                    \draw [borange] (c) -- (d);
 
                     \draw plot [smooth cycle, tension=0.8, xshift=2.0cm, xscale=2.5, scale=3.0] coordinates {(-180:1.0) (-120:1.2) (-60:0.8) (0:0.9) (60:1.1) (120:1.3)};
                     \draw plot [smooth cycle, tension=0.8, xshift=2.8cm, xscale=2.0, scale=2.6] coordinates {(-180:1.0) (-120:1.2) (-60:0.7) (0:0.9) (60:0.9) (120:1.3)};
@@ -476,14 +480,14 @@ Think about two colours at first for simplicity.  Yes, but we need an intermedia
                 \begin{itemize}
                     \item $v$ is in \red{4 red} edges
                         \begin{center}
-                            \begin{tikzpicture}[every node/.style=node]
+                            \begin{tikzpicture}
                                 \foreach \ver in {0,1} {
                                     \begin{scope}[xshift=\ver*6 cm]
-                                        \node [label=left:$v$]  (v\ver) at (-1, 0) {};
-                                        \node [label=right:$w$] (w\ver) at ( 90:1) {};
-                                        \node [label=right:$x$] (x\ver) at ( 30:1) {};
-                                        \node [label=right:$y$] (y\ver) at (-30:1) {};
-                                        \node [label=right:$z$] (z\ver) at (-90:1) {};
+                                        \node [node,label=left:$v$]  (v\ver) at (-1, 0) {};
+                                        \node [node,label=above:$w$] (w\ver) at ( 90:1) {};
+                                        \node [node,label=right:$x$] (x\ver) at ( 30:1) {};
+                                        \node [node,label=right:$y$] (y\ver) at (-30:1) {};
+                                        \node [node,label=below:$z$] (z\ver) at (-90:1) {};
 
                                         \begin{scope}[bred]
                                             \draw (x\ver) -- (v\ver) -- (w\ver);
@@ -593,7 +597,7 @@ We have seen $\hyperlink{def:ramseyNum}{R(3) = 6}$; $R(3, 4) \leq 10$; $R(4) \le
     Induction on $k$. For the base case $k=1$, we can take $n=s$.
 
     For $k>1$, by the induction hypothesis we can find $m$ such that if $\hyperlink{def:Kn}{K_m}$ is $(k-1)$-coloured, then there is a monochromatic $K_s$.
-    Let $n = \hyperlink{def:ramseyNum}{R(s, m)}$ and colour $K_n$ with $k$ colours, including \red{red} but not green.
+    Let $n = \hyperlink{def:ramseyNum}{R(s, m)}$ and colour $K_n$ with $k$ colours, including \red{red} but not \green{green}.
     Re-colour by turning all non-red edges \green{green}.
     By definition of $n$, we have either
     \begin{itemize}
@@ -605,7 +609,7 @@ We have seen $\hyperlink{def:ramseyNum}{R(3) = 6}$; $R(3, 4) \leq 10$; $R(4) \le
 \begin{remark} \leavevmode
     \begin{enumerate}[label=\arabic*.]
         \item We write $R_k(s)$ for the smallest $n$ that works. In particular $R_1(s) = s$ and $R_2(s) = R(s)$.
-            Proof of theorem 4 will give $R_k(s) \leq 4^{s^{k-1}}$.
+            Proof of \Cref{thm:multiRamsey} will give $R_k(s) \leq 4^{s^{k-1}}$.
         \item What do we really mean by colouring?
             We have informally talked about `red edges' etc. More formally, we colouring of the edges of $G = (V, E)$ with $k$ colours is a function $c: E \to [k]$. We mostly refer to the colours as `red', `green' and so on.
             We say $H = (W, F)$ is monochromatic if $c |_F$ is constant.
@@ -629,7 +633,7 @@ With any number of colours, we can find arbitrarily large monochromatic subgraph
 Where it makes sense to do so, we carry terminology over from graphs to \hyperlink{def:infGraph}{infinite graphs}.
 Suppose edges of $\hyperlink{def:kInf}{K_\infty}$ are coloured \red{red}/\green{green}. What can we find? By \nameref{thm:ramsey}, we can find a monochromatic $K_s$ for every finite $s = 1, 2, 3, \dotsc$. Note this doesn't immediately give a monochromatic $K_\infty$:
 \begin{center}
-    \begin{tikzpicture}[inner sep=0.05cm, every node/.style = node, scale=0.6]
+    \begin{tikzpicture}[every node/.style=node, scale=0.6]
         \begin{scope}
             \path [scope fading=east] (8, -3) rectangle (25.5, 3);
             \foreach \n in {2,...,9} {
@@ -1310,7 +1314,7 @@ Does it even exist?
     Increasing this proportion by a tiny amount gives \emph{much} more.
     For example, with a $\frac{1}{2}$ the possible edges, we can guarantee a $\triangle$, but with proportion $\frac{1}{2} + \epsilon$ we can (eventually) guarantee a `blown up triangle':
     \begin{center}
-        \begin{tikzpicture}[every node/.style={node,inner sep=1mm}]
+        \begin{tikzpicture}[every node/.style=node]
             \node (a1) at ( 80:2) {};
             \node (a2) at ( 90:2) {};
             \node (a3) at (100:2) {};
@@ -1480,7 +1484,7 @@ So, we have an equivalent version of Erd\H{o}s-Stone with minimum degree conditi
 
     Then we can find $K_r(T) \subset G$, say with vertex classes $X_1, \dotsc, X_r$.
     \begin{center}
-        \begin{tikzpicture}[scale=0.6, inner sep=0.05cm]
+        \begin{tikzpicture}[scale=0.6]
             \node [node,label=below:$v_1$] (a) at ( -4,  2) {};
             \node [node,label=below:$v_r$] (b) at (  4,  2) {};
 
@@ -1543,7 +1547,7 @@ So, we have an equivalent version of Erd\H{o}s-Stone with minimum degree conditi
 If $\hyperlink{def:order}{\abs{G}} = n$, how big does $e(G)$ need to be to force $G$ \hyperlink{def:hamil}{Hamiltonian}?
 This turns out to be uninteresting, we can have $e(G)$ almost $\binom{n}{2}$ and have no Hamiltonian cycle.
 \begin{center}
-    \begin{tikzpicture}[every node/.style={inner sep=1mm}]
+    \begin{tikzpicture}
         \foreach \k in {0,...,7} {
             \node [node] (\k) at (360/8*\k+90:2) {};
         }
@@ -1571,7 +1575,7 @@ More interestingly then, is there a condition on $\hyperlink{def:degree}{\delta(
     \begin{enumerate}[label=\arabic*.]
         \item This result is best possible:
             \begin{center}
-                \begin{tikzpicture}[every node/.style={inner sep=1mm}]
+                \begin{tikzpicture}
                     \begin{scope}
                         \node at (0,1.7) {$n$ even, $\hyperlink{def:degree}{\delta(G)} = \frac{n}{2}-1$};
 
@@ -1751,7 +1755,7 @@ But,
     \begin{enumerate}[label=\arabic*.]
         \item \hyperlink{def:Kn}{$K_3$} is \hyperlink{def:drawing}{planar}
             \begin{center}
-                \begin{tikzpicture}[every node/.append style={inner sep=0.7mm}]
+                \begin{tikzpicture}
                     \node [node] (A) at (  90:1)  {};
                     \node [node] (B) at (-150:1)  {};
                     \node [node] (C) at ( -30:1)  {};
@@ -1761,7 +1765,7 @@ But,
             \end{center}
         \item $K_4$ may appear non-planar but it is in fact planar.
             \begin{center}
-                \begin{tikzpicture}[every node/.append style={inner sep=0.7mm}]
+                \begin{tikzpicture}
                     \begin{scope}
                         \node [node] (A) at ( 1, 1)  {};
                         \node [node] (B) at (-1, 1)  {};
@@ -1784,7 +1788,7 @@ But,
             \end{center}
         \item $K_5$ is not planar.
             \begin{center}
-                \begin{tikzpicture}[every node/.append style={inner sep=0.7mm}]
+                \begin{tikzpicture}
                     \begin{scope}[xshift=2cm,yshift=0.3cm]
                         \node [node] (A) at (  90:1)  {};
                         \node [node] (B) at ( 162:1)  {};
@@ -1832,7 +1836,7 @@ Clearly if $\hyperlink{def:Kn}{K_5} \subset G$ or $\hyperlink{def:knn}{K_{3,3}} 
 Remarkably, these are the only obstacles to planarity.
 Also, e.g.\
 \begin{center}
-    \begin{tikzpicture}[every node/.style={inner sep=0.7mm},scale=2]
+    \begin{tikzpicture}[scale=2]
         \begin{scope}
             \node [node] (A) at (  90:1)  {};
             \node [node] (B) at ( 162:1)  {};
@@ -1933,9 +1937,9 @@ This is particularly useful for induction, for instance
     \begin{center}
         \begin{tikzpicture}
             \node at (-1,0) {$G=$};
-            \node [node, inner sep=0.7mm] (A) at (0  ,-0.5) {};
-            \node [node, inner sep=0.7mm] (B) at (0.7, 0.5) {};
-            \node [node, inner sep=0.7mm] (C) at (1.4,-0.5) {};
+            \node [node] (A) at (0  ,-0.5) {};
+            \node [node] (B) at (0.7, 0.5) {};
+            \node [node] (C) at (1.4,-0.5) {};
             \draw (A) -- (B) -- (C);
         \end{tikzpicture}
     \end{center}
@@ -2114,7 +2118,7 @@ Clearly $\chi(G)$ can be as large as we like, e.g. $\chi(\hyperlink{def:Kn}{K_k}
         For instance, take $G = K_k \cup \overline{K_k}$.
         Then $\chi(G) = k$, $\frac{\abs{G}}{\alpha(G)} = \frac{2k}{k+1} \approx 2$.
         \begin{center}
-            \begin{tikzpicture}[every node/.style={inner sep=0.7mm}]
+            \begin{tikzpicture}
                 \foreach \x in {0,...,6} {
                     \node [node] (\x) at (360/7*\x+90:1) {};
                     \node [node,xshift=2.5cm] (\x2) at (360/7*\x+90:1) {};
@@ -2182,9 +2186,9 @@ For which graphs $G$ is \eqref{eq:greedystar} achieved?
             at some point in the path we get a point (wlog colour \green{$j$}) which `branches off'.
             \begin{center}
                 \begin{tikzpicture}
-                    \node [node,       inner sep=0.7mm,thick] (v) at (0,0) {};
-                    \node [node,bgreen,inner sep=0.7mm,thick] (j) at (0.2,1) {};
-                    \node [node,bred,  inner sep=0.7mm,thick] (i) at (1,-0.2) {};
+                    \node [node,       thick] (v) at (0,0) {};
+                    \node [node,bgreen,thick] (j) at (0.2,1) {};
+                    \node [node,bred,  thick] (i) at (1,-0.2) {};
                     \draw[path fading=west] (v) -- ( 170:1);
                     \draw[path fading=west] (v) -- (-160:1);
                     \draw[path fading=west] (v) -- (-140:1);
@@ -2192,9 +2196,9 @@ For which graphs $G$ is \eqref{eq:greedystar} achieved?
                     \draw[path fading=south] (v) -- ( -96:1);
 
                     \draw (j) -- (v) -- (i);
-                    \node [node, bred, inner sep=0.7mm, thick] (i2) at (1.2,1.1) {};
-                    \node [node, bgreen, inner sep=0.7mm, thick] (j2) at (1.7,0.4) {};
-                    \node [node, bgreen, inner sep=0.7mm, thick] (j3) at (1.8,1.7) {};
+                    \node [node, bred,   thick] (i2) at (1.2,1.1) {};
+                    \node [node, bgreen, thick] (j2) at (1.7,0.4) {};
+                    \node [node, bgreen, thick] (j3) at (1.8,1.7) {};
 
                     \draw (j) -- (i2) -- (j3);
                     \draw (i2) -- (j2) -- (i);
@@ -2286,7 +2290,7 @@ We use the \textbf{Euler-Poincar\'e Formula}: If $G$ can be drawn on $S$ with $l
 \begin{nthm}[Heawood's Theorem]\label{thm:29}
     Let $S$ be a closed boundaryless surface of \hyperlink{def:eulerChar}{Euler characteristic} $E \leq 1$. Then
     \begin{equation*}
-        \hyperlink{def:chromSur}{\chi(S)} \leq \floor*{\frac{7 + \sqrt{49-24E}}{2}}
+        \hyperlink{def:chromSur}{\chi(S)} \leq \floor*{\frac{7 + \sqrt{49-24E}}{2}}.
     \end{equation*}
 \end{nthm}
 \begin{proof}
@@ -2353,8 +2357,8 @@ Why? It turns out that $K_\chi$ can be drawn on $S$ (hard).
 Clearly $\hyperlink{def:degree}{\Delta(G)} \leq \hyperlink{def:eChromNum}{\chi'}(G) \leq 2 \Delta(G) - 1$, where the lower bound comes from a greedy algorithm: the worst case looks like
 \begin{center}
     \begin{tikzpicture}
-        \node [node, inner sep=0.7mm] (A) at (0,0) {};
-        \node [node, inner sep=0.7mm] (B) at (2,0) {};
+        \node [node] (A) at (0,0) {};
+        \node [node] (B) at (2,0) {};
         \draw (A) -- (B);
         \foreach \x in {-3,...,3} {
             \draw [path fading=west] (A) -- +(\x*20 + 180:1);
@@ -2536,14 +2540,14 @@ What about a converse? If $G$ is \hyperlink{def:kConn}{$k$-connected} and we can
 But this is false, e.g.\
 \begin{center}
     \begin{tikzpicture}
-        \node [node,inner sep=0.7mm] (A) at (-2, 0) {};
-        \node [node,inner sep=0.7mm] (B) at (-1, 1) {};
-        \node [node,inner sep=0.7mm] (C) at ( 0, 1) {};
-        \node [node,inner sep=0.7mm] (D) at ( 1, 1) {};
-        \node [node,inner sep=0.7mm] (E) at ( 2, 0) {};
-        \node [node,inner sep=0.7mm] (F) at ( 1,-1) {};
-        \node [node,inner sep=0.7mm] (G) at ( 0,-1) {};
-        \node [node,inner sep=0.7mm] (H) at (-1,-1) {};
+        \node [node] (A) at (-2, 0) {};
+        \node [node] (B) at (-1, 1) {};
+        \node [node] (C) at ( 0, 1) {};
+        \node [node] (D) at ( 1, 1) {};
+        \node [node] (E) at ( 2, 0) {};
+        \node [node] (F) at ( 1,-1) {};
+        \node [node] (G) at ( 0,-1) {};
+        \node [node] (H) at (-1,-1) {};
         \draw (A) -- (B) -- (C) -- (D) -- (E) -- (F) -- (G) -- (H) -- (A);
         \draw (B) -- (F);
         \draw (D) -- (H);
@@ -2739,7 +2743,7 @@ Recall the \hyperlink{def:zara}{Problem of Zarankiewicz}.
     So, take $p = n^{-\frac{2}{t+1}}$.
     Then
     \begin{equation*}
-        \mathbb{E}(A-B) \geq \left(1 - \frac{1}{(t!)^2}\right) n^{2 - \frac{2}{t+1}}.
+        \mathbb{E}(A-B) \geq \left(1 - \frac{1}{(t!)^2}\right) n^{2 - \frac{2}{t+1}}. \qedhere
     \end{equation*}
 \end{proof}
 Recall from Example sheet 2 that there is a \hyperlink{def:Kn}{$\triangle$}-free graph of large \hyperlink{def:chromNum}{chromatic number} (a hard result).
@@ -3048,7 +3052,7 @@ In fact, Bollob\'as (1988) proved \hyperlink{def:ae}{a.e.\ }$G \in \hyperlink{de
 \begin{eg}
     What are the \hyperlink{def:diameter}{diameter} 1 graphs?
     \begin{center}
-        \begin{tikzpicture}[every node/.style={node, inner sep=0.6mm}]
+        \begin{tikzpicture}[every node/.style=node]
             \node (A) at (0,0) {};
             \node (B) at (1,0) {};
             \draw (A) -- (B);
@@ -3070,7 +3074,7 @@ How many vertices can a graph of \hyperlink{def:diameter}{diameter} 2 have if sa
 As diameter 2, if we have $x \in G$: $V(G) = \{x\} \cup \hyperlink{def:neighbour}{\Gamma}(x) \cup \Gamma(\Gamma(x))$.
 So $\hyperlink{def:order}{|G|} \leq 1 + k + k(k-1) = k^2 + 1$.
 \begin{center}
-    \begin{tikzpicture}[every node/.style={node, inner sep=0.6mm}]
+    \begin{tikzpicture}[every node/.style=node]
         \node (1) at ( 0, 0) {};
         \node (2) at ( 1, 0) {};
         \node (3) at (-1, 0) {};
@@ -3127,7 +3131,7 @@ In general, if $u,v$ are distinct for $G$ \hyperlink{def:moore}{Moore},
 
 For $k=3$:
 \begin{center}
-    \begin{tikzpicture}[every node/.style={node, inner sep=0.7mm}, scale=2]
+    \begin{tikzpicture}[every node/.style=node, scale=2]
         \node (v) at (0,0) {};
         \node (x1) at (  90:1) {};
         \node (x2) at ( -30:1) {};
@@ -3228,11 +3232,11 @@ But, $\hyperlink{def:fG}{f_G}$ carries information about $G$, e.g.:
 \end{defi}
 \begin{center}
     \begin{tikzpicture}
-        \node [node, inner sep=0.6mm,label=above:$1$] (1) at (  90:1)  {};
-        \node [node, inner sep=0.6mm,label=left: $2$] (2) at ( 162:1)  {};
-        \node [node, inner sep=0.6mm,label=below:$3$] (3) at (-126:1)  {};
-        \node [node, inner sep=0.6mm,label=below:$4$] (4) at ( -54:1)  {};
-        \node [node, inner sep=0.6mm,label=right:$5$] (5) at (  18:1)  {};
+        \node [node,label=above:$1$] (1) at (  90:1)  {};
+        \node [node,label=left: $2$] (2) at ( 162:1)  {};
+        \node [node,label=below:$3$] (3) at (-126:1)  {};
+        \node [node,label=below:$4$] (4) at ( -54:1)  {};
+        \node [node,label=right:$5$] (5) at (  18:1)  {};
         \draw (1) -- (2) -- (3) -- (4) -- (5) -- (1);
         \draw (2) -- (5);
         \node at (-1.8,0) {$G=$};
@@ -3293,10 +3297,10 @@ Sometimes it's easy to spot \hyperlink{def:eigen}{eigenvalues}/eigenvectors.
         \item $G=\hyperlink{def:Cn}{C_4}$.
             \begin{center}
                 \begin{tikzpicture}[scale=2]
-                    \node [node,inner sep=0.6mm,label=above left: $1$] (1) at (0,1) {};
-                    \node [node,inner sep=0.6mm,label=above right:$2$] (2) at (1,1) {};
-                    \node [node,inner sep=0.6mm,label=below right:$3$] (3) at (1,0) {};
-                    \node [node,inner sep=0.6mm,label=below left: $4$] (4) at (0,0) {};
+                    \node [node,label=above left: $1$] (1) at (0,1) {};
+                    \node [node,label=above right:$2$] (2) at (1,1) {};
+                    \node [node,label=below right:$3$] (3) at (1,0) {};
+                    \node [node,label=below left: $4$] (4) at (0,0) {};
                     \draw (1) -- (2) -- (3) -- (4) -- (1);
                 \end{tikzpicture}
             \end{center}
@@ -3383,45 +3387,6 @@ Pick $x \in G$, then
 \end{equation*}
 so $G$ is a Moore graph.
 
-Let $G$ be \hyperlink{def:sr}{$(k,a,b)$-strongly regular}.
-Let $A$ be the \hyperlink{def:adj}{adjacency matrix} of $G$.
-Let $\hyperlink{def:order}{|G|}=n$.
-By \Cref{thm:46}, $k$ is an \hyperlink{def:eigen}{eigenvalue} of multiplicity 1 with eigenvector $(1,1,\dotsc,1)^T = v$.
-
-What about other eigenvalues?
-Let $\lambda \neq k$ be an eigenvalue with eigenvector $x$. Now
-\begin{equation*}
-    (A^2)_{ij} =
-    \begin{cases}
-        k & \text{if } i = j \\
-        a & \text{if } i \hyperlink{def:neighbour}{\sim} j \\
-        b & \text{if } i \nsim j
-    \end{cases}
-\end{equation*}
-Thus $A^2 = k I + aA + b(J-I-A)$ where $J$ is the matrix with a $1$ in every place.
-Applying this to $x$, and noting that $x \perp v$, giving $J x = 0$, we get $\lambda^2 x = k x + a \lambda x - b x - b \lambda x$.
-Also $x \neq 0$, so $\lambda^2 + (b-a) \lambda + (b-k) = 0$.
-
-So the remaining eigenvalues are
-\begin{equation*}
-    \lambda = \frac{(a-b) + \sqrt{(b-a)^2 - 4(b-k)}}{2} \text{ and } \mu = \frac{(a-b) - \sqrt{(b-a)^2 - 4(b-k)}}{2}
-\end{equation*}
-with multiplicities $r,s$ say, respectively.
-
-Now $A$ is diagonalizable so
-\begin{align}
-    r + s + 1 &= n \label{eq:24.1} \\
-    \shortintertext{and $\Tr A = 0$ so}
-    \lambda r + \mu s + k &= 0 \label{eq:24.2}
-\end{align}
-Now take $\lambda \times \eqref{eq:24.1} - \eqref{eq:24.2}$: $(\lambda - \mu) s = \lambda(n-1) + k$.
-
-We have $\lambda-\mu = \sqrt{(b-a)^2 - 4(b-k)}$ so
-\begin{align*}
-    s &= \frac{1}{2} \left\{ (n-1) + \frac{(a-b)(n-1) + 2k}{\sqrt{(b-a)^2 - 4(b-k)}}\right\} \\
-    \shortintertext{and so}
-    r &= \frac{1}{2} \left\{ (n-1) - \frac{(a-b)(n-1) + 2k}{\sqrt{(b-a)^2 - 4(b-k)}}\right\}
-\end{align*}
 \begin{nthm}[Rationality condition]\label{thm:47}
     Let $G$ be \hyperlink{def:sr}{$(k,a,b)$-strongly regular}.
     Then
@@ -3430,7 +3395,44 @@ We have $\lambda-\mu = \sqrt{(b-a)^2 - 4(b-k)}$ so
     \end{equation*}
 \end{nthm}
 \begin{proof}
-    See discussion above.
+    Let $A$ be the \hyperlink{def:adj}{adjacency matrix} of $G$.
+    Let $\hyperlink{def:order}{|G|}=n$.
+    By \Cref{thm:46}, $k$ is an \hyperlink{def:eigen}{eigenvalue} of multiplicity 1 with eigenvector $(1,1,\dotsc,1)^T = v$.
+
+    What about other eigenvalues?
+    Let $\lambda \neq k$ be an eigenvalue with eigenvector $x$. Now
+    \begin{equation*}
+        (A^2)_{ij} =
+        \begin{cases}
+            k & \text{if } i = j \\
+            a & \text{if } i \hyperlink{def:neighbour}{\sim} j \\
+            b & \text{if } i \nsim j
+        \end{cases}
+    \end{equation*}
+    Thus $A^2 = k I + aA + b(J-I-A)$ where $J$ is the matrix with a $1$ in every place.
+    Applying this to $x$, and noting that $x \perp v$, giving $J x = 0$, we get $\lambda^2 x = k x + a \lambda x - b x - b \lambda x$.
+    Also $x \neq 0$, so $\lambda^2 + (b-a) \lambda + (b-k) = 0$.
+
+    So the remaining eigenvalues are
+    \begin{equation*}
+        \lambda = \frac{(a-b) + \sqrt{(b-a)^2 - 4(b-k)}}{2} \text{ and } \mu = \frac{(a-b) - \sqrt{(b-a)^2 - 4(b-k)}}{2}
+    \end{equation*}
+    with multiplicities $r,s$ say, respectively.
+
+    Now $A$ is diagonalizable so
+    \begin{align}
+        r + s + 1 &= n \label{eq:24.1} \\
+        \shortintertext{and $\Tr A = 0$ so}
+        \lambda r + \mu s + k &= 0 \label{eq:24.2}
+    \end{align}
+    Now take $\lambda \times \eqref{eq:24.1} - \eqref{eq:24.2}$: $(\lambda - \mu) s = \lambda(n-1) + k$.
+
+    We have $\lambda-\mu = \sqrt{(b-a)^2 - 4(b-k)}$ so
+    \begin{align*}
+        s &= \frac{1}{2} \left\{ (n-1) + \frac{(a-b)(n-1) + 2k}{\sqrt{(b-a)^2 - 4(b-k)}}\right\} \\
+        \shortintertext{and so}
+        r &= \frac{1}{2} \left\{ (n-1) - \frac{(a-b)(n-1) + 2k}{\sqrt{(b-a)^2 - 4(b-k)}}\right\}. \qedhere
+    \end{align*}
 \end{proof}
 \begin{eg}
     \hyperlink{def:moore}{Moore} graphs have $a=0$, $b=1$, $n = k^2+1$.
@@ -3456,7 +3458,7 @@ We have $\lambda-\mu = \sqrt{(b-a)^2 - 4(b-k)}$ so
     For $k=1$ we try
 
     \begin{center}
-        \begin{tikzpicture}[every node/.style={node,inner sep=0.6mm}]
+        \begin{tikzpicture}[every node/.style=node]
             \node (A) at (0,0) {};
             \node (B) at (1,0) {};
             \draw (A) -- (B);
