@@ -611,7 +611,7 @@ Let $V$ be a \emph{real} vector space.
 
 Recall that in a vector space $V$, elements $v_1, \dotsc, v_k$ are linearly independent if
 \begin{equation*}
-    \sum_{i=1}^k \alpha_i v_i = 0 \implies \alpha_1 = \alpha_2 = \dotsb \alpha_k = 0
+    \sum_{i=1}^k \alpha_i v_i = 0 \implies \alpha_1 = \alpha_2 = \dotsb = \alpha_k = 0.
 \end{equation*}
 \hypertarget{def:li}A set $S \subset V$ is linearly independent if any \emph{finite} subset is.
 \hypertarget{def:basis}A basis of $V$ is a set $B \subset V$ that is linearly independent and such that every element of $V$ is a \emph{finite} linear combination of elements of $B$.
@@ -910,8 +910,8 @@ Recall that in a vector space $V$, elements $v_1, \dotsc, v_k$ are linearly inde
     \end{equation*}
     Since the $T_\lambda$ are linear, for any $v \in V$ with $\|v\| = 1$,
     \begin{align*}
-        \|T_\lambda v\| &= \|T_\lambda(v_0 + v) - T_\lambda v_0\| \\
-                           &\leq \frac{1}{r} \sup_{\lambda \in \Lambda} \sup_{\|v - v_0\| < r} \|T_\lambda v\| + \sup_{\lambda} \|T_\lambda v_0\| \\
+        \|T_\lambda v\| &= \frac{1}{r} \|T_\lambda(v_0 + r v) - T_\lambda v_0\| \\
+                        &\leq \frac{1}{r} \sup_{\lambda \in \Lambda} \sup_{\|v - v_0\| < r} \|T_\lambda v\| + \frac{1}{r}\sup_{\lambda} \|T_\lambda v_0\| \\
                            &\eqqcolon M < \infty
                            \text{ independent of $\lambda$ and $v$ for $\|v\| = 1$} \\
         \implies \sup_{\lambda \in \Lambda} \|T_\lambda\| &\leq M \qedhere
@@ -926,8 +926,8 @@ Recall that in a vector space $V$, elements $v_1, \dotsc, v_k$ are linearly inde
 \begin{eg}
     \leavevmode
     \begin{enumerate}[label=(\roman*)]
-        \item $f:\R \to \R$, $x \mapsto x^2$ is continuous but not open, as e.g. $f((-1, 1)) = [0, 1)$ is not open.
-        \item $f:\R^2 \to \R$, $(x, y) \mapsto x + \mathrm{sgn}(y)$ is open but not continuous.
+        \item $f:\R \to \R$, $x \mapsto x^2$ is continuous but not \hyperlink{def:openMap}{open}, as e.g. $f((-1, 1)) = [0, 1)$ is not open.
+        \item $f:\R^2 \to \R$, $(x, y) \mapsto x + \mathrm{sgn}(y)$ is \hyperlink{def:openMap}{open} but not continuous.
     \end{enumerate}
 \end{eg}
 
@@ -940,7 +940,8 @@ Recall that in a vector space $V$, elements $v_1, \dotsc, v_k$ are linearly inde
 \end{thm}
 
 \begin{lemma}
-    Let $V$, $W$ be \hyperlink{def:nvs}{normed spaces}. Then $T: V \to W$ is \hyperlink{def:openMap}{open} if $T(B_1(0)) \supset B_r(0)$ for $r > 0$.
+    Let $V$, $W$ be \hyperlink{def:nvs}{normed spaces}.
+    Then $T: V \to W$ is \hyperlink{def:openMap}{open} if $T(B_1(0)) \supset B_r(0)$ for some $r > 0$.
 \end{lemma}
 
 \begin{proof}
@@ -984,7 +985,7 @@ Recall that in a vector space $V$, elements $v_1, \dotsc, v_k$ are linearly inde
     \begin{align*}
         \implies w_0 - Tv &= \lim_{n \to \infty} \left(w_0 - \sum_{k=1}^n T v_k\right) \\
                           &= \lim_{n \to \infty} \left(w_1 - \sum_{k=2}^n T v_k\right) \\
-                          &\shortvdotswithin{=}
+                          &\vdotswithin{=} \\
                           &= \lim_{n \to \infty} w_n = 0 \\
         \implies w_0 \in T(B_1(0)) &\text{ for any } w_0 \in B_1(0) \\
         \implies T(B_1(0)) &\supset B_1(0). \qedhere
@@ -1012,12 +1013,10 @@ We now return to prove the \hyperlink{thm:omt}{Open Mapping Theorem}.
                 B_{r_0}(0) &= B_{r_0}(w_0) - T v_0 \\
                            &\subset \overline{T(B_{r_0}(0))} - T v_0 \\
                            &= \overline{T(B_{r_0}(-v_0))} \\
-                           &\subset \overline{T(B_{k_0 + l_0}(0))} \\
-                           &= (k_0 + l_0) \overline{T(B_1(0))} \quad \text{(if $l_0 \geq \|v_0\|$)}
+                           &\subset \overline{T(B_{k_0 + l_0}(0))}  \quad \text{(if $l_0 \geq \|v_0\|$)}\\
+                           &= (k_0 + l_0) \overline{T(B_1(0))} \\
+                \implies B_r(0) &\subset \overline{T(B_1(0))}\text{ for }r = \frac{r_0}{k_0 + l_0}.
             \end{align*}
-            \begin{equation*}
-                \implies B_r(0) \subset \overline{T(B_r(0))} \; \text{for} \; r = \frac{r_0}{k_0 + l_0}.
-            \end{equation*}
 
         \item If $T$ is bijective, that $T$ is \hyperlink{def:openMap}{open} means that $T^{-1}$ is continuous, that is, $T^{-1} \in \mathcal{B}(W, V)$. \qedhere
     \end{enumerate}
@@ -1180,15 +1179,15 @@ We now return to prove the \hyperlink{thm:omt}{Open Mapping Theorem}.
     \end{equation*}
     such that
     \begin{gather*}
-        U_q \supset U_q' \ \text{and} \ A_q \supset A_q' \text{ for } q' > q, \\
+        U_q \supset U_{q'} \ \text{and} \ A_q \supset A_{q'} \text{ for } q' > q, \\
         U_q \subset A_q \text{ for all } q \in D, \\
-        A_q' \subset U_q \text{ for } q' > q.
+        A_{q'} \subset U_q \text{ for } q' > q.
     \end{gather*}
 
     Define $f(x) = \sup\set{q \in D | x \in U_q} = \inf\set{q \in D | x \notin A_q}$, where $\inf \emptyset = 1$ and $\sup \emptyset = 0$.
 
     Clearly $0 \leq f \leq 1$. If $x \notin U = U_0$ then $f(x) = 0$. If $x \in A = A_1$, then also $x \in U_q$ for $q \in D$ and $f(x) = 1$.
-    To show continuity, note that, for $t \in R$,
+    To show continuity, note that, for $t \in \mathbb{R}$,
     \begin{align*}
         \set{x | f(x) > t} &= \bigcup_{q > t} U_q \text{ is open} \\
         \set{x | f(x) < t} &= \bigcup_{q > t} X \setminus A_q \text{ is open}.
@@ -1218,9 +1217,10 @@ We now return to prove the \hyperlink{thm:omt}{Open Mapping Theorem}.
     Then there exists a continuous extension $f: X \to \K$ such that $f|_A = g$ and if $\|g\|_\infty < \infty$ then $\|f\|_\infty \leq \|g\|_\infty$.
 \end{thm}
 
-\begin{proof}We first assume that $g$ takes values in $[0, 1]$. Let $g_0 = g$.
+\begin{proof}
+    We first assume that $g$ takes values in $[0, 1]$. Let $g_0 = g$.
     Let $A_0 = g^{-1}([0, \frac{1}{3}])$ and $B_0 = g^{-1}([\frac{2}{3}, 1])$. Then $A_0, B_0$ are closed and disjoint.
-    By the \hyperlink{cor:urysohnCor}{corollary} to Urysohn's Lemma, there is $h_0: X \to [0, \frac{1}{3}]$ continuous such that
+    By the \hyperlink{cor:urysohnCor}{corollary to Urysohn's Lemma}, there is $h_0: X \to [0, \frac{1}{3}]$ continuous such that
     \begin{equation*}
         h_0|_{A_0} = 0 \, , \; h_0|_{B_0} = \frac{1}{3}.
     \end{equation*}
@@ -1229,11 +1229,11 @@ We now return to prove the \hyperlink{thm:omt}{Open Mapping Theorem}.
     \begin{equation*}
         A_i = g_i^{-1} \left(\left[0, \left(\tfrac{2}{3}\right)^i \tfrac{1}{3}\right]\right) \quad B_i = g_i^{-1} \left(\left[\left(\tfrac{2}{3}\right)^i \tfrac{2}{3}, \left(\tfrac{2}{3}\right)^i \right]\right)
     \end{equation*}
-    and a continuous function $h_i|A_i = 0$ and $h_i|B_i = \frac{1}{3} (\frac{2}{3})^i$. Set $g_{i+1} = g_i - h_i|_A$, so
+    and a continuous function $h_i|_{A_i} = 0$ and $h_i|_{B_i} = \frac{1}{3} (\frac{2}{3})^i$. Set $g_{i+1} = g_i - h_i|_A$, so
     \begin{equation*}
-        g = g_0 = \sum_{i=0}^\infty h_i|_A \text{ uniformly on } A.
+        g = g_0 - \sum_{i=0}^\infty h_i|_A \text{ uniformly on } A.
     \end{equation*}
-    Set $\widetilde{f} = \sum_{i=0}^\infty h_i$ uniformly on X, so $\widetilde{f}$ is continuous and $\|f\|_\infty \leq 1$.
+    Set $\widetilde{f} = \sum_{i=0}^\infty h_i$ uniformly on $X$, so $\widetilde{f}$ is continuous and $\|f\|_\infty \leq 1$.
 
     If $g$ takes values in $\R$ but is not bounded, we can apply the above to $\frac{1}{2} + \frac{1}{\pi} \arctan \circ g$ which does take values in $[0, 1]$ to obtain an extension $\widetilde{f}$.
 
@@ -1246,7 +1246,7 @@ We now return to prove the \hyperlink{thm:omt}{Open Mapping Theorem}.
         \end{cases}
     \end{equation*}
 
-    This $f$ is still an extension of $g$ and $\|f\| \leq \|g\|$.
+    This $f$ is still an extension of $g$ and $\|f\|_\infty \leq \|g\|_\infty$.
 \end{proof}
 
 % here
@@ -1968,7 +1968,7 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
 \begin{eg}
     \leavevmode
     \begin{itemize}
-        \item $L^2[a,b]$ is the completion of $C[a, b]$ with inner product $(f,g) = \int_a^n f \overline{g} \, dx$.
+        \item $L^2[a,b]$ is the completion of $C[a, b]$ with inner product $(f,g) = \int_a^b f \overline{g} \, dx$.
         \item The Sobolev space $H^1[a,b]$ is the completion of $C^\infty$ with inner product $(f, g) = \int_a^b f(x) \overline{g(x)} \, dx + \int_a^b f'(x) \overline{g'(x)} \, dx$.
     \end{itemize}
 \end{eg}
@@ -1992,7 +1992,7 @@ Similarly, the weak-$*$ topology on $V^*$ is the weakest topology that makes the
 \end{fact}
 
 \begin{proof}
-    $S^{\hyperlink{def:ortho}{\perp}} = \bigcup_{w \in S} f_w^{-1}(0)$ where $f_w(v) = (v, w)$ is continuous.
+    $S^{\hyperlink{def:ortho}{\perp}} = \bigcap_{w \in S} f_w^{-1}(0)$ where $f_w(v) = (v, w)$ is continuous.
     Thus $S^\perp$ is the intersection of closed sets, so closed. It is clear that $S^\perp$ is a linear subspace.
     Clearly,
     \begin{equation*}
@@ -2231,7 +2231,7 @@ Thus from now on, we will always take \hyperlink{def:ons}{Hilbert bases} to be c
 \begin{proof}
     By taking a limit, we may assume that $N < \infty$. Define $Pv = \sum_{i=1}^N (v, e_i) e_i$. Then $P^2 = P$,
     \begin{equation*}
-        (Pv, w) = \sum_{i=1}^N (v, e_i) \overline{(v, e_i)} = (v, Pw) \quad \text{for all } v, w \in V.
+        (Pv, w) = \sum_{i=1}^N (v, e_i) \overline{(w, e_i)} = (v, Pw) \quad \text{for all } v, w \in V.
     \end{equation*}
     Thus $P$ is an \hyperlink{def:proj}{orthogonal projection} $\implies \sum_{i=1}^N \abs{(v, e_i)}^2 = \|Pv\|^2 \leq \|v\|^2$ for all $v \in V$.
 \end{proof}
@@ -2310,7 +2310,7 @@ From now on, Banach and Hilbert spaces are always complex.
 \end{defi}
 
 \begin{remark}
-    If $T$ is bounded above and $T-z$ is bijective, then $T-z \in \hyperlink{def:bx}{\mathcal{B}(X)}$ is automatic by the \hyperlink{thm:omt}{open mapping theorem}.
+    If $T$ is bounded (as above) and $T-z$ is bijective, then $(T-z)^{-1} \in \hyperlink{def:bx}{\mathcal{B}(X)}$ is automatic by the \hyperlink{thm:omt}{open mapping theorem}.
 \end{remark}
 
 \begin{fact}
@@ -2644,7 +2644,7 @@ Strategy: repeat corollary with $T$ replaced by $T|_{E_{\lambda_1}^\perp}$, $\ab
         T|_{H_k} : H_k \to H_k, \quad \norm{T|_{H_k}} \leq \abs{\lambda_k}.
     \end{equation*}
 
-    Thus there is an eigenvalue $\lambda_{k + 1}$ different from the $\lambda_i$, $i \leq k$, with $\abs{\lambda_{k+1}} = \norm{T|_{H_k}} \leq \abs{\lambda_k}$ and there is no other eigenvalue $\mu$ with $\abs{\lambda_{k+1}} < \abs{\mu} \geq \abs{\lambda_k}$.
+    Thus there is an eigenvalue $\lambda_{k + 1}$ different from the $\lambda_i$, $i \leq k$, with $\abs{\lambda_{k+1}} = \norm{T|_{H_k}} \leq \abs{\lambda_k}$ and there is no other eigenvalue $\mu$ with $\abs{\lambda_{k+1}} < \abs{\mu} \leq \abs{\lambda_k}$.
     This defines a sequence (possibly finite) $(\lambda_i)$ with $\abs{\lambda_{k+1}} \leq \abs{\lambda_k}$.
     Since
     $\bigoplus_{\abs{\lambda_j} > \epsilon} E_{\lambda_j}$ is finite dimensional, this sequence can only accumulate at 0.

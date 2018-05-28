@@ -7,29 +7,25 @@ import Text.LaTeX.Base.Syntax
 thm,thp,def :: [String]
 thm = ["nthm","ncor","nlemma","nprop","thm","cor","lemma","prop"]
 thp = "proof":thm
-def = ["defi","ndef"]
+def = ["defi","ndef","notation"]
 
 modify :: [String] -> LaTeX -> LaTeX
 modify envs = texmap test change
-  where test (TeXRaw _) = True
-        test (TeXComm _ _) = True
-        test (TeXCommS _) = True
+  where test (TeXRaw _)     = True
+        test (TeXComm _ _)  = True
+        test (TeXCommS _)   = True
         test (TeXEnv _ _ _) = True
-        test (TeXMath _ _) = True
-        test _ = False
+        test (TeXMath _ _)  = True
+        test _              = False
 
         change (TeXRaw _) = TeXRaw (T.pack "\n")
         change (TeXComm s as)
-          | s `elem` ["section", "subsection","label"] = TeXComm s as
-          | otherwise                          = TeXEmpty
+          | s `elem` ["section","subsection","subsubsection","label"] = TeXComm s as
         change (TeXCommS s)
           | s `elem` ["clearpage","leavevmode","maketitle"] = TeXCommS s
-          | otherwise                           = TeXEmpty
         change (TeXEnv s as l)
           | s `elem` envs = TeXEnv s as (clearLinks l)
-          | otherwise                                 = TeXEmpty
-        change (TeXMath _ _) = TeXEmpty
-        change _ = error "modify failed"
+        change _ = TeXEmpty
 
 clearLinks :: LaTeX -> LaTeX
 clearLinks = texmap test change

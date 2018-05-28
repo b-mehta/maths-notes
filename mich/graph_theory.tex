@@ -707,10 +707,10 @@ In the diagram, we see that for any finite $s$ we have a \red{red $K_s$} but no 
 
 \begin{proof}
     Any bounded monotone sequence converges, so it is enough to show that any real sequence $(x_n)_{n \geq 1}$ has a monotone subsequence.
-    Let $G$ be a $K_\infty$ with vertex set $\set{1, 2, 3, \dotsc}$. Colour $ij$, with $i<j$ blue if $x_i < x_j$ and yellow if not.
+    Let $G$ be a $K_\infty$ with vertex set $\{1, 2, 3, \dotsc\}$. Colour $ij$, with $i<j$ \red{red} if $x_i < x_j$ and \green{green} if not.
 
     By infinite Ramsey, there is a monochromatic subgraph $H \cong K_\infty$. Let the vertices of $H$ be $n_1 < n_2 < n_3 < \dots$.
-    If $H$ is blue, then $(x_{n_j})_{j \geq 1}$ is decreasing, whereas if $H$ is yellow then $(x_{n_j})_{j \geq 1}$ is increasing.
+    If $H$ is \red{red}, then $(x_{n_j})_{j \geq 1}$ is decreasing, whereas if $H$ is \green{green} then $(x_{n_j})_{j \geq 1}$ is increasing.
 \end{proof}
 
 \subsection{Basic Terminology}
@@ -1004,12 +1004,12 @@ But what if some non-bipartite graph is better?
 In fact, the bipartite graph always wins:
 
 \begin{nthm}[Mantel's Theorem]\label{thm:8}
-    Let $n \geq 3$. Suppose $\abs{G} = n$, $e(g) \geq \floor{\frac{n^2}{4}}$ and $\triangle \not\subset G$.
+    Let $n \geq 3$. Suppose $\abs{G} = n$, $e(G) \geq \floor{\frac{n^2}{4}}$ and $\triangle \not\subset G$.
     Then $G \cong K_{\ceil{\frac{n}{2}}, \floor{\frac{n}{2}}}$.
 \end{nthm}
 
 \begin{proof}
-    Induction on $n$. Start with the $n=3$ case: Consider $K_{2, 1}$, it satisfies $\abs{G} = 3$, $\hyperlink{def:eG}{e(G)} \geq 2$, $\triangle \subset G$, as required.
+    Induction on $n$. Start with the $n=3$ case: Consider $K_{2, 1}$, it satisfies $\abs{G} = 3$, $\hyperlink{def:eG}{e(G)} \geq 2$, $\triangle \not\subset G$, as required.
 
     $n>3$: Let $\abs{G} = n$, $e(G) \geq \floor{\frac{n^2}{4}}$, $\triangle \not\subset G$.
     First, remove edges from $G$ if necessary to get $H$ with $\abs{H} = n$, $e(H) = \floor{\frac{n^2}{4}}$. Clearly $\triangle \not\subset H$.
@@ -1112,7 +1112,7 @@ Each vertex is joined to a proportion approximately $1 - \frac{1}{r}$ of all ver
 More precisely,
 
 \begin{ncor}\label{cor:10}
-    Let $r \geq 2$. As $n \to \infty$, $\hyperlink{def:exn}{\ext(n; K_{r+1})} \hyperlink{def:asymp}{\sim} (1 - \frac{1}{r}) \binom{r}{2}$.
+    Let $r \geq 2$. As $n \to \infty$, $\hyperlink{def:exn}{\ext(n; K_{r+1})} \hyperlink{def:asymp}{\sim} (1 - \frac{1}{r}) \binom{n}{2}$.
 \end{ncor}
 
 \subsubsection{Bipartite graphs}
@@ -1230,7 +1230,8 @@ So $\abs{\hyperlink{def:Cn}{C_n}} = n$, $\abs{\hyperlink{def:Pn}{P_n}} = n+1$, a
 \end{eg}
 
 \begin{nthm}\label{thm:11}
-    Let $t \geq 2$. Then $\hyperlink{def:exn}{\ext}(n; \hyperlink{def:knn}{K_{t,t}}) = \hyperlink{def:asymp}{\mathcal{O}}\left(n^{2 - \frac{1}{t}}\right)$.
+    Let $t \geq 2$.
+    Then $\hyperlink{def:exn}{\ext}(n; \hyperlink{def:knn}{K_{t,t}}) = \hyperlink{def:asymp}{\mathcal{O}}(n^{2 - \frac{1}{t}})$.
 \end{nthm}
 
 \begin{proof}
@@ -2281,7 +2282,7 @@ The closed surfaces without boundary are:
         \chi(S) = \max\set{\hyperlink{def:chromNum}{\chi}(G) | G \text{ can be \hyperlink{def:drawing}{drawn} on } S}
     \end{equation*}
 \end{defi}
-The \nameref{thm:27} says that $\hyperlink{def:chromSur}{\chi}(T_0) = 4$. Also $\chi(T_1) = 5$.
+The \nameref{thm:27} says that $\hyperlink{def:chromSur}{\chi}(T_0) = 4$. Also $\chi(T_1) \geq 5$.
 We use the \textbf{Euler-Poincar\'e Formula}: If $G$ can be drawn on $S$ with $l$ \hyperlink{def:face}{faces}, $\hyperlink{def:order}{\abs{G}} = n$, $\hyperlink{def:eG}{e(G)} = m$ then $n - m + l \geq E$, where $E$ is the \hypertarget{def:eulerChar}Euler characteristic of the surface given by
 \begin{align*}
     S = T_g &\implies E = 2 - 2g \\
@@ -2310,9 +2311,9 @@ We use the \textbf{Euler-Poincar\'e Formula}: If $G$ can be drawn on $S$ with $l
 
     Combining this with \eqref{eq:heawoodstar}:
     If $E \leq 0$: $\chi - 1 \leq \delta(G) \leq 6 - \frac{6E}{n} \leq 6 - \frac{6E}{\chi}$ as $n \geq \chi$.
-    Hence $\chi^2 - 7\chi + 6E \leq 0$ and so $\chi \leq \frac{7 + \sqrt{49 + 24 E}}{2}$.
+    Hence $\chi^2 - 7\chi + 6E \leq 0$ and so $\chi \leq \frac{7 + \sqrt{49 - 24 E}}{2}$.
 
-    If $E = 1$, $\delta(G) \leq 6 - \frac{6}{n} < 6$ so $\delta(G) \leq 5$. Hence $\chi-1 = 5$ so $\chi \leq 6 = \frac{7 + \sqrt{49 + 24}}{2}$.
+    If $E = 1$, $\delta(G) \leq 6 - \frac{6}{n} < 6$ so $\delta(G) \leq 5$. Hence $\chi-1 = 5$ so $\chi \leq 6 = \frac{7 + \sqrt{49 - 24}}{2}$.
 \end{proof}
 \begin{remark}
     The condition $E \leq 1$ takes out only the sphere.
@@ -2375,7 +2376,7 @@ In fact, we can tighten the upper bound:
 \begin{nthm}[Vizing's theorem]\label{thm:30}
     Let $G$ be a \hyperlink{def:graph}{graph}. Then
     \begin{equation*}
-        \hyperlink{def:eChromNum}{\chi'}(G) \leq \hyperlink{def:degree}{\Delta(G)} + 1
+        \hyperlink{def:eChromNum}{\chi'}(G) \leq \hyperlink{def:degree}{\Delta(G)} + 1.
     \end{equation*}
 \end{nthm}
 \begin{proof}
@@ -2430,7 +2431,7 @@ Surprisingly, this is enough.
     Let $G$ be a \hyperlink{def:bipartite}{bipartite} graph with bipartition $(X,Y)$.
     Then $G$ has a \hyperlink{def:matching}{matching} from $X$ to $Y$ iff $G$ satisfies \textbf{Hall's condition}:
     \begin{equation*}
-        \hypertarget{def:hall}\forall A \subset X, \abs{\Gamma(A)} \geq |A|
+        \hypertarget{def:hall}\forall A \subset X, \abs{\Gamma(A)} \geq |A|.
     \end{equation*}
 \end{nthm}
 \begin{proof}
@@ -2502,7 +2503,7 @@ Note: A matching from $X$ to $Y$ is just a set of $|X|$ \hyperlink{def:indepEdg}
 Further extensions are possible, e.g.\
 \begin{enumerate}[label=(\roman*)]
     \item (Variable polyandrous) Take women $x_1, \dotsc, x_n$ and numbers $d_1, \dotsc, d_n \geq 1$. Give woman $x_i$ $d_i$ husbands.
-    \item (Defect polyandrous) Aim to each each woman $d$ husbands but allow $d'$ `missing' husbands.
+    \item (Defect polyandrous) Aim to give each woman $d$ husbands but allow $d'$ `missing' husbands.
     \item (Same sex) (Harder) If $G$ is a \hyperlink{def:graph}{graph}, when can we find a 1-factor in $G$: a set of $\frac{\hyperlink{def:order}{|G|}}{2}$ independent edges.
 \end{enumerate}
 
