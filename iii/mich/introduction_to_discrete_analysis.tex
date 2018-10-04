@@ -6,7 +6,16 @@
 \def\nlecturer{Professor W.\ T.\ Gowers}
 \def\ncourse{Introduction to Discrete Analysis}
 \def\draft{Incomplete}
+\usepackage{scalerel}
+\usepackage{bbm}
+\usepackage{chngcntr}
 \input{header}
+
+\DeclareMathOperator*{\E}{\scalerel*{\mathbb{E}}{\textstyle\sum}}
+\newcommand{\1}[1]{\mathbbm{1}_{#1}}
+\counterwithout{nthm}{section}
+
+% \DeclareMathOperator*{\E}{\text{\Large $\mathbb{E}$}}
 
 % preamble
 
@@ -36,4 +45,119 @@
 \tableofcontents
 
 \clearpage
+\section{The discrete Fourier transform}
+Let $N$ be some fixed positive integer. Write $\omega$ for $e^{\frac{2\pi i}{N}}$, and $\mathbb{Z}_N$ for $\mathbb{Z}/N\mathbb{Z}$.
+
+\begin{defi}[Discrete Fourier transform]\hypertarget{def:dft}
+  Let $f: \mathbb{Z}_N \to \mathbb{C}$.
+  Given $r \in \mathbb{Z}_N$, define $\hat{f}(r)$ to be
+  \begin{equation*}
+    \frac{1}{N} \sum_{x \in \mathbb{Z}_N} f(x) \omega^{-r x}.
+  \end{equation*}
+\end{defi}
+
+\begin{notation}
+  From now on, we shall use notation $\E_{x \in \mathbb{Z}_N}$ for $\frac{1}{N} \sum_{x \in \mathbb{Z}_N}$, where the subscript is omitted when it is clear from context.
+\end{notation}
+
+Notice we can write
+\begin{equation*}
+  \hat{f}(r) = \E_x f(x) e^{-\frac{2 \pi i r x}{N}},
+\end{equation*}
+highlighting the similarity with the usual Fourier transform.
+
+% say something about cyclic groups and well-definedness?
+If we write $\omega_r$ for the function $x \mapsto \omega^{r x}$, and $\langle f, g \rangle$ for $\E_x f(x) \overline{g(x)}$, then $\hat{f}(r) = \langle f, \omega_r \rangle$.
+Let us write $\| f \|_p$ for $\left(\E_x |f(x)|^p\right)^{\frac{1}{p}}$ and call the resulting space $L_p(\mathbb{Z}_N)$.
+
+\paragraph{Important convention.} We use \emph{averages} for the `original functions' in `physical space' and \emph{sums} for their Fourier transforms in `frequency space'
+
+% Lemma 1.
+\begin{nlemma}[Parseval's identity]
+  If $f,g: \mathbb{Z}_N \to \mathbb{C}$, then $\langle \hat{f}, \hat{g} \rangle = \langle f, g \rangle$.
+\end{nlemma}
+\begin{proof}
+  \begin{align*}
+    \langle \hat{f}, \hat{g} \rangle &= \sum_r \hat{f}(r) \overline{\hat{g}(r)} \\
+                                     &= \sum_r (\E_x f(x) \omega^{-r x}) \overline{(\E_y g(y) \omega^{-r y})} \\
+                                     &= \E_x \E_y f(x) \overline{g(y)} \sum_r \omega^{-r(x-y)} \\
+                                     &= \E_x \E_y f(x) \overline{g(y)} \Delta_{xy} \\
+                                     &= \E_x f(x) \E_y \overline{g(y)} \Delta_{xy} \\
+                                     &= \E_x f(x) \overline{g(x)} = \langle f, g \rangle
+  \end{align*}
+  where
+  \begin{equation*}
+    \Delta_{xy} =
+    \begin{cases}
+      N & x = y \\
+      0 & x \neq y.
+    \end{cases} \qedhere
+  \end{equation*}
+   % reformat this...
+\end{proof}
+
+\begin{defi}[Convolution]\hypertarget{def:conv}
+  The convolution $\widehat{f * g}(x)$ is defined to be \begin{equation*}\E_{y + z = x} f(y) g(z) = \E_y f(y) g(x-y).\end{equation*}
+\end{defi}
+
+\begin{nlemma}[Convolution identity]
+  \begin{equation*}
+    \widehat{\hyperlink{def:conv}{f * g}}(r) = \hat{f}(r) \hat{g}(r).
+  \end{equation*}
+\end{nlemma}
+\begin{proof}
+  \begin{align*}
+    \widehat{f * g}(r) &= \E_x f * g(x) \omega^{-r x} \\
+                       &= \E_x \E_{y + z = x} f(y) g(z) \omega^{- r x} \\
+                       &= \E_x \E_{y + z = x} f(y) g(z) \omega^{- r y} \omega^{- r z} \\
+                       &= \E_y f(y) \omega^{-r y} \E_z g(z) \omega^{-r z} = \hat{f}(r) \hat{g}(r). \qedhere
+  \end{align*}
+\end{proof}
+
+\begin{nlemma}[Inversion formula]
+  \begin{equation*}
+    f(x) = \sum_r \hat{f}(r) \omega^{r x}
+  \end{equation*}
+\end{nlemma}
+\begin{proof}
+  \begin{align*}
+    \sum_r \hat{f}(r) \omega^{r x} &= \sum_r \E_y f(y) \omega^{r (x-y)} \\
+                                   &= \E_y f(y) \sum_r \omega^{r (x-y)} \\
+                                   &= \E_y f(y) \Delta_{x y} = f(x). \qedhere
+  \end{align*}
+\end{proof}
+
+Further observations:
+\begin{enumerate}
+  \item If $f$ is real-valued, then $\hat{f}(-r) = \E_x f(x) \omega^{r x} = \overline{\E_x f(x) \omega^{- r x}} = \overline{\hat{f}(r)}$.
+  \item If $A \subset \mathbb{Z}_n$, write $A$ (instead of $\1{A}$ or $\chi_A$) for the characteristic function of $A$.
+    Then $\hat{A}(0) = \E_x A(x) = \frac{|A|}{N}$, the density of $A$.
+  \item Also, $\|\hat{A}\|^2_2 = \langle \hat{A}, \hat{A} \rangle = \langle A, A \rangle = \E_x A(x)^2 = \E_x A(x) = \frac{A}{N}$.
+\end{enumerate}
+
+Let $f : \mathbb{Z}_N \to \mathbb{C}$. Given $\mu \in \mathbb{Z}_N$ with $(\mu,N) = 1$, define $f_\mu(x)$ to be $f(\mu^{-1}x)$.
+Then
+\begin{align*}
+  \hat{f_\mu}(r) &= \E_x f_\mu(x) \omega^{-r x} \\
+                 &= \E_x f(x / \mu) \omega^{-r x}  \\
+                 &= \E_x f(x) \omega^{- r \mu x}  \\
+                 &= \hat{f}(\mu r).
+\end{align*}
+
+\subsection{Roth's Theorem}
+\begin{nthm}
+  For every $\delta > 0$, there exists $N$ such that if $A \subseteq \{1, \dotsc, N\}$ is a set of size at least $\delta N$ then $A$ must contain an arithmetic progression of length 3.
+\end{nthm}
+This is the $k=3$ case of Szemer\'{e}di's theorem.
+
+Basic strategy: show that if $A$ has density $\geq \delta$ and no arithmetic progression of length 3, then there is a long arithmetic progression $P \subseteq \{1, \dotsc, N\}$ such that
+\begin{equation*}
+  |A \cap P| \geq (\delta + c(\delta)) |P|.
+\end{equation*}
+In particular, we have that $|P| \to \infty$ as $N \to \infty$.
+
+The proof we give will produce a bound $\frac{C}{\log \log N}$, but this is not the best known.
+If the bound was reduced to $\frac{1}{\log N}$, this produces a combinatorial proof of the fact that there are arbitrarily long arithmetic progressions in the primes.
+The best known bound is $\frac{(\log \log N)^4}{\log N}$ by Thomas Bloom.
+In the other direction, \textbf{add the bound}.
 \end{document}
