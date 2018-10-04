@@ -5,7 +5,7 @@
 \def\nterm{Michaelmas}
 \def\nlecturer{Professor W.\ T.\ Gowers}
 \def\ncourse{Introduction to Discrete Analysis}
-\def\draft{Incomplete}
+\def\draft{Ongoing course, rough}
 \usepackage{scalerel}
 \usepackage{bbm}
 \usepackage{chngcntr}
@@ -128,12 +128,12 @@ Let us write $\| f \|_p$ for $\left(\E_x |f(x)|^p\right)^{\frac{1}{p}}$ and call
 \end{proof}
 
 Further observations:
-\begin{enumerate}
+\begin{itemize}
   \item If $f$ is real-valued, then $\hat{f}(-r) = \E_x f(x) \omega^{r x} = \overline{\E_x f(x) \omega^{- r x}} = \overline{\hat{f}(r)}$.
   \item If $A \subset \mathbb{Z}_n$, write $A$ (instead of $\1{A}$ or $\chi_A$) for the characteristic function of $A$.
     Then $\hat{A}(0) = \E_x A(x) = \frac{|A|}{N}$, the density of $A$.
   \item Also, $\|\hat{A}\|^2_2 = \langle \hat{A}, \hat{A} \rangle = \langle A, A \rangle = \E_x A(x)^2 = \E_x A(x) = \frac{A}{N}$.
-\end{enumerate}
+\end{itemize}
 
 Let $f : \mathbb{Z}_N \to \mathbb{C}$. Given $\mu \in \mathbb{Z}_N$ with $(\mu,N) = 1$, define $f_\mu(x)$ to be $f(\mu^{-1}x)$.
 Then

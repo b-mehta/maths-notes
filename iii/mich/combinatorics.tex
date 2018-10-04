@@ -5,7 +5,7 @@
 \def\nterm{Michaelmas}
 \def\nlecturer{Professor I.\ B.\ Leader}
 \def\ncourse{Combinatorics}
-\def\draft{Incomplete}
+\def\draft{Ongoing course, rough}
 \input{header}
 
 % preamble
@@ -70,7 +70,7 @@ Often, we make $\mathcal{P}(X)$ into a graph, called $Q_n$ by joining $A$ to $B$
 
 For instance, here is a picture of $Q_3$.
 \begin{center}
-  \begin{tikzpicture}[scale=2, every node/.style={fill=black, circle, inner sep=1pt}]
+  \begin{tikzpicture}[xscale=1.4, every node/.style={fill=black, circle, inner sep=1pt}]
     \node [label=below:$\emptyset$] (empty) at (0,0) {};
     \node [label=left:$1$] (1) at (-1,1) {};
     \node [label=right:$2$] (2) at (0,1) {};
@@ -95,9 +95,36 @@ For instance, here is a picture of $Q_3$.
 \end{center}
 
 As we know, the picture gets `thicker' in the middle. But, for odd $n$, is it not clear where exactly the middle is, so in the odd case we have two equally sized large blobs in the middle.
+
 \begin{center}
   \begin{tikzpicture}
-    \draw (0,0) circle [x radius=10mm, y radius=5mm];
+    \begin{scope}
+      \node at (-2, 3) {$Q_n$, $n$ even};
+      \draw (0,3.2) circle [x radius=1mm, y radius=1mm];
+      \draw (0,2.7) circle [x radius=4.5mm, y radius=2mm];
+      \draw (0,1.9) circle [x radius=9mm, y radius=4mm];
+      \node at (0,1.25) {$\vdots$};
+      \draw (0,0) circle [x radius=16mm, y radius=8mm];
+      \node at (0,-1.05) {$\vdots$};
+      \draw (0,-1.9) circle [x radius=9mm, y radius=4mm];
+      \draw (0,-2.7) circle [x radius=4.5mm, y radius=2mm];
+      \draw (0,-3.2) circle [x radius=1mm, y radius=1mm];
+      \node at (0.6, 3.2) {$X^{(n)}$};
+    \end{scope}
+
+    \begin{scope}[xshift=6cm]
+      \node at (-2, 3) {$Q_n$, $n$ odd};
+      \draw (0,3.2) circle [x radius=1mm, y radius=0.8mm];
+      \draw (0,2.8) circle [x radius=4.5mm, y radius=1.5mm];
+      \draw (0,2.1) circle [x radius=9mm, y radius=3mm];
+      \node at (0,1.55) {$\vdots$};
+      \draw (0,0.6) circle [x radius=16mm, y radius=5mm];
+      \draw (0,-3.2) circle [x radius=1mm, y radius=0.8mm];
+      \draw (0,-2.8) circle [x radius=4.5mm, y radius=1.5mm];
+      \draw (0,-2.1) circle [x radius=9mm, y radius=3mm];
+      \node at (0,-1.35) {$\vdots$};
+      \draw (0,-0.6) circle [x radius=16mm, y radius=5mm];
+    \end{scope}
   \end{tikzpicture}
 \end{center}
 % more pics
