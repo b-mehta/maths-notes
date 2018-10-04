@@ -1031,7 +1031,7 @@ Then clearly $f = f^+ - f^-$ and $\abs{f} = f^+ + f^-$.
             Note $E_n \in \mathcal{A}$ and $\bigcup_{n \geq 1} E_n \cup \set{x \in X | f(x) = 0} = X$.
             By countable subadditivity of $\mu$, it is enough to that that $\forall n$, $\mu(E_n) = 0$. But
             \begin{equation*}
-                \frac{1}{n} \1{{E_n}} \leq f, \; \text{so} \ \frac{1}{n} \mu(E_n) \leq \mu(F).
+                \frac{1}{n} \1{{E_n}} \leq f, \; \text{so} \ \frac{1}{n} \mu(E_n) \leq \mu(f).
             \end{equation*}
             As $\mu(f) = 0$, we get $\mu(E_n) = 0$. \qedhere
     \end{itemize}
@@ -1778,7 +1778,7 @@ Throughout this section, take $(\Omega, \mathcal{F}, \Prob)$ a \hyperlink{def:pr
 
 \begin{eg}\leavevmode
     \begin{itemize}
-        \item Take an i.i.d.\ space $(X_n)_{n \geq 1}$ of \hyperlink{def:rv}{random variables} such that $\forall T \geq 0$, $\Prob(X_1 < 1) < 1$.
+        \item Take an i.i.d.\ space $(X_n)_{n \geq 1}$ of \hyperlink{def:rv}{random variables} such that $\forall T \geq 0$, $\Prob(X_1 < T) < 1$.
             Then almost surely $\lim \sup X_n = +\infty$.
 
             Indeed,
@@ -1922,7 +1922,7 @@ Some additional basic terminology:
     \begin{enumerate}[label=(\alph*)]
         \item \textbf{almost surely} if for $\mathbb{P}$ a.e.\ $\omega$, $X_n(\omega) \xrightarrow{n \to \infty} X(\omega)$
         \item \textbf{in probability} (or in measure) if $\forall \epsilon > 0$, $\mathbb{P}(\norm{X_n - X} > \epsilon) \xrightarrow{n \to \infty} 0$.
-        \item \textbf{in distribution} if $\mu_{x_n} \xrightarrow{n \to \infty} \mu_x$ weakly, with $\mu_{x_n}$ the \hyperlink{def:law}{law} of $X_n$ on $\mathbb{R}^d$.
+        \item \textbf{in distribution} if $\mu_{X_n} \xrightarrow{n \to \infty} \mu_X$ weakly, with $\mu_{X_n}$ the \hyperlink{def:law}{law} of $X_n$ on $\mathbb{R}^d$.
     \end{enumerate}
 \end{defi}
 
@@ -1951,8 +1951,8 @@ Some additional basic terminology:
     When $d=1$, (c) is equivalent to saying that the \hyperlink{def:cdf}{distribution function} $F_{\mu_n} (X) \to F_\mu(x)$ for all $x \in \R$ where $F_\mu(x)$ is continuous.
     Recall
     \begin{align*}
-        F_\mu(x) \coloneqq \mu((-\infty,x]) \\ %)
-        F_{\mu_n}(x) \coloneqq \mu_n((-\infty,x]). %)
+        F_\mu(x) &\coloneqq \mu((-\infty,x]) \\ %)
+        F_{\mu_n}(x) &\coloneqq \mu_n((-\infty,x]). %)
     \end{align*}
     For example, take $\mu_n = \delta_{1/n} \to \delta_0 = \mu$, so $F_{\mu_n} = \1{x \geq \frac{1}{n}}$, but $F_\mu = \1{x \geq 0}$.
     Then $F_{\mu_n}(0) = 0$ while $F_\mu(0) = 1$, so $F_{\mu_n}(0) \not\to F_\mu(0)$.

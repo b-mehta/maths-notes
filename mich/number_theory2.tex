@@ -239,12 +239,12 @@ It is easy to see that the operations of addition and multiplication in $\{a + n
 \end{proof}
 
 \begin{notation}\hypertarget{def:znz*}
-    For $n > 1$, we write $(\Z / n \Z)^*$ to denote the set of units (invertible elements) of $\hyperlink{def:znz}{\Z / n \Z}$.
+    For $n > 1$, we write $(\Z / n \Z)^\times$ to denote the set of units (invertible elements) of $\hyperlink{def:znz}{\Z / n \Z}$.
 \end{notation}
 By \cref{lem:2.1}, this is the set of classes $a + n \Z$ where $\hyperlink{def:gcd}{(a, n)} = 1$.
 \begin{defi}[Euler $\varphi$-function]\hypertarget{def:phi}
     We can then define the \textbf{Euler $\varphi$-function}:
-    \begin{equation*}\varphi(n) \coloneqq \# \hyperlink{def:znz*}{(\Z / n \Z)^*} = \# \set{a \in \Z | 1 \leq a \leq n, \, \hyperlink{def:gcd}{(a, n)} = 1}.\end{equation*}
+    \begin{equation*}\varphi(n) \coloneqq \# \hyperlink{def:znz*}{(\Z / n \Z)^\times} = \# \set{a \in \Z | 1 \leq a \leq n, \, \hyperlink{def:gcd}{(a, n)} = 1}.\end{equation*}
 \end{defi}
 
 \begin{remark}
@@ -261,7 +261,7 @@ By \cref{lem:2.1}, this is the set of classes $a + n \Z$ where $\hyperlink{def:g
 \end{thm}
 
 \begin{proof}
-    $(n>1)$ Apply Lagrange's theorem to the group $G = \hyperlink{def:znz*}{(\Z/n\Z)^*}$ which has order $\hyperlink{def:phi}{\varphi(n)}$.
+    $(n>1)$ Apply Lagrange's theorem to the group $G = \hyperlink{def:znz*}{(\Z/n\Z)^\times}$ which has order $\hyperlink{def:phi}{\varphi(n)}$.
     Then $a \in \Z$ with $\hyperlink{def:gcd}{(a, n)} = 1$ defines an element of $G$ whose order divides $\varphi(n)$. So $a^{\varphi(n)} \equiv 1 \pmod{n}$.
 \end{proof}
 
@@ -554,14 +554,14 @@ However in general a polynomial can have more roots than its \hyperlink{def:degr
     giving us Wilson's Theorem: $(p-1)! \equiv -1 \pmod{p}$.
 \end{eg}
 
-The additive group $(\hyperlink{def:znz}{\Z / n\Z}, +)$ is cyclic. What about $(\hyperlink{def:znz*}{(\Z/n\Z)^*}, \times)$?
+The additive group $(\hyperlink{def:znz}{\Z / n\Z}, +)$ is cyclic. What about $(\hyperlink{def:znz*}{(\Z/n\Z)^\times}, \times)$?
 
 \begin{eg}
-    Consider $n=7$, then we can check $3$ is a generator of $\hyperlink{def:znz*}{(\Z / n \Z)^*}$ and hence the group is cyclic.
+    Consider $n=7$, then we can check $3$ is a generator of $\hyperlink{def:znz*}{(\Z / n \Z)^\times}$ and hence the group is cyclic.
 \end{eg}
 
 \begin{nthm}\label{thm:2.8}
-    If $p$ is \hyperlink{def:prime}{prime}, then $G = \hyperlink{def:znz*}{(\Z / p \Z)^*}$ is cyclic of order $p-1$.
+    If $p$ is \hyperlink{def:prime}{prime}, then $G = \hyperlink{def:znz*}{(\Z / p \Z)^\times}$ is cyclic of order $p-1$.
 \end{nthm}
 
 \begin{proof}
@@ -580,13 +580,13 @@ The additive group $(\hyperlink{def:znz}{\Z / n\Z}, +)$ is cyclic. What about $(
 % Lecture 5
 
 \begin{defi}[Primitive root]\hypertarget{def:primRoot}
-    If $g$ is a generator of $\hyperlink{def:znz*}{(\Z / p \Z)^*}$ then $g$ is said to be a \textbf{primitive root mod $p$}.
+    If $g$ is a generator of $\hyperlink{def:znz*}{(\Z / p \Z)^\times}$ then $g$ is said to be a \textbf{primitive root mod $p$}.
 \end{defi}
 
 By \cref{thm:2.8}, \hyperlink{def:primRoot}{primitive roots} exist.
 
 \begin{eg}
-    Take $p = 19$, and let $d$ be the order of $2$ inside $\hyperlink{def:znz*}{(\Z/19\Z)^*}$, then $d \mid p-1$ = 18.
+    Take $p = 19$, and let $d$ be the order of $2$ inside $\hyperlink{def:znz*}{(\Z/19\Z)^\times}$, then $d \mid p-1$ = 18.
     We have $2^6 \equiv 7 \not\equiv 1 \hyperlink{def:mod}{\pmod{19}}$, so $d \hyperlink{def:div}{\nmid} 6$.
     Similarly, $2^9 \equiv -1 \pmod{19}$ so $d \nmid 9$.  Hence, $d=18$ and $2$ is a \hyperlink{def:primRoot}{primitive root} mod $19$.
 \end{eg}
@@ -604,14 +604,14 @@ There are many unsolved problems about \hyperlink{def:primRoot}{primitive roots}
         It is known that is is bounded above by $c p^{1/4 + \epsilon}$ for any $\epsilon > 0$, but expected to be smaller (bounded by $c (\log p)^2$).
 \end{enumerate}
 
-Now let's consider the more general case of $\hyperlink{def:znz*}{(\Z / p^n \Z)^*}$ for $n > 1$, and ask if it is cyclic.
-$(\Z / 8 \Z)^* = \{\pm 1, \pm 3\}$, which all have order $1$ or $2$, so the group is not cyclic.
-If $n \geq 3$, the map $(\Z/2^n \Z)^* \to (\Z/8 \Z)^*$ is surjective:
+Now let's consider the more general case of $\hyperlink{def:znz*}{(\Z / p^n \Z)^\times}$ for $n > 1$, and ask if it is cyclic.
+$(\Z / 8 \Z)^\times = \{\pm 1, \pm 3\}$, which all have order $1$ or $2$, so the group is not cyclic.
+If $n \geq 3$, the map $(\Z/2^n \Z)^\times \to (\Z/8 \Z)^\times$ is surjective:
 \begin{equation*}\forall n \geq 1, \quad \hyperlink{def:gcd}{(x, 8)} = 1 \iff x \text{ odd } \iff (x, 2^n) = 1 \end{equation*}
-So, $(\Z/2^n \Z)^*$ is not cyclic for $n \geq 3$ since a generator would map to a generator of $(\Z / 8 \Z)^*$.
+So, $(\Z/2^n \Z)^\times$ is not cyclic for $n \geq 3$ since a generator would map to a generator of $(\Z / 8 \Z)^\times$.
 
 \begin{nthm}\label{thm:2.9}
-    If $p > 2$ and $n \geq 1$ then $\hyperlink{def:znz*}{(\Z/p^n \Z)^*}$ is cyclic.
+    If $p > 2$ and $n \geq 1$ then $\hyperlink{def:znz*}{(\Z/p^n \Z)^\times}$ is cyclic.
 \end{nthm}
 
 \begin{proof}
@@ -642,7 +642,7 @@ So, $(\Z/2^n \Z)^*$ is not cyclic for $n \geq 3$ since a generator would map to 
 \end{proof}
 
 \begin{nlemma}\label{lem:2.11}
-    If $g \in \Z$, $\hyperlink{def:gcd}{(g, p)} = 1$, $g$ is a \hyperlink{def:primRoot}{primitive root} mod $p$, and $g^{p-1} \not\equiv 1 \hyperlink{def:mod}{\pmod{p^2}}$, then $g$ is a generator of $(\Z/p^n \Z)^* = G$.
+    If $g \in \Z$, $\hyperlink{def:gcd}{(g, p)} = 1$, $g$ is a \hyperlink{def:primRoot}{primitive root} mod $p$, and $g^{p-1} \not\equiv 1 \hyperlink{def:mod}{\pmod{p^2}}$, then $g$ is a generator of $(\Z/p^n \Z)^\times = G$.
 \end{nlemma}
 
 \begin{proof}
@@ -669,28 +669,28 @@ We can return and prove \cref{thm:2.9}.
 
 \begin{proof}[Proof of \cref{thm:2.9}]\label{pf:2.9}
     Let $g \in \Z$ be a \hyperlink{def:primRoot}{primitive root} mod $p$.
-    If $g^{p-1} \not\equiv 1 \hyperlink{def:mod}{\pmod{p^2}}$, then by \cref{lem:2.11}, $g$ generates $\hyperlink{def:znz*}{(\Z/p^n \Z)^*}$.
+    If $g^{p-1} \not\equiv 1 \hyperlink{def:mod}{\pmod{p^2}}$, then by \cref{lem:2.11}, $g$ generates $\hyperlink{def:znz*}{(\Z/p^n \Z)^\times}$.
     If not, $g^p \equiv g \pmod{p^2}$. Let $g_1 = g(1 + p)$.
     Then, $g_1^p = g^p (1+p)^p$ and $(1+p)^p \equiv 1 \pmod{p^2}$ by \cref{lem:2.10}.
 
-    So, $g_1^p \equiv g^p \pmod{p^2} \equiv g \pmod{p^2} \not\equiv g_1 \pmod{p^2}$, so by \cref{lem:2.11}, $g_1$ generates $(\Z/p^n \Z)^*$.
+    So, $g_1^p \equiv g^p \pmod{p^2} \equiv g \pmod{p^2} \not\equiv g_1 \pmod{p^2}$, so by \cref{lem:2.11}, $g_1$ generates $(\Z/p^n \Z)^\times$.
 \end{proof}
 
 \begin{remark}
     \leavevmode
     \begin{enumerate}
-        \item Our proof gives an easy way to find a generator for $\hyperlink{def:znz*}{(\Z / p^n \Z)^*}$, independent of $n \geq 2$.
+        \item Our proof gives an easy way to find a generator for $\hyperlink{def:znz*}{(\Z / p^n \Z)^\times}$, independent of $n \geq 2$.
         \item What happens when $p=2$?
             \Cref{lem:2.10}(i) fails to hold for $p=2$, $k=1$: $(1+2)^2 \equiv 1 \hyperlink{def:mod}{\pmod{8}}$.
             It does hold for $p=2$ and $k \geq 2$ however. Part (ii) becomes $(1+4)^{k-1} \equiv 1 + 2^{k+1} \pmod{2^{k+2}}$.
-            We can then show (following the argument for $p$ odd), that $(\Z/2^n \Z)^*$ for $n \geq 3$ is generated by $-1$ and $5$ which have orders $2$ and $2^{n-2}$ respectively.
+            We can then show (following the argument for $p$ odd), that $(\Z/2^n \Z)^\times$ for $n \geq 3$ is generated by $-1$ and $5$ which have orders $2$ and $2^{n-2}$ respectively.
             So, we have that
             \begin{equation*}
-                (\Z/2^n \Z)^* \cong \Z/2\Z \times \Z/2^{n-2} \Z
+                (\Z/2^n \Z)^\times \cong \Z/2\Z \times \Z/2^{n-2} \Z
             \end{equation*}
         \item If $N = \prod_{1 \leq i \leq r} p_i^{k_i}$, then
             \begin{equation*}
-                (\Z/N \Z)^* \cong (\Z/{p_1}^{k_1} \Z)^* \times \dotsm \times (\Z/{p_r}^{k_r} \Z)^*
+                (\Z/N \Z)^\times \cong (\Z/{p_1}^{k_1} \Z)^\times \times \dotsm \times (\Z/{p_r}^{k_r} \Z)^\times
             \end{equation*}
             by the \hyperlink{thm:crt}{Chinese Remainder Theorem}.
     \end{enumerate}
@@ -710,7 +710,7 @@ For $a \not \equiv 0 \pmod{p}$, if $x$ is a solution then so is $-x$, and $-x \e
 
 % Lecture 6
 
-So $a$ is a \hyperlink{def:qr}{quadratic residue} mod $p$ iff its class in $(\Z / p \Z)^*$ is a square.
+So $a$ is a \hyperlink{def:qr}{quadratic residue} mod $p$ iff its class in $(\Z / p \Z)^\times$ is a square.
 \begin{eg}
     Computing squares \hyperlink{def:mod}{mod} $7$,
     \begin{equation*}
@@ -729,7 +729,7 @@ So $a$ is a \hyperlink{def:qr}{quadratic residue} mod $p$ iff its class in $(\Z 
 \begin{proof}[Proof 1]
     Consider
     \begin{align*}
-        \sigma: \hyperlink{def:znz*}{(\Z / p \Z)^*} &\longrightarrow (\Z/p\Z)^* \\
+        \sigma: \hyperlink{def:znz*}{(\Z / p \Z)^\times} &\longrightarrow (\Z/p\Z)^\times \\
         x &\longmapsto x^2 \hyperlink{def:mod}{\pmod{p}}
     \end{align*}
     Then
@@ -745,10 +745,10 @@ So $a$ is a \hyperlink{def:qr}{quadratic residue} mod $p$ iff its class in $(\Z 
 
 \begin{proof}[Proof 2]
     Let $g$ be a \hyperlink{def:primRoot}{primitive root} mod $p$.
-    Then $\hyperlink{def:znz*}{(\Z / p \Z)^*} = \{1, g, g^2, \dotsc, g^{p-2}\}$ as $g^{p-1} = 1$.
+    Then $\hyperlink{def:znz*}{(\Z / p \Z)^\times} = \{1, g, g^2, \dotsc, g^{p-2}\}$ as $g^{p-1} = 1$.
     So,
     \begin{align*}
-        \set{x^2 | x \in (\Z / p\Z)^*} &= \{1, g^2, g^4, \dotsc, g^{p-3}, g^{p-1}, g^{p+1}, \dotsc, g^{2p-4}\} \\
+        \set{x^2 | x \in (\Z / p\Z)^\times} &= \{1, g^2, g^4, \dotsc, g^{p-3}, g^{p-1}, g^{p+1}, \dotsc, g^{2p-4}\} \\
                                       &= \{1, g^2, g^4, \dotsc, g^{p-3}\}
     \end{align*}
     since $g^{p-1} = 1$ and $g^{p+1} = g^2$, and so on, hence there are $\frac{p-1}{2}$ elements.
@@ -806,7 +806,7 @@ So $a$ is a \hyperlink{def:qr}{quadratic residue} mod $p$ iff its class in $(\Z 
         \item The map
             \begin{equation*}
                 \begin{tikzcd}[row sep=tiny,column sep=small]
-                    \hyperlink{def:znz*}{(\mathbb{Z}/p\mathbb{Z})^*} \rar & \{\pm1\} \\
+                    \hyperlink{def:znz*}{(\mathbb{Z}/p\mathbb{Z})^\times} \rar & \{\pm1\} \\
                     a \rar[maps to] & \hyperlink{def:legendre}{\legendre{a}{p}}
                 \end{tikzcd}
             \end{equation*}
@@ -1174,7 +1174,7 @@ Are there higher reciprocity laws?
 \begin{itemize}
     \item Higher powers, for instance cubes mod $p$:
 
-        If $p \equiv 2 \hyperlink{def:mod}{\pmod{3}}$ then $3 \hyperlink{def:div}{\nmid} p-1$, and we can easily see that everything is a cube mod $p$, since $x \mapsto x^3$ is a bijection $(\Z/p\Z)^* \to (\Z/p\Z)^*$.
+        If $p \equiv 2 \hyperlink{def:mod}{\pmod{3}}$ then $3 \hyperlink{def:div}{\nmid} p-1$, and we can easily see that everything is a cube mod $p$, since $x \mapsto x^3$ is a bijection $(\Z/p\Z)^\times \to (\Z/p\Z)^\times$.
 
         For $p \equiv 1 \pmod{3}$, we can define a `cubic Legendre symbol' taking values in $\{0\} \cup \{1, \omega, \omega^2\}$ where $\omega$ is a cube root of unity.
         There is a cubic reciprocity law.
@@ -2202,7 +2202,7 @@ In fact, the proportion of primes in such an arithmetic progression is $\frac{1}
         \item $\chi(mn) = \chi(m)\chi(n)$ $\forall m,n$.
     \end{enumerate}
 \end{defi}
-So $\chi$ is just a homomorphism $(\Z/n\Z)^* \to \mathbb{C}^*$ extended to all $n$ by $\chi(n) = 0$ if $(n, N)>1$.
+So $\chi$ is just a homomorphism $(\Z/n\Z)^\times \to \mathbb{C}^\times$ extended to all $n$ by $\chi(n) = 0$ if $(n, N)>1$.
 An example is given by the Legendre/Jacobi symbol.
 
 \begin{fact}
@@ -2852,7 +2852,7 @@ Or, if $N$ is composite, how many $a$'s do we need to try to detect this?
 
 Notice if $N$ is a \hyperlink{def:pseudo}{pseudoprime} to base $b_1$ and to base $b_2$, as $(b_1 b_2)^{N-1} = b_1^{N-1} b_2^{N-1}$, it is a pseudoprime to base $b_1 b_2$.
 Obviously every composite $N$ is a pseudoprime to base $1$.
-So $\{1 \leq b < N, (b, N) = 1 \text{ s.t. $N$ is a pseudoprime to base } b\}$ is a subgroup of the group $(\Z/n\Z)^*$ of residue classes coprime to $N$ under multiplication.
+So $\{1 \leq b < N, (b, N) = 1 \text{ s.t. $N$ is a pseudoprime to base } b\}$ is a subgroup of the group $(\Z/n\Z)^\times$ of residue classes coprime to $N$ under multiplication.
 
 \begin{nprop}\label{prop:7.1}
     Take $N>1$, odd composite.
@@ -2862,8 +2862,8 @@ So $\{1 \leq b < N, (b, N) = 1 \text{ s.t. $N$ is a pseudoprime to base } b\}$ i
     \begin{equation*}
         H = \set{b | N \text{ is a pseudoprime to base } b}
     \end{equation*}
-    is a subgroup of $(\Z/n\Z)^*$. By hypothesis, it is a proper subgroup (as $\exists b \notin H$).
-    By Lagrange, the order of $H$ divides $\hyperlink{def:phi}{\varphi}(N) = \# (\Z/N\Z)^*$, so $\#H \leq \frac{1}{2} \varphi(N)$, so $\#\{b \notin H\} \geq \frac{1}{2} \varphi(N)$.
+    is a subgroup of $(\Z/n\Z)^\times$. By hypothesis, it is a proper subgroup (as $\exists b \notin H$).
+    By Lagrange, the order of $H$ divides $\hyperlink{def:phi}{\varphi}(N) = \# (\Z/N\Z)^\times$, so $\#H \leq \frac{1}{2} \varphi(N)$, so $\#\{b \notin H\} \geq \frac{1}{2} \varphi(N)$.
 \end{proof}
 
 This is encouraging: if $N$ is composite and it is not a pseudoprime to some base, then this can be detected by testing a small number of bases, with high probability.

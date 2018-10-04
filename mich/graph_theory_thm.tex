@@ -1,0 +1,1015 @@
+\documentclass{article}
+
+\def\npart{II}
+\def\nyear{2017}
+\def\nterm{Michaelmas}
+\def\nlecturer{Prof. P. Russell}
+\def\ncourse{Graph Theory}
+\input{header}
+\hypersetup{unicode=true}
+
+% preamble
+\usepackage{chngcntr}
+\usepackage{ifthen}
+\usepackage{pifont}
+\usepackage{bbm}
+
+\newcommand{\xmark}{\ding{55}}
+
+\setcounter{section}{-1}
+\usetikzlibrary{positioning,decorations.pathmorphing, calc, backgrounds, fadings}
+\tikzset{node/.style = {circle,draw,inner sep=0.8mm}}
+
+\counterwithout{nthm}{section}
+
+\DeclareMathOperator{\ext}{ex}
+\DeclareMathOperator{\ud}{ud}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newtheorem{manualtheoreminner}{Theorem}
+\newenvironment{manualtheorem}[1]{%
+    \renewcommand\themanualtheoreminner{#1}%
+    \manualtheoreminner
+}{\endmanualtheoreminner}
+
+\newcommand{\red}[1]{\textcolor{bred}{#1}}
+\newcommand{\green}[1]{\textcolor{bgreen}{#1}}
+\newcommand{\blue}[1]{\textcolor{bblue}{#1}}
+\newcommand{\yellow}[1]{\textcolor{byellow}{#1}}
+\newcommand{\orange}[1]{\textcolor{borange}{#1}}
+\newcommand{\purple}[1]{\textcolor{bpurple}{#1}}
+
+% and here we go!
+
+
+\begin{document}
+\maketitle
+
+
+
+\clearpage
+\section{Introduction}
+\subsection{Preliminary}
+
+\subsection{Informal definitions}
+
+
+
+\subsection{Where do such structures arise?}
+
+\begin{thm}[Schur's Theorem]\hypertarget{thm:schur}
+    Let $n$ be a positive integer. Then if $p$ is a sufficiently large positive integer, whenever $\{1, 2, \dots, p\}$ is partitioned into $n$ parts, we can solve $a + b = c$ with $a, b, c$ all in some part.
+\end{thm}
+\clearpage
+\section{Ramsey Theory}
+
+
+
+
+
+
+
+
+\label{def:triangle}
+
+
+
+\begin{thm}[Schur's Theorem reformulated\label{thm:schur2}]
+    Let $k$ be a positive integer. Then there is a positive integer $n$ such that if the set $[n] = \{1, 2, \dots, n\}$ is coloured with $k$ colours, we can find $a, b, c$ with $a + b = c$ and $a,b,c$ the same colour.
+\end{thm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nprop}\label{prop:1}
+    Let $k$ be a positive integer.
+    Then there is a positive integer $n$ such that whenever the edges of $K_n$ are coloured with $k$ colours we can find a monochromatic triangle.
+\end{nprop}
+
+
+
+
+
+
+
+
+
+\begin{nthm}[Ramsey's Theorem]\label{thm:ramsey}
+    $R(s, t)$ exists for all $s, t \geq 2$.
+    Moreover, if $s, t > 2$ then $R(s, t) \leq R(s-1, t) + R(s, t-1)$.
+\end{nthm}
+
+% cor 3
+\begin{ncor}\label{cor:3}
+    For all $s, t \geq 2$, $R(s, t) \leq 2^{s+t}$, so $R(s) \leq 4^s$.
+\end{ncor}
+
+
+\begin{nthm}[Multicolour Ramsey Theorem]\label{thm:multiRamsey}
+    Let $k \geq 1$ and $s \geq 2$.
+    Then there exists some $n$ such that whenever the edges of $K_n$ are coloured with $k$ colours, we can find a monochromatic $K_s$.
+\end{nthm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}[Infinite Ramsey Theorem]\label{thm:infRamsey}
+    Let $k \geq 1$. Whenever the edges of $K_\infty$ are $k$-coloured, we have a monochromatic $K_\infty$ subgraph.
+\end{nthm}
+
+
+\begin{ncor}
+    Any bounded sequence has a convergent subsequence.
+\end{ncor}
+
+\subsection{Basic Terminology}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% TODO thing about transitivity
+
+
+
+
+
+
+
+
+
+
+\clearpage
+\section{Extremal Graph Theory}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Forbidden Subgraph Problem}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection{Triangles}
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}\label{thm:7}
+    A graph is bipartite iff it contains no odd cycles.
+\end{nthm}
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}[Mantel's Theorem]\label{thm:8}
+    Let $n \geq 3$. Suppose $\abs{G} = n$, $e(G) \geq \floor{\frac{n^2}{4}}$ and $\triangle \not\subset G$.
+    Then $G \cong K_{\ceil{\frac{n}{2}}, \floor{\frac{n}{2}}}$.
+\end{nthm}
+
+
+
+
+
+\subsubsection{Complete graphs}
+
+
+
+
+
+\begin{nthm}[Tur\'{a}n's Theorem]\label{thm:9}
+    Let $r \geq 2$ and $\abs{G} = n \geq r+1$. If $e(G) \geq t_r(n)$ and $K_{r+1} \not\subset G$ then $G \cong T_r(n)$.
+\end{nthm}
+
+
+
+
+
+
+
+
+\begin{ncor}\label{cor:10}
+    Let $r \geq 2$. As $n \to \infty$, $\ext(n; K_{r+1}) \sim (1 - \frac{1}{r}) \binom{n}{2}$.
+\end{ncor}
+\subsubsection{Bipartite graphs}
+
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}\label{thm:11}
+    Let $t \geq 2$.
+    Then $\ext(n; K_{t,t}) = \mathcal{O}(n^{2 - \frac{1}{t}})$.
+\end{nthm}
+
+
+
+
+
+
+
+
+\begin{nthm}\label{thm:12}
+    Let $t \geq 2$. Then $z(n, t)  = \mathcal{O}(n^{2 - \frac{1}{t}})$.
+\end{nthm}
+
+\subsubsection{General graphs}
+
+
+
+
+
+\begin{nprop}\label{prop:13}
+    Let $H$ be a graph with at least one edge, and for $n \geq \abs{H}$, let $x_n = \frac{\ext(n; H)}{\binom{n}{2}}$. Then $(x_n)$ converges.
+\end{nprop}
+
+
+
+
+
+\begin{nthm}[Erd\H{o}s-Stone Theorem]\label{thm:14}
+    Let $r, t \geq 1$ be integers, and let $\epsilon > 0$ be real.
+    Then $\exists n_0$ such that $\forall n \geq n_0$,
+    \begin{equation*}
+        \abs{G} = n,\ e(G) \geq \left(1 - \frac{1}{r} + \epsilon\right) \binom{n}{2} \implies K_{r+1}(t) \subset G.
+    \end{equation*}
+\end{nthm}
+
+
+
+
+
+\begin{ncor}\label{cor:15}
+    Let $H$ be a graph with at least one edge. Then
+    \begin{equation*}
+        \ext(H) = 1 - \frac{1}{\chi(H) - 1}.
+    \end{equation*}
+\end{ncor}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{ncor}
+    For any infinite graph $G$,
+    \begin{equation*}
+        \ud(G) \in \left\{0, 1, \frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \dotsc\right\}.
+    \end{equation*}
+\end{ncor}
+
+\subsubsection{Proof of Erd\H{o}s-Stone (non-examinable)}\label{sec:es}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Hamiltonian graphs}
+
+
+
+
+
+
+
+
+
+\begin{nthm}[Dirac's Theorem]\label{thm:17}
+    Let $\abs{G} = n \geq 3$ and $\delta(G) \geq \frac{n}{2}$. Then $G$ is Hamiltonian.
+\end{nthm}
+
+
+
+
+
+
+
+
+
+\begin{nprop}\label{thm:18}
+    Let $G$ be a connected graph. Then
+    \begin{equation*}
+        G\text{ Eulerian if and only if } \forall v \in G,\ d(v)\text{ is even.}
+    \end{equation*}
+\end{nprop}
+
+\clearpage
+\section{Graph Colouring}
+
+
+
+
+
+
+
+\subsection{Planar Graphs}
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}[Kuratowski's Theorem]\label{thm:19}
+    Let $G$ be a graph. Then $G$ planar iff $G$ contains no subdivision of $K_5$ or $K_{3,3}$.
+\end{nthm}
+
+
+
+
+
+\begin{nprop}\label{prop:20}
+    Every tree of order at least $2$ has a leaf.
+\end{nprop}
+
+
+
+
+
+
+
+
+\begin{nprop}\label{prop:21}
+    Let $T$ be a tree, $\abs{T} = n \geq 1$. Then $e(T) = n-1$.
+\end{nprop}
+
+\begin{nprop}\label{prop:22}
+    Every tree is planar.
+\end{nprop}
+
+
+
+\begin{nthm}[Euler's Formula]\label{thm:23}
+    Take $G$ connected and planar.
+    Take $\abs{G} = n \geq 1$, $e(G) = m$ with $l$ faces.
+    Then $n - m + l = 2$.
+\end{nthm}
+
+\begin{ncor}\label{cor:24}
+    Let $G$ be planar, $\abs{G} = n \geq 3$. Then $e(G) \leq 3n-6$.
+\end{ncor}
+
+\begin{nprop}[Six colour theorem]\label{prop:25}
+    Any planar graph is 6-colourable.
+\end{nprop}
+
+\begin{nthm}[Five colour theorem]\label{thm:26}
+    Any planar graph is 5-colourable.
+\end{nthm}
+
+\begin{nthm}[Four colour theorem]\label{thm:27}
+    Any planar graph is 4-colourable.
+\end{nthm}
+
+% new lec
+
+
+\subsection{General Graphs}
+
+
+
+
+
+
+
+
+
+{
+}
+
+
+{
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}[Brooks' theorem]\label{thm:28}
+    Let $G$ be a connected graph that is neither complete nor an odd cycle.
+    Then $\chi(G) \leq \Delta(G)$.
+\end{nthm}
+
+\subsection{Graphs on surfaces}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}[Heawood's Theorem]\label{thm:29}
+    Let $S$ be a closed boundaryless surface of Euler characteristic $E \leq 1$. Then
+    \begin{equation*}
+        \chi(S) \leq \floor*{\frac{7 + \sqrt{49-24E}}{2}}.
+    \end{equation*}
+\end{nthm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Edge Colouring}
+
+
+
+
+\begin{nthm}[Vizing's theorem]\label{thm:30}
+    Let $G$ be a graph. Then
+    \begin{equation*}
+        \chi'(G) \leq \Delta(G) + 1
+    \end{equation*}
+\end{nthm}
+
+\clearpage
+\section{Connectivity}
+\subsection{The Marriage Problem}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}[Hall's Marriage Theorem]\label{thm:31}
+    Let $G$ be a bipartite graph with bipartition $(X,Y)$.
+    Then $G$ has a matching from $X$ to $Y$ iff $G$ satisfies \textbf{Hall's condition}:
+    \begin{equation*}
+        \hypertarget{def:hall}\forall A \subset X, \abs{\Gamma(A)} \geq |A|
+    \end{equation*}
+\end{nthm}
+
+
+
+
+
+
+\begin{ncor}[Defect Hall]\label{cor:32}
+    Let $G$ be a bipartite graph with bipartition $(X,Y)$ and let $d \geq 1$.
+    Then $G$ contains $|X|-d$ independent edges if and only if $\forall A \subset X, \ |\Gamma(A)| \geq |A| - d$.
+\end{ncor}
+
+\begin{ncor}[Polyandrous Hall]\label{cor:33}
+    Let $G$ be a bipartite graph, bipartition $(X,Y)$, $d \geq 2$.
+    Then $G$ contains a set of $d |X|$ edges, each vertex in $X$ in precisely $d$ of them, each vertex in $Y$ in at most one $\iff \forall A \subset X, |\Gamma(A)| \geq d |A|$.
+\end{ncor}
+
+
+
+\subsection{Connectivity}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}\label{thm:34}
+    Let $G$ be a graph and $A,B \subset V(G)$.
+    Let
+    \begin{equation*}
+        k = \min \set{\abs{W} | W \text{ is an $AB$-separator}}.
+    \end{equation*}
+    Then $G$ contains $k$ vertex-disjoint $AB$-paths.
+\end{nthm}
+
+
+
+
+
+\begin{ncor}[Menger's Theorem]\label{cor:35}
+    Let $G$ be an incomplete $k$-connected graph and let $a,b \in V(G)$, $a \neq b$.
+    Then $G$ contains $k$ independent $ab$-paths.
+\end{ncor}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Edge connectivity}
+
+\begin{ncor}[Edge Menger]\label{cor:36}
+    Let $G$ be $l$-edge connected and $a,b \in V(G)$ be distinct.
+    Then $G$ has $l$ edge-disjoint $ab$-paths.
+\end{ncor}
+
+\clearpage
+\section{Probabilistic Techniques}
+\subsection{The Probabilistic Method}
+
+
+
+
+
+
+
+\begin{nthm}[Erd\H{o}s]\label{thm:37}
+    \begin{equation*}
+        R(s) = \Omega(\sqrt{2}^s)
+    \end{equation*}
+\end{nthm}
+
+\subsection{Modifying a Random Graph}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}\label{thm:38}
+    If $t \geq 2$ then $z(n,t) = \Omega(n^{2 - \frac{2}{t+1}})$.
+\end{nthm}
+
+
+
+
+\begin{nthm}\label{thm:39}
+    Let $g \geq 3$, $k \geq 2$. Then there is a graph $G$ with no cycles of length $\leq g$ and $\chi(G) \geq k$.
+\end{nthm}
+
+
+{
+}
+
+\subsection{The Structure of Random Graphs}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nprop}\label{prop:40}
+    $p = \frac{1}{n}$ is a sharp threshold for $G \in \mathcal{G}(n,p)$ to contain a $\triangle$, in the sense that:
+    \begin{itemize}
+        \item if $p = o(\frac{1}{n})$ then almost every $G \in \mathcal{G}(n,p)$ has no $\triangle$, whereas
+        \item if $p = \omega(\frac{1}{n})$ then almost every $G \in \mathcal{G}(n,p)$ has a $\triangle$.
+    \end{itemize}
+\end{nprop}
+
+
+
+
+
+\begin{nthm}\label{thm:41}
+    There exists a function $d: \mathbb{N} \to \mathbb{N}$ such that a.e.\ $G \in \mathcal{G}(n,p)$ has $\omega(G) \in \{d-1,d,d+1\}$ (where $d = d(n)$).
+\end{nthm}
+
+
+\begin{ncor}\label{cor:42}
+    Almost every $G \in \mathcal{G}(n,p)$ has
+    \begin{equation*}
+        \chi(G) \geq (1 + o(1))\frac{n \log \frac{1}{q}}{2 \log n}
+    \end{equation*}
+    where $q = 1-p.$
+\end{ncor}
+
+
+
+
+\clearpage
+\section{Algebraic Methods}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{The Chromatic Polynomial}
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}[Cut-fuse relation]\label{thm:43}
+    Let $G$ be a graph, $e \in E(G)$, $k \geq 1$. Then $f_G(k) = f_{G-e}(k) - f_{G/e} (k)$.
+\end{nthm}
+
+\begin{ncor}\label{cor:44}
+    Let $G$ be a graph. Then $f_G$ is a polynomial.
+\end{ncor}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{ncor}\label{cor:45}
+    If $|G| = n$, $e(G) = m$ then
+    \begin{equation*}
+        f_G(X) = X^n - m X^{n-1} + \dotsc
+    \end{equation*}
+\end{ncor}
+
+\subsection{Eigenvalues}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}\label{thm:46}
+    Let $G$ be a graph, $\Delta(G) = \Delta$, $\lambda$ an eigenvalue of $G$.
+    Then $|\lambda| \leq \Delta$.
+    Moreover if $G$ is connected then $\Delta$ is an eigenvalue $\iff G$ is $\Delta$-regular; in this case $\Delta$ has multiplicity 1 and eigenvector $\left(\begin{smallmatrix}1\\1\\  \vphantom{\int\limits^x}\smash{\vdots}\\1\end{smallmatrix}\right)$.
+\end{nthm}
+
+\subsection{Strongly Regular Graphs}
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{nthm}[Rationality condition]\label{thm:47}
+    Let $G$ be $(k,a,b)$-strongly regular.
+    Then
+    \begin{equation*}
+        \frac{1}{2} \left\{ (n-1) \pm \frac{(a-b)(n-1) + 2k}{\sqrt{(b-a)^2 - 4(b-k)}}\right\} \in \mathbb{Z}.
+    \end{equation*}
+\end{nthm}
+
+
+\end{document}
