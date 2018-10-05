@@ -56,7 +56,7 @@ If $Y$ is a random element of $X$ with distribution $\mu$, then $T(Y)$ also has 
 
   Now, let $U \subset \mathbb{R}/\mathbb{Z}$ be open. Then $U = I_1 \sqcup I_2 \sqcup \dotsb$ is a disjoint union of intervals:
   \begin{align*}
-    \mu(T^{-1} U) &= \mu(\bigcup T^{-1} I_j) \\
+    \mu(T^{-1} U) &= \mu\left(\bigcup T^{-1} I_j\right) \\
                   &= \sum \mu(T^{-1} I_j) \\
                   &= \sum \mu(I_j) \\
                   &= \mu(U).
@@ -66,8 +66,7 @@ If $Y$ is a random element of $X$ with distribution $\mu$, then $T(Y)$ also has 
   \begin{align*}
     \mu(T^{-1} K) = 1 - \mu((T^{-1} K)^c) = 1 - \mu(T^{-1} K^c) = 1 - \mu(K^c) = \mu(K).
   \end{align*}
-
-  Let $A \in \mathcal{B}$ be arbitrary. Let $\epsilon > 0$. $\exists U$ open and $\exists K$ compact such that $K \subset A \subset U$ and $\mu(U \setminus K) < \epsilon$.
+  Now let $A \in \mathcal{B}$ be arbitrary. Let $\epsilon > 0$. $\exists U$ open and $\exists K$ compact such that $K \subset A \subset U$ and $\mu(U \setminus K) < \epsilon$.
   \begin{align*}
     \mu(K) = \mu(T^{-1} K) \leq \mu(T^{-1} A) \leq \mu(T^{-1} U) = \mu(U).
   \end{align*}
@@ -135,7 +134,7 @@ Some questions we might ask are:
   \end{equation*}
   and $\bar{d}(S) > 0$.
   Then $S$ contains arbitrarily long arithmetic progressions. That is, $\forall l, \exists a \in \mathbb{Z}, d \in \mathbb{Z}_{> 0}$,
-  \begin{equation*}a, a+d, \dotsc, a+(l-1)d \in S.\end{equation*}.
+  \begin{equation*}a, a+d, \dotsc, a+(l-1)d \in S.\end{equation*}
 \end{thm}
 
 \begin{thm}[Furstenberg, multiple recurrence]
