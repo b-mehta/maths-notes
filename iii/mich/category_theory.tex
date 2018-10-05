@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\def\npart{III}
+\def\nyear{2018}
+\def\nterm{Michaelmas}
+\def\nlecturer{Professor P.\ T.\ Johnstone}
+\def\ncourse{Category Theory}
+\def\draft{Ongoing course, rough}
+
+\usepackage{mathrsfs}
+\usepackage{imakeidx}
+
+\input{header}
+
+\makeindex[intoc]
+
+\DeclareMathOperator{\ob}{ob}
+\DeclareMathOperator{\mor}{mor}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\cod}{cod}
+
+% preamble
+
+\setcounter{section}{-1}
+
+\newtheorem{nremark}[nthm]{Remark}
+\newtheorem{nexample}[nthm]{Examples}
+
+% and here we go!
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\clearpage
+\section{Introduction}
+Category theory is like a language spoken by many different people, with many different dialects.
+Specifically, different parts of category theory are used in different branches of mathematics.
+In this course, we aim to speak the language of category theory, without an accent - a broad overview of all aspects of category theory.
+There will be many examples, some of which may not be understandable.
+As long as some examples make sense, it is not a point of concern that some examples seem unfamiliar.
+
+\section{Definitions and Examples}
+\begin{ndef}[Category]\index{category}\hypertarget{def:cat}
+  A \textbf{category} $\mathscr{C}$ consists of
+  \begin{enumerate}[label=(\alph*)]
+    \item \index{object}a collection $\mathscr{C}$ of \textbf{objects} $A,B,C,\dotsc$
+    \item \index{morphism}a collection $\mor \mathscr{C}$ of \textbf{morphism} $f,g,h,\dotsc$
+    \item \index{domain}\index{codomain}two operations $\dom, \cod$ assigning to each $f \in \mor \mathscr{C}$ a pair of objects, its \textbf{domain} and \textbf{codomain}. We write $A \xrightarrow{f} B$ to mean `$f$ is a morphism and $\dom f = A$ and $\cod f = B$'.
+    \item \index{identity}an operation assigning to each $A \in \ob \mathscr{C}$ a morphism $A \xrightarrow{1_A} A$, called its \textbf{identity}.
+    \item \index{composition}a partial binary operation \textbf{composition} $(f,g) \mapsto f g$ on morphisms, such that $fg$ is defined iff $\dom f = \cod g$ and $\dom(f g) = \dom g$, $\cod (f g) = \cod f$ if $fg$ is defined.
+  \end{enumerate}
+  satisfying
+  \begin{enumerate}[label=(\alph*)] \setcounter{enumi}{5}
+    \item \index{category!axioms}$f 1_A = f = 1_B f$ for any $A \xrightarrow{f} B$
+    \item $(fg)h = f (gh)$ whenever $fg$ and $gh$ are defined
+  \end{enumerate}
+\end{ndef}
+
+\begin{nremark}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item \index{category!small}\hypertarget{def:small}This definition is independent of a model of set theory. If we're given a particular model of set theory, we call the \hyperlink{def:cat}{category $\mathscr{C}$} \textbf{small} if $\ob \mathscr{C}$ and $\mor \mathscr{C}$ are sets.
+    \item Some texts say $fg$ means `$f$ followed by $g$', i.e.\ $fg$ defined $\iff \hyperlink{def:cat}{\cod} f = \dom g$.
+      \item Note that a morphism $f$ is an \hyperlink{def:cat}{identity} iff $fg = g$ and $hf = h$ whenever the compositions are defined.
+        So we could formulate the definition entirely in terms of morphisms.
+  \end{enumerate}
+\end{nremark}
+
+\begin{nexample}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item The \hyperlink{def:cat}{category} \textbf{Set} has all sets as objects, and all functions between sets as morphisms.
+      (Strictly, morphisms $A \to B$ are pairs $(f,B)$ where $f$ is a set-theoretic function.)
+    \item The category \textbf{Gp} has all groups as objects, and group homomorphisms as morphisms. Similarly, \textbf{Rng} is the category of rings, \textbf{Mod}$_R$ the category of $R$-modules.
+    \item The category \textbf{Top} has all topological spaces as objects and continuous functions as morphisms. Similarly \textbf{Unif} has uniform spaces and uniformly continuous functions, and \textbf{Mf} has manifolds and smooth maps.
+    \item The category \textbf{Htpy} has the same objects as \textbf{Top}, but morphisms are homotopy classes of continuous functions.
+      More generally, given $\mathscr{C}$, we call an equivalence relation $\simeq$ on $\mor \mathscr{C}$ a \textbf{congruence} if $f \simeq g \implies \dom f = \dom g$ and $\cod f = \cod g$, and $f \simeq g \implies f h \simeq g h$ and $k f \simeq k g$ whenever the composites are defined. Then we have a category $\mathscr{C}/\simeq$ with the same objects as $\mathscr{C}$, but congruence classes as morphisms.
+    \item \index{duality}Given $\mathscr{C}$, the \textbf{opposite category} $\mathscr{C}^{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^{op}$ is $gf$ in $\mathscr{C}$.
+      This leads to the \textbf{Duality principle} if $P$ is a true statement about categories, so is the statement $P^*$ obtained from $P$ by reversing all arrows.
+    \item A \hyperlink{def:small}{small} category with one object is a \textbf{monoid}, i.e.\ a semigroup with $1$. In particular, a group is a small category with one object, in which every morphism is an isomorphism (i.e.\ for all $f$, $\exists g$ such that $fg$ and $gf$ are identities).
+    \item A \textbf{groupoid} is a category in which every morphism is an isomorphism. For a topological space $X$, the fundamental groupoid $\pi(X)$ has all points of $X$ as objects and morphisms $x \to y$ are homotopy classes rel $\{0,1\}$ of paths $u: [0,1] \to X$ with $u(0) = x$, $u(1) = y$.
+      (If you know how to prove that the fundamental group is a group, you can prove that $\pi(X)$ is a groupoid.)
+    \item A \textbf{discrete} category is one whose only morphisms are identities. A \textbf{preorder} is a category $\mathscr{C}$ in which, for any pair $(A,B)$ there is at most $1$ morphism $A \to B$.
+      A small preorder is a set equipped with a binary relation which is reflexive and transitive.
+      In particular, a partially ordered set is a small preorder in which the only isomorphisms are identities.
+  \end{enumerate}
+\end{nexample}
+
+\printindex
+\end{document}
