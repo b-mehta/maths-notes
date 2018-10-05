@@ -6,7 +6,9 @@
 \def\nlecturer{Professor I.\ B.\ Leader}
 \def\ncourse{Combinatorics}
 \def\draft{Ongoing course, rough}
+\usepackage{imakeidx}
 \input{header}
+\makeindex[intoc]
 
 % preamble
 
@@ -59,24 +61,27 @@ While all examinable proofs will be included in lectures, relevant books for thi
 
 \clearpage
 \section{Set systems}
-\begin{defi}[Set system]\hypertarget{def:ss}
-  Let $X$ be a set. A \textbf{set system} on $X$ (or \textbf{family of subsets} of X) is a family $\mathcal{A} \subseteq \mathcal{P}(X)$.
+\begin{defi}[Set system]\index{set system}\hypertarget{def:ss}
+  Let $X$ be a set. A \textbf{set system} on $X$ (or \textbf{family of subsets} of $X$) is a family $\mathcal{A} \subseteq \mathcal{P}(X)$.
 \end{defi}
-For instance, we write $X^{(r)} = \set{A \subset X | |A| = r}$.
-Unless otherwise stated, \begin{equation*}X = [n] = \{1,2,\dotsc,n\},\end{equation*} eg $|X^{(r)}| = \binom{n}{r}$.
-Thus $[4]^{(2)} = \{12,13,14,23,24,34\}$, so $|[4]^{(2)}| = 6$.
+For instance, we write \hypertarget{def:superr}$X^{(r)} = \set{A \subset X | |A| = r}$, so $X^{(r)}$ is a \hyperlink{def:ss}{set system} on $X$.
+Unless otherwise stated,
+\begin{equation*}
+  \hypertarget{def:ints}X = [n] \coloneqq \{1,2,\dotsc,n\},
+\end{equation*}
+e.g.\ $|X^{\hyperlink{def:superr}{(r)}}| = \binom{n}{r}$.
+Thus $\hyperlink{def:ints}{[4]}^{(2)} = \{12,13,14,23,24,34\}$, so $|[4]^{(2)}| = 6$.
 
-Often, we make $\mathcal{P}(X)$ into a graph, called $Q_n$ by joining $A$ to $B$ if $|A \triangle B| = 1$, i.e.\ if $A = B \cup \{i\}$ for some $i \notin B$ (or vice versa).
-
-For instance, here is a picture of $Q_3$.
+Often, we make $\mathcal{P}(X)$ into a graph, called $Q_n$, by joining $A$ to $B$ if $|A \triangle B| = 1$, i.e.\ if $A = B \cup \{i\}$ for some $i \notin B$ (or vice versa).
+For instance, here is a picture of $Q_3$:
 \begin{center}
   \begin{tikzpicture}[xscale=1.4, every node/.style={fill=black, circle, inner sep=1pt}]
     \node [label=below:$\emptyset$] (empty) at (0,0) {};
     \node [label=left:$1$] (1) at (-1,1) {};
-    \node [label=right:$2$] (2) at (0,1) {};
+    \node [label=below right:$2$] (2) at (0,1) {};
     \node [label=right:$3$] (3) at (1,1) {};
     \node [label=left:$23$] (23) at (-1,2) {};
-    \node [label=right:$13$] (13) at (0,2) {};
+    \node [label=above right:$13$] (13) at (0,2) {};
     \node [label=right:$12$] (12) at (1,2) {};
     \node [label=above:$123$] (123) at (0,3) {};
     \draw (empty) -- (1);
@@ -100,6 +105,114 @@ As we know, the picture gets `thicker' in the middle. But, for odd $n$, is it no
   \begin{tikzpicture}
     \begin{scope}
       \node at (-2, 3) {$Q_n$, $n$ even};
+
+      \draw (0,3.2) circle [x radius=1mm, y radius=1mm];
+      \node [right] at (0.25, 3.2) {$\hyperlink{def:superr}{X^{(n)}}$};
+
+      \draw (0,2.7) circle [x radius=4.5mm, y radius=2mm];
+      \node [right] at (0.5, 2.7) {$X^{(n-1)}$};
+
+      \draw (0,1.9) circle [x radius=9mm, y radius=4mm];
+      \node [right] at (0.9, 1.9) {$X^{(n-2)}$};
+
+      \node at (0,1.25) {$\vdots$};
+
+      \draw (0,0) circle [x radius=16mm, y radius=8mm];
+      \node [right] at (1.6, 0) {$X^{(\frac{n}{2})}$};
+
+      \node at (0,-1.05) {$\vdots$};
+
+      \draw (0,-1.9) circle [x radius=9mm, y radius=4mm];
+      \node [right] at (0.9, -1.9) {$X^{(2)}$};
+
+      \draw (0,-2.7) circle [x radius=4.5mm, y radius=2mm];
+      \node [right] at (0.5, -2.7) {$X^{(1)}$};
+
+      \draw (0,-3.2) circle [x radius=1mm, y radius=1mm];
+      \node [right] at (0.25, -3.2) {$X^{(0)}$};
+    \end{scope}
+
+    \begin{scope}[xshift=6cm]
+      \node at (-2, 3) {$Q_n$, $n$ odd};
+
+      \draw (0,3.2) circle [x radius=1mm, y radius=0.8mm];
+      \node [right] at (0.25, 3.2) {$X^{(n)}$};
+
+      \draw (0,2.8) circle [x radius=4.5mm, y radius=1.5mm];
+      \node [right] at (0.5, 2.8) {$X^{(n-1)}$};
+
+      \draw (0,2.1) circle [x radius=9mm, y radius=3mm];
+      \node [right] at (0.9, 2.1) {$X^{(n-2)}$};
+
+      \node at (0,1.55) {$\vdots$};
+
+      \draw (0,0.6) circle [x radius=16mm, y radius=5mm];
+      \node [right] at (1.6, 0.6) {$X^{(\ceil{\frac{n}{2}})}$};
+
+      \draw (0,-0.6) circle [x radius=16mm, y radius=5mm];
+      \node [right] at (1.6, -0.6) {$X^{(\floor{\frac{n}{2}})}$};
+
+      \node at (0,-1.35) {$\vdots$};
+
+      \draw (0,-2.1) circle [x radius=9mm, y radius=3mm];
+      \node [right] at (0.9, -2.1) {$X^{(2)}$};
+
+      \draw (0,-2.8) circle [x radius=4.5mm, y radius=1.5mm];
+      \node [right] at (0.5, -2.8) {$X^{(1)}$};
+
+      \draw (0,-3.2) circle [x radius=1mm, y radius=0.8mm];
+      \node [right] at (0.25, -3.2) {$X^{(0)}$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+If we identify a set $A \subseteq X$ with a $0$-$1$ sequence of length $n$, e.g.\ $134 \longleftrightarrow 1011000\dots0$, via $A \longleftrightarrow 1_{A}$ or $\chi_A$, the characteristic function,
+then $Q_3$ looks like
+\begin{center}
+  \begin{tikzpicture}[every node/.style={fill=black, circle, inner sep=1pt}, scale=2.5]
+    \node [label=below left:$\emptyset$] (empty) at (0,0) {};
+    \node [label=below right:$1$] (1) at (1, 0) {};
+    \node [fill opacity=0.5, label=left:$2$] (2) at (0.3,0.3) {};
+    \node [label=left:$3$] (3) at (0, 1) {};
+    \node [label=above left:$13$] (13) at (1, 1) {};
+    \node [label=right:$12$] (12) at (1.3, 0.3) {};
+    \node [label=above left:$23$] (23) at (0.3, 1.3) {};
+    \node [label=above right:$123$] (123) at (1.3, 1.3) {};
+    \draw (empty) -- (1);
+    \draw [opacity=0.7, very thin] (empty) -- (2);
+    \draw (empty) -- (3);
+    \draw (1) -- (12);
+    \draw (1) -- (13);
+    \draw [opacity=0.7, very thin] (2) -- (12);
+    \draw [opacity=0.7, very thin] (2) -- (23);
+    \draw (3) -- (13);
+    \draw (3) -- (23);
+    \draw (12) -- (123);
+    \draw (13) -- (123);
+    \draw (23) -- (123);
+  \end{tikzpicture}
+\end{center}
+\begin{defi}[Hypercube]\index{hypercube}\hypertarget{def:qn}
+  $Q_n$ is often called the \textbf{hypercube} or \textbf{discrete cube} or \textbf{$n$-cube}.
+\end{defi}
+It is important to keep \emph{both} these pictures in mind: for induction the cube image is more instructive, but when thinking about layers the earlier image is more helpful.
+
+\subsection{Chains and antichains}
+\begin{defi}[Chain]\index{chain}\hypertarget{def:chain}
+  A family $\mathcal{A} \subseteq \mathcal{P}(X)$ is a \textbf{chain} if $\forall A, B \in \mathcal{A}$, we have $A \subseteq B$ or $B \subseteq A$.
+\end{defi}
+\begin{defi}[Antichain]\index{antichain}\hypertarget{def:antichain}
+  A family $\mathcal{A} \subseteq \mathcal{P}(X)$ is an \textbf{antichain} if $\forall A,B \in \mathcal{A}$ with $A \neq B \Rightarrow A \nsubseteq B$.
+\end{defi}
+\begin{eg}
+  For instance, $\{12, 125, 123589\}$ is an \hyperlink{def:chain}{chain}, and $\{1,467,2456\}$ is an \hyperlink{def:antichain}{antichain}.
+\end{eg}
+
+In this course, we ask questions like, how large can a \hyperlink{def:chain}{chain} be?
+We can achieve $|\mathcal{A}| = n+1$, e.g.\ $\{\emptyset, 1, 12, 123, \dotsc, [n]\}$.
+It is easy to visualise this by picking `one per level':
+\begin{center}
+  \begin{tikzpicture}
       \draw (0,3.2) circle [x radius=1mm, y radius=1mm];
       \draw (0,2.7) circle [x radius=4.5mm, y radius=2mm];
       \draw (0,1.9) circle [x radius=9mm, y radius=4mm];
@@ -109,64 +222,27 @@ As we know, the picture gets `thicker' in the middle. But, for odd $n$, is it no
       \draw (0,-1.9) circle [x radius=9mm, y radius=4mm];
       \draw (0,-2.7) circle [x radius=4.5mm, y radius=2mm];
       \draw (0,-3.2) circle [x radius=1mm, y radius=1mm];
-      \node at (0.6, 3.2) {$X^{(n)}$};
-    \end{scope}
-
-    \begin{scope}[xshift=6cm]
-      \node at (-2, 3) {$Q_n$, $n$ odd};
-      \draw (0,3.2) circle [x radius=1mm, y radius=0.8mm];
-      \draw (0,2.8) circle [x radius=4.5mm, y radius=1.5mm];
-      \draw (0,2.1) circle [x radius=9mm, y radius=3mm];
-      \node at (0,1.55) {$\vdots$};
-      \draw (0,0.6) circle [x radius=16mm, y radius=5mm];
-      \draw (0,-3.2) circle [x radius=1mm, y radius=0.8mm];
-      \draw (0,-2.8) circle [x radius=4.5mm, y radius=1.5mm];
-      \draw (0,-2.1) circle [x radius=9mm, y radius=3mm];
-      \node at (0,-1.35) {$\vdots$};
-      \draw (0,-0.6) circle [x radius=16mm, y radius=5mm];
-    \end{scope}
+      \begin{scope}[every node/.style={fill=black, circle, inner sep=0.5pt}]
+        \node (0) at (0,-3.2)    {};
+        \node (1) at (0.1,-2.7)  {};
+        \node (2) at (-0.2,-1.8) {};
+        \node (3) at (0.3, 0.1)   {};
+        \node (4) at (0.2,1.8)   {};
+        \node (5) at (-0.1,2.7)  {};
+        \node (6) at (0,3.2)     {};
+        \draw[very thin, gray] (0) -- (1) -- (2) -- (3) -- (4) -- (5) -- (6);
+      \end{scope}
   \end{tikzpicture}
 \end{center}
-% more pics
 
-If we identify a set $A \subseteq X$ with a $0-1$ sequence of length $n$, e.g.\ $134 \leftrightarrow 1011000\dots0$, via $A \leftrightarrow 1_{A}$ or $\chi_A$, the characteristic function.
-Then $Q_3$ looks like
-\begin{center}
-  \begin{tikzpicture}
-
-  \end{tikzpicture}
-\end{center}
-\begin{defi}[Hypercube]\hypertarget{def:qn}
-  $Q_n$ is often called the \textbf{hypercube} or \textbf{discrete cube} or \textbf{$n$-cube}.
-\end{defi}
-It is important to keep \emph{both} these pictures in mind: for induction the cube image is more instructive, but when thinking about layers the earlier image is more helpful.
-
-\subsection{Chains and antichains}
-\begin{defi}[Chain]\hypertarget{def:chain}
-  A family $\mathcal{A} \subseteq \mathcal{P}(X)$ is a \textbf{chain} if $\forall A, B \in \mathcal{A}$, we have $A \subseteq B$ or $B \subseteq A$.
-\end{defi}
-\begin{defi}[Antichain]\hypertarget{def:antichain}
-  A family $\mathcal{A} \subseteq \mathcal{P}(X)$ is an antichain if $\forall A,B \in \mathcal{A}$ with $A \neq B \Rightarrow A \nsubseteq B$.
-\end{defi}
-\begin{eg}
-  For instance, $\{12, 125, 123589\}$ is an \hyperlink{def:chain}{chain}, and $\{1,467,2456\}$ is an \hyperlink{def:antichain}{antichain}.
-\end{eg}
-
-In this course, we ask questions like, how large can a \hyperlink{def:chain}{chain} be?
-We can achieve $|\mathcal{A}| = n+1$, e.g.\ $\{\emptyset, 1, 12, 123, \dotsc, [n]\}$.
-It is easy to visualise this by picking `one per level':
-
-\begin{center}
-  \begin{tikzpicture}
-
-  \end{tikzpicture}
-\end{center}
 We cannot exceed $n+1$, since a chain must meet each `level' $X^{(r)}$ ($0 \leq r \leq n$) in at most one place.
 
 How large can an \hyperlink{def:antichain}{antichain} be?
-We could achieve $\mathcal{A}=n$, e.g.\ $\mathcal{A} = \{1,2,3,\dotsc,n\}$ (and this is maximal)
-Indeed, could take $\mathcal{A} = X^{(r)}$ for any $r$, so we can achieve $|\mathcal{A}| = \binom{n}{\floor{\frac{n}{2}}}$. Can we beat this?
+We could achieve $\mathcal{A}=n$, e.g.\ $\mathcal{A} = \{1,2,3,\dotsc,n\}$ (and this is maximal).
+Indeed, we could take $\mathcal{A} = X^{(r)}$ for any $r$, so we can achieve $|\mathcal{A}| = \binom{n}{\floor{\frac{n}{2}}}$.
+Can we beat this?
 Aim: Prove this is the winner.
 \section{Isoperimetric inequalities}
 \section{Projections}
+\printindex
 \end{document}
