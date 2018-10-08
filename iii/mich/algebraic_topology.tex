@@ -12,10 +12,14 @@
 
 \setcounter{section}{-1}
 
+\usetikzlibrary{cd,decorations.pathmorphing,decorations.markings, fadings}
+\tikzset{dot/.style = {circle,fill=black,inner sep=1pt}}
+
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \DeclareMathOperator{\image}{image}
 \DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Hom}{Hom}
 
 %\newtheorem{manualtheoreminner}{Theorem}
 %\newenvironment{manualtheorem}[1]{%
@@ -142,7 +146,61 @@ Algebraic topology is the study of the set of spaces up to homotopy equivalence 
 
 The first naive attempt would be homotopy groups:
 Loops (continuous maps $S^1 \to X$) with a common base-point can be concatenated and this induces a group structure on the set of homotopy classes of maps $(S^1, *) \to (X, x_0)$.
-This refers to continuous maps $S^1 \to X$ taking $* \mapsto x_0$ and a based homotopy $F : f \simeq g$ of two such is one such that $F |_{S \times \{t\}}$ sends $*$ to $x_0$ $\forall t$.
+Recall this refers to continuous maps $S^1 \to X$ taking $* \mapsto x_0$ and a based homotopy $F : f \simeq g$ of two such is one such that $F |_{S \times \{t\}}$ sends $*$ to $x_0$ $\forall t$.
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+    \begin{scope}[decoration={markings,mark=at position 0.25 with {\arrow{>}}}]
+      \draw [postaction={decorate}] (0,0) circle [radius=1cm];
+      \draw [bred, postaction={decorate}] (4,1) circle [radius=1cm];
+    \end{scope}
+    \begin{scope}[decoration={markings,mark=at position 0.75 with {\arrow{<}}}]
+      \draw [bblue, postaction={decorate}] (4,-1) circle [radius=1cm];
+    \end{scope}
+    \node [dot] at (0,-1) {};
+    \node [dot] at (4,0) {};
+    \draw [->, decorate, decoration={snake, post length=1pt}] (1.1, 0) -- (3.2, 0);
+    \node at (2,-0.5) {concatenate};
+    \draw [->] (4.8,0) to [bend right] (7,0);
+    \node at (5.9, -0.6) {embed};
+
+    \begin{scope}[xshift=8.8cm, scale=0.7]
+      \draw (-1,0) to[bend left=40] (1,0);
+      \draw (-1.2,0.15) to[bend right=40] (1.2,0.15);
+      \draw ( 3,0) to[bend left=40] (5,0);
+      \draw ( 2.8,0.15) to[bend right=40] (5.2,0.15);
+      \draw [clip] plot [smooth cycle, tension=0.7] coordinates {
+          (- 2.2, 0  )
+          (- 1.5, 1  )
+          (  0  , 1.4)
+          (  2  , 1.1)
+          (  4  , 1.4)
+          (  5.5, 1  )
+          (  6.2, 0  )
+          (  5.5,-1  )
+          (  4  ,-1.4)
+          (  2  ,-1.1)
+          (  0  ,-1.4)
+          (- 1.5,-1  )
+        };
+      \node [dot] at (2,0) {};
+      %\draw[step=0.1cm,very thin, help lines] (-3,-2) grid (7,2);
+      \begin{scope}[decoration={markings,mark=at position 0.5 with {\arrow{<}}}]
+        \draw[bblue, postaction={decorate}] (2,0) to [out=180, in=22] (0.6,-0.2);
+        \draw[bblue, postaction={decorate},dashed, very thin] (0.6,-0.2) to [out=202, in=-160] (1.2,-1.2);
+        \draw[bblue, postaction={decorate}] (1.2,-1.2) to [out=20, in=-110] (2,0);
+      \end{scope}
+      \begin{scope}[decoration={markings,mark=at position 0.5 with {\arrow{>}}}]
+        \draw[bred, postaction={decorate}] (2,0) to[out=0, in=170] (4,-0.8);
+        \draw[bred, postaction={decorate}] (4,-0.8) to[out=-10, in=270] (5.7,0);
+        \draw[bred, postaction={decorate}] (5.7,0) to [out=90, in=0] (4,0.9);
+        \draw[bred, postaction={decorate}] (4,0.9) to[out=180,in=70] (2,0);
+      \end{scope}
+      % \draw plot [smooth, tension=0.6] coordinates {(2,0)  (0.6,-0.2) (0.6,-0.8) (1.2,-1.2) (1.8,-0.6) (2,0)};
+    \end{scope}
+
+  \end{tikzpicture}
+\end{center}
 
 Again, there is a group structure on the set of based homotopy classes of maps $(S^n, *) \to (X, x_0)$ calld $\pi_n(X, x_0)$, the $n$-th homotopy group of $X$.
 \begin{fact}
@@ -177,4 +235,139 @@ This will be rather computable for simple spaces. In this course, we will mostly
     H^n(C^*, d) \coloneqq \frac{\ker(d^n)}{\im(d^{n-1})}.
   \end{equation*}
 \end{defi}
+\subsection{Singular (co)chains}
+\begin{defi}[Simplex]\hypertarget{def:simplex}
+  A \textbf{simplex} in a topological space $X$ is defined as follows.
+  \begin{itemize}
+    \item An $n$-simplex is the convex hull of $(n+1)$ ordered points $v_0, \dotsc, v_n$ in $\mathbb{R}^m$ such that $\set{v_i - v_0 | 1 \leq i \leq n}$ are linearly independent. Write this as $[v_0, \dotsc, v_n] = \sigma$.
+  \end{itemize}
+  The \textbf{standard $n$-simplex} is $\Delta^n = \set{(t_0, \dotsc, t_n) \in \mathbb{R}^{n+1} | \sum_{i=0}^n t_i = 1, t_i \geq 0 \ \forall i}$, e.g.
+  \begin{center}
+    \begin{tikzpicture}[scale=3]
+      \draw [->] (-0.2,0) -- (1.2,0);
+      \draw [->] (0,-0.2) -- (0,1.2);
+      \draw (1,0) -- (0,1);
+      \node [dot, label={below:$(1,0)$}] at (1,0) {};
+      \node [dot, label={left:$(0,1)$}] at (0,1) {};
+      \node [mblue, above right] at (0.5,0.5) {$\Delta^1$};
+      \begin{scope}[xshift=2cm]
+        \draw [->] (-0.2,0) -- (1.2,0);
+        \draw [->] (0,-0.2) -- (0,1.2);
+        \draw (1,0) -- (0,1);
+        \node [dot, label={below:$(1,0,0)$}] at (1,0) {};
+        \node [dot, label={left:$(0,1,0)$}] at (0,1) {};
+        \node [above right] at (0.5,0.5) {$\Delta^2$};
+        \begin{scope}
+          \draw [very thin, opacity=0.8] (0,0) -- (0.6,0.4);
+          \draw [very thin] (1,0) -- (0.48,0.32);
+          \draw [very thin] (0,1) -- (0.48,0.32);
+          \node [dot, label={left:$(0,0,1)$}] at (0.48,0.32) {};
+          \node [dot] at (0.48,0.32) {};
+          \draw [->] (0.6,0.4) -- (0.9,0.6);
+        \end{scope}
+      \end{scope}
+    \end{tikzpicture}
+
+  \end{center}
+
+\end{defi}
+
+Note \emph{any} $n$-simplex is canonically the image of $\Delta^n$ under a linear homeomorphism $\Delta^n \to \sigma$ given by $(t_i) \mapsto \Sigma t_i v_i \in \sigma$.
+
+An $n$ simplex in $X$ is a continuous map $\sigma: \Delta^n \to X$, or from any $n$-simplex to $X$.
+Note any $n$-simplex has faces $\Delta_i^{n-1} \subseteq \Delta^n$ is defined by $\{t_i = 0\}$ and then this defines a corresponding face of any $\sigma$ via the map $\Delta^n \to \sigma$.
+Write $i$th face of $\sigma$ as $[v_0, \dotsc, \hat{v_i}, \dotsc, v_n] \subseteq [v_0, \dotsc, v_n]$ (so a hat over a vertex means omit it).
+
+Note the edges of any simplex are canonically oriented via `$v_i \to v_j$ if $i < j$'.
+
+\begin{center}
+  \begin{tikzpicture}
+     %draw D1,D2,D3 (tetra) with arrows labelled
+
+  \end{tikzpicture}
+\end{center}
+\begin{defi}[Singular chain complex]
+  If $X$ is a space, the \textbf{singular chain complex} $C_*(X; \mathbb{Z})$ or just $C_*(X)$ is defined as follows:
+  \begin{equation*}
+    \Set{\sum_{i=1}^N h_i \sigma_i | N \in \mathbb{N}_{\geq 0}, h_i \in \mathbb{Z}, \sigma_i: \Delta^n \to X \text{ an $n$-simplex in $X$}}
+  \end{equation*}
+  the free abelian group on $n$-simplices in $X$.
+\end{defi}
+\begin{defi}[Boundary map]
+  The boundary map $d: C_n(X) \to C_{n-1}(X)$ is defined by
+  \begin{equation*}
+    d \sigma = \sum_{i=0}^n (-1)^i \sigma|_{[v_0 \dotsm \hat{v_i} \dotsm v_n]}
+  \end{equation*}
+  on $\sigma=[v_0 \dotsm v_n]$ and extend to $C_n(X)$ by linearity.
+\end{defi}
+\begin{eg}
+  For the simplex $\sigma = [v_0 v_1 v_2]$, $d(\sigma) = [v_0 v_1] - [v_0 v_2] [v_1 v_2]$.
+\end{eg}
+\begin{lemma}
+  $d^2 = 0$, i.e.\ $d_{n-1} \circ d_n= 0 \ \forall n$.
+\end{lemma}
+\begin{proof}
+  \begin{align*}
+    d \circ d(\sigma) &= d(\sum_{i=0}^n (-1)^i \sigma|_{[v_0 \dotsm \hat{v_i} \dotsm v_n]})\\
+                      &= \sum_{j < i} (-1)^i (-1)^j \sigma|_[v_0 \dotsm \hat{v_j} \dotsm \hat{v_i} \dotsm v_n]  \\
+                      &+ \sum_{j > i} (-1)^i (-1)^(j+1) \sigma|_[v_0 \dotsm \hat{v_i} \dotsm \hat{v_j} \dotsm v_n].
+  \end{align*}
+  Exchanging $i$ and $j$, these two terms exactly cancel.
+\end{proof}
+The resulting homology theory $H_*(X)$ or $H_*(X; \mathbb{Z})$ is called \textbf{singular homology}.
+
+The $\mathbb{Z}$ keeps track of the fact that $h_i \in \mathbb{Z}$, we could similarly define $C_*(X, G)$ and $H_*(X,G)$ for any abelian group $G$.
+Note $H_*(X,\mathbb{Z})$ is tautologically a homeomorphism invariant of $X$.
+
+The idea is that $d$ takes the boundary of a region covered by simplices.
+
+Elements of $\ker(d: C_i(X) \to C_{i-1}(X))$ are called cycles or $i$-cycles.
+Elements in $\im(d)$ are called boundaries.
+
+\begin{defi} [Cochain complex]
+  The singular \textbf{cochain} complex of a space $X$, $C^*(X, \mathbb{Z})$ or $C^*(X)$, has cochain groups $C^n(X) \coloneqq \Hom(C_n(X), \mathbb{Z})$ and coboundary map $d^*: C^n(X) \to C^{n+1}(X)$ by $(d^* \psi)(\sigma) \coloneqq \psi(d \sigma)$. Here $\sigma \in C_{n+1}(X)$ and $d \sigma \in C_n(X)$, i.e.\ $d \sigma = d_{n+1} \sigma$.
+\end{defi}
+Observe $d^*(d^* \psi) (\sigma) = d^*(\psi|_{d \sigma}) = \psi|_{d \circ d(\sigma)}$ and $d \circ d(\sigma) = 0$, so $(d^*)^2 = 0$.
+So indeed $(C^*(X), d^*)$ is a cochain complex and the cohomology $H^*(X,\mathbb{Z})$ or $H^*(X)$ is called singular cohomology.
+
+Note $H^*(X,\mathbb{Z}) \neq \Hom_{\mathbb{Z}}(H_*(X,\mathbb{Z}),\mathbb{Z})$ in general.
+
+Observe if $f: X \to Y$ is continuous and $\sigma: \Delta^n \to X$ is continuous, then I get $f \circ \sigma: \Delta^n \to Y$ is an $n$-simplex in $Y$, so I get
+\begin{align*}
+  f_*: C_*(X) &\to C_*(Y) \\
+  f_*: C_n(X) &\to C_n(Y) \ \forall n
+\end{align*}
+are group homomorphisms.
+
+Key observation: $df_* = f_*d$ since $f \circ (\sigma|_{[v_0 \dotsm \hat{v_i} \dotsm v_n]}) = (f \circ \sigma)|_{[v_0 \dotsm \hat{v_i} \dotsm v_n]}$
+i.e.\ a continuous maps $f: X \to Y$ induces a \textbf{chain map} of chain complexes.
+\begin{equation*}
+  \begin{tikzcd}
+    \dots \rar & C_{n+1}(X) \rar{d} \dar{f_*} & C_n(X) \rar{d} \dar{f_*} & C_{n-1}(X) \rar{d} \dar{f_*} & \dots \\
+    \dots \rar & C_{n+1}(Y) \rar{d}  & C_n(Y) \rar{d}  & C_{n-1}(Y) \rar{d}  & \dots
+  \end{tikzcd}
+\end{equation*}
+and each square commutes.
+\begin{lemma}
+  If $C_*$ and $D_*$ are chain complexes and $f_*:C_* \to D_*$ is a chain map. then $f_*$ indexes homomorphisms $f_*:H_i(C_*) \to H_i(D_*)$ for every $I$.
+\end{lemma}
+\begin{proof}
+  Let $a \in H_i(C_*) = \frac{\ker(d_i:C_i \to C_{i-1})}{\im(d_{i+1}:C_{i+1} \to C_i)}$, so $a$ is represented by some $i$-cycle $\alpha \in C_i$, where $d \alpha = 0$.
+
+  Then $f_*(d\alpha) = 0 = d(f_* \alpha) \implies f_*(\alpha) \in D_i$ is a cycle in the $D_*$-chain complex, and hence defines an element in $H_i(D_*) = \frac{\ker(d:D_i \to D_{i-1})}{\im(d:D_{i+1}\to D_i)}$. Call this element $b$ and set $f_*(a) = b$.
+  This is well-defined.
+  If $\alpha'$ also repesents $a \in H_i(C_*)$, then $\alpha-\alpha'$ is a boundary, i.e.\ $\alpha-\alpha_i = d_{i+1}(\gamma)$ for some $\gamma \in C_{i+1}$.
+  Then $f_*(\alpha) - f_*(\alpha') = f_*(d_{i+1}\gamma) = d_{i+1} f_*(\gamma)$ so $f_*(\alpha')$ and $f_*(\alpha)$ differ by a boundary, so define some element $b \in H_i(D_*)$.
+  It is an easy exercise to check that this map $f_*:H_i(C_*) \to H_i(D_*)$ is indeed a homomorphism of groups.
+\end{proof}
+The upshot of this is that if $f:X\to Y$ is a continuous map of spaces, it induces maps $f_*:H_i(X) \to H_i(Y)$ for all $i$.
+\begin{lemma}
+  If $X \xrightarrow{f} Y \xrightarrow{g} Z$, then $(g \circ f)_* = g_* \circ f_*$, $id_* = id$.
+\end{lemma}
+\begin{proof}
+  Exercise.
+\end{proof}
+In category-theoretic language, the association $X \mapsto H_*(X)$ is a functor from the category of topological spaces to the set of graded abelian groups.
+Observe $f:X \to Y$ $f_*:C_*(X) \to C_*(Y)$ and this has an adjoint $f^*: C^*(Y) \to C^*(X)$.
+Note this goes the other way. This again induces a map $H^*(Y) \to H^*(X)$.
 \end{document}
