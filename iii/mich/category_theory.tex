@@ -11,6 +11,8 @@
 \usepackage{imakeidx}
 
 \input{header}
+\usetikzlibrary{cd}
+\swapnumbers
 
 \makeindex[intoc]
 
@@ -23,6 +25,22 @@
 
 \setcounter{section}{-1}
 
+\newtheorem{manualeginner}{Examples}
+\newenvironment{manualeg}[1]{%
+    \renewcommand\themanualeginner{#1}%
+    \manualeginner
+}{\endmanualeginner}
+
+%\let\nthm\undefined
+%\let\nlemma\undefined
+%\let\nprop\undefined
+%\let\ncor\undefined
+%\let\ndef\undefined
+%\newtheorem{nthm}{Theorem}[section]
+%\newtheorem{nlemma}[nthm]{Lemma}
+%\newtheorem{nprop}[nthm]{Proposition}
+%\newtheorem{ncor}[nthm]{Corollary}
+%\newtheorem{ndef}[nthm]{Definition}
 \newtheorem{nremark}[nthm]{Remark}
 \newtheorem{nexample}[nthm]{Examples}
 
@@ -68,14 +86,14 @@ As long as some examples make sense, it is not a point of concern that some exam
 \end{nremark}
 
 \begin{nexample}\leavevmode
-  \begin{enumerate}[label=(\alph*)]
+  \begin{enumerate}[label=(\alph*)]\hypertarget{def:categ}
     \item The \hyperlink{def:cat}{category} \textbf{Set} has all sets as objects, and all functions between sets as morphisms.
       (Strictly, morphisms $A \to B$ are pairs $(f,B)$ where $f$ is a set-theoretic function.)
     \item The category \textbf{Gp} has all groups as objects, and group homomorphisms as morphisms. Similarly, \textbf{Rng} is the category of rings, \textbf{Mod}$_R$ the category of $R$-modules.
     \item The category \textbf{Top} has all topological spaces as objects and continuous functions as morphisms. Similarly \textbf{Unif} has uniform spaces and uniformly continuous functions, and \textbf{Mf} has manifolds and smooth maps.
     \item The category \textbf{Htpy} has the same objects as \textbf{Top}, but morphisms are homotopy classes of continuous functions.
       More generally, given $\mathscr{C}$, we call an equivalence relation $\simeq$ on $\mor \mathscr{C}$ a \textbf{congruence} if $f \simeq g \implies \dom f = \dom g$ and $\cod f = \cod g$, and $f \simeq g \implies f h \simeq g h$ and $k f \simeq k g$ whenever the composites are defined. Then we have a category $\mathscr{C}/\simeq$ with the same objects as $\mathscr{C}$, but congruence classes as morphisms.
-    \item \index{duality}Given $\mathscr{C}$, the \textbf{opposite category} $\mathscr{C}^{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^{op}$ is $gf$ in $\mathscr{C}$.
+    \item \index{duality}\hypertarget{def:duality}Given $\mathscr{C}$, the \textbf{opposite category} $\mathscr{C}^{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^{op}$ is $gf$ in $\mathscr{C}$.
       This leads to the \textbf{Duality principle} if $P$ is a true statement about categories, so is the statement $P^*$ obtained from $P$ by reversing all arrows.
     \item A \hyperlink{def:small}{small} category with one object is a \textbf{monoid}, i.e.\ a semigroup with $1$. In particular, a group is a small category with one object, in which every morphism is an isomorphism (i.e.\ for all $f$, $\exists g$ such that $fg$ and $gf$ are identities).
     \item A \textbf{groupoid} is a category in which every morphism is an isomorphism. For a topological space $X$, the fundamental groupoid $\pi(X)$ has all points of $X$ as objects and morphisms $x \to y$ are homotopy classes rel $\{0,1\}$ of paths $u: [0,1] \to X$ with $u(0) = x$, $u(1) = y$.
@@ -83,8 +101,82 @@ As long as some examples make sense, it is not a point of concern that some exam
     \item A \textbf{discrete} category is one whose only morphisms are identities. A \textbf{preorder} is a category $\mathscr{C}$ in which, for any pair $(A,B)$ there is at most $1$ morphism $A \to B$.
       A small preorder is a set equipped with a binary relation which is reflexive and transitive.
       In particular, a partially ordered set is a small preorder in which the only isomorphisms are identities.
+    \item The category \textbf{Rel} has the same objects as \textbf{Set}, but morphisms $A \to B$ are arbitrary relations $R \subseteq A \times B$.
+      Given $R$ and $S \subseteq B \times C$, we define
+      \begin{equation*}
+        S \circ R = \set{(a,c) \in A \times C | (\exists b \in B) ((a,b) \in R \wedge (b,c) \in S)}.
+      \end{equation*}
+      The identity $1_A: A \to A$ is $\set{(a,a) | a \in A}$.
+
+      Similarly, the category \textbf{Part} of sets and partial functions (i.e.\ relations such that $(a,b) \in R, (a,b') \in R \implies b = b'$).
+    \item Let $K$ be a field. The category $\mathbf{Mat}_K$ has natural numbers as objects, and morphisms $n \to p$ are $(p \times n)$ matrices with entries from $K$.
+      Composition is matrix multiplication.
+  \end{enumerate}
+\end{nexample}
+\begin{ndef}[Functor]\index{functor}\hypertarget{def:funct}
+  Let $\mathscr{C}, \mathscr{D}$ be \hyperlink{def:cat}{categories}. A \textbf{functor} $F: \mathscr{C} \to \mathscr{D}$ consists of
+  \begin{enumerate}[label=(\alph*)]
+    \item a mapping $A \mapsto FA$ from $\ob \mathscr{C}$ to $\ob \mathscr{D}$
+    \item a mapping $f \mapsto Ff$ from $\mor \mathscr{C}$ to $\mor \mathscr{D}$
+  \end{enumerate}
+  such that $\dom(Ff) = F (\dom f)$, $\cod(F f)=F(\cod f)$, $1_{FA} = F(1_A)$ and $(Ff)(Fg) = F(fg)$ whenever $fg$ is defined.
+\end{ndef}
+\begin{manualeg}{1.3}[\emph{Continued}]\leavevmode
+  \begin{enumerate}[label=(\alph*)]\setcounter{enumi}{10}
+    \item We write \textbf{Cat} for the category whose objects are all \hyperlink{def:small}{small} \hyperlink{def:cat}{categories}, and whose morphisms are \hyperlink{def:funct}{functors} between them.
+  \end{enumerate}
+\end{manualeg}
+\begin{nexample}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item \index{functor!forgetful}\hypertarget{def:forgFunc}We have \textbf{forgetful \hyperlink{def:funct}{functors}} $\mathbf{\hyperlink{def:categ}{Gp}} \xrightarrow{U} \mathbf{Set}$, $\mathbf{Rng} \to \mathbf{Set}$, $\mathbf{Top} \to \mathbf{Set}$, $\mathbf{Rng} \to \mathbf{Ab Gp}$ (forgetting $\times$), $\mathbf{Rng} \to \mathbf{Mon}$ (forgetting $+$).
+    \item Given a set $A$, the free group $FA$ has the property: given any group $G$ and any function $A \xrightarrow{f} UG$, there's a unique homomorphism $FA \xrightarrow{f} G$ extending $f$.
+      $F$ is a functor $\mathbf{Set} \to \mathbf{Gp}$: given $A \xrightarrow{f} B$, we define $Ff$ to be the unique homomorphism extending $A \xrightarrow{f} B \hookrightarrow UFB$.
+
+      Functoriality follows from uniqueness: given $B \xrightarrow{g} C$, $F(gf)$ and $(Fg)(Ff)$ are both homoms extending $A \xrightarrow{f} B \xrightarrow{g} C\hookrightarrow UFC$.
+    \item Given a set $A$, we write $PA$ for the set of all subsets of $A$. We can make $P$ into a functor $\mathbf{Set} \to \mathbf{Set}$: given $A \xrightarrow{f} B$, we define $Pf(A') = \set{f(a) | a \in A'}$ for $A' \subseteq A$.
+      But we also have a functor $P^*: \mathbf{Set} \to \mathbf{Set}^{op}$ defined on objects by $P$, but $P^*f(B') = \set{a \in A | f(a) \in B'}$ for $B' \subseteq B$.
+
+      \index{functor!contravariant}\hypertarget{def:contrFunct}By a \textbf{contravariant} functor $\mathscr{C} \to \mathscr{D}$. we mean a \hyperlink{def:funct}{functor} $\mathscr{C} \to \mathscr{D}^{\hyperlink{def:duality}{op}}$ (or $\mathscr{C}^{op} \to \mathscr{D}$). (A \textbf{covariant} functor is one that doesn't reverse arrows).
+    \item Let $K$ be a field. We have a functor $*: \mathbf{Mod}_K \to \mathbf{Mod}_K^{op}$ defined by $V^* = \{\text{linear maps }V \to K\}$ and if $V \xrightarrow{f} W$, $f^*(\theta:W \to K) = \theta f$.
+    \item We have a functor $op: \mathbf{Cat} \to \mathbf{Cat}$ which is the `identity' on morphisms. (Note that this is \hyperlink{def:contrFunct}{covariant}).
+    \item A functor between monoids is a monoid homomorphism.
+    \item A functor between posets is an order-preseving map.
+    \item Let $G$ be a group. A functor $F: G \to \mathbf{Set}$ consists of a set $A = F*$ together with an action of $G$ on $A$, i.e.\ a permutation representation of $G$. (Use $*$ to refer to the unique object of the group).
+      Similarly a functor $G \to \mathbf{Mod}_K$ is a $K$-linear representation of $G$.
+    \item The construction of a the fundamental group $\pi_1(X,x)$ of a space $X$ with basepoint $x$ is a functor $\mathbf{Top}_* \to \mathbf{Gp}$ where $\mathbf{Top}_*$ is the set of spaces with a chosen basepoint.
+      Similarly, the fundamental groupoid is a functor $\mathbf{Top} \to \mathbf{Gpd}$ where $\mathbf{Gpd}$ is the category of groupoids and functors between them.
   \end{enumerate}
 \end{nexample}
 
+\begin{ndef}[Natural transformation]\index{natural transformations}\hypertarget{def:nattrans}
+  Let $\mathscr{C}, \mathscr{D}$ be \hyperlink{def:cat}{categories} and $F,G: \mathscr{C} \rightrightarrows \mathscr{D}$ two \hyperlink{def:funct}{functors}.
+  A \textbf{natural transformation} $\alpha: F \to G$ consists of an assignment $A \mapsto \alpha_A$ from $\ob \mathscr{C}$ to $\mor \mathscr{D}$, such that $\dom \alpha_A \ FA$ and $\cod \alpha_A = GA$ for all $A$, and for all $A \xrightarrow{f} B$ in $\mathscr{C}$ the square
+  \begin{equation*}
+    \begin{tikzcd}
+      FA \rar{Ff} \dar{\alpha_a} & FB \dar{\alpha_B} \\
+      GA \rar{Gf} & GB
+    \end{tikzcd}
+  \end{equation*}
+  commutes (i.e.\ $\alpha_B(Ff) = (Gf) \alpha_A$).
+\end{ndef}
+\begin{manualeg}{1.3}[\emph{Continued}]\leavevmode
+  \begin{enumerate}[label=(\alph*)]\setcounter{enumi}{11}
+    \item Given categories $\mathscr{C}, \mathscr{D}$, we write $[\mathscr{C}, \mathscr{D}]$ for the category whose objects are functors$\mathscr{C}\to \mathscr{D}$, and whose morphism are \hyperlink{def:nattrans}{natural transformations}.
+  \end{enumerate}
+\end{manualeg}
+\begin{nexample}
+  \begin{enumerate}[label=(\alph*)]
+
+    \item Let $K$ be a field, $V$ a vector space over $K$. There is al linear map $\alpha_V: V \to V^{**}$ given by
+      \begin{equation*}
+        \alpha_V(v)(\theta) = \theta(v)
+      \end{equation*}
+      for $\theta \in V^*$.
+      This is the $V$-component of a natural transformation
+      \begin{equation*}
+        1_{\mathbf{Mod}_K} \to ** : \mathbf{Mod}_K \to \mathbf{Mod}_K
+      \end{equation*}
+  \end{enumerate}
+\end{nexample}
 \printindex
 \end{document}
