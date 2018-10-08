@@ -31,16 +31,20 @@
     \manualeginner
 }{\endmanualeginner}
 
-%\let\nthm\undefined
-%\let\nlemma\undefined
-%\let\nprop\undefined
-%\let\ncor\undefined
-%\let\ndef\undefined
-%\newtheorem{nthm}{Theorem}[section]
-%\newtheorem{nlemma}[nthm]{Lemma}
-%\newtheorem{nprop}[nthm]{Proposition}
-%\newtheorem{ncor}[nthm]{Corollary}
-%\newtheorem{ndef}[nthm]{Definition}
+% hacks to swap the ordering - undefine all thm-y environments and redefine
+\let\nthm\undefined
+\makeatletter
+\let\c@nthm\undefined
+\makeatother
+\let\nlemma\undefined
+\let\nprop\undefined
+\let\ncor\undefined
+\let\ndef\undefined
+\newtheorem{nthm}{Theorem}[section]
+\newtheorem{nlemma}[nthm]{Lemma}
+\newtheorem{nprop}[nthm]{Proposition}
+\newtheorem{ncor}[nthm]{Corollary}
+\newtheorem{ndef}[nthm]{Definition}
 \newtheorem{nremark}[nthm]{Remark}
 \newtheorem{nexample}[nthm]{Examples}
 
@@ -161,20 +165,19 @@ As long as some examples make sense, it is not a point of concern that some exam
 \end{ndef}
 \begin{manualeg}{1.3}[\emph{Continued}]\leavevmode
   \begin{enumerate}[label=(\alph*)]\setcounter{enumi}{11}
-    \item Given categories $\mathscr{C}, \mathscr{D}$, we write $[\mathscr{C}, \mathscr{D}]$ for the category whose objects are functors$\mathscr{C}\to \mathscr{D}$, and whose morphism are \hyperlink{def:nattrans}{natural transformations}.
+    \item Given \hyperlink{def:cat}{categories} $\mathscr{C}, \mathscr{D}$, we write $[\mathscr{C}, \mathscr{D}]$ for the category whose objects are \hyperlink{def:funct}{functors} $\mathscr{C}\to \mathscr{D}$, and whose morphisms are \hyperlink{def:nattrans}{natural transformations}.
   \end{enumerate}
 \end{manualeg}
-\begin{nexample}
+\begin{nexample}\leavevmode
   \begin{enumerate}[label=(\alph*)]
-
-    \item Let $K$ be a field, $V$ a vector space over $K$. There is al linear map $\alpha_V: V \to V^{**}$ given by
+    \item Let $K$ be a field, $V$ a vector space over $K$. There is a linear map $\alpha_V: V \to V^{**}$ given by
       \begin{equation*}
         \alpha_V(v)(\theta) = \theta(v)
       \end{equation*}
       for $\theta \in V^*$.
       This is the $V$-component of a natural transformation
       \begin{equation*}
-        1_{\mathbf{Mod}_K} \to ** : \mathbf{Mod}_K \to \mathbf{Mod}_K
+        1_{\hyperlink{def:categ}{\mathbf{Mod}_K}} \to ** : \mathbf{Mod}_K \to \mathbf{Mod}_K
       \end{equation*}
   \end{enumerate}
 \end{nexample}

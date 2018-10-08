@@ -328,10 +328,9 @@ Elements in $\im(d)$ are called boundaries.
   The singular \textbf{cochain} complex of a space $X$, $C^*(X, \mathbb{Z})$ or $C^*(X)$, has cochain groups $C^n(X) \coloneqq \Hom(C_n(X), \mathbb{Z})$ and coboundary map $d^*: C^n(X) \to C^{n+1}(X)$ by $(d^* \psi)(\sigma) \coloneqq \psi(d \sigma)$. Here $\sigma \in C_{n+1}(X)$ and $d \sigma \in C_n(X)$, i.e.\ $d \sigma = d_{n+1} \sigma$.
 \end{defi}
 Observe $d^*(d^* \psi) (\sigma) = d^*(\psi|_{d \sigma}) = \psi|_{d \circ d(\sigma)}$ and $d \circ d(\sigma) = 0$, so $(d^*)^2 = 0$.
-So indeed $(C^*(X), d^*)$ is a cochain complex and the cohomology $H^*(X,\mathbb{Z})$ or $H^*(X)$ is called singular cohomology.
+So indeed $(C^*(X), d^*)$ is a cochain complex and the cohomology $H^*(X,\mathbb{Z})$ or $H^*(X)$ is called \textbf{singular cohomology}.
 
 Note $H^*(X,\mathbb{Z}) \neq \Hom_{\mathbb{Z}}(H_*(X,\mathbb{Z}),\mathbb{Z})$ in general.
-
 Observe if $f: X \to Y$ is continuous and $\sigma: \Delta^n \to X$ is continuous, then I get $f \circ \sigma: \Delta^n \to Y$ is an $n$-simplex in $Y$, so I get
 \begin{align*}
   f_*: C_*(X) &\to C_*(Y) \\
@@ -340,7 +339,7 @@ Observe if $f: X \to Y$ is continuous and $\sigma: \Delta^n \to X$ is continuous
 are group homomorphisms.
 
 Key observation: $df_* = f_*d$ since $f \circ (\sigma|_{[v_0 \dotsm \hat{v_i} \dotsm v_n]}) = (f \circ \sigma)|_{[v_0 \dotsm \hat{v_i} \dotsm v_n]}$
-i.e.\ a continuous maps $f: X \to Y$ induces a \textbf{chain map} of chain complexes.
+i.e.\ a continuous map $f: X \to Y$ induces a \textbf{chain map} of chain complexes
 \begin{equation*}
   \begin{tikzcd}
     \dots \rar & C_{n+1}(X) \rar{d} \dar{f_*} & C_n(X) \rar{d} \dar{f_*} & C_{n-1}(X) \rar{d} \dar{f_*} & \dots \\
@@ -349,7 +348,7 @@ i.e.\ a continuous maps $f: X \to Y$ induces a \textbf{chain map} of chain compl
 \end{equation*}
 and each square commutes.
 \begin{lemma}
-  If $C_*$ and $D_*$ are chain complexes and $f_*:C_* \to D_*$ is a chain map. then $f_*$ indexes homomorphisms $f_*:H_i(C_*) \to H_i(D_*)$ for every $I$.
+  If $C_*$ and $D_*$ are chain complexes and $f_*:C_* \to D_*$ is a chain map, then $f_*$ indexes homomorphisms $f_*:H_i(C_*) \to H_i(D_*)$ for every $i$.
 \end{lemma}
 \begin{proof}
   Let $a \in H_i(C_*) = \frac{\ker(d_i:C_i \to C_{i-1})}{\im(d_{i+1}:C_{i+1} \to C_i)}$, so $a$ is represented by some $i$-cycle $\alpha \in C_i$, where $d \alpha = 0$.
