@@ -14,8 +14,10 @@
 \DeclareMathOperator*{\E}{\scalerel*{\mathbb{E}}{\textstyle\sum}}
 \newcommand{\1}[1]{\mathbbm{1}_{#1}}
 \counterwithout{nthm}{section}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
-% \DeclareMathOperator*{\E}{\text{\Large $\mathbb{E}$}}
+\DeclareMathOperator{\osc}{osc}
 
 % preamble
 
@@ -156,8 +158,81 @@ Basic strategy: show that if $A$ has density $\geq \delta$ and no arithmetic pro
 \end{equation*}
 In particular, we have that $|P| \to \infty$ as $N \to \infty$.
 
-The proof we give will produce a bound $\frac{C}{\log \log N}$, but this is not the best known.
+The proof we give will produce a bound $\delta \geq \frac{C}{\log \log N}$, but this is not the best known.
 If the bound was reduced to $\frac{1}{\log N}$, this produces a combinatorial proof of the fact that there are arbitrarily long arithmetic progressions in the primes.
 The best known bound is $\frac{(\log \log N)^4}{\log N}$ by Thomas Bloom.
-In the other direction, \textbf{add the bound}.
+In the other direction, we know $e^{- \sqrt{\log N}}$ does not work.
+
+% lecture 2
+\begin{nlemma}
+  Let $A, B, C \subset \mathbb{Z}_N$ have densities $\alpha, \beta, \gamma$, for $N$ odd.
+  If $\max_{r \neq 0} |\hat{A}(r)| \leq \frac{\alpha(\beta \gamma)^\frac{1}{2}}{2}$ and $\frac{\alpha\beta\gamma}{2} > \frac{1}{N}$ then there exists $x,d \in \mathbb{Z}_N$ with $d \neq 0$ such that $(x, x+d, x+2d) \in A \times B \times C$.
+\end{nlemma}
+\begin{proof}
+  \begin{align*}
+    \E_{x,d} A(x) B(x+d) C(x+2d) &= \E_{\mathclap{x + z = 2y}} A(x) B(y) C(z) \\
+                                 &= \E_u (\E_{x+z=u} A(x) C(z)) \E_{2y=u} B(y) \\
+                                 &= \E_u (A * C)(u) B_2(u) = \langle A * C, B_2 \rangle \\
+                                 &= \langle \widehat{A * C}, \hat{B} _2 \rangle \\
+                                 &= \langle \hat{A} \hat{C}, \hat{B}_2 \rangle \\
+                                 &= \sum_r \hat{A}(r) \hat{C}(r) \hat{B}(-2r) \\
+                                 &= \alpha \beta \gamma + \sum_{r\neq 0} \hat{A}(r) \hat{C}(r) \hat{B}(-2r).
+  \end{align*}
+  We have a lower bound on the left term, so focus on the right.
+  \begin{align*}
+    \left| \sum_{r\neq0} \hat{A}(r) \hat{B}(-2r) \hat{C}(r) \right| &\leq \frac{\alpha(\beta\gamma)^\frac{1}{2}}{2} \sum_{r\neq0} |\hat{B}(-2r) \hat{C}(r)| \\
+                                                      &\leq \frac{\alpha(\beta\gamma)^\frac{1}{2}}{2} \left(\sum_r |\hat{B}(-2r)|^2\right)^\frac{1}{2} \left(\sum_r |\hat{C}(r)|^2\right)^\frac{1}{2} \\
+                                                      &= \frac{\alpha(\beta\gamma)^\frac{1}{2}}{2} \|\hat{B}\|_2 \|\hat{C}\|_2 = \frac{\alpha(\beta\gamma)^\frac{1}{2}}{2} \|B\|_2 \|C\|_2 \\
+                                                      &= \frac{\alpha\beta\gamma}{2}.
+  \end{align*}
+  The contribution to $\E_{x,d} A(x) B(x+d) C(x+2d)$ from $d=0$ is at most $\frac{1}{N}$, so if $\frac{\alpha\beta\gamma}{2} > \frac{1}{N}$, we are done.
+\end{proof}
+
+Now let $A$ be a subset of $\{1, \dotsc, N\}$ of density $\geq \delta$ and let $B = C = A \cap (\frac{N}{3}, \frac{2N}{3}]$.
+If $B$ has density $< \frac{\delta}{5}$, then either $A \cap [1, \frac{N}{3}]$ or $A \cap [\frac{2N}{3}, N]$ has density at least $\frac{2 \delta}{5}$.
+So in that case we find an AP $P$ of length about $\frac{N}{3}$ such that $\frac{|A \cap P|}{|P|} \geq \frac{6 \delta}{5}$.
+
+Otherwise, we find that if $\max_{r \neq 0} |\hat{A}(r)| \leq \frac{\delta^2}{10}$ and $\frac{\delta^3}{50} > \frac{1}{N}$ then $A \times B \times C$ contains a 3AP $\implies A$ contains a 3AP.
+So if $A$ does not contain a 3AP, then either we find $P$ of length about $\frac{N}{3}$ with $\frac{|A \cap P|}{|P|} \geq \frac{6 \delta}{5}$ or $\exists r \neq 0$ such that $|\hat{A}(r)| \geq \frac{\delta}{10}$.
+
+\begin{defi}
+  If $X$ is a finite set and $f: X \to \mathbb{C}$, $Y \subseteq X$, write $\osc(f|_Y)$ to mean $\max_{y_1, y_2 \in Y} |f(y_1) - f(y_2)|$.
+\end{defi}
+\begin{nlemma}\label{lem:6}
+  Let $r \in \hat{\mathbb{Z}}_n$ and let $\epsilon > 0$. Then there is a partition of $\{1,2,\dotsc,N\}$ into arithmetic progressions $P_i$ of length at least $c(\epsilon) \sqrt{N}$ such that $\osc(\omega_r|_{P_i}) \leq \epsilon$ for each $i$.
+\end{nlemma}
+\begin{proof}
+  Let $t = \floor{\sqrt{N}}$. Of the numbers $1, \omega^r, \omega^{2r}, \dotsc, \omega^{tr}$ there must be two that differ by at most $\frac{2\pi}{t}$.
+  If $|\omega^{ar} - \omega^{br}| \leq \frac{2\pi}{t}$ with $a < b$, then $|1 - \omega^{dr}| \leq \frac{2\pi}{t}$ where $d = b-a$.
+  Now, by the triangle inequality, if $u < v$, then
+  \begin{equation*}
+    |\omega^{u rd} - \omega^{v r d}| \leq |\omega^{urd} - \omega^{(u+1) r d}| + |\omega^{urd} - \omega^{(u+1) r d}| + \dotsb + |\omega^{urd} - \omega^{(u+1) r d}| \leq \frac{2\pi}{t} (v-u).
+  \end{equation*}
+  So if $P$ is a progression with common difference $d$ and length $l$, then $\osc(\omega_r|_P) \leq \frac{2\pi l}{t}$.
+  So divide up $\{1,\dotsc,N\}$ into residue classes mod $d$ and partition each residue class into parts of length between $\frac{\epsilon t}{4 \pi}$ and $\frac{\epsilon t}{2 \pi}$ (possible, since $d \leq t \leq \sqrt{N}$).
+  We are done, with $c(\epsilon) = \frac{\epsilon}{16}$.
+\end{proof}
+Now let us use the information that $r \neq 0$ and $|\hat{A}(r)| \geq \frac{\delta^2}{10}$.
+Define the balanced function $f$ of $A$ by $f(x) = A(x) - \frac{|A|}{N}$ for each $x$.
+
+Note that $\hat{f}(0) = 0$ and $\hat{f}(r) = \hat{A}(r)$ for all $r \neq 0$.
+Now let $P_1, \dotsc, P_m$ be given by \cref{lem:6} with $\epsilon = \frac{\delta^2}{20}$.
+Then
+\begin{align*}
+  \frac{\delta^2}{10} = \frac{1}{N} \left| \sum_x f(x) \omega^{-rx} \right| &\leq \frac{1}{N} \sum_{i=1}^m \left|\sum_{x\in P_i} f(x) \omega^{-r x}\right| \\
+                                                                      &\leq \frac{1}{N} \sum_{i=1}^m \left[\left|\sum_{x \in P_i} f(x) \omega^{-r x_i}\right| + \left|\sum_{x \in P_i} f(x) (\omega^{-r x} - \omega^{-r x_i})\right|\right] \\
+                                                                      \shortintertext{where $x_i \in P_i$ is arbitrary }
+                                                                      &\leq \frac{1}{N} \sum_{i=1}^m |\sum_{x \in P_i} f(x)| + \frac{\delta^2}{20}
+                                                                      \shortintertext{So}
+                                                                      \sum_{i=1}^N |\sum_{x \in P_i} f(x) | \geq \frac{\delta^2 N}{20}.
+\end{align*}
+Also,
+\begin{equation*}
+  \sum_{i=1}^m \sum_{x \in P_i} f(x) = 0.
+\end{equation*}
+So
+\begin{equation*}
+  \sum_{i=1} \left( |\sum_{x \in P_i} f(x)| )
+\end{equation*}
+
 \end{document}
