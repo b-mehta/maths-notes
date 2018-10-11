@@ -13,6 +13,10 @@
 
 % preamble
 
+\let\oldmodels\models
+\let\models\vDash
+\let\nModels\nvDash
+
 \setcounter{section}{-1}
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
@@ -21,6 +25,8 @@
 \newtheorem{nremark}[nthm]{Remark}
 \newtheorem{nexample}[nthm]{Example}
 \newtheorem{nexercise}[nthm]{Exercise}
+\newtheorem{nfact}[nthm]{Fact}
+\newtheorem{nnotation}[nthm]{Notation}
 
 %\newtheorem{manualtheoreminner}{Theorem}
 %\newenvironment{manualtheorem}[1]{%
@@ -95,7 +101,7 @@ We may write $\mathcal{M} = \langle M, \mathscr{F}, \mathscr{R}, \mathscr{C} \ra
         \alpha(f^\mathcal{M}(a_1, \dotsc, a_{n_f})) = f^\mathcal{N}(\alpha(a_1), \dotsc, \alpha(a_{n_f}))
       \end{equation*}
       \begin{center}
-        \begin{tikzpicture}[scale=2]
+        \begin{tikzpicture}[scale=1]
           \node at (-2, 1.6) {$\mathcal{M}$};
           \node at (2, 1.6) {$\mathcal{N}$};
           \draw (-2, 0) circle [x radius=10mm, y radius=14mm];
@@ -104,10 +110,10 @@ We may write $\mathcal{M} = \langle M, \mathscr{F}, \mathscr{R}, \mathscr{C} \ra
           \draw (2, 0) circle [x radius=10mm, y radius=14mm];
           \node [circle, inner sep=1pt, fill=black, label=right:$\alpha(a)$] (aa) at (2, -0.8) {};
           \node [circle, inner sep=1pt, fill=black, label=right:$f^\mathcal{N}(\alpha(a))$] (faa) at (2, 0.8) {};
-          \draw [->, opacity=0.7] (a) to [bend left=20] node[above]{$\alpha$} (aa);
-          \draw [->, opacity=0.7] (fa) to [bend left=20] node[above]{$\alpha$} (faa);
-          \draw [->, opacity=0.7] (a) to [bend right=10] node[right]{$f^\mathcal{M}$} (fa);
-          \draw [->, opacity=0.7] (aa) to [bend right=10] node[right]{$f^\mathcal{N}$} (faa);
+          \draw [->] (a) to [bend right=20] node[above]{$\alpha$} (aa);
+          \draw [->] (fa) to [bend left=20] node[above]{$\alpha$} (faa);
+          \draw [->] (a) to [bend left=10] node[right]{$f^\mathcal{M}$} (fa);
+          \draw [->] (aa) to [bend right=10] node[right]{$f^\mathcal{N}$} (faa);
         \end{tikzpicture}
       \end{center}
     \item for all $R \in \mathscr{R}$, and $a_1, \dotsc, a_{n_R} \in M$
@@ -120,16 +126,18 @@ We may write $\mathcal{M} = \langle M, \mathscr{F}, \mathscr{R}, \mathscr{C} \ra
 \end{ndef}
 
 \begin{nexercise}
-  Let $G_1, G_2$ be groups, regarded as $L_{gp}$-structures. Check that $G_1 \simeq G_2$ in the usual algebra sense if and only if there is an isomorphism $\alpha: G_1 \to G_2$ in the sense of \cref{def:1.5}
+  Let $G_1, G_2$ be groups, regarded as $L_{gp}$-structures. Check that $G_1 \simeq G_2$ in the usual algebra sense if and only if there is an isomorphism $\alpha: G_1 \to G_2$ in the sense of \cref{def:1.5}.
 \end{nexercise}
 
+\clearpage
 \section{Review: Terms, formulae and their interpretations}
 In addition to the symbols of $L$, we also have
 \begin{enumerate}[label=(\roman*)]
   \item infinitely many variables $\{x_i\}_{i \in I}$
   \item logical connectives $\wedge, \neg$ (also expresses $\vee, \Rightarrow, \iff$)
     \item quantifier $\exists$ (also expresses $\forall$)
-    \item $(\phantom{\cdot},\phantom{\cdot})$
+    \item $(\phantom{-},\phantom{-})$
+    \item equality symbol $=$
 \end{enumerate}
 
 \begin{ndef}[\hypertarget{def:lterm}{$L$-terms}]
@@ -158,4 +166,97 @@ Notation: we write $t(x_1, \dotsc, x_m)$ to mean that the variables appearing in
       \end{equation*}
   \end{enumerate}
 \end{ndef}
+% lecture 2
+
+Notice in $L_{gp}$, the term $x_2 \cdot x_3$ can be described as $t_1(x_1, x_2, x_3)$ or $t_2(x_1, x_2, x_3, x_4)$, or infinitely many other ways.
+Then $t_1$ is assigned to $t_1^\mathcal{M}: M^3 \to M$, with $(a_1, a_2, a_3) \mapsto (a_2, a_3)$, and $t_2$ is assigned to $t_2^\mathcal{M} : M^4 \to M$, with $(a_1, a_2, a_3, a_4) \mapsto a_2 \cdot a_3$.
+\begin{nfact}\label{fact:2.3}
+  Let $\mathcal{M}, \mathcal{N}$ be \hyperlink{def:lstr}{$L$-structures}, and let $\alpha: \mathcal{M} \to \mathcal{N}$ be an \hyperlink{def:embedding}{embedding}.
+  For any \hyperlink{def:lterm}{$L$-term} $t(x_1, \dotsc, x_k)$ and $a_1, \dotsc, a_k \in M$ we have
+  \begin{equation*}
+    \alpha(t^\mathcal{M}(a_1, \dotsc, a_k)) = t^\mathcal{N}(\alpha(a_1), \dotsc, \alpha(a_k))
+  \end{equation*}
+\end{nfact}
+\begin{proof}
+  By induction on the complexity of $t$. Let $\bar{a} = (a_1, \dotsc, a_k)$ and $\bar{x} = (x_1, \dotsc, x_k)$.
+  Then
+  \begin{enumerate}[label=(\roman*)]
+    \item if $t = x_i$, then $t^\mathcal{M}(\bar{a}) = a_i$, and $t^\mathcal{N}(\alpha(a_1), \dotsc, \alpha(a_k)) = \alpha(a_i)$, so the conclusion holds.
+    \item if $t = c$ a constant, then $t^\mathcal{M}(\bar{a}) = c^\mathcal{M}$, and $t^\mathcal{N}(\alpha(\bar{a})) = c^\mathcal{N}$, and $\alpha(c^\mathcal{M}) = c^\mathcal{N}$, as required.
+    \item if $t = f(t_1(\bar{x}),\dotsc, t_{m_f}(\bar{x}))$, then
+      \begin{equation*}
+        \alpha(f^\mathcal{M}(t_1^\mathcal{M}(\bar{a}), \dotsc, t_{m_f}^\mathcal{M}(\bar{a}))) = f^\mathcal{N}(\alpha(t_1^\mathcal{M}(\bar{a})), \dotsc, \alpha(t_{m_f}^\mathcal{M}(\bar{a})))
+      \end{equation*}
+      since $\alpha$ is an embedding.
+      $t_1(\bar{x}), \dotsc, t_{m_f}(\bar{x})$ have lower complexity than $t$, so inductive hypothesis applies.
+  \end{enumerate}
+\end{proof}
+\begin{nexample}
+  Exercise: conclude the proof of \cref{fact:2.3}.
+\end{nexample}
+\begin{ndef}[Atomic formula]\index{formula!atomic}\hypertarget{def:atomform}
+  The set of \textbf{atomic formulas} of $L$ is defined as follows
+  \begin{enumerate}[label=(\roman*)]
+    \item if $t_1, t_2$ are $L$-terms, then $t_1 = t_2$ is an atomic formula
+    \item if $R$ is a relation symbol and $t_1, \dotsc, t_{m_R}$ are terms, then $R(t_1, \dotsc, t_{m_R})$ is an atomic formula
+    \item nothing else is an atomic formula.
+  \end{enumerate}
+\end{ndef}
+\begin{ndef}[Formula]\index{formula}\hypertarget{def:form}
+  The set of \textbf{$L$-formulas} is defined as follows
+  \begin{enumerate}[label=(\roman*)]
+    \item any \hyperlink{def:atomform}{atomic formula} is an $L$-formula
+    \item if $\phi$ is an $L$-formula, then so is $\neg \phi$
+    \item if $\phi$ and $\psi$ are $L$-formulas, then so is $\phi \wedge \psi$
+    \item if $\phi$ is an $L$-formula, for any $i \geq 1$, $\exists x_i \phi$ is an $L$-formula
+    \item nothing else is an $L$-formula
+  \end{enumerate}
+\end{ndef}
+\begin{eg}
+  In $L_{gp}$, $x_1 \cdot x_1 = x_2$ and $x_1 \cdot x_2 = 1$ are \hyperlink{def:form}{atomic formulas}, and $\exists x_1 (x_1 \cdot x_2) = 1$ is an $L_{gp}$-formula.
+\end{eg}
+\hypertarget{def:free}A variable occurs freely in a formula if it does not occur within the scope of a quantifier $\exists$ (the variable is \textbf{free}). Otherwise the variable is \textbf{bound}. For instance, in $\exists x_1 (x_1 \cdot x_2) = 1$, $x_1$ is bound and $x_2$ is free.
+
+\textbf{Important convention:} no variable occurs both \hyperlink{def:free}{freely} and as a bound variable in the same formula.
+
+A \textbf{sentence} is a \hyperlink{def:formula}{formula} with no \hyperlink{def:free}{free} variables. $\exists x_1 \exists x_2 (x_1 \cdot x_2 = 1)$ is an $L_{gp}$-sentence.
+
+Notation: $\phi(x_1, \dotsc, x_k)$ means that the free variables in $\phi$ are among $x_1, \dotsc, x_k$.
+
+\begin{ndef}[$\models$]\index{$\models$}\hypertarget{def:models}
+  Let $\phi(x_1, \dotsc, x_k)$ be an $L$-formula, let $\mathcal{M}$ be an $L$-structure, and let $\bar{a} = (a_1, \dotsc, a_k)$ be elements of $\mathcal{M}$.
+  We define $\mathcal{M} \models \phi(\bar{a})$ as follows.
+  \begin{enumerate}[label=(\roman*)]
+    \item if $\phi$ is $t_1 = t_2$, then $\mathcal{M} \models \phi(\bar{a})$ if and only if $t_1^\mathcal{M}(\bar{a}) = t_2^\mathcal{M}(\bar{a})$.
+    \item if $\phi$ is $R(t_1, \dotsc, t_{m_k})$ then $\mathcal{M} \models \phi(\bar{a})$ iff
+      \begin{equation*}
+        (t_1^\mathcal{M}(\bar{a}),\dotsc,t_{m_k}^\mathcal{M}(\bar{a})) \in R^\mathcal{M}.
+      \end{equation*}
+    \item if $\phi$ is $\psi \wedge \chi$, then $\mathcal{M} \models \phi(\bar{a})$ iff $\mathcal{M} \models \psi(\bar{a})$ and $\mathcal{M} \models \chi(\bar{a})$.
+    \item if $\phi$ is $\exists x_j: \chi(x_1, \dotsc, x_k, x_j)$ (where $x_j \neq x_i$ for $i = 1, \dotsc, k$).
+      Then $\mathcal{M} \models \phi(\bar{a})$ iff there is $b \in \mathcal{M}$ such that $\mathcal{M} \models \chi(a_1, \dotsc, a_k, b)$.
+    \item if $\phi = \neg \psi$ then $\mathcal{M} \models \phi(\bar{a})$ iff $\mathcal{M} \nModels \psi(\bar{a})$.
+  \end{enumerate}
+\end{ndef}
+\begin{eg}
+  For $\mathcal{R} = \langle \mathbb{R}^*,\cdot, ^{-1}, 1\rangle$, $\phi(x_1) = \exists x_2 (x_2 \cdot x_2) = x_1$ then $\mathcal{R} \models \phi(1)$ but $\mathcal{R} \nModels \phi(-1)$.
+\end{eg}
+\begin{nnotation}[Useful abbreviations]
+  We write
+  \begin{itemize}[label=--]
+    \item $\phi \vee \psi$ for $\neg(\neg\phi \wedge \neg\psi)$
+    \item $\phi \to \psi$ for $\neg \phi \vee \psi$
+    \item $\phi \leftrightarrow \psi$ for $(\phi \to \psi) \wedge (\psi \to \phi)$
+    \item $\forall x_i\ \phi$ for $\neg \exists x_i\ (\neg \phi)$
+  \end{itemize}
+\end{nnotation}
+\begin{nprop}\label{prop:2.9}
+  Let $\mathcal{M}, \mathcal{N}$ be \hyperlink{def:lstr}{$L$-structures}, let $\alpha: \mathcal{M} \to \mathcal{N}$ be an \hyperlink{def:embedding}{embedding}. Let $\phi(\bar{x})$ be atomic and $\bar{a} \in M^k$, then
+  \begin{equation*}
+    M \models \phi(\bar{a}) \iff M \models \phi(\alpha(\bar{a})).
+  \end{equation*}
+\end{nprop}
+
+Question: If $\phi$ is an $L$-formula, not necessarily atomic, does \cref{prop:2.9} hold?
+\printindex
 \end{document}
