@@ -16,12 +16,24 @@
 
 \makeindex[intoc]
 
+% preamble
+
 \DeclareMathOperator{\ob}{ob}
 \DeclareMathOperator{\mor}{mor}
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\cod}{cod}
 
-% preamble
+% special categories
+\newcommand{\cat}{\mathbf{Cat}}
+\newcommand{\setc}{\mathbf{Set}}
+\newcommand{\gpc}{\mathbf{Gp}}
+\newcommand{\partc}{\mathbf{Part}}
+\newcommand{\matc}{\mathbf{Mat}}
+
+\newcommand{\cc}{\mathscr{C}}
+\newcommand{\dc}{\mathscr{D}}
+%\newcommand{\}{\mathbb{R}}
+%\newcommand{\Z}{\mathbb{Z}}
 
 \setcounter{section}{-1}
 
@@ -125,13 +137,14 @@ As long as some examples make sense, it is not a point of concern that some exam
   \end{enumerate}
   such that $\dom(Ff) = F (\dom f)$, $\cod(F f)=F(\cod f)$, $1_{FA} = F(1_A)$ and $(Ff)(Fg) = F(fg)$ whenever $fg$ is defined.
 \end{ndef}
+% lecture 2
 \begin{manualeg}{1.3}[\emph{Continued}]\leavevmode
   \begin{enumerate}[label=(\alph*)]\setcounter{enumi}{10}
     \item We write \textbf{Cat} for the category whose objects are all \hyperlink{def:small}{small} \hyperlink{def:cat}{categories}, and whose morphisms are \hyperlink{def:funct}{functors} between them.
   \end{enumerate}
 \end{manualeg}
 \begin{nexample}\leavevmode
-  \begin{enumerate}[label=(\alph*)]
+  \begin{enumerate}[label=(\alph*)]\label{eg:1.5}
     \item \index{functor!forgetful}\hypertarget{def:forgFunc}We have \textbf{forgetful \hyperlink{def:funct}{functors}} $\mathbf{\hyperlink{def:categ}{Gp}} \xrightarrow{U} \mathbf{Set}$, $\mathbf{Rng} \to \mathbf{Set}$, $\mathbf{Top} \to \mathbf{Set}$, $\mathbf{Rng} \to \mathbf{Ab Gp}$ (forgetting $\times$), $\mathbf{Rng} \to \mathbf{Mon}$ (forgetting $+$).
     \item Given a set $A$, the free group $FA$ has the property: given any group $G$ and any function $A \xrightarrow{f} UG$, there's a unique homomorphism $FA \xrightarrow{f} G$ extending $f$.
       $F$ is a functor $\mathbf{Set} \to \mathbf{Gp}$: given $A \xrightarrow{f} B$, we define $Ff$ to be the unique homomorphism extending $A \xrightarrow{f} B \hookrightarrow UFB$.
@@ -154,7 +167,7 @@ As long as some examples make sense, it is not a point of concern that some exam
 
 \begin{ndef}[Natural transformation]\index{natural transformations}\hypertarget{def:nattrans}
   Let $\mathscr{C}, \mathscr{D}$ be \hyperlink{def:cat}{categories} and $F,G: \mathscr{C} \rightrightarrows \mathscr{D}$ two \hyperlink{def:funct}{functors}.
-  A \textbf{natural transformation} $\alpha: F \to G$ consists of an assignment $A \mapsto \alpha_A$ from $\ob \mathscr{C}$ to $\mor \mathscr{D}$, such that $\dom \alpha_A \ FA$ and $\cod \alpha_A = GA$ for all $A$, and for all $A \xrightarrow{f} B$ in $\mathscr{C}$ the square
+  A \textbf{natural transformation} $\alpha: F \to G$ consists of an assignment $A \mapsto \alpha_A$ from $\ob \mathscr{C}$ to $\mor \mathscr{D}$, such that $\dom \alpha_A = FA$ and $\cod \alpha_A = GA$ for all $A$, and for all $A \xrightarrow{f} B$ in $\mathscr{C}$ the square
   \begin{equation*}
     \begin{tikzcd}
       FA \rar{Ff} \dar{\alpha_a} & FB \dar{\alpha_B} \\
@@ -169,16 +182,93 @@ As long as some examples make sense, it is not a point of concern that some exam
   \end{enumerate}
 \end{manualeg}
 \begin{nexample}\leavevmode
-  \begin{enumerate}[label=(\alph*)]
+  \begin{enumerate}[label=(\alph*)]\label{eg:1.7}
     \item Let $K$ be a field, $V$ a vector space over $K$. There is a linear map $\alpha_V: V \to V^{**}$ given by
       \begin{equation*}
         \alpha_V(v)(\theta) = \theta(v)
       \end{equation*}
       for $\theta \in V^*$.
-      This is the $V$-component of a natural transformation
+      This is the $V$-component of a \hyperlink{def:nattrans}{natural transformation}
       \begin{equation*}
-        1_{\hyperlink{def:categ}{\mathbf{Mod}_K}} \to ** : \mathbf{Mod}_K \to \mathbf{Mod}_K
+        1_{\hyperlink{def:categ}{\mathbf{Mod}_K}} \to ** : \mathbf{Mod}_K \to \mathbf{Mod}_K.
       \end{equation*}
+      % lecture 3
+    \item For any set $A$, we have a mapping $\sigma_A : A \to PA$ sending $a$ to $\{a\}$.
+      If $f: A \to B$, then $Pf\{a\} = \{f(a)\}$, so $\sigma$ is a natural transformation $1_{\mathbf{Set}} \to P$.
+    \item Let $F: \mathbf{Set} \to \mathbf{Gp}$ be the free group functor (\cref{eg:1.5}(b)) and $U: \mathbf{Gp} \to \mathbf{Set}$ the forgetful functor.
+      The inclusions $A \to UFA$ form a natural transformation $1_{\mathbf{Set}} \to UF$.
+    \item Let $G,H$ be groups and $f,g: G\rightrightarrows H$ two homomorphisms.
+      A natural transformation $\alpha: f \to g$ corresponds to an element $h = \alpha_*$ of $H$ such that $h.f(x) = g(x).h$ for all $x \in G$, or equivalently $f(x) = h^{-1} g(x) h$, i.e.\ $f$ and $g$ are conjugate group homomorphisms.
+    \item Let $A,B$ be two $G$-sets regarded as funcrtors $G \rightrightarrows \setc$.
+      A natural transformation $A \to B$ is a function $f$ satisfying $f(g . a) = g . f(a)$ for all $a \in A$, i.e.\ a $G$-equivariant map.
+  \end{enumerate}
+\end{nexample}
+\begin{nlemma}
+  Let $F,G : \mathscr{C} \rightrightarrows \mathscr{D}$ be two \hyperlink{def:funct}{functors}, and $\alpha: F \to G$ a \hyperlink{def:nattrans}{natural transformation}.
+  Then $\alpha$ is an isomorphism in $[\mathscr{C}, \mathscr{D}]$ iff each $\alpha_A$ is an isomorphism in $\mathscr{D}$.
+\end{nlemma}
+\begin{proof}\leavevmode
+  \begin{itemize}
+    \item[$\Rightarrow$] trivial
+    \item[$\Leftarrow$] Suppose each $\alpha_A$ has an inverse $\beta_A$. Given $f: A \to B$ in $\mathscr{C}$, we need to show that
+      \begin{equation*}
+        \begin{tikzcd}
+          GA \rar{Gf} \dar{\beta_A} & GB \dar{\beta_B} \\
+          FA \rar{Ff} & FB
+        \end{tikzcd}
+      \end{equation*}
+      commutes.
+
+      But
+      \begin{align*}
+        (Ff) \beta_A &= \beta_B \alpha_B (Ff) \beta_A \\
+                     &= \beta_B (Gf) \alpha_A \beta_A \\
+                     &= \beta_B (Gf). \qedhere
+      \end{align*}
+  \end{itemize}
+\end{proof}
+\begin{ndef}[Equivalent category]\index{category!equivalence}\index{equivalent}\index{categorical property}\hypertarget{def:equicat}
+  Let $\mathscr{C}, \mathscr{D}$ be categories.
+  By an \textbf{equivalence} between $\mathscr{C}$ and $\mathscr{D}$, we mean a pair of \hyperlink{def:funct}{functors} $F: \mathscr{C} \to \mathscr{D}$, $G: \mathscr{D} \to \mathscr{C}$ together with natural isomorphisms $\alpha: 1_\mathscr{C} \to GF$ and $\beta: FG \to \mathscr{D}$.
+  We write $\mathscr{C} \simeq \mathscr{D}$ if $\mathscr{C}$ and $\mathscr{D}$ are equivalent.
+
+  We say a property $P$ of \hyperlink{def:cat}{categories} is a \textbf{categorical property} if whenever $\cc$ has $P$ and $\cc \simeq \dc$, then $\dc$ has $P$.
+
+  For instance, being a groupoid or a preorder are categorical properties, but being a group or a partial order are not.
+\end{ndef}
+
+\begin{nexample}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item The category \hyperlink{def:categ}{$\partc$} is equivalent to the category $\setc_*$ of pointed sets (and basepoint-preserving functions).
+      We define $F: \setc_* \to \partc$ by $F(A,a) = A \setminus \{a\}$ and if $f: (A,a) \to (B,b)$
+      \begin{equation*}
+        Ff(x) =
+        \begin{cases}
+          f(x) & \text{if } f(x) \neq b \\
+          \text{undefined} & \text{otherwise}
+        \end{cases}
+      \end{equation*}
+      and
+      $G : \partc \to \setc_*$ by $G(A) = A^+ = A \cup \{A\}$ and if $f: A \to B$ is a partial function, we define $Gf: A^+ \to B^+$ by
+      \begin{equation*}
+        Gf =
+        \begin{cases*}
+          f(x) & if $x \in A$ and $f(x)$ defined \\
+          B & otherwise
+        \end{cases*}
+      \end{equation*}
+      The composite $FG$ is the identity on $\partc$, but $GF$ is not the identity, however there's an isomorphism
+      \begin{equation*}
+        (A,a) \longrightarrow ((A \setminus \{a\})^+, A \setminus \{a\})
+      \end{equation*}
+      sending $a$ to $A \setminus \{a\}$ and everything else to itself and this is natural.
+
+      Note that there can be no isomorphism $\setc_* \to \partc$ since $\partc$ has a $1$-element isomorphism class $\{\emptyset\}$ and $\setc_*$ doesn't.
+    \item The category $\mathbf{FdMod}_K$ of finite-dimensional vector spaces over $K$ is equivalent to $\mathbf{FdMod}_K^{op}$: the functors in both directions are $(-)^*$ and both isomorphisms are the natural transformations of \cref{eg:1.7}(a).
+    \item $\mathbf{FdMod}_K$ is also equivalent to $\hyperlink{def:categ}{\matc_K}$: We define $F: \matc_K \to \mathbf{FdMod}_K$ by $F(n) = K^n$, and $F(A)$ is the linear map represented by $A$ with respect to the standard bases of $K^n$ and $K^p$.
+
+      To define $G: \mathbf{FdMod}_K \to \matc_K$, choose a basis for each finite dimensional vector space,and define $G(V) = \dim V$, $G(V \xrightarrow{f} W)$ as the matrix representing $f$ with respect to the chosen bases.
+      $GF$ is the identity, provided we choose the standard bases for the spaces $K^n$; $FG \neq 1$, but the chosen basis gives isomorphisms $FG(V) = K^{\dim V} \to V$ for each $V$, which form a natural isomorphism.
   \end{enumerate}
 \end{nexample}
 \printindex
