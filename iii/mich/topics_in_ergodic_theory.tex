@@ -233,5 +233,109 @@ Then $ \mu_m(A)\to\mu(A) $, i.e.\
 \begin{equation*} \mu(A) = \underbrace{\lim_{m\to\infty}\frac{1}{M_m-N_m}\left|\set{n\in[N_m,M_m-1]: n\in S}\right|}_{\bar{d}(S)} > 0 \end{equation*}
 where the inequality comes from satisfying the conditions of Furstenberg.
 
+\begin{lemma}
+  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}. Let $A \in \mathcal{B}$ with $\mu(A) > 0$. Then $\exists u \in \mathbb{Z}_{> 0}$ such that $\mu(A \cap T^{-n} A) > 0$.
+\end{lemma}
+\begin{proof}
+  Suppose $\mu(A \cap T^{-n}A) = 0$ for all $n > 0$.
+  Then $\mu(T^{-k}A \cap T^{-n} A) = \mu(A \cap T^{-(n-k)}A) = 0$ for all $n > k \geq 0$.
+
+  Then the set $A, T^{-1} A, \dotsc$ are `almost pairwise disjoint'.
+  Then
+  \begin{align*}
+    \mu(A \cup T^{-1} A \cup \dotsb \cup T^{-n} A) &= \mu(A) \\
+                                                   &+ \mu(T^{-1} A) - \underbrace{\mu(T^{-1}A \cap A)}_{=0} \\
+                                                   &+ \mu(T^{-2} A) - \underbrace{\mu(T^{-2} A \cap (A \cup T^{-1} A))}_{=0} \\
+                                                   &+ \dotsb \\
+                                                   &+ \mu(T^{-n} A) - \underbrace{\mu(T^{-n} A \cap (A \cup T^{-1} A \cup \dotsb \cup T^{-(n-1)} A))}_{=0} \\
+                                                   &= (n+1) \mu(A),
+  \end{align*}
+  a contradiction if $n + 1 > \mu(A)^{-1}$.
+\end{proof}
+\begin{thm}[Poincar\'{e} recurrence]
+  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{MPS}. Let $A \in \mathcal{B}$ with $\mu(A) > 0$. Then a.e.\ $x \in A$ returns to $A$ infinitely often.
+  That is:
+  \begin{equation*}
+    \mu(A \setminus \bigcap_{N=1}^\infty \bigcup_{n=N}^\infty T^{-n} A) = 0.
+  \end{equation*}
+\end{thm}
+\begin{remark}
+  $x \in T^{-n} A \iff T^n x \in A$. $\bigcup_{n=N}^\infty T^{-n} A$ are the points that visit $A$ at least once after time $N$.
+\end{remark}
+\begin{proof}
+  Let $A_0$ be the set of points in $A$ that never return to $A$. We first show $\mu(A_0) = 0$. Note that $\mu(A_0 \cap T^{-n} A_0) \leq \mu(A_0 \cap T^{-n} A) = \mu(\emptyset) = 0 \; \forall n > 0$.
+  By the lemma, $\mu(A_0) = 0$. Note that if $x \in (A \setminus \cap_{N=1}^\infty \cup_{n=N}^\infty T^{-n} A)$, then there is a maximal $m \in \mathbb{Z}_{\geq 0}$ such that $T^m x \in A$.
+  This means that
+  \begin{equation*}
+    A \setminus \bigcap \bigcup T^{-n} A \subset \bigcup_{m=0}^\infty T^{-m} A
+  \end{equation*}
+  where the right hand side has measure 0.
+\end{proof}
+
+This effectively answers one % which one
+of the questions we asked earlier. % describe how
+
+%What if the point does not start in $A$?
+The main issue that can occur is that $X$ splits into parts, which are preserved under $T$:
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,0) circle[x radius=2cm, y radius=1cm];
+    \draw (-1,0) -- (1,0);
+  \end{tikzpicture}
+\end{center}
+
+\begin{defi}[Ergodic]
+  A \hyperlink{def:mps}{measure preserving system} is called \textbf{ergodic} if $A = T^{-1}A$ implies $\mu(A) = 0$ or $1$ for all $A \in \mathcal{B}$.
+\end{defi}
+
+If the MPS is not \hyperlink{def:ergodic}{ergodic}, and $A \in \mathcal{B}$ with $0 < \mu(A) < 1$ such that $T^{-1} A = A$, then we can restrict the MPS to $A$.
+That is, we consider the MPS: $(A, \mathcal{B}_A, \mu_A, T|_A)$ where $\mathcal{B}_A = \set{B \in \mathcal{B} | B \subseteq A}$ and $\mu_A(B) = \frac{\mu(B)}{\mu(A)}$ for all $B \in \mathcal{B}_A$.
+\begin{thm}
+  The following are equivalent for an \hyperlink{def:mps}{measure preserving system} $(X, \mathcal{B}, \mu,T)$.
+  \begin{enumerate}[label=(\arabic*)]
+    \item $(X, \mathcal{B}, \mu, T)$ is \hyperlink{def:ergodic}{ergodic}.
+    \item For all $A \in \mathcal{B}$ with $\mu(A) > 0$,
+      \begin{equation*}
+        \mu(\bigcap_{N=1}^\infty \bigcup_{n=N}^\infty T^{-n} A) = 1.
+      \end{equation*}
+    \item $\mu(A \triangle T^{-1} A) = 0$ implies $\mu(A) = 0$ or $1$ $\forall A \in \mathcal{B}$.
+    \item For all bounded measurable functions $f: X \to \mathbb{R}$,
+      $f = f \circ T$ a.e.\ implies $f$ is constant a.e.
+    \item For all bounded measurable functions $f: X \to \mathbb{C}$,
+      $f = f \circ T$ a.e.\ implies $f$ is constant a.e.
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  (1) $\Rightarrow$ (2). Let $A \in \mathcal{B}$ with $\mu(A) > 0$. Let $B = \bigcap \bigcup T^{-n}A$.
+  By Poincar\'e recurrence, $\mu(B) \geq \mu(A) > 0$. So if we show that $B = T^{-1} B$, then $\mu(B) = 1$ follows by ergodicity.
+  $x \in B$ iff $x$ visits $A$ infinitely often $\iff Tx$ visits $A$ infinitely often $\iff T_x \in B$.
+  So we have proved $B = T^{-1} B$.
+
+  (2) $\Rightarrow$ (3). Let $A \in \mathcal{B}$ such that $\mu(A \triangle T^{-1} A) = 0$. If $\mu(A) = 0$, there is nothing to prove. Suppose $\mu(A) > 0$.
+  Let $B = \bigcap \bigcup T^{-n} A$. By (2), we know that $\mu(B) = 1$. We show $\mu(B \setminus A) = 0$, which completes the proof.
+  Let $x \in B \setminus A$, then there is a first time $m$ such that $T^m x \in A$, and $m > 0$.
+  Hence $x \in T^{-m} A \setminus T^{-(m-1)}A$. We proved: $B \setminus A \subseteq \bigcup_m \underbrace{T^{-m} A \setminus T^{-(m-1)} A}_{\text{measure 0 because } \mu(T^{-m} A \setminus T^{-(m-1)} A) = \mu(T^{-1} A \setminus A) = 0}$.
+  So $\mu(B \setminus A) = 0$.
+
+  (3) $\implies$ (4).
+  Let $f : X \to \mathbb{R}$ be a bounded measurable function such that $f = f \circ T$ almost everywhere.
+  For all $t \in \mathbb{R}$, let $A_t = \set{x \in X | f(x) \leq t}$.
+  Then $\mu(A_t \triangle T^{-1} A_t) = 0$.
+  By (3), we have $\mu(A_t) = 0$ or $1$ for all $t$.
+  If $t$ is very small, then $\mu(A_t) = 0$. If $t$ is very large, $\mu(A_t) = 1$. $t \mapsto \mu(A_t)$ is monotone, hence $\exists c \in \mathbb{R}$ such that $\mu(A_t) = 0$ for all $t < c$ and $\mu(A_t) = 1 \; \forall t > c$.
+  Then $f(x) = c$ a.e.
+
+  (4) $\Leftrightarrow$ (5) is left as an exercise.
+  (4) $\Rightarrow$ (1). Let $A \in \mathcal{B}$ with $A = T^{-1} A$. Then $\chi(A) = \chi(A) \circ T$ everywhere so $\chi(A)$ is constant a.e.
+\end{proof}
+\begin{eg}
+  The circle rotation map $(\mathbb{R}/\mathbb{Z}, \mathcal{B}, \mu, R_\alpha)$ is ergodic iff $\alpha$ is irrational.
+  Let $f: X \to \mathbb{R}$ be measurable. $f(x) = \sum_{n \in \mathbb{Z}} a_n \exp(2\pi i n x)$.
+  \begin{align}
+    f \circ R_\alpha(x) = f(x + \alpha) &= \sum_{n \in \mathbb{Z}} a_n \exp(2 \pi i n (x + \alpha)) \\
+                                        &= \sum_{n \in \mathbb{Z}} a_n \exp(2\pi i n \alpha) \exp(2 \pi i n x)
+  \end{align}
+  So $f = f \circ R_\alpha \iff a_n = a_n = \exp(2 \pi i n \alpha) \; \forall n$. If $\alpha$ is irrational, then $\exp(2 \pi i n \alpha) \neq 1$ for all $n \neq 0$, then $a_n = 0$.
+\end{eg}
 \printindex
 \end{document}
