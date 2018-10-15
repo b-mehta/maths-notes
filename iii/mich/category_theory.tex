@@ -5,7 +5,7 @@
 \def\nterm{Michaelmas}
 \def\nlecturer{Professor P.\ T.\ Johnstone}
 \def\ncourse{Category Theory}
-\def\draft{Ongoing course, rough}
+\def\draft{Ongoing course}
 
 \usepackage{mathrsfs}
 \usepackage{imakeidx}
@@ -29,11 +29,21 @@
 \newcommand{\gpc}{\mathbf{Gp}}
 \newcommand{\partc}{\mathbf{Part}}
 \newcommand{\matc}{\mathbf{Mat}}
+\newcommand{\rngc}{\mathbf{Rng}}
+\newcommand{\monc}{\mathbf{Mon}}
+\newcommand{\sgpc}{\mathbf{Sgp}}
+\newcommand{\fdmodc}{\mathbf{FdMod}}
+\newcommand{\topc}{\mathbf{Top}}
 
 \newcommand{\cc}{\mathscr{C}}
 \newcommand{\dc}{\mathscr{D}}
-%\newcommand{\}{\mathbb{R}}
-%\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{tikzcdi}{\begin{tikzcd}[cramped, sep=scriptsize]}{\end{tikzcd}}
+
+\let\oldto\to
+\let\to\longrightarrow
+\let\oldmapsto\mapsto
+\let\mapsto\longmapsto
 
 \setcounter{section}{-1}
 
@@ -76,23 +86,24 @@ There will be many examples, some of which may not be understandable.
 As long as some examples make sense, it is not a point of concern that some examples seem unfamiliar.
 
 \section{Definitions and Examples}
-\begin{ndef}[Category]\index{category}\hypertarget{def:cat}
+\begin{ndef}[Category]\label{1.1}\index{category}\hypertarget{def:cat}
   A \textbf{category} $\mathscr{C}$ consists of
   \begin{enumerate}[label=(\alph*)]
     \item \index{object}a collection $\mathscr{C}$ of \textbf{objects} $A,B,C,\dotsc$
-    \item \index{morphism}a collection $\mor \mathscr{C}$ of \textbf{morphism} $f,g,h,\dotsc$
-    \item \index{domain}\index{codomain}two operations $\dom, \cod$ assigning to each $f \in \mor \mathscr{C}$ a pair of objects, its \textbf{domain} and \textbf{codomain}. We write $A \xrightarrow{f} B$ to mean `$f$ is a morphism and $\dom f = A$ and $\cod f = B$'.
-    \item \index{identity}an operation assigning to each $A \in \ob \mathscr{C}$ a morphism $A \xrightarrow{1_A} A$, called its \textbf{identity}.
+    \item \index{morphism}a collection $\mor \mathscr{C}$ of \textbf{morphisms} $f,g,h,\dotsc$
+    \item \index{domain}\index{codomain}two operations $\dom, \cod$ assigning to each $f \in \mor \mathscr{C}$ a pair of objects, its \textbf{domain} and \textbf{codomain}.
+    We write $\begin{tikzcdi}A \rar{f} & B \end{tikzcdi}$ to mean `$f$ is a morphism and $\dom f = A$ and $\cod f = B$'.
+    \item \index{identity}an operation assigning to each $A \in \ob \cc$ a morphism $\begin{tikzcdi}A \rar{1_A} & A\end{tikzcdi}$, called its \textbf{identity}.
     \item \index{composition}a partial binary operation \textbf{composition} $(f,g) \mapsto f g$ on morphisms, such that $fg$ is defined iff $\dom f = \cod g$ and $\dom(f g) = \dom g$, $\cod (f g) = \cod f$ if $fg$ is defined.
   \end{enumerate}
   satisfying
   \begin{enumerate}[label=(\alph*)] \setcounter{enumi}{5}
-    \item \index{category!axioms}$f 1_A = f = 1_B f$ for any $A \xrightarrow{f} B$
+    \item \index{category!axioms}$f 1_A = f = 1_B f$ for any $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$
     \item $(fg)h = f (gh)$ whenever $fg$ and $gh$ are defined
   \end{enumerate}
 \end{ndef}
 
-\begin{nremark}\leavevmode
+\begin{nremark}\label{1.2}\leavevmode
   \begin{enumerate}[label=(\alph*)]
     \item \index{category!small}\hypertarget{def:small}This definition is independent of a model of set theory. If we're given a particular model of set theory, we call the \hyperlink{def:cat}{category $\mathscr{C}$} \textbf{small} if $\ob \mathscr{C}$ and $\mor \mathscr{C}$ are sets.
     \item Some texts say $fg$ means `$f$ followed by $g$', i.e.\ $fg$ defined $\iff \hyperlink{def:cat}{\cod} f = \dom g$.
@@ -101,17 +112,17 @@ As long as some examples make sense, it is not a point of concern that some exam
   \end{enumerate}
 \end{nremark}
 
-\begin{nexample}\leavevmode
+\begin{nexample}\label{1.3}\leavevmode
   \begin{enumerate}[label=(\alph*)]\hypertarget{def:categ}
     \item The \hyperlink{def:cat}{category} \textbf{Set} has all sets as objects, and all functions between sets as morphisms.
-      (Strictly, morphisms $A \to B$ are pairs $(f,B)$ where $f$ is a set-theoretic function.)
+      (Strictly, morphisms $\begin{tikzcdi} A \rar& B \end{tikzcdi}$ are pairs $(f,B)$ where $f$ is a set-theoretic function.)
     \item The category \textbf{Gp} has all groups as objects, and group homomorphisms as morphisms. Similarly, \textbf{Rng} is the category of rings, \textbf{Mod}$_R$ the category of $R$-modules.
     \item The category \textbf{Top} has all topological spaces as objects and continuous functions as morphisms. Similarly \textbf{Unif} has uniform spaces and uniformly continuous functions, and \textbf{Mf} has manifolds and smooth maps.
     \item The category \textbf{Htpy} has the same objects as \textbf{Top}, but morphisms are homotopy classes of continuous functions.
       More generally, given $\mathscr{C}$, we call an equivalence relation $\simeq$ on $\mor \mathscr{C}$ a \textbf{congruence} if $f \simeq g \implies \dom f = \dom g$ and $\cod f = \cod g$, and $f \simeq g \implies f h \simeq g h$ and $k f \simeq k g$ whenever the composites are defined. Then we have a category $\mathscr{C}/\simeq$ with the same objects as $\mathscr{C}$, but congruence classes as morphisms.
     \item \index{duality}\hypertarget{def:duality}Given $\mathscr{C}$, the \textbf{opposite category} $\mathscr{C}^{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^{op}$ is $gf$ in $\mathscr{C}$.
       This leads to the \textbf{Duality principle} if $P$ is a true statement about categories, so is the statement $P^*$ obtained from $P$ by reversing all arrows.
-    \item A \hyperlink{def:small}{small} category with one object is a \textbf{monoid}, i.e.\ a semigroup with $1$. In particular, a group is a small category with one object, in which every morphism is an isomorphism (i.e.\ for all $f$, $\exists g$ such that $fg$ and $gf$ are identities).
+    \item \index{isomorphism}\hypertarget{def:iso}A \hyperlink{def:small}{small} category with one object is a \textbf{monoid}, i.e.\ a semigroup with $1$. In particular, a group is a small category with one object, in which every morphism is an isomorphism ($f$ is an \textbf{isomorphism} if $\exists g$ such that $fg$ and $gf$ are identities).
     \item A \textbf{groupoid} is a category in which every morphism is an isomorphism. For a topological space $X$, the fundamental groupoid $\pi(X)$ has all points of $X$ as objects and morphisms $x \to y$ are homotopy classes rel $\{0,1\}$ of paths $u: [0,1] \to X$ with $u(0) = x$, $u(1) = y$.
       (If you know how to prove that the fundamental group is a group, you can prove that $\pi(X)$ is a groupoid.)
     \item A \textbf{discrete} category is one whose only morphisms are identities. A \textbf{preorder} is a category $\mathscr{C}$ in which, for any pair $(A,B)$ there is at most $1$ morphism $A \to B$.
@@ -129,7 +140,7 @@ As long as some examples make sense, it is not a point of concern that some exam
       Composition is matrix multiplication.
   \end{enumerate}
 \end{nexample}
-\begin{ndef}[Functor]\index{functor}\hypertarget{def:funct}
+\begin{ndef}[Functor]\label{1.4}\index{functor}\hypertarget{def:funct}
   Let $\mathscr{C}, \mathscr{D}$ be \hyperlink{def:cat}{categories}. A \textbf{functor} $F: \mathscr{C} \to \mathscr{D}$ consists of
   \begin{enumerate}[label=(\alph*)]
     \item a mapping $A \mapsto FA$ from $\ob \mathscr{C}$ to $\ob \mathscr{D}$
@@ -144,30 +155,39 @@ As long as some examples make sense, it is not a point of concern that some exam
   \end{enumerate}
 \end{manualeg}
 \begin{nexample}\leavevmode
-  \begin{enumerate}[label=(\alph*)]\label{eg:1.5}
-    \item \index{functor!forgetful}\hypertarget{def:forgFunc}We have \textbf{forgetful \hyperlink{def:funct}{functors}} $\mathbf{\hyperlink{def:categ}{Gp}} \xrightarrow{U} \mathbf{Set}$, $\mathbf{Rng} \to \mathbf{Set}$, $\mathbf{Top} \to \mathbf{Set}$, $\mathbf{Rng} \to \mathbf{Ab Gp}$ (forgetting $\times$), $\mathbf{Rng} \to \mathbf{Mon}$ (forgetting $+$).
-    \item Given a set $A$, the free group $FA$ has the property: given any group $G$ and any function $A \xrightarrow{f} UG$, there's a unique homomorphism $FA \xrightarrow{f} G$ extending $f$.
-      $F$ is a functor $\mathbf{Set} \to \mathbf{Gp}$: given $A \xrightarrow{f} B$, we define $Ff$ to be the unique homomorphism extending $A \xrightarrow{f} B \hookrightarrow UFB$.
+  \begin{enumerate}[label=(\alph*)]\label{1.5}
+    \item \index{functor!forgetful}\hypertarget{def:forgFunc}We have \textbf{forgetful \hyperlink{def:funct}{functors}}
+    $\begin{tikzcdi} \mathbf{\hyperlink{def:categ}{Gp}} \rar{U}& \mathbf{Set} \end{tikzcdi}$,
+    $ \mathbf{Rng} \to \mathbf{Set} $,
+    $ \mathbf{Top} \to \mathbf{Set} $,
+    $ \mathbf{Rng} \to \mathbf{Ab Gp} $ (forgetting $\times$),
+    $ \mathbf{Rng} \to \mathbf{Mon} $
+    (forgetting $+$).
+    \item Given a set $A$, the free group $FA$ has the property: given any group $G$ and any function $\begin{tikzcdi} A \rar{f}& UG \end{tikzcdi}$, there's a unique homomorphism $\begin{tikzcdi} FA \rar{f}& G \end{tikzcdi}$ extending $f$.
+    $F$ is a functor $\mathbf{Set} \to \mathbf{Gp}$: given $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$, we define $Ff$ to be the unique homomorphism extending $\begin{tikzcdi} A \rar{f}& B \rar[hook]& UFB \end{tikzcdi}$.
 
-      Functoriality follows from uniqueness: given $B \xrightarrow{g} C$, $F(gf)$ and $(Fg)(Ff)$ are both homoms extending $A \xrightarrow{f} B \xrightarrow{g} C\hookrightarrow UFC$.
-    \item Given a set $A$, we write $PA$ for the set of all subsets of $A$. We can make $P$ into a functor $\mathbf{Set} \to \mathbf{Set}$: given $A \xrightarrow{f} B$, we define $Pf(A') = \set{f(a) | a \in A'}$ for $A' \subseteq A$.
+    Functoriality follows from uniqueness: given $\begin{tikzcdi} B \rar{g}& C \end{tikzcdi}$, $F(gf)$ and $(Fg)(Ff)$ are both homoms extending $\begin{tikzcdi} A \rar{f}& B \rar{g}& C \rar[hook]& UFC \end{tikzcdi}$.
+    \item Given a set $A$, we write $PA$ for the set of all subsets of $A$.
+      We can make $P$ into a functor $\setc \to \setc$: given $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$, we define $Pf(A') = \set{f(a) | a \in A'}$ for $A' \subseteq A$.
       But we also have a functor $P^*: \mathbf{Set} \to \mathbf{Set}^{op}$ defined on objects by $P$, but $P^*f(B') = \set{a \in A | f(a) \in B'}$ for $B' \subseteq B$.
 
-      \index{functor!contravariant}\hypertarget{def:contrFunct}By a \textbf{contravariant} functor $\mathscr{C} \to \mathscr{D}$. we mean a \hyperlink{def:funct}{functor} $\mathscr{C} \to \mathscr{D}^{\hyperlink{def:duality}{op}}$ (or $\mathscr{C}^{op} \to \mathscr{D}$). (A \textbf{covariant} functor is one that doesn't reverse arrows).
-    \item Let $K$ be a field. We have a functor $*: \mathbf{Mod}_K \to \mathbf{Mod}_K^{op}$ defined by $V^* = \{\text{linear maps }V \to K\}$ and if $V \xrightarrow{f} W$, $f^*(\theta:W \to K) = \theta f$.
+      \index{functor!contravariant}\hypertarget{def:contrFunct}By a \textbf{contravariant} functor $\mathscr{C} \to \mathscr{D}$, we mean a \hyperlink{def:funct}{functor} $\mathscr{C} \to \mathscr{D}^{\hyperlink{def:duality}{op}}$ (or $\mathscr{C}^{op} \to \mathscr{D}$). (A \textbf{covariant} functor is one that doesn't reverse arrows).
+    \item Let $K$ be a field. We have a functor $*: \mathbf{Mod}_K \to \mathbf{Mod}_K^{op}$ defined by $V^* = \{\text{linear maps }V \to K\}$ and if $\begin{tikzcdi}
+        V \rar{f}& W
+    \end{tikzcdi}$, $f^*(\theta:W \to K) = \theta f$.
     \item We have a functor $op: \mathbf{Cat} \to \mathbf{Cat}$ which is the `identity' on morphisms. (Note that this is \hyperlink{def:contrFunct}{covariant}).
     \item A functor between monoids is a monoid homomorphism.
-    \item A functor between posets is an order-preseving map.
-    \item Let $G$ be a group. A functor $F: G \to \mathbf{Set}$ consists of a set $A = F*$ together with an action of $G$ on $A$, i.e.\ a permutation representation of $G$. (Use $*$ to refer to the unique object of the group).
+    \item A functor between posets is an order-preserving map.
+    \item Let $G$ be a group. A functor $F: G \to \mathbf{Set}$ consists of a set $A = F*$ together with an action of $G$ on $A$, i.e.\ a permutation representation of $G$ (where we use $*$ to refer to the unique object of the group).
       Similarly a functor $G \to \mathbf{Mod}_K$ is a $K$-linear representation of $G$.
-    \item The construction of a the fundamental group $\pi_1(X,x)$ of a space $X$ with basepoint $x$ is a functor $\mathbf{Top}_* \to \mathbf{Gp}$ where $\mathbf{Top}_*$ is the set of spaces with a chosen basepoint.
+    \item The construction of a fundamental group $\pi_1(X,x)$ of a space $X$ with basepoint $x$ is a functor $\mathbf{Top}_* \to \mathbf{Gp}$ where $\mathbf{Top}_*$ is the set of spaces with a chosen basepoint.
       Similarly, the fundamental groupoid is a functor $\mathbf{Top} \to \mathbf{Gpd}$ where $\mathbf{Gpd}$ is the category of groupoids and functors between them.
   \end{enumerate}
 \end{nexample}
 
-\begin{ndef}[Natural transformation]\index{natural transformations}\hypertarget{def:nattrans}
-  Let $\mathscr{C}, \mathscr{D}$ be \hyperlink{def:cat}{categories} and $F,G: \mathscr{C} \rightrightarrows \mathscr{D}$ two \hyperlink{def:funct}{functors}.
-  A \textbf{natural transformation} $\alpha: F \to G$ consists of an assignment $A \mapsto \alpha_A$ from $\ob \mathscr{C}$ to $\mor \mathscr{D}$, such that $\dom \alpha_A = FA$ and $\cod \alpha_A = GA$ for all $A$, and for all $A \xrightarrow{f} B$ in $\mathscr{C}$ the square
+\begin{ndef}[Natural transformation]\label{1.6}\index{natural transformations}\hypertarget{def:nattrans}
+  Let $\mathscr{C}, \mathscr{D}$ be \hyperlink{def:cat}{categories} and $\begin{tikzcdi} F,G: \mathscr{C} \rar[shift left]\rar[shift right]& \mathscr{D} \end{tikzcdi}$ two \hyperlink{def:funct}{functors}.
+ A \textbf{natural transformation} $\alpha: F \to G$ consists of an assignment $A \mapsto \alpha_A$ from $\ob \mathscr{C}$ to $\mor \mathscr{D}$, such that $\dom \alpha_A = FA$ and $\cod \alpha_A = GA$ for all $A$, and for all $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$ in $\mathscr{C}$ the square
   \begin{equation*}
     \begin{tikzcd}
       FA \rar{Ff} \dar{\alpha_a} & FB \dar{\alpha_B} \\
@@ -178,11 +198,11 @@ As long as some examples make sense, it is not a point of concern that some exam
 \end{ndef}
 \begin{manualeg}{1.3}[\emph{Continued}]\leavevmode
   \begin{enumerate}[label=(\alph*)]\setcounter{enumi}{11}
-    \item Given \hyperlink{def:cat}{categories} $\mathscr{C}, \mathscr{D}$, we write $[\mathscr{C}, \mathscr{D}]$ for the category whose objects are \hyperlink{def:funct}{functors} $\mathscr{C}\to \mathscr{D}$, and whose morphisms are \hyperlink{def:nattrans}{natural transformations}.
+    \item \hypertarget{def:functcat}Given \hyperlink{def:cat}{categories} $\mathscr{C}, \mathscr{D}$, we write $[\mathscr{C}, \mathscr{D}]$ for the category whose objects are \hyperlink{def:funct}{functors} $\mathscr{C}\to \mathscr{D}$, and whose morphisms are \hyperlink{def:nattrans}{natural transformations}.
   \end{enumerate}
 \end{manualeg}
 \begin{nexample}\leavevmode
-  \begin{enumerate}[label=(\alph*)]\label{eg:1.7}
+  \begin{enumerate}[label=(\alph*)]\label{1.7}
     \item Let $K$ be a field, $V$ a vector space over $K$. There is a linear map $\alpha_V: V \to V^{**}$ given by
       \begin{equation*}
         \alpha_V(v)(\theta) = \theta(v)
@@ -195,22 +215,22 @@ As long as some examples make sense, it is not a point of concern that some exam
       % lecture 3
     \item For any set $A$, we have a mapping $\sigma_A : A \to PA$ sending $a$ to $\{a\}$.
       If $f: A \to B$, then $Pf\{a\} = \{f(a)\}$, so $\sigma$ is a natural transformation $1_{\mathbf{Set}} \to P$.
-    \item Let $F: \mathbf{Set} \to \mathbf{Gp}$ be the free group functor (\cref{eg:1.5}(b)) and $U: \mathbf{Gp} \to \mathbf{Set}$ the forgetful functor.
+    \item Let $F: \mathbf{Set} \to \mathbf{Gp}$ be the free group functor (\cref{1.5}(b)) and $U: \mathbf{Gp} \to \mathbf{Set}$ the forgetful functor.
       The inclusions $A \to UFA$ form a natural transformation $1_{\mathbf{Set}} \to UF$.
-    \item Let $G,H$ be groups and $f,g: G\rightrightarrows H$ two homomorphisms.
+    \item Let $G,H$ be groups and $f,g: G \to H$ two homomorphisms.
       A natural transformation $\alpha: f \to g$ corresponds to an element $h = \alpha_*$ of $H$ such that $h.f(x) = g(x).h$ for all $x \in G$, or equivalently $f(x) = h^{-1} g(x) h$, i.e.\ $f$ and $g$ are conjugate group homomorphisms.
-    \item Let $A,B$ be two $G$-sets regarded as funcrtors $G \rightrightarrows \setc$.
+    \item Let $A,B$ be two $G$-sets regarded as functors $G \to \setc$.
       A natural transformation $A \to B$ is a function $f$ satisfying $f(g . a) = g . f(a)$ for all $a \in A$, i.e.\ a $G$-equivariant map.
   \end{enumerate}
 \end{nexample}
-\begin{nlemma}
-  Let $F,G : \mathscr{C} \rightrightarrows \mathscr{D}$ be two \hyperlink{def:funct}{functors}, and $\alpha: F \to G$ a \hyperlink{def:nattrans}{natural transformation}.
-  Then $\alpha$ is an isomorphism in $[\mathscr{C}, \mathscr{D}]$ iff each $\alpha_A$ is an isomorphism in $\mathscr{D}$.
+\begin{nlemma}\label{1.8}
+  Let $F,G : \mathscr{C} \to \mathscr{D}$ be two \hyperlink{def:funct}{functors}, and $\alpha: F \to G$ a \hyperlink{def:nattrans}{natural transformation}.
+  Then $\alpha$ is an isomorphism in $\hyperlink{def:functcat}{[\mathscr{C}, \mathscr{D}]}$ iff each $\alpha_A$ is an isomorphism in $\mathscr{D}$.
 \end{nlemma}
 \begin{proof}\leavevmode
   \begin{itemize}
-    \item[$\Rightarrow$] trivial
-    \item[$\Leftarrow$] Suppose each $\alpha_A$ has an inverse $\beta_A$. Given $f: A \to B$ in $\mathscr{C}$, we need to show that
+    \item[$\implies$] trivial
+    \item[$\impliedby$] Suppose each $\alpha_A$ has an inverse $\beta_A$. Given $f: A \to B$ in $\mathscr{C}$, we need to show that
       \begin{equation*}
         \begin{tikzcd}
           GA \rar{Gf} \dar{\beta_A} & GB \dar{\beta_B} \\
@@ -227,7 +247,7 @@ As long as some examples make sense, it is not a point of concern that some exam
       \end{align*}
   \end{itemize}
 \end{proof}
-\begin{ndef}[Equivalent category]\index{category!equivalence}\index{equivalent}\index{categorical property}\hypertarget{def:equicat}
+\begin{ndef}[Equivalent category]\label{1.9}\index{category!equivalence}\index{equivalent}\index{categorical property}\hypertarget{def:equicat}
   Let $\mathscr{C}, \mathscr{D}$ be categories.
   By an \textbf{equivalence} between $\mathscr{C}$ and $\mathscr{D}$, we mean a pair of \hyperlink{def:funct}{functors} $F: \mathscr{C} \to \mathscr{D}$, $G: \mathscr{D} \to \mathscr{C}$ together with natural isomorphisms $\alpha: 1_\mathscr{C} \to GF$ and $\beta: FG \to \mathscr{D}$.
   We write $\mathscr{C} \simeq \mathscr{D}$ if $\mathscr{C}$ and $\mathscr{D}$ are equivalent.
@@ -237,7 +257,7 @@ As long as some examples make sense, it is not a point of concern that some exam
   For instance, being a groupoid or a preorder are categorical properties, but being a group or a partial order are not.
 \end{ndef}
 
-\begin{nexample}\leavevmode
+\begin{nexample}\label{1.10}\leavevmode
   \begin{enumerate}[label=(\alph*)]
     \item The category \hyperlink{def:categ}{$\partc$} is equivalent to the category $\setc_*$ of pointed sets (and basepoint-preserving functions).
       We define $F: \setc_* \to \partc$ by $F(A,a) = A \setminus \{a\}$ and if $f: (A,a) \to (B,b)$
@@ -259,17 +279,132 @@ As long as some examples make sense, it is not a point of concern that some exam
       \end{equation*}
       The composite $FG$ is the identity on $\partc$, but $GF$ is not the identity, however there's an isomorphism
       \begin{equation*}
-        (A,a) \longrightarrow ((A \setminus \{a\})^+, A \setminus \{a\})
+        (A,a) \to ((A \setminus \{a\})^+, A \setminus \{a\})
       \end{equation*}
       sending $a$ to $A \setminus \{a\}$ and everything else to itself and this is natural.
 
       Note that there can be no isomorphism $\setc_* \to \partc$ since $\partc$ has a $1$-element isomorphism class $\{\emptyset\}$ and $\setc_*$ doesn't.
-    \item The category $\mathbf{FdMod}_K$ of finite-dimensional vector spaces over $K$ is equivalent to $\mathbf{FdMod}_K^{op}$: the functors in both directions are $(-)^*$ and both isomorphisms are the natural transformations of \cref{eg:1.7}(a).
+    \item The category $\mathbf{FdMod}_K$ of finite-dimensional vector spaces over $K$ is equivalent to $\mathbf{FdMod}_K^{op}$: the functors in both directions are $(-)^*$ and both isomorphisms are the natural transformations of \cref{1.7}(a).
     \item $\mathbf{FdMod}_K$ is also equivalent to $\hyperlink{def:categ}{\matc_K}$: We define $F: \matc_K \to \mathbf{FdMod}_K$ by $F(n) = K^n$, and $F(A)$ is the linear map represented by $A$ with respect to the standard bases of $K^n$ and $K^p$.
 
-      To define $G: \mathbf{FdMod}_K \to \matc_K$, choose a basis for each finite dimensional vector space,and define $G(V) = \dim V$, $G(V \xrightarrow{f} W)$ as the matrix representing $f$ with respect to the chosen bases.
+      To define $G: \mathbf{FdMod}_K \to \matc_K$, choose a basis for each finite dimensional vector space,and define $G(V) = \dim V$, $G(V \overset{f}{\to} W)$ as the matrix representing $f$ with respect to the chosen bases.
       $GF$ is the identity, provided we choose the standard bases for the spaces $K^n$; $FG \neq 1$, but the chosen basis gives isomorphisms $FG(V) = K^{\dim V} \to V$ for each $V$, which form a natural isomorphism.
   \end{enumerate}
 \end{nexample}
+% lecture 4
+\begin{ndef}[Faithful, full, essentially surjective]\label{1.11}\hypertarget{def:full}
+ Let $\begin{tikzcdi} \mathscr{C} \rar{F}& \mathscr{D} \end{tikzcdi}$ be a \hyperlink{def:funct}{functor}.
+  \begin{enumerate}[label=(\alph*)]
+    \item \index{functor!faithful}We say $F$ is \textbf{faithful} if, given $f, f' \in \mor \cc$ with $\dom f = \dom f'$, $\cod f = \cod f'$ and $Ff = Ff'$ then $f = f'$.
+    \item \index{functor!full}We say $F$ is \textbf{full} if, given $\begin{tikzcdi} FA \rar{g}& FB \end{tikzcdi}$ in $\mathscr{D}$, there exists $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$ in $\mathscr{C}$ with $Ff = g$.
+    \item \index{functor!essentially surjective}We say $F$ is \textbf{essentially surjective} if, for every $B \in \ob \dc$, there exists $A \in \ob \cc$ and an isomorphism $FA \to B$ in $\dc$.
+  \end{enumerate}
+  \hypertarget{def:fulls}We say a subcategory $\cc' \subseteq \cc$ is \textbf{full} if the inclusion $\cc' \to \cc$ is a full functor.
+\end{ndef}
+\begin{eg}
+  $\gpc$ is a \hyperlink{def:fulls}{full subcategory} of $\monc$, but $\monc$ is not a full subcategory of the category $\sgpc$ of semigroups.
+\end{eg}
+\begin{nlemma}\label{1.12}
+  Assuming the axiom of choice, a functor $F: \cc \to \dc$ is part of an \hyperlink{def:equicat}{equivalence} $\cc\simeq\dc$ iff it is \hyperlink{def:full}{full}, \hyperlink{def:full}{faithful} and \hyperlink{def:full}{essentially surjective}.
+\end{nlemma}
+\begin{proof}\leavevmode
+  \begin{itemize}
+    \item[$\implies$] Given $G,\alpha,\beta$ as in \cref{1.9}, for each $B\in\ob\dc$, $\beta_B$ is an isometry $FGB\to B$, so $F$ is essentially surjective.
+
+     Given $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$ in $\mathcal{C}$, we can recover $f$ from $Ff$ as the composite
+      \begin{equation*}
+        \begin{tikzcd}
+          A\rar{\alpha_A} & GFA\rar{GFf} &GFB\rar{\alpha_B^{-1}} & B.
+        \end{tikzcd}
+      \end{equation*}
+      Hence if $\begin{tikzcdi} A \rar{f'}& B \end{tikzcdi}$ satisfies $Ff=Ff'$, then $f=f'$.
+
+    Given $\begin{tikzcdi} FA \rar{g}& FB \end{tikzcdi}$, define $f$ to be the composite
+      \begin{equation*}
+        \begin{tikzcd}
+          A\rar{\alpha_A} & GFA\rar{Gg} & GFB\rar{\alpha_B^{-1}} & B
+        \end{tikzcd}
+      \end{equation*}
+      Then $GFf = \alpha_Bf\alpha_A^{-1} = Gg$, and $G$ is faithful for the same reason as $F$, so $Ff = g$.
+
+    \item[$ \impliedby $] For each $B\in\ob\dc$, choose $ GB\in\ob\cc$ and an isomorphism $\beta_B: FGB \to B$ in $\dc$.
+      Given
+      \begin{equation*}
+        \begin{tikzcd}
+          B\rar{g} & B'
+        \end{tikzcd}
+      \end{equation*}
+      define $Gg: GB \to GB'$ to be the unique morphism whose image under $F$ is
+      \begin{equation*}
+        \begin{tikzcd}
+          FGB\rar{\beta_B} & B\rar{g} & B'\rar{\beta_{B'}^{-1}} & FGB'
+        \end{tikzcd}
+      \end{equation*}
+      Uniqueness implies functoriality: given
+      \begin{equation*}
+        \begin{tikzcd}
+          B'\rar{g'} & B''
+        \end{tikzcd}
+      \end{equation*}
+      then note $(Gg')(Gg)$ and $G(g' g)$ have the same image under $F$, so they're equal.
+
+      By construction, $\beta$ is a natural transformation $FG \to 1_\mathscr{D}$.
+
+      Given $A\in\ob\cc $, define $\alpha_A: A \to GFA$ to be the unique morphism whose image under $F$ is
+      \begin{equation*}
+        \begin{tikzcd}
+          FA\rar{\beta_{FA}^{-1}} & FGFA
+        \end{tikzcd}
+      \end{equation*}
+
+      $\alpha_A$ is an isomorphism, since $\beta_{FA}$ also has a unique pre-image under $F$.
+
+      Also $\alpha$ is a natural transformation, since any naturality square for $\alpha$ is mapped by $F$ to a commutative square, and $F$ is faithful. \qedhere
+  \end{itemize}
+\end{proof}
+\begin{ndef}[Skeleton]\label{1.13}\hypertarget{def:skel}
+  By a \textbf{skeleton} of a \hyperlink{def:cat}{category} $\mathscr{C}$, we mean a \hyperlink{def:fulls}{full subcategory} $\mathscr{C}_0$ containing one object from each isomorphism class.
+  We say $\mathscr{C}$ is \textbf{skeletal} if it's a skeleton of itself.
+\end{ndef}
+\begin{eg}
+  $\matc_K$ is \hyperlink{def:skel}{skeletal}, and the image of $F: \matc_K \to \fdmodc_K$ of \cref{1.10}(c) is a \hyperlink{def:skel}{skeleton} of $\fdmodc_K$.
+\end{eg}
+\begin{warning}
+  Almost any assertion about \hyperlink{def:skel}{skeletons} is equivalent to the axiom of choice.
+  See question 2 on example sheet 1.
+\end{warning}
+\begin{ndef}[Monomorphism, epimorphism]\label{1.14}
+  Let $A \xrightarrow{f} B$ be a \hyperlink{def:cat}{morphism} in $\cc$
+  \begin{enumerate}[label=(\alph*)]
+    \item \index{morphism!mono-}\index{monomorphism}\hypertarget{def:monic}We say $f$ is a \textbf{monomorphism} (or f is \textbf{monic}) if, given any pair
+    \begin{tikzcd}[cramped]
+      C \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & A,
+    \end{tikzcd}
+    $fg = fh$ implies $g = h$
+  \item \index{morphism!epi-}\index{epimorphism}\hypertarget{def:epic}We say $f$ is an \textbf{epimorphism} (or \textbf{epic}) if it's a monomorphism in $C^{\hyperlink{def:duality}{op}}$ i.e.\ if $gf = hf$ implies $g = h$.
+  \end{enumerate}
+ We denote \hyperlink{def:monic}{monomorphisms} by \begin{tikzcd}[cramped, sep=scriptsize] A \rar[tail]{f} & B \end{tikzcd} and \hyperlink{def:epic}{epimorphisms} by \begin{tikzcd}[cramped, sep=scriptsize] A \rar[two heads]{f} & B\end{tikzcd}
+\end{ndef}
+Any isomorphism is \hyperlink{def:monic}{monic} and \hyperlink{def:epic}{epic}: more generally if $f$ has a left inverse (i.e.\ $\exists g$ such that $gf$ is an identity) then it's monic.
+\index{split monomorphism}\index{monomorphism!split}\hypertarget{def:split}We call such monomorphisms \textbf{split}.
+
+\index{category!balanced}\index{balanced}\hypertarget{def:balanced}We say $C$ is a \textbf{balanced} \hyperlink{def:cat}{category} if any morphism which is both \hyperlink{def:monic}{monic} and \hyperlink{def:epic}{epic} is an isomorphism.
+
+\begin{nexample}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item In $\setc$, \hyperlink{def:monic}{mono} $\iff$ injective ($\implies$ easy; for $\impliedby$ take $C = 1 = \{*\}$) and \hyperlink{def:epic}{epi} $\iff$ surjective ($\implies$ easy; for $\impliedby$ use two morphisms $B \to 2 = \{0,1\}$).
+      So $\setc$ is \hyperlink{def:balanced}{balanced}.
+    \item In $\gpc$ mono $\iff$ injective (for $\impliedby$ use homoms $\mathbb{Z} \to A$) and epi $\iff$ surjective ($\impliedby$ uses free products with amalgamation).
+      So $\gpc$ is balanced.
+    \item In $\rngc$, mono $\iff$ injective (proof much as for $\gpc$) but the inclusion $\mathbb{Z} \to \mathbb{Q}$ is an epimorphism, since if \begin{tikzcd}[cramped] \mathbb{Q} \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & R \end{tikzcd}
+      agree on all integers, they agree everywhere.
+      So $\rngc$ isn't balanced.
+    \item In $\topc$, mono $\iff$ injective and epi $\iff$ surjective (proofs as in $\setc$).
+        But $\topc$ isn't balanced since a continuous bijection needn't have a continuous inverse.
+  \end{enumerate}
+\end{nexample}
+
+\clearpage
+\section{The Yoneda Lemma}
 \printindex
 \end{document}
