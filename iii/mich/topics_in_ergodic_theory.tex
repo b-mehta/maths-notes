@@ -280,7 +280,9 @@ The main issue that can occur is that $X$ splits into parts, which are preserved
 \begin{center}
   \begin{tikzpicture}
     \draw (0,0) circle[x radius=2cm, y radius=1cm];
-    \draw (-1,0) -- (1,0);
+    \draw (0,-1) -- (0,1);
+    \draw [->] (-0.75,0) arc[radius=2.5mm, start angle= 0, end angle= 270];
+    \draw [->] (1.25,0) arc[radius=2.5mm, start angle= 0, end angle= 270];
   \end{tikzpicture}
 \end{center}
 
@@ -296,7 +298,7 @@ That is, we consider the MPS: $(A, \mathcal{B}_A, \mu_A, T|_A)$ where $\mathcal{
     \item $(X, \mathcal{B}, \mu, T)$ is \hyperlink{def:ergodic}{ergodic}.
     \item For all $A \in \mathcal{B}$ with $\mu(A) > 0$,
       \begin{equation*}
-        \mu(\bigcap_{N=1}^\infty \bigcup_{n=N}^\infty T^{-n} A) = 1.
+        \mu\left(\bigcap_{N=1}^\infty \bigcup_{n=N}^\infty T^{-n} A\right) = 1.
       \end{equation*}
     \item $\mu(A \triangle T^{-1} A) = 0$ implies $\mu(A) = 0$ or $1$ $\forall A \in \mathcal{B}$.
     \item For all bounded measurable functions $f: X \to \mathbb{R}$,
@@ -314,8 +316,11 @@ That is, we consider the MPS: $(A, \mathcal{B}_A, \mu_A, T|_A)$ where $\mathcal{
   (2) $\Rightarrow$ (3). Let $A \in \mathcal{B}$ such that $\mu(A \triangle T^{-1} A) = 0$. If $\mu(A) = 0$, there is nothing to prove. Suppose $\mu(A) > 0$.
   Let $B = \bigcap \bigcup T^{-n} A$. By (2), we know that $\mu(B) = 1$. We show $\mu(B \setminus A) = 0$, which completes the proof.
   Let $x \in B \setminus A$, then there is a first time $m$ such that $T^m x \in A$, and $m > 0$.
-  Hence $x \in T^{-m} A \setminus T^{-(m-1)}A$. We proved: $B \setminus A \subseteq \bigcup_m \underbrace{T^{-m} A \setminus T^{-(m-1)} A}_{\text{measure 0 because } \mu(T^{-m} A \setminus T^{-(m-1)} A) = \mu(T^{-1} A \setminus A) = 0}$.
-  So $\mu(B \setminus A) = 0$.
+  Hence $x \in T^{-m} A \setminus T^{-(m-1)}A$. Thus
+  \begin{equation*}
+    B \setminus A \subseteq \bigcup_m T^{-m} A \setminus T^{-(m-1)} A,
+  \end{equation*}
+  and $\mu(T^{-m} A \setminus T^{-(m-1)} A) = \mu(T^{-1} A \setminus A) = 0$, so $\mu(B \setminus A) = 0$.
 
   (3) $\implies$ (4).
   Let $f : X \to \mathbb{R}$ be a bounded measurable function such that $f = f \circ T$ almost everywhere.
@@ -337,5 +342,106 @@ That is, we consider the MPS: $(A, \mathcal{B}_A, \mu_A, T|_A)$ where $\mathcal{
   \end{align}
   So $f = f \circ R_\alpha \iff a_n = a_n = \exp(2 \pi i n \alpha) \; \forall n$. If $\alpha$ is irrational, then $\exp(2 \pi i n \alpha) \neq 1$ for all $n \neq 0$, then $a_n = 0$.
 \end{eg}
+
+\textbf{missing content here}
+% loads of missing crap
+
+\begin{thm}[Maximal ergodic theorem, Wiener]
+  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
+  Let $f \in L^1$, $\alpha \in \mathbb{R}_{> 0}$. Let
+  \begin{equation*}
+    E_\alpha = \set{x \in X | \sup_{N > 0} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x) > \alpha}.
+  \end{equation*}
+  Then $\mu(E_\alpha) \leq \alpha^{-1} \|f\|_1$.
+\end{thm}
+\begin{prop}
+  Let $(X, \mathcal{B},\mu,T)$ be a \hyperlink{def:mps}{measure preserving system}.
+  Let $f \in L^1$. Let $f_0 = 0, f_1 = f, f_2 = f \circ T + f$,
+  \begin{equation*}
+    f_n = f \circ T^{n-1} + \dotsb + f \circ T + f,
+  \end{equation*}
+  and
+  \begin{equation*}
+    F_N = \max_{n = 0, \dotsc, N} f_n.
+  \end{equation*}
+  Then
+  \begin{equation*}
+    \int_{\set{x \in X | F_N(x) > 0}} f \, d \mu \geq 0 \; \forall N
+  \end{equation*}
+\end{prop}
+\begin{proof}
+  Suppose that $F_N(x) > 0$ for some $x$.
+  Then $F_N(x) = f_n(x)$ for some $n \in \{1, \dotsc, N\}$.
+  Then $F_N(x) = f_{n-1}(Tx) + f(x) \leq F_N(Tx) + f(x)$, hence
+  $f(x) \geq F_N(x) - F_N(Tx)$.
+  \begin{align*}
+    \int_{\set{x \in X | F_N(x) > 0}} f(x)\,d\mu &\geq \int_{\set{x \in X | F_N(x) > 0}} (F_n(x) - F_N(Tx))\,d\mu \\
+    \shortintertext{note if $F_n(x) \not> 0$, then $F_N(x) - F_N(Tx) \leq 0$, so}
+                                                 & \geq \int_X F_N(x) - F_N(Tx)\,d\mu = 0
+  \end{align*}
+\end{proof}
+\begin{proof}[Proof of maximal ergodic theorem]
+  Define
+  \begin{align*}
+    E_{\alpha,M} &= \Set{x \in X | \max_{N = 1, \dotsc, M} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x) > \alpha} \\
+                 &= \Set{x \in X | \max_{N = 1, \dotsc, M} \sum_{n=0}^{N-1} (f(T^n x) - \alpha) > 0}
+  \end{align*}
+  We apply the proposition for the function $f - \alpha$.
+  Then
+  \begin{equation*}
+    \int_{E_{\alpha,M}} (f(x) - \alpha)\,d\mu \geq 0
+  \end{equation*}
+  Then
+  \begin{equation*}
+    \int_{E_{\alpha,M}} f(x)\,d\mu \geq \alpha \mu(E_{\alpha,M})
+  \end{equation*}
+  and $\int_{E_{\alpha,M}} \leq \|f\|_1$.
+  Note that $E_\alpha = \bigcup_M E_{\alpha,M}$, and this is an increasing union.
+\end{proof}
+
+% let x,b,u,t be a mps. Let f in l1, then `E f* in L1, t invariant such that ...\to f*(x) pointwise ae
+\begin{proof}[Proof of pointwise ergodic theorem]
+  Fix $\epsilon > 0$.
+  Then $\exists f_\epsilon \in L^2$, $e_{\epsilon,1} \in L^1$ such that $f = f_\epsilon + e_{\epsilon_1}$, and $\|e_{\epsilon,1}\| < \epsilon$.
+  $\exists g_\epsilon \in L62$, $e_{\epsilon,2} \in L^1$ such that $f_\epsilon = P_T f_\epsilon + g_\epsilon \circ T - g_\epsilon + e_{\epsilon,2}$ and $\|e_{\epsilon,2}\|_1 < \epsilon$.
+
+  Also, $\exists h_\epsilon \in L^\infty$, $e_{\epsilon, 3} \in L^1$ such that $g_\epsilon = h_\epsilon + e_{\epsilon,3}$ and $\|e_{\epsilon,3}\|_1 < \epsilon$.
+
+  Thus, $f = P_T f_\epsilon + h_\epsilon \circ T - h_\epsilon + e_\epsilon$, where $e_\epsilon \in L^1$ with $\|e_\epsilon\|_1 < 4\epsilon$.
+
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N_1} f(T^nx) = P_T f_\epsilon(x) + \frac{1}{N} \left(h_\epsilon(T^N x) - h_\epsilon(x)\right) + \frac{1}{N} \sum_{n=0}^{N-1} e_\epsilon(T^nx).
+  \end{equation*}
+  Let
+  \begin{equation*}E_{\epsilon,\alpha} = \set{x \in X | \limsup_{N \to \infty} \left|\frac{1}{N} \sum_{n=0}^\infty f(T^n x) - P_T f_\epsilon(x)\right| > \alpha}.\end{equation*}
+  Applying the maximal ergodic theorem for the function $e_\epsilon$:
+  \begin{equation*}
+    \mu(E_{\epsilon,\alpha}) \leq \alpha^{-1} \|e_\epsilon\|_1 \leq \frac{4\epsilon}{\alpha}.
+  \end{equation*}
+
+  Let $F$ be the set of points $x$ such that $\frac{1}{N} \sum_{n=0}^{N-1} f(T^nx)$ does not converge at $x$.
+  Then $F \subset \cup F_\alpha$ where
+  \begin{equation*}
+    F_\alpha = \set{x \in X | \limsup_{N_1, N_2 \to \infty} \left|\frac{1}{N_1} \sum_{n=0}^{N_1 - 1} f(T^n x) - \frac{1}{N_2} \sum_{n=0}^{N_2 - 1} f(T^n x)\right| > 2\alpha}.
+  \end{equation*}
+  Notice $F_\alpha \subset E_{\epsilon,\alpha}$ for all $\epsilon > 0$.
+  $\mu(F_\alpha) \leq \mu(E_{\epsilon,\alpha}) \leq \frac{4\epsilon}{\alpha}$.
+  Therefore $\mu(F_\alpha) = 0$.
+
+  We can take a countable sequence of $\alpha$'s and conclude $\mu(F) = 0$>
+  We proved that $\frac{1}{N} \sum_{n=0}^{N-1} f(T^n x) \to f^*(x)$ for some function $f^*$.
+
+  By Fatou's lemma, $f^* \in L^1$.
+  It remains to prove $f^*(x) = f^*(Tx)$ a.e.
+  For a.e.\ $x$,
+  \begin{align*}
+    f^*(x) &= \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x) \\
+    f^*(Tx) &= \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^{n+1} x) \\
+     &= \lim_{N \to \infty} \frac{1}{N} \sum_{n=1}^{N} f(T^n x) \\
+     &= \lim_{N \to \infty} \frac{1}{N-1} \sum_{n=1}^{N-1} f(T^n x) \\
+     &= \lim_{N \to \infty} \frac{1}{N} \sum_{n=1}^{N-1} f(T^n x) \\
+  \end{align*}
+  Then $f^*(x) - f^*(Tx) = \lim \frac{1}{N} f(x) = 0$.
+\end{proof}
 \printindex
 \end{document}
