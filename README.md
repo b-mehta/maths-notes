@@ -2,7 +2,7 @@
 
 ## Part III notes
 ### Michaelmas
-- [Algebraic Topology](iii/mich/algebraic_topology.pdf) (2018, I. Smith)
+- ~~[Algebraic Topology](iii/mich/algebraic_topology.pdf) (2018, I. Smith)~~ dropped.
 - [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone)
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader)
 - [Introduction to Discrete Analysis](iii/mich/introduction_to_discrete_analysis.pdf) (2018, W. T. Gowers)

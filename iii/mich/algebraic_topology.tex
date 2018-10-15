@@ -184,7 +184,6 @@ Recall this refers to continuous maps $S^1 \to X$ taking $* \mapsto x_0$ and a b
           (- 1.5,-1  )
         };
       \node [dot] at (2,0) {};
-      %\draw[step=0.1cm,very thin, help lines] (-3,-2) grid (7,2);
       \begin{scope}[decoration={markings,mark=at position 0.5 with {\arrow{<}}}]
         \draw[bblue, postaction={decorate}] (2,0) to [out=180, in=22] (0.6,-0.2);
         \draw[bblue, postaction={decorate},dashed, very thin] (0.6,-0.2) to [out=202, in=-160] (1.2,-1.2);
@@ -196,7 +195,6 @@ Recall this refers to continuous maps $S^1 \to X$ taking $* \mapsto x_0$ and a b
         \draw[bred, postaction={decorate}] (5.7,0) to [out=90, in=0] (4,0.9);
         \draw[bred, postaction={decorate}] (4,0.9) to[out=180,in=70] (2,0);
       \end{scope}
-      % \draw plot [smooth, tension=0.6] coordinates {(2,0)  (0.6,-0.2) (0.6,-0.8) (1.2,-1.2) (1.8,-0.6) (2,0)};
     \end{scope}
 
   \end{tikzpicture}
@@ -301,16 +299,16 @@ Note the edges of any simplex are canonically oriented via `$v_i \to v_j$ if $i 
   on $\sigma=[v_0 \dotsm v_n]$ and extend to $C_n(X)$ by linearity.
 \end{defi}
 \begin{eg}
-  For the simplex $\sigma = [v_0 v_1 v_2]$, $d(\sigma) = [v_0 v_1] - [v_0 v_2] [v_1 v_2]$.
+  For the simplex $\sigma = [v_0 v_1 v_2]$, $d(\sigma) = [v_0 v_1] - [v_0 v_2] + [v_1 v_2]$.
 \end{eg}
 \begin{lemma}
   $d^2 = 0$, i.e.\ $d_{n-1} \circ d_n= 0 \ \forall n$.
 \end{lemma}
 \begin{proof}
   \begin{align*}
-    d \circ d(\sigma) &= d(\sum_{i=0}^n (-1)^i \sigma|_{[v_0 \dotsm \hat{v_i} \dotsm v_n]})\\
-                      &= \sum_{j < i} (-1)^i (-1)^j \sigma|_[v_0 \dotsm \hat{v_j} \dotsm \hat{v_i} \dotsm v_n]  \\
-                      &+ \sum_{j > i} (-1)^i (-1)^(j+1) \sigma|_[v_0 \dotsm \hat{v_i} \dotsm \hat{v_j} \dotsm v_n].
+    d \circ d(\sigma) &= d\left(\sum_{i=0}^n (-1)^i \sigma|_{[v_0 \dotsm \hat{v_i} \dotsm v_n]}\right)\\
+                      &= \sum_{j < i} (-1)^i (-1)^j \sigma|_{[v_0 \dotsm \hat{v_j} \dotsm \hat{v_i} \dotsm v_n]}  \\
+                      &+ \sum_{j > i} (-1)^i (-1)^{j+1} \sigma|_{[v_0 \dotsm \hat{v_i} \dotsm \hat{v_j} \dotsm v_n]}.
   \end{align*}
   Exchanging $i$ and $j$, these two terms exactly cancel.
 \end{proof}
@@ -367,6 +365,25 @@ The upshot of this is that if $f:X\to Y$ is a continuous map of spaces, it induc
   Exercise.
 \end{proof}
 In category-theoretic language, the association $X \mapsto H_*(X)$ is a functor from the category of topological spaces to the set of graded abelian groups.
-Observe $f:X \to Y$ $f_*:C_*(X) \to C_*(Y)$ and this has an adjoint $f^*: C^*(Y) \to C^*(X)$.
+Observe $f:X \to Y$ induces $f_*:C_*(X) \to C_*(Y)$ and this has an adjoint $f^*: C^*(Y) \to C^*(X)$.
 Note this goes the other way. This again induces a map $H^*(Y) \to H^*(X)$.
+
+\begin{lemma}
+  \begin{equation*}
+    H_*(\text{pt}) =
+    \begin{cases*}
+      \mathbb{Z} & * = 0\\
+      0 & otherwise
+    \end{cases*}
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  Note for each $n \geq0$, there is a \emph{unique} $n$-simplex in $X = $\{pt\}, namely the constant map $\sigma_n: \Delta^n \to $ \{pt\}.
+  So the chain complex $(C_*(\text{pt}), d)$ is as follows.
+  \begin{equation*}
+    \begin{tikzcd}
+      \dots \rar & C_n(X)
+    \end{tikzcd}
+  \end{equation*}
+\end{proof}
 \end{document}
