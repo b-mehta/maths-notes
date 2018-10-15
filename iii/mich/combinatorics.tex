@@ -7,16 +7,21 @@
 \def\ncourse{Combinatorics}
 \def\draft{Ongoing course, rough}
 \usepackage{imakeidx}
+\usepackage{chngcntr}
 \input{header}
 \makeindex[intoc]
-\usetikzlibrary{fadings}
+\usetikzlibrary{fadings, decorations.pathmorphing}
 
 % preamble
 
 \setcounter{section}{-1}
+\counterwithout{nthm}{section}
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newcommand{\ihalf}[1]{\floor{\frac{#1}{2}}}
+\newcommand{\ihalfc}[1]{\ceil{\frac{#1}{2}}}
 
 %\newtheorem{manualtheoreminner}{Theorem}
 %\newenvironment{manualtheorem}[1]{%
@@ -32,6 +37,9 @@
 %\newcommand{\purple}[1]{\textcolor{bpurple}{#1}}
 
 % and here we go!
+
+\let\oldsubset\subset
+\let\subset\subseteq
 
 \begin{document}
 \maketitle
@@ -245,18 +253,19 @@ Can we beat this?
 Aim: Prove this is the winner.
 
 % lecture 2
-Inspired by `each chain meets each level $X^{(r)}$ in at most one place' for chains, we try to decompose $\hyperlink{def:qn}{Q_n}$ into chains to find large antichains.
-\begin{nthm}[Sperner's Lemma]\label{thm:sperner}
-  Let $\mathcal{A} \subseteq \mathcal{P}(X)$ be an antichain. Then $|\mathcal{A}| \leq \binom{n}{\floor{\frac{n}{2}}}$.
+Inspired by `each \hyperlink{def:chain}{chain} meets each level $X^{(r)}$ in at most one place' for chains, we try to decompose $\hyperlink{def:qn}{Q_n}$ into chains to find large \hyperlink{def:antichain}{antichains}.
+\begin{nthm}[Sperner's Lemma]\label{thm:sperner}\index{Sperner's Lemma}
+  Let $\mathcal{A} \subseteq \mathcal{P}(X)$ be an \hyperlink{def:antichain}{antichain}.
+  Then $|\mathcal{A}| \leq \binom{n}{\floor{\frac{n}{2}}}$.
 \end{nthm}
 \begin{proof}
-  It is sufficient to partition $\mathcal{P}(X)$ into $\binom{n}{\floor{\frac{n}{2}}}$ chains.
+  It is sufficient to partition $\mathcal{P}(X)$ into $\binom{n}{\floor{\frac{n}{2}}}$ \hyperlink{def:chain}{chains}.
   For this, it is sufficient to show
   \begin{enumerate}[label=(\roman*)]
-    \item $\forall r < \frac{n}{2}$, there is a matching from $X^{(r)}$ to $X^{(r+1)}$
+    \item $\forall r < \frac{n}{2}$, there is a matching from \hyperlink{def:superr}{$X^{(r)}$} to $X^{(r+1)}$
     \item $\forall r > \frac{n}{2}$, there is a matching from $X^{(r)}$ to $X^{(r-1)}$.
   \end{enumerate}
-  Then put these matchings together to form chains, each passing through $X^{(\floor{\frac{n}{2}})}$, so there are $\binom{n}{\floor{\frac{n}{2}}}$ of them.
+  Then put these matchings together to form chains, each passing through $X^{(\floor{\frac{n}{2}})}$, so there are $\binom{n}{\floor{\frac{n}{2}}}$ of them. (Recall we have a \hyperlink{def:ints}{natural graph structure} on \hyperlink{def:qn}{$Q_n$})
 
   \begin{center}
     \begin{tikzpicture}
@@ -273,117 +282,146 @@ Inspired by `each chain meets each level $X^{(r)}$ in at most one place' for cha
         \draw (0,1.9) circle [x radius=9mm, y radius=4mm];
         \node [right] at (0.9, 1.9) {$X^{(n-2)}$};
 
-        \draw (0,3.2) -- (0,2.7) -- (0,1.9);
-        \draw [path fading=fade down] (0,1.9) -- (0,1.4);
+        \draw [bblue] (0,3.2) -- (0,2.7) -- (0,1.9);
+        \draw [bblue, path fading=fade down] (0,1.9) -- (0,1.4);
 
-        \draw (0.2,2.7) to[out=270, in=100] (0.25,1.9);
-        \draw [path fading=fade down] (0.25,1.9) to[out=-80, in=110] (0.4, 1.4);
+        \draw [bblue] (0.2,2.7) to[out=270, in=100] (0.25,1.9);
+        \draw [bblue, path fading=fade down] (0.25,1.9) to[out=-80, in=110] (0.4, 1.4);
 
-        \draw (-0.2,2.7) to[out=270, in=80] (-0.25,1.9);
-        \draw [path fading=fade down] (-0.25,1.9) to[out=-100, in=70] (-0.4, 1.4);
+        \draw [bblue] (-0.2,2.7) to[out=270, in=80] (-0.25,1.9);
+        \draw [bblue, path fading=fade down] (-0.25,1.9) to[out=-100, in=70] (-0.4, 1.4);
 
-        \draw [path fading=fade down] (0.5, 1.9) -- (0.7, 1.4);
-        \draw [path fading=fade down] (-0.5, 1.9) -- (-0.7, 1.4);
+        \draw [bblue, path fading=fade down] (0.5, 1.9) -- (0.7, 1.4);
+        \draw [bblue, path fading=fade down] (-0.5, 1.9) -- (-0.7, 1.4);
 
         \node at (0,1.25) {$\vdots$};
 
         \foreach \val in {-1.4,-1.0,...,1.4} {
-          \draw [path fading=fade up] (\val*0.8,1) to[in=90,out=270] (\val,0); % -- (\val*0.8,-1);
-          \draw [path fading=fade down] (\val*0.8,-1) to[in=270,out=90] (\val,0);
+          \draw [bblue, path fading=fade up] (\val*0.8,1) to[in=90,out=270] (\val,0); % -- (\val*0.8,-1);
+          \draw [bblue, path fading=fade down] (\val*0.8,-1) to[in=270,out=90] (\val,0);
         }
 
         \draw (0,0) circle [x radius=16mm, y radius=8mm];
-        \node [right] at (1.6, 0) {$X^{(\frac{n}{2})}$};
+        \node [right] at (1.6, 0) {$X^{(\floor{\frac{n}{2}})}$};
 
         \node at (0,-1.05) {$\vdots$};
 
         \begin{scope}[yscale=-1]
-        \draw (0,3.2) circle [x radius=1mm, y radius=1mm];
-        \node [right] at (0.25, 3.2) {$X^{(n)}$};
+          \draw (0,3.2) circle [x radius=1mm, y radius=1mm];
+          \node [right] at (0.25, 3.2) {$X^{(0)}$};
 
-        \draw (0,2.7) circle [x radius=4.5mm, y radius=2mm];
-        \node [right] at (0.5, 2.7) {$X^{(n-1)}$};
+          \draw (0,2.7) circle [x radius=4.5mm, y radius=2mm];
+          \node [right] at (0.5, 2.7) {$X^{(1)}$};
 
-        \draw (0,1.9) circle [x radius=9mm, y radius=4mm];
-        \node [right] at (0.9, 1.9) {$X^{(n-2)}$};
+          \draw (0,1.9) circle [x radius=9mm, y radius=4mm];
+          \node [right] at (0.9, 1.9) {$X^{(2)}$};
 
-        \draw (0,3.2) -- (0,2.7) -- (0,1.9);
-        \draw [path fading=fade up] (0,1.9) -- (0,1.4);
+          \draw [bblue] (0,3.2) -- (0,2.7) -- (0,1.9);
+          \draw [bblue, path fading=fade up] (0,1.9) -- (0,1.4);
 
-        \draw (0.2,2.7) to[out=270, in=100] (0.25,1.9);
-        \draw [path fading=fade up] (0.25,1.9) to[out=-80, in=110] (0.4, 1.4);
+          \draw [bblue] (0.2,2.7) to[out=270, in=100] (0.25,1.9);
+          \draw [bblue, path fading=fade up] (0.25,1.9) to[out=-80, in=110] (0.4, 1.4);
 
-        \draw (-0.2,2.7) to[out=270, in=80] (-0.25,1.9);
-        \draw [path fading=fade up] (-0.25,1.9) to[out=-100, in=70] (-0.4, 1.4);
+          \draw [bblue] (-0.2,2.7) to[out=270, in=80] (-0.25,1.9);
+          \draw [bblue, path fading=fade up] (-0.25,1.9) to[out=-100, in=70] (-0.4, 1.4);
 
-        \draw [path fading=fade up] (0.5, 1.9) -- (0.7, 1.4);
-        \draw [path fading=fade up] (-0.5, 1.9) -- (-0.7, 1.4);
+          \draw [bblue, path fading=fade up] (0.5, 1.9) -- (0.7, 1.4);
+          \draw [bblue, path fading=fade up] (-0.5, 1.9) -- (-0.7, 1.4);
         \end{scope}
     \end{tikzpicture}
   \end{center}
 
   By taking complements, it is sufficient to prove (i).
 
-  Consider the subgraph of $Q_n$ spanned by $X^{(r)} \cup X^{(r+1)}$. It is bipartite.
+  Consider the subgraph of \hyperlink{def:qn}{$Q_n$} spanned by $\hyperlink{def:superr}{X^{(r)}} \cup X^{(r+1)}$. It is bipartite.
   For any $\mathcal{B} \subseteq X^{(r)}$, we have that
   \begin{itemize}
-    \item The number of edges from $\mathcal{B}$ to $\mathcal{P}(\mathcal{B})$ is $|\mathcal{B}| (n-r)$ (each point in $X^{(r)}$ has degree $n-r$).
-    \item The number of edges from $\mathcal{B}$ to $\mathcal{P}(\mathcal{B})$ at most $|\mathcal{P}(\mathcal{B})| (r+1)$ (each point in $X^{(r+1)}$ has degree $r+1$).
+    \item The number of edges from $\mathcal{B}$ to $\Gamma(\mathcal{B})$ is $|\mathcal{B}| (n-r)$ (each point in $X^{(r)}$ has degree $n-r$).
+    \item The number of edges from $\mathcal{B}$ to $\Gamma(\mathcal{B})$ is at most $|\Gamma(\mathcal{B})| (r+1)$ (each point in $X^{(r+1)}$ has degree $r+1$).
   \end{itemize}
   \begin{center}
     \begin{tikzpicture}
-      \draw (0, 1) circle [x radius=1.2cm, y radius=0.6cm];
-      \node [right] at (1.2, 1) {$X^{(r)}$};
-      \draw (0.7, 0.9) circle [x radius=0.3cm, y radius=]
-      \draw (0,-1) circle [x radius=1.7cm, y radius=0.9cm];
-      \node [right] at (1.7, -1) {$X^{(r+1)}$};
+      \draw (0,1) circle [x radius=1.7cm, y radius=0.9cm];
+      \node [right] at (1.7, 1) {$X^{(r+1)}$};
+      \draw [thin, decorate, decoration={random steps,segment length=1.5pt,amplitude=0.7pt}, bred, fill=bred!20] (0.7, 1.1) circle [x radius=0.6cm, y radius=0.45cm];
+      \node [left, bred] at (0.1, 1.1) {$\Gamma(\mathcal{B})$};
+
+      \draw (0, -1) circle [x radius=1.2cm, y radius=0.6cm];
+      \node [right] at (1.2, -1) {$X^{(r)}$};
+      \draw [thin, decorate, decoration={random steps,segment length=1.5pt,amplitude=0.7pt}, bred, fill=bred!20] (0.6, -0.9) circle [x radius=0.3cm, y radius=0.25cm];
+      \node [left, bred] at (0.3, -0.9) {$\mathcal{B}$};
+      %\foreach \x in {0.4,0.5,...,1.1} {
+      %  \draw [very thin] (\x,1.1) to (\x*0.6+0.2,-0.9);
+      %}
     \end{tikzpicture}
   \end{center}
   Thus
   \begin{align*}
-    |\mathcal{P}(\mathcal{B})| &\geq |\mathcal{B}| \frac{n-r}{r+1} \\
+    |\Gamma(\mathcal{B})| &\geq |\mathcal{B}| \frac{n-r}{r+1} \\
                                &\geq |\mathcal{B}|
   \end{align*}
   as $r < \frac{n}{2}$.
   Hence by Hall's theorem, there is a matching.
 \end{proof}
 
-\begin{remark}\leavevmode
-  \begin{itemize}[label=--]
-    \item Recall $\binom{n}{\floor{\frac{n}{2}}}$ was achievable, for example $A = X^{(\floor{\frac{n}{2}})}$.
-    \item The proof says nothing about extremal cases - which antichains have size $\binom{n}{\floor{\frac{n}{2}}}$?
-  \end{itemize}
+\begin{remark}
+  Recall $\binom{n}{\floor{\frac{n}{2}}}$ was achievable, for example $\mathcal{A} = \hyperlink{def:superr}{X^{(\floor{\frac{n}{2}})}}$.
+  This proof says nothing about extremal cases - which \hyperlink{def:antichain}{antichains} have size $\binom{n}{\floor{\frac{n}{2}}}$?
 \end{remark}
 
 Aim: For $\mathcal{A}$ an antichain,
 \begin{equation*}
-  \sum_{r=0}^n \frac{\mathcal{A} \cap X^{(r)}}{\binom{n}{r}} \leq 1.
+  \sum_{r=0}^n \frac{|\mathcal{A} \cap X^{(r)}|}{\binom{n}{r}} \leq 1.
 \end{equation*}
 This trivially implies \nameref{thm:sperner}.
 
-\begin{defi}[Shadow]\hypertarget{def:shadow}
+%\begin{center}
+%  \begin{tikzpicture}
+%
+%  \end{tikzpicture}
+%\end{center}
+\begin{defi}[Shadow]\index{shadow}\hypertarget{def:shadow}
   Let $\mathcal{A} \subseteq X^{(r)}$, for some $1 \leq r \leq n$.
   The \textbf{shadow} or \textbf{corner shadow} of $\mathcal{A}$ is
   \begin{equation*}
-    \partial \mathcal{A} = \partial^- \mathcal{A} = \set{A - \{i\} | A \in \mathcal{A}, i \in A}
+    \partial \mathcal{A} \equiv \partial^- \mathcal{A} \coloneqq \set{A - \{i\} | A \in \mathcal{A},\; i \in A}
   \end{equation*}
   so $\partial \mathcal{A} \subset X^{(r-1)}$.
 \end{defi}
+\begin{center}
+  \begin{tikzpicture}
+    \draw [bgreen, opacity=0.8] (0.2,1.1) -- (0.2,-1);
+    \draw [bgreen, opacity=0.8] (1.2,1.1) -- (1,-1);
+
+    \draw (0,1) circle [x radius=1.7cm, y radius=0.9cm];
+    \node [right] at (1.7, 1) {$X^{(r)}$};
+    \draw [thin, decorate, decoration={random steps,segment length=1.5pt,amplitude=0.7pt}, bgreen, fill=bgreen!20] (0.7, 1.1) circle [x radius=0.5cm, y radius=0.4cm];
+    \node [left, bgreen] at (0.2, 1.1) {$A$};
+
+    \draw (0, -1) circle [x radius=1.2cm, y radius=0.6cm];
+    \node [right] at (1.2, -1) {$X^{(r-1)}$};
+    \draw [thin, decorate, decoration={random steps,segment length=1.5pt,amplitude=0.7pt}, bgreen, fill=bgreen!20] (0.6, -1) circle [x radius=0.4cm, y radius=0.3cm];
+    \node [left, bgreen] at (0.2, -1) {$\partial A$};
+    %\foreach \x in {0.4,0.5,...,1.1} {
+    %  \draw [very thin] (\x,1.1) to (\x*0.6+0.2,-0.9);
+    %}
+  \end{tikzpicture}
+\end{center}
 For example, if $\mathcal{A} = \{123,124,134,135\} \subset X^{(3)}$, then
 \begin{equation*}\hyperlink{def:shadow}{\partial \mathcal{A}} = \{12,13,23,24,34,15,35\} \subset X^{(2)}.\end{equation*}
 
-\begin{nlemma}[Local LYM]\label{thm:locallym}
-  Let $\mathcal{A} \subseteq X^{(r)}$, $1 \leq r \leq n$. Then
+\begin{nlemma}[Local LYM]\label{thm:locallym}\index{Local LYM}
+  Let $\mathcal{A} \subseteq \hyperlink{def:superr}{X^{(r)}}$, $1 \leq r \leq n$. Then
   \begin{equation*}
-    \frac{|\partial \mathcal{A}|}{\binom{n}{r-1}} \geq \frac{|\mathcal{A}|}{\binom{n}{r}}.
+    \frac{|\hyperlink{def:shadow}{\partial \mathcal{A}}|}{\binom{n}{r-1}} \geq \frac{|\mathcal{A}|}{\binom{n}{r}}.
   \end{equation*}
   `The fraction of the layer occupied increases when we take the \hyperlink{def:shadow}{shadow}'.
 \end{nlemma}
 \begin{proof}
-  Counting from above, there are $r|A|$ edges $A$ to $\partial A$.
-  Counting from below, the number of edges $A$ to $\partial A$ is at most $(n-r+1) |\partial A|$, so
+  Counting from above, there are $r|\mathcal{A}|$ edges $\mathcal{A}$ to $\hyperlink{def:shadow}{\partial \mathcal{A}}$.
+  Counting from below, the number of edges $\mathcal{A}$ to $\partial \mathcal{A}$ is at most $(n-r+1) |\partial \mathcal{A}|$, so
   \begin{equation*}
-    \frac{|\partial A|}{|A|} \geq \frac{r}{n-r+1}.
+    \frac{|\partial \mathcal{A}|}{|\mathcal{A}|} \geq \frac{r}{n-r+1}.
   \end{equation*}
   But
   \begin{equation*}
@@ -391,52 +429,43 @@ For example, if $\mathcal{A} = \{123,124,134,135\} \subset X^{(3)}$, then
   \end{equation*}
 \end{proof}
 
-When do we get equality in \nameref{thm:locallym}? We'd need $(A - \{i\}) \cup \{j\} \in \mathcal{A} \; \forall A \in \mathcal{A}, i \in A, j \notin A$. Hence $\mathcal{A} = X^{r}$ or $\emptyset$.
+When do we get equality in \nameref{thm:locallym}? We'd need $(A - \{i\}) \cup \{j\} \in \mathcal{A}\;\;\forall A \in \mathcal{A},\; i \in A,\; j \notin A$. Hence $\mathcal{A} = X^{r}$ or $\emptyset$.
 
-\begin{nthm}[LYM inequality]\label{thm:lym}
+The LYM in \nameref{thm:locallym} stands for `Lubell–Yamamoto–Meshalkin'.
+We can use \nameref{thm:locallym} to prove:
+\begin{nthm}[LYM]\label{thm:lym}\index{LYM}
   Let $\mathcal{A} \subset \mathcal{P}(X)$ be an \hyperlink{def:antichain}{antichain}.
   Then
   \begin{equation*}
-    \sum_{r=0}^n \frac{|\mathcal{A} \cap X^{(r)}|}{\binom{n}{r}} \leq 1.
+    \sum_{r=0}^n \frac{|\mathcal{A} \cap \hyperlink{def:superr}{X^{(r)}}|}{\binom{n}{r}} \leq 1.
   \end{equation*}
 \end{nthm}
-\begin{proof}[Proof 1]
-  `Bubble down with \nameref{thm:locallym}'
+\begin{proof}[Proof 1: `Bubble down with \nameref{thm:locallym}']
   Write $\mathcal{A}_r = \mathcal{A} \cap X^{(r)}$.
   We have $\frac{|\mathcal{A}_n|}{\binom{n}{n}} \leq 1$.
-
-  Also, $\partial \mathcal{A}_n$ and $\mathcal{A}_{n-1}$ are distinct, since $\mathcal{A}$ was an antichain so
-  \begin{equation*}
-    \frac{|\partial A_n|}{\binom{n}{n-1}} + \frac{|A_{n-1}|}{\binom{n}{n-1}} = \frac{|\partial A_n \cup A_{n-1}|}{\binom{n}{n-1}}
-  \end{equation*}
-  so
-  \begin{equation*}
-    \frac{|A_n|}{\binom{n}{n}} + \frac{|\mathcal{A}_{n-1}|}{\binom{n}{n-1}} \leq 1
-  \end{equation*}
+  Also, $\hyperlink{def:shadow}{\partial \mathcal{A}_n}$ and $\mathcal{A}_{n-1}$ are distinct since $\mathcal{A}$ was an \hyperlink{def:antichain}{antichain}, so
+  \begin{align*}
+    \frac{|\partial A_n|}{\binom{n}{n-1}} + \frac{|A_{n-1}|}{\binom{n}{n-1}} &= \frac{|\partial A_n \cup A_{n-1}|}{\binom{n}{n-1}} \\
+    \implies \frac{|A_n|}{\binom{n}{n}} + \frac{|\mathcal{A}_{n-1}|}{\binom{n}{n-1}} &\leq 1
+  \end{align*}
   by \nameref{thm:locallym}.
 
-  Also, $\partial(\partial A_n \cup A_{n-1})$ is disjoint from $A_{n-2}$, again since $A$ is an antichain so
-  \begin{equation*}
-    \frac{|\partial(\partial A_n \cup A_{n-1})|}{\binom{n}{n-2}} + \frac{A_{n-2}}{{n \choose n-2}},
-  \end{equation*}
-  so
-  \begin{equation*}
-    \frac{|(\partial A_n \cup A_{n-1})|}{\binom{n}{n-1}} + \frac{A_{n-2}}{{n \choose n-2}},
-  \end{equation*}
-  so
-  \begin{equation*}
-    \frac{A_n}{\binom{n}{n}} + \frac{A_{n-1}}{\binom{n}{n-1}} + \frac{A_{n-2}}{\binom{n}{n-2}} \leq 1.
-  \end{equation*}
-
+  Also, $\partial(\partial \mathcal{A}_n \cup \mathcal{A}_{n-1})$ is disjoint from $\mathcal{A}_{n-2}$, again since $\mathcal{A}$ is an antichain so
+  \begin{align*}
+    \frac{|\partial(\partial \mathcal{A}_n \cup \mathcal{A}_{n-1})|}{\binom{n}{n-2}} + \frac{\mathcal{A}_{n-2}}{{n \choose n-2}} &\leq 1, \\
+    \implies \frac{|(\partial \mathcal{A}_n \cup \mathcal{A}_{n-1})|}{\binom{n}{n-1}} + \frac{\mathcal{A}_{n-2}}{{n \choose n-2}} &\leq 1, \\
+    \implies \frac{\mathcal{A}_n}{\binom{n}{n}} + \frac{\mathcal{A}_{n-1}}{\binom{n}{n-1}} + \frac{\mathcal{A}_{n-2}}{\binom{n}{n-2}} &\leq 1.
+  \end{align*}
   Keep going, we obtain
   \begin{equation*}
-    \frac{A_n}{\binom{n}{n}} + \frac{A_{n-1}}{\binom{n}{n-1}} + \dotsm + \frac{A_0}{\binom{n}{0}} \leq 1.
+    \frac{\mathcal{A}_n}{\binom{n}{n}} + \frac{\mathcal{A}_{n-1}}{\binom{n}{n-1}} + \dotsm + \frac{\mathcal{A}_0}{\binom{n}{0}} \leq 1. \qedhere
   \end{equation*}
 \end{proof}
 
-When do we get equality in LYM? Must have had equality in each use of local lym.
-So the first (greatest) $r$ with $A_r \neq 0$ must have $A_r = X^{(r)}$ so $\mathcal{A} = X^{(r)}$.
-Hence equality in \nameref{thm:sperner} implies $\mathcal{A} = X^{(\frac{n}{2})}$ for $n$ even and $\mathcal{A} = X^{(\floor{\frac{n}{2}})}$ or $X^{(\ceil{\frac{n}{2}})}$.
+When do we get equality in \nameref{thm:lym}?
+We must have had equality in each use of \nameref{thm:locallym}.
+So the first (greatest) $r$ with $\mathcal{A}_r \neq \emptyset$ must have $\mathcal{A}_r = X^{(r)}$ thus $\mathcal{\mathcal{A}} = X^{(r)}$.
+Hence equality in \nameref{thm:sperner} $\iff$ $\mathcal{A} = X^{(\frac{n}{2})}$ for $n$ even and $\mathcal{A} = X^{(\ihalf{n})}$ or $X^{(\ihalfc{n})}$ for $n$ odd.
 \section{Isoperimetric inequalities}
 \section{Projections}
 \printindex
