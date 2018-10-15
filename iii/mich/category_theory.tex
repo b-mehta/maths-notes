@@ -9,10 +9,12 @@
 
 \usepackage{mathrsfs}
 \usepackage{imakeidx}
+\usepackage{marginnote}
 
 \input{header}
 \usetikzlibrary{cd}
 \swapnumbers
+\reversemarginpar
 
 \makeindex[intoc]
 
@@ -79,6 +81,7 @@
 
 \clearpage
 \section{Introduction}
+\marginnote{\emph{Lecture 1}}[0cm]
 Category theory is like a language spoken by many different people, with many different dialects.
 Specifically, different parts of category theory are used in different branches of mathematics.
 In this course, we aim to speak the language of category theory, without an accent - a broad overview of all aspects of category theory.
@@ -150,6 +153,7 @@ As long as some examples make sense, it is not a point of concern that some exam
 \end{ndef}
 % lecture 2
 \begin{manualeg}{1.3}[\emph{Continued}]\leavevmode
+  \marginnote{\emph{Lecture 2}}[0cm]
   \begin{enumerate}[label=(\alph*)]\setcounter{enumi}{10}
     \item We write \textbf{Cat} for the category whose objects are all \hyperlink{def:small}{small} \hyperlink{def:cat}{categories}, and whose morphisms are \hyperlink{def:funct}{functors} between them.
   \end{enumerate}
@@ -213,7 +217,7 @@ As long as some examples make sense, it is not a point of concern that some exam
         1_{\hyperlink{def:categ}{\mathbf{Mod}_K}} \to ** : \mathbf{Mod}_K \to \mathbf{Mod}_K.
       \end{equation*}
       % lecture 3
-    \item For any set $A$, we have a mapping $\sigma_A : A \to PA$ sending $a$ to $\{a\}$.
+    \item For any set $A$, we have a mapping $\sigma_A : A \to PA$ sending $a$ to $\{a\}$.  \marginnote{\emph{Lecture 3}}[0cm]
       If $f: A \to B$, then $Pf\{a\} = \{f(a)\}$, so $\sigma$ is a natural transformation $1_{\mathbf{Set}} \to P$.
     \item Let $F: \mathbf{Set} \to \mathbf{Gp}$ be the free group functor (\cref{1.5}(b)) and $U: \mathbf{Gp} \to \mathbf{Set}$ the forgetful functor.
       The inclusions $A \to UFA$ form a natural transformation $1_{\mathbf{Set}} \to UF$.
@@ -223,7 +227,7 @@ As long as some examples make sense, it is not a point of concern that some exam
       A natural transformation $A \to B$ is a function $f$ satisfying $f(g . a) = g . f(a)$ for all $a \in A$, i.e.\ a $G$-equivariant map.
   \end{enumerate}
 \end{nexample}
-\begin{nlemma}\label{1.8}
+\begin{nlemma}\label{1.8}\hypertarget{def:natiso}
   Let $F,G : \mathscr{C} \to \mathscr{D}$ be two \hyperlink{def:funct}{functors}, and $\alpha: F \to G$ a \hyperlink{def:nattrans}{natural transformation}.
   Then $\alpha$ is an isomorphism in $\hyperlink{def:functcat}{[\mathscr{C}, \mathscr{D}]}$ iff each $\alpha_A$ is an isomorphism in $\mathscr{D}$.
 \end{nlemma}
@@ -293,13 +297,14 @@ As long as some examples make sense, it is not a point of concern that some exam
 \end{nexample}
 % lecture 4
 \begin{ndef}[Faithful, full, essentially surjective]\label{1.11}\hypertarget{def:full}
- Let $\begin{tikzcdi} \mathscr{C} \rar{F}& \mathscr{D} \end{tikzcdi}$ be a \hyperlink{def:funct}{functor}.
-  \begin{enumerate}[label=(\alph*)]
-    \item \index{functor!faithful}We say $F$ is \textbf{faithful} if, given $f, f' \in \mor \cc$ with $\dom f = \dom f'$, $\cod f = \cod f'$ and $Ff = Ff'$ then $f = f'$.
-    \item \index{functor!full}We say $F$ is \textbf{full} if, given $\begin{tikzcdi} FA \rar{g}& FB \end{tikzcdi}$ in $\mathscr{D}$, there exists $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$ in $\mathscr{C}$ with $Ff = g$.
-    \item \index{functor!essentially surjective}We say $F$ is \textbf{essentially surjective} if, for every $B \in \ob \dc$, there exists $A \in \ob \cc$ and an isomorphism $FA \to B$ in $\dc$.
-  \end{enumerate}
-  \hypertarget{def:fulls}We say a subcategory $\cc' \subseteq \cc$ is \textbf{full} if the inclusion $\cc' \to \cc$ is a full functor.
+  Let $\begin{tikzcdi} \mathscr{C} \rar{F}& \mathscr{D} \end{tikzcdi}$ be a \hyperlink{def:funct}{functor}.
+  \marginnote{\emph{Lecture 4}}[0cm]
+ \begin{enumerate}[label=(\alph*)]
+   \item \index{functor!faithful}We say $F$ is \textbf{faithful} if, given $f, f' \in \mor \cc$ with $\dom f = \dom f'$, $\cod f = \cod f'$ and $Ff = Ff'$ then $f = f'$.
+   \item \index{functor!full}We say $F$ is \textbf{full} if, given $\begin{tikzcdi} FA \rar{g}& FB \end{tikzcdi}$ in $\mathscr{D}$, there exists $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$ in $\mathscr{C}$ with $Ff = g$.
+   \item \index{functor!essentially surjective}We say $F$ is \textbf{essentially surjective} if, for every $B \in \ob \dc$, there exists $A \in \ob \cc$ and an isomorphism $FA \to B$ in $\dc$.
+ \end{enumerate}
+ \hypertarget{def:fulls}We say a subcategory $\cc' \subseteq \cc$ is \textbf{full} if the inclusion $\cc' \to \cc$ is a full functor.
 \end{ndef}
 \begin{eg}
   $\gpc$ is a \hyperlink{def:fulls}{full subcategory} of $\monc$, but $\monc$ is not a full subcategory of the category $\sgpc$ of semigroups.
@@ -406,5 +411,122 @@ Any isomorphism is \hyperlink{def:monic}{monic} and \hyperlink{def:epic}{epic}: 
 
 \clearpage
 \section{The Yoneda Lemma}
+\begin{ndef}[Locally small]\label{2.1}\index{locally small}\hypertarget{def:lsmall}
+  We \marginnote{\emph{Lecture 5}}[0cm]say a \hyperlink{def:cat}{category} $\cc$ is \textbf{locally small} if, for any two objects $A,B$, the morphisms $A \to B$ in $\cc$ form a set $\cc(A,B)$.
+\end{ndef}
+
+ If we fix $A$ and let $B$ vary, the assignment $B \mapsto \cc(A,B)$ becomes a \hyperlink{def:funct}{functor} $\hyperlink{def:lsmall}{\cc(A, -)} : \cc \to \setc$: given $\begin{tikzcdi} B \rar{f} & C \end{tikzcdi}$, $\cc(A,f)$ is the mapping $g \mapsto fg$.
+Similarly, $A \mapsto \cc(A,B)$ defines a functor $\cc(-, B): \cc^{op} \to \setc$.
+\begin{nlemma}\label{2.2}
+  Let $\cc$ be a \hyperlink{def:lsmall}{locally small} \hyperlink{def:cat}{category}, $A \in \ob \cc$ and $F: \cc \to \setc$ a \hyperlink{def:funct}{functor}.
+  \begin{enumerate}[label=(\roman*)]
+    \item Then natural transformations $\cc(A, -) \to F$ is a bijection with elements of $FA$.
+    \item Moreover, this bijection is natural in both $A$ and $F$.
+  \end{enumerate}
+\end{nlemma}
+\begin{proof}[Proof of \cref{2.2}(i)]
+    Given $\alpha: \cc(A,-) \to F$, we define
+      \begin{equation*}
+        \Phi(\alpha) = \alpha_A(1_A) \in FA.
+      \end{equation*}
+      Given $x \in FA$, we define $\Psi(x) : \cc(A,-) \to F$ by
+      \begin{equation*}\Psi(x)_B(A \overset{f}{\to} B) = Ff(x) \in FB.\end{equation*}
+
+      $\Psi(x)$ is natural: given $g: B \to C$, we have
+      \begin{align*}
+        \Psi(x)_C \cc(A,g)(f) = &\Psi(x)_C(gf) = F(gf)(x) \\
+        (Fg)\Psi(x)_B(f) = (Fg)(Ff)(x) = F(gf)(x).
+      \end{align*}
+      We also verify $\Psi$ and $\Phi$ are inverse:
+      \begin{equation*}
+        \Phi \Psi(x) = \Psi(x)_A(1_A) = F(1_A)(x) = x.
+      \end{equation*}
+      Given $\alpha$,
+      \begin{align*}
+        \Psi\Phi(\alpha)_B(f) &= \Phi(\alpha_A(1_A))_B(f) = Ff(\alpha_A(1_A)) \\
+                              &= \alpha_B \cc(A,f) (1_A) = \alpha_B(f)
+      \end{align*}
+      so $\Psi \Phi(\alpha) = \alpha$.
+\end{proof}
+\begin{ncor}\label{2.3}
+  The assignment $A \mapsto \hyperlink{def:lsmall}{\cc(A, -)}$ defines a \hyperlink{def:full}{full} and \hyperlink{def:full}{faithful} \hyperlink{def:funct}{functor} $\cc^{op} \to \hyperlink{def:functcat}{[\cc, \setc]}$.
+\end{ncor}
+\begin{proof}
+  Put $F = \cc(B, -)$ in \cref{2.2}(i): we get a bijection between $\cc(B,A)$ and morphisms $\cc(A, -) \to \cc(B, -)$ in $[\cc, \setc]$.
+  We need to verify this is functorial: but it sends $f: B \to A$ to the natural transformation $g \mapsto gf$.
+  So functoriality follows from associativity.
+\end{proof}
+\hypertarget{def:yonemb}We call this \hyperlink{def:funct}{functor} (or the functor $\cc \to [\cc^{op}, \setc]$) sending $A$ to $\cc(-,A)$ the \textbf{Yoneda embedding} of $\cc$, and denote it by $Y$.
+
+\begin{proof}[Proof of \cref{2.2}(ii)]
+  Suppose for the moment that $\cc$ is \hyperlink{def:small}{small}, so that $\hyperlink{def:lsmall}{[\cc, \setc]}$ is \hyperlink{def:lsmall}{locally small}.
+  Then we have two functors $\cc \times [\cc, \setc] \to \setc$:
+  One sends $(A,F)$ to $FA$, and the other is the composite
+  \begin{equation*}
+    \begin{tikzcd}[column sep=6em]
+      \cc \times [\cc, \setc] \arrow[r,"Y \times 1"] &
+      \left[\cc, \setc\right]^{op} \times \left[\cc, \setc\right]
+      \rar{[\cc, \setc](-, -)} & \setc
+    \end{tikzcd}
+  \end{equation*}
+  \cref{2.2}(ii) says that these are naturally isomorphic.
+
+  We can translate this into an elementary statement, making sense even when $\cc$ isn't small, given $A \overset{f}{\to} B$ and $F \overset{\alpha}{\to} G$, the two ways of producing an element of $GB$ from a natural transformation $\beta: \cc(A, -) \to F$ give the same result, namely
+  \begin{equation*}
+    \alpha_B(Ff) \beta_A(1_A) = (GF)\alpha_A \beta_A(1_A)
+  \end{equation*}
+  which is equal to $\alpha_B \beta_B(f)$.
+\end{proof}
+
+\begin{ndef}\label{2.4}\index{representable}\index{representation}\hypertarget{def:repr}
+  We say a \hyperlink{def:funct}{functor} $F: \cc \to \setc$ is \textbf{representable} if it's \hyperlink{def:natiso}{isomorphic} to $\cc(A, -)$ for some $A$.
+  By \textbf{representation} of $F$, we mean a pair $(A,x)$ where $x \in FA$ is such that $\Phi(x)$ is an \hyperlink{def:iso}{isomorphism}.
+  We also call $x$ a \textbf{universal element} of $F$.
+\end{ndef}
+\begin{ncor}\label{2.5}
+  If $(A,x)$ and $(B,y)$ are both \hyperlink{def:repr}{representations} of $F$, then there's a unique \hyperlink{def:iso}{isomorphism} $f: A \to B$ such that $(Ff)(x) = y$.
+\end{ncor}
+\begin{proof}
+  Consider the composite
+  \begin{equation*}
+    \begin{tikzcd}
+      \hyperlink{def:lsmall}{\cc(B, -)} \rar{\Psi(y)} &
+      F \rar{\Psi(x)^{-1}} &
+      \cc(A,-)
+    \end{tikzcd}
+  \end{equation*}
+  By \cref{2.3}, this is of the form $\hyperlink{def:yonemb}{Y(f)}$ for a unique \hyperlink{def:iso}{isomorphism} $f: A \to B$ and the diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=large]
+      \cc(B, -) \arrow[rr, "Y(f)"] \arrow[rd, "\Psi(y)"'] & & \cc(A,-) \dlar{\Psi(x)} \\
+      & F
+    \end{tikzcd}
+  \end{equation*}
+  commutes iff $(Ff) x = y$.
+\end{proof}
+\begin{nexample}\label{2.6}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item The \hyperlink{def:forgFunc}{forgetful functor} $\gpc \to \setc$ is \hyperlink{def:repr}{representable} by $(\mathbb{Z}, 1)$.
+      Similarly, the forgetful functor $\rngc \to \setc$ is representable by $(\mathbb{Z}[x], x)$ and
+      the forgetful functor $\topc \to \setc$ is representable by $(\{*\}, *)$.
+    \item The functor $P^*: \setc^{op} \to \setc$ (see \cref{1.5}(c)) is representable by $(\{0,1\}, \{1\})$: this is the bijection between subsets and characteristic functions.
+    \item Let $G$ be a group.
+      The unique (up to \hyperlink{def:iso}{isomorphism}) representable functor $G(*, -): G \to \setc$ is the \emph{Cayley representation} of $G$, i.e.\ the set $UG$ with $G$ acting by left multiplication.
+    \item Let $A,B$ be two objects of a \hyperlink{def:lsmall}{locally small} \hyperlink{def:cat}{category} $\cc$.
+      We have a functor $\cc^{op} \to \setc$ sending $C$ to $\cc(C,A) \times \cc(C,B)$.
+      \hypertarget{def:catprod}A representation of this, if it exists, is called a (categorical) \textbf{product} of $A$ and $B$, and denoted
+      \begin{equation*}
+        (A\times B, (A \times B \overset{\pi_1}{\to} A), (A \times B \overset{\pi_2}{\to} B)).
+      \end{equation*}
+
+      This pair has the property that, for any pair $(C \overset{f}\to A, C \overset{g}{\to} B)$ there's a unique $C \overset{h}{\to} A \times B$ with $\pi_1 h = f$ and $\pi_2 h = g$.
+
+      Products exist in many categories of interest: in $\setc, \gpc, \rngc, \topc$ they are `just' Cartesian products, in posets they are binary meets.
+
+      Dually we have the notion of \textbf{coproduct} $(A + B, A \overset{\nu_1}\to A + B, B \overset{\nu_2}\to A + B)$.
+
+      These also exist in many categories of interest.
+  \end{enumerate}
+\end{nexample}
 \printindex
 \end{document}
