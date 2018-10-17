@@ -29,13 +29,6 @@
 %    \manualtheoreminner
 %}{\endmanualtheoreminner}
 
-%\newcommand{\red}[1]{\textcolor{bred}{#1}}
-%\newcommand{\green}[1]{\textcolor{bgreen}{#1}}
-%\newcommand{\blue}[1]{\textcolor{bblue}{#1}}
-%\newcommand{\yellow}[1]{\textcolor{byellow}{#1}}
-%\newcommand{\orange}[1]{\textcolor{borange}{#1}}
-%\newcommand{\purple}[1]{\textcolor{bpurple}{#1}}
-
 % and here we go!
 
 \let\oldsubset\subset
@@ -343,13 +336,16 @@ Inspired by `each \hyperlink{def:chain}{chain} meets each level $X^{(r)}$ in at 
     \begin{tikzpicture}
       \draw (0,1) circle [x radius=1.7cm, y radius=0.9cm];
       \node [right] at (1.7, 1) {$X^{(r+1)}$};
-      \draw [thin, decorate, decoration={random steps,segment length=1.5pt,amplitude=0.7pt}, bred, fill=bred!20] (0.7, 1.1) circle [x radius=0.6cm, y radius=0.45cm];
       \node [left, bred] at (0.1, 1.1) {$\Gamma(\mathcal{B})$};
 
       \draw (0, -1) circle [x radius=1.2cm, y radius=0.6cm];
       \node [right] at (1.2, -1) {$X^{(r)}$};
-      \draw [thin, decorate, decoration={random steps,segment length=1.5pt,amplitude=0.7pt}, bred, fill=bred!20] (0.6, -0.9) circle [x radius=0.3cm, y radius=0.25cm];
       \node [left, bred] at (0.3, -0.9) {$\mathcal{B}$};
+
+      \begin{scope}[every path/.style={decorate, decoration={random steps, segment length=1.5pt, amplitude=0.7pt}, bred, fill=bred!20}]
+        \draw (0.6, -0.9) circle [x radius=0.3cm, y radius=0.25cm];
+        \draw (0.7, 1.1) circle [x radius=0.6cm, y radius=0.45cm];
+      \end{scope}
       %\foreach \x in {0.4,0.5,...,1.1} {
       %  \draw [very thin] (\x,1.1) to (\x*0.6+0.2,-0.9);
       %}
@@ -375,11 +371,6 @@ Aim: For $\mathcal{A}$ an antichain,
 \end{equation*}
 This trivially implies \nameref{thm:sperner}.
 
-%\begin{center}
-%  \begin{tikzpicture}
-%
-%  \end{tikzpicture}
-%\end{center}
 \begin{defi}[Shadow]\index{shadow}\hypertarget{def:shadow}
   Let $\mathcal{A} \subseteq X^{(r)}$, for some $1 \leq r \leq n$.
   The \textbf{shadow} or \textbf{corner shadow} of $\mathcal{A}$ is
@@ -395,16 +386,15 @@ This trivially implies \nameref{thm:sperner}.
 
     \draw (0,1) circle [x radius=1.7cm, y radius=0.9cm];
     \node [right] at (1.7, 1) {$X^{(r)}$};
-    \draw [thin, decorate, decoration={random steps,segment length=1.5pt,amplitude=0.7pt}, bgreen, fill=bgreen!20] (0.7, 1.1) circle [x radius=0.5cm, y radius=0.4cm];
     \node [left, bgreen] at (0.2, 1.1) {$A$};
 
     \draw (0, -1) circle [x radius=1.2cm, y radius=0.6cm];
     \node [right] at (1.2, -1) {$X^{(r-1)}$};
-    \draw [thin, decorate, decoration={random steps,segment length=1.5pt,amplitude=0.7pt}, bgreen, fill=bgreen!20] (0.6, -1) circle [x radius=0.4cm, y radius=0.3cm];
     \node [left, bgreen] at (0.2, -1) {$\partial A$};
-    %\foreach \x in {0.4,0.5,...,1.1} {
-    %  \draw [very thin] (\x,1.1) to (\x*0.6+0.2,-0.9);
-    %}
+    \begin{scope}[every path/.style={decorate, decoration={random steps, segment length=1.5pt, amplitude=0.7pt}, bgreen, fill=bgreen!20}]
+      \draw (0.6, -1) circle [x radius=0.4cm, y radius=0.3cm];
+      \draw (0.7, 1.1) circle [x radius=0.5cm, y radius=0.4cm];
+    \end{scope}
   \end{tikzpicture}
 \end{center}
 For example, if $\mathcal{A} = \{123,124,134,135\} \subset X^{(3)}$, then
@@ -456,6 +446,31 @@ We can use \nameref{thm:locallym} to prove:
     \implies \frac{|(\partial \mathcal{A}_n \cup \mathcal{A}_{n-1})|}{\binom{n}{n-1}} + \frac{\mathcal{A}_{n-2}}{{n \choose n-2}} &\leq 1, \\
     \implies \frac{\mathcal{A}_n}{\binom{n}{n}} + \frac{\mathcal{A}_{n-1}}{\binom{n}{n-1}} + \frac{\mathcal{A}_{n-2}}{\binom{n}{n-2}} &\leq 1.
   \end{align*}
+  \begin{center}
+    \begin{tikzpicture}[scale=2]
+      \draw (0, 1) circle [x radius=0.5cm, y radius=0.3cm];
+      \draw (0, 0) circle [x radius=0.9cm, y radius=0.5cm];
+      \draw (0,-1.6) circle [x radius=1.4cm, y radius=0.8cm];
+
+      \draw [bred, opacity=0.8] (-0.3, 1) -- (-0.6,0) -- (-0.1,-1.6);
+      \draw [bred, opacity=0.8] (0.1, 1) -- (0,0);
+      \draw [bred, opacity=0.8] (0.65,0) -- (0.9,-1.6);
+
+      \node [bred] at (0.3,1) {$\mathcal{A}_n$};
+      \node [bred] at (-0.3,-0.3) {$\partial \mathcal{A}_n$};
+      \node [bred] at (0.3,-0.3) {$\mathcal{A}_{n-1}$};
+      \node [bred] at (-0.7,-1.9) {$\mathcal{A}_{n-2}$};
+      \node [bred] at (0.3,-2.1) {$\partial(\partial A_n \cup A_{n-1})$};
+
+      \begin{scope}[every path/.style={decorate, decoration={random steps, segment length=1.5pt, amplitude=0.7pt}, bred, fill=bred!20}]
+        \draw [thick] (-0.1, 1) circle [x radius=0.2 cm, y radius=1.5 mm];
+        \draw [fill=bred!10] (-0.3, 0) circle [x radius=0.3 cm, y radius=0.2 cm];
+        \draw [thick] (0.4, 0) circle [x radius=0.25 cm, y radius=0.2 cm];
+        \draw [thick] (-0.7, -1.5) circle [x radius=0.3cm, y radius=0.25cm];
+        \draw [fill=bred!10] (0.4, -1.6) circle [x radius=0.5cm, y radius=0.35cm];
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
   Keep going, we obtain
   \begin{equation*}
     \frac{\mathcal{A}_n}{\binom{n}{n}} + \frac{\mathcal{A}_{n-1}}{\binom{n}{n-1}} + \dotsm + \frac{\mathcal{A}_0}{\binom{n}{0}} \leq 1. \qedhere
@@ -466,6 +481,87 @@ When do we get equality in \nameref{thm:lym}?
 We must have had equality in each use of \nameref{thm:locallym}.
 So the first (greatest) $r$ with $\mathcal{A}_r \neq \emptyset$ must have $\mathcal{A}_r = X^{(r)}$ thus $\mathcal{\mathcal{A}} = X^{(r)}$.
 Hence equality in \nameref{thm:sperner} $\iff$ $\mathcal{A} = X^{(\frac{n}{2})}$ for $n$ even and $\mathcal{A} = X^{(\ihalf{n})}$ or $X^{(\ihalfc{n})}$ for $n$ odd.
+
+% lecture 3
+\begin{proof}[Proof 2]
+  Choose uniformly at random a maximal \hyperlink{def:chain}{chain} $\mathcal{C}$ (i.e.\ $\mathcal{C}_0 \subset \mathcal{C}_1 \subset \mathcal{C}_2 \subset \dotsb \subset \mathcal{C}_n$) with $|\mathcal{C}_i| = i \; \forall i$.
+  For a given \hyperlink{def:superr}{$r$-set} $A$,
+ \begin{align*}\mathbb{P}(A \in \mathcal{C}) = &\frac{1}{\binom{n}{r}} \qquad \qquad \text{(all $r$-sets are equally likely)} \\
+    \mathbb{P}(\mathcal{A}_r \text{ meets } \mathcal{C}) = &\frac{|\mathcal{A}_r|}{\binom{n}{r}} \qquad \qquad \text{(events are disjoint)} \\
+    \implies \mathbb{P}(\mathcal{A} \text{ meets }\mathcal{C}) = &\sum_{r=0}^n \frac{|\mathcal{A}_r|}{\binom{n}{r}}. \\
+    \implies &\sum_{i=0}^n \frac{|\mathcal{A}_r|}{\binom{n}{r}} \leq 1. \qedhere
+  \end{align*}
+\end{proof}
+\begin{remark}
+  Equivalently, the number of maximal chains is $n!$, and the number containing a given $r$-set is $r! (n-r)!$, so $\sum |\mathcal{A}_r| r! (n-r)! \leq n!$.
+\end{remark}
+\subsection{Shadows}
+For $\mathcal{A} \subset X^{(r)}$, we know $|\partial A| \geq |A| \frac{r}{n-r+1}$ - but equality is rare (only for $\mathcal{A} = \emptyset$ or $\mathcal{A} = X^{(r)}$).
+
+Given $|\mathcal{A}|$, how should we choose $\mathcal{A} \subset X^{(r)}$ to minimise $|\partial A|$?
+(Ultimately, we are asking `how tightly can we pack some $r$-sets?')
+If $|\mathcal{A}| = \binom{k}{r}$, it is believable that we'd take $\mathcal{A} = [k]^{(r)}$ - giving $\partial \mathcal{A} = [k]^{(r-1)}$.
+What if $\binom{k}{r} < |\mathcal{A}| < \binom{k+1}{r}$? Believable that we'd take $[k]^{(r)}$ and some other $r$-sets from $[k+1]^{(r)}$.
+For instance, if $\mathcal{A} \subset X^{(3)}$ with $|\mathcal{A}| = \binom{7}{3} + \binom{4}{2}$, we'd take $\mathcal{A} = [7]^{(3)} \cup \set{A \cup \{8\} | A\in [4]^{(2)}}$
+
+\subsubsection{Two total orderings on \texorpdfstring{$X^{(r)}$}{X(r)}}
+Given $A,B \in \hyperlink{def:superr}{X^{(r)}}$, say $A = a_1 \dotsb a_r$, $B = b_1 \dotsb b_r$.
+\begin{defi}[Lexicographic order]\index{lexicographic order}\hypertarget{def:lex}
+  Say $A < B$ in the \textbf{lexicographic order} or \textbf{lex order} if for some $i$ we have $a_i < b_i$ and $a_j = b_j \; \forall j < i$.
+\end{defi}
+Equivalently, $a_i < b_i$, where $i = \min\set{j | a_j \neq b_j}$.
+`Use small numbers', dictionary order.
+
+\begin{eg}\leavevmode
+  \begin{itemize}
+    \item The \hyperlink{def:lex}{lex order} on $\hyperlink{def:ints}{[4]}^{\hyperlink{def:superr}{(2)}}$ is
+      \begin{equation*}
+        12,13,14,23,24,34.
+      \end{equation*}
+    \item The lex order on $[6]^{(3)}$ is
+      \begin{align*}
+        &123,124,125,126,134,135,136,145,146,156,\\
+        &234,235,236,245,246,256,345,346,356,456.
+      \end{align*}
+  \end{itemize}
+\end{eg}
+
+\begin{defi}[Colexicographic order]\index{colexicographic order}\hypertarget{def:colex}
+  Say $A < B$ in the \textbf{colexicographic order} or \textbf{colex order} if for some $i$ have $a_i < b_i$ and $a_j = b_j \; \forall j > i$.
+\end{defi}
+Equivalently, $a_i < b_i$ where $i = \max\set{j | a_j \neq b_j}$.
+`Avoid large numbers'. Equivalently, $A < B$ if $\sum_{i \in A} 2^i < \sum_{i \in B} 2^i$.
+\begin{eg}\leavevmode
+  \begin{itemize}
+    \item \hyperlink{def:colex}{Colex} on $\hyperlink{def:ints}{[4]}^{\hyperlink{def:superr}{(2)}}$ is
+      \begin{equation*}
+        12,13,23,14,24,34
+      \end{equation*}
+    \item Colex on $[6]^{(3)}$ is
+      \begin{align*}
+        &123,124,134,234,125,135,235,145,245,345,\\
+        &126,136,236,146,246,346,156,256,356,456.
+      \end{align*}
+  \end{itemize}
+\end{eg}
+Note: In \hyperlink{def:colex}{colex}, $\hyperlink{def:ints}{[k]}^{\hyperlink{def:superr}{(r)}}$ is an initial segment of $[k+1]^{(r+1)}$, so we could view colex as an enumeration of $\mathbb{N}^{(r)}$ (but this is false for \hyperlink{def:lex}{lex}).
+
+\begin{aim}
+  Initial segments of \hyperlink{def:colex}{colex} minimise $\hyperlink{def:shadow}{\partial}$, i.e.\ if $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ and $\mathcal{C} \subset X^{(r)}$ is the first $|\mathcal{A}|$ $r$-sets in \hyperlink{def:colex}{colex}, then $|\partial \mathcal{A}| \geq |\partial \mathcal{C}|$.
+\end{aim}
+This is known as the Kruskal-Katona theorem.
+In particular, \begin{equation*}|\mathcal{A}| = \binom{k}{r} \implies |\partial A| \geq \binom{k}{r-1}.\end{equation*}
+
+\subsection{Compressions}
+Idea: We want to `replace' $\mathcal{A} \subset X^{(r)}$ with some $\mathcal{A}' \subset X^{(r)}$ such that
+\begin{enumerate}[label=(\roman*)]
+  \item $|\mathcal{A}'| = |\mathcal{A}|$
+  \item $|\partial \mathcal{A}'| \leq |\partial \mathcal{A}|$
+  \item $\mathcal{A}'$ `looks more like $\mathcal{C}$' than $\mathcal{A}$ did.
+\end{enumerate}
+Ideally, we'd compress $\mathcal{A} \to \mathcal{A}' \to \mathcal{A}'' \to \dotsm \to \mathcal{B}$ where either $\mathcal{B} = \mathcal{C}$ or $\mathcal{B}$ is so similar to $\mathcal{C}$ that we can see directly that $|\partial \mathcal{B}| \geq |\partial \mathcal{C}|$.
+
+\clearpage
 \section{Isoperimetric inequalities}
 \section{Projections}
 \printindex
