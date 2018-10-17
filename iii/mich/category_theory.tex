@@ -35,6 +35,7 @@
 \newcommand{\monc}{\mathbf{Mon}}
 \newcommand{\sgpc}{\mathbf{Sgp}}
 \newcommand{\fdmodc}{\mathbf{FdMod}}
+\newcommand{\modc}{\mathbf{Mod}}
 \newcommand{\topc}{\mathbf{Top}}
 
 \newcommand{\cc}{\mathscr{C}}
@@ -108,7 +109,7 @@ As long as some examples make sense, it is not a point of concern that some exam
 
 \begin{nremark}\label{1.2}\leavevmode
   \begin{enumerate}[label=(\alph*)]
-    \item \index{category!small}\hypertarget{def:small}This definition is independent of a model of set theory. If we're given a particular model of set theory, we call the \hyperlink{def:cat}{category $\mathscr{C}$} \textbf{small} if $\ob \mathscr{C}$ and $\mor \mathscr{C}$ are sets.
+    \item \index{small category}\index{category!small}\hypertarget{def:small}This definition is independent of a model of set theory. If we're given a particular model of set theory, we call the \hyperlink{def:cat}{category $\mathscr{C}$} \textbf{small} if $\ob \mathscr{C}$ and $\mor \mathscr{C}$ are sets.
     \item Some texts say $fg$ means `$f$ followed by $g$', i.e.\ $fg$ defined $\iff \hyperlink{def:cat}{\cod} f = \dom g$.
       \item Note that a morphism $f$ is an \hyperlink{def:cat}{identity} iff $fg = g$ and $hf = h$ whenever the compositions are defined.
         So we could formulate the definition entirely in terms of morphisms.
@@ -125,7 +126,7 @@ As long as some examples make sense, it is not a point of concern that some exam
       More generally, given $\mathscr{C}$, we call an equivalence relation $\simeq$ on $\mor \mathscr{C}$ a \textbf{congruence} if $f \simeq g \implies \dom f = \dom g$ and $\cod f = \cod g$, and $f \simeq g \implies f h \simeq g h$ and $k f \simeq k g$ whenever the composites are defined. Then we have a category $\mathscr{C}/\simeq$ with the same objects as $\mathscr{C}$, but congruence classes as morphisms.
     \item \index{duality}\hypertarget{def:duality}Given $\mathscr{C}$, the \textbf{opposite category} $\mathscr{C}^{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^{op}$ is $gf$ in $\mathscr{C}$.
       This leads to the \textbf{Duality principle} if $P$ is a true statement about categories, so is the statement $P^*$ obtained from $P$ by reversing all arrows.
-    \item \index{isomorphism}\hypertarget{def:iso}A \hyperlink{def:small}{small} category with one object is a \textbf{monoid}, i.e.\ a semigroup with $1$. In particular, a group is a small category with one object, in which every morphism is an isomorphism ($f$ is an \textbf{isomorphism} if $\exists g$ such that $fg$ and $gf$ are identities).
+    \item \index{isomorphism}\index{morphism!iso-}\hypertarget{def:iso}A \hyperlink{def:small}{small} category with one object is a \textbf{monoid}, i.e.\ a semigroup with $1$. In particular, a group is a small category with one object, in which every morphism is an isomorphism ($f$ is an \textbf{isomorphism} if $\exists g$ such that $fg$ and $gf$ are identities).
     \item A \textbf{groupoid} is a category in which every morphism is an isomorphism. For a topological space $X$, the fundamental groupoid $\pi(X)$ has all points of $X$ as objects and morphisms $x \to y$ are homotopy classes rel $\{0,1\}$ of paths $u: [0,1] \to X$ with $u(0) = x$, $u(1) = y$.
       (If you know how to prove that the fundamental group is a group, you can prove that $\pi(X)$ is a groupoid.)
     \item A \textbf{discrete} category is one whose only morphisms are identities. A \textbf{preorder} is a category $\mathscr{C}$ in which, for any pair $(A,B)$ there is at most $1$ morphism $A \to B$.
@@ -253,7 +254,7 @@ As long as some examples make sense, it is not a point of concern that some exam
 \end{proof}
 \begin{ndef}[Equivalent category]\label{1.9}\index{category!equivalence}\index{equivalent}\index{categorical property}\hypertarget{def:equicat}
   Let $\mathscr{C}, \mathscr{D}$ be categories.
-  By an \textbf{equivalence} between $\mathscr{C}$ and $\mathscr{D}$, we mean a pair of \hyperlink{def:funct}{functors} $F: \mathscr{C} \to \mathscr{D}$, $G: \mathscr{D} \to \mathscr{C}$ together with natural isomorphisms $\alpha: 1_\mathscr{C} \to GF$ and $\beta: FG \to \mathscr{D}$.
+  By an \textbf{equivalence} between $\mathscr{C}$ and $\mathscr{D}$, we mean a pair of \hyperlink{def:funct}{functors} $F: \mathscr{C} \to \mathscr{D}$, $G: \mathscr{D} \to \mathscr{C}$ together with natural isomorphisms $\alpha: 1_\mathscr{C} \to GF$ and $\beta: FG \to 1_\mathscr{D}$.
   We write $\mathscr{C} \simeq \mathscr{D}$ if $\mathscr{C}$ and $\mathscr{D}$ are equivalent.
 
   We say a property $P$ of \hyperlink{def:cat}{categories} is a \textbf{categorical property} if whenever $\cc$ has $P$ and $\cc \simeq \dc$, then $\dc$ has $P$.
@@ -391,7 +392,7 @@ As long as some examples make sense, it is not a point of concern that some exam
  We denote \hyperlink{def:monic}{monomorphisms} by \begin{tikzcd}[cramped, sep=scriptsize] A \rar[tail]{f} & B \end{tikzcd} and \hyperlink{def:epic}{epimorphisms} by \begin{tikzcd}[cramped, sep=scriptsize] A \rar[two heads]{f} & B\end{tikzcd}
 \end{ndef}
 Any isomorphism is \hyperlink{def:monic}{monic} and \hyperlink{def:epic}{epic}: more generally if $f$ has a left inverse (i.e.\ $\exists g$ such that $gf$ is an identity) then it's monic.
-\index{split monomorphism}\index{monomorphism!split}\hypertarget{def:split}We call such monomorphisms \textbf{split}.
+\index{split}\index{monomorphism!split}\hypertarget{def:split}We call such monomorphisms \textbf{split}.
 
 \index{category!balanced}\index{balanced}\hypertarget{def:balanced}We say $C$ is a \textbf{balanced} \hyperlink{def:cat}{category} if any morphism which is both \hyperlink{def:monic}{monic} and \hyperlink{def:epic}{epic} is an isomorphism.
 
@@ -417,36 +418,42 @@ Any isomorphism is \hyperlink{def:monic}{monic} and \hyperlink{def:epic}{epic}: 
 
  If we fix $A$ and let $B$ vary, the assignment $B \mapsto \cc(A,B)$ becomes a \hyperlink{def:funct}{functor} $\hyperlink{def:lsmall}{\cc(A, -)} : \cc \to \setc$: given $\begin{tikzcdi} B \rar{f} & C \end{tikzcdi}$, $\cc(A,f)$ is the mapping $g \mapsto fg$.
 Similarly, $A \mapsto \cc(A,B)$ defines a functor $\cc(-, B): \cc^{op} \to \setc$.
-\begin{nlemma}\label{2.2}
+\begin{nlemma}[Yoneda Lemma]\index{Yoneda!lemma}\label{2.2}
   Let $\cc$ be a \hyperlink{def:lsmall}{locally small} \hyperlink{def:cat}{category}, $A \in \ob \cc$ and $F: \cc \to \setc$ a \hyperlink{def:funct}{functor}.
   \begin{enumerate}[label=(\roman*)]
-    \item Then natural transformations $\cc(A, -) \to F$ is a bijection with elements of $FA$.
+    \item Then natural transformations $\cc(A, -) \to F$ are in bijection with elements of $FA$.
     \item Moreover, this bijection is natural in both $A$ and $F$.
   \end{enumerate}
 \end{nlemma}
 \begin{proof}[Proof of \cref{2.2}(i)]
-    Given $\alpha: \cc(A,-) \to F$, we define
-      \begin{equation*}
-        \Phi(\alpha) = \alpha_A(1_A) \in FA.
-      \end{equation*}
-      Given $x \in FA$, we define $\Psi(x) : \cc(A,-) \to F$ by
-      \begin{equation*}\Psi(x)_B(A \overset{f}{\to} B) = Ff(x) \in FB.\end{equation*}
+  Given $\alpha: \cc(A,-) \to F$, we define
+  \begin{equation*}
+    \Phi(\alpha) = \alpha_A(1_A) \in FA.
+  \end{equation*}
+  Given $x \in FA$, we define $\Psi(x) : \cc(A,-) \to F$ by
+  \begin{equation*}\Psi(x)_B(A \overset{f}{\to} B) = Ff(x) \in FB.\end{equation*}
+  $\Psi(x)$ is natural: given $g: B \to C$, we have
+  \begin{align*}
+    \Psi(x)_C \cc(A,g)(f) = \Psi(x)_C(gf) &= F(gf)(x) \\
+    (Fg)\Psi(x)_B(f) = (Fg)(Ff)(x) &= F(gf)(x).
+  \end{align*}
+  \begin{equation*}
+    \begin{tikzcd}[row sep=large]
+    {\mathscr{C}(A,B)} \arrow[r, "{\mathscr{C}(A,g)}"] \arrow[d, "\Psi(x)_B"'] & {\mathscr{C}(A,C)} \arrow[d, "\Psi(x)_C"] \\
+    FB \arrow[r, "Fg"'] & FC
+    \end{tikzcd}
+  \end{equation*}
 
-      $\Psi(x)$ is natural: given $g: B \to C$, we have
-      \begin{align*}
-        \Psi(x)_C \cc(A,g)(f) = &\Psi(x)_C(gf) = F(gf)(x) \\
-        (Fg)\Psi(x)_B(f) = (Fg)(Ff)(x) = F(gf)(x).
-      \end{align*}
-      We also verify $\Psi$ and $\Phi$ are inverse:
-      \begin{equation*}
-        \Phi \Psi(x) = \Psi(x)_A(1_A) = F(1_A)(x) = x.
-      \end{equation*}
-      Given $\alpha$,
-      \begin{align*}
-        \Psi\Phi(\alpha)_B(f) &= \Phi(\alpha_A(1_A))_B(f) = Ff(\alpha_A(1_A)) \\
-                              &= \alpha_B \cc(A,f) (1_A) = \alpha_B(f)
-      \end{align*}
-      so $\Psi \Phi(\alpha) = \alpha$.
+  We also verify $\Psi$ and $\Phi$ are inverse:
+  \begin{equation*}
+    \Phi \Psi(x) = \Psi(x)_A(1_A) = F(1_A)(x) = x.
+  \end{equation*}
+  Given $\alpha$,
+  \begin{align*}
+    \Psi\Phi(\alpha)_B(f) &= \Psi(\alpha_A(1_A))_B(f) = Ff(\alpha_A(1_A)) \\
+                          &= \alpha_B \cc(A,f) (1_A) = \alpha_B(f)
+  \end{align*}
+  so $\Psi \Phi(\alpha) = \alpha$.
 \end{proof}
 \begin{ncor}\label{2.3}
   The assignment $A \mapsto \hyperlink{def:lsmall}{\cc(A, -)}$ defines a \hyperlink{def:full}{full} and \hyperlink{def:full}{faithful} \hyperlink{def:funct}{functor} $\cc^{op} \to \hyperlink{def:functcat}{[\cc, \setc]}$.
@@ -456,7 +463,7 @@ Similarly, $A \mapsto \cc(A,B)$ defines a functor $\cc(-, B): \cc^{op} \to \setc
   We need to verify this is functorial: but it sends $f: B \to A$ to the natural transformation $g \mapsto gf$.
   So functoriality follows from associativity.
 \end{proof}
-\hypertarget{def:yonemb}We call this \hyperlink{def:funct}{functor} (or the functor $\cc \to [\cc^{op}, \setc]$) sending $A$ to $\cc(-,A)$ the \textbf{Yoneda embedding} of $\cc$, and denote it by $Y$.
+\hypertarget{def:yonemb}We\index{Yoneda!embedding} call this \hyperlink{def:funct}{functor} (or the functor $\cc \to [\cc^{op}, \setc]$) sending $A$ to $\cc(-,A)$ the \textbf{Yoneda embedding} of $\cc$, and denote it by $Y$.
 
 \begin{proof}[Proof of \cref{2.2}(ii)]
   Suppose for the moment that $\cc$ is \hyperlink{def:small}{small}, so that $\hyperlink{def:lsmall}{[\cc, \setc]}$ is \hyperlink{def:lsmall}{locally small}.
@@ -478,7 +485,7 @@ Similarly, $A \mapsto \cc(A,B)$ defines a functor $\cc(-, B): \cc^{op} \to \setc
   which is equal to $\alpha_B \beta_B(f)$.
 \end{proof}
 
-\begin{ndef}\label{2.4}\index{representable}\index{representation}\hypertarget{def:repr}
+\begin{ndef}\label{2.4}\index{universal element}\index{representable}\index{representation}\hypertarget{def:repr}
   We say a \hyperlink{def:funct}{functor} $F: \cc \to \setc$ is \textbf{representable} if it's \hyperlink{def:natiso}{isomorphic} to $\cc(A, -)$ for some $A$.
   By \textbf{representation} of $F$, we mean a pair $(A,x)$ where $x \in FA$ is such that $\Phi(x)$ is an \hyperlink{def:iso}{isomorphism}.
   We also call $x$ a \textbf{universal element} of $F$.
@@ -514,7 +521,7 @@ Similarly, $A \mapsto \cc(A,B)$ defines a functor $\cc(-, B): \cc^{op} \to \setc
       The unique (up to \hyperlink{def:iso}{isomorphism}) representable functor $G(*, -): G \to \setc$ is the \emph{Cayley representation} of $G$, i.e.\ the set $UG$ with $G$ acting by left multiplication.
     \item Let $A,B$ be two objects of a \hyperlink{def:lsmall}{locally small} \hyperlink{def:cat}{category} $\cc$.
       We have a functor $\cc^{op} \to \setc$ sending $C$ to $\cc(C,A) \times \cc(C,B)$.
-      \hypertarget{def:catprod}A representation of this, if it exists, is called a (categorical) \textbf{product} of $A$ and $B$, and denoted
+      \hypertarget{def:prod}A representation of this, if it exists, is called a (categorical) \index{product}\textbf{product} of $A$ and $B$, and denoted
       \begin{equation*}
         (A\times B, (A \times B \overset{\pi_1}{\to} A), (A \times B \overset{\pi_2}{\to} B)).
       \end{equation*}
@@ -523,10 +530,118 @@ Similarly, $A \mapsto \cc(A,B)$ defines a functor $\cc(-, B): \cc^{op} \to \setc
 
       Products exist in many categories of interest: in $\setc, \gpc, \rngc, \topc$ they are `just' Cartesian products, in posets they are binary meets.
 
-      Dually we have the notion of \textbf{coproduct} $(A + B, A \overset{\nu_1}\to A + B, B \overset{\nu_2}\to A + B)$.
+      \hypertarget{def:coprod}Dually we have the notion of \index{coproduct}\textbf{coproduct} $(A + B, A \overset{\nu_1}\to A + B, B \overset{\nu_2}\to A + B)$.
 
       These also exist in many categories of interest.
+    \item \marginnote{\emph{Lecture 6}}[0cm] The dual-vector-space functor $\modc_K^{op} \to \modc_K$, when composed with the forgetful functor $\modc_K \to \setc$, is representable by $(K, 1_K$).
+    \item Let \begin{tikzcd}[cramped] A \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & B \end{tikzcd} be morphisms in a locally small category $\cc$.
+      We have a functor $F: \cc^{op} \to \setc$ defined by
+      \begin{equation*}
+        F(C) = \set{h \in \cc(C, A) | fh = gh}.
+      \end{equation*}
+      \hypertarget{def:equalizer}A representation of $F$, if it exists, is called an \textbf{equalizer} of $(f,g)$.
+      It consists of an objects $E$ and a morphism $E \overset{e}{\to} A$ such $fe = ge$, and every $h$ with $fh = gh$ factors uniquely through $e$.
+
+      In $\setc$, we take $E = \set{x \in A | f(x) = g(x)}$ and $e = $ inclusion.
+
+      Similar constructions work in $\gpc, \rngc, \topc, \dotsc$.
+
+      Dually, we have the notion of \textbf{coequalizer}.
   \end{enumerate}
 \end{nexample}
+
+\begin{nremark}\label{2.7}
+  If $e$ occurs as an \hyperlink{def:equalizer}{equalizer}, then it's a \hyperlink{def:monic}{monomorphism}, since any $h$ factors through it in at most one way.
+  \hypertarget{def:regular}We \index{monomorphism!regular}\index{regular}say a mono is \textbf{regular} if it occurs as an equalizer.
+
+  \hyperlink{def:split}{Split} monomorphisms are regular (c.f.\ question 6i on sheet 1).
+  Note that regular mono + \hyperlink{def:epic}{epi} $\implies$ \hyperlink{def:iso}{iso}:
+  if the equalizer $e$ of $(f,g)$ is epic, then $f = g$, so $e \cong 1_{\cod e}$.
+\end{nremark}
+
+\begin{ndef}[Separating, detecting families]\label{def:2.8}
+  Let $\cc$ be a category, $\mathscr{G}$ a class of objects of $\cc$.
+  \begin{enumerate}[label=(\alph*)]
+    \item \index{separating family}\hypertarget{def:separating}We say $\mathscr{G}$ is a \textbf{separating family} for $\cc$ if, given \begin{tikzcd}[cramped] A \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & B \end{tikzcd} such that $fh=gh$ for all $G \overset{h}{\to} A$ with $G \in \mathscr{G}$, then $f = g$. (i.e.\ the functors $\cc(G,-)$, $G \in \mathscr{G}$ are collectively faithful).
+    \item \index{detecting family}\hypertarget{def:detecting}We say $\mathscr{G}$ is a \textbf{detecting family} for $\cc$ if, given $A \overset{f}\to B$ such that every $G \overset{h}{\to} b$ with $G \in \mathscr{G}$ factors uniquely through $f$, then $f$ is an isomorphism.
+  \end{enumerate}
+  If $\mathscr{G} = \{G\}$, we call $G$ a \textbf{separator}/\textbf{detector}.
+\end{ndef}
+
+\begin{nlemma}\label{lem:2.9}
+  \begin{enumerate}[label=(\roman*)]
+    \item If $\cc$ is a \hyperlink{def:balanced}{balanced} category, then any \hyperlink{def:separating}{separating} family is \hyperlink{def:detecting}{detecting}.
+    \item If $\cc$ has \hyperlink{def:equalizer}{equalizers}, then any detecting family is separating.
+  \end{enumerate}
+\end{nlemma}
+\begin{proof}
+  \begin{enumerate}[label=(\roman*)]
+    \item Suppose $\mathscr{G}$ is \hyperlink{def:separating}{separating} and $A \overset{f}\to B$ satisfies the condition of 2.8(b).
+      If \begin{tikzcd}[cramped] B \arrow[r, shift left, "g"] \arrow[r, shift right,"h"'] & C \end{tikzcd} satisfy $gf = hf$, then $gx = hx$ for every $G \overset{x}\to B$, so $g = h$, i.e.\ $f$ is \hyperlink{def:epic}{epic}.
+      Similarly if
+      \begin{tikzcd}[cramped] D \arrow[r, shift left, "k"] \arrow[r, shift right,"l"'] & A \end{tikzcd}
+      satisfy $fk = fl$, then $ky = ly$ for any $G \overset{y}\to D$, since both are factorisations of $fky$ through $f$. So $k=l$, i.e.\ $f$ is \hyperlink{def:monic}{monic}.
+    \item Suppose $\mathscr{G}$ is \hyperlink{def:detecting}{detecting} and \begin{tikzcd}[cramped] A \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & B \end{tikzcd} satisfies the condition of 2.8(a) .
+      Then the \hyperlink{def:equalizer}{equalizer} $E \overset{e}\to A$ is an \hyperlink{def:iso}{isomorphism}, so $f = g$.
+  \end{enumerate}
+\end{proof}
+\begin{nexample}\label{eg:2.10}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item In $[\cc, \setc]$ the family
+      \begin{equation*}
+        \set{\cc(A, -) | A \in \ob \cc}
+      \end{equation*}
+      is both \hyperlink{def:separating}{separating} and \hyperlink{def:detecting}{detecting} (this is just a restatement of \nameref{2.2}.)
+    \item In $\setc$, $1 = \{*\}$ is both a separator and a detector since it represents the identity \hyperlink{def:funct}{functor} $\setc \to \setc$.
+
+      Similarly, $\mathbb{Z}$ is both in $\gpc$, since it represents the forgetful functor $\gpc \to \setc$.
+
+      And $2 = \{0,1\}$ is a coseparator and a codetector in $\setc$, since it represents $P^*: \setc^{op} \to \setc$.
+    \item In $\topc$, $1 = \{*\}$ is a separator since it represents the forgetful functor $\topc \to \setc$, but not a detector.
+      In fact, $\topc$ has no detecting \emph{set} of objects.
+
+      For any infinite cardinal $\kappa$, let $X$ be a discrete space of cardinality $\kappa$ and let $Y$ be the same set with `co-$< \kappa$' topology, i.e.\ $F \subseteq Y$ closed $\iff F = Y$ or $\operatorname{card} F < \kappa$.
+      The identity $X \to Y$ is continuous, but not a homeomorphism.
+
+      So if $\set{G_i | i \in I}$ is any set of spaces, taking $\kappa > \operatorname{card} G_i$ for all $i$ yields an example to show that the set is not detecting.
+    \item Let $\cc$ be the category of pointed connected CW-complexes and homotopy classes of (basepoint-preserving) continuous maps.
+      JHC Whitehead proved that if $X \overset{f}\to Y$ in this category induces isomorphisms $\pi_n(X) \to \pi_n(Y)$ for all $n$, then it's an isomorphism in $\cc$.
+      This says that $\set{S^n | n \geq 1}$ is a detecting set for $\cc$.
+
+      But PJ Freyd showed there is no faithful functor $\cc \to \setc$, so no separating \emph{set}: if $\set{G_i | i \in I}$ were separating, then
+      \begin{equation*}
+        x \mapsto \coprod_{i \in I} \cc(G_i, X)
+      \end{equation*}
+      would be faithful.
+  \end{enumerate}
+\end{nexample}
+Note that any functor of the form $\cc(A, -)$ preserves monos, but they don't normally preserve epis.
+
+\begin{ndef}
+  We say an object $P$ is \textbf{projective} if, given
+  \begin{center}
+    \begin{tikzcd}
+      & P \arrow[d, "f"] \\
+      A \arrow[r, "e", two heads] & B
+    \end{tikzcd}
+  \end{center}
+  there exists $P \overset{g}\to A$ with $eg = f$.
+  (If $\cc$ is \hyperlink{def:lsmall}{locally small}, this says $\cc(P, -)$ preserves epis).
+
+  Dually, an \textbf{injective} object of $\cc$ is a projective object of $\cc^{op}$.
+  Given a class $\mathscr{E}$ of epimorphisms, we say $P$ is $\mathscr{E}$-projective if it satisfies the condition for all $e \in \mathscr{E}$.
+\end{ndef}
+\begin{nlemma}
+  Representable functors are (pointwise) projective in $[\cc, \setc]$.
+  \begin{center}
+    \begin{tikzcd}
+ & {\mathscr{C}(A, -)} \arrow[d, "f"] \\
+F \arrow[r, "a", two heads] & G
+    \end{tikzcd}
+  \end{center}
+  where $\alpha$ is pointwise surjective.
+  By Yoneda, $\beta$ corresponds to some $y \in GA$, and we can find $x \in FA$ with $\alpha_A(x) = y$.
+  Now if $\gamma: \cc(A, -) \to F$ corresponds to $x$ then naturality of $x$ %finish
+\end{nlemma}
 \printindex
 \end{document}
