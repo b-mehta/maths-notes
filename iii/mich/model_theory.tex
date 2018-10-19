@@ -24,6 +24,7 @@
 
 \DeclareMathOperator{\Mod}{Mod}
 \DeclareMathOperator{\Th}{Th}
+\DeclareMathOperator{\dom}{dom}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
@@ -318,8 +319,8 @@ Throughout, $L$ is a \hyperlink{def:lang}{language}, $\mathcal{M}, \mathcal{N}$ 
 \end{nexample}
 Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{gp}$. For a specific $G$, clearly $\hyperlink{def:ltheory}{\Th(G)}$ is larger than $T_{gp}$!
 
-\begin{ndef}\hypertarget{def:eleq}\index{elementarily equivalent}\label{def:3.3}
-  $\mathcal{M}$ and $\mathcal{N}$ are \textbf{elementarily equivalent} if $\Th(\mathcal{M}) = \Th(\mathcal{N})$.
+\begin{ndef}\index{elementarily equivalent}\label{def:3.3}
+  \hypertarget{def:eleq}Say $\mathcal{M}$ and $\mathcal{N}$ are \textbf{elementarily equivalent} if $\Th(\mathcal{M}) = \Th(\mathcal{N})$.
   We write $\mathcal{M} \equiv \mathcal{N}$.
   Clearly if $\mathcal{M} \simeq \mathcal{N}$, then $\mathcal{M} \equiv \mathcal{N}$ but if $\mathcal{M}$ and $\mathcal{N}$ are not isomorphic, establishing whether $\mathcal{M} \equiv \mathcal{N}$ can be highly non-trivial!
 
@@ -327,12 +328,12 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{gp}$. For a speci
 \end{ndef}
 \begin{ndef}\label{def:3.4}\leavevmode
   \begin{enumerate}[label=(\roman*)]
-    \item an embedding $\beta: \mathcal{M} \to \mathcal{N}$ is \textbf{elementary} if for all formulas $\phi(\bar{x})$ and $\bar{a} \in M^{|\bar{x}|}$,
+    \item \hypertarget{def:el}an embedding $\beta: \mathcal{M} \to \mathcal{N}$ is \textbf{elementary} if for all formulas $\phi(\bar{x})$ and $\bar{a} \in M^{|\bar{x}|}$,
       \begin{equation*}
         \mathcal{M} \models \phi(\bar{a}) \iff \mathcal{N} \models \phi(\beta(\bar{a}))
       \end{equation*}
-    \item if $M \subseteq N$ and $\operatorname{id}: \mathcal{M} \to \mathcal{N}$ is an embedding, then $\mathcal{M}$ is said to be a \textbf{substructure} of $\mathcal{N}$.
-    \item if $M \subseteq N$ and $\operatorname{id}: \mathcal{M} \to \mathcal{N}$ is an elementary embedding, then $\mathcal{M}$ is said to be an \textbf{elementary substructure} of $\mathcal{N}$, written $\mathcal{M} \preccurlyeq \mathcal{N}$.
+    \item \hypertarget{def:subs}if $M \subseteq N$ and $\operatorname{id}: \mathcal{M} \to \mathcal{N}$ is an embedding, then $\mathcal{M}$ is said to be a \textbf{substructure} of $\mathcal{N}$.
+    \item \hypertarget{def:elsubs}if $M \subseteq N$ and $\operatorname{id}: \mathcal{M} \to \mathcal{N}$ is an elementary embedding, then $\mathcal{M}$ is said to be an \textbf{elementary substructure} of $\mathcal{N}$, written $\mathcal{M} \preccurlyeq \mathcal{N}$.
   \end{enumerate}
 \end{ndef}
 \begin{nexample}\label{eg:3.5}
@@ -356,5 +357,97 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{gp}$. For a speci
   The elements of $A$ are called \textbf{parameters}.
   If $\mathcal{M}, \mathcal{N}$ are $L$-structures and $A \subseteq M \cap N$, then $\mathcal{M} \equiv_A \mathcal{N}$ when $\mathcal{M}, \mathcal{N}$ satisfy exactly the same $L(A)$ sentences.
 \end{ndef}
+
+\marginnote{\emph{Lecture 4}}[0cm]
+\begin{nexercise}\label{ex:3.7}
+  $\mathcal{M} \hyperlink{def:elsubs}{\preccurlyeq} \mathcal{N} \iff \mathcal{M} \equiv_M \mathcal{N}$ (where $M$ is the \hyperlink{def:lstr}{domain} of $\mathcal{M}$).
+\end{nexercise}
+\begin{nlemma}[Tarski-Vaught test]\label{lem:3.8}
+  Let $\mathcal{N}$ be an \hyperlink{def:lstr}{$L$-structure}, let $A \subseteq N$. The following are equivalent:
+  \begin{enumerate}[label=(\roman*)]
+    \item $A$ is the \hyperlink{def:lstr}{domain} of a structure $\mathcal{M}$ such that $M \hyperlink{def:elsubs}{\preccurlyeq} N$.
+    \item if $\phi(x) \in L(A)$, if $\mathcal{N} \models \exists x \phi(x)$, then $\mathcal{N} \models \phi(b)$ for some $b \in A$.
+  \end{enumerate}
+\end{nlemma}
+\begin{proof}\leavevmode
+  \begin{itemize}
+    \item [(i) $\Rightarrow$ (ii)] Suppose $\mathcal{N} \models \phi(x)$.
+      Then by elementarity, $\mathcal{M} \models \exists x \phi(x)$, and so $\mathcal{M} \models \exists x \phi(x)$ for $b \in \mathcal{M}$, so again by elementarity $\mathcal{N} \models \phi(b)$.
+    \item [(ii) $\Rightarrow$ (i)] First we prove that $A$ is the domain $\mathcal{M} \subseteq \mathcal{N}$.
+      By exercise 4 on sheet 1, it is enough to check:
+      \begin{enumerate}[label=(\alph*)]
+        \item for each constant $c$, $c^\mathcal{N} \in A$.
+        \item for each function symbol $f$, $f^{\mathcal{N}}(\bar{a}) \in A$ (for all $\bar{a} \in A^{m_f}$).
+      \end{enumerate}
+      For (a), use property (ii) with $\exists x\; (x = c)$. For (b) use property (ii) with $\exists x\; (f(\bar{a}) = x)$.
+
+      So we now have $\mathcal{M} \subseteq \mathcal{N}$, and the domain of $\mathcal{M}$ is $A$.
+      Let $\chi(\bar{x})$ be an \hyperlink{def:form}{$L$-formula}.
+      We show that for $\bar{a} \in A^{|\bar{x}|}$,
+      \begin{equation*}
+        \mathcal{M} \models \chi(\bar{a}) \iff \mathcal{N} \models \chi(\bar{a}). \tag{$*$} \label{eq:4star}
+      \end{equation*}
+      By induction on the complexity of $\chi(\bar{x})$:
+      \begin{itemize}[label=--]
+        \item if $\chi(\bar{x})$ is atomic \eqref{eq:4star} follows from $\mathcal{M} \subseteq \mathcal{N}$ ($\mathcal{M}$ is a \hyperlink{def:subs}{substructure}).
+        \item if $\chi(\bar{x})$ is $\neg \psi(\bar{x})$ or $\chi(\bar{x})$ is $\psi(\bar{x}) \wedge \xi(\bar{x})$: straightforward induction.
+        \item if $\chi(\bar{x}) = \exists y \psi(\bar{x},y)$ where $\psi(\bar{x},y)$ is an $L$-formula, suppose that $\mathcal{M} \models \chi(\bar{a})$.
+          Then $\mathcal{M} \models \exists y \psi(\bar{a}, y)$, hence $\mathcal{M} \models \psi(\bar{a},b)$ for some $b \in A = \dom \mathcal{M}$.
+          But then $\mathcal{N} \models \psi(\bar{a},b)$ by inductive hypothesis, so $\mathcal{N} \models \chi(\bar{a})$.
+          Now let $\mathcal{N} \models \chi(\bar{a})$, i.e.\ $\mathcal{N} \models \exists y \psi(\bar{a},y)$.
+          By property (ii), $\mathcal{N} \models \psi(\bar{a},b)$ for some $b \in A = \dom(\mathcal{M})$.
+          By inductive hypothesis, $\mathcal{M} \models \psi(\bar{a},b)$ and so $\mathcal{M} \models \chi(\bar{a})$. \qedhere
+      \end{itemize}
+  \end{itemize}
+\end{proof}
+\begin{nremark}\label{rem:3.9}
+  Assume the set of variables is countably infinite. Then
+  \begin{itemize}[label=--]
+    \item the cardinality of the set of $L$-formulas is $|L| + \omega$. (We abuse notation and write $\omega$ for the ordinal and cardinal)
+    \item if $A$ is a set of parameters in some structure, the cardinality of the set $L(A)$-formulas is $|A| + |L| + \omega$.
+  \end{itemize}
+\end{nremark}
+\begin{ndef}\label{def:3.10}
+  Let $\lambda$ be an ordinal. Then \textbf{a chain of length $\lambda$} of sets is a sequence $\langle M_i : i < \lambda \rangle$, where $M_i \subseteq M_j$ for all $i \leq j < \lambda$.
+  A \textbf{chain of $L$-structures} is a sequence $\langle \mathcal{M}_i : i < \lambda \rangle$ such that $\mathcal{M}_i \subseteq \mathcal{M}_j$ for $i \leq j < \lambda$.
+
+  The \textbf{union} of this chain is the $L$-structure $\mathcal{M}$ is defined as follows:
+  \begin{itemize}[label=--]
+    \item the domain of $\mathcal{M}$ is $\bigcup_{i < \lambda} M_i$
+    \item $c^\mathcal{M} = c^{\mathcal{M}_i}$ for any $i < \lambda$ ($c$ is a constant).
+    \item if $f$ is a function symbol, $\bar{a} \in M^{m_f}$, $f^\mathcal{M}\bar{a} = f^{\mathcal{M}_i} \bar{a}$ where $i$ is such that $\bar{a} \in M_i^{m_f}$.
+    \item if $R$ is a relation symbol, then $R^\mathcal{M} = \bigcup_{i < \lambda} R^{\mathcal{M}_i}$
+  \end{itemize}
+\end{ndef}
+
+\begin{nthm}[Downward L\"owenheim-Skolem]\label{thm:3.11DLS}
+  Let $\mathcal{N}$ be an $L$-structure, and $|N| \geq |L| + \omega$.
+  Let $A \subseteq N$.
+  Then for any cardinal $\lambda$ such that $|L| + |A| + \omega \leq \lambda \leq |\mathcal{N}|$, there is $\mathcal{M} \preccurlyeq \mathcal{N}$ such that
+  \begin{enumerate}[label=(\roman*)]
+    \item $A \subseteq M$
+    \item $|\mathcal{M}| = \lambda$.
+  \end{enumerate}
+\end{nthm}
+(It helps to think about the case $|L| \leq \omega$, $|A| = \omega$ and $|N|$ is uncountable).
+
+For instance, think of $(\mathbb{C}, + , \cdot, -, ^{-1}, 0,1)$ as a field. Then $\mathbb{Q} \subseteq \mathbb{C}$, it is a subset and a substructure.
+In particular, the property of being algebraically closed is in the theory of $\mathbb{C}$.
+Thus \cref{thm:3.11DLS} gives a algebraically closed field, which is countable and contains $\mathbb{Q}$ - the algebraic closure of $\mathbb{Q}$.
+
+\begin{proof}
+  We build a chain $\langle A_i  : i < \omega \rangle$, with $A_i \subseteq N$, such that $|A_i| = \lambda$.
+  (Our goal is to define $M = \bigcup_{i < \omega} A_i$).
+
+  Let $A_0 \subseteq N$ be such that $A \subseteq A_0$ and $|A_0| = \lambda$.
+  At stage $i+1$, we assume that $A_i$ has been built, with $|A_i| = \lambda$.
+  Let $\langle \phi_k(x) : k < \lambda  \rangle$ be an enumeration of those $L(A_i)$-formulas such that $\mathcal{N} \models \phi_k(x)$.
+  Let $a_k$ be such that $\mathcal{N} \models \phi_k(a_k)$ and let $A_{i+1} = A_i \cup \set{a_k : k < \lambda}$.
+  Then $|A_{i+1}| = \lambda$.
+
+  Now let $M = \cup_{i < \omega} A_i$.
+  We use \cref{lem:3.8} to show that $M$ is the domain of $\mathcal{M} \preccurlyeq \mathcal{N}$, and $|M| = \lambda$.
+\end{proof}
+
 \printindex
 \end{document}
