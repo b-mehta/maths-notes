@@ -502,7 +502,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
 
 \begin{ndef}\label{def:2.4}\index{universal element}\index{representable}\index{representation}\hypertarget{def:repr}
   We say a \hyperlink{def:funct}{functor} $F: \mathscr{C} \to \mathbf{Set}$ is \textbf{representable} if it's \hyperlink{def:natiso}{isomorphic} to $\mathscr{C}(A, -)$ for some $A$.
-  By \textbf{representation} of $F$, we mean a pair $(A,x)$ where $x \in FA$ is such that $\Phi(x)$ is an \hyperlink{def:iso}{isomorphism}.
+  By \textbf{representation} of $F$, we mean a pair $(A,x)$ where $x \in FA$ is such that $\Psi(x)$ is an \hyperlink{def:iso}{isomorphism}.
   We also call $x$ a \textbf{universal element} of $F$.
 \end{ndef}
 \begin{ncor}\label{cor:2.5}
@@ -620,7 +620,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
       JHC Whitehead proved that if $X \overset{f}\to Y$ in this category induces isomorphisms $\pi_n(X) \to \pi_n(Y)$ for all $n$, then it's an isomorphism in $\mathscr{C}$.
       This says that $\set{S^n | n \geq 1}$ is a detecting set for $\mathscr{C}$.
 
-      But PJ Freyd showed there is no faithful functor $\mathscr{C} \to \mathbf{Set}$, so no separating \emph{set}: if $\set{G_i | i \in I}$ were separating, then
+      But PJ Freyd showed there is no \hyperlink{def:full}{faithful} functor $\mathscr{C} \to \mathbf{Set}$, so no separating \emph{set}: if $\set{G_i | i \in I}$ were separating, then
       \begin{equation*}
         x \mapsto \coprod_{i \in I} \mathscr{C}(G_i, X)
       \end{equation*}
@@ -756,8 +756,188 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   \end{equation*}
   commute.
   Functoriality follows from uniqueness: given $f': A' \to A''$, both $F(f'f)$ and $(Ff')(Ff)$ are morphisms $(FA, \eta_A) \to (FA'', \eta_{A''}f'f)$ in $(A \downarrow G)$.
-\end{proof}
 
-\marginnote{\emph{Lecture 8}}[0cm]
+  \marginnote{\emph{Lecture 8}}[0cm]To show $F \dashv G$: given $A \overset{f}\to GB$, we define $\hat{f}: FA \to B$ to be the unique morphism $(FA, \eta_A) \to (B, f)$ in $\hyperlink{def:comma}{(A \downarrow G)}$.
+  This is a bijection with inverse
+  \begin{equation*}
+    (FA \overset{f}\to B) \mapsto (A \overset{\eta_A}\to GFA \overset{Gg}\to GB)
+  \end{equation*}
+  The latter mapping is natural in $B$ since $G$ is a functor, and in $A$ since, by construction, $\eta$ is a natural transformation $1_\cc \to GF$.
+\end{proof}
+\begin{ncor}\label{cor:3.4}
+  If $F$ and $F'$ are both \hyperlink{def:adj}{left adjoint} to $G: \dc \to \cc$, then they are \hyperlink{def:natiso}{naturally isomorphic}.
+\end{ncor}
+\begin{proof}
+  For any $A$, $(FA, \eta_A)$ and $(F'A, \eta'_A)$ are both \hyperlink{def:initial}{initial} in $\hyperlink{def:comma}{(A \downarrow G)}$, so there's a unique \hyperlink{def:iso}{isomorphism} $\alpha_A : (FA, \eta_A) \to (F'A, \eta'_A)$.
+  In any naturality square for $\alpha$, the two ways round are both morphisms in $(A \downarrow G)$ where the domain is initial, so they are equal.
+\end{proof}
+\begin{nlemma}\label{lem:3.5}
+  Given
+  \begin{equation*}
+    \begin{tikzcd}
+      \cc \rar[shift left]{F} & \dc \lar[shift left]{G} \rar[shift left]{H} & \lar[shift left]{K} \mathscr{E}
+    \end{tikzcd}
+  \end{equation*}
+  with $(F \dashv G)$ and $(H \dashv K)$ we have $(HF \dashv GK)$.
+\end{nlemma}
+\begin{proof}
+  We have bijections between morphisms $A \to GKC$, morphisms $FA \to KC$ and morphisms $HFA \to C$, which are both natural in $A$ and $C$.
+\end{proof}
+\begin{ncor}\label{cor:3.6}
+  Given a commutative square
+  \begin{equation*}
+    \begin{tikzcd}
+      \cc \rar \dar & \dc \dar \\
+      \mathscr{E} \rar & \mathscr{F}
+    \end{tikzcd}
+  \end{equation*}
+  of \hyperlink{def:cat}{categories} and \hyperlink{def:funct}{functors}, if the functors all have left \hyperlink{def:adj}{adjoints}, then the diagram of left adjoints commutes up to \hyperlink{def:natiso}{natural isomorphism}.
+\end{ncor}
+\begin{proof}
+  By \cref{lem:3.5}, both ways round the diagram of left adjoints are left adjoint to the composite $\cc \to \mathscr{F}$, so by \cref{cor:3.4} they are isomorphic.
+\end{proof}
+\index{unit}\hypertarget{def:unit}Given an \hyperlink{def:adj}{adjunction} $(F \dashv G)$, the \hyperlink{def:nattrans}{natural transformation} $\eta: 1_{\cc} \to GF$ emerging in the proof of \cref{thm:3.3} is called the \textbf{unit} of the adjunction.
+\index{counit}\hypertarget{def:counit}Dually, we have a natural transformation $\epsilon: FG \to 1_{\dc}$ such that $\epsilon_B: FGB \to B$ corresponds to $GB \overset{1_{GB}}\to GB$ is called the \textbf{counit}.
+\begin{nthm}\label{thm:3.7}
+  Given functors
+  $\begin{tikzcd}
+          \cc \rar[shift left]{F} & \dc \lar[shift left]{G}
+  \end{tikzcd}$
+  specifying an \hyperlink{def:adj}{adjunction} $(F \dashv G)$ is equivalent to specifying natural transformations $\eta: 1_{\cc} \to GF$, $\epsilon: FG \to 1_{\dc}$ satisfying the commutative diagrams
+  \begin{equation*}
+    \begin{tikzcd}
+      F \rar{F \eta} \arrow[dr, "1_F"'] & FGF \dar{\epsilon F} \\ & F
+    \end{tikzcd}
+    \qquad \text{and} \qquad
+    \begin{tikzcd}
+      G \rar{\eta G} \arrow[dr, "1_G"'] & GFG \dar{G\epsilon} \\ & G
+    \end{tikzcd}
+  \end{equation*}
+  called the \hypertarget{def:triId}{\textbf{triangular identities}}.
+\end{nthm}
+\begin{proof}
+  First suppose given $(F \hyperlink{def:adj}{\dashv} G)$.
+  Define $\eta$ and $\epsilon$ as in \cref{thm:3.3} and its dual; now consider the composite
+  \begin{equation*}
+    \begin{tikzcd}
+      FA \rar{F\eta_A} & FGFA \rar{\epsilon_{FA}} & FA.
+    \end{tikzcd}
+  \end{equation*}
+  Under the adjunction this corresponds to
+  \begin{equation*}
+    \begin{tikzcd}
+      A \rar{\eta_A} & GFA \rar{1_{GFA}} & GFA
+    \end{tikzcd}
+  \end{equation*}
+  but this also corresponds to $1_{FA}$, so $\epsilon_{FA} \cdot F\eta_A = 1_{FA}$.
+  The other identity is \hyperlink{def:duality}{dual}.
+
+  Conversely, suppose given $\eta$ and $\epsilon$ satisfying the \hyperlink{def:triId}{triangular identities}.
+  Given $A \overset{f}\to GB$, let $\Phi(f)$ be the composite
+  \begin{equation*}
+    \begin{tikzcd}
+      FA \rar{Ff} & FGB \rar{\epsilon B} & B,
+    \end{tikzcd}
+  \end{equation*}
+  and given $FA \overset{g}\to b$, let $\Psi(g)$ be
+  \begin{equation*}
+    \begin{tikzcd}
+      A \rar{\eta_A} & GFA \rar{Gg} & GB.
+    \end{tikzcd}
+  \end{equation*}
+  Then $\Phi$ and $\Psi$ are both natural; we need to show that $\Phi \Psi$ and $\Psi \Phi$ are identity mappings.
+  But
+  \begin{align*}
+    \Psi \Phi \left(
+    \begin{tikzcd}[ampersand replacement=\&]
+        A \rar{f} \& GB
+      \end{tikzcd}
+  \right) &=
+      \begin{tikzcd}[ampersand replacement=\&]
+        A \rar{\eta_A} \& GFA \rar{GFf} \& GFGB \rar{G\epsilon_B} \& GB
+      \end{tikzcd} \\
+      &=
+      \begin{tikzcd}[ampersand replacement=\&]
+        A \rar{f} \& GB \rar{\eta_{GB}} \& GFGB \rar{G\epsilon_B} \& GB
+      \end{tikzcd} \\
+      &= f
+  \end{align*}
+  and dually $\Phi \Psi(g) = g$.
+\end{proof}
+\begin{nlemma}\label{lem:3.8}
+  Suppose given
+  \begin{equation*}
+    \begin{tikzcd}
+      \cc \rar[shift left]{F} & \dc \lar[shift left]{G}
+    \end{tikzcd}
+  \end{equation*}
+  and \hyperlink{def:natiso}{natural isomorphisms} $\alpha: 1_{\cc} \to GF$, $\beta: FG \to 1_{\dc}$.
+  Then there are isomorphisms $\alpha': 1_{\cc} \to GF$, $\beta': FG \to 1_{\dc}$ which satisfy the \hyperlink{def:triId}{triangular identities}, so $\hyperlink{def:adj}{(F \dashv G)}$ (and $(G \dashv F)$).
+\end{nlemma}
+\begin{proof}
+  We define $\alpha' = \alpha$ and $\beta'$ to be the composite
+  \begin{equation*}
+    \begin{tikzcd}[column sep=huge]
+      FG \rar{(FG\beta)^{-1}} & FGFG \rar{(F\alpha G)^{-1}} & FG \rar{\beta} & 1_{\dc}.
+    \end{tikzcd}
+  \end{equation*}
+  Note that $FG\beta = \beta{FG}$ since
+  \begin{equation*}
+    \begin{tikzcd}
+      FGFG \rar{FG\beta} \dar{\beta{FG}} & FG \dar{\beta} \\
+      FG \rar{\beta} & 1_{\dc}
+    \end{tikzcd}
+  \end{equation*}
+  commutes by naturality of $\beta$ and $\beta$ is monic.
+  Now $(\beta'_F)(F\alpha')$ is the composite
+  \begin{align*}
+    &\begin{tikzcd}[ampersand replacement=\&, column sep=huge]
+      F \rar{F\alpha} \& FGF \rar{(\beta {FGF})^{-1}} \& FGFGF \rar{(F\alpha{GF})^{-1}} \& FGF \rar{\beta F} \& F
+    \end{tikzcd} \\
+    =
+    &\begin{tikzcd}[ampersand replacement=\&, column sep=huge]
+      F \rar{(\beta F)^{-1}} \& FGF \rar{FGF\alpha} \& FGFGF \rar{(F\alpha{GF})^{-1}} \& FGF \rar{\beta F} \& F
+    \end{tikzcd} \\
+    =
+    &\begin{tikzcd}[ampersand replacement=\&, column sep=huge]
+      F \rar{(\beta F)^{-1}} \& FGF \rar{\beta F} \& F
+    \end{tikzcd}
+    = 1_F
+  \end{align*}
+  since $GF\alpha = \alpha_{GF}$.
+  Similarly $(G\beta')(\alpha'_G)$ is
+  \begin{align*}
+    &\begin{tikzcd}[ampersand replacement=\&, column sep=huge]
+    G \rar{\alpha G} \& GFG \rar{(GFG\beta)^{-1}} \& GFGFG \rar{(GF\alpha G)^{-1}} \& GFG \rar{G\beta} \& G
+    \end{tikzcd} \\
+    =
+    &\begin{tikzcd}[ampersand replacement=\&, column sep=huge]
+      G \rar{(G\beta)^{-1}} \& GFG \rar{\alpha GFG} \& GFGFG \rar{(GF\alpha G)^{-1}} \& GFG \rar{G\beta} \& G
+    \end{tikzcd} \\
+    =
+    &\begin{tikzcd}[ampersand replacement=\&, column sep=huge]
+    G \rar{(G\beta)^{-1}} \& GFG \rar{G\beta} \& G
+    \end{tikzcd}
+    = 1_G. \qedhere
+  \end{align*}
+\end{proof}
+\begin{nlemma}
+  Suppose $G: \dc \to \cc$ has a \hyperlink{def:adj}{left adjoint} $F$ with \hyperlink{def:counit}{counit} $\epsilon: FG \to 1_{\dc}$, then
+  \begin{enumerate}[label=(\roman*)]
+    \item $G$ is \hyperlink{def:full}{faithful} iff $\epsilon$ is pointwise \hyperlink{def:epic}{epic}.
+    \item $G$ is \hyperlink{def:full}{full} and faithful iff $\epsilon$ is an \hyperlink{def:natiso}{isomorphism}.
+  \end{enumerate}
+\end{nlemma}
+\begin{proof}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item Given $B \overset{g}\to B'$, $Gg$ corresponds under the \hyperlink{def:adj}{adjunction} to the composite
+      \begin{equation*}
+        \begin{tikzcd}
+          FGB \rar{\epsilon_B} & B \rar{g} & B'.
+        \end{tikzcd}
+      \end{equation*}
+      Hence the mapping $g \mapsto Gg$ is injective on morphisms with domain $B$ (and specified codomain) iff $g \mapsto g \epsilon_B$ is injective, i.e.\ iff $\epsilon_B$ is epic.
+  \end{enumerate}
+\end{proof}
 \printindex
 \end{document}
