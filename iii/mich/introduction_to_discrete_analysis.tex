@@ -25,13 +25,16 @@
 }
 \parskip 1ex
 
+\usetikzlibrary{cd}
+
 \DeclareMathOperator*{\E}{\scalerel*{\mathbb{E}}{\textstyle\sum}}
 \newcommand{\1}[1]{\mathbbm{1}_{#1}}
-\counterwithout{nthm}{section}
+%\counterwithout{nthm}{section}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \DeclareMathOperator{\osc}{osc}
+\DeclareMathOperator{\diam}{diam}
 
 % preamble
 
@@ -130,7 +133,7 @@ Let us write $\| f \|_p$ for $\left(\E_x |f(x)|^p\right)^{\frac{1}{p}}$ and call
   \end{align*}
 \end{proof}
 
-\begin{nlemma}[Inversion formula]
+\begin{nlemma}[Inversion formula]\label{lem:3}
   \begin{equation*}
     f(x) = \sum_r \hat{f}(r) \omega^{r x}
   \end{equation*}
@@ -161,7 +164,7 @@ Then
 \end{align*}
 
 \subsection{Roth's Theorem}
-\begin{nthm}
+\begin{nthm}\label{thm:1.4}
   For every $\delta > 0$, there exists $N$ such that if $A \subseteq \{1, \dotsc, N\}$ is a set of size at least $\delta N$ then $A$ must contain an arithmetic progression of length 3.
 \end{nthm}
 This is the $k=3$ case of Szemer\'{e}di's theorem.
@@ -178,7 +181,7 @@ The best known bound is $\frac{(\log \log N)^4}{\log N}$ by Thomas Bloom.
 In the other direction, we know $e^{- \sqrt{\log N}}$ does not work.
 
 % lecture 2
-\begin{nlemma}
+\begin{nlemma}\label{lem:1.5}
   Let $A, B, C \subset \mathbb{Z}_N$ have densities $\alpha, \beta, \gamma$, for $N$ odd.
   If $\max_{r \neq 0} |\hat{A}(r)| \leq \frac{\alpha(\beta \gamma)^\frac{1}{2}}{2}$ and $\frac{\alpha\beta\gamma}{2} > \frac{1}{N}$ then there exists $x,d \in \mathbb{Z}_N$ with $d \neq 0$ such that $(x, x+d, x+2d) \in A \times B \times C$.
 \end{nlemma}
@@ -212,7 +215,7 @@ So if $A$ does not contain a 3AP, then either we find $P$ of length about $\frac
 \begin{defi}
   If $X$ is a finite set and $f: X \to \mathbb{C}$, $Y \subseteq X$, write $\osc(f|_Y)$ to mean $\max_{y_1, y_2 \in Y} |f(y_1) - f(y_2)|$.
 \end{defi}
-\begin{nlemma}\label{lem:6}
+\begin{nlemma}\label{lem:1.6}
   Let $r \in \hat{\mathbb{Z}}_n$ and let $\epsilon > 0$. Then there is a partition of $\{1,2,\dotsc,N\}$ into arithmetic progressions $P_i$ of length at least $c(\epsilon) \sqrt{N}$ such that $\osc(\omega_r|_{P_i}) \leq \epsilon$ for each $i$.
 \end{nlemma}
 \begin{proof}
@@ -230,7 +233,7 @@ Now let us use the information that $r \neq 0$ and $|\hat{A}(r)| \geq \frac{\del
 Define the balanced function $f$ of $A$ by $f(x) = A(x) - \frac{|A|}{N}$ for each $x$.
 
 Note that $\hat{f}(0) = 0$ and $\hat{f}(r) = \hat{A}(r)$ for all $r \neq 0$.
-Now let $P_1, \dotsc, P_m$ be given by \cref{lem:6} with $\epsilon = \frac{\delta^2}{20}$.
+Now let $P_1, \dotsc, P_m$ be given by \cref{lem:1.6} with $\epsilon = \frac{\delta^2}{20}$.
 Then
 \begin{align*}
   \frac{\delta^2}{10} \leq \frac{1}{N} \left| \sum_x f(x) \omega^{-rx} \right| &\leq \frac{1}{N} \sum_{i=1}^m \left|\sum_{x\in P_i} f(x) \omega^{-r x}\right| \\
@@ -282,7 +285,7 @@ So the argument works provided
 
 \subsection{Bogolyubov's method}
 Let $K \subset \hat{\mathbb{Z}}_N$ and let $\delta > 0$.
-\begin{defi}[Bohr set]
+\begin{defi}[Bohr set]\hypertarget{def:bohr}
   The \textbf{Bohr set} $B(K, \delta)$ has two definitions.
   \begin{enumerate}
     \item $B(K, \delta) = \set{x \in \mathbb{Z}_N | rx \in [-\delta N, \delta N] \ \forall r \in K}$ (arc-length definition)
@@ -298,7 +301,7 @@ Let $K \subset \hat{\mathbb{Z}}_N$ and let $\delta > 0$.
   \end{align*}
 \end{defi}
 
-\begin{nlemma}
+\begin{nlemma}\label{lem:1.7}
   Let $A \subset \mathbb{Z}_N$ be a set of density $\alpha$. Then $2A - 2A$ contains a \hyperlink{def:bohr}{Bohr set} (arc) with $|K| \geq \alpha^{-2}$.
 \end{nlemma}
 \begin{proof}
@@ -325,7 +328,7 @@ Let $K \subset \hat{\mathbb{Z}}_N$ and let $\delta > 0$.
 
   It follows that $\Re \left(\sum_r |\hat{A}(r)|^4 \omega^{r x}\right) > 0$, so $x \in 2A - 2A$.
 \end{proof}
-\begin{nlemma}
+\begin{nlemma}\label{lem:1.8}
   Let $K \subset \mathbb{Z}_N$ and let $\delta > 0$. Then
   \begin{enumerate}[label=(\roman*)]
     \item $B(K, \delta)$ (arc) has density at least $\delta^{|K|}$
@@ -341,7 +344,224 @@ Let $K \subset \hat{\mathbb{Z}}_N$ and let $\delta > 0$.
     \item If we take $\eta > N^{\frac{1}{2}}$, then by (i) we get that $|B(K, \eta) > 1$, so $\exists x \in B(K, \eta)$ such that $x \neq 0$.
       But then $d x \in B(K, d \eta)$ for every $d$.
       So if $d \eta \leq \delta$ then $d x \in B(K, \delta)$. That gives us an AP of length at least $\frac{\delta}{\eta}$.
-      So we get one of length at least $\delta N^\frac{1}{k}$.
+      So we get one of length at least $\delta N^\frac{1}{k}$. \qedhere
   \end{enumerate}
 \end{proof}
+\begin{defi}[Freiman homomorphism]
+  Let $A,B$ be subsets of Abelian groups and let $\phi : A \to B$.
+  Then $\phi$ is a \textbf{Freiman homomorphism of order $k$} if
+  \begin{equation*}
+    a_1 + \dotsb + a_k = a_{k+1} + \dotsc + a_{2k} \implies \phi(a_1) + \dotsb + \phi(a_k) = \phi(a_{k+1}) + \dotsb + \phi(a_{2k}).
+  \end{equation*}
+  If $k=2$, we call this a \textbf{Freiman homomorphism}.
+  In that case, the condition is equivalent to $a - b = c - d \implies \phi(a) - \phi(b) = \phi(c) - \phi(d)$.
+
+  If $\phi$ has an inverse which is also a Freiman homomorphism of order $k$, then $\phi$ is a Freiman isomorphism of order $k$.
+\end{defi}
+\begin{nlemma}\label{lem:1.9}
+  Assume $0 \notin K$ and $N$ prime.
+  If $\delta < \frac{1}{4}$, then $B(K, \delta)$ (arc) is Freiman isomorphic to the intersection in $\mathbb{R}^{K}$ of $[-\delta N, \delta N]^{|K|}$ with some lattice $\Delta$.
+\end{nlemma}
+\begin{proof}
+  Let $K = \{r_1, \dotsc, r_k\}$ and let $\Lambda = N \mathbb{Z}^k + \set{(r_1 x, \dotsc, r_k x) | x \in \mathbb{Z}}$.
+  Write $\mathbf{r}$ for $(r_1, \dotsc, r_k)$.
+  Claim that $B(K, \delta) \cong \Lambda \cap [-\delta N, \delta N]^k$.
+  Define a map $\phi: B(K, \delta) \to \Lambda \cap [-\delta N, \delta N]^k$ by sending $x$ to $(\langle r_1 x \rangle, \dotsc, \langle r_k x \rangle)$ where $\langle u \rangle$ means the least-modulus residue of $u \bmod N$.
+
+  If $x + y = z + w$, then $\mathbf{r} x + \mathbf{r} y = \mathbf{r} z + \mathbf{r} w$ in $\mathbb{Z}_N^k$.
+  But for each $i$, $\langle r_i x \rangle + \langle r_i y \rangle - \langle r_i z \rangle - \langle r_i w \rangle \in [-4 \delta N, 4 \delta N]$.
+  Since $\delta < \frac{1}{4}$, that implies that $\langle r_i x \rangle + \langle r_i y\rangle - \langle r_i z \rangle - \langle r_i w \rangle = 0$.
+  So $\langle \mathbf{r} x \rangle + \langle \mathbf{r} y \rangle = \langle \mathbf{r} z \rangle + \langle \mathbf{r} w \rangle$.
+
+  That already implies that $\phi$ is an injection.
+  If $\mathbf{r} x + \mathbf{a} N \in [-\delta N, \delta N]^k$ then $r_i x \in [-\delta N, \delta N] \bmod{N}$ for each $i$, so $x \in B(K, \delta)$ and $\phi(x) = \mathbf{r} x + \mathbf{a} N$.
+  So $\phi$ is a surjection.
+
+  If $\mathbf{r} x + \mathbf{a} N + \mathbf{r} y + \mathbf{b} N = \mathbf{r} z + \mathbf{c} N + \mathbf{r} w + \mathbf{d} N$, then $r_1 (x+y) = r_1 (z + w) \bmod{N}$, so $x + y = z + w \bmod{N}$.
+  So the inverse of $\phi$ is also a Freiman homomorphism.
+\end{proof}
+\begin{nlemma}\label{lem:1.10}
+  Let $\Lambda$ be a lattice and let $C$ be a symmetric convex body, both in $\mathbb{R}^k$.
+  Then $\Lambda \cap C \leq 5^k |\Lambda \cap \frac{C}{2}|$.
+\end{nlemma}
+\begin{proof}
+  Let $x_1, \dotsc, x_n$ be a maximal subset of $\Lambda \cap C$ such that for all $i \neq j$, $x_j \notin x_i + \frac{C}{2}$.
+  Then by maximality, the sets $x_i + \frac{C}{2}$ cover all of $\Lambda \cap C$.
+  Also, the sets $x_i + \frac{C}{4}$ are disjoint subsets of $\mathbb{R}^k$, and they are all contained in $C + \frac{C}{4} = \frac{5}{4} C$.
+  So
+  \begin{equation*}
+    m \leq \frac{\operatorname{vol}(\frac{5}{4} C)}{\operatorname{vol}(\frac{1}{4} C)} = 5^k.
+  \end{equation*}
+\end{proof}
+\begin{ncor}
+  If $N$ is prime, $0 \notin K$, $|K| = k$, $\delta < \frac{1}{4}$, then $|B(K,\delta)| \leq 5^k |B(K, \frac{\delta}{2})$.
+\end{ncor}
+
+\clearpage
+\section{Sumsets and their structure}
+The idea is to show that for $A \subset \mathbb{Z}$, if $|A + A| \leq K|A|$ then $|rA - sA| \leq K^{r+s} |A|$.
+\begin{nlemma}[Petridis]\label{lem:2.1}
+  Let $A_0, B$ be finite subsets of an abelian group such that $|A_0 + B| \leq K_0 |A_0|$.
+  Then there exists a non-empty subset $A \subset A_0$ and $K \leq K_0$ such that $|A + B + C| \leq K|A + C|$ for every finite subset $C$ of the group.
+\end{nlemma}
+\begin{proof}
+  Let $A$ minimise the ratio $\frac{|A+B|}{|A|}$ and let the minimal ratio be $K$.
+  Claim: this works. We prove this by induction on $C$.
+
+  If $C = \emptyset$, then the result holds.
+  Now assume it for $C$ and let $x \notin C$.
+  Then \begin{equation*}A + (C \cup \{x\}) = (A + C) \cup (A + \{x\}) = (A + C) \cup \left[(A + x) \setminus (A' + x)\right]\end{equation*} where $A' = \set{a \in A | a + x \in A + C}$.
+  This is a disjoint union, so
+  \begin{equation*}
+    |A + (C \cup \{x\})| = |A + C| + |A| - |A'|.
+  \end{equation*}
+  Similarly,
+  \begin{align*}
+    A + B + (C \cup \{x\}) &= (A + B + C) \cup ((A + B + x) \setminus (A' + B + x)) \\
+    \shortintertext{(since if $a+x \in A + C$ then $a + B + x \subset A + B + C$)}
+    \implies |A + B + (C \cup \{x\})| &\leq |A + B + C| + |A + B| - |A' + B| \\
+                                      &\leq K |A + C| + K|A| - K|A'|
+  \end{align*}
+  by induction and minimality property of $A$.
+\end{proof}
+% new lecture
+\begin{ncor}\label{cor:2.2}
+  If $A,B$ are finite subsets of an Abelian group and $|A + B| \leq K|A|$, then there exists $A' \subseteq A$, $A' \neq \emptyset$ such that $|A' + rB| \leq K^r |A'|$ for every positive integer $r$.
+\end{ncor}
+\begin{proof}
+  Choose $A'$ as we chose $A$ in the proof of \cref{lem:2.1}.
+  Then
+  \begin{equation*}
+    |A' + rB| = |A'+B+(r-1)B| \leq K |A' + (r-1) B|
+  \end{equation*}
+  and $|A'+B| \leq K|A'|$
+  so we are done by induction.
+\end{proof}
+\begin{ncor}\label{cor:2.3}
+  If $|A+A| \leq K|A|$ or $|A - A| \leq K|A|$, then $|rA| \leq K^r |A|$.
+\end{ncor}
+\begin{proof}
+  Set $B = A$ or $-A$ in \cref{cor:2.2}
+\end{proof}
+
+\begin{nlemma}[Rusza inequality]\label{lem:2.4}
+  Let $A,B,C$ be finite subsets of an abelian group.
+  Then $|A||B-C| \leq |A-B||A-C|$.
+\end{nlemma}
+\begin{proof}
+  Define a map $\phi: A \times (B-C) \to (A-B) \times (A-C)$ as follows.
+  Given $(a,x)$ with $a\in A, x \in B-C$, choose, somehow, $b(x) \in B$ and $c(x) \in C$ such that $b(x) - c(x) = x$ and set $\phi(a,x) = (a - b(x), a-c(x))$.
+
+  Note that $(a - c(x)) - (a - b(x)) = b(x) - c(x) = x$.
+  Having worked out $x$, we know $b(x)$ and $a = a - b(x) + b(x)$, so $a$ is determined too.
+  So $\phi$ is an injection.
+\end{proof}
+
+Why is it called a triangle inequality?
+We can write it as
+\begin{equation*}
+  \frac{|B-C|}{|B|^{\frac{1}{2}} |C|^{\frac{1}{2}}} \leq \frac{|A-B|}{|A|^{\frac{1}{2}} |B|^{\frac{1}{2}}} + \frac{|A-C|}{|A|^{\frac{1}{2}} |C|^{\frac{1}{2}}}
+\end{equation*}
+so if we define the Rusza distance $d(A,B)$ to be
+\begin{equation*}
+  \frac{|A-B|}{|A|^{\frac{1}{2}} |B|^{\frac{1}{2}}},
+\end{equation*}
+then the inequality says $d(B,C) \leq d(A,B) d(A,C)$.
+
+\begin{ncor}\label{cor:2.5}
+  If $|A - B| \leq K|A|$, then $|rB - sB| \leq K^{r+s}|A|$ for all $r,s$.
+\end{ncor}
+\begin{proof}
+  Pick $A'$ as before. Then by \cref{cor:2.2} with $B$ replaced by $-B$, $|A'-rB| \leq K'|A'|$ and $|A' - sB| \leq K^s |A'|$.
+  Therefore, by \nameref{lem:2.4},
+  \begin{equation*}
+    |A'| |rB - sB| \leq K^{r+s} |A'|^2 \implies |rB - sB| \leq K^{r+s} |A|. \qedhere
+  \end{equation*}
+\end{proof}
+
+\begin{ncor}[Plünnecke's theorem]\label{cor:2.6}
+  If $|A+A| \leq K|A|$ or $|A-A| \leq K|A|$, then $|rA-sA| \leq K^{r+s}|A|$.
+\end{ncor}
+\begin{proof}
+  Apply \cref{cor:2.5} with $B=-A$ or $B=A$.
+\end{proof}
+
+\begin{nlemma}[Ruzsa's embedding theorem]\label{lem:2.7}
+  Let $A \subseteq \mathbb{Z}$ be finite and suppose that $|kA - kA| \leq C|A|$.
+  Then there exists a prime $p \leq 4 C |A|$ and a subset $A' \subseteq A$ of size at least $|A|/k$ such that $A'$ is Freiman isomorphic of order $k$ to a subset of $\mathbb{Z}_p$.
+\end{nlemma}
+\begin{proof}
+  Consider the following composition of maps
+  \begin{equation*}
+    \begin{tikzcd}[column sep=6em]
+      \mathbb{Z} \rar{\text{reduce mod }q}
+    & \mathbb{Z}_q \arrow[r, "\times\text{ by some}", "\text{non-zero }r"']
+    & \mathbb{Z}_q \arrow[r, "\text{least non-negative}", "\text{residue}"'] & \mathbb{Z} \rar{\text{reduce mod }p} & \mathbb{Z}_p
+    \end{tikzcd}
+  \end{equation*}
+  where $q$ is a prime bigger than $\diam A$ and $p$ is a prime $\in (2 C |A|, 4 C |A|]$.
+
+  Let $\phi$ be the composition. The first, second and fourth parts are group homomorphisms, and thus Freiman homomorphisms of all orders.
+  Also, the third map is a Freiman homomorphism of order $k$ if you restrict to a subinterval of $[0, q-1]$ of length $\leq \frac{q}{k}$.
+  To see this, write $\langle u \rangle$ for the least non-negative residue.
+  Then if $I$ has length $\leq \frac{q}{k}$ (and therefore $< \frac{q}{k}$) and $u_1, \dotsc, u_{2k} \in I$, then if $u_1 + \dotsb + u_k - u_{k+1} - \dotsb - u_{2k} = 0$, then
+  \begin{equation*}
+    \langle u_1 \rangle + \dotsb + \langle u_k \rangle - \langle u_{k+1} \rangle - \dotsb - \langle u_{2k} \rangle \equiv 0 \pmod{q}
+  \end{equation*}
+  and also has modulus less than $q$. So it is zero.
+
+  By the pigeonhole principe, for any $r$ we can find $I$ of length $\leq \frac{q}{k}$ such that
+  \begin{equation*}
+    A' = \set{a \in A | ra \in I}
+  \end{equation*}
+  has size at least $|A|/k$.
+
+  Remains to prove that $\phi$ is an isomorphism to its image. That is, we must show that if
+  \begin{equation*}
+    a_1 + \dotsb + a_k - a_{k+1} - \dotsb a_{2k} \equiv 0 \quad (a_i \in A)
+  \end{equation*}
+  then
+  \begin{equation*}
+    \langle r a_1 \rangle + \dotsb + \langle r a_k \rangle - \langle r a_{k+1} \rangle - \langle r a_{2k} \rangle \neq 0 \pmod{p}
+  \end{equation*}
+  But if the $a_i$ are chosen such that the $r a_i$ all belong to the same interval of length $\frac{q}{k}$,
+  \begin{equation*}
+    |\langle r a_1 \rangle + \dotsb \langle r a_k \rangle - \langle r a_{k+1} \rangle - \dotsb - \langle r a_{2k} \rangle| < q \\
+  \end{equation*}
+  and
+  \begin{equation*}
+    \langle r a_1 \rangle + \dotsb + \langle r a_k \rangle - \langle r a_{k+1} \rangle - \dotsb - \langle r a_{2k} \rangle \equiv r(a_1 + \dotsb + a_k - a_{k+1} - \dotsb - a_{2k}) \bmod{q}
+  \end{equation*}
+  So all that can go wrong is if $r(a_1 + \dotsb + a_k - a_{k+1} - \dotsb - a_{2k})$ is $xp$ for some $x \neq 0$ with $|x| < \frac{q}{p}$.
+  The number of values to avoid is at most $\frac{2q}{p}$, so for each $a_1 + \dotsb + a_k - a_{k+1} - \dotsc - a_{2k}$ the probability of going wrong if $r$ is chosen randomly is at most $\frac{2}{p}$.
+  So since $|kA - kA| \leq C|A|$, the probability of going wrong is at most $\frac{2}{p} C |A|$.
+  Since $p > 2 C |A|$, there exists $r$ such that we get a Freiman isomorphism of order $k$.
+\end{proof}
+
+% new lecture
+\subsection{Freiman's theorem (a version of)}
+We shall now start with a set $A \subseteq \mathbb{Z}$ with $|A+A| \leq C|A|$ and put together several of the previous results to say a lot about the structure of $A$.
+
+By Pl\"unnecke's theorem, $|8A - 8A| \leq C^{16}|A|$. By Ruzsa's embedding lemma, $A$ has a subset $A'$ of size at least $\frac{A}{8}$ that is $8$-isomorphic to a subset $A'' \subset \mathbb{Z}_p$ with $p \leq 4 C^{16} |A|$.
+The density of $A''$ in $\mathbb{Z}_p$ is $\alpha \geq \frac{1}{32 C^{16}}$.
+By Bogolubov's lemma, $2A'' - 2A''$ contains a Bohr set $B(K, \frac{1}{4})$ with $|K| \leq \alpha^{-2}$, which is $2$-isomorphic to a set $B'$ that is the intersection of a symmetric convex body with a lattice of dimension at most $\alpha^{-2}$.
+
+On the example sheet, prove that if $A$ is $8$-isomorphic to $B$, then $2A-2A$ is $2$-isomorphic to $2B - 2B$.
+Thus $2A'' - 2A'' \overset{2}{\cong} 2A' - 2A'$, and therefore $2A' - 2A'$ has a subset $B$ that is isomorphic to $B'$.
+
+Now let $X \subset A$ be maximal such that the sets $x + B$ with $x \in X$ are disjoint.
+Then $A \subset X + B - B$, by maximality.
+Also, $|X| |B| = |X + B| \leq |3A - 2A| \leq C^5 |A| \implies |X| \leq C^5 \frac{|A|}{|B|}$.
+But by basic facts about Bohr sets, $|B| \geq 4^{-\alpha^{-2}} |A|$, so $|X| \leq 4^{\alpha^{-2}} C^5$.
+So $A$ is the union of at most $4^{1024 C^{32}} C^5$ translates of $B-B$.
+If $B = \Lambda \cap K_0$ then $B - B \subset \Lambda \cap 2K_0$ and also $|B-B| \leq 5^{\alpha^{-2}} |B|$.
+
+\subsection{The Balog-Szemer\'edi-Gowers theorem}
+\begin{defi}[Additive quadruple]
+  Let $A$ be a subset of an Abelian group. An additive quadruple in $A$ is a quadruple $(a,b,c,d) \in A^4$ such that $a+b = c+d$.
+\end{defi}
+(Equivalently, it's a quadruple such that $a - b = c-d$.)
+
+If $|A|=n$, then the number of additve quadruples in $A$ is at most $n^3$.
+We shall show that if $A^4$ contains at least $cn^3$ additive quadruples, then $A$ has a subset $A'$ of size at least $c' n$ with $|A' - A'| \leq C|A|$ where $c'$ and $C$ depend (nicely) on $c$ only.
 \end{document}
