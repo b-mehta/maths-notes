@@ -87,9 +87,9 @@
 \newtheorem{nexample}[nthm]{Examples}
 
 % and here we go!
+
+
 \begin{document}
-
-
 \maketitle
 
 \tableofcontents
@@ -104,7 +104,7 @@ There will be many examples, some of which may not be understandable.
 As long as some examples make sense, it is not a point of concern that some examples seem unfamiliar.
 
 \section{Definitions and Examples}
-\begin{ndef}[Category]\label{1.1}\index{category}\hypertarget{def:cat}
+\begin{ndef}[Category]\label{def:1.1}\index{category}\hypertarget{def:cat}
   A \textbf{category} $\mathscr{C}$ consists of
   \begin{enumerate}[label=(\alph*)]
     \item \index{object}a collection $\mathscr{C}$ of \textbf{objects} $A,B,C,\dotsc$
@@ -121,7 +121,7 @@ As long as some examples make sense, it is not a point of concern that some exam
   \end{enumerate}
 \end{ndef}
 
-\begin{nremark}\label{1.2}\leavevmode
+\begin{nremark}\label{rem:1.2}\leavevmode
   \begin{enumerate}[label=(\alph*)]
     \item \index{small category}\index{category!small}\hypertarget{def:small}This definition is independent of a model of set theory. If we're given a particular model of set theory, we call the \hyperlink{def:cat}{category $\mathscr{C}$} \textbf{small} if $\ob \mathscr{C}$ and $\mor \mathscr{C}$ are sets.
     \item Some texts say $fg$ means `$f$ followed by $g$', i.e.\ $fg$ defined $\iff \hyperlink{def:cat}{\cod} f = \dom g$.
@@ -130,7 +130,7 @@ As long as some examples make sense, it is not a point of concern that some exam
   \end{enumerate}
 \end{nremark}
 
-\begin{nexample}\label{1.3}\leavevmode
+\begin{nexample}\label{eg:1.3}\leavevmode
   \begin{enumerate}[label=(\alph*)]\hypertarget{def:categ}
     \item The \hyperlink{def:cat}{category} \textbf{Set} has all sets as objects, and all functions between sets as morphisms.
       (Strictly, morphisms $\begin{tikzcdi} A \rar& B \end{tikzcdi}$ are pairs $(f,B)$ where $f$ is a set-theoretic function.)
@@ -159,7 +159,7 @@ As long as some examples make sense, it is not a point of concern that some exam
       Composition is matrix multiplication.
   \end{enumerate}
 \end{nexample}
-\begin{ndef}[Functor]\label{1.4}\index{functor}\hypertarget{def:funct}
+\begin{ndef}[Functor]\label{def:1.4}\index{functor}\hypertarget{def:funct}
   Let $\mathscr{C}, \mathscr{D}$ be \hyperlink{def:cat}{categories}. A \textbf{functor} $F: \mathscr{C} \to \mathscr{D}$ consists of
   \begin{enumerate}[label=(\alph*)]
     \item a mapping $A \mapsto FA$ from $\ob \mathscr{C}$ to $\ob \mathscr{D}$
@@ -175,7 +175,7 @@ As long as some examples make sense, it is not a point of concern that some exam
   \end{enumerate}
 \end{manualeg}
 \begin{nexample}\leavevmode
-  \begin{enumerate}[label=(\alph*)]\label{1.5}
+  \begin{enumerate}[label=(\alph*)]\label{eg:1.5}
     \item \index{functor!forgetful}\hypertarget{def:forgFunc}We have \textbf{forgetful \hyperlink{def:funct}{functors}}
     $\begin{tikzcdi} \mathbf{\hyperlink{def:categ}{Gp}} \rar{U}& \mathbf{Set} \end{tikzcdi}$,
     $ \mathbf{Rng} \to \mathbf{Set} $,
@@ -205,7 +205,7 @@ As long as some examples make sense, it is not a point of concern that some exam
   \end{enumerate}
 \end{nexample}
 
-\begin{ndef}[Natural transformation]\label{1.6}\index{natural transformations}\hypertarget{def:nattrans}
+\begin{ndef}[Natural transformation]\label{def:1.6}\index{natural transformations}\hypertarget{def:nattrans}
   Let $\mathscr{C}, \mathscr{D}$ be \hyperlink{def:cat}{categories} and $\begin{tikzcdi} F,G: \mathscr{C} \rar[shift left]\rar[shift right]& \mathscr{D} \end{tikzcdi}$ two \hyperlink{def:funct}{functors}.
   A \textbf{natural transformation} $\alpha: F \to G$ consists of an assignment $A \mapsto \alpha_A$ from $\ob \mathscr{C}$ to $\mor \mathscr{D}$, such that $\dom \alpha_A = FA$ and $\cod \alpha_A = GA$ for all $A$, and for all $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$ in $\mathscr{C}$ the square
   \begin{equation*}
@@ -222,7 +222,7 @@ As long as some examples make sense, it is not a point of concern that some exam
   \end{enumerate}
 \end{manualeg}
 \begin{nexample}\leavevmode
-  \begin{enumerate}[label=(\alph*)]\label{1.7}
+  \begin{enumerate}[label=(\alph*)]\label{eg:1.7}
     \item Let $K$ be a field, $V$ a vector space over $K$. There is a linear map $\alpha_V: V \to V^{**}$ given by
       \begin{equation*}
         \alpha_V(v)(\theta) = \theta(v)
@@ -235,7 +235,7 @@ As long as some examples make sense, it is not a point of concern that some exam
       % lecture 3
     \item For any set $A$, we have a mapping $\sigma_A : A \to \mathcal{P}A$ sending $a$ to $\{a\}$.  \marginnote{\emph{Lecture 3}}[0cm]
       If $f: A \to B$, then $\mathcal{P}f\{a\} = \{f(a)\}$, so $\sigma$ is a natural transformation $1_{\mathbf{Set}} \to \mathcal{P}$.
-    \item Let $F: \mathbf{Set} \to \mathbf{Gp}$ be the \hyperlink{def:freeFunct}{free group functor} (\cref{1.5}(b)) and $U: \mathbf{Gp} \to \mathbf{Set}$ the forgetful functor.
+    \item Let $F: \mathbf{Set} \to \mathbf{Gp}$ be the \hyperlink{def:freeFunct}{free group functor} (\cref{eg:1.5}(b)) and $U: \mathbf{Gp} \to \mathbf{Set}$ the forgetful functor.
       The inclusions $A \to UFA$ form a natural transformation $1_{\mathbf{Set}} \to UF$.
     \item Let $G,H$ be groups and $f,g: G \to H$ two homomorphisms.
       A natural transformation $\alpha: f \to g$ corresponds to an element $h = \alpha_*$ of $H$ such that $h.f(x) = g(x).h$ for all $x \in G$, or equivalently $f(x) = h^{-1} g(x) h$, i.e.\ $f$ and $g$ are conjugate group homomorphisms.
@@ -243,7 +243,7 @@ As long as some examples make sense, it is not a point of concern that some exam
       A natural transformation $A \to B$ is a function $f$ satisfying $f(g . a) = g . f(a)$ for all $a \in A$, i.e.\ a $G$-equivariant map.
   \end{enumerate}
 \end{nexample}
-\begin{nlemma}\label{1.8}\hypertarget{def:natiso}
+\begin{nlemma}\label{lem:1.8}\hypertarget{def:natiso}
   Let $F,G : \mathscr{C} \to \mathscr{D}$ be two \hyperlink{def:funct}{functors}, and $\alpha: F \to G$ a \hyperlink{def:nattrans}{natural transformation}.
   Then $\alpha$ is an isomorphism in $\hyperlink{def:functcat}{[\mathscr{C}, \mathscr{D}]}$ iff each $\alpha_A$ is an isomorphism in $\mathscr{D}$.
 \end{nlemma}
@@ -268,7 +268,7 @@ As long as some examples make sense, it is not a point of concern that some exam
       \end{align*}
   \end{itemize}
 \end{proof}
-\begin{ndef}[Equivalent category]\label{1.9}\index{category!equivalence}\index{equivalent}\index{categorical property}\hypertarget{def:equicat}
+\begin{ndef}[Equivalent category]\label{def:1.9}\index{category!equivalence}\index{equivalent}\index{categorical property}\hypertarget{def:equicat}
   Let $\mathscr{C}, \mathscr{D}$ be categories.
   By an \textbf{equivalence} between $\mathscr{C}$ and $\mathscr{D}$, we mean a pair of \hyperlink{def:funct}{functors} $F: \mathscr{C} \to \mathscr{D}$, $G: \mathscr{D} \to \mathscr{C}$ together with natural isomorphisms $\alpha: 1_\mathscr{C} \to GF$ and $\beta: FG \to 1_\mathscr{D}$.
   We write $\mathscr{C} \simeq \mathscr{D}$ if $\mathscr{C}$ and $\mathscr{D}$ are equivalent.
@@ -278,7 +278,7 @@ As long as some examples make sense, it is not a point of concern that some exam
   For instance, being a groupoid or a preorder are categorical properties, but being a group or a partial order are not.
 \end{ndef}
 
-\begin{nexample}\label{1.10}\leavevmode
+\begin{nexample}\label{eg:1.10}\leavevmode
   \begin{enumerate}[label=(\alph*)]
     \item The category \hyperlink{def:categ}{$\mathbf{Part}$} is equivalent to the category $\mathbf{Set}_*$ of pointed sets (and basepoint-preserving functions).
       We define $F: \mathbf{Set}_* \to \mathbf{Part}$ by $F(A,a) = A \setminus \{a\}$ and if $f: (A,a) \to (B,b)$
@@ -305,14 +305,14 @@ As long as some examples make sense, it is not a point of concern that some exam
       sending $a$ to $A \setminus \{a\}$ and everything else to itself and this is natural.
 
       Note that there can be no isomorphism $\mathbf{Set}_* \to \mathbf{Part}$ since $\mathbf{Part}$ has a $1$-element isomorphism class $\{\emptyset\}$ and $\mathbf{Set}_*$ doesn't.
-    \item The category $\mathbf{FdMod}_K$ of finite-dimensional vector spaces over $K$ is equivalent to $\mathbf{FdMod}_K^{op}$: the functors in both directions are $(-)^*$ and both isomorphisms are the natural transformations of \cref{1.7}(a).
+    \item The category $\mathbf{FdMod}_K$ of finite-dimensional vector spaces over $K$ is equivalent to $\mathbf{FdMod}_K^{op}$: the functors in both directions are $(-)^*$ and both isomorphisms are the natural transformations of \cref{eg:1.7}(a).
     \item $\mathbf{FdMod}_K$ is also equivalent to $\hyperlink{def:categ}{\mathbf{Mat}_K}$: We define $F: \mathbf{Mat}_K \to \mathbf{FdMod}_K$ by $F(n) = K^n$, and $F(A)$ is the linear map represented by $A$ with respect to the standard bases of $K^n$ and $K^p$.
 
       To define $G: \mathbf{FdMod}_K \to \mathbf{Mat}_K$, choose a basis for each finite dimensional vector space,and define $G(V) = \dim V$, $G(V \overset{f}{\to} W)$ as the matrix representing $f$ with respect to the chosen bases.
       $GF$ is the identity, provided we choose the standard bases for the spaces $K^n$; $FG \neq 1$, but the chosen basis gives isomorphisms $FG(V) = K^{\dim V} \to V$ for each $V$, which form a natural isomorphism.
   \end{enumerate}
 \end{nexample}
-\begin{ndef}[Faithful, full, essentially surjective]\label{1.11}\hypertarget{def:full}
+\begin{ndef}[Faithful, full, essentially surjective]\label{def:1.11}\hypertarget{def:full}
   Let $\begin{tikzcdi} \mathscr{C} \rar{F}& \mathscr{D} \end{tikzcdi}$ be a \hyperlink{def:funct}{functor}.
   \marginnote{\emph{Lecture 4}}[0cm]
  \begin{enumerate}[label=(\alph*)]
@@ -325,12 +325,12 @@ As long as some examples make sense, it is not a point of concern that some exam
 \begin{eg}
   $\mathbf{Gp}$ is a \hyperlink{def:fulls}{full subcategory} of $\mathbf{Mon}$, but $\mathbf{Mon}$ is not a full subcategory of the category $\mathbf{Sgp}$ of semigroups.
 \end{eg}
-\begin{nlemma}\label{1.12}
+\begin{nlemma}\label{lem:1.12}
   Assuming the axiom of choice, a functor $F: \mathscr{C} \to \mathscr{D}$ is part of an \hyperlink{def:equicat}{equivalence} $\mathscr{C}\simeq\mathscr{D}$ iff it is \hyperlink{def:full}{full}, \hyperlink{def:full}{faithful} and \hyperlink{def:full}{essentially surjective}.
 \end{nlemma}
 \begin{proof}\leavevmode
   \begin{itemize}
-    \item[$\implies$] Given $G,\alpha,\beta$ as in \cref{1.9}, for each $B\in\ob\mathscr{D}$, $\beta_B$ is an isometry $FGB\to B$, so $F$ is essentially surjective.
+    \item[$\implies$] Given $G,\alpha,\beta$ as in \cref{def:1.9}, for each $B\in\ob\mathscr{D}$, $\beta_B$ is an isometry $FGB\to B$, so $F$ is essentially surjective.
 
      Given $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$ in $\mathcal{C}$, we can recover $f$ from $Ff$ as the composite
       \begin{equation*}
@@ -383,18 +383,18 @@ As long as some examples make sense, it is not a point of concern that some exam
       Also $\alpha$ is a natural transformation, since any naturality square for $\alpha$ is mapped by $F$ to a commutative square, and $F$ is faithful. \qedhere
   \end{itemize}
 \end{proof}
-\begin{ndef}[Skeleton]\label{1.13}\hypertarget{def:skel}
+\begin{ndef}[Skeleton]\label{def:1.13}\hypertarget{def:skel}
   By a \textbf{skeleton} of a \hyperlink{def:cat}{category} $\mathscr{C}$, we mean a \hyperlink{def:fulls}{full subcategory} $\mathscr{C}_0$ containing one object from each isomorphism class.
   We say $\mathscr{C}$ is \textbf{skeletal} if it's a skeleton of itself.
 \end{ndef}
 \begin{eg}
-  $\mathbf{Mat}_K$ is \hyperlink{def:skel}{skeletal}, and the image of $F: \mathbf{Mat}_K \to \mathbf{FdMod}_K$ of \cref{1.10}(c) is a \hyperlink{def:skel}{skeleton} of $\mathbf{FdMod}_K$.
+  $\mathbf{Mat}_K$ is \hyperlink{def:skel}{skeletal}, and the image of $F: \mathbf{Mat}_K \to \mathbf{FdMod}_K$ of \cref{eg:1.10}(c) is a \hyperlink{def:skel}{skeleton} of $\mathbf{FdMod}_K$.
 \end{eg}
 \begin{warning}
   Almost any assertion about \hyperlink{def:skel}{skeletons} is equivalent to the axiom of choice.
   See question 2 on example sheet 1.
 \end{warning}
-\begin{ndef}[Monomorphism, epimorphism]\label{1.14}
+\begin{ndef}[Monomorphism, epimorphism]\label{def:1.14}
   Let $A \xrightarrow{f} B$ be a \hyperlink{def:cat}{morphism} in $\mathscr{C}$
   \begin{enumerate}[label=(\alph*)]
     \item \index{morphism!mono-}\index{monomorphism}\hypertarget{def:monic}We say $f$ is a \textbf{monomorphism} (or f is \textbf{monic}) if, given any pair
@@ -531,7 +531,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
     \item The \hyperlink{def:forgFunc}{forgetful functor} $\mathbf{Gp} \to \mathbf{Set}$ is \hyperlink{def:repr}{representable} by $(\mathbb{Z}, 1)$.
       Similarly, the forgetful functor $\mathbf{Rng} \to \mathbf{Set}$ is representable by $(\mathbb{Z}[x], x)$ and
       the forgetful functor $\mathbf{Top} \to \mathbf{Set}$ is representable by $(\{*\}, *)$.
-    \item The functor $\mathcal{P}^*: \mathbf{Set}^{op} \to \mathbf{Set}$ (see \cref{1.5}(c)) is representable by $(\{0,1\}, \{1\})$: this is the bijection between subsets and characteristic functions.
+    \item The functor $\mathcal{P}^*: \mathbf{Set}^{op} \to \mathbf{Set}$ (see \cref{eg:1.5}(c)) is representable by $(\{0,1\}, \{1\})$: this is the bijection between subsets and characteristic functions.
     \item Let $G$ be a group.
       The unique (up to \hyperlink{def:iso}{isomorphism}) representable functor $G(*, -): G \to \mathbf{Set}$ is the \emph{Cayley representation} of $G$, i.e.\ the set $UG$ with $G$ acting by left multiplication.
     \item Let $A,B$ be two objects of a \hyperlink{def:lsmall}{locally small} \hyperlink{def:cat}{category} $\mathscr{C}$.
@@ -627,7 +627,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
       would be faithful.
   \end{enumerate}
 \end{nexample}
-Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}{\mathscr{C}(A, -)}$ preserves \hyperlink{def:monic}{monomorphisms}, but they don't normally preserve \hyperlink{def:epic}{epimorphisms}. % TODO: check this is true
+Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}{\mathscr{C}(A, -)}$ preserves \hyperlink{def:monic}{monomorphisms}, but they don't normally preserve \hyperlink{def:epic}{epimorphisms}.
 
 \begin{ndef}[Projective]\label{def:2.11}\index{projective}\hypertarget{def:projective}
   We say an object $P$ is \textbf{projective} if, given
@@ -762,10 +762,10 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   \begin{equation*}
     (FA \overset{f}\to B) \mapsto (A \overset{\eta_A}\to GFA \overset{Gg}\to GB)
   \end{equation*}
-  The latter mapping is natural in $B$ since $G$ is a functor, and in $A$ since, by construction, $\eta$ is a natural transformation $1_\cc \to GF$.
+  The latter mapping is natural in $B$ since $G$ is a functor, and in $A$ since, by construction, $\eta$ is a natural transformation $1_\mathscr{C} \to GF$.
 \end{proof}
 \begin{ncor}\label{cor:3.4}
-  If $F$ and $F'$ are both \hyperlink{def:adj}{left adjoint} to $G: \dc \to \cc$, then they are \hyperlink{def:natiso}{naturally isomorphic}.
+  If $F$ and $F'$ are both \hyperlink{def:adj}{left adjoint} to $G: \mathscr{D} \to \mathscr{C}$, then they are \hyperlink{def:natiso}{naturally isomorphic}.
 \end{ncor}
 \begin{proof}
   For any $A$, $(FA, \eta_A)$ and $(F'A, \eta'_A)$ are both \hyperlink{def:initial}{initial} in $\hyperlink{def:comma}{(A \downarrow G)}$, so there's a unique \hyperlink{def:iso}{isomorphism} $\alpha_A : (FA, \eta_A) \to (F'A, \eta'_A)$.
@@ -775,7 +775,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   Given
   \begin{equation*}
     \begin{tikzcd}
-      \cc \rar[shift left]{F} & \dc \lar[shift left]{G} \rar[shift left]{H} & \lar[shift left]{K} \mathscr{E}
+      \mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G} \rar[shift left]{H} & \lar[shift left]{K} \mathscr{E}
     \end{tikzcd}
   \end{equation*}
   with $(F \dashv G)$ and $(H \dashv K)$ we have $(HF \dashv GK)$.
@@ -787,23 +787,23 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   Given a commutative square
   \begin{equation*}
     \begin{tikzcd}
-      \cc \rar \dar & \dc \dar \\
+      \mathscr{C} \rar \dar & \mathscr{D} \dar \\
       \mathscr{E} \rar & \mathscr{F}
     \end{tikzcd}
   \end{equation*}
   of \hyperlink{def:cat}{categories} and \hyperlink{def:funct}{functors}, if the functors all have left \hyperlink{def:adj}{adjoints}, then the diagram of left adjoints commutes up to \hyperlink{def:natiso}{natural isomorphism}.
 \end{ncor}
 \begin{proof}
-  By \cref{lem:3.5}, both ways round the diagram of left adjoints are left adjoint to the composite $\cc \to \mathscr{F}$, so by \cref{cor:3.4} they are isomorphic.
+  By \cref{lem:3.5}, both ways round the diagram of left adjoints are left adjoint to the composite $\mathscr{C} \to \mathscr{F}$, so by \cref{cor:3.4} they are isomorphic.
 \end{proof}
-\index{unit}\hypertarget{def:unit}Given an \hyperlink{def:adj}{adjunction} $(F \dashv G)$, the \hyperlink{def:nattrans}{natural transformation} $\eta: 1_{\cc} \to GF$ emerging in the proof of \cref{thm:3.3} is called the \textbf{unit} of the adjunction.
-\index{counit}\hypertarget{def:counit}Dually, we have a natural transformation $\epsilon: FG \to 1_{\dc}$ such that $\epsilon_B: FGB \to B$ corresponds to $GB \overset{1_{GB}}\to GB$ is called the \textbf{counit}.
+\index{unit}\hypertarget{def:unit}Given an \hyperlink{def:adj}{adjunction} $(F \dashv G)$, the \hyperlink{def:nattrans}{natural transformation} $\eta: 1_{\mathscr{C}} \to GF$ emerging in the proof of \cref{thm:3.3} is called the \textbf{unit} of the adjunction.
+\index{counit}\hypertarget{def:counit}Dually, we have a natural transformation $\epsilon: FG \to 1_{\mathscr{D}}$ such that $\epsilon_B: FGB \to B$ corresponds to $GB \overset{1_{GB}}\to GB$ is called the \textbf{counit}.
 \begin{nthm}\label{thm:3.7}
   Given functors
   $\begin{tikzcd}
-          \cc \rar[shift left]{F} & \dc \lar[shift left]{G}
+          \mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G}
   \end{tikzcd}$
-  specifying an \hyperlink{def:adj}{adjunction} $(F \dashv G)$ is equivalent to specifying natural transformations $\eta: 1_{\cc} \to GF$, $\epsilon: FG \to 1_{\dc}$ satisfying the commutative diagrams
+  specifying an \hyperlink{def:adj}{adjunction} $(F \dashv G)$ is equivalent to specifying natural transformations $\eta: 1_{\mathscr{C}} \to GF$, $\epsilon: FG \to 1_{\mathscr{D}}$ satisfying the commutative diagrams
   \begin{equation*}
     \begin{tikzcd}
       F \rar{F \eta} \arrow[dr, "1_F"'] & FGF \dar{\epsilon F} \\ & F
@@ -868,24 +868,24 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   Suppose given
   \begin{equation*}
     \begin{tikzcd}
-      \cc \rar[shift left]{F} & \dc \lar[shift left]{G}
+      \mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G}
     \end{tikzcd}
   \end{equation*}
-  and \hyperlink{def:natiso}{natural isomorphisms} $\alpha: 1_{\cc} \to GF$, $\beta: FG \to 1_{\dc}$.
-  Then there are isomorphisms $\alpha': 1_{\cc} \to GF$, $\beta': FG \to 1_{\dc}$ which satisfy the \hyperlink{def:triId}{triangular identities}, so $\hyperlink{def:adj}{(F \dashv G)}$ (and $(G \dashv F)$).
+  and \hyperlink{def:natiso}{natural isomorphisms} $\alpha: 1_{\mathscr{C}} \to GF$, $\beta: FG \to 1_{\mathscr{D}}$.
+  Then there are isomorphisms $\alpha': 1_{\mathscr{C}} \to GF$, $\beta': FG \to 1_{\mathscr{D}}$ which satisfy the \hyperlink{def:triId}{triangular identities}, so $\hyperlink{def:adj}{(F \dashv G)}$ (and $(G \dashv F)$).
 \end{nlemma}
 \begin{proof}
   We define $\alpha' = \alpha$ and $\beta'$ to be the composite
   \begin{equation*}
     \begin{tikzcd}[column sep=huge]
-      FG \rar{(FG\beta)^{-1}} & FGFG \rar{(F\alpha G)^{-1}} & FG \rar{\beta} & 1_{\dc}.
+      FG \rar{(FG\beta)^{-1}} & FGFG \rar{(F\alpha G)^{-1}} & FG \rar{\beta} & 1_{\mathscr{D}}.
     \end{tikzcd}
   \end{equation*}
   Note that $FG\beta = \beta{FG}$ since
   \begin{equation*}
     \begin{tikzcd}
       FGFG \rar{FG\beta} \dar{\beta{FG}} & FG \dar{\beta} \\
-      FG \rar{\beta} & 1_{\dc}
+      FG \rar{\beta} & 1_{\mathscr{D}}
     \end{tikzcd}
   \end{equation*}
   commutes by naturality of $\beta$ and $\beta$ is monic.
@@ -921,8 +921,8 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
     = 1_G. \qedhere
   \end{align*}
 \end{proof}
-\begin{nlemma}
-  Suppose $G: \dc \to \cc$ has a \hyperlink{def:adj}{left adjoint} $F$ with \hyperlink{def:counit}{counit} $\epsilon: FG \to 1_{\dc}$, then
+\begin{nlemma}\label{lem:3.9}
+  Suppose $G: \mathscr{D} \to \mathscr{C}$ has a \hyperlink{def:adj}{left adjoint} $F$ with \hyperlink{def:counit}{counit} $\epsilon: FG \to 1_{\mathscr{D}}$, then
   \begin{enumerate}[label=(\roman*)]
     \item $G$ is \hyperlink{def:full}{faithful} iff $\epsilon$ is pointwise \hyperlink{def:epic}{epic}.
     \item $G$ is \hyperlink{def:full}{full} and faithful iff $\epsilon$ is an \hyperlink{def:natiso}{isomorphism}.
@@ -937,7 +937,119 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
         \end{tikzcd}
       \end{equation*}
       Hence the mapping $g \mapsto Gg$ is injective on morphisms with domain $B$ (and specified codomain) iff $g \mapsto g \epsilon_B$ is injective, i.e.\ iff $\epsilon_B$ is epic.
+    \item Similarly, $G$ is \hyperlink{def:full}{full and faithful} iff $g \mapsto g \epsilon_B$ is bijective.
+      If $\alpha: B \to FGB$ is such that $\alpha \epsilon_B = 1_{FGB}$, then $\epsilon_B \alpha \epsilon_B = \epsilon_B$, whence $\epsilon_B \alpha = 1_B$.
+      So $\epsilon_B$ is an isomorphism for all $B$. \qedhere
   \end{enumerate}
 \end{proof}
+\begin{ndef}[Reflection]\label{def:3.10}\index{reflection}\hypertarget{def:refl}
+  By\marginnote{\emph{Lecture 9}}[0cm] a \textbf{reflection}, we mean an \hyperlink{def:adj}{adjunction} in which the right adjoint is full and faithful (equivalently, the \hyperlink{def:counit}{counit} is an \hyperlink{def:iso}{isomorphism}).
+  We say a subcategory $\mathscr{C}' \subseteq \mathscr{C}$ is \textbf{reflective} if the inclusion $\mathscr{C}' \to \mathscr{C}$ has a left adjoint.
+\end{ndef}
+\begin{nexample}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item The category $\mathbf{AbGp}$ of abelian groups is \hyperlink{def:refl}{reflective} in $\mathbf{Gp}$: the \hyperlink{def:adj}{left adjoint} sends a group $G$ to its abelianization $G/G'$, where $G'$ is the subgroup generated by all commutators $[x,y] = x y x^{-1} y^{-1}$, $x,y \in G$.
+      (The \hyperlink{def:unit}{unit} of the adjunction is the quotient map $G \mapsto G/G'$.)
+    \item Given an abelian group $A$, let $A_t$ denote the torsion subgroup, i.e.\ the subgroup of elements of finite order.
+      The assignment $A \mapsto A/A_t$ gives a left adjoint to the inclusion $\mathbf{tfAbGp} \to \mathbf{AbGp}$ where $\mathbf{tfAbGp}$ is the \hyperlink{def:fulls}{full subcategory} of torsion-free abelian groups.
+      And $A \mapsto A_t$ is right adjoint to the inclusion $\mathbf{tfAbGp} \to \mathbf{AbGp}$ so this subcategory is \hyperlink{def:duality}{co}reflective.
+    \item Let $\mathbf{KHaus} \subseteq \mathbf{Top}$ be the full subcategory of compact Hausdorff spaces.
+      The inclusion $\mathbf{KHaus} \to \mathbf{Top}$ has a left adjoint $\beta$, the Stone-\v{C}ech compactification.
+    \item Let $X$ be a topological space. We say $A \subseteq X$ is sequentially closed if $x_n \to x_\infty$ and $x_n \in A$ for all $n$ implies $x_\infty \in A$.
+      We say $X$ is sequential if all sequentially closed sets are closed.
+      Given a non-sequential space $X$, let $X_s$ be the same set with topology given by the sequentially open sets in $X$;
+      the identity $X_s \to S$ is continuous, and defines the \hyperlink{def:counit}{counit} of an adjunction between the inclusion $\mathbf{Seq} \to \mathbf{Top}$ and the functor $X \mapsto X_s$.
+    \item If $X$ is a topological space, the poset $CX$ of closed subsets of $X$ is reflective in $PX$, with reflector given by closure, and the poset $OX$ of open subsets is coreflective, with coreflector given by interior.
+  \end{enumerate}
+\end{nexample}
+
+\clearpage
+\section{Limits}
+\begin{ndef}\leavevmode\label{def:4.1}
+  \begin{enumerate}[label=(\alph*)]
+    \item \index{diagram}\hypertarget{def:diagram}Let $J$ be a \hyperlink{def:cat}{category} (almost always \hyperlink{def:small}{small}, often finite).
+      By a \textbf{diagram of shape} $J$ in $\mathscr{C}$ we mean a \hyperlink{def:funct}{functor} $D: J \to \mathscr{C}$.
+      The objects $D(j), \; j \in \ob J$ are called \textbf{vertices} of the diagram, and the morphisms $D(\alpha)$, $\alpha \in \mor J$ are called \textbf{edges} of $D$.
+      For example, if $J$ is the category
+      \begin{equation*}
+        \begin{tikzcd}
+          \bullet \dar \rar \drar & \bullet \dar \\
+          \bullet \rar & \bullet
+        \end{tikzcd}
+      \end{equation*}
+      with 4 objects and 5 non-identity morphisms, a diagram of shape $J$ is a commutative square
+      \begin{equation*}
+        \begin{tikzcd}
+          A \rar{f} \dar{g} & B \dar{h} \\
+          C \rar{k} & D
+        \end{tikzcd}
+      \end{equation*}
+      If $J$ is
+      \begin{equation*}
+        \begin{tikzcd}
+          \bullet \dar \rar \drar[shift right] \drar[shift left] & \bullet \dar \\
+          \bullet \rar & \bullet
+        \end{tikzcd}
+      \end{equation*}
+      a diagram of shape $J$ is a not-necessarily commutative square.
+    \item \index{cone}\index{apex}\hypertarget{def:cone}Given $D: J \to \mathscr{C}$, a \textbf{cone} over $D$ consists of an object $A$ of $\mathscr{C}$ (the \textbf{apex} of the cone) together with morphisms $A \overset{\lambda_j}\to D(j)$ for each $j \in \ob J$, such that
+      \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+          & A \arrow[dl, "\lambda_j"'] \arrow[dr, "\lambda_j'"] \\
+          D(j) \arrow[rr, "D(\alpha)"'] && D(j')
+        \end{tikzcd}
+      \end{equation*}
+      commutes for all $j \overset{\alpha}\to j'$ in $\mor J$ (the $\lambda_j$ are called the legs of the cone).
+      \begin{center}
+        \begin{tikzpicture}[scale=2, link/.style={red,double=black,line width=1.8pt,double distance=0.8pt}]
+          \node (A) at (0,0.4) {$A$};
+          \node (D1) at (0.2,-0.8) {$\bullet$};
+          \node (D2) at (-0.7,-1) {$\bullet$};
+          \node (D3) at (0.7,-1) {$\bullet$};
+          \node (D4) at (-0.2,-1.2) {$\bullet$};
+          \draw [->] (A) -- (D2);
+          \draw [->] (A) -- (D3);
+          \draw [->] (A) -- (D4);
+          \draw [->] (D1) -- (D2);
+          \draw [->] (D2) -- (D4);
+          \draw [->] (D1) -- (D3);
+          \draw [->] (D3) -- (D4);
+          \draw [->] (D1) -- (D4);
+          \draw [->] (A) -- (D1);
+          \draw (0,-1) circle [x radius=1.1cm, y radius=0.4cm];
+          \node at (-1.3, -1) {$D$};
+        \end{tikzpicture}
+      \end{center}
+      % picture
+      Given cones $(A, (\lambda_j)_{j \in \ob J})$ and $(B, (\mu_j)_{j \in \ob J})$, a morphism of cones between them is a morphism $A \overset{f}\to B$ such that
+      \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+          A \arrow[rr, "f"] \arrow[dr, "\lambda_j"'] && B \arrow[dl, "\mu_j"] \\
+                                                    & D(j)
+        \end{tikzcd}
+      \end{equation*}
+      commutes for all $j$.
+
+      We write $\mathbf{Cone}(D)$ for the category of cones over $D$.
+    \item \index{limit}\hypertarget{def:limit} A \textbf{limit} for $D$ is a terminal object of $\mathbf{Cone}(D)$, if this exists.
+      Dually, we have the notion of cone under a diagram, and of colimit (initial cone under $D$).
+  \end{enumerate}
+\end{ndef}
+
+Alternatively if $\mathscr{C}$ is \hyperlink{def:lsmall}{locally small} and $J$ is small, we have a functor $\mathscr{C}^{op} \to \mathbf{Set}$ sending $A$ to the set of cones with apex $A$.
+A \hyperlink{def:limit}{limit} for $D$ is a representation of this functor.
+If $\Delta A$ denotes the constant diagram of shape $J$ with all vertices $A$ and all edges $1_A$, then a cone over $D$ with apex $A$ is the same thing as a natural transformation $\Delta A \to D$.
+
+$\Delta$ is a functor $\mathscr{C} \to [J, \mathscr{C}]$, and $\mathbf{Cone}(D)$ is the category $(\Delta \downarrow D)$ (a \hyperlink{def:comma}{comma category}, reversed).
+So to say that every diagram of shape $J$ in $\mathscr{C}$ has a limit is equivalent to saying that $\Delta$ has a \hyperlink{def:adj}{right adjoint}.
+(We say $\mathscr{C}$ \textbf{has limits}) of shape $J$.
+Dually, $\mathscr{C}$ has colimits of shape $J$ iff $\Delta: \mathscr{C} \to [J, \mathscr{C}]$ has a left adjoint.
+\begin{nexample}\leavevmode
+  \begin{enumerate}[label=(\alph*)]\label{eg:4.2}
+    \item Suppose $J = \emptyset$. There's a unique diagram of shape $J$ in $\mathscr{C}$; a \hyperlink{def:cone}{cone} over it is just an object, and a morphism of cones is a morphism of $\mathscr{C}$.
+      So a limit for this empty diagram is a terminal object of $\mathscr{C}$.
+      (Dually, a colimit for it is an initial object).
+  \end{enumerate}
+\end{nexample}
 \printindex
 \end{document}
