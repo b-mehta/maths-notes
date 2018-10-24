@@ -8,6 +8,7 @@
 \def\draft{Ongoing course, rough}
 \usepackage{imakeidx}
 \usepackage{chngcntr}
+\usepackage{marginnote}
 \input{header}
 \makeindex[intoc]
 \usetikzlibrary{fadings, decorations.pathmorphing}
@@ -16,6 +17,8 @@
 
 \setcounter{section}{-1}
 \counterwithout{nthm}{section}
+
+\reversemarginpar
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
@@ -41,6 +44,7 @@
 
 \clearpage
 \section{Introduction}
+\marginnote{\emph{Lecture 1}}[0cm]
 Combinatorics tends to have problems which are easy to state and hard to prove.
 One of the reasons for this is that it is often unclear where to start - for instance in linear algebra we can often start by picking a basis.
 Proofs tend to have the property that they seem to take thousands of years to come up with, and a single line to write down.
@@ -245,9 +249,9 @@ Indeed, we could take $\mathcal{A} = X^{(r)}$ for any $r$, so we can achieve $|\
 Can we beat this?
 Aim: Prove this is the winner.
 
-% lecture 2
+\marginnote{\emph{Lecture 2}}[0cm]
 Inspired by `each \hyperlink{def:chain}{chain} meets each level $X^{(r)}$ in at most one place' for chains, we try to decompose $\hyperlink{def:qn}{Q_n}$ into chains to find large \hyperlink{def:antichain}{antichains}.
-\begin{nthm}[Sperner's Lemma]\label{thm:sperner}\index{Sperner's Lemma}
+\begin{nthm}[Sperner's Lemma]\label{thm:sperner1}\index{Sperner's Lemma}
   Let $\mathcal{A} \subseteq \mathcal{P}(X)$ be an \hyperlink{def:antichain}{antichain}.
   Then $|\mathcal{A}| \leq \binom{n}{\floor{\frac{n}{2}}}$.
 \end{nthm}
@@ -369,7 +373,7 @@ Aim: For $\mathcal{A}$ an antichain,
 \begin{equation*}
   \sum_{r=0}^n \frac{|\mathcal{A} \cap X^{(r)}|}{\binom{n}{r}} \leq 1.
 \end{equation*}
-This trivially implies \nameref{thm:sperner}.
+This trivially implies \nameref{thm:sperner1}.
 
 \begin{defi}[Shadow]\index{shadow}\hypertarget{def:shadow}
   Let $\mathcal{A} \subseteq X^{(r)}$, for some $1 \leq r \leq n$.
@@ -400,7 +404,7 @@ This trivially implies \nameref{thm:sperner}.
 For example, if $\mathcal{A} = \{123,124,134,135\} \subset X^{(3)}$, then
 \begin{equation*}\hyperlink{def:shadow}{\partial \mathcal{A}} = \{12,13,23,24,34,15,35\} \subset X^{(2)}.\end{equation*}
 
-\begin{nlemma}[Local LYM]\label{thm:locallym}\index{Local LYM}
+\begin{nlemma}[Local LYM]\label{thm:locallym2}\index{Local LYM}
   Let $\mathcal{A} \subseteq \hyperlink{def:superr}{X^{(r)}}$, $1 \leq r \leq n$. Then
   \begin{equation*}
     \frac{|\hyperlink{def:shadow}{\partial \mathcal{A}}|}{\binom{n}{r-1}} \geq \frac{|\mathcal{A}|}{\binom{n}{r}}.
@@ -419,18 +423,18 @@ For example, if $\mathcal{A} = \{123,124,134,135\} \subset X^{(3)}$, then
   \end{equation*}
 \end{proof}
 
-When do we get equality in \nameref{thm:locallym}? We'd need $(A - \{i\}) \cup \{j\} \in \mathcal{A}\;\;\forall A \in \mathcal{A},\; i \in A,\; j \notin A$. Hence $\mathcal{A} = X^{r}$ or $\emptyset$.
+When do we get equality in \nameref{thm:locallym2}? We'd need $(A - \{i\}) \cup \{j\} \in \mathcal{A}\;\;\forall A \in \mathcal{A},\; i \in A,\; j \notin A$. Hence $\mathcal{A} = X^{r}$ or $\emptyset$.
 
-The LYM in \nameref{thm:locallym} stands for `Lubell–Yamamoto–Meshalkin'.
-We can use \nameref{thm:locallym} to prove:
-\begin{nthm}[LYM]\label{thm:lym}\index{LYM}
+The LYM in \nameref{thm:locallym2} stands for `Lubell–Yamamoto–Meshalkin'.
+We can use \nameref{thm:locallym2} to prove:
+\begin{nthm}[LYM]\label{thm:lym3}\index{LYM}
   Let $\mathcal{A} \subset \mathcal{P}(X)$ be an \hyperlink{def:antichain}{antichain}.
   Then
   \begin{equation*}
     \sum_{r=0}^n \frac{|\mathcal{A} \cap \hyperlink{def:superr}{X^{(r)}}|}{\binom{n}{r}} \leq 1.
   \end{equation*}
 \end{nthm}
-\begin{proof}[Proof 1: `Bubble down with \nameref{thm:locallym}']
+\begin{proof}[Proof 1: `Bubble down with \nameref{thm:locallym2}']
   Write $\mathcal{A}_r = \mathcal{A} \cap X^{(r)}$.
   We have $\frac{|\mathcal{A}_n|}{\binom{n}{n}} \leq 1$.
   Also, $\hyperlink{def:shadow}{\partial \mathcal{A}_n}$ and $\mathcal{A}_{n-1}$ are distinct since $\mathcal{A}$ was an \hyperlink{def:antichain}{antichain}, so
@@ -438,7 +442,7 @@ We can use \nameref{thm:locallym} to prove:
     \frac{|\partial A_n|}{\binom{n}{n-1}} + \frac{|A_{n-1}|}{\binom{n}{n-1}} &= \frac{|\partial A_n \cup A_{n-1}|}{\binom{n}{n-1}} \\
     \implies \frac{|A_n|}{\binom{n}{n}} + \frac{|\mathcal{A}_{n-1}|}{\binom{n}{n-1}} &\leq 1
   \end{align*}
-  by \nameref{thm:locallym}.
+  by \nameref{thm:locallym2}.
 
   Also, $\partial(\partial \mathcal{A}_n \cup \mathcal{A}_{n-1})$ is disjoint from $\mathcal{A}_{n-2}$, again since $\mathcal{A}$ is an antichain so
   \begin{align*}
@@ -477,12 +481,12 @@ We can use \nameref{thm:locallym} to prove:
   \end{equation*}
 \end{proof}
 
-When do we get equality in \nameref{thm:lym}?
-We must have had equality in each use of \nameref{thm:locallym}.
+When do we get equality in \nameref{thm:lym3}?
+We must have had equality in each use of \nameref{thm:locallym2}.
 So the first (greatest) $r$ with $\mathcal{A}_r \neq \emptyset$ must have $\mathcal{A}_r = X^{(r)}$ thus $\mathcal{\mathcal{A}} = X^{(r)}$.
-Hence equality in \nameref{thm:sperner} $\iff$ $\mathcal{A} = X^{(\frac{n}{2})}$ for $n$ even and $\mathcal{A} = X^{(\ihalf{n})}$ or $X^{(\ihalfc{n})}$ for $n$ odd.
+Hence equality in \nameref{thm:sperner1} $\iff$ $\mathcal{A} = X^{(\frac{n}{2})}$ for $n$ even and $\mathcal{A} = X^{(\ihalf{n})}$ or $X^{(\ihalfc{n})}$ for $n$ odd.
 
-% lecture 3
+\marginnote{\emph{Lecture 3}}[0cm]
 \begin{proof}[Proof 2]
   Choose uniformly at random a maximal \hyperlink{def:chain}{chain} $\mathcal{C}$ (i.e.\ $\mathcal{C}_0 \subset \mathcal{C}_1 \subset \mathcal{C}_2 \subset \dotsb \subset \mathcal{C}_n$) with $|\mathcal{C}_i| = i \; \forall i$.
   For a given \hyperlink{def:superr}{$r$-set} $A$,
@@ -560,6 +564,119 @@ Idea: We want to `replace' $\mathcal{A} \subset X^{(r)}$ with some $\mathcal{A}'
   \item $\mathcal{A}'$ `looks more like $\mathcal{C}$' than $\mathcal{A}$ did.
 \end{enumerate}
 Ideally, we'd compress $\mathcal{A} \to \mathcal{A}' \to \mathcal{A}'' \to \dotsm \to \mathcal{B}$ where either $\mathcal{B} = \mathcal{C}$ or $\mathcal{B}$ is so similar to $\mathcal{C}$ that we can see directly that $|\partial \mathcal{B}| \geq |\partial \mathcal{C}|$.
+
+\marginnote{\emph{Lecture 4}}[0cm]
+Use the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
+\begin{defi}[$ij$-compression]\index{Compression}\hypertarget{def:comp}
+  For $1 \leq i < j \leq n$, the \textbf{$ij$-compression} $C_{ij}$ defined by: for $A \subset X$,
+  \begin{equation*}
+    C_{ij}(A) =
+    \begin{cases}
+      A - \{j\} \cup \{i\} & \text{if } j \in A, i \notin A \\
+      A & \text{otherwise}
+    \end{cases}
+  \end{equation*}
+  and for $\mathcal{A} \subset \mathbb{P}(X)$,
+  \begin{equation*}
+    C_{i,j}(\mathcal{A}) = \set{C_{ij}(A) | A \in \mathcal{A}} \cup \set{A \in \mathcal{A} | C_{ij}(A) \in \mathcal{A}}.
+  \end{equation*}
+
+  Say $\mathcal{A}$ is \textbf{$ij$-compressed} if $C_{ij}(\mathcal{A}) = \mathcal{A}$.
+\end{defi}
+\begin{eg}
+  If $\mathcal{A} = \{123,134,234,235,247\}$, then
+  \begin{equation*}
+    C_{12}(\mathcal{A}) = \set{123,134,234,135,147}.
+  \end{equation*}
+  So $|C_{ij}(\mathcal{A})| = |\mathcal{A}|$.
+\end{eg}
+\begin{nprop}\label{prop:4}
+  Let $\mathcal{A} \subset X^{(r)}$, $1 \leq i < j \leq n$.
+  Then
+  \begin{equation*}
+    |\partial C_{ij}(\mathcal{A})| \leq |\partial \mathcal{A}|.
+  \end{equation*}
+\end{nprop}
+\begin{proof}
+  Write $\mathcal{A}'$ for $C_{ij}(\mathcal{A})$.
+  We'll show that if $B \in \partial \mathcal{A}' - \partial \mathcal{A}$ then $i \in B, j \notin B$ and $B \cup \{j\} - \{i\} \in \partial \mathcal{A} - \partial \mathcal{A}'$, then done, since this gives an injection.
+
+  We have $B \cup \{x\} \in \mathcal{A}'$, for some $x \notin B$, and $B \cup \{x\} \notin \mathcal{A}$ (as $B \notin \partial \mathcal{A}$).
+  Hence $i \in B \cup \{x\}$, $j \notin B \cup \{x\}$ and $(B \cup \{x\}) \cup \{j\} - \{i\} \in \mathcal{A}$.
+  Note that $x \neq i$, else $B \cup \{j\} \in \mathcal{A}$, contradicting $B \notin \partial \mathcal{A}$.
+  Certainly $B \cup \{j\} - \{i\} \in \partial \mathcal{A}$.
+
+  \textbf{Claim: }$B \cup \{j\} - \{i\} \notin \partial \mathcal{A}'$.
+
+  \textbf{Proof of claim: }Suppose $(B \cup \{j\} - \{i\}) \cup \{y\} \in \mathcal{A}'$.
+  We cannot have $y = i$, else $B \cup \{j\} \in \mathcal{A}'$, whence $B \cup \{j\} \in \mathcal{A}$ as $j \in B \cup\{j\}$, a contradiction.
+
+  Thus
+  \begin{align*}
+    j \in (B \cup \{j\} - \{i\}) \cup \{y\} \\
+    i \notin (B \cup \{j\} - \{i\}) \cup \{y\}
+    \shortintertext{so}
+    (B \cup \{j\} - \{i\}) \cup y \in \mathcal{A}
+  \end{align*}
+  and $B \cup \{y\} \in \mathcal{A}$ (definition of $C_{ij}$), contradicting the assumption that $B \in \partial \mathcal{A}' - \partial \mathcal{A}$.
+\end{proof}
+
+\begin{remark}
+  We actually showed
+  \begin{equation*}
+    \partial C_{ij}(\mathcal{A}) \subset C_{ij}(\partial A).
+  \end{equation*}
+\end{remark}
+\begin{defi}[Left-compressed]\index{left-compressed}\hypertarget{def:lcomp}
+  Say $\mathcal{A} \subset X^{(r)}$ is \textbf{left-compressed} if $C_{ij}(\mathcal{A}) = \mathcal{A} \; \forall i < j$.
+\end{defi}
+\begin{nprop}\label{prop:5}
+  Let $\mathcal{A} \subset X^{(r)}$.
+  Then $\exists$ \hyperlink{def:lcomp}{left-compressed} $\mathcal{B} \subset X^{(r)}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\partial \mathcal{B}| \leq |\partial \mathcal{A}|$
+\end{nprop}
+\begin{proof}
+  Among all $\mathcal{B} \subset X^{(r)}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\partial \mathcal{B}| \leq |\partial \mathcal{A}|$,
+  choose one with $\sum_{A \in \mathcal{B}} \sum_{x \in A} x$ minimal.
+  Then $\mathcal{B}$ left-compressed, as if $C_{ij}(\mathcal{B}) \neq \mathcal{B}$ we contradict minimality.
+\end{proof}
+\begin{remark}
+  Or apply a $C_{ij}$, then another, and so on - this must terminate.
+  In fact, can apply each $C_{ij}$ at most once, if you chose a sensible order.
+\end{remark}
+
+Certainly initial segments of colex are left-compressed.
+The converse is false - e.g.\ $\mathcal{A} = \{123,124,125,126,127\}$.
+
+`Colex prefers $23$ to $14$' inspires:
+For $U,V \subset X$ with $|U| = |V|$ and $U \cap V = \emptyset$, the $UV$-compression $C_{UV}$ is defined by
+For $A \subset X$,
+\begin{equation*}
+  \begin{cases}
+    A \cup U - V & \text{if } V \subset A, U \cap A = \emptyset \\
+    A & \text{otherwise}
+  \end{cases}
+\end{equation*}
+and if $\mathcal{A} \subset X^{(r)}$,
+\begin{equation*}
+  C_{UV}(\mathcal{A}) = \set{C_{UV}(A) | A \in \mathcal{A}} \cup \set{A \in \mathcal{A} | C_{UV}(A) \in \mathcal{A}}
+\end{equation*}
+
+Say $\mathcal{A}$ is $UV$-compressed if $C_{UV}(\mathcal{A}) = \mathcal{A}$.
+
+\begin{eg}
+  If $\mathcal{A} = \{123,134,235,145,146,157\}$ then
+  \begin{equation*}C_{23,14}(\mathcal{A}) = \{123,134,235,145,236,157\}.\end{equation*}
+\end{eg}
+Note that $|C_{UV}(\mathcal{A})| = |\mathcal{A}|$.
+
+Sadly, $C_{UV}$ need not decrease $\partial$ - e.g.\ $\mathcal{A} = \{146,467\}$ has $|\partial\mathcal{A}| = 5$, but $C_{23,14}(\mathcal{A}) = \{236,147\}$ has $|\partial C{23,14}(\mathcal{A})| = 6$.
+$C_{23,14}$ moved some things a long way.
+However:
+\begin{nprop}\label{prop:6}
+  Let $\mathcal{A} \subset X^{(r)}$ and $U,V \subseteq X$ with $|U| = |V|$ and $U \cap V = \emptyset$.
+  Suppose $\forall x \in U$ $\exists y \in V$ such that $\mathcal{A}$ is $(U-x, V-y)$-compressed.
+  Then $|\partial C_{UV}(\mathcal{A})| \leq |\partial \mathcal{A}|$.
+\end{nprop}
 
 \clearpage
 \section{Isoperimetric inequalities}
