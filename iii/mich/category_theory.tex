@@ -38,6 +38,8 @@
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\cod}{cod}
 
+\newcommand{\named}[1]{\textbf{#1}\index{#1}}
+
 % special categories
 \newcommand{\cat}{\mathbf{Cat}}
 \newcommand{\setc}{\mathbf{Set}}
@@ -87,8 +89,6 @@
 \newtheorem{nexample}[nthm]{Examples}
 
 % and here we go!
-
-
 \begin{document}
 \maketitle
 
@@ -96,8 +96,8 @@
 
 \clearpage
 \section{Introduction}
-\marginnote{\emph{Lecture 1}}[0cm]
-Category theory is like a language spoken by many different people, with many different dialects.
+
+Category \marginnote{\emph{Lecture 1}}[0cm]theory is like a language spoken by many different people, with many different dialects.
 Specifically, different parts of category theory are used in different branches of mathematics.
 In this course, we aim to speak the language of category theory, without an accent - a broad overview of all aspects of category theory.
 There will be many examples, some of which may not be understandable.
@@ -138,7 +138,7 @@ As long as some examples make sense, it is not a point of concern that some exam
     \item The category \textbf{Top} has all topological spaces as objects and continuous functions as morphisms. Similarly \textbf{Unif} has uniform spaces and uniformly continuous functions, and \textbf{Mf} has manifolds and smooth maps.
     \item The category \textbf{Htpy} has the same objects as \textbf{Top}, but morphisms are homotopy classes of continuous functions.
       More generally, given $\mathscr{C}$, we call an equivalence relation $\simeq$ on $\mor \mathscr{C}$ a \textbf{congruence} if $f \simeq g \implies \dom f = \dom g$ and $\cod f = \cod g$, and $f \simeq g \implies f h \simeq g h$ and $k f \simeq k g$ whenever the composites are defined. Then we have a category $\mathscr{C}/\simeq$ with the same objects as $\mathscr{C}$, but congruence classes as morphisms.
-    \item \index{duality}\hypertarget{def:duality}Given $\mathscr{C}$, the \textbf{opposite category} $\mathscr{C}^{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^{op}$ is $gf$ in $\mathscr{C}$.
+    \item \index{duality}\hypertarget{def:duality}Given $\mathscr{C}$, the \textbf{opposite category} $\mathscr{C}^\text{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^\text{op}$ is $gf$ in $\mathscr{C}$.
       This leads to the \textbf{Duality principle} if $P$ is a true statement about categories, so is the statement $P^*$ obtained from $P$ by reversing all arrows.
     \item \index{isomorphism}\index{morphism!iso-}\hypertarget{def:monoid}A \hyperlink{def:small}{small} category with one object is a \textbf{monoid}, i.e.\ a semigroup with $1$.
       \hypertarget{def:group}In particular, \hypertarget{def:iso}a group is a small category with one object, in which every morphism is an isomorphism ($f$ is an \textbf{isomorphism} if $\exists g$ such that $fg$ and $gf$ are identities).
@@ -189,10 +189,10 @@ As long as some examples make sense, it is not a point of concern that some exam
     Functoriality follows from uniqueness: given $\begin{tikzcdi} B \rar{g}& C \end{tikzcdi}$, $F(gf)$ and $(Fg)(Ff)$ are both homoms extending $\begin{tikzcdi} A \rar{f}& B \rar{g}& C \rar[hook]& UFC \end{tikzcdi}$. Call this the \index{functor!free}\index{free}\textbf{free functor}.
   \item Given a set $A$, we write $\mathcal{P}A$ for the set of all subsets of $A$.
     We can make $\mathcal{P}$ into a functor $\mathbf{Set} \to \mathbf{Set}$: given $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$, we define $\mathcal{P}f(A') = \set{f(a) | a \in A'}$ for $A' \subseteq A$.
-      But we also have a functor $\mathcal{P}^*: \mathbf{Set} \to \mathbf{Set}^{op}$ defined on objects by $\mathcal{P}$, but $\mathcal{P}^*f(B') = \set{a \in A | f(a) \in B'}$ for $B' \subseteq B$.
+      But we also have a functor $\mathcal{P}^*: \mathbf{Set} \to \mathbf{Set}^\text{op}$ defined on objects by $\mathcal{P}$, but $\mathcal{P}^*f(B') = \set{a \in A | f(a) \in B'}$ for $B' \subseteq B$.
 
-      \index{functor!contravariant}\hypertarget{def:contrFunct}By a \textbf{contravariant} functor $\mathscr{C} \to \mathscr{D}$, we mean a \hyperlink{def:funct}{functor} $\mathscr{C} \to \mathscr{D}^{\hyperlink{def:duality}{op}}$ (or $\mathscr{C}^{op} \to \mathscr{D}$). (A \textbf{covariant} functor is one that doesn't reverse arrows).
-    \item Let $K$ be a field. We have a functor $*: \mathbf{Mod}_K \to \mathbf{Mod}_K^{op}$ defined by $V^* = \{\text{linear maps }V \to K\}$ and if $\begin{tikzcdi}
+      \index{functor!contravariant}\hypertarget{def:contrFunct}By a \textbf{contravariant} functor $\mathscr{C} \to \mathscr{D}$, we mean a \hyperlink{def:funct}{functor} $\mathscr{C} \to \mathscr{D}^{\hyperlink{def:duality}\text{op}}$ (or $\mathscr{C}^\text{op} \to \mathscr{D}$). (A \textbf{covariant} functor is one that doesn't reverse arrows).
+    \item Let $K$ be a field. We have a functor $*: \mathbf{Mod}_K \to \mathbf{Mod}_K^\text{op}$ defined by $V^* = \{\text{linear maps }V \to K\}$ and if $\begin{tikzcdi}
         V \rar{f}& W
     \end{tikzcdi}$, $f^*(\theta:W \to K) = \theta f$.
     \item We have a functor $op: \hyperlink{def:catc}{\mathbf{Cat}} \to \mathbf{Cat}$ which is the `identity' on morphisms. (Note that this is \hyperlink{def:contrFunct}{covariant}).
@@ -305,7 +305,7 @@ As long as some examples make sense, it is not a point of concern that some exam
       sending $a$ to $A \setminus \{a\}$ and everything else to itself and this is natural.
 
       Note that there can be no isomorphism $\mathbf{Set}_* \to \mathbf{Part}$ since $\mathbf{Part}$ has a $1$-element isomorphism class $\{\emptyset\}$ and $\mathbf{Set}_*$ doesn't.
-    \item The category $\mathbf{FdMod}_K$ of finite-dimensional vector spaces over $K$ is equivalent to $\mathbf{FdMod}_K^{op}$: the functors in both directions are $(-)^*$ and both isomorphisms are the natural transformations of \cref{eg:1.7}(a).
+    \item The category $\mathbf{FdMod}_K$ of finite-dimensional vector spaces over $K$ is equivalent to $\mathbf{FdMod}_K^\text{op}$: the functors in both directions are $(-)^*$ and both isomorphisms are the natural transformations of \cref{eg:1.7}(a).
     \item $\mathbf{FdMod}_K$ is also equivalent to $\hyperlink{def:categ}{\mathbf{Mat}_K}$: We define $F: \mathbf{Mat}_K \to \mathbf{FdMod}_K$ by $F(n) = K^n$, and $F(A)$ is the linear map represented by $A$ with respect to the standard bases of $K^n$ and $K^p$.
 
       To define $G: \mathbf{FdMod}_K \to \mathbf{Mat}_K$, choose a basis for each finite dimensional vector space,and define $G(V) = \dim V$, $G(V \overset{f}{\to} W)$ as the matrix representing $f$ with respect to the chosen bases.
@@ -402,7 +402,7 @@ As long as some examples make sense, it is not a point of concern that some exam
       C \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & A,
     \end{tikzcd}
     $fg = fh$ implies $g = h$
-  \item \index{morphism!epi-}\index{epimorphism}\hypertarget{def:epic}We say $f$ is an \textbf{epimorphism} (or \textbf{epic}) if it's a monomorphism in $C^{\hyperlink{def:duality}{op}}$ i.e.\ if $gf = hf$ implies $g = h$.
+  \item \index{morphism!epi-}\index{epimorphism}\hypertarget{def:epic}We say $f$ is an \textbf{epimorphism} (or \textbf{epic}) if it's a monomorphism in $C^{\hyperlink{def:duality}\text{op}}$ i.e.\ if $gf = hf$ implies $g = h$.
   \end{enumerate}
  We denote \hyperlink{def:monic}{monomorphisms} by \begin{tikzcd}[cramped, sep=scriptsize] A \rar[tail]{f} & B \end{tikzcd} and \hyperlink{def:epic}{epimorphisms} by \begin{tikzcd}[cramped, sep=scriptsize] A \rar[two heads]{f} & B\end{tikzcd}
 \end{ndef}
@@ -432,7 +432,7 @@ Any isomorphism is \hyperlink{def:monic}{monic} and \hyperlink{def:epic}{epic}: 
 \end{ndef}
 
  If we fix $A$ and let $B$ vary, the assignment $B \mapsto \mathscr{C}(A,B)$ becomes a \hyperlink{def:funct}{functor} $\hyperlink{def:lsmall}{\mathscr{C}(A, -)} : \mathscr{C} \to \mathbf{Set}$: given $\begin{tikzcdi} B \rar{f} & C \end{tikzcdi}$, $\mathscr{C}(A,f)$ is the mapping $g \mapsto fg$.
-Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \mathscr{C}^{op} \to \mathbf{Set}$.
+Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \mathscr{C}^\text{op} \to \mathbf{Set}$.
 \begin{nlemma}[Yoneda Lemma]\index{Yoneda!lemma}\label{lem:2.2}
   Let $\mathscr{C}$ be a \hyperlink{def:lsmall}{locally small} \hyperlink{def:cat}{category}, $A \in \ob \mathscr{C}$ and $F: \mathscr{C} \to \mathbf{Set}$ a \hyperlink{def:funct}{functor}.
   \begin{enumerate}[label=(\roman*)]
@@ -471,14 +471,14 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
   so $\Psi \Phi(\alpha) = \alpha$.
 \end{proof}
 \begin{ncor}\label{cor:2.3}
-  The assignment $A \mapsto \hyperlink{def:lsmall}{\mathscr{C}(A, -)}$ defines a \hyperlink{def:full}{full} and \hyperlink{def:full}{faithful} \hyperlink{def:funct}{functor} $\mathscr{C}^{op} \to \hyperlink{def:functcat}{[\mathscr{C}, \mathbf{Set}]}$.
+  The assignment $A \mapsto \hyperlink{def:lsmall}{\mathscr{C}(A, -)}$ defines a \hyperlink{def:full}{full} and \hyperlink{def:full}{faithful} \hyperlink{def:funct}{functor} $\mathscr{C}^\text{op} \to \hyperlink{def:functcat}{[\mathscr{C}, \mathbf{Set}]}$.
 \end{ncor}
 \begin{proof}
   Put $F = \mathscr{C}(B, -)$ in \cref{lem:2.2}(i): we get a bijection between $\mathscr{C}(B,A)$ and morphisms $\mathscr{C}(A, -) \to \mathscr{C}(B, -)$ in $[\mathscr{C}, \mathbf{Set}]$.
   We need to verify this is functorial: but it sends $f: B \to A$ to the natural transformation $g \mapsto gf$.
   So functoriality follows from associativity.
 \end{proof}
-\hypertarget{def:yonemb}We\index{Yoneda!embedding} call this \hyperlink{def:funct}{functor} (or the functor $\mathscr{C} \to [\mathscr{C}^{op}, \mathbf{Set}]$) sending $A$ to $\mathscr{C}(-,A)$ the \textbf{Yoneda embedding} of $\mathscr{C}$, and denote it by $Y$.
+\hypertarget{def:yonemb}We\index{Yoneda!embedding} call this \hyperlink{def:funct}{functor} (or the functor $\mathscr{C} \to [\mathscr{C}^\text{op}, \mathbf{Set}]$) sending $A$ to $\mathscr{C}(-,A)$ the \textbf{Yoneda embedding} of $\mathscr{C}$, and denote it by $Y$.
 
 \begin{proof}[Proof of \nameref{lem:2.2}(ii)]
   Suppose for the moment that $\mathscr{C}$ is \hyperlink{def:small}{small}, so that $\hyperlink{def:lsmall}{[\mathscr{C}, \mathbf{Set}]}$ is \hyperlink{def:lsmall}{locally small}.
@@ -487,7 +487,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
   \begin{equation*}
     \begin{tikzcd}[column sep=6em]
       \mathscr{C} \times [\mathscr{C}, \mathbf{Set}] \arrow[r,"Y \times 1"] &
-      \left[\mathscr{C}, \mathbf{Set}\right]^{op} \times \left[\mathscr{C}, \mathbf{Set}\right]
+      \left[\mathscr{C}, \mathbf{Set}\right]^\text{op} \times \left[\mathscr{C}, \mathbf{Set}\right]
       \rar{[\mathscr{C}, \mathbf{Set}](-, -)} & \mathbf{Set}
     \end{tikzcd}
   \end{equation*}
@@ -531,11 +531,11 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
     \item The \hyperlink{def:forgFunc}{forgetful functor} $\mathbf{Gp} \to \mathbf{Set}$ is \hyperlink{def:repr}{representable} by $(\mathbb{Z}, 1)$.
       Similarly, the forgetful functor $\mathbf{Rng} \to \mathbf{Set}$ is representable by $(\mathbb{Z}[x], x)$ and
       the forgetful functor $\mathbf{Top} \to \mathbf{Set}$ is representable by $(\{*\}, *)$.
-    \item The functor $\mathcal{P}^*: \mathbf{Set}^{op} \to \mathbf{Set}$ (see \cref{eg:1.5}(c)) is representable by $(\{0,1\}, \{1\})$: this is the bijection between subsets and characteristic functions.
+    \item The functor $\mathcal{P}^*: \mathbf{Set}^\text{op} \to \mathbf{Set}$ (see \cref{eg:1.5}(c)) is representable by $(\{0,1\}, \{1\})$: this is the bijection between subsets and characteristic functions.
     \item Let $G$ be a group.
       The unique (up to \hyperlink{def:iso}{isomorphism}) representable functor $G(*, -): G \to \mathbf{Set}$ is the \emph{Cayley representation} of $G$, i.e.\ the set $UG$ with $G$ acting by left multiplication.
     \item Let $A,B$ be two objects of a \hyperlink{def:lsmall}{locally small} \hyperlink{def:cat}{category} $\mathscr{C}$.
-      We have a functor $\mathscr{C}^{op} \to \mathbf{Set}$ sending $C$ to $\mathscr{C}(C,A) \times \mathscr{C}(C,B)$.
+      We have a functor $\mathscr{C}^\text{op} \to \mathbf{Set}$ sending $C$ to $\mathscr{C}(C,A) \times \mathscr{C}(C,B)$.
       \hypertarget{def:prod}A \hyperlink{def:repr}{representation} of this, if it exists, is called a (categorical) \index{product}\textbf{product} of $A$ and $B$, and denoted
       \begin{equation*}
         (A\times B, (A \times B \overset{\pi_1}{\to} A, A \times B \overset{\pi_2}{\to} B)).
@@ -547,9 +547,9 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
 
       \hypertarget{def:coprod}Dually we have the notion of \index{coproduct}\textbf{coproduct} $(A + B, (A \overset{\nu_1}\to A + B, B \overset{\nu_2}\to A + B))$.
       These also exist in many categories of interest.
-    \item \marginnote{\emph{Lecture 6}}[0cm] The dual-vector-space functor $\mathbf{Mod}_K^{op} \to \mathbf{Mod}_K$, when composed with the forgetful functor $\mathbf{Mod}_K \to \mathbf{Set}$, is representable by $(K, 1_K$).
+    \item \marginnote{\emph{Lecture 6}}[0cm] The dual-vector-space functor $\mathbf{Mod}_K^\text{op} \to \mathbf{Mod}_K$, when composed with the forgetful functor $\mathbf{Mod}_K \to \mathbf{Set}$, is representable by $(K, 1_K$).
     \item Let \begin{tikzcd}[cramped] A \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & B \end{tikzcd} be morphisms in a locally small category $\mathscr{C}$.
-      We have a functor $F: \mathscr{C}^{op} \to \mathbf{Set}$ defined by
+      We have a functor $F: \mathscr{C}^\text{op} \to \mathbf{Set}$ defined by
       \begin{equation*}
         F(C) = \set{h \in \mathscr{C}(C, A) | fh = gh}.
       \end{equation*}
@@ -608,7 +608,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
 
       Similarly, $\mathbb{Z}$ is both in $\mathbf{Gp}$, since it represents the \hyperlink{def:forgFunc}{forgetful functor} $\mathbf{Gp} \to \mathbf{Set}$.
 
-      And $2 = \{0,1\}$ is a coseparator and a codetector in $\mathbf{Set}$, since it represents $\mathcal{P}^*: \mathbf{Set}^{op} \to \mathbf{Set}$.
+      And $2 = \{0,1\}$ is a coseparator and a codetector in $\mathbf{Set}$, since it represents $\mathcal{P}^*: \mathbf{Set}^\text{op} \to \mathbf{Set}$.
     \item In $\mathbf{Top}$, $1 = \{*\}$ is a separator since it represents the forgetful functor $\mathbf{Top} \to \mathbf{Set}$, but not a detector.
       In fact, $\mathbf{Top}$ has no detecting \emph{set} of objects:
 
@@ -640,7 +640,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   there exists $P \overset{g}\to A$ with $eg = f$.
   (If $\mathscr{C}$ is \hyperlink{def:lsmall}{locally small}, this says $\hyperlink{def:lsmall}{\mathscr{C}(P, -)}$ preserves \hyperlink{def:epic}{epimorphisms}).
 
-  Dually, an \textbf{injective} object of $\mathscr{C}$ is a projective object of $\hyperlink{def:duality}{\mathscr{C}^{op}}$.
+  Dually, an \textbf{injective} object of $\mathscr{C}$ is a projective object of $\hyperlink{def:duality}{\mathscr{C}^\text{op}}$.
   Given a class $\mathscr{E}$ of epimorphisms, we say $P$ is $\mathscr{E}$-projective if it satisfies the condition for all $e \in \mathscr{E}$.
 \end{ndef}
 \begin{nlemma}\label{lem:2.12}
@@ -708,7 +708,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
         T \subseteq S^r \iff S \times T \subseteq R \iff S \subseteq T^l.
       \end{equation*}
       \hypertarget{def:adjointr}We say $(-)^r$ and $(-)^l$ are \textbf{adjoint on the right}.
-    \item The functor $\mathcal{P}^*: \mathbf{Set}^{op} \to \mathbf{Set}$ is self-\hyperlink{def:adjointr}{adjoint on the right}, since functions $A \to \mathcal{P}B$ correspond bijectively to subsets of $A \times B$ and hence to functions $B \to \mathcal{P}A$.
+    \item The functor $\mathcal{P}^*: \mathbf{Set}^\text{op} \to \mathbf{Set}$ is self-\hyperlink{def:adjointr}{adjoint on the right}, since functions $A \to \mathcal{P}B$ correspond bijectively to subsets of $A \times B$ and hence to functions $B \to \mathcal{P}A$.
   \end{enumerate}
 \end{nexample}
 \begin{defi}[Comma category]\index{comma category}
@@ -839,7 +839,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
       FA \rar{Ff} & FGB \rar{\epsilon B} & B,
     \end{tikzcd}
   \end{equation*}
-  and given $FA \overset{g}\to b$, let $\Psi(g)$ be
+  and given $FA \overset{g}\to B$, let $\Psi(g)$ be
   \begin{equation*}
     \begin{tikzcd}
       A \rar{\eta_A} & GFA \rar{Gg} & GB.
@@ -999,9 +999,9 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
           D(j) \arrow[rr, "D(\alpha)"'] && D(j')
         \end{tikzcd}
       \end{equation*}
-      commutes for all $j \overset{\alpha}\to j'$ in $\mor J$ (the $\lambda_j$ are called the legs of the cone).
+      commutes for all $j \overset{\alpha}\to j'$ in $\mor J$ (the $\lambda_j$ are called the \textbf{legs} of the cone).
       \begin{center}
-        \begin{tikzpicture}[scale=2, link/.style={red,double=black,line width=1.8pt,double distance=0.8pt}]
+        \begin{tikzpicture}[scale=3]
           \node (A) at (0,0.4) {$A$};
           \node (D1) at (0.2,-0.8) {$\bullet$};
           \node (D2) at (-0.7,-1) {$\bullet$};
@@ -1018,9 +1018,14 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
           \draw [->] (A) -- (D1);
           \draw (0,-1) circle [x radius=1.1cm, y radius=0.4cm];
           \node at (-1.3, -1) {$D$};
+          \begin{scope}[link/.style={white,double=black,line width=1.8pt,double distance=0.4pt, shorten > = 1.5mm}]
+            \draw [link] (A) -- (D1);
+            \draw [link] (A) -- (D2);
+            \draw [link] (A) -- (D3);
+            \draw [link] (A) -- (D4);
+          \end{scope}
         \end{tikzpicture}
       \end{center}
-      % picture
       Given cones $(A, (\lambda_j)_{j \in \ob J})$ and $(B, (\mu_j)_{j \in \ob J})$, a morphism of cones between them is a morphism $A \overset{f}\to B$ such that
       \begin{equation*}
         \begin{tikzcd}[column sep=small]
@@ -1031,25 +1036,199 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
       commutes for all $j$.
 
       We write $\mathbf{Cone}(D)$ for the category of cones over $D$.
-    \item \index{limit}\hypertarget{def:limit} A \textbf{limit} for $D$ is a terminal object of $\mathbf{Cone}(D)$, if this exists.
-      Dually, we have the notion of cone under a diagram, and of colimit (initial cone under $D$).
+    \item \index{limit}\index{colimit}\hypertarget{def:limit} A \textbf{limit} for $D$ is a \hyperlink{def:terminal}{terminal object} of $\mathbf{Cone}(D)$, if this exists.
+      Dually, we have the notion of \textbf{cone under a diagram}, and of \textbf{colimit} (\hyperlink{def:initial}{initial} cone under $D$).
   \end{enumerate}
 \end{ndef}
 
-Alternatively if $\mathscr{C}$ is \hyperlink{def:lsmall}{locally small} and $J$ is small, we have a functor $\mathscr{C}^{op} \to \mathbf{Set}$ sending $A$ to the set of cones with apex $A$.
-A \hyperlink{def:limit}{limit} for $D$ is a representation of this functor.
+Alternatively if $\mathscr{C}$ is \hyperlink{def:lsmall}{locally small} and $J$ is small, we have a \hyperlink{def:funct}{functor} $\mathscr{C}^{\hyperlink{def:duality}{\text{op}}} \to \mathbf{Set}$ sending $A$ to the set of \hyperlink{def:cone}{cones} with apex $A$.
+A \hyperlink{def:limit}{limit} for $D$ is a \hyperlink{def:repr}{representation} of this functor.
 If $\Delta A$ denotes the constant diagram of shape $J$ with all vertices $A$ and all edges $1_A$, then a cone over $D$ with apex $A$ is the same thing as a natural transformation $\Delta A \to D$.
 
 $\Delta$ is a functor $\mathscr{C} \to [J, \mathscr{C}]$, and $\mathbf{Cone}(D)$ is the category $(\Delta \downarrow D)$ (a \hyperlink{def:comma}{comma category}, reversed).
-So to say that every diagram of shape $J$ in $\mathscr{C}$ has a limit is equivalent to saying that $\Delta$ has a \hyperlink{def:adj}{right adjoint}.
-(We say $\mathscr{C}$ \textbf{has limits}) of shape $J$.
+So to say that every \hyperlink{def:diagram}{diagram of shape $J$} in $\mathscr{C}$ has a \hyperlink{def:limit}{limit} is equivalent to saying that $\Delta$ has a \hyperlink{def:adj}{right adjoint}.
+(We say $\mathscr{C}$ \textbf{has limits} of shape $J$).
 Dually, $\mathscr{C}$ has colimits of shape $J$ iff $\Delta: \mathscr{C} \to [J, \mathscr{C}]$ has a left adjoint.
 \begin{nexample}\leavevmode
   \begin{enumerate}[label=(\alph*)]\label{eg:4.2}
-    \item Suppose $J = \emptyset$. There's a unique diagram of shape $J$ in $\mathscr{C}$; a \hyperlink{def:cone}{cone} over it is just an object, and a morphism of cones is a morphism of $\mathscr{C}$.
-      So a limit for this empty diagram is a terminal object of $\mathscr{C}$.
+    \item Suppose $J = \emptyset$. There's a unique \hyperlink{def:diagram}{diagram of shape $J$} in $\mathscr{C}$; a \hyperlink{def:cone}{cone} over it is just an object, and a morphism of cones is a morphism of $\mathscr{C}$.
+      So a \hyperlink{def:limit}{limit} for this empty diagram is a \hyperlink{def:terminal}{terminal object} of $\mathscr{C}$.
       (Dually, a colimit for it is an initial object).
+    \item\marginnote{\emph{Lecture 10}}[0cm]
+      Let $J$ be the category
+      \begin{equation*}
+        \begin{tikzcd}
+          \bullet & \bullet
+        \end{tikzcd}
+      \end{equation*}
+      \index{span}\hypertarget{def:span}A \hyperlink{def:diagram}{diagram of shape $J$} is a pair of objects $A,B$; a \hyperlink{def:cone}{cone} over it is a \textbf{span}
+      \begin{equation*}
+        \begin{tikzcd}[column sep=tiny]
+          & \dlar C \drar  \\
+          A && B
+        \end{tikzcd}
+      \end{equation*}
+      and a \hyperlink{def:limit}{limit} for it is a \hyperlink{def:prod}{product}
+      \begin{equation*}
+        \begin{tikzcd}[column sep=tiny]
+          & \arrow[dl, "\pi_1"'] A \times B \drar{\pi_2} \\
+          A && B
+        \end{tikzcd}
+      \end{equation*}
+      Dually, a colimit for it is a \hyperlink{def:coprod}{coproduct}
+      \begin{equation*}
+        \begin{tikzcd}[column sep=tiny]
+        A \drar[']{\nu_1} && B \dlar{\nu_2} \\
+          & A + B
+        \end{tikzcd}
+      \end{equation*}
+    \item More generally, if $J$ is a \hyperlink{def:small}{small} discrete category, a diagram of shape $J$ is a $J$-indexed family $\set{A_j | j \in J}$, and a limit for it is a product
+      \begin{equation*}
+        \Set{\prod_{j \in J} A_j \overset{\pi_j}\to A_j | j \in J}.
+      \end{equation*}
+      Dually, a colimit for it is a coproduct
+      \begin{equation*}
+        \Set{A_j \overset{\nu_j}\to \sum_{j \in J} A_j | j \in J},
+      \end{equation*}
+      also written $\coprod_{j \in J} A_j$.
+    \item Let $J$ be the category
+      \begin{equation*}
+        \begin{tikzcd}
+          \bullet \rar[shift left] \rar[shift right] & \bullet
+        \end{tikzcd}
+      \end{equation*}
+      A diagram of shape $J$ is a parallel pair
+      \begin{equation*}
+      \begin{tikzcd}
+        A \rar[shift left]{f} \rar[shift right, ']{g} & B
+      \end{tikzcd}
+      \end{equation*} a cone over this is
+      \begin{equation*}
+        \begin{tikzcd}[column sep=tiny]
+          & \arrow[dl, "h"'] C \drar{k} \\
+          A && B
+        \end{tikzcd}
+      \end{equation*}
+      satisfying $fh = k = gh$, or equivalently a morphism $C \overset{h}\to A$ satisfying $fh = gh$.
+      A (co)limit for the diagram is a \hyperlink{def:equalizer}{(co)equalizer}.
+    \item Let $J$ be the category
+      \begin{equation*}
+        \begin{tikzcd}
+          & \bullet \dar \\
+          \bullet \rar & \bullet
+        \end{tikzcd}
+      \end{equation*}
+      A diagram of shape $J$ is a \hyperlink{def:span}{cospan}
+      \begin{equation*}
+        \begin{tikzcd}
+          & A \dar \\
+          B \rar & C
+        \end{tikzcd}
+      \end{equation*}
+      a cone over it is
+      \begin{equation*}
+        \begin{tikzcd}
+          D \rar{p} \dar{q} \drar{r} & A \\
+          B & C
+        \end{tikzcd}
+      \end{equation*}
+      satisfying $fp = r = gq$, or equivalently a span $(p,q)$ completing the diagram to a commutative square.
+      \hypertarget{def:pullback}A limit for the diagram is called a \textbf{pullback} of $(f,g)$.
+      In $\mathbf{Set}$, the \hyperlink{def:cone}{apex} of the pullback is the `fibre product'
+      \begin{equation*}
+        A \times_C B = \set{(x,y) \in A \times B | f(x) = g(y)}
+      \end{equation*}
+      \hypertarget{def:pushout}Dually, colimits of shape $J^{\text{op}}$ are called \textbf{pushouts}, given
+      \begin{equation*}
+        \begin{tikzcd}
+          A \rar{f} \dar{g} & B \\
+          C
+        \end{tikzcd}
+      \end{equation*}
+      we `push $g$ along $f$' to get the right hand side of the colimit square.
+      \item Let $J$ be the poset of natural numbers.
+        A diagram of shape $J$ is a \textbf{direct system}
+        \begin{equation*}
+          \begin{tikzcd}
+            A_0 \rar{f_0} & A_1 \rar{f_1} & A_2 \rar{f_2} & A_3 \rar{f_3} & \dots
+          \end{tikzcd}
+        \end{equation*}
+        A colimit for this is called a \textbf{direct limit}: it consists of $A_\infty$ equipped with morphisms $A_n \overset{g_n} \to A_\infty$ satisfying $g_n = g_{n+1} f_n$ for all $n$, and universal among such.
+        Dually, we have \textbf{inverse system} and \textbf{inverse limit}.
   \end{enumerate}
 \end{nexample}
+\begin{nthm}\label{thm:4.3}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item Suppose $\mathscr{C}$ has \hyperlink{def:equalizer}{equalizers} and all finite (resp.\ \hyperlink{def:small}{small}) \hyperlink{def:prod}{products}.
+      Then $\mathscr{C}$ has all finite (resp.\ small) \hyperlink{def:limit}{limits}.
+    \item Suppose $\mathscr{C}$ has \hyperlink{def:pullback}{pullbacks} and a \hyperlink{def:terminal}{terminal object}.
+      Then $\mathscr{C}$ has all finite limits.
+  \end{enumerate}
+\end{nthm}
+\begin{proof}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item Suppose given $D: J \to \mathscr{C}$.
+      Form the products
+      \begin{equation*}
+        P = \prod_{j \in \ob J} D(j) \quad \text{and}\quad
+        Q = \prod_{\alpha\in\mor J} D(\cod \alpha).
+      \end{equation*}
+    We have morphisms $\begin{tikzcd}P \rar[shift left]{f} \rar[shift right,']{g} & Q\end{tikzcd}$ defined by $\pi_\alpha f = \pi_{\cod \alpha}$, $\pi_\alpha g = D(\alpha) \pi_{\dom \alpha}$ for all $\alpha$.
+
+    Let $E \overset{e}\to P$ be an equalizer of $(f,g)$.
+    The composites $\lambda_j = \pi_j e: E \to D(j)$ form a cone over $D$:
+    given $\alpha: j \to j'$ in $J$,
+    \begin{equation*}
+      D(\alpha) \lambda_j = D(\alpha) \pi_j e = \pi_\alpha g e = \pi_\alpha f e = \pi_{j'} e = \lambda_{j'}.
+    \end{equation*}
+
+    Given any cone $(A, \set{\mu_j | j \in \ob J})$ over $D$, there's a unique $\mu: A \to P$ with $\pi_j \mu = \mu_j$ for each $j$, and
+    \begin{equation*}
+      \pi_\alpha f \mu = \mu_{\cod \alpha} = D(\alpha) \mu_{\dom \alpha} = \pi_\alpha g \mu
+    \end{equation*}
+    for all $\alpha$, and hence $f\mu = g\mu$, so $\exists ! \nu: A \to E$ with $e \nu = \mu$.
+    So $(E, \set{\lambda_j | j \in \ob J})$ is a limit cone.
+  \item It's enough to construct finite products and \hyperlink{def:equalizer}{equalizers}.
+    But if $1$ is the terminal object, then a pullback for
+    \begin{equation*}
+      \begin{tikzcd}
+        & A \dar \\
+        B \rar & 1
+      \end{tikzcd}
+    \end{equation*}
+    has the universal property of a product $A \times B$, and we can form $\prod_{i=1}^n A_i$ inductively as $A_1 \times (A_2 \times (A_3 \times \dotsm (A_{n-1} \times A_n) \dotsm)).$
+
+    Now, to form the equalizer of $\begin{tikzcd}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcd}$, consider the cospan
+    \begin{equation*}
+      \begin{tikzcd}
+        &A \dar{(1_A,f)} \\
+        A \rar{(1_A, g)} & A \times B
+      \end{tikzcd}
+    \end{equation*}
+    A cone over this consists of
+    \begin{equation*}
+      \begin{tikzcd}
+      P \rar{h} \dar{k} & A \\ A
+      \end{tikzcd}
+    \end{equation*}
+    satisfying $(1_A, f) h = (1_A, g) k$ or equivalently, $1_A h = 1_A k$ and $fh = gk$, or equivalently a morphism $P \overset{h}\to A$ satisfying $fh = gh$.
+    So a pullback for $(1_A,f)$ and $(1_A, g)$ is an equalizer of $(f,g)$. \qedhere
+   \end{enumerate}
+\end{proof}
+\begin{defi}[Complete]\index{complete}\hypertarget{def:complete}
+  We say a \hyperlink{def:cat}{category} $\mathscr{C}$ is \named{complete} if it has all \hyperlink{def:small}{small} \hyperlink{def:limit}{limits}.
+  (Dually, \textbf{cocomplete} = all small colimits).
+\end{defi}
+Set is \hyperlink{def:complete}{complete} and cocomplete: products are Cartesian products, coproducts are disjoint unions.
+Similarly, $\mathbf{Gp}, \mathbf{AbGp}, \mathbf{Rng}, \mathbf{Mod}_R, \dotsc$ are all complete and cocomplete.
+$\mathbf{Top}$ is also complete and cocomplete.
+\begin{ndef}\label{def:4.4}
+  Let $F: \mathscr{C} \to \mathscr{D}$ be a \hyperlink{def:funct}{functor}.
+  \begin{enumerate}[label=(\alph*)]
+    \item \hypertarget{def:plim}We say $F$ \textbf{preserves limits}\index{limit!preserved}\index{preserves limits} of \hyperlink{def:diagram}{shape $J$} if, given $D: J \to \mathscr{C}$ and a \hyperlink{def:limit}{limit} \hyperlink{def:cone}{cone} $(L, \set{\lambda_j | j \in \ob J})$ in $\mathscr{C}$, $(FL, \set{F \lambda_j | j \in \ob J})$ is a limit for $FD$.
+    \item \hypertarget{def:rlim}We say $F$ \textbf{reflects limits}\index{limit!reflected}\index{reflects limits} of shape $J$ if, given $D: J \to \mathscr{C}$ and a cone $(L, (\lambda_j)_j)$ such that $(FL, \set{F\lambda_j | j \in \ob J})$ is a limit for $FD$, then $(L, (\lambda_j)_j)$ is a limit for $D$.
+    \item \hypertarget{def:clim}We say $F$ \textbf{creates limits}\index{limit!created}\index{creates limits} of shape $J$ if, given $D: J \to \mathscr{C}$ and a limit $(M, \set{\mu_j | j \in \ob J})$ for $FD$, there exists a cone $(L, (\lambda_j)_j)$ over $D$ whose image under $F$ is isomorphic to the limit cone, and any such that cone is a limit in $\mathscr{C}$.
+  \end{enumerate}
+\end{ndef}
 \printindex
 \end{document}

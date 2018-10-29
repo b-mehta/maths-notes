@@ -2,7 +2,7 @@
 
 ## Part III notes
 ### Michaelmas
-- [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone) up to lecture 9
+- [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone) up to lecture 10
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader) up to lecture 4
 - [Introduction to Discrete Analysis](iii/mich/introduction_to_discrete_analysis.pdf) (2018, W. T. Gowers) up to lecture 3
 - [Model Theory](iii/mich/model_theory.pdf) (2018, S. Barbina) up to lecture 6
@@ -23,6 +23,6 @@
 - [Analysis of Functions](ii/lent/analysis_of_functions.pdf) (2018, C. Mouhot) up to section 2.6, see also [official notes](https://cmouhot.wordpress.com/2017/01/26/analysis-of-functions-part-ii-d-course/).
 - [Coding and Cryptography](ii/lent/coding_and_cryptography.pdf) (2018, R. Camina)
 
-Feel free to get in touch with any typos, comments or suggestions at <bm489@cam.ac.uk>.
+Feel free to get in touch with any typos, comments or suggestions at <bm489@cam.ac.uk>, or make a github pull request or issue.
 
 If you would like different versions of these notes, such as theorem/proof only or colourblind-friendly versions, please get in touch with me directly.
