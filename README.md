@@ -2,7 +2,7 @@
 
 ## Part III notes
 ### Michaelmas
-- [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone) up to lecture 10
+- [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone) up to lecture 11
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader) up to lecture 6
 - [Introduction to Discrete Analysis](iii/mich/introduction_to_discrete_analysis.pdf) (2018, W. T. Gowers) up to lecture 3
 - [Model Theory](iii/mich/model_theory.pdf) (2018, S. Barbina) up to lecture 6

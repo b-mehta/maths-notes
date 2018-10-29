@@ -1043,17 +1043,17 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
 
 Alternatively if $\mathscr{C}$ is \hyperlink{def:lsmall}{locally small} and $J$ is small, we have a \hyperlink{def:funct}{functor} $\mathscr{C}^{\hyperlink{def:duality}{\text{op}}} \to \mathbf{Set}$ sending $A$ to the set of \hyperlink{def:cone}{cones} with apex $A$.
 A \hyperlink{def:limit}{limit} for $D$ is a \hyperlink{def:repr}{representation} of this functor.
-If $\Delta A$ denotes the constant diagram of shape $J$ with all vertices $A$ and all edges $1_A$, then a cone over $D$ with apex $A$ is the same thing as a natural transformation $\Delta A \to D$.
 
+If $\Delta A$ denotes the constant diagram of shape $J$ with all vertices $A$ and all edges $1_A$, then a \hyperlink{def:cone}{cone} over $D$ with \hyperlink{def:cone}{apex} $A$ is the same thing as a \hyperlink{def:nattrans}{natural transformation} $\Delta A \to D$.
 $\Delta$ is a functor $\mathscr{C} \to [J, \mathscr{C}]$, and $\mathbf{Cone}(D)$ is the category $(\Delta \downarrow D)$ (a \hyperlink{def:comma}{comma category}, reversed).
 So to say that every \hyperlink{def:diagram}{diagram of shape $J$} in $\mathscr{C}$ has a \hyperlink{def:limit}{limit} is equivalent to saying that $\Delta$ has a \hyperlink{def:adj}{right adjoint}.
-(We say $\mathscr{C}$ \textbf{has limits} of shape $J$).
-Dually, $\mathscr{C}$ has colimits of shape $J$ iff $\Delta: \mathscr{C} \to [J, \mathscr{C}]$ has a left adjoint.
+\hypertarget{def:haslimits}(We say $\mathscr{C}$ \textbf{has limits} of shape $J$).
+Dually, $\mathscr{C}$ \textbf{has colimits} of shape $J$ iff $\Delta: \mathscr{C} \to [J, \mathscr{C}]$ has a left adjoint.
 \begin{nexample}\leavevmode
   \begin{enumerate}[label=(\alph*)]\label{eg:4.2}
     \item Suppose $J = \emptyset$. There's a unique \hyperlink{def:diagram}{diagram of shape $J$} in $\mathscr{C}$; a \hyperlink{def:cone}{cone} over it is just an object, and a morphism of cones is a morphism of $\mathscr{C}$.
       So a \hyperlink{def:limit}{limit} for this empty diagram is a \hyperlink{def:terminal}{terminal object} of $\mathscr{C}$.
-      (Dually, a colimit for it is an initial object).
+      (Dually, a \hyperlink{def:limit}{colimit} for it is an initial object).
     \item\marginnote{\emph{Lecture 10}}[0cm]
       Let $J$ be the category
       \begin{equation*}
@@ -1061,7 +1061,7 @@ Dually, $\mathscr{C}$ has colimits of shape $J$ iff $\Delta: \mathscr{C} \to [J,
           \bullet & \bullet
         \end{tikzcd}
       \end{equation*}
-      \index{span}\hypertarget{def:span}A \hyperlink{def:diagram}{diagram of shape $J$} is a pair of objects $A,B$; a \hyperlink{def:cone}{cone} over it is a \textbf{span}
+      \index{span}\index{cospan}\hypertarget{def:span}A \hyperlink{def:diagram}{diagram of shape $J$} is a pair of objects $A,B$; a \hyperlink{def:cone}{cone} over it is a \textbf{span}
       \begin{equation*}
         \begin{tikzcd}[column sep=tiny]
           & \dlar C \drar  \\
@@ -1082,11 +1082,11 @@ Dually, $\mathscr{C}$ has colimits of shape $J$ iff $\Delta: \mathscr{C} \to [J,
           & A + B
         \end{tikzcd}
       \end{equation*}
-    \item More generally, if $J$ is a \hyperlink{def:small}{small} discrete category, a diagram of shape $J$ is a $J$-indexed family $\set{A_j | j \in J}$, and a limit for it is a product
+    \item \hypertarget{def:lprod}More generally, if $J$ is a \hyperlink{def:small}{small} discrete category, a diagram of shape $J$ is a $J$-indexed family $\set{A_j | j \in J}$, and a limit for it is a product
       \begin{equation*}
         \Set{\prod_{j \in J} A_j \overset{\pi_j}\to A_j | j \in J}.
       \end{equation*}
-      Dually, a colimit for it is a coproduct
+      \hypertarget{def:lcoprod}Dually, a colimit for it is a coproduct
       \begin{equation*}
         \Set{A_j \overset{\nu_j}\to \sum_{j \in J} A_j | j \in J},
       \end{equation*}
@@ -1121,8 +1121,8 @@ Dually, $\mathscr{C}$ has colimits of shape $J$ iff $\Delta: \mathscr{C} \to [J,
       A diagram of shape $J$ is a \hyperlink{def:span}{cospan}
       \begin{equation*}
         \begin{tikzcd}
-          & A \dar \\
-          B \rar & C
+          & A \dar{f} \\
+          B \rar[']{g} & C
         \end{tikzcd}
       \end{equation*}
       a cone over it is
@@ -1159,24 +1159,24 @@ Dually, $\mathscr{C}$ has colimits of shape $J$ iff $\Delta: \mathscr{C} \to [J,
 \end{nexample}
 \begin{nthm}\label{thm:4.3}\leavevmode
   \begin{enumerate}[label=(\roman*)]
-    \item Suppose $\mathscr{C}$ has \hyperlink{def:equalizer}{equalizers} and all finite (resp.\ \hyperlink{def:small}{small}) \hyperlink{def:prod}{products}.
-      Then $\mathscr{C}$ has all finite (resp.\ small) \hyperlink{def:limit}{limits}.
+    \item Suppose $\mathscr{C}$ has \hyperlink{def:equalizer}{equalizers} and all finite (resp.\ \hyperlink{def:small}{small}) \hyperlink{def:lprod}{products}.
+      Then $\mathscr{C}$ \hyperlink{def:haslimits}{has} all finite (resp.\ small) \hyperlink{def:limit}{limits}.
     \item Suppose $\mathscr{C}$ has \hyperlink{def:pullback}{pullbacks} and a \hyperlink{def:terminal}{terminal object}.
-      Then $\mathscr{C}$ has all finite limits.
+      Then $\mathscr{C}$ \hyperlink{def:haslimits}{has} all finite limits.
   \end{enumerate}
 \end{nthm}
 \begin{proof}\leavevmode
   \begin{enumerate}[label=(\roman*)]
     \item Suppose given $D: J \to \mathscr{C}$.
-      Form the products
+      Form the \hyperlink{def:lprod}{products}
       \begin{equation*}
         P = \prod_{j \in \ob J} D(j) \quad \text{and}\quad
         Q = \prod_{\alpha\in\mor J} D(\cod \alpha).
       \end{equation*}
     We have morphisms $\begin{tikzcd}P \rar[shift left]{f} \rar[shift right,']{g} & Q\end{tikzcd}$ defined by $\pi_\alpha f = \pi_{\cod \alpha}$, $\pi_\alpha g = D(\alpha) \pi_{\dom \alpha}$ for all $\alpha$.
 
-    Let $E \overset{e}\to P$ be an equalizer of $(f,g)$.
-    The composites $\lambda_j = \pi_j e: E \to D(j)$ form a cone over $D$:
+    Let $E \overset{e}\to P$ be an \hyperlink{def:equalizer}{equalizer} of $(f,g)$.
+    The composites $\lambda_j = \pi_j e: E \to D(j)$ form a \hyperlink{def:cone}{cone} over $D$:
     given $\alpha: j \to j'$ in $J$,
     \begin{equation*}
       D(\alpha) \lambda_j = D(\alpha) \pi_j e = \pi_\alpha g e = \pi_\alpha f e = \pi_{j'} e = \lambda_{j'}.
@@ -1187,9 +1187,9 @@ Dually, $\mathscr{C}$ has colimits of shape $J$ iff $\Delta: \mathscr{C} \to [J,
       \pi_\alpha f \mu = \mu_{\cod \alpha} = D(\alpha) \mu_{\dom \alpha} = \pi_\alpha g \mu
     \end{equation*}
     for all $\alpha$, and hence $f\mu = g\mu$, so $\exists ! \nu: A \to E$ with $e \nu = \mu$.
-    So $(E, \set{\lambda_j | j \in \ob J})$ is a limit cone.
-  \item It's enough to construct finite products and \hyperlink{def:equalizer}{equalizers}.
-    But if $1$ is the terminal object, then a pullback for
+    So $(E, \set{\lambda_j | j \in \ob J})$ is a \hyperlink{def:limit}{limit cone}.
+  \item It's enough to construct finite products and equalizers.
+    But if $1$ is the \hyperlink{def:terminal}{terminal object}, then a pullback for
     \begin{equation*}
       \begin{tikzcd}
         & A \dar \\
@@ -1198,11 +1198,11 @@ Dually, $\mathscr{C}$ has colimits of shape $J$ iff $\Delta: \mathscr{C} \to [J,
     \end{equation*}
     has the universal property of a product $A \times B$, and we can form $\prod_{i=1}^n A_i$ inductively as $A_1 \times (A_2 \times (A_3 \times \dotsm (A_{n-1} \times A_n) \dotsm)).$
 
-    Now, to form the equalizer of $\begin{tikzcd}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcd}$, consider the cospan
+    Now, to form the equalizer of $\begin{tikzcd}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcd}$, consider the \hyperlink{def:span}{cospan}
     \begin{equation*}
       \begin{tikzcd}
         &A \dar{(1_A,f)} \\
-        A \rar{(1_A, g)} & A \times B
+        A \rar{(1_A, g)} & A \times B.
       \end{tikzcd}
     \end{equation*}
     A cone over this consists of
@@ -1219,16 +1219,111 @@ Dually, $\mathscr{C}$ has colimits of shape $J$ iff $\Delta: \mathscr{C} \to [J,
   We say a \hyperlink{def:cat}{category} $\mathscr{C}$ is \named{complete} if it has all \hyperlink{def:small}{small} \hyperlink{def:limit}{limits}.
   (Dually, \textbf{cocomplete} = all small colimits).
 \end{defi}
-Set is \hyperlink{def:complete}{complete} and cocomplete: products are Cartesian products, coproducts are disjoint unions.
-Similarly, $\mathbf{Gp}, \mathbf{AbGp}, \mathbf{Rng}, \mathbf{Mod}_R, \dotsc$ are all complete and cocomplete.
+Set is \hyperlink{def:complete}{complete} and cocomplete: \hyperlink{def:lprod}{products} are Cartesian products, \hyperlink{def:lcoprod}{coproducts} are disjoint unions.
+Similarly, $\hyperlink{def:categ}{\mathbf{Gp}}, \mathbf{AbGp}, \hyperlink{def:categ}{\mathbf{Rng}, \mathbf{Mod}_R}, \dotsc$ are all complete and cocomplete.
 $\mathbf{Top}$ is also complete and cocomplete.
 \begin{ndef}\label{def:4.4}
   Let $F: \mathscr{C} \to \mathscr{D}$ be a \hyperlink{def:funct}{functor}.
   \begin{enumerate}[label=(\alph*)]
     \item \hypertarget{def:plim}We say $F$ \textbf{preserves limits}\index{limit!preserved}\index{preserves limits} of \hyperlink{def:diagram}{shape $J$} if, given $D: J \to \mathscr{C}$ and a \hyperlink{def:limit}{limit} \hyperlink{def:cone}{cone} $(L, \set{\lambda_j | j \in \ob J})$ in $\mathscr{C}$, $(FL, \set{F \lambda_j | j \in \ob J})$ is a limit for $FD$.
-    \item \hypertarget{def:rlim}We say $F$ \textbf{reflects limits}\index{limit!reflected}\index{reflects limits} of shape $J$ if, given $D: J \to \mathscr{C}$ and a cone $(L, (\lambda_j)_j)$ such that $(FL, \set{F\lambda_j | j \in \ob J})$ is a limit for $FD$, then $(L, (\lambda_j)_j)$ is a limit for $D$.
-    \item \hypertarget{def:clim}We say $F$ \textbf{creates limits}\index{limit!created}\index{creates limits} of shape $J$ if, given $D: J \to \mathscr{C}$ and a limit $(M, \set{\mu_j | j \in \ob J})$ for $FD$, there exists a cone $(L, (\lambda_j)_j)$ over $D$ whose image under $F$ is isomorphic to the limit cone, and any such that cone is a limit in $\mathscr{C}$.
+    \item \hypertarget{def:rlim}We say $F$ \textbf{reflects limits}\index{limit!reflected}\index{reflects limits} of shape $J$ if, given $D: J \to \mathscr{C}$ and a cone $(L, (\lambda_j)_j)$ such that $(FL, (F\lambda_j)_j)$ is a limit for $FD$, then $(L, (\lambda_j)_j)$ is a limit for $D$.
+    \item \hypertarget{def:clim}We say $F$ \textbf{creates limits}\index{limit!created}\index{creates limits} of shape $J$ if, given $D: J \to \mathscr{C}$ and a limit $(M, (\mu_j)_j)$ for $FD$, there exists a cone $(L, (\lambda_j)_j)$ over $D$ whose image under $F$ is isomorphic to the limit cone, and any such that cone is a limit in $\mathscr{C}$.
   \end{enumerate}
 \end{ndef}
+\begin{nremark}\label{rem:4.5}\leavevmode\marginnote{\emph{Lecture 11}}[0cm]
+  \begin{enumerate}[label=(\alph*)]
+    \item If $\mathscr{C}$ has \hyperlink{def:limit}{limits of shape $J$}, $F: \mathscr{C} \to \mathscr{D}$ \hyperlink{def:plim}{preserves} them and $F$ and $F$ reflects \hyperlink{def:iso}{isomorphisms}, then $F$ \hyperlink{def:rlim}{reflects} limits of shape $J$.
+    \item $F$ reflects limits of shape $\mathbf{1} \iff F$ reflects isomorphisms.
+      \item If $\mathscr{D}$ has limits of shape $J$ and $F: \mathscr{C} \to \mathscr{D}$ \hyperlink{def:clim}{creates them}, then $F$ both preserves and reflects them.
+        \item In any of the statements of \cref{thm:4.3}, we may replace both instances of `$\mathscr{C}$ has' by either `$\mathscr{C}$ has and $F: \mathscr{C} \to \mathscr{D}$ preserves' or `$\mathscr{D}$ has and $F: \mathscr{C} \to \mathscr{D}$ creates'.
+  \end{enumerate}
+\end{nremark}
+\begin{nexample}\label{eg:4.6}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item $U: \mathbf{Gp} \to \mathbf{Set}$ (\hyperlink{def:forgFunc}{forgetful}) \hyperlink{def:clim}{creates} all \hyperlink{def:small}{small} limits:
+      Given a family $\set{G_i | i \in I}$ of groups, there's a unique group structure on $\prod_{i \in I} UG_i$ making the projections $\pi_i$ into homomorphisms and this makes it into a product in $\mathbf{Gp}$.
+      Similarly for \hyperlink{def:equalizer}{equalizers}.
+
+      But $U$ doesn't \hyperlink{def:plim}{preserve} \hyperlink{def:lcoprod}{coproducts}: $U(G * H) \ncong UG \sqcup UH$.
+    \item $U: \mathbf{Top} \to \mathbf{Set}$ (forgetful) \hyperlink{def:plim}{preserves} all small limits and colimits, but doesn't \hyperlink{def:rlim}{reflect} them: if $L$ is a \hyperlink{def:limit}{limit} for $D: J \to \mathbf{Top}$, and $L$ is not discrete, there's another \hyperlink{def:cone}{cone} with \hyperlink{def:cone}{apex} $L_d$ mapping to the limit in $\mathbf{Set}$.
+    \item The inclusion functor $I: \mathbf{AbGp} \to \mathbf{Gp}$ reflects coproducts but doesn't preserve them.
+      The direct sum $A \oplus B$ (coproduct in $\mathbf{AbGp}$) is not normally \hyperlink{def:iso}{isomorphic} to the free product $A * B$; $A*B$ is not abelian unless either $A$ or $B$ is $\{e\}$, but if $A \cong \{e\}$ then $A * B \cong A \oplus B \cong B$.
+  \end{enumerate}
+\end{nexample}
+\begin{nlemma}\label{lem:4.7}
+  If $\mathscr{D}$ has \hyperlink{def:limit}{limits of shape $J$}, then so does the \hyperlink{def:functcat}{functor category} $[\mathscr{C}, \mathscr{D}]$ for any $\mathscr{C}$, and the \hyperlink{def:forgFunc}{forgetful functor} $[\mathscr{C}, \mathscr{D}] \to \mathscr{D}^{\ob \mathscr{C}}$ \hyperlink{def:clim}{creates them}.
+\end{nlemma}
+\begin{proof}
+  Suppose we are given a \hyperlink{def:diagram}{diagram of shape $J$} in $\hyperlink{def:functcat}{[\mathscr{C}, \mathscr{D}]}$; think of it as a \hyperlink{def:funct}{functor} $D: J \times \mathscr{C} \to \mathscr{D}$.
+  For each $A \in \ob \mathscr{C}$, let $(LA, \set{\lambda_{j,A} | j \in \ob J})$ be a \hyperlink{def:limit}{limit} \hyperlink{def:cone}{cone} for the diagram $D(-, A): J \to \mathscr{D}$.
+  Given $A \overset{f}\to B$ in $\mathscr{C}$, the composites
+  \begin{equation*}
+    A \overset{\lambda_{j,A}}\to D(j,A)\overset{D(j,f)}\to D(j,B)
+  \end{equation*}
+  form a cone over $D(-,B)$, since the squares
+  \begin{equation*}
+    \begin{tikzcd}[column sep=large, row sep=huge]
+      {D(j,A)} \arrow[r, "{D(j,f)}"] \arrow[d, "{D(\alpha,A)}"] & {D(j,B)} \arrow[d, "{D(\alpha,B)}"] \\
+      {D(j',A)} \arrow[r, "{D(j',f)}"] & {D(j',B)}
+    \end{tikzcd}
+  \end{equation*}
+  commute.
+  So there's a unique $Lf: LA \to LB$ making
+  \begin{equation*}
+    \begin{tikzcd}[column sep=large, row sep=huge]
+    LA \rar{\lambda_{j,A}} \dar{Lf} & D(j,A) \dar{D(j,f)} \\
+    LB \rar{\lambda_{j,B}} & D(j,B)
+    \end{tikzcd}
+  \end{equation*}
+  commute for all $j$.
+
+  Uniqueness implies functoriality: given $g: B \to C$, $L(gf)$ and $(Lg)(Lf)$ are factorizations of the same cone through the limit $LC$.
+  And this is the unique functor structure on $(A \mapsto LA)$ making the $\lambda_{j, -}$ into \hyperlink{def:nattrans}{natural transformations}.
+
+  The cone $(L, \{\lambda_{j, -} \mid j \in \ob J\})$ is a limit: suppose given another cone $(M, \{\mu_{j,-} \mid j \in \ob J\})$, then for each $A$, $(MA, \set{\mu_{j,A} | j \in \ob J})$ is a cone over $D(-,A)$, so induces a unique $\alpha_A: MA \to LA$.
+  Naturality of $\alpha$ follows from uniqueness of factorisations through a limit.
+  So $(M, (\mu_j))$ factors uniquely through $(L, (\lambda_j))$.
+\end{proof}
+\begin{nremark}\label{rem:4.8}
+  In any \hyperlink{def:cat}{category}, a morphism $A \overset f\to B$ is \hyperlink{def:monic}{monic} iff
+  \begin{equation*}
+    \begin{tikzcd}
+      A \rar{1_A} \dar{1_A} & A \dar{f}\\ A \rar{f} & B
+    \end{tikzcd}
+  \end{equation*}
+    is a \hyperlink{def:pullback}{pullback}.
+    Hence any \hyperlink{def:funct}{functor} which preserves pullbacks preserves monomorphisms.
+    In particular, if $\mathscr{D}$ has pullbacks, then monomorphisms in $\hyperlink{def:functcat}{[\mathscr{C}, \mathscr{D}]}$ are just pointwise monomorphisms.
+\end{nremark}
+\begin{nthm}\label{thm:4.9}
+  Suppose $G: \mathscr{D} \to \mathscr{C}$ has a \hyperlink{def:adj}{left adjoint} $F$.
+  Then $G$ \hyperlink{def:plim}{preserves} all \hyperlink{def:limit}{limits} which exist in $\mathscr{D}$.
+\end{nthm}
+\begin{proof}[Proof 1]
+  Suppose $\mathscr{C}$ and $\mathscr{D}$ both have \hyperlink{def:limit}{limits of shape $J$}.
+  We have a commutative diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathscr{C} \rar{F} \dar{\Delta} & \mathscr{D} \dar{\Delta} \\
+      \left[J, \mathscr{C}\right] \rar{[J,F]} & \left[J, \mathscr{D}\right]
+    \end{tikzcd}
+  \end{equation*}
+  and all the \hyperlink{def:funct}{functors} in it have \hyperlink{def:adj}{right adjoints} (in particular $[J,F] \dashv [J, G]$).
+  So by \cref{cor:3.6}, the diagram of right adjoints
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathscr{D} \rar{G} & \mathscr{C} \\
+      \left[J, \mathscr{D}\right] \rar{[J,G]} \uar{\lim_J} & \left[J, \mathscr{C}\right] \uar{\lim_J}
+    \end{tikzcd}
+  \end{equation*}
+  commutes up to \hyperlink{def:iso}{isomorphism}, i.e.\ $G$ \hyperlink{def:plim}{preserves limits} of shape $J$.
+\end{proof}
+\begin{proof}[Proof 2]
+  Suppose given $D: J \to \mathscr{D}$ and a \hyperlink{def:limit}{limit} \hyperlink{def:cone}{cone} $(L, \set{L \overset{\lambda_j}\to D(j) | j \in \ob J})$.
+  Given a cone $(A, \set{A \overset{\alpha_j} \to GD(j) | j \in \ob J})$ over $GD$ the morphisms $FA \overset{\hat{\alpha_j}}\to D(j)$ form a cone over $D$, so they induce a unique $FA \overset{\hat{\beta}}\to L$ such that $\lambda_j \hat{\beta} = \hat{\alpha_j}$ for all $j$.
+  Then $A \overset{\beta}\to GL$ is the unique morphism satisfying $(G\lambda_j) \beta = \alpha_j$ for all $j$.
+  So $(GL, \set{G\lambda_j | j \in \ob J})$ is a limit cone in $\mathscr{C}$.
+\end{proof}
+The `primeval' Adjoint Functor Theorem says that the converse of \cref{thm:4.9} is true: if $\mathscr{D}$ has and $G: \mathscr{D} \to \mathscr{C}$ \hyperlink{def:plim}{preserves} \emph{all} limits, then $G$ has a \hyperlink{def:adj}{left adjoint}.
 \printindex
 \end{document}
