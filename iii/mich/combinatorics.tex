@@ -25,6 +25,8 @@
 
 \newcommand{\ihalf}[1]{\floor{\frac{#1}{2}}}
 \newcommand{\ihalfc}[1]{\ceil{\frac{#1}{2}}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\named}[1]{\textbf{#1}\index{#1}}
 
 %\newtheorem{manualtheoreminner}{Theorem}
 %\newenvironment{manualtheorem}[1]{%
@@ -68,7 +70,7 @@ While all examinable proofs will be included in lectures, relevant books for thi
 \clearpage
 \section{Set systems}
 \begin{defi}[Set system]\index{set system}\hypertarget{def:ss}
-  Let $X$ be a set. A \textbf{set system} on $X$ (or \textbf{family of subsets} of $X$) is a family $\mathcal{A} \subseteq \mathcal{P}(X)$.
+  Let $X$ be a set. A \named{set system} on $X$ (or \named{family of subsets} of $X$) is a family $\mathcal{A} \subseteq \mathcal{P}(X)$.
 \end{defi}
 For instance, we write \hypertarget{def:superr}$X^{(r)} = \set{A \subset X | |A| = r}$, so $X^{(r)}$ is a \hyperlink{def:ss}{set system} on $X$.
 Unless otherwise stated,
@@ -199,16 +201,16 @@ then $Q_3$ looks like
   \end{tikzpicture}
 \end{center}
 \begin{defi}[Hypercube]\index{hypercube}\hypertarget{def:qn}
-  $Q_n$ is often called the \textbf{hypercube} or \textbf{discrete cube} or \textbf{$n$-cube}.
+  $Q_n$ is often called the \named{hypercube} or \textbf{discrete cube} or \textbf{$n$-cube}.
 \end{defi}
 It is important to keep \emph{both} these pictures in mind: for induction the cube image is more instructive, but when thinking about layers the earlier image is more helpful.
 
 \subsection{Chains and antichains}
 \begin{defi}[Chain]\index{chain}\hypertarget{def:chain}
-  A family $\mathcal{A} \subseteq \mathcal{P}(X)$ is a \textbf{chain} if $\forall A, B \in \mathcal{A}$, we have $A \subseteq B$ or $B \subseteq A$.
+  A family $\mathcal{A} \subseteq \mathcal{P}(X)$ is a \named{chain} if $\forall A, B \in \mathcal{A}$, we have $A \subseteq B$ or $B \subseteq A$.
 \end{defi}
 \begin{defi}[Antichain]\index{antichain}\hypertarget{def:antichain}
-  A family $\mathcal{A} \subseteq \mathcal{P}(X)$ is an \textbf{antichain} if $\forall A,B \in \mathcal{A}$ with $A \neq B \Rightarrow A \nsubseteq B$.
+  A family $\mathcal{A} \subseteq \mathcal{P}(X)$ is an \named{antichain} if $\forall A,B \in \mathcal{A}$ with $A \neq B \Rightarrow A \nsubseteq B$.
 \end{defi}
 \begin{eg}
   For instance, $\{12, 125, 123589\}$ is an \hyperlink{def:chain}{chain}, and $\{1,467,2456\}$ is an \hyperlink{def:antichain}{antichain}.
@@ -377,7 +379,7 @@ This trivially implies \nameref{thm:sperner1}.
 
 \begin{defi}[Shadow]\index{shadow}\hypertarget{def:shadow}
   Let $\mathcal{A} \subseteq X^{(r)}$, for some $1 \leq r \leq n$.
-  The \textbf{shadow} or \textbf{corner shadow} of $\mathcal{A}$ is
+  The \named{shadow} or \named{corner shadow} of $\mathcal{A}$ is
   \begin{equation*}
     \partial \mathcal{A} \equiv \partial^- \mathcal{A} \coloneqq \set{A - \{i\} | A \in \mathcal{A},\; i \in A}
   \end{equation*}
@@ -511,7 +513,7 @@ For instance, if $\mathcal{A} \subset X^{(3)}$ with $|\mathcal{A}| = \binom{7}{3
 \subsubsection{Two total orderings on \texorpdfstring{$X^{(r)}$}{X(r)}}
 Given $A,B \in \hyperlink{def:superr}{X^{(r)}}$, say $A = a_1 \dotsb a_r$, $B = b_1 \dotsb b_r$.
 \begin{defi}[Lexicographic order]\index{lexicographic order}\hypertarget{def:lex}
-  Say $A < B$ in the \textbf{lexicographic order} or \textbf{lex order} if for some $i$ we have $a_i < b_i$ and $a_j = b_j \; \forall j < i$.
+  Say $A < B$ in the \named{lexicographic order} or \textbf{lex order} if for some $i$ we have $a_i < b_i$ and $a_j = b_j \; \forall j < i$.
 \end{defi}
 Equivalently, $a_i < b_i$, where $i = \min\set{j | a_j \neq b_j}$.
 `Use small numbers', dictionary order.
@@ -531,7 +533,7 @@ Equivalently, $a_i < b_i$, where $i = \min\set{j | a_j \neq b_j}$.
 \end{eg}
 
 \begin{defi}[Colexicographic order]\index{colexicographic order}\hypertarget{def:colex}
-  Say $A < B$ in the \textbf{colexicographic order} or \textbf{colex order} if for some $i$ have $a_i < b_i$ and $a_j = b_j \; \forall j > i$.
+  Say $A < B$ in the \named{colexicographic order} or \textbf{colex order} if for some $i$ have $a_i < b_i$ and $a_j = b_j \; \forall j > i$.
 \end{defi}
 Equivalently, $a_i < b_i$ where $i = \max\set{j | a_j \neq b_j}$.
 `Avoid large numbers'. Equivalently, $A < B$ if $\sum_{i \in A} 2^i < \sum_{i \in B} 2^i$.
@@ -560,14 +562,14 @@ In particular, \begin{equation*}|\mathcal{A}| = \binom{k}{r} \implies |\partial 
 Idea: We want to `replace' $\mathcal{A} \subset X^{(r)}$ with some $\mathcal{A}' \subset X^{(r)}$ such that
 \begin{enumerate}[label=(\roman*)]
   \item $|\mathcal{A}'| = |\mathcal{A}|$
-  \item $|\partial \mathcal{A}'| \leq |\partial \mathcal{A}|$
+  \item $|\hyperlink{def:shadow}{\partial \mathcal{A}'}| \leq |\partial \mathcal{A}|$
   \item $\mathcal{A}'$ `looks more like $\mathcal{C}$' than $\mathcal{A}$ did.
 \end{enumerate}
 Ideally, we'd compress $\mathcal{A} \to \mathcal{A}' \to \mathcal{A}'' \to \dotsm \to \mathcal{B}$ where either $\mathcal{B} = \mathcal{C}$ or $\mathcal{B}$ is so similar to $\mathcal{C}$ that we can see directly that $|\partial \mathcal{B}| \geq |\partial \mathcal{C}|$.
 
 \marginnote{\emph{Lecture 4}}[0cm]
 Use the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
-\begin{defi}[$ij$-compression]\index{Compression}\hypertarget{def:comp}
+\begin{defi}[$ij$-compression]\index{compression@$ij$-compression}\hypertarget{def:comp}
   For $1 \leq i < j \leq n$, the \textbf{$ij$-compression} $C_{ij}$ defined by: for $A \subset X$,
   \begin{equation*}
     C_{ij}(A) =
@@ -586,7 +588,7 @@ Use the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
 \begin{eg}
   If $\mathcal{A} = \{123,134,234,235,247\}$, then
   \begin{equation*}
-    C_{12}(\mathcal{A}) = \set{123,134,234,135,147}.
+    \hyperlink{def:comp}{C_{12}}(\mathcal{A}) = \set{123,134,234,135,147}.
   \end{equation*}
   So $|C_{ij}(\mathcal{A})| = |\mathcal{A}|$.
 \end{eg}
@@ -594,7 +596,7 @@ Use the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
   Let $\mathcal{A} \subset X^{(r)}$, $1 \leq i < j \leq n$.
   Then
   \begin{equation*}
-    |\partial C_{ij}(\mathcal{A})| \leq |\partial \mathcal{A}|.
+    |\hyperlink{def:shadow}{\partial} C_{ij}(\mathcal{A})| \leq |\partial \mathcal{A}|.
   \end{equation*}
 \end{nprop}
 \begin{proof}
@@ -627,59 +629,293 @@ Use the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
     \partial C_{ij}(\mathcal{A}) \subset C_{ij}(\partial A).
   \end{equation*}
 \end{remark}
-\begin{defi}[Left-compressed]\index{left-compressed}\hypertarget{def:lcomp}
+\begin{defi}[Left-compressed]\index{compressed}\hypertarget{def:lcomp}
   Say $\mathcal{A} \subset X^{(r)}$ is \textbf{left-compressed} if $C_{ij}(\mathcal{A}) = \mathcal{A} \; \forall i < j$.
 \end{defi}
 \begin{nprop}\label{prop:5}
   Let $\mathcal{A} \subset X^{(r)}$.
-  Then $\exists$ \hyperlink{def:lcomp}{left-compressed} $\mathcal{B} \subset X^{(r)}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\partial \mathcal{B}| \leq |\partial \mathcal{A}|$
+  Then $\exists$ \hyperlink{def:lcomp}{left-compressed} $\mathcal{B} \subset X^{(r)}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\hyperlink{def:shadow}{\partial \mathcal{B}}| \leq |\partial \mathcal{A}|$
 \end{nprop}
 \begin{proof}
-  Among all $\mathcal{B} \subset X^{(r)}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\partial \mathcal{B}| \leq |\partial \mathcal{A}|$,
+  Among all $\mathcal{B} \subset X^{(r)}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\hyperlink{def:shadow}{\partial \mathcal{B}}| \leq |\partial \mathcal{A}|$,
   choose one with $\sum_{A \in \mathcal{B}} \sum_{x \in A} x$ minimal.
-  Then $\mathcal{B}$ left-compressed, as if $C_{ij}(\mathcal{B}) \neq \mathcal{B}$ we contradict minimality.
+  Then $\mathcal{B}$ left-compressed, as if $\hyperlink{def:comp}{C_{ij}}(\mathcal{B}) \neq \mathcal{B}$ we contradict minimality.
 \end{proof}
 \begin{remark}
-  Or apply a $C_{ij}$, then another, and so on - this must terminate.
+  Or apply a $\hyperlink{def:comp}{C_{ij}}$, then another, and so on - this must terminate.
   In fact, can apply each $C_{ij}$ at most once, if you chose a sensible order.
 \end{remark}
 
-Certainly initial segments of colex are left-compressed.
+Certainly initial segments of \hyperlink{def:colex}{colex} are \hyperlink{def:lcomp}{left-compressed}.
 The converse is false - e.g.\ $\mathcal{A} = \{123,124,125,126,127\}$.
 
-`Colex prefers $23$ to $14$' inspires:
-For $U,V \subset X$ with $|U| = |V|$ and $U \cap V = \emptyset$, the $UV$-compression $C_{UV}$ is defined by
-For $A \subset X$,
-\begin{equation*}
-  \begin{cases}
-    A \cup U - V & \text{if } V \subset A, U \cap A = \emptyset \\
-    A & \text{otherwise}
-  \end{cases}
-\end{equation*}
-and if $\mathcal{A} \subset X^{(r)}$,
-\begin{equation*}
-  C_{UV}(\mathcal{A}) = \set{C_{UV}(A) | A \in \mathcal{A}} \cup \set{A \in \mathcal{A} | C_{UV}(A) \in \mathcal{A}}
-\end{equation*}
+`\hyperlink{def:colex}{Colex} prefers $23$ to $14$' inspires:
+\begin{defi}[$UV$-compression]\index{compression@$UV$-compression}\hypertarget{def:uvcomp}
+  For $U,V \subset X$ with $|U| = |V|$ and $U \cap V = \emptyset$, the \textbf{$UV$-compression} $C_{UV}$ is defined by
+  For $A \subset X$,
+  \begin{equation*}
+    \begin{cases}
+      A \cup U - V & \text{if } V \subset A, U \cap A = \emptyset \\
+      A & \text{otherwise}
+    \end{cases}
+  \end{equation*}
+  and if $\mathcal{A} \subset X^{(r)}$,
+  \begin{equation*}
+    C_{UV}(\mathcal{A}) = \set{C_{UV}(A) | A \in \mathcal{A}} \cup \set{A \in \mathcal{A} | C_{UV}(A) \in \mathcal{A}}
+  \end{equation*}
 
-Say $\mathcal{A}$ is $UV$-compressed if $C_{UV}(\mathcal{A}) = \mathcal{A}$.
+  Say $\mathcal{A}$ is \textbf{$UV$-compressed} if $C_{UV}(\mathcal{A}) = \mathcal{A}$.
+\end{defi}
 
 \begin{eg}
   If $\mathcal{A} = \{123,134,235,145,146,157\}$ then
-  \begin{equation*}C_{23,14}(\mathcal{A}) = \{123,134,235,145,236,157\}.\end{equation*}
+  \begin{equation*}\hyperlink{def:uvcomp}{C_{23,14}}(\mathcal{A}) = \{123,134,235,145,236,157\}.\end{equation*}
 \end{eg}
 Note that $|C_{UV}(\mathcal{A})| = |\mathcal{A}|$.
 
-Sadly, $C_{UV}$ need not decrease $\partial$ - e.g.\ $\mathcal{A} = \{146,467\}$ has $|\partial\mathcal{A}| = 5$, but $C_{23,14}(\mathcal{A}) = \{236,147\}$ has $|\partial C{23,14}(\mathcal{A})| = 6$.
+Sadly, \hyperlink{def:uvcomp}{$C_{UV}$} need not decrease \hyperlink{def:shadow}{$\partial$} - e.g.\ $\mathcal{A} = \{146,467\}$ has $|\partial\mathcal{A}| = 5$, but $C_{23,14}(\mathcal{A}) = \{236,147\}$ has $|\partial C_{23,14}(\mathcal{A})| = 6$.
 $C_{23,14}$ moved some things a long way.
 However:
 \begin{nprop}\label{prop:6}
-  Let $\mathcal{A} \subset X^{(r)}$ and $U,V \subseteq X$ with $|U| = |V|$ and $U \cap V = \emptyset$.
-  Suppose $\forall x \in U$ $\exists y \in V$ such that $\mathcal{A}$ is $(U-x, V-y)$-compressed.
-  Then $|\partial C_{UV}(\mathcal{A})| \leq |\partial \mathcal{A}|$.
+  Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ and $U,V \subseteq X$ with $|U| = |V|$ and $U \cap V = \emptyset$.
+  Suppose $\forall x \in U$ $\exists y \in V$ such that $\mathcal{A}$ is \hyperlink{def:uvcomp}{$(U-x, V-y)$-compressed}.
+  Then $|\hyperlink{def:shadow}{\partial} \hyperlink{def:uvcomp}{C_{UV}(\mathcal{A})}| \leq |\partial \mathcal{A}|$.
 \end{nprop}
+\begin{proof}
+  \marginnote{\emph{Lecture 5}}[0cm]
+  \color{gray}
+  Write $\mathcal{A}'$ for $\hyperlink{def:uvcomp}{C_{UV}(\mathcal{A})}$.
+  Given $B \in \hyperlink{def:shadow}{\partial} \A' - \partial \A$, we'll show that $U \subset B$, $V \cap B = \emptyset$, and $B \cup V - U \in \partial \A - \partial \A'$ (then done).
 
+  We have $B \cup \{x\} \in \mathcal{A}'$ for some $x \in B$, with $B \cup \{x\} \notin \mathcal{A}$.
+  So $U \subset B \cup \{x\}$, $V \cap (B \cup \{x\}) = \emptyset$, and $(B \cup \{x\}) \cup V - U \in \mathcal{A}$.
+  Thus certainly $V \cap B = \emptyset$.\bigskip
+
+  If $x \in V$: We have $\mathcal{A}$ is $(U-x,V-y)$-compressed for some $y \in V$.
+  So from $(B \cup \{x\}) \cup V - U \in \mathcal{A}$, we obtain $B \cup \{y\} \in \mathcal{A}$,
+  contradicting $B \notin \partial \mathcal{A}$.
+  Hence $x \notin U$, and so $U \subset B$. \bigskip
+
+  Also, $B \cup V - U \in \partial \mathcal{A}$ (as $(B \cup \{x\}) \cup V - U \in \mathcal{A}$).
+  Suppose $B \cup V - U \in \partial \mathcal{A}'$.
+  Then $(B \cup V - U) \cup \{w\} \in \mathcal{A}'$ for some $w$.
+
+  If $w \notin U$: Then $V \subset (B \cup V - U) \cup \{w\}$ and $U \cap ((B \cup V - U) \cup \{w\}) = \emptyset$, so from $(B \cup V - U) \cup \{w\} \in \mathcal{A}'$ we can conclude that both $(B \cup V - U) \cup \{w\} \in \mathcal{A}$ and $B \cup \{w\} \in \mathcal{A}$, contradicting $B \notin \partial A.$
+
+  If $w \in U$: We know $\mathcal{A}$ is $(U-w,V-z)$-compressed for some $z \in V$.
+  So from $(B \cup V - U) \cup \{w\} \in \mathcal{A}$ (as it is in $\mathcal{A}'$ and contains $V$, so could not have moved).
+  We deduce $B \cup \{z\} \in \mathcal{A}$, contradicting $B \notin \partial \mathcal{A}$.
+\end{proof}
+\begin{remark}
+  Actually showed $\partial C_{UV}(\mathcal{A}) \subseteq C_{UV}(\partial\mathcal{A})$.
+\end{remark}
+
+\begin{nthm}[Kruskal-Katona Theorem]\label{thm:kk7}\index{Kruskal-Katona theorem}
+  Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ (for $1 \leq r \leq n$) and let $\mathcal{C}$ be the initial segment of \hyperlink{def:colex}{colex} on $X^{(r)}$ with $|\mathcal{C}| = |\mathcal{A}|$.
+  Then $|\hyperlink{def:shadow}{\partial \mathcal{A}}| \geq |\partial \mathcal{C}|$.
+  In particular, if $|\mathcal{A}| = \binom{k}{r}$ then $|\partial \mathcal{A}| \geq \binom{k}{r-1}$.
+\end{nthm}
+\begin{proof}
+  Let
+  \begin{equation*}
+    \Gamma = \set{(U,V) | U,V \subset X, |U| = |V| > 0, U \cap V = \emptyset, \max U < \max V}.
+  \end{equation*}
+  Define a sequence of \hyperlink{def:ss}{set systems} $\mathcal{A}_0, \mathcal{A}_1, \dotsc$ in \hyperlink{def:superr}{$X^{(r)}$} as follows.
+  Put $\mathcal{A}_0 = \mathcal{A}$.
+
+  Having defined $\mathcal{A}_k$, if $\mathcal{A}_k$ is \hyperlink{def:uvcomp}{$(U,V)$-compressed} $\forall (U,V) \in \Gamma$ then stop the sequence with $\mathcal{A}_k$.
+  If not, choose $(U,V) \in \Gamma$ such that $\mathcal{A}_k$ is not $(U,V)$-compressed with $|U|$ minimal.
+
+  Set $\mathcal{A}_{k+1} = C_{UV}(\mathcal{A}_k)$.
+  Note that $\forall x \in U$ we have $(U-\{x\}, V - \{y\}) \in \Gamma \cup \{(\emptyset,\emptyset)\}$ for $y = \min V$.
+  So by \cref{prop:6}, $|\partial \mathcal{A}_{n+1}| \leq |\partial \mathcal{A}_n|$.
+  Continue.
+
+  The sequence must terminate, e.g.\ as $\sum_{A \in \mathcal{A}_n} \sum_{i \in A} 2^i$ is decreasing in $\mathcal{A}$.
+  The final system $\mathcal{B} = \mathcal{A}_k$ satisfies $|\mathcal{B}| = |\mathcal{A}|$ and $|\partial \mathcal{B}| \leq |\partial \mathcal{A}|$, and is $(U,V)$-compressed $\forall (U,V) \in \Gamma$.
+
+  \textbf{Claim:} $\mathcal{B} = \mathcal{C}$.
+
+  \textbf{Proof of claim}: Suppose $\mathcal{B}$ is not an initial segment of colex.
+  Then $\exists A < B$ in colex with $A \notin \mathcal{B}$ and $B \in \mathcal{B}$, but then $U = A-B$ and $V = B-A$ have $(U,V) \in \Gamma$ and $C_{UV}(B) = A$, a contradiction.
+\end{proof}
+\begin{remark}\leavevmode
+  \begin{enumerate}
+    \item Equivalently: If $\mathcal{A} \subset X^{(r)}$ with
+      \begin{equation*}
+        |\mathcal{A}| = \binom{k_r}{r} + \binom{k_{r-1}}{r-1} + \dotsb + \binom{k_s}{s},
+      \end{equation*}
+      where $k_r > k_{r-1} > \dotsb > k_s$ and $s > 0$, then
+      \begin{equation*}
+        |\partial \mathcal{A}| = \binom{k_r}{r-1} + \binom{k_{r-1}}{r-2} + \dotsb + \binom{k_s}{s-1}.
+      \end{equation*}
+    \item In the proof of the \nameref{thm:kk7}, we used only \cref{prop:6}, not \cref{prop:4} or \cref{prop:5}.
+    \item Uniqueness? Can check that if $|\partial \mathcal{A}| = |\partial \mathcal{C}|$ and $|\mathcal{A}| = \binom{k}{r}$,
+      then $\mathcal{A} = Y^{(r)}$, for some $k$-set $Y$ (i.e.\ uniqueness).
+
+      \hypertarget{def:iso}But, in general, it is not true that $|\partial \mathcal{A}| = |\partial \mathcal{C}| \implies \mathcal{A}$ isomorphic to $|\mathcal{C}|$
+      (where $\mathcal{A},\mathcal{B}$ are \textbf{isomorphic} if $\exists$ a permutation of $X$ sending $\mathcal{A}$ to $\mathcal{B}$).
+  \end{enumerate}
+\end{remark}
+\begin{defi}[Upper shadow]\hypertarget{def:upshad}
+  For $A \subset X^{(r)}$ ($0 \leq r \leq n-1$), the \named{upper shadow} of $\mathcal{A}$ is
+  \begin{equation*}
+    \partial^+ \mathcal{A} = \set{A \cup \{x\} | A \in \mathcal{A}, x \notin A}.
+  \end{equation*}
+\end{defi}
+Note also $A < B$ in \hyperlink{def:colex}{colex} $\iff$ $A^c < B^c$ in \hyperlink{def:lex}{lex} with ground-set order reversed.
+
+\begin{ncor}\label{cor:8}
+  Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ ($0 \leq r \leq n-1$) and let $\mathcal{C}$ be the initial segment of \hyperlink{def:lex}{lex} with $|\mathcal{C}| = |\mathcal{A}$.
+  Then $|\hyperlink{def:upshad}{\partial^+ \mathcal{A}}| \geq |\partial^+ \mathcal{C}|$.
+\end{ncor}
+\begin{proof}
+  Take complements.
+\end{proof}
+Also, the \hyperlink{def:shadow}{shadow} of an initial segment of \hyperlink{def:colex}{colex} (in \hyperlink{def:superr}{$X^{(r)}$}) is again an initial segment of colex in $X^{(r-1)}$.
+Indeed, if
+\begin{equation*}\mathcal{C} = \set{A \in X^{(r)} | A \leq a_1 a_2 \dots a_r}\end{equation*}
+then
+\begin{equation*}\hyperlink{def:shadow}{\partial \mathcal{C}} = \set{B \in X^{(r-1)}| B \leq a_2 \dots a_r}\end{equation*}.
+
+\begin{ncor}\label{cor:9}
+  Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ and let $\mathcal{C} \subset X^{(r)}$ be the initial segment of \hyperlink{def:colex}{colex} with $|\mathcal{C}| = |\mathcal{A}|$.
+  Then $|\hyperlink{def:shadow}{\partial}^t \mathcal{A}| \geq |\partial^t \mathcal{C}|$ $\forall 1 \leq t \leq r$.
+  In particular, if $|\mathcal{A}| = \binom{k}{r}$ then $|\partial^t \mathcal{A}| \geq \binom{k}{r-t}$.
+\end{ncor}
+\begin{proof}
+  If $|\partial^t \mathcal{A}| \geq |\partial^t \mathcal{C}|$ then $|\partial^{t+1} \mathcal{A}| \geq |\partial^{t+1} \mathcal{C}|$ by \nameref{thm:kk7}.
+\end{proof}
+
+\subsection{Intersecting families}
+\begin{defi}[Intersecting]\hypertarget{def:inter}
+  A \marginnote{\emph{Lecture 6}}[0cm] family $\mathcal{A} \subset \mathbb{P}(X)$ is \named{intersecting} if $A \cap B \neq \emptyset \;\; \forall A, B \in \mathcal{A}$.
+\end{defi}
+How large can $|\mathcal{A}|$ be?
+Can achieve $|\mathcal{A}| = 2^{n-1}$, by taking, e.g.\ $\mathcal{A} = \set{A \subset X | 1 \in A}$.
+\begin{nprop}\label{prop:10}
+  Let $\mathcal{A} \subset \mathbb{P}(X)$ be \hyperlink{def:inter}{intersecting}.
+  Then $|\A| \leq 2^{n-1}$.
+\end{nprop}
+\begin{proof}
+  For each $A \subset X$, can have $\leq 1$ of $A, A^c$ in $\mathcal{A}$.
+\end{proof}
+Note: there are many examples with $|\A| = 2^{n-1}$, e.g.\ for $n$ odd we can take \begin{equation*}\Set{A \subset X |\ |A| > \frac{n}{2}}.\end{equation*}
+% top of cube
+\begin{center}
+  \begin{tikzpicture}
+    \draw [red, dashed] (0,1.65) circle [x radius=2.4cm, y radius=1.7cm];
+    \begin{scope}
+      \draw (0,3.2) circle [x radius=1mm, y radius=0.8mm];
+      \node [right] at (0.25, 3.2) {$X^{(n)}$};
+
+      \draw (0,2.8) circle [x radius=4.5mm, y radius=1.5mm];
+      \node [right] at (0.5, 2.8) {$X^{(n-1)}$};
+
+      \draw (0,2.1) circle [x radius=9mm, y radius=3mm];
+      \node [right] at (0.9, 2.1) {$X^{(n-2)}$};
+
+      \node at (0,1.55) {$\vdots$};
+
+      \draw (0,0.6) circle [x radius=16mm, y radius=5mm];
+      \node [right] at (1.6, 0.6) {$X^{(\ceil{\frac{n}{2}})}$};
+
+      \draw (0,-0.6) circle [x radius=16mm, y radius=5mm];
+      \node [right] at (1.6, -0.6) {$X^{(\floor{\frac{n}{2}})}$};
+
+      \node at (0,-1.35) {$\vdots$};
+
+      \draw (0,-2.1) circle [x radius=9mm, y radius=3mm];
+      \node [right] at (0.9, -2.1) {$X^{(2)}$};
+
+      \draw (0,-2.8) circle [x radius=4.5mm, y radius=1.5mm];
+      \node [right] at (0.5, -2.8) {$X^{(1)}$};
+
+      \draw (0,-3.2) circle [x radius=1mm, y radius=0.8mm];
+      \node [right] at (0.25, -3.2) {$X^{(0)}$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+What if we insist $A \subset X^{(r)}$?
+
+If $r > \frac{n}{2}$, this is a silly question, as we can take $\A = X^{(r)}$.
+If $r = \frac{n}{2}$, the maximum is $\frac{1}{2} \binom nr$ - just choose one of $A,A^c$ for each $A \in X^{(r)}$.
+So assume $r < \frac{n}{2}$.
+
+Taking $\mathcal{A} = \set{A \in X^{(r)} | 1 \in A}$ gives $|\A| = \binom{n-1}{r-1} = \frac{r}{n} \binom nr$.
+
+Could also try, e.g.\ $\mathcal{B} = \set{A \in X^{(r)} | |A \cap \{1,2,3\}| \geq 2}$.
+
+Try both on $[8]^{(3)}$:
+\begin{gather*}
+  |\A| = \binom{7}{2} = 21 \\
+  |\mathcal{B}| = 1 + \binom{3}{2} \binom{5}{1} = 16 < 21.
+\end{gather*}
+where the first term counts the number of $|A \cap \{1,2,3\}| = 3$, and the second term counts $|A \cap \{1,2,3\}| = 2$.
+
+In fact, the size from $\A$ is optimal:
+\begin{nthm}[Erd\H{o}s-Ko-Rado]\label{thm:ekr11}\index{Erd\H{o}s-Ko-Rado theorem}
+  Let $r < \frac{n}{2}$, and let $\A \subset X^{(r)}$ be \hyperlink{def:inter}{intersecting}.
+  Then $|\A| \leq \binom{n-1}{r-1}$.
+\end{nthm}
+\begin{proof}[Proof 1: `Bubble down with \nameref{thm:kk7}']
+  For $A,B \in \A$, have $A \cap B \neq 0$, i.e.\ $A \nsubseteq B^c$.
+  Writing $\bar{\A}$ for $\set{A^c | A \in \A} \subset X^{(n-r)}$, this says that $\partial^{n-2r} \bar{\A}$ is disjoint from $\A$.
+
+  Suppose $|\A| > \binom{n-1}{r-1}$.
+  Then $|\A^c| > \binom{n-1}{r-1} = \binom{n-1}{n-r}$, so by \nameref{thm:kk7} (as given in \cref{cor:9}), have $|\partial^{n-2r} \bar{\A}| \geq \binom{n-1}{r}$.
+  But
+  \begin{equation*}
+    \binom{n-1}{r-1} + \binom{n-1}{r} = \binom{n}{r}
+  \end{equation*}
+  i.e.\
+  \begin{equation*}
+    |\partial^{n-2r} \bar{\A}| + |\A| > |X^{(r)}|.
+  \end{equation*}
+  a contradiction.
+\end{proof}
+\begin{remark}
+  The numbers \emph{had} to work, as we get equality for $\A = \set{A \in X^{(r)} | 1 \in A}$.
+\end{remark}
+\begin{proof}[Proof 2]
+  Consider a cyclic ordering of $[n]$, i.e.\ a bijection $C: [n] \to \mathbb{Z}_n$, e.g.
+  \begin{center}
+    \begin{tikzpicture}[scale=1.5]
+      \draw (0,0) circle [radius = 1cm];
+      \begin{scope}[every node/.style={fill=white, circle, inner sep=0.3mm}]
+      \node at (90:1) {1};
+      \node at (45:1) {4};
+      \node at (0:1) {3};
+      \node at (-45:1) {2};
+      \node at (-90:1) {8};
+      \node at (-135:1) {6};
+      \node at (180:1) {5};
+      \node at (135:1) {7};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  How many $A \in \A$ are intervals (sets of $r$ consecutive elements) in our ordering?
+  Answer: $\leq r$. Indeed, suppose $c_1 \dots c_r \in \mathcal{A}$.
+  Then, for each $1 \leq i \leq r-1$, at most one of the two intervals $\dots c_{i-1} c_i$ and $c_{i+1} c_{i+2} \dots$ can belong to $\A$.
+
+  Also, a given $r$-set $A$ is an interval in exactly $n r! (n-r)!$ of the $n!$ cyclic orderings.
+  Hence $|\A| n r! (n-r)! \leq n! r$, i.e.
+  \begin{equation*}
+    |\A| \leq \frac{(n-1)!}{(r-1)! (n-r)!} = \binom{n-1}{r-1}. \qedhere
+  \end{equation*}
+\end{proof}
+\begin{remark}\leavevmode
+  \begin{enumerate}
+    \item Equivalently, we are double-counting the edges in the bipartite graph, vertex classes $\A$ and all cyclic orderings, in which $A$ is joined to $C$ if $A$ is an interval in $C$.
+    \item This method is called \named{averaging}, or Katona's method.
+  \end{enumerate}
+\end{remark}
+Equality in \nameref{thm:ekr11}? Can check equality holds $\iff \A = \set{A \in X^{(r)} | i \in A}$ for some $i$.
+This follows (proof 1) from equality case of \nameref{thm:kk7}, or (proof 2) by considering changing the cyclic ordering bit by bit.
 \clearpage
 \section{Isoperimetric inequalities}
+`How tightly can we pack a subset of given size in a space?'
+\clearpage
 \section{Projections}
 \printindex
 \end{document}
