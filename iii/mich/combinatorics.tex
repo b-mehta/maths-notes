@@ -691,7 +691,7 @@ However:
   So $U \subset B \cup \{x\}$, $V \cap (B \cup \{x\}) = \emptyset$, and $(B \cup \{x\}) \cup V - U \in \mathcal{A}$.
   Thus certainly $V \cap B = \emptyset$.\bigskip
 
-  If $x \in V$: We have $\mathcal{A}$ is $(U-x,V-y)$-compressed for some $y \in V$.
+  If $x \in U$: We have $\mathcal{A}$ is $(U-x,V-y)$-compressed for some $y \in V$.
   So from $(B \cup \{x\}) \cup V - U \in \mathcal{A}$, we obtain $B \cup \{y\} \in \mathcal{A}$,
   contradicting $B \notin \partial \mathcal{A}$.
   Hence $x \notin U$, and so $U \subset B$. \bigskip
@@ -915,6 +915,159 @@ This follows (proof 1) from equality case of \nameref{thm:kk7}, or (proof 2) by 
 \clearpage
 \section{Isoperimetric inequalities}
 `How tightly can we pack a subset of given size in a space?'
+\marginnote{\emph{Lecture 7}}[0cm]We are familiar with this kind of inequality in the continuous sense:
+\begin{itemize}
+  \item Among subsets of $\mathbb{R}^2$ of given area, the disc has smallest perimeter.
+  \item Among subsets of $\mathbb{R}^3$ of given volume, the disc has smallest surface area.
+  \item Among subsets of $S^2$ of given area, the cap has smallest perimeter.
+\end{itemize}
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{scope}
+      \draw [fill=bred!20] (0,0) circle [radius=1cm];
+    \end{scope}
+    \begin{scope}[xshift=3cm]
+      \shade [ball color = bred!40, opacity = 0.6] (0,0) circle (1cm);
+      \draw (0,0) circle (1cm);
+      \draw (-1,0) arc (180:360:1 and 0.3);
+      \draw [dashed] (1,0) arc (0:180:1 and 0.3);
+    \end{scope}
+    \begin{scope}[xshift=6cm]
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+\begin{defi}[Boundary]
+For a set $A$ of vertices in a graph $G$, the \named{boundary} is
+\begin{equation*}
+  b(A) = \set{x \in V(G) | x \notin A, xy \in E \text{ for some } y \in A}.
+\end{equation*}
+\end{defi}
+For example, in the picture, if $A = \{1,2,3\}$, then $b(A) = \{4,5\}$.
+
+An \named{isoperimetric inequality} on $G$ is an inequality of the form
+\begin{equation*}
+  |b(A)| \geq f(|A|) \quad \forall \subseteq V(G).
+\end{equation*}
+
+Equivalently, minimise the \named{neighbourhood} of $A$:
+\begin{equation*}
+  N(A) = A \cap b(A) = \set{x \in G | d(x,A) \leq 1}
+\end{equation*}
+where $d$ denotes the usual graph distance.
+
+A natural guess is often $B(x,r) = \set{y \in G | d(x,y) \leq r}$.
+
+What happens in $Q_n$?
+For example, try $|A|=4$ in $Q_3$:
+\begin{center}
+  \begin{tikzpicture}[scale=2]
+    \node at (0.65,-0.3) {$|b(A)| = 3$};
+    \begin{scope}[every node/.style={draw=black, inner sep=1.5pt, circle}]
+      \node [fill=bred  ] (A) at (0,0) {};
+      \node [fill=bred  ] (B) at (1,0) {};
+      \node [fill=bgreen] (C) at (1,1) {};
+      \node [fill=bred  ] (D) at (0,1) {};
+      \node [fill=bred  ] (E) at (0.3,0.4) {};
+      \node [fill=bgreen] (F) at (1.3,0.4) {};
+      \node               (G) at (1.3,1.4) {};
+      \node [fill=bgreen] (H) at (0.3,1.4) {};
+      \draw (A) -- (B) -- (C) -- (D) -- (A);
+      \draw (E) -- (F) -- (G) -- (H) -- (E);
+      \draw (A) -- (E);
+      \draw (B) -- (F);
+      \draw (C) -- (G);
+      \draw (D) -- (H);
+
+      \begin{scope}[xshift=3cm]
+        \node [fill=bred  ] (A) at (0,0) {};
+        \node [fill=bred  ] (B) at (1,0) {};
+        \node [fill=bgreen] (C) at (1,1) {};
+        \node [fill=bgreen] (D) at (0,1) {};
+        \node [fill=bred  ] (E) at (0.3,0.4) {};
+        \node [fill=bred  ] (F) at (1.3,0.4) {};
+        \node [fill=bgreen] (G) at (1.3,1.4) {};
+        \node [fill=bgreen] (H) at (0.3,1.4) {};
+        \draw (A) -- (B) -- (C) -- (D) -- (A);
+        \draw (E) -- (F) -- (G) -- (H) -- (E);
+        \draw (A) -- (E);
+        \draw (B) -- (F);
+        \draw (C) -- (G);
+        \draw (D) -- (H);
+      \end{scope}
+  \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Guess: `Balls are best', i.e.\ if $|A| = |X^{(\leq r)}|$, then $|N(A)| \geq |X^{(\leq r + 1)}|$ (where $X^{(\leq r)}$ is shorthand for $X^{(0)} \cup \dotsb \cup X^{(r)}$).
+What if $|A|$ strictly between $\sum_{i=0}^r \binom{n}{i}$ and $\sum_{i=0}^{r+1} \binom{n}{i}$?
+
+Guess: Take $A = X^{(\leq r)} \cup B$, for some $B \subset X^{(r+1)}$ (called a `Hamming Ball'\index{Hamming ball}).
+
+If we knew this, then $N(A) = X^{(\leq r+1)} \cup \partial^+ B$, so by \nameref{thm:kk7}, we'd take $B$ to be an initial segment of \hyperlink{def:lex}{lex}.
+
+\begin{defi}[Simplicial order]\hypertarget{def:simplicial}
+  Define the \named{simplicial order} on $Q_n$ by $x<y$ if either $|x| < |y|$ or $|x|=|y|$ and $x<y$ in \hyperlink{def:lex}{lex}.
+\end{defi}
+`Go up in levels, and use lex inside a level.'
+Aim: Initial segments of \hyperlink{def:simplicial}{simplicial} order are best.
+
+\begin{defi}[Sections]
+  Given $A \subset \hyperlink{def:qn}{Q_n}$ and $1 \leq i \leq n$, the \named{section}\textbf{$i$-sections} are the \hyperlink{def:ss}{set systems} $A_+^{(i)}, A_-^{(i)} \subset \mathcal{P}(X-i)$ given by
+  \begin{align*}
+    A_-^{(i)} = \set{ x \in A | i \notin x} \subset \mathcal{P}(X-i)
+    A_+^{(i)} = \set{ x - \{i\} | x \in A, i \in x} \subset \mathcal{P}(X-i)
+  \end{align*}
+\end{defi}
+\begin{defi}[Compression]\hypertarget{def:icomp}
+  Define the \textbf{$i$-compression} $C_i(A)$ of $A$ by giving its $i$-sections.
+  \begin{itemize}
+    \item $C_i(A)_+^{i}$ is the initial segment of $Q_{n-1}$ of size $|A^{(i)}_+|$
+    \item $C_i(A)_-^{i}$ is the initial segment of $Q_{n-1}$ of size $|A^{(i)}_-|$
+  \end{itemize}
+\end{defi}
+Certainly $|\hyperlink{def:icomp}{C_i(A)}| = |A|$.
+Also, $C_i(A)$ `looks more like' an initial segment of \hyperlink{def:simplicial}{simplicial} than $A$ did.
+
+Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
+
+\begin{nthm}[Harper's theorem]\label{thm:harper1}
+  Let $A \subset Q_n$, and let $C$ be the initial segment of simplicial order with $|C| = |A|$.
+  Then $|N(A)| \geq |N(C)|$. In particular, if $|A| \geq \sum_{i=0}^r \binom{n}{i}$ then $|N(A)| \geq \sum_{i=0}^{r+1} \binom{n}{i}$.
+\end{nthm}
+\begin{remark}\leavevmode
+  \begin{enumerate}[label=\arabic*.]
+    \item If we know $A$ is a \hyperlink{def:hamming}{Hamming ball}, then done by \nameref{thm:kk7}.
+    \item \nameref{thm:harper1} $\implies$ \nameref{thm:kk7}. Indeed, given $B \subset X^{(r)}$.
+      Apply \nameref{thm:harper1} to $A = B \cup X^{(\leq r-1)}$
+  \end{enumerate}
+\end{remark}
+\begin{proof}
+  Induction on $n$. $n=1$ works.
+  Given $A \subset Q_n$ for $n > 1$, fix $1 \leq i \leq n$.
+
+  \textbf{Claim:} $|N(C_i(A))| \leq |N(A)|$.
+
+  \textbf{Proof of claim:} Write $B = C_i(A)$.
+  We have
+  \begin{align*}
+    |N(A)| &= |A_+ \cup N(A_-)| + |A_- \cup N(A_+)| \\
+    |N(B)| &= |B_+ \cup N(B_-)| + |B_- \cup N(B_+)|
+  \end{align*}
+  where the first term is `downstairs', and the second term is `upstairs'.
+  Now, $|B_+| = |A_+|$ and $|N(B_-)| \leq |N(A_-)|$ by induction.
+
+  But $N(B_-)$ is an initial segment of \hyperlink{def:simplicial}{simplicial} on $Q_{n-1}$ as is $B_+$.
+
+  So $N(B_-)$ and $B_+$ are nested.
+  Hence
+  \begin{align*}
+    |B_+ \cup N(B_-)| &\leq |A_+ \cup N(A_-)| \\
+    |B_- \cup N(B_+)| &\leq |A_- \cup N(A_+)|
+  \end{align*}
+  Thus $N(B) \leq N(A)$.
+\end{proof}
 \clearpage
 \section{Projections}
 \printindex
