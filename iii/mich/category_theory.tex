@@ -1324,6 +1324,88 @@ $\mathbf{Top}$ is also complete and cocomplete.
   Then $A \overset{\beta}\to GL$ is the unique morphism satisfying $(G\lambda_j) \beta = \alpha_j$ for all $j$.
   So $(GL, \set{G\lambda_j | j \in \ob J})$ is a limit cone in $\mathscr{C}$.
 \end{proof}
-The `primeval' Adjoint Functor Theorem says that the converse of \cref{thm:4.9} is true: if $\mathscr{D}$ has and $G: \mathscr{D} \to \mathscr{C}$ \hyperlink{def:plim}{preserves} \emph{all} limits, then $G$ has a \hyperlink{def:adj}{left adjoint}.
+\leavevmode\marginnote{\emph{Lecture 12}}[0cm]
+\hypertarget{thm:paft}The `primeval' Adjoint Functor Theorem says that the converse of \cref{thm:4.9} is true: if $\mathscr{D}$ has and $G: \mathscr{D} \to \mathscr{C}$ \hyperlink{def:plim}{preserves} \emph{all} limits, then $G$ has a \hyperlink{def:adj}{left adjoint}.
+\begin{nlemma}\label{lem:4.10}
+  Suppose $\mathscr{D}$ \hyperlink{def:haslimits}{has} and $G: \mathscr{D} \to \mathscr{C}$ \hyperlink{def:plim}{preserves limits} of shape $J$.
+  Then for any $A \in \ob \mathscr{C}$, the \hyperlink{def:comma}{arrow category} $(A \downarrow G)$ has \hyperlink{def:limit}{limits} of shape $J$, and the \hyperlink{def:forgFunc}{forgetful functor} $U: (A \downarrow G) \to \mathscr{D}$ \hyperlink{def:clim}{creates them}.
+\end{nlemma}
+\begin{proof}
+  Suppose given $D : J \to (A \downarrow G)$, write $D(j)$ as $(U D(j), f_j)$.
+  Let $(L, (\lambda_j: L \to U D(j))_{j \in \ob J})$ be a \hyperlink{def:limit}{limit} for $UD$;
+  then $(GL, (G\lambda_j)_{j \in \ob J})$ is a limit for $GUD$.
+
+  Since the edges of $UD$ are morphisms in $(A \downarrow G)$, the $f_j$ form a \hyperlink{def:cone}{cone} over $GUD$.
+  So there's a unique $h: A \to GL$ such that $(G\lambda_j) h = f_j$ for all $j$,
+  i.e.\ there's a unique $h$ such that the $\lambda_j$ are all morphisms $(L,h) \to (UD(j), f_j)$ in $(A \downarrow G)$.
+
+  If $((C, k) (\mu_j)_{j \in \ob J})$ is any cone over $D$, then $(C, (\mu_j)_{j \in \ob J})$ is a cone over $UD$, so there's a unique $l: C \to L$ with $\lambda_j l = \mu_j$ for all $j$.
+  We need to show $(Gl)k = h$:
+  but $(G\lambda_j) (Gl) k = (G\mu_j) k = f_j = (G\lambda_j) h$
+  for all $j$ so $(Gl)k = h$ by uniqueness of factorizations through limits.
+\end{proof}
+\begin{nlemma}\label{lem:4.11}
+  A \hyperlink{def:cat}{category} $\mathscr{C}$ has an \hyperlink{def:initial}{initial object} iff $1_\mathscr{C}: \mathscr{C} \to \mathscr{C}$, regarded as a \hyperlink{def:diagram}{diagram} of shape $\mathscr{C}$ in $\mathscr{C}$, has a \hyperlink{def:limit}{limit}.
+\end{nlemma}
+\begin{proof}
+  First suppose $\cc$ has an \hyperlink{def:initial}{initial object} $I$.
+  Then the unique morphisms $\set{I \to A | A \in \ob \cc}$ form a \hyperlink{def:cone}{cone} over $1_\cc$; and given any cone $\set{C \overset{\lambda_A}\to A | A \in \ob \cc}$, then for any $A$ the triangle
+  \begin{equation*}
+    \begin{tikzcd}
+      C \rar{\lambda_I} \drar[']{\lambda_A} & I \dar \\& A
+    \end{tikzcd}
+  \end{equation*}
+  commutes, so $\lambda_I$ is the unique factorization of $\set{\lambda_A | A \in \ob \cc}$ through $\set{I \to A | A \in \ob \cc}$.
+
+  Conversely, suppose $(I, \set{\lambda_A: I \to A| A \in \ob \cc})$ is a limit.
+  Then, for any $I \overset{f}\to A$, the diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      I \rar{\lambda_I} \drar[']{\lambda_A} & I \dar{f} \\ & A
+    \end{tikzcd}
+  \end{equation*}
+  commutes. In particular, putting $f = \lambda_A$, we see that $\lambda_I$ is a factorization of the limit cone through itself, so $\lambda_I = 1_I$.
+  Hence every $f: I \to A$ satisfies $f = \lambda_A$.
+\end{proof}
+
+The \hyperlink{thm:paft}{primeval Adjoint Functor Theorem} follows immediately from \cref{lem:4.10}, \cref{lem:4.11} and \cref{thm:3.3}.
+However, it only applies to functors between preorders (cf question 6 on example sheet 2).
+
+\begin{nthm}[General Adjoint Functor Theorem]\label{thm:4.12gaft}
+  Suppose that $\dc$ is \hyperlink{def:lsmall}{locally small} and \hyperlink{def:complete}{complete}.
+  \hypertarget{def:ssc}Then $G: \dc \to \cc$ has a \hyperlink{def:adj}{left adjoint} if and only if $G$ satisfies the \named{solution set condition}: the solution set condition says that $G$ preserves all small limits and, for each $A \in \ob \cc$ there exists a set of morphisms $\set{A \overset{f_i}\to GB_i | i \in I}$ such that every $A \overset{h}\to GC$ factors as $A \overset{f_i}\to GB_i \overset{Gg}\to GC$ for some $i$ and some $g: B_i \to C$.
+\end{nthm}
+\begin{proof}
+  $(\Rightarrow)$. If $F \dashv G$, $G$ preserves limits by \cref{thm:4.9}, and $\{A \overset{\eta_A}\to GFA\}$ is a singleton solution set, by \cref{thm:3.3}.
+
+  $(\Leftarrow)$. By \cref{lem:4.10}, $(A \downarrow G)$ is complete, and it inherits local smallness from $\dc$.
+  So we need to show: if $\mathscr{A} \coloneqq (A \downarrow G)$ is complete and locally small, and has a weakly initial set of objects $\set{B_i | i \in I}$, then $\mathscr{A}$ has an initial object.
+
+  First form $P = \prod_{i \in I} B_i$, then $P$ is weakly initial.
+  Now form the limit of
+  \begin{equation*}
+    \begin{tikzcd}
+      P \rar[shift left] \rar[shift right] \rar & P
+    \end{tikzcd} \tag{$*$}\label{eq:12star}
+  \end{equation*}
+  where edges are all the endomorphisms of $P$: denote the limit $I \overset{i}\to P$.
+  $I$ is also weakly initial in $\mathscr{A}$: suppose given $\begin{tikzcd}I \rar[shift left]{f} \rar[shift right]{g} & C\end{tikzcd}$.
+  Form the equalizer $E \overset{e}\to I$ of $(f,g)$, then there exists $P \overset{h}\to E$ since $P$ is weakly initial.
+  $ieh:P \to P$, and $1_P$ are edges of the diagram \eqref{eq:12star} so $i = iehi$. But $i$ is monic, so $ehi = 1_I$, so $e$ is split epic, so $f = g$.
+  Hence $I$ is initial.
+\end{proof}
+\begin{nexample}\label{eg:4.13}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item Consider the \hyperlink{def:forgFunc}{forgetful functor} $U: \gpc \to \setc$.
+      By \cref{eg:4.6}(a), $U$ creates all small limits, so $\gpc$ has them and $U$ preserves them.
+      $\gpc$ is \hyperlink{def:lsmall}{locally small}, given a set $A$, any $f: A \to UG$ factors as $A \to UG' \to UG$, where $G'$ is the subgroup generated by $\set{f(x) | x \in A}$ and $\operatorname{card} G' \leq \max\{\aleph_0, \operatorname{card} A\}$.
+
+      Let $B$ be a set of this cardinality; consider all subsets $B' \subseteq B$, all group structures on $B'$, and all mappings $A \to B'$.
+      These give us a \hyperlink{def:ssc}{solution set} at $A$.
+    \item Consider the category $\mathbf{CLat}$ of complete lattices (posets with all meets and joins).
+      Again $U: \mathbf{CLat} \to \mathbf{Set}$ creates all small limits.
+      But A.W.Hales (1964) showed that, for any cardinal $\kappa$, there exist complete lattices of $\operatorname{card} \geq\kappa$ generated by three elements, so the \hyperlink{def:ssc}{solution set condition} fails at $A = \{x,y,z\}$, and $U$ doesn't have a left adjoint.
+  \end{enumerate}
+\end{nexample}
 \printindex
 \end{document}
