@@ -35,6 +35,8 @@
 \newtheorem{nfact}[nthm]{Fact}
 \newtheorem{nnotation}[nthm]{Notation}
 
+\newcommand{\named}[1]{\textbf{#1}\index{#1}}
+
 %\newtheorem{manualtheoreminner}{Theorem}
 %\newenvironment{manualtheorem}[1]{%
 %    \renewcommand\themanualtheoreminner{#1}%
@@ -56,10 +58,10 @@ The basic question in model theory is: `how powerful is our description of these
 In Logic and Set Theory, the focus was on what was provable from a theory and language, but here we focus on whether or not a model exists.
 
 \section{Languages and structures}
-\begin{ndef}[Language]\label{def:1.1}\index{language}\hypertarget{def:lang}
-  A \textbf{language} $L$ consists of
+\begin{ndef}[Language]\label{def:1.1}\hypertarget{def:lang}
+  A \named{language} $L$ consists of
   \begin{enumerate}[label=(\roman*)]
-    \item a set $\mathscr{F}$ of function symbols, and for each $f \in \mathscr{F}$ a positive integer $m_f$ the \textbf{arity} of $f$.
+    \item a set $\mathscr{F}$ of function symbols, and for each $f \in \mathscr{F}$ a positive integer $m_f$ the \named{arity} of $f$.
     \item a set $\mathscr{R}$ of relation symbols, and for each $R \in \mathscr{R}$, a positive integer $m_R$.
     \item a set $\mathscr{C}$ of constant symbols.
   \end{enumerate}
@@ -70,15 +72,15 @@ In Logic and Set Theory, the focus was on what was provable from a theory and la
   Also, $L_{\text{lo}} = \{<\}$ a single binary relation, for linear orders.
 \end{eg}
 
-\begin{ndef}[$L$-structure]\label{def:1.2}\index{L-structure@$L$-structure}\hypertarget{def:lstr}
+\begin{ndef}[$L$-structure]\label{def:1.2}\index{structure}\hypertarget{def:lstr}
   Given a \hyperlink{def:lang}{language} $L$, say, an \textbf{$L$-structure} consists of
   \begin{enumerate}[label=(\roman*)]
-    \item a set $M$, the \textbf{domain}
+    \item a set $M$, the \named{domain}
     \item for each $f \in \mathscr{F}$, a function $f^\mathcal{M} : M^{m_f} \to M$.
     \item for each $R \in \mathscr{R}$, a relation $R^\mathcal{M} \subseteq M^{m_R}$.
     \item for each $c \in \mathscr{C}$, an element $c^\mathcal{M} \in M$.
   \end{enumerate}
-  $f^M, R^M, c^M$ are the \textbf{interpretations} of $f,R,c$ respectively.
+  $f^M, R^M, c^M$ are the \named{interpretations} of $f,R,c$ respectively.
 \end{ndef}
 \begin{nremark}\label{rem:1.3}
   We often fail to distinguish between the \hyperlink{def:lang}{symbols} in $L$ and their \hyperlink{def:lstr}{interpretations} in a \hyperlink{def:lstr}{structure}, if the interpretations are clear from the context.
@@ -93,9 +95,9 @@ We may write $\mathcal{M} = \langle M, \mathscr{F}, \mathscr{R}, \mathscr{C} \ra
     \item $\mathcal{Q} = \langle \mathbb{Q}, < \rangle$ is an \hyperlink{def:lgp}{$L_{\text{lo}}$}-structure.
   \end{enumerate}
 \end{nexample}
-\begin{ndef}[Embedding]\label{def:1.5}\index{embedding}\hypertarget{def:embedding}
+\begin{ndef}[Embedding]\label{def:1.5}\hypertarget{def:embedding}
   Let $L$ be a \hyperlink{def:lang}{language}, let $\mathcal{M}, \mathcal{N}$ be \hyperlink{def:lstr}{$L$-structures}.
-  An \textbf{embedding} of $\mathcal{M}$ into $\mathcal{N}$ is a one-to-one mapping $\alpha: M \to N$ such that
+  An \named{embedding} of $\mathcal{M}$ into $\mathcal{N}$ is a one-to-one mapping $\alpha: M \to N$ such that
   \begin{enumerate}[label=(\roman*)]
     \item for all $f \in \mathscr{F}$, and $a_1, \dotsc, a_{m_f} \in M$,
       \begin{equation*}
@@ -123,7 +125,7 @@ We may write $\mathcal{M} = \langle M, \mathscr{F}, \mathscr{R}, \mathscr{C} \ra
       \end{equation*}
     \item for all $c \in \mathscr{C}$, $\alpha(c^\mathcal{M}) = c^\mathcal{N}$.
   \end{enumerate}
-  \hypertarget{def:iso}An \textbf{isomorphism} of $\mathcal{M}$ into $\mathcal{N}$ is a surjective embedding (onto).
+  \hypertarget{def:iso}An \named{isomorphism} of $\mathcal{M}$ into $\mathcal{N}$ is a surjective embedding (onto).
 \end{ndef}
 
 \begin{nexercise}\label{ex:1.6}
@@ -143,7 +145,7 @@ In addition to the \hyperlink{def:lang}{symbols} of $L$, we also have
 \end{enumerate}
 
 \begin{ndef}[\hypertarget{def:lterm}{$L$-terms}]\label{def:2.1}
-  \index{L-term@$L$-term}\textbf{$L$-terms} are defined recursively as follows:
+  \index{term}\textbf{$L$-terms} are defined recursively as follows:
   \begin{itemize}[label=--]
     \item any variable $x_i$ is a term
     \item any constant symbol is a term
@@ -195,11 +197,11 @@ Then $t_1$ is assigned to $t_1^\mathcal{M}: M^3 \to M$, with $(a_1, a_2, a_3) \m
       $t_1(\bar{x}), \dotsc, t_{m_f}(\bar{x})$ have lower complexity than $t$, so inductive hypothesis applies. \qedhere
   \end{enumerate}
 \end{proof}
-\begin{nexample}\label{eg:2.4}
+\begin{nexercise}\label{ex:2.4}
   Exercise: conclude the proof of \cref{fact:2.3}.
-\end{nexample}
+\end{nexercise}
 \begin{ndef}[Atomic formula]\label{def:2.5}\index{formula!atomic}\hypertarget{def:atomform}
-  The set of \textbf{atomic formulas} of $L$ is defined as follows
+  The set of \named{atomic formulas} of $L$ is defined as follows
   \begin{enumerate}[label=(\roman*)]
     \item if $t_1, t_2$ are $L$-terms, then $t_1 = t_2$ is an atomic formula
     \item if $R$ is a relation symbol and $t_1, \dotsc, t_{m_R}$ are terms, then $R(t_1, \dotsc, t_{m_R})$ is an atomic formula
@@ -219,11 +221,11 @@ Then $t_1$ is assigned to $t_1^\mathcal{M}: M^3 \to M$, with $(a_1, a_2, a_3) \m
 \begin{eg}
   In $L_{\text{gp}}$, $x_1 \cdot x_1 = x_2$ and $x_1 \cdot x_2 = 1$ are \hyperlink{def:form}{atomic formulas}, and $\exists x_1 \; (x_1 \cdot x_2) = 1$ is an $L_{\text{gp}}$-formula.
 \end{eg}
-\index{free variable}\index{bound variable}\hypertarget{def:free}A variable occurs freely in a formula if it does not occur within the scope of a quantifier $\exists$ (the variable is \textbf{free}). Otherwise the variable is \textbf{bound}. For instance, in $\exists x_1 \; (x_1 \cdot x_2) = 1$, $x_1$ is bound and $x_2$ is free.
+\hypertarget{def:free}A variable occurs freely in a formula if it does not occur within the scope of a quantifier $\exists$ (the variable is \named{free}). Otherwise the variable is \named{bound}. For instance, in $\exists x_1 \; (x_1 \cdot x_2) = 1$, $x_1$ is bound and $x_2$ is free.
 
 \textbf{Important convention:} no variable occurs both \hyperlink{def:free}{freely} and as a bound variable in the same formula.
 
-\index{sentence}\hypertarget{def:sentence}A \textbf{sentence} is a \hyperlink{def:form}{formula} with no \hyperlink{def:free}{free} variables. $\exists x_1 \exists x_2 \; (x_1 \cdot x_2 = 1)$ is an $L_{\text{gp}}$-sentence.
+\hypertarget{def:sentence}A \named{sentence} is a \hyperlink{def:form}{formula} with no \hyperlink{def:free}{free} variables. $\exists x_1 \exists x_2 \; (x_1 \cdot x_2 = 1)$ is an $L_{\text{gp}}$-sentence.
 Notation: $\phi(x_1, \dotsc, x_k)$ means that the free variables in $\phi$ are among $x_1, \dotsc, x_k$.
 
 \begin{ndef}[$\models$]\label{def:2.7}\index{$\models$}\hypertarget{def:models}
@@ -270,7 +272,7 @@ Question: If $\phi$ is an \hyperlink{def:form}{$L$-formula}, not necessarily \hy
     \item $\phi(\bar{x})$ is of the form $t_1(\bar{x}) = t_2(\bar{x})$ where $t_1,t_2$ are terms.
       (Exercise: complete this case, using \cref{fact:2.3})
     \item $\phi(\bar{x})$ is of the form $R(t_1(\bar{x}), \dotsc, t_{m_R}(\bar{x}))$.
-      Then $\mathcal{M} \hyperlink{def:models}{\models} R(t_1(\bar{a}), \dotsc, t_{m_R})$ if and only if...
+      Then $\mathcal{M} \hyperlink{def:models}{\models} R(t_1(\bar{a}), \dotsc, t_{m_R}(\bar{a}))$ if and only if...
       (Exercise: complete this case)
   \end{enumerate}
 \end{proof}
@@ -300,9 +302,9 @@ Question: If $\phi$ is an \hyperlink{def:form}{$L$-formula}, not necessarily \hy
 \clearpage
 \section{Theories and elementarity}
 Throughout, $L$ is a \hyperlink{def:lang}{language}, $\mathcal{M}, \mathcal{N}$ are \hyperlink{def:lstr}{$L$-structures}.
-\begin{ndef}[$L$-theory]\label{def:3.1}\index{L-theory@$L$-theory}\hypertarget{def:ltheory}
+\begin{ndef}[$L$-theory]\label{def:3.1}\index{theory}\hypertarget{def:ltheory}
   An \textbf{$L$-theory} $T$ is a set of \hyperlink{def:sentence}{$L$-sentences}.
-  \hypertarget{def:model}$\mathcal{M}$ is a \textbf{model} of $T$ if $\mathcal{M} \hyperlink{def:models}{\models} \sigma$ for all $\sigma \in T$. We write $\mathcal{M} \models T$.
+  \hypertarget{def:model}$\mathcal{M}$ is a \named{model} of $T$ if $\mathcal{M} \hyperlink{def:models}{\models} \sigma$ for all $\sigma \in T$. We write $\mathcal{M} \models T$.
   The class of all the models of $T$ is written $\Mod(T)$.
   The theory of $\mathcal{M}$ is the set
   \begin{equation*}
@@ -319,8 +321,8 @@ Throughout, $L$ is a \hyperlink{def:lang}{language}, $\mathcal{M}, \mathcal{N}$ 
 \end{nexample}
 Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For a specific $G$, clearly $\hyperlink{def:ltheory}{\Th(G)}$ is larger than $T_{\text{gp}}$!
 
-\begin{ndef}[Elementarily equivalent]\index{elementarily equivalent}\label{def:3.3}
-  \hypertarget{def:eleq}Say $\mathcal{M}$ and $\mathcal{N}$ are \textbf{elementarily equivalent} if $\Th(\mathcal{M}) = \Th(\mathcal{N})$.
+\begin{ndef}[Elementarily equivalent]\label{def:3.3}
+  \hypertarget{def:eleq}Say $\mathcal{M}$ and $\mathcal{N}$ are \named{elementarily equivalent} if $\Th(\mathcal{M}) = \Th(\mathcal{N})$.
   We write $\mathcal{M} \equiv \mathcal{N}$.
   Clearly if $\mathcal{M} \hyperlink{def:iso}{\simeq} \mathcal{N}$, then $\mathcal{M} \equiv \mathcal{N}$ but if $\mathcal{M}$ and $\mathcal{N}$ are not isomorphic, establishing whether $\mathcal{M} \equiv \mathcal{N}$ can be highly non-trivial!
 
@@ -328,12 +330,12 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
 \end{ndef}
 \begin{ndef}[Elementary substructure]\label{def:3.4}\leavevmode
   \begin{enumerate}[label=(\roman*)]
-    \item \index{elementary embedding}\hypertarget{def:el}an \hyperlink{def:embedding}{embedding} $\beta: \mathcal{M} \to \mathcal{N}$ is \textbf{elementary} if for all \hyperlink{def:form}{formulas} $\phi(\bar{x})$ and $\bar{a} \in M^{|\bar{x}|}$,
+    \item \index{elementary embedding}\hypertarget{def:el}an \hyperlink{def:embedding}{embedding} $\beta: \mathcal{M} \to \mathcal{N}$ is \named{elementary} if for all \hyperlink{def:form}{formulas} $\phi(\bar{x})$ and $\bar{a} \in M^{|\bar{x}|}$,
       \begin{equation*}
         \mathcal{M} \hyperlink{def:models}{\models} \phi(\bar{a}) \iff \mathcal{N} \models \phi(\beta(\bar{a}))
       \end{equation*}
-    \item \index{substructure}\hypertarget{def:subs}if $M \subseteq N$ and $\operatorname{id}: \mathcal{M} \to \mathcal{N}$ is an embedding, then $\mathcal{M}$ is said to be a \textbf{substructure} of $\mathcal{N}$, written $\mathcal{M} \subseteq \mathcal{N}$.
-    \item \index{elementary substructure}\hypertarget{def:elsubs}if $M \subseteq N$ and $\operatorname{id}: \mathcal{M} \to \mathcal{N}$ is an elementary embedding, then $\mathcal{M}$ is said to be an \textbf{elementary substructure} of $\mathcal{N}$, written $\mathcal{M} \preccurlyeq \mathcal{N}$.
+    \item \index{substructure}\hypertarget{def:subs}if $M \subseteq N$ and $\operatorname{id}: \mathcal{M} \to \mathcal{N}$ is an embedding, then $\mathcal{M}$ is said to be a \named{substructure} of $\mathcal{N}$, written $\mathcal{M} \subseteq \mathcal{N}$.
+    \item \index{elementary substructure}\hypertarget{def:elsubs}if $M \subseteq N$ and $\operatorname{id}: \mathcal{M} \to \mathcal{N}$ is an elementary embedding, then $\mathcal{M}$ is said to be an \named{elementary substructure} of $\mathcal{N}$, written $\mathcal{M} \preccurlyeq \mathcal{N}$.
   \end{enumerate}
 \end{ndef}
 \begin{nexample}\label{eg:3.5}
@@ -350,13 +352,13 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
   \end{equation*}
 \end{nexample}
 \begin{ndef}\label{def:3.6}
-  Let $\mathcal{M}$ be an $L$-structure, $A \subseteq M$, then
+  \hypertarget{def:la}Let $\mathcal{M}$ be an $L$-\hyperlink{def:lstr}{structure}, $A \subseteq M$, then
   \begin{equation*}
     L(A) \coloneqq L \cup \set{c_a | a \in A}
   \end{equation*}
   for $c_a$ each constant symbols.
   An \hyperlink{def:lstr}{interpretation} of $\mathcal{M}$ as an $L$-structure extends to an interpretation of $\mathcal{M}$ as an $L(A)$-structure in the obvious way ($c_a^\mathcal{M} = a$).
-  The elements of $A$ are called \textbf{parameters}.
+  The elements of $A$ are called \named{parameters}.
   \hypertarget{def:eleqa}If $\mathcal{M}, \mathcal{N}$ are $L$-structures and $A \subseteq M \cap N$, then $\mathcal{M} \equiv_A \mathcal{N}$ when $\mathcal{M}, \mathcal{N}$ satisfy exactly the same $L(A)$ sentences.
 \end{ndef}
 
@@ -367,14 +369,14 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
 \begin{nlemma}[Tarski-Vaught test]\label{lem:3.8}
   Let $\mathcal{N}$ be an \hyperlink{def:lstr}{$L$-structure}, let $A \subseteq N$. The following are equivalent:
   \begin{enumerate}[label=(\roman*)]
-    \item $A$ is the \hyperlink{def:lstr}{domain} of a structure $\mathcal{M}$ such that $M \hyperlink{def:elsubs}{\preccurlyeq} N$.
-    \item if $\phi(x) \in L(A)$, if $\mathcal{N} \models \exists x \phi(x)$, then $\mathcal{N} \models \phi(b)$ for some $b \in A$.
+    \item $A$ is the \hyperlink{def:lstr}{domain} of a structure $\mathcal{M}$ such that $\mathcal{M} \hyperlink{def:elsubs}{\preccurlyeq} \mathcal{N}$.
+    \item if $\phi(x) \in \hyperlink{def:la}{L(A)}$, if $\mathcal{N} \hyperlink{def:models}{\models} \exists x \; \phi(x)$, then $\mathcal{N} \models \phi(b)$ for some $b \in A$.
   \end{enumerate}
 \end{nlemma}
 \begin{proof}\leavevmode
   \begin{itemize}
     \item [(i) $\Rightarrow$ (ii)] Suppose $\mathcal{N} \models \phi(x)$.
-      Then by elementarity, $\mathcal{M} \models \exists x \phi(x)$, and so $\mathcal{M} \models \exists x \phi(x)$ for $b \in \mathcal{M}$, so again by elementarity $\mathcal{N} \models \phi(b)$.
+      Then by elementarity, $\mathcal{M} \models \exists x \; \phi(x)$, and so $\mathcal{M} \models \exists x \; \phi(x)$ for $b \in \mathcal{M}$, so again by elementarity $\mathcal{N} \models \phi(b)$.
     \item [(ii) $\Rightarrow$ (i)] First we prove that $A$ is the domain $\mathcal{M} \subseteq \mathcal{N}$.
       By exercise 4 on sheet 1, it is enough to check:
       \begin{enumerate}[label=(\alph*)]
@@ -393,10 +395,10 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
       \begin{itemize}[label=--]
         \item if $\chi(\bar{x})$ is atomic \eqref{eq:4star} follows from $\mathcal{M} \subseteq \mathcal{N}$ ($\mathcal{M}$ is a \hyperlink{def:subs}{substructure}).
         \item if $\chi(\bar{x})$ is $\neg \psi(\bar{x})$ or $\chi(\bar{x})$ is $\psi(\bar{x}) \wedge \xi(\bar{x})$: straightforward induction.
-        \item if $\chi(\bar{x}) = \exists y \psi(\bar{x},y)$ where $\psi(\bar{x},y)$ is an $L$-formula, suppose that $\mathcal{M} \models \chi(\bar{a})$.
-          Then $\mathcal{M} \models \exists y \psi(\bar{a}, y)$, hence $\mathcal{M} \models \psi(\bar{a},b)$ for some $b \in A = \dom \mathcal{M}$.
+        \item if $\chi(\bar{x}) = \exists y \; \psi(\bar{x},y)$ where $\psi(\bar{x},y)$ is an $L$-formula, suppose that $\mathcal{M} \models \chi(\bar{a})$.
+          Then $\mathcal{M} \models \exists y \; \psi(\bar{a}, y)$, hence $\mathcal{M} \models \psi(\bar{a},b)$ for some $b \in A = \dom \mathcal{M}$.
           But then $\mathcal{N} \models \psi(\bar{a},b)$ by inductive hypothesis, so $\mathcal{N} \models \chi(\bar{a})$.
-          Now let $\mathcal{N} \models \chi(\bar{a})$, i.e.\ $\mathcal{N} \models \exists y \psi(\bar{a},y)$.
+          Now let $\mathcal{N} \models \chi(\bar{a})$, i.e.\ $\mathcal{N} \models \exists y \; \psi(\bar{a},y)$.
           By property (ii), $\mathcal{N} \models \psi(\bar{a},b)$ for some $b \in A = \dom(\mathcal{M})$.
           By inductive hypothesis, $\mathcal{M} \models \psi(\bar{a},b)$ and so $\mathcal{M} \models \chi(\bar{a})$. \qedhere
       \end{itemize}
@@ -410,7 +412,7 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
   \end{itemize}
 \end{nremark}
 \begin{ndef}\label{def:3.10}
-  Let $\lambda$ be an ordinal. Then \textbf{a chain of length $\lambda$} of sets is a sequence $\langle M_i : i < \lambda \rangle$, where $M_i \subseteq M_j$ for all $i \leq j < \lambda$.
+  Let $\lambda$ be an ordinal. Then \index{chain}\textbf{a chain of length $\lambda$} of sets is a sequence $\langle M_i : i < \lambda \rangle$, where $M_i \subseteq M_j$ for all $i \leq j < \lambda$.
   A \textbf{chain of $L$-structures} is a sequence $\langle \mathcal{M}_i : i < \lambda \rangle$ such that $\mathcal{M}_i \subseteq \mathcal{M}_j$ for $i \leq j < \lambda$.
 
   The \textbf{union} of this chain is the $L$-structure $\mathcal{M}$ is defined as follows:
@@ -458,13 +460,13 @@ Thus \cref{thm:3.11DLS} gives a algebraically closed field, which is countable a
 \clearpage
 \section{Two relational structures}
 \begin{ndef}[Dense linear orders]\label{def:4.1}\hypertarget{def:tlo}
-  A \textbf{linear order}\marginnote{\emph{Lecture 5}}[0cm]  is an $L_{\text{lo}} = \{<\}$-\hyperlink{def:lstr}{structure} such that
+  A \named{linear order}\marginnote{\emph{Lecture 5}}[0cm]  is an $L_{\text{lo}} = \{<\}$-\hyperlink{def:lstr}{structure} such that
   \begin{enumerate}[label=(\roman*)]
     \item $\forall x \; \lnot (x < x)$
     \item $\forall x y z ((x < y \land y < z) \to x < z)$
     \item $\forall x y ((x < y) \land (y < x) \lor (x = y))$.
   \end{enumerate}
-  A linear order is \textbf{dense} if it also satisfies
+  A linear order is \index{linear order!dense}\textbf{dense} if it also satisfies
   \begin{enumerate}[label=(\roman*)] \setcounter{enumi}{3}
     \item $\exists x y (x < y)$
     \item $\forall x y (x < y \to \exists z (x < z < y))$ (density)
@@ -476,10 +478,10 @@ Thus \cref{thm:3.11DLS} gives a algebraically closed field, which is countable a
   $T_{\text{dlo}}$ is the theory that includes axioms (i) to (vi), $T_{\text{lo}}$ is the theory that includes axioms (i) to (iii) only.
 \end{ndef}
 Remark: (iv) and (v) imply that if $\mathcal{M} \models T_{\text{dlo}}$ then $|\mathcal{M}| \geq \omega$.
-\begin{ndef}[(Finite) Partial embedding]\label{def:4.2}\index{partial embedding}\hypertarget{def:pe}
-  If $\mathcal{M}, \mathcal{N} \models T_{\text{lo}}$, then an injective map $p: A \subseteq M \to N$ is a \textbf{partial embedding} if
+\begin{ndef}[(Finite) Partial embedding]\label{def:4.2}\hypertarget{def:pe}
+  If $\mathcal{M}, \mathcal{N} \models T_{\text{lo}}$, then an injective map $p: A \subseteq M \to N$ is a \index{partial embedding!linear order}\textbf{partial embedding} if
   \begin{equation*}\mathcal{M} \models a < b \implies \mathcal{N} \models p(a) < p(b).\end{equation*}
-  \index{partial embedding!finite}If $|\dom(p)| < \omega$, then $p$ is a \textbf{finite partial embedding}.
+  If $|\dom(p)| < \omega$, then $p$ is a \index{finite partial embedding!linear order}\textbf{finite partial embedding}.
 \end{ndef}
 
 \begin{nlemma}[Extension lemma]\label{lem:4.3}
@@ -516,14 +518,14 @@ Then $p_{i+1}$ extends $p_i$ as required.
 \end{proof}
 
 \begin{ndef}[Consistent, complete]\label{def:4.5}
-  \index{consistent}\hypertarget{def:consistent}An $L$-theory is \textbf{consistent} if there is $\mathcal{M}$ such that $\mathcal{M} \models T$.
-  If $T$ is a theory in $L$ and $\phi$ is an $L$-sentence, then $T \vdash \phi$ if for all $\mathcal{M}$ such that $\mathcal{M} \models T$, also $\mathcal{M} \models \phi$.
-  \index{complete}\hypertarget{def:complete}An $L$-theory $T$ is \textbf{complete} if for all $L$-sentences $\phi$, either $T \vdash \phi$ or $T \vdash \lnot \phi$.
+  \index{consistent}\hypertarget{def:consistent}An \hyperlink{def:ltheory}{$L$-theory} is \named{consistent} if there is $\mathcal{M}$ such that $\mathcal{M} \hyperlink{def:models}{\models} T$.
+  If $T$ is a theory in $L$ and $\phi$ is an \hyperlink{def:sentence}{$L$-sentence}, then we write $T \vdash \phi$ if for all $\mathcal{M}$ such that $\mathcal{M} \models T$, also $\mathcal{M} \models \phi$.
+  \index{complete}\hypertarget{def:complete}An $L$-theory $T$ is \named{complete} if for all $L$-sentences $\phi$, either $T \vdash \phi$ or $T \vdash \lnot \phi$.
 \end{ndef}
 Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
 
 \begin{ndef}[$\omega$-categorical]\label{def:4.6}\index{categorical@$\omega$-categorical}\hypertarget{def:wcat}
-  A \marginnote{\emph{Lecture 6}}[0cm] \hyperlink{def:ltheory}{theory} $T$ in a countable \hyperlink{def:lang}{language} with a countably infinite \hyperlink{def:model}{model} is \hyperlink{def:wcat}{$\omega$-categorical} if any two countable models of $T$ are isomorphic.
+  A \marginnote{\emph{Lecture 6}}[0cm] \hyperlink{def:ltheory}{theory} $T$ in a countable \hyperlink{def:lang}{language} with a countably infinite \hyperlink{def:model}{model} is \hyperlink{def:wcat}{$\omega$-categorical} if any two countable models of $T$ are \hyperlink{def:iso}{isomorphic}.
 \end{ndef}
 \begin{ncor}\label{cor:4.7}
   of \cref{thm:4.4}: \hyperlink{def:tlo}{$T_{\text{dlo}}$} is \hyperlink{def:wcat}{$\omega$-categorical}.
@@ -535,7 +537,7 @@ Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
   (Can also use any $\{\langle a, b \rangle\}$ where $a \in \mathcal{M}, b \in \mathcal{N}$ as initial finite partial embedding).
 \end{proof}
 \begin{nthm}\label{thm:4.8}
-  If $T$ is an \hyperlink{def:wcat}{$\omega$-categorical} theory in a countable \hyperlink{def:lang}{language}, then $T$ is \hyperlink{def:complete}{complete}.
+  If $T$ is an \hyperlink{def:wcat}{$\omega$-categorical} theory in a countable \hyperlink{def:lang}{language}, and $T$ has no finite models then $T$ is \hyperlink{def:complete}{complete}.
 \end{nthm}
 \begin{proof}
   Let $\mathcal{M} \models T$ and $\phi$ be an \hyperlink{def:sentence}{$L$-sentence}.
@@ -558,11 +560,13 @@ Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
 \begin{nremark}\label{rem:4.11}
   A map $f$ is \hyperlink{def:elmap}{elementary} iff every finite restriction of $f$ is elementary.
 \end{nremark}
-\begin{proof}
-  $(\implies)$ If $f_0 \subseteq f$ is a finite restriction that is not \hyperlink{def:elmap}{elementary}, then for some $\phi(\bar{x})$, $\bar{a} \in \dom(f_0)$, $\mathcal{M} \models \phi(\bar{a}) \centernot\iff \mathcal{N} \models \phi(f_0(\bar{a}))$.
+\begin{proof}\leavevmode
+  \begin{itemize}
+    \item[$(\Leftarrow)$] If $f_0 \subseteq f$ is a finite restriction that is not \hyperlink{def:elmap}{elementary}, then for some $\phi(\bar{x})$, $\bar{a} \in \dom(f_0)$, $\mathcal{M} \models \phi(\bar{a}) \centernot\iff \mathcal{N} \models \phi(f_0(\bar{a}))$.
     Then $f$ is not elementary.
 
-    $(\impliedby)$ Clear.
+  \item[$(\Rightarrow)$] Clear.\qedhere
+  \end{itemize}
 \end{proof}
 \begin{nprop}\label{prop:4.12}
   Let $\mathcal{M}, \mathcal{N} \hyperlink{def:models}{\models} \hyperlink{def:tlo}{T_{\text{dlo}}}$ and let $p: A \subseteq M \to N$ be a \hyperlink{def:pe}{partial embedding}.
@@ -590,6 +594,7 @@ Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
       \node [fill=white, circle, inner sep=0] at (2,2) {$\mathcal{N}$};
       \node [fill=white, circle, inner sep=0] at (2,0.9) {$\mathcal{N}'$};
       \node [fill=white, circle, inner sep=0] at (2,0.2) {$\scriptstyle\img(p)$};
+      \draw [->] (-2,-0.5) to[bend left] (2,-0.5) node [pos=.5, label=above:$p$] {};
     \end{tikzpicture}
   \end{center}
   % picture
@@ -604,23 +609,35 @@ Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
 \end{proof}
 \begin{ndef}[Random graph]\label{def:4.14}
   Let $L_{\text{gph}} = \{R\}$, a binary relation symbol.
-  An $L_{\text{gph}}$-\hyperlink{def:lstr}{structure} is a \textbf{graph} if
+  An $L_{\text{gph}}$-\hyperlink{def:lstr}{structure} is a \named{graph} if
   \begin{enumerate}[label=(\roman*)]
     \item $\forall x \; \lnot R(x,x)$
     \item $\forall xy \; (R(x,y) \leftrightarrow R(y,x))$
   \end{enumerate}
 
-  \index{random graph}\hypertarget{def:rgraph}An $L_{\text{gph}}$-\hyperlink{def:lstr}{structure} is a \textbf{random graph} if it is a graph such that, for all $n \in \omega$,
-
-  \begin{enumerate}[label=(\roman*)]
-    \item[($r_n$)]
+  \hypertarget{def:rgraph}An $L_{\text{gph}}$-\hyperlink{def:lstr}{structure} is a \named{random graph} if it is a graph such that, for all $n \in \omega$, axiom $(r_n)$ holds:
       \begin{equation*}
         \forall x_0 \dots x_n, y_0 \dots y_n \; \left(\bigwedge_{i,j=0}^n x_i \neq y_j \to \exists z \; \left(\bigwedge_{i=0}^n (z \neq x_i) \land (z \neq y_i) \land R(z,x_i) \land \lnot R(z, y_i)\right)\right)
       \end{equation*}
-      \setcounter{enumi}{2}
+  \begin{enumerate}[label=(\roman*)]\setcounter{enumi}{2}
     \item $\exists xy \; (x \neq y)$.
   \end{enumerate}
 \end{ndef}
+Axiom $(r_n)$ effectively says that for disjoint subsets $(x_i)$ and $(y_i)$ each of size $n$, there is a (different) node $z$ connected to each $x_i$ and none of the $y_i$.
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,0) circle [x radius=3.5cm, y radius=3cm];
+    \draw (1.5,1) circle [x radius=1.2cm, y radius=1cm];
+    \draw (-1.6,0.5) circle [x radius=1.2cm, y radius=1cm];
+    \draw [help lines, step=0.2] (-3.5,-3) grid (3.5,3);
+    \draw [help lines, black] (-3.5,-3) grid (3.5,3);
+    \begin{scope}[every node/.style={fill=white, circle, inner sep=0.5mm}]
+    \node at (-2.6,2) {$G$};
+    \node at (-1.6, 1.5) {$(x_i)$};
+    \node at (1, 1.9) {$(y_i)$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
 \begin{remark}
   A \hyperlink{def:rgraph}{random graph} is infinite.
   Given a finite subset, we can always find a vertex that is connected to every vertex in the subset (likewise for not connected).
@@ -638,15 +655,114 @@ Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
 \end{exercise}
 \begin{ndef}[Graph theories, partial embedding]\label{def:4.16}\hypertarget{def:gpe}
   $T_{\text{gph}}$ consists of the axioms (i),(ii) above, and $T_{\text{rg}} = T_{\text{gph}} \cup \{(\text{iii}), (r_n) : n \in \omega\}$.
-  If $\mathcal{M}, \mathcal{N} \models T_{\text{gph}}$, a \textbf{partial embedding} is an injective map $p: A \subseteq M$ to $N$ such that
+  If $\mathcal{M}, \mathcal{N} \models T_{\text{gph}}$, a \index{partial embedding!graph}\textbf{partial embedding} is an injective map $p: A \subseteq M$ to $N$ such that
   \begin{equation*}
     \mathcal{M} \models R(a,b) \iff \mathcal{N} \models R(p(a), p(b))
   \end{equation*}
   for all $a,b$ in the domain.
+  Just as before, if $|\dom(p)| < \omega$ then $p$ is called a \textbf{finite partial embedding}.
 \end{ndef}
-\begin{nlemma}\label{def:4.17}
+\begin{nlemma}\label{lem:4.17}
   Let $\mathcal{M} \models \hyperlink{def:gpe}{T_{\text{gph}}}$, $\mathcal{N} \models \hyperlink{def:gpe}{T_{\text{rg}}}$, let $p: A \subseteq M \to N$ be a \hyperlink{def:gpe}{finite partial embedding}, and let $c \in M$.
   Then there is $\hat{p}: \hat{A} \subseteq M \to N$ such that $\hat{p}$ is a partial embedding, $c \in \dom(\hat{p})$, $p \subseteq \hat{p}$.
 \end{nlemma}
+
+\begin{proof}
+  \marginnote{\emph{Lecture 7}}[0cm]
+  Take $c \in M$, $c \notin \dom(p)$.
+  \begin{center}
+    \begin{tikzpicture}
+      \node {empty diagram};
+    \end{tikzpicture}
+  \end{center}
+  Find $d \in N$ such that $N \models R(d, p(a)) \iff M \nModels R(c,a)$. %check this against notes
+\end{proof}
+\begin{nthm}\label{thm:4.18}
+  Let $\mathcal{M}, \mathcal{N} \models \hyperlink{def:gpe}{T_{\text{rg}}}$ and $|\mathcal{M}| = |\mathcal{N}| = \omega$, and $p: A \subset M \to N$ is a \hyperlink{def:gpe}{finite partial embedding}.
+  Then $\mathcal{M} \simeq \mathcal{N}$, by an isomorphism that extends $p$.
+\end{nthm}
+\begin{proof}
+  Same as proof of \cref{thm:4.4}, but with \cref{lem:4.17} instead of \cref{lem:4.3}.
+\end{proof}
+\begin{ncor}
+  \hyperlink{def:gpe}{$T_{\text{rg}}$} is \hyperlink{def:wcat}{$\omega$-categorical} and \hyperlink{def:complete}{complete}.
+  Moreover, every \hyperlink{def:gpe}{finite partial embedding} between models of $T_{\text{rg}}$ is an \hyperlink{def:elmap}{elementary map}.
+\end{ncor}
+\begin{nremark}\label{rem:4.20}
+  The unique (up to isomorphism) model of \hyperlink{def:gpe}{$T_{\text{rg}}$} is \emph{the} countable random graph, or the \named{Rado graph}.
+  It is universal with respect to finite and countable graphs (i.e.\ it embeds them all).
+  It is \named{ultrahomogeneous} i.e.\ every \hyperlink{def:iso}{isomorphism} between finite \hyperlink{def:subs}{substructures} extends to an automorphism of the whole graph.
+\end{nremark}
+
+\clearpage
+\section{Compactness}
+\begin{ndef}\label{def:5.1}
+  Take an \hyperlink{def:ltheory}{$L$-theory} $T$.
+  \begin{enumerate}[label=(\roman*)]
+    \item \hypertarget{def:fs}$T$ is \named{finitely satisfiable} if every finite subset of \hyperlink{def:sentence}{sentences} in $T$ has a \hyperlink{def:model}{model}.
+    \item \hypertarget{def:maximal}$T$ is \named{maximal} if for all $L$-sentences $\sigma$, either $\sigma \in T$ or $\lnot \sigma \in T$.
+    \item \hypertarget{def:wp}$T$ has the \named{witness property} (WP) if for all $\phi(x)$ ($L$-\hyperlink{def:form}{formula} with one \hyperlink{def:free}{free} variable) there is a constant $c \in \mathscr{C}$ such that
+      \begin{equation*}
+        (\exists x \; \phi(x) \to \phi(c)) \in T.
+      \end{equation*}
+  \end{enumerate}
+\end{ndef}
+\begin{nlemma}\label{lem:5.2}
+  If $T$ is \hyperlink{def:maximal}{maximal} and \hyperlink{def:fs}{finitely satisfiable} and $\phi$ is an $L$-\hyperlink{def:sentence}{sentence}, and $\Delta \overset{\mathclap{\text{finite}}}\subseteq T$ and $\Delta \hyperlink{def:models}{\models} \phi$, then $T \models \phi$.
+\end{nlemma}
+\begin{nlemma}\label{lem:5.3}
+  Let $T$ be a \hyperlink{def:maximal}{maximal}, \hyperlink{def:fs}{finitely satisfiable} theory with the \hyperlink{def:wp}{witness property}. Then $T$ has a \hyperlink{def:model}{model}.
+  Moreover, if $\lambda$ is a cardinal and $|\mathscr{C}| \leq \lambda$, then $T$ has a model of size at most $\lambda$.
+\end{nlemma}
+\begin{proof}
+  Let $c,d \in \mathscr{C}$, define $c \sim d$ iff $c = d \in T$.
+
+  \textbf{Claim:} $\sim$ is an equivalence relation. \textbf{Proof:} For transitivity, let $c \sim d$ and $d \sim e$.
+  Then $c = d \in T$ and $d = e \in T$, so $c = e \in T$ (by \cref{lem:5.2}), and so $c \sim e$. $\blacksquare$
+
+  \hypertarget{def:cstar}We denote $[c] \in \mathscr{C} / \sim$ by $c^*$
+
+  Now, define a \hyperlink{def:lstr}{structure} $\mathcal{M}$ whose domain is $\mathscr{C} / \sim\ = M$.
+  Clearly, $|M| \leq \lambda$ if $|\mathscr{C}| \leq \lambda$.
+  We must define \hyperlink{def:lstr}{interpretations} in $\mathcal{M}$ for symbols of $L$.
+  \begin{itemize}
+    \item If $c \in \mathscr{C}$, then $c^\mathcal{M} = c^*$.
+    \item If $R \in \mathscr{R}$, define
+      \begin{equation*}
+        R^\mathcal{M} \coloneqq \set{(c_1^*, \dotsc, c_{n_R}^*) | R(c_1, \dotsc, c_n) \in T}
+      \end{equation*}
+      \textbf{Claim:} $R^\mathcal{M}$ is well defined.
+      \textbf{Proof:} Suppose $\bar{c}, \bar{d} \in \mathscr{C}^{n_R}$ and suppose $c_i \sim d_i$.
+      That is, $c_i = d_i \in T$ for $i=1, \dotsc, n_R$
+      \begin{equation*}
+        R(\bar{c}) \in T \iff R(\bar{d}) \in T.
+      \end{equation*}
+      This proves that $R^\mathcal{M}$ is well defined. $\blacksquare$
+    \item If $f \in \mathscr{F}$, and $\bar{c} \in \mathscr{C}^{n_R}$, then $f \bar{c} = d \in T$ for some $d \in \mathscr{C}$. (This is because $\exists x \; (f(\bar{c}) = x) \in T$ by \hyperlink{def:maximal}{maximality} and \hyperlink{def:fs}{finite satisfiability}.)
+
+      Then define $f^\mathcal{M}(\bar{c}^*) = d^*$.
+      Exercise: Check $f^\mathcal{M}(\bar{c}^*)$ is well-defined!
+  \end{itemize}
+
+  \textbf{Claim:} if $t(x_1, \dotsc, x_n)$ is an $L$-term and $c_1, \dotsc, c_n, d \in \mathscr{C}$, then
+  \begin{equation*}
+    t(c_1, \dotsc, c_n) = d \in T \iff t^\mathcal{M}(c_1^*, \dotsc, c_n^*) = d^*.
+  \end{equation*}
+  \textbf{Proof:}
+  $(\Rightarrow)$ by induction on the complexity of $t$.
+  $(\Leftarrow)$ Assume $t^\mathcal{M}(c_1^*, \dotsc, c_n^*) = d^*$.
+  Then
+  \begin{equation*}t(c_1, \dotsc, c_n) = e \in T\end{equation*}
+  for some constant $e$.
+  Use $\Rightarrow$ to get that $t^\mathcal{M}(c_1^*, \dotsc, c_n^*) = e^*$.
+  But then $d^* = e^*$, i.e.\ $d = e \in T$.
+  Then $t(c_1, \dotsc, c_n) = d \in T$. $\blacksquare$
+
+  \textbf{Claim:} For all $L$-formulas $\phi(\bar{x})$, and $\bar{c} \in \mathscr{C}^{|\bar{x}|}$,
+  \begin{equation*}
+    \mathcal{M} \models \phi(\bar{c}) \iff \phi(\bar{c}) \in T.
+  \end{equation*}
+  \textbf{Proof:} By induction on $\phi(\bar{x})$. (Exercise: Fill in the details). $\blacksquare$
+\end{proof}
 \printindex
 \end{document}
