@@ -118,14 +118,14 @@ As long as some examples make sense, it is not a point of concern that some exam
 
 \section{Definitions and Examples}
 \begin{ndef}[Category]\label{def:1.1}\index{category}\hypertarget{def:cat}
-  A \textbf{category} $\mathscr{C}$ consists of
+  A \named{category} $\mathscr{C}$ consists of
   \begin{enumerate}[label=(\alph*)]
     \item \index{object}a collection $\mathscr{C}$ of \textbf{objects} $A,B,C,\dotsc$
     \item \index{morphism}a collection $\mor \mathscr{C}$ of \textbf{morphisms} $f,g,h,\dotsc$
-    \item \index{domain}\index{codomain}two operations $\dom, \cod$ assigning to each $f \in \mor \mathscr{C}$ a pair of objects, its \textbf{domain} and \textbf{codomain}.
+    \item two operations $\dom, \cod$ assigning to each $f \in \mor \mathscr{C}$ a pair of objects, its \named{domain} and \named{codomain}.
     We write $\begin{tikzcdi}A \rar{f} & B \end{tikzcdi}$ to mean `$f$ is a morphism and $\dom f = A$ and $\cod f = B$'.
-    \item \index{identity}an operation assigning to each $A \in \ob \mathscr{C}$ a morphism $\begin{tikzcdi}A \rar{1_A} & A\end{tikzcdi}$, called its \textbf{identity}.
-    \item \index{composition}a partial binary operation \textbf{composition} $(f,g) \mapsto f g$ on morphisms, such that $fg$ is defined iff $\dom f = \cod g$ and $\dom(f g) = \dom g$, $\cod (f g) = \cod f$ if $fg$ is defined.
+    \item an operation assigning to each $A \in \ob \mathscr{C}$ a morphism $\begin{tikzcdi}A \rar{1_A} & A\end{tikzcdi}$, called its \named{identity}.
+    \item a partial binary operation \named{composition} $(f,g) \mapsto f g$ on morphisms, such that $fg$ is defined iff $\dom f = \cod g$ and $\dom(f g) = \dom g$, $\cod (f g) = \cod f$ if $fg$ is defined.
   \end{enumerate}
   satisfying
   \begin{enumerate}[label=(\alph*)] \setcounter{enumi}{5}
@@ -136,7 +136,7 @@ As long as some examples make sense, it is not a point of concern that some exam
 
 \begin{nremark}\label{rem:1.2}\leavevmode
   \begin{enumerate}[label=(\alph*)]
-    \item \index{small category}\index{category!small}\hypertarget{def:small}This definition is independent of a model of set theory. If we're given a particular model of set theory, we call the \hyperlink{def:cat}{category $\mathscr{C}$} \textbf{small} if $\ob \mathscr{C}$ and $\mor \mathscr{C}$ are sets.
+    \item \index{small category}\index{category!small}\hypertarget{def:small}This definition is independent of a model of set theory. If we're given a particular model of set theory, we call the \hyperlink{def:cat}{category $\mathscr{C}$} \named{small} if $\ob \mathscr{C}$ and $\mor \mathscr{C}$ are sets.
     \item Some texts say $fg$ means `$f$ followed by $g$', i.e.\ $fg$ defined $\iff \hyperlink{def:cat}{\cod} f = \dom g$.
       \item Note that a morphism $f$ is an \hyperlink{def:cat}{identity} iff $fg = g$ and $hf = h$ whenever the compositions are defined.
         So we could formulate the definition entirely in terms of morphisms.
@@ -151,9 +151,9 @@ As long as some examples make sense, it is not a point of concern that some exam
     \item The category \textbf{Top} has all topological spaces as objects and continuous functions as morphisms. Similarly \textbf{Unif} has uniform spaces and uniformly continuous functions, and \textbf{Mf} has manifolds and smooth maps.
     \item The category \textbf{Htpy} has the same objects as \textbf{Top}, but morphisms are homotopy classes of continuous functions.
       More generally, given $\mathscr{C}$, we call an equivalence relation $\simeq$ on $\mor \mathscr{C}$ a \textbf{congruence} if $f \simeq g \implies \dom f = \dom g$ and $\cod f = \cod g$, and $f \simeq g \implies f h \simeq g h$ and $k f \simeq k g$ whenever the composites are defined. Then we have a category $\mathscr{C}/\simeq$ with the same objects as $\mathscr{C}$, but congruence classes as morphisms.
-    \item \index{duality}\hypertarget{def:duality}Given $\mathscr{C}$, the \textbf{opposite category} $\mathscr{C}^\text{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^\text{op}$ is $gf$ in $\mathscr{C}$.
+    \item \index{opposite}\index{duality}\hypertarget{def:duality}Given $\mathscr{C}$, the \textbf{opposite category} $\mathscr{C}^\text{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^\text{op}$ is $gf$ in $\mathscr{C}$.
       This leads to the \textbf{Duality principle} if $P$ is a true statement about categories, so is the statement $P^*$ obtained from $P$ by reversing all arrows.
-    \item \index{isomorphism}\index{morphism!iso-}\hypertarget{def:monoid}A \hyperlink{def:small}{small} category with one object is a \textbf{monoid}, i.e.\ a semigroup with $1$.
+    \item \index{isomorphism}\index{morphism!iso-}\hypertarget{def:monoid}A \hyperlink{def:small}{small} category with one object is a \named{monoid}, i.e.\ a semigroup with $1$.
       \hypertarget{def:group}In particular, \hypertarget{def:iso}a group is a small category with one object, in which every morphism is an isomorphism ($f$ is an \textbf{isomorphism} if $\exists g$ such that $fg$ and $gf$ are identities).
     \item A \textbf{groupoid} is a category in which every morphism is an isomorphism. For a topological space $X$, the fundamental groupoid $\pi(X)$ has all points of $X$ as objects and morphisms $x \to y$ are homotopy classes rel $\{0,1\}$ of paths $u: [0,1] \to X$ with $u(0) = x$, $u(1) = y$.
       (If you know how to prove that the fundamental group is a group, you can prove that $\pi(X)$ is a groupoid.)
@@ -1060,7 +1060,7 @@ A \hyperlink{def:limit}{limit} for $D$ is a \hyperlink{def:repr}{representation}
 If $\Delta A$ denotes the constant diagram of shape $J$ with all vertices $A$ and all edges $1_A$, then a \hyperlink{def:cone}{cone} over $D$ with \hyperlink{def:cone}{apex} $A$ is the same thing as a \hyperlink{def:nattrans}{natural transformation} $\Delta A \to D$.
 $\Delta$ is a functor $\mathscr{C} \to [J, \mathscr{C}]$, and $\mathbf{Cone}(D)$ is the category $(\Delta \downarrow D)$ (a \hyperlink{def:comma}{comma category}, reversed).
 So to say that every \hyperlink{def:diagram}{diagram of shape $J$} in $\mathscr{C}$ has a \hyperlink{def:limit}{limit} is equivalent to saying that $\Delta$ has a \hyperlink{def:adj}{right adjoint}.
-\hypertarget{def:haslimits}(We say $\mathscr{C}$ \textbf{has limits} of shape $J$).
+\hypertarget{def:haslimits}(We say $\mathscr{C}$ \named{has limits} of shape $J$).
 Dually, $\mathscr{C}$ \textbf{has colimits} of shape $J$ iff $\Delta: \mathscr{C} \to [J, \mathscr{C}]$ has a left adjoint.
 \begin{nexample}\leavevmode
   \begin{enumerate}[label=(\alph*)]\label{eg:4.2}
@@ -1338,7 +1338,7 @@ $\mathbf{Top}$ is also complete and cocomplete.
   So $(GL, \set{G\lambda_j | j \in \ob J})$ is a limit cone in $\mathscr{C}$.
 \end{proof}
 \leavevmode\marginnote{\emph{Lecture 12}}[0cm]
-\hypertarget{thm:paft}The `primeval' Adjoint Functor Theorem says that the converse of \cref{thm:4.9} is true: if $\mathscr{D}$ has and $G: \mathscr{D} \to \mathscr{C}$ \hyperlink{def:plim}{preserves} \emph{all} limits, then $G$ has a \hyperlink{def:adj}{left adjoint}.
+\hypertarget{thm:paft}The \index{Adjoint Functor Theorem!Primeval}`Primeval' Adjoint Functor Theorem says that the converse of \cref{thm:4.9} is true: if $\mathscr{D}$ has and $G: \mathscr{D} \to \mathscr{C}$ \hyperlink{def:plim}{preserves} \emph{all} limits, then $G$ has a \hyperlink{def:adj}{left adjoint}.
 \begin{nlemma}\label{lem:4.10}
   Suppose $\mathscr{D}$ \hyperlink{def:haslimits}{has} and $G: \mathscr{D} \to \mathscr{C}$ \hyperlink{def:plim}{preserves limits} of shape $J$.
   Then for any $A \in \ob \mathscr{C}$, the \hyperlink{def:comma}{arrow category} $(A \downarrow G)$ has \hyperlink{def:limit}{limits} of shape $J$, and the \hyperlink{def:forgFunc}{forgetful functor} $U: (A \downarrow G) \to \mathscr{D}$ \hyperlink{def:clim}{creates them}.
@@ -1401,11 +1401,11 @@ However, it only applies to \hyperlink{def:funct}{functors} between preorders (c
   Now form the limit of
   \begin{equation*}
     \begin{tikzcd}[column sep=huge]
-      P \rar[shift left=0.5] \rar[shift left=2] \rar[shift left=3.5] \rar[shift right=2] & P
+    P \rar[shift left=0.5] \rar[shift left=2] \rar[shift left=3.5] \rar[shift right=3.5] \arrow[r, shift right=0.75, phantom, "\scriptscriptstyle\vdots"] & P
     \end{tikzcd} \tag{$*$}\label{eq:12star}
   \end{equation*}
   where edges are all the endomorphisms of $P$: denote the limit $I \overset{i}\to P$.
-  $I$ is also \hyperlink{def:winitial}{weakly initial} in $\mathscr{A}$: suppose given $\begin{tikzcd}I \rar[shift left]{f} \rar[shift right]{g} & C\end{tikzcd}$.
+  $I$ is also \hyperlink{def:winitial}{weakly initial} in $\mathscr{A}$: suppose given $\begin{tikzcd}I \rar[shift left]{f} \rar[shift right,']{g} & C\end{tikzcd}$.
   Form the equalizer $E \overset{e}\to I$ of $(f,g)$, then there exists $P \overset{h}\to E$ since $P$ is weakly initial.
   $ieh:P \to P$, and $1_P$ are edges of the diagram \eqref{eq:12star} so $i = iehi$. But $i$ is monic, so $ehi = 1_I$, so $e$ is split epic, so $f = g$.
   Hence $I$ is initial.
@@ -1528,9 +1528,9 @@ However, it only applies to \hyperlink{def:funct}{functors} between preorders (c
   and hence a morphism $I \to B \to A$.
 \end{proof}
 \begin{nexample}\label{eg:4.17}
-  Consider the inclusion $\textbf{KHaus} \overset{I}\to \textbf{Top}$, where $\textbf{KHaus}$ is the \hyperlink{def:fulls}{full subcategory} of compact Hausdorff spaces.
-  $\textbf{KHaus}$ \hyperlink{def:haslimits}{has} and $I$ \hyperlink{def:plim}{preserves} \hyperlink{def:small}{small} \hyperlink{def:lprod}{products} (by Tychonoff's Theorem) and \hyperlink{def:equalizer}{equalizers} (since equalizers of pairs $\begin{tikzcdi}X \rar[shift left]{f} \rar[shift right,']{g} & Y\end{tikzcdi}$ with $Y$ Hausdorff are closed subspaces).
-  Both categories are \hyperlink{def:lsmall}{locally small} and \textbf{KHaus} is \hyperlink{def:wp}{well-powered} (subobjects of $X$ are all isomorphic to closed subspaces).
+  Consider the inclusion $\mathbf{KHaus} \overset{I}\to \mathbf{Top}$, where $\mathbf{KHaus}$ is the \hyperlink{def:fulls}{full subcategory} of compact Hausdorff spaces.
+  $\mathbf{KHaus}$ \hyperlink{def:haslimits}{has} and $I$ \hyperlink{def:plim}{preserves} \hyperlink{def:small}{small} \hyperlink{def:lprod}{products} (by Tychonoff's Theorem) and \hyperlink{def:equalizer}{equalizers} (since equalizers of pairs $\begin{tikzcdi}X \rar[shift left]{f} \rar[shift right,']{g} & Y\end{tikzcdi}$ with $Y$ Hausdorff are closed subspaces).
+  Both categories are \hyperlink{def:lsmall}{locally small} and $\mathbf{KHaus}$ is \hyperlink{def:wp}{well-powered} (subobjects of $X$ are all isomorphic to closed subspaces).
   The closed interval $[0,1]$ is a \hyperlink{def:separating}{coseparator} in $\mathbf{KHaus}$ by Urysohn's Lemma.
   So by \cref{thm:4.16saft}, $I$ has a \hyperlink{def:adj}{left adjoint} $\beta$.
 \end{nexample}
@@ -1543,15 +1543,16 @@ However, it only applies to \hyperlink{def:funct}{functors} between preorders (c
     \item We could have used \nameref{thm:4.12gaft} to construct $\beta$: we get a solution set at $X$ by considering all continuous $X \overset{f}\to Y$ with $Y$ compact Hausdorff, and $\operatorname{im} f$ dense in $Y$ and such $Y$ have cardinality $\leq 2^{2^{\operatorname{card} X}}$.
   \end{enumerate}
 \end{nremark}
+\clearpage
 \section{Monads}
-\marginnote{\emph{Lecture 14}}[0cm]
 Suppose given
+\marginnote{\emph{Lecture 14}}[0cm]
 \begin{equation*}
   \begin{tikzcd}
     \mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G}
   \end{tikzcd}
 \end{equation*}
-with $(F \dashv G)$.
+with $\hyperlink{def:adj}{(F \dashv G)}$.
 How much of this structure can we describe without mentioning $\mathscr{D}$?
 
 We have the functor $T= GF: \mathscr{C} \to cc$, and the unit $\eta: 1_\mathscr{C} \to T = GF$ and the natural transformation
@@ -1606,21 +1607,21 @@ This adjunction gives rise to the monad of \cref{eg:5.2}(b).
 
 \begin{ndef}[Eilenberg-Moore category]\label{def:5.3}
   \hypertarget{def:em}Let $\mathbb{T}$ be a \hyperlink{def:monad}{monad} on $\mathscr{C}$.
-  A $\mathbb{T}$-\named{algebra} is a pair $(A, \alpha)$ with $A \in \ob \mathscr{C}$ and $TA \overset{\alpha}\to A$ satisfying the commutative diagrams
+  A $\mathbb{T}$-\textbf{algebra}\index{Talgebra@$\mathbb{T}$-algebra} is a pair $(A, \alpha)$ with $A \in \ob \mathscr{C}$ and $TA \overset{\alpha}\to A$ satisfying the commutative diagrams
   \begin{equation}
     \begin{tikzcd}
       A \rar{\eta_A} \drar[']{1_A} & TA \dar{\alpha} \\ & A
-    \end{tikzcd} \tag{4} \label{eq:em4}
+    \end{tikzcd} \label{eq:em4}
   \end{equation}
   \begin{equation}
     \begin{tikzcd}
       TTA \rar{T\alpha} \dar{\mu_A} & TA \dar{\alpha} \\ TA \rar{\alpha} & A.
-    \end{tikzcd} \tag{5} \label{eq:em5}
+    \end{tikzcd} \label{eq:em5}
   \end{equation}
-  A \textbf{homomorphism}\label{algebra!homomorphism} $f: (A, \alpha) \to (B, \beta)$ is a morphism $A \overset{f}\to B$ such that
+  A \textbf{homomorphism}\index{algebra!homomorphism} $f: (A, \alpha) \to (B, \beta)$ is a morphism $A \overset{f}\to B$ such that
   \begin{equation}
   \begin{tikzcd}
-    TA \rar{Tf} \dar{\alpha} & TB \dar{\beta} \\ A \rar{f} & B \tag{6} \label{eq:em6}
+    TA \rar{Tf} \dar{\alpha} & TB \dar{\beta} \\ A \rar{f} & B  \label{eq:em6}
   \end{tikzcd}
   \end{equation}
   commutes.
