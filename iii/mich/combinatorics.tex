@@ -673,7 +673,7 @@ The converse is false - e.g.\ $\mathcal{A} = \{123,124,125,126,127\}$.
 \end{eg}
 Note that $|C_{UV}(\mathcal{A})| = |\mathcal{A}|$.
 
-Sadly, \hyperlink{def:uvcomp}{$C_{UV}$} need not decrease \hyperlink{def:shadow}{$\partial$} - e.g.\ $\mathcal{A} = \{146,467\}$ has $|\partial\mathcal{A}| = 5$, but $C_{23,14}(\mathcal{A}) = \{236,147\}$ has $|\partial C_{23,14}(\mathcal{A})| = 6$.
+Sadly, \hyperlink{def:uvcomp}{$C_{UV}$} need not decrease \hyperlink{def:shadow}{$\partial$} - e.g.\ $\mathcal{A} = \{146,467\}$ has $|\partial\mathcal{A}| = 5$, but $C_{23,14}(\mathcal{A}) = \{236,467\}$ has $|\partial C_{23,14}(\mathcal{A})| = 6$.
 $C_{23,14}$ moved some things a long way.
 However:
 \begin{nprop}\label{prop:6}
@@ -1066,7 +1066,97 @@ Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
     |B_+ \cup N(B_-)| &\leq |A_+ \cup N(A_-)| \\
     |B_- \cup N(B_+)| &\leq |A_- \cup N(A_+)|
   \end{align*}
-  Thus $N(B) \leq N(A)$.
+  Thus $|N(B)| \leq |N(A)|$.
+\end{proof}
+\marginnote{\emph{Lecture 8}}[0cm]Among all $B \subset Q_n$ with $|B| = |A|$ and $|N(B)| \leq |N(A)|$, choose one with
+\begin{equation*}
+  \sum_{x \in B} f(x)
+\end{equation*}
+minimal, where $f(x)=$ the position of $x$ in the \hyperlink{def:simplicial}{simplicial order} on $Q_n$.
+Then $B$ is $i$-compressed $\forall i$.
+
+Must such a $B$ be an initial segment of simplicial?
+Unfortunately, no - e.g.\ $A = \{\emptyset,1,2,12\} \subset Q_3$.
+
+However,
+\begin{nlemma}\label{lem:2.2}
+  Let $B \subset Q_n$ be $i$-compressed $\forall i$ but not an initial segment of the simplicial order.
+  Then if $n$ is odd, say $n = 2k+1$, we have
+  \begin{equation*}
+    B = X^{(\leq k)} - \{\text{last $k$-set}\} \cup \{\text{first $k$-set}\}, % mark the last kset as (k+2),...,(2k+1) and the first as 1,2,...,k,(k+1)
+  \end{equation*}
+  while if $n$ is even, say $n = 2k$, we have
+  \begin{equation*}
+    B = X^{(\leq k-1)} \cup \set{x \in X^{(k)} | 1 \in x} - \{\text{last $k$-set with 1}\} \cup \{\text{first $k$-set without $1$}\}. % mark the last kset as 1(k+2),...,(2k) and the first as 2,3,4,...,k,(k+1)
+  \end{equation*}
+\end{nlemma}
+Once we have proved this, we are done, as in each case $|N(B)| \geq |N(C)|$.
+\begin{proof}
+  We have $x \notin B, y \in B$ for some $x,y$ with $x<y$ in simplicial.
+  We cannot have $i \in x, i \in y$ (as $B$ is $i$-compressed), and cannot have $i \notin x, i \notin y$ (as $B$ is $i$-compressed).
+
+  So, for each $i$, $i$ belongs to exactly one of $x,y$.
+  Thus $y = x^c$.
+
+  Hence for each $y \in B$, at most one $x < y$ has $x \notin B$ (namely $Y^c$) and for each $x \notin B$, at most $y > x$ has $y \in B$ (namely $X^c$).
+
+  Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
+  But then $x=$ last $k$-set (if $n=2k+1$) or the last $k$-set containing $1$ (if $n = 2k$)
+  by definition of simplicial ordering.
+\end{proof}
+
+\begin{remark}\leavevmode
+  \begin{enumerate}[label=\arabic*.]
+    \item Can also prove \nameref{thm:harper1} by $UV$-compressions.
+    \item Can also use these `codimension 1' compressions to prove \nameref{thm:kk7}.
+  \end{enumerate}
+\end{remark}
+\begin{defi}
+  For $A \subset Q_i$, the \textbf{$t$-neighbourhood} of $A$ is
+  \begin{equation*}
+    A_{(t)} \coloneqq N^t(A) = \set{x \in Q_n | d(x,A) \leq t}.
+  \end{equation*}
+\end{defi}
+\begin{ncor}\label{cor:3}
+  Let $A \subset Q_n$ with $|A| = |X^{(\leq r)}|$. Then, for $1 \leq t \leq n-r$, have
+  \begin{equation*}
+    |A_{(t)}| \geq |X^{(\leq r + t)}
+  \end{equation*}
+\end{ncor}
+\begin{proof}
+  \cref{thm:harper1} and induction.
+\end{proof}
+To get a feel for what \cref{cor:3} is saying, we'll need some estimates for things like $\sum_{i=0}^r \binom{n}{i}$.
+\begin{nprop}\label{prop:2.4}
+  Let $0 \leq \epsilon < \frac{1}{4}$.
+  \begin{equation*}
+    \sum_{i=0}^\floor{(\frac{1}{2} - \epsilon) n} \binom{n}{i} < \frac{1}{\epsilon} e^{(-\epsilon^2 \frac{n}{2})} 2^n
+  \end{equation*}
+  (an exponentially small fraction of $2^n$ for $\epsilon$ fixed).
+\end{nprop}
+Roughly we are going around $\epsilon \sqrt{n}$ standard deviations from the mean.
+
+\begin{proof}
+  For $i \leq (\frac{1}{2} - \epsilon) n:$
+  \begin{equation*}
+    \frac{\binom{n}{n-i}}{\binom{n}{i}} = \frac{i}{n-i+1} \leq \frac{\frac{1}{2} - \epsilon}{\frac{1}{2} + \epsilon} = 1 - \frac{2\epsilon}{\frac{1}{2} + \epsilon} \leq 1 - 2\epsilon.
+  \end{equation*}
+  Hence
+  \begin{equation*}
+    \sum_{i=0}^{\floor{(\frac{1}{2}-\epsilon) n}} \binom{n}{i} \leq \frac{1}{2\epsilon} \binom{n}{\floor{(\frac{1}{2} + \epsilon) n}}
+  \end{equation*}
+  as a geometric progression.
+  Similarly, replacing $\epsilon$ with $\epsilon/2$,
+  \begin{align*}
+    \binom{n}{\floor{(\frac{1}{2} - \epsilon)n}} &\leq (1-\epsilon)^{\epsilon \frac{n}{2} - 1} \binom{n}{\floor{(\frac{1}{2} - \frac{\epsilon}{2}) n}} \\
+                                                 &\leq 2(1-\epsilon)^{\epsilon/2} 2^n \\
+                                                 &\leq 2 e^{-\epsilon \cdot \epsilon n/2} 2^n,
+  \end{align*}
+  using $e^{-x} \geq 1-x$ in the final step.
+  Thus
+  \begin{equation*}
+    \sum_{i=0}^{\floor{(\frac{1}{2} - \epsilon) n}} \leq \frac{1}{2\epsilon} 2 e^{-\epsilon^2 n / 2} 2^n. \qedhere
+  \end{equation*}
 \end{proof}
 \clearpage
 \section{Projections}
