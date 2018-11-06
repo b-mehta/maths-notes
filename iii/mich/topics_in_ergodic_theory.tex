@@ -122,7 +122,7 @@ Some questions we might ask are:
 \section{Furstenberg correspondence}
 An interesting problem from number theory and combinatorics is Szemer\'edi's theorem.
 In this course, we will give an ergodic theory proof of this, using Furstenberg's multiple recurrence theorem.
-\begin{thm}[Szemer\'{e}di]\index{Szemer\'{e}rdi's theorem}\hypertarget{thm:sze}
+\begin{thm}[Szemer\'{e}di's theorem]\index{Szemer\'{e}rdi's theorem}\hypertarget{thm:sze}
   Let $S \subset \mathbb{Z}$ of positive upper Banach density. That is,
   \begin{equation*}
     \bar{d}(S) \coloneqq \limsup_{N,M: M - N \to \infty} \frac{1}{M-N} \big| S \cap [N,M-1] \big|
@@ -140,73 +140,85 @@ In this course, we will give an ergodic theory proof of this, using Furstenberg'
   \end{equation*}
 \end{thm}
 
-Let
-\begin{itemize}
-  \item $X = \{0, 1\}^\Z$
-  \item $\mathcal{B}=$ Borel $\sigma$-algebra
-  \item $\sigma=$ the \hyperlink{def:markovshift}{shift} map $\vec{x} \mapsto (x_{n+1})_n$
-\end{itemize}
-Let $ \vec{x}^S \in X$ be defined by
-\begin{equation*}
-  \vec{x}_n^S =
-  \begin{cases}
-    1 & n\in S\\
-    0 & n \notin S.
-  \end{cases}
-\end{equation*}
-Also let $A\in\beta$ be given by $A = \set{x\in X | x_0 = 1}$.
-Observe then that
-\begin{equation*}
-  \vec{x}^S_n=1\iff n\in S\iff \sigma^n\vec{x}^S\in A\iff (\sigma^n\vec{x}^S)_0=1.
-\end{equation*}
+% lecture 2
+To \marginnote{\emph{Lecture 2}}prove \hyperlink{thm:furs}{Furstenberg's theorem} requires more preparation, and we will do it later in this course.
+However, we can now prove \hyperlink{thm:sze}{Szemer\'edi} assuming \hyperlink{thm:furs}{Furstenberg multiple recurrence}.
 
-Let $\{M_m\}$ and $\{N_m\}$ be sequences s.t. $ M_n-N_m\to\infty $ and
-\begin{equation*} \bar{d}(S) = \lim_{m\to\infty}\frac{1}{M_m-N_m}\left|S\cap[N_m,M_m-1]\right| \end{equation*}
-Let
-\begin{equation*}
-  \mu_m = \frac{1}{M_m-N_m}\sum_{n=N_m}^{M_m-1}\delta_{\sigma^n\vec{x}^S}
-\end{equation*}
-where $\delta_x$ is a measure on $X$ defined as
-\begin{equation*}
-  \delta_x(B) =
-  \begin{cases}
-    1 & x\in B\\
-    0 & x\notin B
-  \end{cases}
-\end{equation*}
+\begin{proof}[Proof of \hyperlink{thm:sze}{Szemer\'edi} using \hyperlink{thm:furs}{Furstenberg}]
+  Aim to construct a \hyperlink{def:mps}{measure preserving system} in order to use \hyperlink{thm:furs}{Furstenberg multiple recurrence}, using the given set $S$.
 
-Let $\mu$ be the weak limit of \emph{a} subsequence of $\mu_m$.
-Note how the $\mu$ could be different dependent on subsequence choice.
+  Take $X = \{0, 1\}^\Z$, $\mathcal{B}=$ Borel $\sigma$-algebra and
+  $\sigma=$ the \hyperlink{def:markovshift}{shift} map $(\sigma(x))_n = x_{n+1}$.
+  Let $ {x}^S \in X$ be defined by
+  \begin{equation*}
+    {x}_n^S =
+    \begin{cases}
+      1 & n\in S\\
+      0 & n \notin S
+    \end{cases}
+  \end{equation*}
+  (so $x^S$ is effectively the indicator function of $S$).
+  Also let $A\in\mathcal{B}$ be given by $A = \set{{x}\in X | x_0 = 1}$.
+  Observe then that
+  \begin{equation*}
+    n\in S\iff x^S_n=1\iff (\sigma^n x^S)_0=1\iff \sigma^n x^S\in A.
+  \end{equation*}
+  The equivalence $n \in S \iff \sigma^n x^S \in A$ allows us to relate the set $S$ to the dynamics of $\sigma$.
 
-\begin{defi}[Weak limit]
+  Now, we begin to construct the invariant measure $\mu$.
+  Let $\{M_m\}$ and $\{N_m\}$ be sequences s.t. $ M_n-N_m\to\infty $ and
+  \begin{equation*} \bar{d}(S) = \lim_{m\to\infty}\frac{1}{M_m-N_m}\left|S\cap[N_m,M_m-1]\right|. \end{equation*}
+  Let
+  \begin{equation*}
+    \mu_m = \frac{1}{M_m-N_m}\sum_{n=N_m}^{M_m-1}\delta_{\sigma^n{x}^S}
+  \end{equation*}
+  where $\delta_x$ is a measure on $X$ defined as
+  \begin{equation*}
+    \delta_x(B) =
+    \begin{cases}
+      1 & x\in B\\
+      0 & x\notin B.
+    \end{cases}
+  \end{equation*}
+
+  Let $\mu$ be the \hyperlink{def:weaklimit}{weak limit} of \emph{a} subsequence of $\mu_m$.
+  Note that the $\mu$ could be different dependent on subsequence choice.
+  \renewcommand{\qedsymbol}{}
+\end{proof}
+
+\subsection{Aside on weak limits}
+We pause the proof to briefly recap material on weak limits.
+
+\begin{defi}[Weak limit]\hypertarget{def:weaklimit}
   Let $X$ be a compact metric space.
   Let $\mu_m$ be a sequence of Borel measures on $X$, and let $\mu$ be another Borel measure.
-  Then $\mu_m$ converges weakly to $\mu$ if for any $f\in C(X)$, we have
+  Then $\mu_m$ \textbf{converges weakly} to $\mu$ if for any $f\in C(X)$, we have
   \begin{equation*}
     \lim _{n \to \infty} \int_X f \,d \mu_{n} = \int_X f \,d \mu.
   \end{equation*}
+  We write $\limw_{n \to \infty} \mu_n = \mu$.
 \end{defi}
 
-\begin{thm}(Banach-Alaoglu, or Helly)
+\begin{thm}[Banach-Alaoglu, or Helly]\hypertarget{thm:banachalaoglu}
   Let $X$ be a compact metric space.
   Then $\mathcal{M}(X)$, the set of Borel probability measures on $X$, endowed with the topology of weak convergence, is compact and metrizable.
-  That is, there is a weakly convergent subsequence in any sequence of Borel probability measures.
+  That is, there is a \hyperlink{def:weaklimit}{weakly convergent subsequence} in any sequence of Borel probability measures.
 \end{thm}
 
+We are ready to return to the main proof: next we check that the system constructed is indeed a \hyperlink{def:mps}{measure preserving system}.
 \begin{lemma}
   $(X, \mathcal{B}, \mu, \sigma)$ as defined above is a \hyperlink{def:mps}{measure preserving system}.
 \end{lemma}
 \begin{proof}[Proof sketch]
   Let $B \in \mathcal{B}$. Then
   \begin{align*}
-    \mu_m(B) &= \frac{1}{M_m - N_m} \left|\set{n \in [N_m, M_m -1] | \sigma^n \vec{x}^S \in \mathcal{B}} \right| \\
-    \mu_m(\sigma^{-1} B) &= \frac{1}{M_m - N_m} \left|\set{n \in [N_m, M_m -1] | \sigma^n \vec{x}^S \in \sigma^{-1}\mathcal{B}} \right| \\
-                         &= \frac{1}{M_m - N_m} \left|\set{n \in [N_m+1, M_m] | \sigma^n \vec{x}^S \in \mathcal{B}} \right|
+    \mu_m(B) &= \frac{1}{M_m - N_m} \left\lvert\set{n \in [N_m, M_m -1] | \sigma^n {x}^S \in B} \right\rvert \\
+    \mu_m(\sigma^{-1} B) &= \frac{1}{M_m - N_m} \left|\set{n \in [N_m, M_m -1] | \sigma^n {x}^S \in \sigma^{-1}B} \right| \\
+                         &= \frac{1}{M_m - N_m} \left|\set{n \in [N_m+1, M_m] | \sigma^n {x}^S \in B} \right|
   \end{align*}
-
   So the difference is such that
-  \[ \left|\mu_m(B) - \mu_m(\sigma^{-1}B)\right| \leq \frac{1}{M_m-N_m}\to 0 \]
-  It can be shown that we can pass to the limit on $ m $ and conclude that $ \mu(B) = \mu(\theta^{-1}B)$.
+  \begin{equation*} \left|\mu_m(B) - \mu_m(\sigma^{-1}B)\right| \leq \frac{1}{M_m-N_m}\to 0 \end{equation*}
+  It can be shown that we can pass to the limit on $m$ and conclude that $\mu(B) = \mu(\sigma^{-1}B)$.
 \end{proof}
 
 \begin{remark}
@@ -218,11 +230,12 @@ Note how the $\mu$ could be different dependent on subsequence choice.
   Therefore $\chi_B$, the characteristic function of $B$ is continuous.
   Hence $\lim_{n \to \infty} \mu_m(B) = \mu(B)$, since $\mu_m(B) = \int \chi_B \, d \mu_m$ and $\mu(B) = \int \chi_B \, d \mu$.
 
-  Approximating any Borel set by such cylinder sets would help complete the proof, but we in fact can get this result on spaces where $ \chi $ is not continuous on nice set of sets. So we leave full proof till a more general theorem.
+  Approximating any Borel set by such cylinder sets would help complete the proof, but we in fact can get this result on spaces where $\chi$ is not continuous on a nice set of sets.
+  So we leave full proof till a more general theorem.
 \end{remark}
 
 \begin{prop}
-  Let $S \subseteq \mathbb{Z}$, let $\vec{x}^S, A, (X, \mathcal{B}, \mu, \sigma)$ as defined above.
+  Let $S \subseteq \mathbb{Z}$, $x^S, A, (X, \mathcal{B}, \mu, \sigma)$ as defined above.
   Let $l \in \mathbb{Z}_{> 0}$.
   Suppose that $\exists n \in \mathbb{Z}_{>0}$ such that
   \begin{equation*}
@@ -231,64 +244,78 @@ Note how the $\mu$ could be different dependent on subsequence choice.
   Then $S$ contains an arithmetic progression of length $l$.
 \end{prop}
 \begin{proof}
-  Without loss of generality, we can assume $\mu = \lim \mu_m$ - if not, pass to a subsequence.
+  Without loss of generality, we can assume $\mu = \hyperlink{def:weaklimit}{\limw} \mu_m$ - if not, pass to a subsequence.
   Let $B = A \cap \sigma^{-n} A \cap \dotsb \cap \sigma^{-n (l-1)} (A).$
   Observe that $B$ is a cylinder set.
-  Then by the earlier remark, $\mu(B) = \lim \mu_m(B)$, hence $\exists m$ such that $\mu_m(B) > 0$.
+  Then by the remark, $\mu(B) = \lim \mu_m(B)$, hence $\exists m$ such that $\mu_m(B) > 0$.
 
-  By definition of $\mu_m$, $\exists k \in [N_m, M_m - 1]$ such that $\sigma^k \vec{x}^S \in B$.
+  By definition of $\mu_m$, $\exists k \in [N_m, M_m - 1]$ such that $\sigma^k x^S \in B$.
   Hence
-  \begin{equation*}\sigma^k \vec{x}^S \in A, \sigma^k \vec{x}^S \in \sigma^{-n}(A), \dotsc, \sigma^k \vec{x}^S \in \sigma^{-n(l-1)}(A).\end{equation*}
+  \begin{equation*}\sigma^k x^S \in A, \sigma^k x^S \in \sigma^{-n}(A), \dotsc, \sigma^k x^S \in \sigma^{-n(l-1)}(A).\end{equation*}
   Thus, $k, k+n, \dotsc, k + n(l-1) \in S$.
 \end{proof}
-Returning to the overall proof, we note $ A $ is a cylinder set.
+Returning to the overall proof, we note $A$ is a cylinder set.
 Then $ \mu_m(A)\to\mu(A) $, i.e.\
 \begin{equation*} \mu(A) = \underbrace{\lim_{m\to\infty}\frac{1}{M_m-N_m}\left|\set{n\in[N_m,M_m-1]: n\in S}\right|}_{\bar{d}(S)} > 0 \end{equation*}
-where the inequality comes from satisfying the conditions of Furstenberg.
+where the inequality comes from satisfying the conditions of \hyperlink{thm:sze}{Szemer\'edi}, and \hyperlink{thm:furs}{Furstenberg's multiple recurrence} finishes the argument. \qed
 
+\clearpage
+\section{Ergodicity}
 \begin{lemma}
-  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}. Let $A \in \mathcal{B}$ with $\mu(A) > 0$. Then $\exists u \in \mathbb{Z}_{> 0}$ such that $\mu(A \cap T^{-n} A) > 0$.
+  \marginnote{\emph{Lecture 3}}Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
+  Let $A \in \mathcal{B}$ with $\mu(A) > 0$. Then $\exists n \in \mathbb{Z}_{> 0}$ such that $\mu(A \cap T^{-n} A) > 0$.
 \end{lemma}
 \begin{proof}
-  Suppose $\mu(A \cap T^{-n}A) = 0$ for all $n > 0$.
-  Then $\mu(T^{-k}A \cap T^{-n} A) = \mu(A \cap T^{-(n-k)}A) = 0$ for all $n > k \geq 0$.
+  Suppose for contradiction that $\mu(A \cap T^{-n}A) = 0$ for all $n > 0$.
+  Then
+  \begin{equation*}\mu(T^{-k}A \cap T^{-n} A) = \mu(A \cap T^{-(n-k)}A) = 0\end{equation*}
+  for all $n > k \geq 0$.
+  Thus the sets $A, T^{-1} A, \dotsc$ are `almost pairwise disjoint'.
 
-  Then the set $A, T^{-1} A, \dotsc$ are `almost pairwise disjoint'.
   Then
   \begin{align*}
     \mu(A \cup T^{-1} A \cup \dotsb \cup T^{-n} A) &= \mu(A) \\
                                                    &+ \mu(T^{-1} A) - \underbrace{\mu(T^{-1}A \cap A)}_{=0} \\
                                                    &+ \mu(T^{-2} A) - \underbrace{\mu(T^{-2} A \cap (A \cup T^{-1} A))}_{=0} \\
-                                                   &+ \dotsb \\
+                                                   &\shortvdotswithin{-}
                                                    &+ \mu(T^{-n} A) - \underbrace{\mu(T^{-n} A \cap (A \cup T^{-1} A \cup \dotsb \cup T^{-(n-1)} A))}_{=0} \\
                                                    &= (n+1) \mu(A),
   \end{align*}
   a contradiction if $n + 1 > \mu(A)^{-1}$.
 \end{proof}
-\begin{thm}[Poincar\'{e} recurrence]
-  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{MPS}. Let $A \in \mathcal{B}$ with $\mu(A) > 0$. Then a.e.\ $x \in A$ returns to $A$ infinitely often.
+\begin{thm}[Poincar\'{e} recurrence]\hypertarget{def:poincare}
+  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
+  Let $A \in \mathcal{B}$ with $\mu(A) > 0$.
+  Then almost every $x \in A$ returns to $A$ infinitely often.
   That is:
   \begin{equation*}
-    \mu(A \setminus \bigcap_{N=1}^\infty \bigcup_{n=N}^\infty T^{-n} A) = 0.
+    \mu\left(A \setminus \bigcap_{N=1}^\infty \bigcup_{n=N}^\infty T^{-n} A\right) = 0.
   \end{equation*}
 \end{thm}
 \begin{remark}
   $x \in T^{-n} A \iff T^n x \in A$. $\bigcup_{n=N}^\infty T^{-n} A$ are the points that visit $A$ at least once after time $N$.
 \end{remark}
 \begin{proof}
-  Let $A_0$ be the set of points in $A$ that never return to $A$. We first show $\mu(A_0) = 0$. Note that $\mu(A_0 \cap T^{-n} A_0) \leq \mu(A_0 \cap T^{-n} A) = \mu(\emptyset) = 0 \; \forall n > 0$.
-  By the lemma, $\mu(A_0) = 0$. Note that if $x \in (A \setminus \cap_{N=1}^\infty \cup_{n=N}^\infty T^{-n} A)$, then there is a maximal $m \in \mathbb{Z}_{\geq 0}$ such that $T^m x \in A$.
+  Let $A_0$ be the set of points in $A$ that never return to $A$.
+  We first show $\mu(A_0) = 0$.
+  Note that
+  \begin{equation*}\mu(A_0 \cap T^{-n} A_0) \leq \mu(A_0 \cap T^{-n} A) = \mu(\emptyset) = 0\end{equation*}
+  for all $n > 0$.
+  By the lemma, $\mu(A_0) = 0$.
+
+  Note that if
+  \begin{equation*}x \in A \setminus \bigcap_{N=1}^\infty \bigcup_{n=N}^\infty T^{-n} A,\end{equation*}
+  then there is a maximal $m \in \mathbb{Z}_{\geq 0}$ such that $T^m x \in A_0$.
   This means that
   \begin{equation*}
-    A \setminus \bigcap \bigcup T^{-n} A \subset \bigcup_{m=0}^\infty T^{-m} A
+    A \setminus \bigcap \bigcup T^{-n} A \subset \bigcup_{m=0}^\infty T^{-m} A_0
   \end{equation*}
   where the right hand side has measure 0.
 \end{proof}
 
-This effectively answers one % which one
-of the questions we asked earlier. % describe how
+This effectively answers the first question we asked earlier - the \hyperlink{def:orbit}{orbit} of almost every $x$ visits $A$ infinitely often if $\mu(A) > 0$.
 
-%What if the point does not start in $A$?
+But what if the point does not start in $A$?
 The main issue that can occur is that $X$ splits into parts, which are preserved under $T$:
 \begin{center}
   \begin{tikzpicture}
@@ -299,12 +326,13 @@ The main issue that can occur is that $X$ splits into parts, which are preserved
   \end{tikzpicture}
 \end{center}
 
-\begin{defi}[Ergodic]
+So, we define a notion of `irreducible' for \hyperlink{def:mps}{measure preserving systems}.
+\begin{defi}[Ergodic]\hypertarget{def:ergodic}
   A \hyperlink{def:mps}{measure preserving system} is called \textbf{ergodic} if $A = T^{-1}A$ implies $\mu(A) = 0$ or $1$ for all $A \in \mathcal{B}$.
 \end{defi}
 
-If the MPS is not \hyperlink{def:ergodic}{ergodic}, and $A \in \mathcal{B}$ with $0 < \mu(A) < 1$ such that $T^{-1} A = A$, then we can restrict the MPS to $A$.
-That is, we consider the MPS: $(A, \mathcal{B}_A, \mu_A, T|_A)$ where $\mathcal{B}_A = \set{B \in \mathcal{B} | B \subseteq A}$ and $\mu_A(B) = \frac{\mu(B)}{\mu(A)}$ for all $B \in \mathcal{B}_A$.
+If a \hyperlink{def:mps}{measure preserving system} is not \hyperlink{def:ergodic}{ergodic}, and we have $A \in \mathcal{B}$ with $0 < \mu(A) < 1$ such that $T^{-1} A = A$, then we can restrict the measure preserving system to $A$.
+That is, we consider the measure preserving system $(A, \mathcal{B}_A, \mu_A, T|_A)$ where $\mathcal{B}_A = \set{B \in \mathcal{B} | B \subseteq A}$ and $\mu_A(B) = \frac{\mu(B)}{\mu(A)}$ for all $B \in \mathcal{B}_A$.
 \begin{thm}
   The following are equivalent for an \hyperlink{def:mps}{measure preserving system} $(X, \mathcal{B}, \mu,T)$.
   \begin{enumerate}[label=(\arabic*)]
@@ -321,13 +349,18 @@ That is, we consider the MPS: $(A, \mathcal{B}_A, \mu_A, T|_A)$ where $\mathcal{
   \end{enumerate}
 \end{thm}
 \begin{proof}
-  (1) $\Rightarrow$ (2). Let $A \in \mathcal{B}$ with $\mu(A) > 0$. Let $B = \bigcap \bigcup T^{-n}A$.
-  By Poincar\'e recurrence, $\mu(B) \geq \mu(A) > 0$. So if we show that $B = T^{-1} B$, then $\mu(B) = 1$ follows by ergodicity.
-  $x \in B$ iff $x$ visits $A$ infinitely often $\iff Tx$ visits $A$ infinitely often $\iff T_x \in B$.
-  So we have proved $B = T^{-1} B$.
+  (1) $\implies$ (2).
+  Let $A \in \mathcal{B}$ with $\mu(A) > 0$. Let $B = \bigcap \bigcup T^{-n}A$.
+  By \hyperlink{def:poincare}{Poincar\'e recurrence}, $\mu(B) \geq \mu(A) > 0$.
+  So if we show that $B = T^{-1} B$, then $\mu(B) = 1$ follows by \hyperlink{def:ergodic}{ergodicity}.
+  But
+  \begin{equation*}x \in B \iff x\text{ visits }A\text{ infinitely often }\iff Tx\text{ visits }A\text{ infinitely often }\iff Tx \in B.\end{equation*}
+  So $B = T^{-1} B$.
 
-  (2) $\Rightarrow$ (3). Let $A \in \mathcal{B}$ such that $\mu(A \triangle T^{-1} A) = 0$. If $\mu(A) = 0$, there is nothing to prove. Suppose $\mu(A) > 0$.
-  Let $B = \bigcap \bigcup T^{-n} A$. By (2), we know that $\mu(B) = 1$. We show $\mu(B \setminus A) = 0$, which completes the proof.
+  (2) $\implies$ (3). Let $A \in \mathcal{B}$ such that $\mu(A \triangle T^{-1} A) = 0$. If $\mu(A) = 0$, there is nothing to prove. Suppose $\mu(A) > 0$.
+  Let $B = \bigcap \bigcup T^{-n} A$. By (2), we know that $\mu(B) = 1$.
+
+  We show $\mu(B \setminus A) = 0$, which completes the proof.
   Let $x \in B \setminus A$, then there is a first time $m$ such that $T^m x \in A$, and $m > 0$.
   Hence $x \in T^{-m} A \setminus T^{-(m-1)}A$. Thus
   \begin{equation*}
@@ -340,20 +373,22 @@ That is, we consider the MPS: $(A, \mathcal{B}_A, \mu_A, T|_A)$ where $\mathcal{
   For all $t \in \mathbb{R}$, let $A_t = \set{x \in X | f(x) \leq t}$.
   Then $\mu(A_t \triangle T^{-1} A_t) = 0$.
   By (3), we have $\mu(A_t) = 0$ or $1$ for all $t$.
-  If $t$ is very small, then $\mu(A_t) = 0$. If $t$ is very large, $\mu(A_t) = 1$. $t \mapsto \mu(A_t)$ is monotone, hence $\exists c \in \mathbb{R}$ such that $\mu(A_t) = 0$ for all $t < c$ and $\mu(A_t) = 1 \; \forall t > c$.
-  Then $f(x) = c$ a.e.
 
-  (4) $\Leftrightarrow$ (5) is left as an exercise.
-  (4) $\Rightarrow$ (1). Let $A \in \mathcal{B}$ with $A = T^{-1} A$. Then $\chi(A) = \chi(A) \circ T$ everywhere so $\chi(A)$ is constant a.e.
+  If $t$ is very small, then $\mu(A_t) = 0$. If $t$ is very large, $\mu(A_t) = 1$. $t \mapsto \mu(A_t)$ is monotone, hence $\exists c \in \mathbb{R}$ such that $\mu(A_t) = 0$ for all $t < c$ and $\mu(A_t) = 1$ $\forall t > c$.
+  Then $f(x) = c$ almost everywhere.
+
+  (4) $\iff$ (5) is left as an exercise.
+
+  (4) $\implies$ (1). Let $A \in \mathcal{B}$ with $A = T^{-1} A$. Then $\chi_A = \chi_A \circ T$ everywhere so $\chi_A$ is constant almost everywhere.
 \end{proof}
 \begin{eg}
-  The circle rotation map $(\mathbb{R}/\mathbb{Z}, \mathcal{B}, \mu, R_\alpha)$ is ergodic iff $\alpha$ is irrational.
-  Let $f: X \to \mathbb{R}$ be measurable. $f(x) = \sum_{n \in \mathbb{Z}} a_n \exp(2\pi i n x)$.
-  \begin{align}
+  The \hyperlink{def:circ}{circle rotation} map $(\mathbb{R}/\mathbb{Z}, \mathcal{B}, \mu, R_\alpha)$ is \hyperlink{def:ergodic}{ergodic} iff $\alpha$ is irrational.
+  Let $f: X \to \mathbb{R}$ be measurable. We can write $f(x) = \sum_{n \in \mathbb{Z}} a_n \exp(2\pi i n x)$.
+  \begin{align*}
     f \circ R_\alpha(x) = f(x + \alpha) &= \sum_{n \in \mathbb{Z}} a_n \exp(2 \pi i n (x + \alpha)) \\
                                         &= \sum_{n \in \mathbb{Z}} a_n \exp(2\pi i n \alpha) \exp(2 \pi i n x)
-  \end{align}
-  So $f = f \circ R_\alpha \iff a_n = a_n = \exp(2 \pi i n \alpha) \; \forall n$. If $\alpha$ is irrational, then $\exp(2 \pi i n \alpha) \neq 1$ for all $n \neq 0$, then $a_n = 0$.
+  \end{align*}
+  So $f = f \circ R_\alpha \iff a_n = a_n \exp(2 \pi i n \alpha) \; \forall n$. If $\alpha$ is irrational, then $\exp(2 \pi i n \alpha) \neq 1$ for all $n \neq 0$, so $a_n = 0$.
 \end{eg}
 
 \textbf{missing content here}
