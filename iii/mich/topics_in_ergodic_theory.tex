@@ -15,6 +15,12 @@
 \reversemarginpar
 
 % preamble
+\newcommand{\named}[1]{\textbf{#1}\index{#1}}
+
+\DeclareMathOperator*{\limw}{lim-w}
+
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\sym}{\bigtriangleup}
 
 % and here we go!
 
@@ -283,7 +289,7 @@ where the inequality comes from satisfying the conditions of \hyperlink{thm:sze}
   \end{align*}
   a contradiction if $n + 1 > \mu(A)^{-1}$.
 \end{proof}
-\begin{thm}[Poincar\'{e} recurrence]\hypertarget{def:poincare}
+\begin{thm}[Poincar\'{e} recurrence]\hypertarget{thm:poincare}
   Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
   Let $A \in \mathcal{B}$ with $\mu(A) > 0$.
   Then almost every $x \in A$ returns to $A$ infinitely often.
@@ -341,23 +347,23 @@ That is, we consider the measure preserving system $(A, \mathcal{B}_A, \mu_A, T|
       \begin{equation*}
         \mu\left(\bigcap_{N=1}^\infty \bigcup_{n=N}^\infty T^{-n} A\right) = 1.
       \end{equation*}
-    \item $\mu(A \triangle T^{-1} A) = 0$ implies $\mu(A) = 0$ or $1$ $\forall A \in \mathcal{B}$.
+    \item $\mu(A \sym T^{-1} A) = 0$ implies $\mu(A) = 0$ or $1$ $\forall A \in \mathcal{B}$.
     \item For all bounded measurable functions $f: X \to \mathbb{R}$,
-      $f = f \circ T$ a.e.\ implies $f$ is constant a.e.
+      $f = f \circ T$ almost everywhere implies $f$ is constant almost everywhere.
     \item For all bounded measurable functions $f: X \to \mathbb{C}$,
-      $f = f \circ T$ a.e.\ implies $f$ is constant a.e.
+      $f = f \circ T$ almost everywhere implies $f$ is constant almost everywhere.
   \end{enumerate}
 \end{thm}
 \begin{proof}
-  (1) $\implies$ (2).
+  (1) $\Rightarrow$ (2).
   Let $A \in \mathcal{B}$ with $\mu(A) > 0$. Let $B = \bigcap \bigcup T^{-n}A$.
-  By \hyperlink{def:poincare}{Poincar\'e recurrence}, $\mu(B) \geq \mu(A) > 0$.
+  By \hyperlink{thm:poincare}{Poincar\'e recurrence}, $\mu(B) \geq \mu(A) > 0$.
   So if we show that $B = T^{-1} B$, then $\mu(B) = 1$ follows by \hyperlink{def:ergodic}{ergodicity}.
   But
   \begin{equation*}x \in B \iff x\text{ visits }A\text{ infinitely often }\iff Tx\text{ visits }A\text{ infinitely often }\iff Tx \in B.\end{equation*}
   So $B = T^{-1} B$.
 
-  (2) $\implies$ (3). Let $A \in \mathcal{B}$ such that $\mu(A \triangle T^{-1} A) = 0$. If $\mu(A) = 0$, there is nothing to prove. Suppose $\mu(A) > 0$.
+  (2) $\Rightarrow$ (3). Let $A \in \mathcal{B}$ such that $\mu(A \sym T^{-1} A) = 0$. If $\mu(A) = 0$, there is nothing to prove. Suppose $\mu(A) > 0$.
   Let $B = \bigcap \bigcup T^{-n} A$. By (2), we know that $\mu(B) = 1$.
 
   We show $\mu(B \setminus A) = 0$, which completes the proof.
@@ -368,18 +374,18 @@ That is, we consider the measure preserving system $(A, \mathcal{B}_A, \mu_A, T|
   \end{equation*}
   and $\mu(T^{-m} A \setminus T^{-(m-1)} A) = \mu(T^{-1} A \setminus A) = 0$, so $\mu(B \setminus A) = 0$.
 
-  (3) $\implies$ (4).
+  (3) $\Rightarrow$ (4).
   Let $f : X \to \mathbb{R}$ be a bounded measurable function such that $f = f \circ T$ almost everywhere.
   For all $t \in \mathbb{R}$, let $A_t = \set{x \in X | f(x) \leq t}$.
-  Then $\mu(A_t \triangle T^{-1} A_t) = 0$.
+  Then $\mu(A_t \sym T^{-1} A_t) = 0$.
   By (3), we have $\mu(A_t) = 0$ or $1$ for all $t$.
 
   If $t$ is very small, then $\mu(A_t) = 0$. If $t$ is very large, $\mu(A_t) = 1$. $t \mapsto \mu(A_t)$ is monotone, hence $\exists c \in \mathbb{R}$ such that $\mu(A_t) = 0$ for all $t < c$ and $\mu(A_t) = 1$ $\forall t > c$.
   Then $f(x) = c$ almost everywhere.
 
-  (4) $\iff$ (5) is left as an exercise.
+  (4) $\Leftrightarrow$ (5) is left as an exercise.
 
-  (4) $\implies$ (1). Let $A \in \mathcal{B}$ with $A = T^{-1} A$. Then $\chi_A = \chi_A \circ T$ everywhere so $\chi_A$ is constant almost everywhere.
+  (4) $\Rightarrow$ (1). Let $A \in \mathcal{B}$ with $A = T^{-1} A$. Then $\chi_A = \chi_A \circ T$ everywhere so $\chi_A$ is constant almost everywhere.
 \end{proof}
 \begin{eg}
   The \hyperlink{def:circ}{circle rotation} map $(\mathbb{R}/\mathbb{Z}, \mathcal{B}, \mu, R_\alpha)$ is \hyperlink{def:ergodic}{ergodic} iff $\alpha$ is irrational.
@@ -391,8 +397,151 @@ That is, we consider the measure preserving system $(A, \mathcal{B}_A, \mu_A, T|
   So $f = f \circ R_\alpha \iff a_n = a_n \exp(2 \pi i n \alpha) \; \forall n$. If $\alpha$ is irrational, then $\exp(2 \pi i n \alpha) \neq 1$ for all $n \neq 0$, so $a_n = 0$.
 \end{eg}
 
-\textbf{missing content here}
-% loads of missing crap
+% lecture 4
+\clearpage
+\section{Ergodic theorems}
+In \marginnote{\emph{Lecture 4}}the previous section, we discussed recurrence, which is concerned with orbits visiting a particular set infinitely often.
+However, we have not addressed how frequent these visits are: the second question we asked earlier.
+\begin{thm}[Mean Ergodic Theorem, von Neumann]\hypertarget{thm:meanet}
+  Let\hypertarget{def:invfunc} $(M, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}, and write
+  \begin{equation*}
+    I \coloneqq \set{f \in L^2(X) | f \circ T = f \text{ a.e.}}
+  \end{equation*}
+  for the (closed) subspace of $T$-invariant functions.
+  Denote by $P_T:L^2(X) \to I$ the orthogonal projection.
+  Then for every $f \in L^2(X)$:
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N-1} f \circ T^n \to P_T f \quad \text{in } L^2(X).
+  \end{equation*}
+\end{thm}
+\begin{thm}[Pointwise Ergodic Theorem, Birkhoff]\hypertarget{thm:pet}
+  Let $(M, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
+  Then for every $f \in L^1(X)$, there is a $T$-invariant function
+  $f^* \in L^1(X)$ such that
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N-1} f \circ T^n \to f^*(x) \quad \text{pointwise a.e.}
+  \end{equation*}
+\end{thm}
+
+\hypertarget{def:ergavg}When $f \in L^2(X)$, then the function $f^*$ in the \hyperlink{thm:pet}{Pointwise Ergodic Theorem} is $P_Tf$.
+The \hyperlink{thm:meanet}{Mean Ergodic Theorem} also holds in $L^p$ for $1 \leq p < \infty$, see the example sheet.
+We call the quantity $\frac{1}{N} \sum_{n=0}^{N-1} f \circ T^n$ the \textbf{ergodic average}.
+
+\begin{lemma}
+  Let $(X, \mathcal{B}, \mu)$ be a probability space, and let $T: X \to X$ be a measurable transformation.
+  Then $T$ is measure preserving if and only if
+  \begin{equation*}
+    \int_X f \circ T \, d\mu = \int_X f \, d\mu \label{eq:4star} \tag{$*$}
+  \end{equation*}
+  for all $f \in L^1(X)$.
+\end{lemma}
+\begin{proof}
+  $(\Rightarrow)$. Let $A \in \mathcal{B}$ and note that $x \in T^{-1}(A)$ is equivalent to $Tx \in A$.
+  Hence we can write
+  \begin{equation*}
+    \mu(T^{-1}(A))=\int\!\chi_{T^{-1}A}\,d\mu=\int\!\chi_A\circ T\,d\mu=\int\!\chi_A\,d\mu=\mu(A)
+  \end{equation*}
+  so $T$ is measure preserving.
+
+  ($\Leftarrow$). As in ($\Rightarrow$), we can show \eqref{eq:4star} for characteristic functions.
+  Then by linearity of integration, it also holds for simple functions.
+  Now let $f \in L^1(X)$ be non-negative. Taking $f_1, f_2, \dotsc$ an increasing sequence of simple functions with $f = \lim f_n$ almost everywhere.
+  Then $f \circ T = \lim f_n \circ T$ almost everywhere (since $T$ is measure preserving).
+  Hence using the definition of integration and \eqref{eq:4star} for simple functions
+  \begin{equation*}
+    \int\!f\circ T\,d\mu=\lim\int\!f_n\circ T\,d\mu=\lim\int\!f_n\,d\mu=\int\!f\,d\mu.
+  \end{equation*}
+  Finally, a general $f \in L^1(X)$ can be written as the difference of two non-negative functions, and conclude \eqref{eq:4star} by linearity.
+\end{proof}
+\begin{defi}[Koopman operator]\hypertarget{def:koopman}
+  Let $(X,\mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
+  For $f: X \to \mathbb{C}$ a measurable function, define
+  \begin{equation*}
+    U_T f = f \circ T
+  \end{equation*}
+  and call $U_T$ the \textbf{Koopman operator}.
+\end{defi}
+\begin{lemma}
+  The \hyperlink{def:koopman}{Koopman operator $U_T$} is an isometry on the Hilbert space $L^2(X)$, i.e.
+  \begin{equation*}
+    \langle f, g \rangle = \langle U_T f, U_T g \rangle
+  \end{equation*}
+  for all $f,g \in L^2(X)$.
+\end{lemma}
+\begin{proof}
+  Apply the previous lemma to $f \cdot \bar{g} \in L^1(X)$.
+\end{proof}
+
+\begin{defi}[Invertible]\hypertarget{def:inv}
+  A \hyperlink{def:mps}{measure preserving system} $(X, \mathcal{B}, \mu, T)$ is said to be \textbf{invertible} if there is a measure preserving map $S: X \to X$ such that $T \circ S = S \circ T = \operatorname{id}_X$ almost everywhere.
+  If such a map exists, denote it as $T^{-1}$.
+\end{defi}
+\begin{eg}
+  The \hyperlink{def:circ}{circle rotation} is invertible, but the \hyperlink{def:doubling}{doubling map} is not.
+\end{eg}
+\begin{lemma}
+  If the \hyperlink{def:mps}{measure preserving system} $(X, \mathcal{B}, \mu, T)$ is \hyperlink{def:inv}{invertible}, then \hyperlink{def:koopman}{$U_T$} is unitary on $L^2(X)$ and $U_T^* = U_{T^{-1}}$.
+\end{lemma}
+\begin{proof}
+  We use the earlier lemma to the function $f \cdot \overline{(g \circ T^{-1})}$:
+  \begin{align*}
+    \langle f, \hyperlink{def:koopman}{U_{T^{-1}}} g \rangle &= \int f \cdot \overline{g \circ T^{-1}} \, d\mu \\
+                                    &= \int (f \cdot \overline{(g \circ T^{-1})}) \circ T\,d\mu \\
+                                    &= \int f\circ T \cdot \bar{g}\,d\mu \\
+                                    &= \langle U_T f, g \rangle
+  \end{align*}
+  This shows that $U_T^* = U_{T^{-1}}$. Clearly $U_T U_{T^{-1}} = U_{T^{-1}} U_T = \operatorname{id}_{L^2(X)}$, so $U_T$ is unitary.
+\end{proof}
+The proofs we will give of the ergodic theorems rely on the idea that convergence is easy for certain special functions.
+
+First, the ergodic averages of a $T$-invariant function $f \hyperlink{def:invfunc}{\in I}$ are equal to $f$, so they converge to $f$.
+If $f = U_T g - g$ for some $g$, then the \hyperlink{def:ergavg}{ergodic averages} become telescopic sums and only the boundary terms remain, that is:
+\begin{equation*}
+  \frac{1}{N} \sum_{n=0}^{N-1} U_T^n(U_T g - g) = \frac{1}{N} (U_T^N g - g)
+\end{equation*}
+and the right hand side is easily seen to converge to $0$.
+The following lemma shows that these two type of functions are enough to look at.
+\begin{lemma}
+  Write
+  \begin{equation*}
+    B \coloneqq \set{U_T g - g | g \in L^2(X)}.
+  \end{equation*}
+  Then $I = B^\perp$.
+\end{lemma}
+It is important to note that the space $B$ is not closed. So $L^2(X) = I \oplus \bar{B}$, but not every function in $L^2(X)$ is the sum of a $T$-invariant function and an element of $B$.
+\begin{proof}
+  We can write
+  \begin{align*}
+    f \in B^\perp &\iff \langle f, \hyperlink{def:koopman}{U_T} g - g \rangle = 0 \quad \forall g \in L^2(X) \\
+                  &\iff \langle f, g \rangle = \langle f, U_T g \rangle = \langle U_T^* f, g \rangle \quad \forall g \in L^2(X) \\
+                  &\iff f = U_T^* f.
+  \end{align*}
+  If the system was \hyperlink{def:inv}{invertible}, then we could finish the proof by applying $U_T = (U_T^*)^{-1}$ to both sides of the last equation.
+
+  But, we can prove that $f = U_T f \iff f = U_T^* f$ in the general case:
+  \begin{align*}
+    f = U_T f &\iff \langle f - U_T f, f - U_T f \rangle = 0 \\
+              &\iff\|f\|_2^2+\|U_T f\|^2_2-\langle f,U_Tf\rangle-\langle U_Tf,f\rangle=0 \\
+              &\iff\|f\|_2^2+\|U_T^*\|_2^2-\langle U_T^*f,f\rangle-\langle f,U_T^*f\rangle + (\|U_Tf\|^2_2-\|U_T^*f\|_2^2) = 0 \\
+              &\iff\|f-U_T^*f\|_2^2+(\|U_Tf\|_2^2-\|U_T^*f\|_2^2)=0
+  \end{align*}
+  Note that both terms in the left hand side of the final equation are non-negative, since $\|U_Tf\|_2=\|f\|_2$ since $U_T$ is an isometry, and $\|U_T^*f\|_2\leq\|f\|_2$ as $\|U_T^*\|=\|U_T\|=1$.
+
+  Thus,
+  \begin{equation*}
+    f = U_T f \iff f = U_T^* f\text{ and }\|f\|_2 = \|U_T^*f\|_2.
+  \end{equation*}
+  The second statement of the right follows from the first one, hence $f = U_T f \iff f = U_T^*f$, as required.
+\end{proof}
+\begin{proof}[Proof of \hypertarget{thm:meanet}{Mean Ergodic Theorem}]
+  Let $f \in L^2(X)$ and fix $\epsilon > 0$.
+  By the lemma, we can write $f = \hyperlink{def:invfunc}{P_T} f + \hyperlink{def:koopman}{U_T} g - g + e$ for some $e, g \in L^2(X)$ such that $\|e\|_2 < \epsilon$.
+  Thus
+  \begin{equation*}
+    \limsup_{n \to \infty} \left\|\frac{1}{N} \sum_{n=0}^{N-1} U_T^n f - P_T f\right\|_2 \leq \limsup_{n\to \infty} \left\lVert\frac{1}{N} \left(U_T^Ng - g\right) + \frac{1}{N} \sum_{n=0}^{N-1}U_T^ne\right\rVert_2 < \epsilon
+  \end{equation*}
+  and conclude by taking $\epsilon\to0$.
+\end{proof}
 
 \begin{thm}[Maximal ergodic theorem, Wiener]
   Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
