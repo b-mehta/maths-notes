@@ -1131,5 +1131,122 @@ Open problem: Is there a \hyperlink{def:mps}{measure preserving system} that is 
     \hyperlink{def:dens}{\dlim_{n \to \infty}} \mu(A \cap T^{-n} B) = \mu(A) \mu(B).
   \end{equation*}
 \end{defi}
+% newlec
+\begin{lemma}
+  Let\marginnote{\emph{Lecture 10}} $(a_n) \subset \mathbb{R}$ be a bounded sequence, let $a \in \mathbb{R}$.
+  Then the following are equivalent.
+  \begin{enumerate}[label=(\arabic*)]
+    \item $\hyperlink{def:dens}{\dlim_{n \to \infty}} a_n = a.$
+    \item $\hyperlink{def:cesaro}{\clim_{n \to \infty}} |a_n- a| = 0$.
+    \item $\clim_{n \to \infty} (a_n- a)^2 = 0$.
+    \item $\clim_{n \to \infty} a_n = a$ and $\clim a_n^2 = a^2$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\leavevmode
+  \begin{itemize}
+    \item (1) $\Rightarrow$ (2). Fix $\epsilon > 0$. Let $M = \sup |a_n|$. Suppose that $N$ is large enough such that
+      \begin{equation*}
+        \frac{1}{N} \left\lvert\set{n \in [1,N] | |a_n - a| > \epsilon}\right\rvert < \epsilon.
+      \end{equation*}
+      We estimate
+      \begin{align*}
+        \frac{1}{N} \sum_{n=1}^N |a_n - a| &\leq \frac{1}{N} (\epsilon \cdot N + 2M \cdot \epsilon N) \\
+                                           &= \epsilon(1 + 2M).
+      \end{align*}
+      $M$ is constant, $\epsilon$ is arbitrary, so
+      \begin{equation*}
+        \frac{1}{N} \sum_{n=1}^N |a_n - a| \to 0 \quad \text{as } N \to \infty.
+      \end{equation*}
+
+    \item (2) $\Rightarrow$ (1). Fix $\epsilon > 0$.
+      \begin{equation*}
+        \epsilon \left\lvert\set{n \in [1,N] | |a_n - a| > \epsilon}\right\rvert \leq \sum_{n=1}^N |a_n - a|
+      \end{equation*}
+      By (2), we get $\frac{\epsilon}{N} \left\lvert\set{n \in [1,N] | |a_n - a| > \epsilon}\right\rvert \to 0$.
+      This proves (1).
+
+    \item The argument (1) $\Leftrightarrow$ (3) is the same.
+
+    \item (1),(2) $\Rightarrow$ (4).
+      \begin{equation*}
+        \left| \frac{1}{N} \sum_{n=1}^N (a_n - a) \right| \leq \frac{1}{N} \sum_{n=1}^N |a_n - a| \to 0
+      \end{equation*}
+      by (2). This implies $\clim a_n = a$.
+
+      By the definition of $\dlim$:
+      \begin{equation*}
+        \dlim a_n = a \implies \dlim a_n^2 = a^2
+      \end{equation*}
+      So using (1) and the implication (1) $\Rightarrow$ (3), $\clim |a_n^2 - a^2| = 0$ hence $\clim a_n^2 = a^2$.
+
+    \item (4) $\Rightarrow$ (3).
+      \begin{align*}
+        \frac{1}{N} \sum_{n=1}^N (a_n - a)^2 &= \frac{1}{N} \sum_{n=1}^N a_n^2 + \frac{1}{N} \sum_{n=1}^N a^2 - 2 \frac{1}{N} \sum_{n=1}^N a a_n \\
+                                             &\to a^2 + a^2 - 2a \cdot a = 0. \qedhere
+      \end{align*}
+  \end{itemize}
+\end{proof}
+\begin{thm}
+  Let $(X,\mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
+  The following are equivalent
+  \begin{enumerate}[label=(\arabic*)]
+    \item $(X, \mathcal{B}, \mu, T)$ is \hyperlink{def:wMixing}{weak mixing}.
+    \item $(X \times Y, \mathcal{B} \times \mathcal{C}, \mu \times \nu, T \times S)$ is \hyperlink{def:ergodic}{ergodic} for any ergodic measure preserving system $(Y, \mathcal{C}, \nu, S).$
+    \item $(X \times X, \mathcal{B} \times \mathcal{B}, \mu \times \mu, T \times T)$ is ergodic.
+    \item $(X \times X, \mathcal{B} \times \mathcal{B}, \mu \times \mu, T \times T)$ is weak mixing.
+    \item $U_T$ has no non-constant eigenfunctions, i.e.\ if $f: X \to \mathbb{C}$ is measurable and $\lambda \in \mathbb{C}$ such that $f \circ T = \lambda f$ almost everywhere, then $f$ is constant a.e.
+  \end{enumerate}
+\end{thm}
+We will come back to prove this in a moment.
+\begin{lemma}
+  Let $(X,\mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
+  Let $\mathcal{S} \subset \mathcal{B}$ be a semi-algebra ($\pi$-system) that generates $\mathcal{B}$.
+  Then $(X, \mathcal{B}, \mu, T)$ is \hyperlink{def:wMixing}{weak mixing} iff
+  \begin{equation*}
+    \hyperlink{def:dens}{\dlim_{n \to \infty}} \mu(T^{-n} A \cap B) = \mu(A) \mu(B) \quad \forall A, B \in \mathcal{S}
+  \end{equation*}
+  and $(X, \mathcal{B}, \mu, T)$ is ergodic iff
+  \begin{equation*}
+    \hyperlink{def:cesaro}{\clim_{n \to \infty}} \mu(T^{-n} A \cap B) = \mu(A) \mu(B).
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  See example sheet 2, question 2.
+\end{proof}
+\begin{proof}
+  (1) $\Rightarrow$ (2). Let $\mathcal{S}$ be the set of measurable rectangles, i.e.\ sets of the form $B \times C$, where $B \in \mathcal{B}$, $C \in \mathcal{C}$.
+  We write for $B_1 \times C_1, B_2 \times C_2 \in \mathcal{S}$:
+  \begin{align*}
+    &\left|\frac{1}{N} \sum_{n=1}^N [\mu \times \nu((T \times S)^{-n} (B_1 \times C_1) \cap B_2 \times C_2) - \mu \times \nu (B_1 \times C_1) \mu \times \nu(B_2 \times C_2)]\right| \\
+    =
+    &\left|\frac{1}{N} \sum_{n=1}^N [\mu (T^{-n} B_1 \cap B_2) \nu(S^{-n} C_1 \cap C_2) - \mu(B_1) \mu(B_2) \nu(C_1) \nu(C_2)]\right| \\
+    \leq & \frac{1}{N} \left| \sum_{n=1}^N \mu(T^{-n}B_1 \cap B_2) \nu(S^{-n} C_1 \cap C_2) - \mu(B_1) \mu(B_2) \nu(S^{-n}C_1 \cap C_2)\right| \\
+         &\hspace{2cm} + \frac{1}{N} \left|\sum_{n=1}^N \left[\mu(B_1) \mu(B_2) \nu(S^{-n} C_1 \cap C_2) - \mu(B_1) \mu(B_2) \nu(C_1) \nu(C_2)\right] \right| \\
+    \leq &\frac{1}{N} \sum_{n=1}^N |\mu(T^{-n} B_1 \cap B_2) - \mu(B_1) \mu(B_2)| \\
+         &\hspace{2cm} + \frac{1}{N} \mu(B_1) \mu(B_2) \left|\sum_{n=1}^N \left[\nu(S^{-n} C_1 \cap C_2) - \nu(C_1) \nu(C_2)\right] \right|
+    \to 0.
+  \end{align*}
+
+  (2) $\Rightarrow$ (3). (3) is a special case of (2) if we show that $(X, \mathcal{B}, \mu, T)$ is ergodic. That can be seen by applying (2) with $|Y| = 1, S = \operatorname{id}_Y$.
+
+  (3) $\Rightarrow$ (1). Let $A, B \in \mathcal{B}$. We have
+  \begin{align*}
+    \clim \mu \times \mu ((T \times T)^{-n} (A \times X) \cap (B \times X)) &= \mu \times \mu(A \times X) \mu \times \mu(B \times X) \\
+    \clim \mu(T^{-n} A \cap B) \mu(T^{-n} X \cap X) &= \mu(A) \mu(B) \mu(X)^2 \\
+    \clim \mu(T^{-n} A \cap B) &= \mu(A) \mu(B)
+  \end{align*}
+  Same argument with $A \times A$ and $B \times B$ in place of $A \times X$ and $B \times X$ gives
+  \begin{equation*}
+    \clim \mu(T^{-n} A \cap B)^2 = (\mu(A) \mu(B))^2.
+  \end{equation*}
+  Then
+  \begin{equation*}
+    \dlim \mu(T^{-n} A \cap B) = \mu(A) \mu(B).
+  \end{equation*}
+  This proves (1).
+
+  (1) $\Leftrightarrow$ (4) is the same arguments.
+
+\end{proof}
 \printindex
 \end{document}
