@@ -1572,5 +1572,120 @@ Roughly, the entropy measures how difficult it is to predict the next element of
     \item $H_\mu(\xi \vee \eta) = H_\mu(\xi) + H_\mu(\eta \mid \xi)$, sometimes called the chain rule.
   \end{enumerate}
 \end{lemma}
+% new lecture
+\begin{defi}[Convex]\hypertarget{def:convex}
+  A \marginnote{\emph{Lecture 15}}function $[a,b] \to \mathbb{R} \cup \{\infty\}$ is \named{convex} if $\forall x \in (a,b), \exists \alpha_x \in \mathbb{R}$ such that
+  \begin{equation*}
+    f(y) \geq f(x) + \alpha_x (y-x) \quad \forall y \in (a,b),
+  \end{equation*}
+  $f$ is \named{strictly convex}\index{convex!strictly} if equality occurs only for $x=y$.
+\end{defi}
+\begin{remark}
+  If $f$ is $C^2((a,b))$ and $C([a,b])$ and $f''(x)>0$ for all $x \in (a,b)$ then $f$ is \hyperlink{def:convex}{strictly convex}.
+\end{remark}
+\begin{lemma}[Jensen's inequality]\hypertarget{lem:jensen}
+  Let $f: [a,b] \to \mathbb{R}\cup \{\infty\}$ be a \hyperlink{def:convex}{convex} function.
+  Let $p_1,p_2, \dotsc$ be a probability vector (possibly infinite). Let $x_1, x_2, \dotsc \in [a,b]$.
+  Then
+  \begin{equation*}
+    f(p_1 x_1 + p_2 x_2 + \dotsb) \leq \sum_i p_i f(x_i).
+  \end{equation*}
+  If $f$ is \hyperlink{def:convex}{convex}, then equality occurs iff those $x_i$ for which $p_i > 0$ coincide.
+\end{lemma}
+\begin{proof}
+  The proof of Jensen's inequality is not part of this course, but is still worth reading.
+\end{proof}
+\begin{proof}[Proof of lemma]
+  (1) is immediate by definition.
+  For (2), let $(X, \mathcal{B},\mu)$ be a probability space, let $\xi$ be a measurable partition with $k$ atoms.
+  Apply \hyperlink{lem:jensen}{Jensen's inequality} to the function $x \mapsto x \log x$ with weights $p_i = \frac{1}{k}$ and the points $\mu(A_i)$ where $A_i$ are the atoms of $\xi$.
+  Note
+  \begin{align*}
+    \sum p_i \mu(A_i) &= \frac{1}{k} \sum \mu(A_i) = \frac{1}{k} \\
+    \frac{1}{k} \log \frac{1}{k} &\leq \sum \frac{1}{k} \mu(A_i) \log \mu(A_i) \\
+    \log k &\geq \sum -\mu(A_i) \log \mu(A_i) = H_\mu(\xi).
+  \end{align*}
+  (3) is immediate from definition, and we will prove (4) in greater generality below.
+\end{proof}
+\begin{defi}[Information function]\hypertarget{def:i}
+  Let $(X,\mathcal{B},\mu)$ be a probability space.
+  Let $\xi$ be a \hyperlink{def:partition}{countable measurable partition}.
+  The \named{information function} of $\xi$ is
+  \begin{align*}
+    I_\mu(\xi): X &\longrightarrow \mathbb{R}\cup\{\infty\} \\
+    x &\longmapsto -\log \mu([x]_\xi),
+  \end{align*}
+  where $[x]_\xi$ is the \hyperlink{def:partition}{tom} of $\xi$ where $\xi$ belongs.
+
+  If $\eta$ is another partition, then the \textbf{conditional information} $f_n$ of $\xi$ relative to $\eta$ is
+  \begin{equation*}
+    I_\mu(\xi \mid \eta)(x) = -\log \frac{\mu([x]_{\xi \vee \eta})}{\mu([x]_\eta)}.
+  \end{equation*}
+\end{defi}
+\begin{lemma}
+  With notation as above,
+  \begin{align*}
+    \hyperlink{def:ent}{H_\mu(\xi)} &= \int \hyperlink{def:i}{I_\mu(\xi)}\,d\mu \\
+    H_\mu(\xi \mid \eta) &= \int I_\mu(\xi \mid \eta)\,d\mu
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  The first is a special case of the second, where $\eta = \{X\}$, so we only prove the second.
+  \begin{align*}
+    \int I_\mu(\xi \mid \eta)\,d\mu &= \sum_{A \in \xi, B \in \eta} \int_{A\cap B} I_\mu(\xi\mid\eta)\,d\mu \\
+                                    &= \sum_{A\in\xi, B\in\eta} \mu(A\cap B) \log{\frac{\mu(A \cap B)}{\mu(B)}} \\
+                                    &= \sum_{B\in\eta} \mu(B) \cdot \sum_{A\in\xi}-\frac{\mu(A\cap B)}{\mu(B)} \log\frac{\mu(A \cap B)}{\mu(B)}\qedhere.
+  \end{align*}
+\end{proof}
+\begin{lemma}[Chain rule]
+  Let $(X,\mathcal{B},\mu)$ be a probability space and let $\xi,\eta,\lambda$ be \hyperlink{def:partition}{countable measurable partitions}. Then
+  \begin{align*}
+    \hyperlink{def:i}{I_\mu}(\xi \vee \eta \mid \lambda)(x) &= I_\mu(\xi \mid \lambda) (x) + I_\mu(\eta \mid \xi \vee \lambda)(x) \quad \forall x \\
+    \hyperlink{def:ent}{H_\mu}(\xi \vee \eta \mid \lambda)(x) &= H_\mu(\xi \mid \lambda) (x) + H_\mu(\eta \mid \xi \vee \lambda)(x) \quad \forall x
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Note the second immediately follows from the first by the previous lemma.
+  \begin{align*}
+    I_\mu(\xi \vee \eta \mid \lambda)(x) &= -\log \frac{\mu([x]_{\xi \vee \eta \vee \lambda})}{\mu([x]_{\lambda})} \\
+    I_\mu(\xi \mid \lambda)(x) &= -\log \frac{\mu([x]_{\xi \vee \lambda})}{\mu([x]_{\lambda})} \\
+    I_\mu(\eta \mid \xi \vee \lambda)(x) &= -\log \frac{\mu([x]_{\xi \vee \eta \vee \lambda})}{\mu([x]_{\xi \vee \lambda})}. \qedhere
+  \end{align*}
+\end{proof}
+\begin{lemma}
+  Let notation be as above. Then
+  \begin{equation*}
+    H_\mu(\xi \mid \eta) \geq H_\mu(\xi \mid \eta \vee \lambda).
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  \begin{align*}
+    \hyperlink{def:ent}{H_\mu}(\xi \mid \eta \vee \lambda) &= \sum_{A \in\xi, B \in \eta, C \in \lambda} \mu(A \cap B \cap C) \log\frac{\mu(B \cap C)}{\mu(A \cap B \cap C)} \\
+    H_\mu(\xi \mid \eta) &= \sum_{A \in\xi, B \in \eta} \mu(A \cap B) \log\frac{\mu(B)}{\mu(A \cap B)}.
+  \end{align*}
+  It is enough to show that for all fixed $A \in \xi$, $B \in \eta$, we have:
+  \begin{equation*}
+    \mu(A \cap B) \log \frac{\mu(B)}{\mu(A \cap B)} \geq \sum_{C \in \lambda} \mu(A \cap B \cap C) \log \frac{\mu(B \cap C)}{\mu(A \cap B \cap C)}.
+  \end{equation*}
+  Apply \hyperlink{lem:jensen}{Jensen's inequality} for $x \mapsto x \log x$ at the points $\frac{\mu(A \cap B \cap C)}{\mu(B \cap C)}$ for $C \in \lambda$ with weights $\frac{\mu(B\cap C)}{\mu(B)}$.
+  Write
+  \begin{align*}
+    \sum_{C \in \lambda} \frac{\mu(B\cap C)}{\mu(B)} \cdot \frac{\mu(A \cap B \cap C)}{\mu(B \cap C)} &= \frac{1}{\mu(B)} \sum_{C \in \lambda} \mu(A \cap B \cap C) = \frac{\mu(A \cap B)}{\mu(B)} \\
+    \shortintertext{thus}
+    \frac{\mu(A \cap B)}{\mu(B)} \cdot \log \frac{\mu(A \cap B)}{\mu(B)} &\leq \sum_{C \in \lambda} \frac{\mu(B \cap C)}{\mu(B)} \cdot \frac{\mu(A \cap B \cap C)}{\mu(B \cap C)} \cdot \log \frac{\mu(A \cap B \cap C)}{\mu(B \cap C)} \\
+    \mu(A \cap B) \cdot \log \frac{\mu(A \cap B)}{\mu(B)} &\leq \sum_{C \in \lambda} \mu(A \cap B \cap C) \cdot \log \frac{\mu(A \cap B \cap C)}{\mu(B \cap C)}. \qedhere
+  \end{align*}
+\end{proof}
+\begin{cor}
+  \begin{equation*}
+    \hyperlink{def:ent}{H_\mu}(\xi) \leq H_\mu(\xi \vee \eta) \leq H_\mu(\xi) + H_\mu(\eta).
+  \end{equation*}
+\end{cor}
+\begin{proof}
+  Using the chain rule:
+  \begin{equation*}
+    H_\mu(\xi \vee \eta) = H_\mu(\xi) + H_\mu(\eta \mid \xi). \qedhere
+  \end{equation*}
+\end{proof}
 \printindex
 \end{document}
