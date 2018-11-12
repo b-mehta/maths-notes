@@ -10,13 +10,14 @@
 \usepackage{chngcntr}
 \usepackage{marginnote}
 \input{header}
+\usepackage{pgfplots}
 \makeindex[intoc]
 \usetikzlibrary{fadings, decorations.pathmorphing}
 
 % preamble
 
 \setcounter{section}{-1}
-\counterwithout{nthm}{section}
+% \counterwithout{nthm}{section}
 
 \reversemarginpar
 
@@ -1003,7 +1004,7 @@ For example, try $|A|=4$ in $Q_3$:
 Guess: `Balls are best', i.e.\ if $|A| = |X^{(\leq r)}|$, then $|N(A)| \geq |X^{(\leq r + 1)}|$ (where $X^{(\leq r)}$ is shorthand for $X^{(0)} \cup \dotsb \cup X^{(r)}$).
 What if $|A|$ strictly between $\sum_{i=0}^r \binom{n}{i}$ and $\sum_{i=0}^{r+1} \binom{n}{i}$?
 
-Guess: Take $A = X^{(\leq r)} \cup B$, for some $B \subset X^{(r+1)}$ (called a `Hamming Ball'\index{Hamming ball}).
+Guess: Take $A = X^{(\leq r)} \cup B$, for some $B \subset X^{(r+1)}$ (called a \hypertarget{def:hamming}`Hamming Ball'\index{Hamming ball}).
 
 If we knew this, then $N(A) = X^{(\leq r+1)} \cup \partial^+ B$, so by \nameref{thm:kk7}, we'd take $B$ to be an initial segment of \hyperlink{def:lex}{lex}.
 
@@ -1111,26 +1112,26 @@ Once we have proved this, we are done, as in each case $|N(B)| \geq |N(C)|$.
     \item Can also use these `codimension 1' compressions to prove \nameref{thm:kk7}.
   \end{enumerate}
 \end{remark}
-\begin{defi}
-  For $A \subset Q_i$, the \textbf{$t$-neighbourhood} of $A$ is
+\begin{defi}[Neighbourhood]
+  \hypertarget{def:neighbourhood}For\index{neighbourhood} $A \subset Q_i$, the \textbf{$t$-neighbourhood} of $A$ is
   \begin{equation*}
     A_{(t)} \coloneqq N^t(A) = \set{x \in Q_n | d(x,A) \leq t}.
   \end{equation*}
 \end{defi}
-\begin{ncor}\label{cor:3}
+\begin{ncor}\label{cor:2.3}
   Let $A \subset Q_n$ with $|A| = |X^{(\leq r)}|$. Then, for $1 \leq t \leq n-r$, have
   \begin{equation*}
-    |A_{(t)}| \geq |X^{(\leq r + t)}
+    |A_{(t)}| \geq |X^{(\leq r + t)}|
   \end{equation*}
 \end{ncor}
 \begin{proof}
-  \cref{thm:harper1} and induction.
+  \nameref{thm:harper1} and induction.
 \end{proof}
-To get a feel for what \cref{cor:3} is saying, we'll need some estimates for things like $\sum_{i=0}^r \binom{n}{i}$.
+To get a feel for what \cref{cor:2.3} is saying, we'll need some estimates for things like $\sum_{i=0}^r \binom{n}{i}$.
 \begin{nprop}\label{prop:2.4}
   Let $0 \leq \epsilon < \frac{1}{4}$.
   \begin{equation*}
-    \sum_{i=0}^\floor{(\frac{1}{2} - \epsilon) n} \binom{n}{i} < \frac{1}{\epsilon} e^{(-\epsilon^2 \frac{n}{2})} 2^n
+    \sum_{i=0}^{\floor{(\frac{1}{2} - \epsilon) n}} \binom{n}{i} < \frac{1}{\epsilon} e^{(-\epsilon^2 \frac{n}{2})} 2^n
   \end{equation*}
   (an exponentially small fraction of $2^n$ for $\epsilon$ fixed).
 \end{nprop}
@@ -1146,18 +1147,255 @@ Roughly we are going around $\epsilon \sqrt{n}$ standard deviations from the mea
     \sum_{i=0}^{\floor{(\frac{1}{2}-\epsilon) n}} \binom{n}{i} \leq \frac{1}{2\epsilon} \binom{n}{\floor{(\frac{1}{2} + \epsilon) n}}
   \end{equation*}
   as a geometric progression.
-  Similarly, replacing $\epsilon$ with $\epsilon/2$,
+  Similarly, replacing $\epsilon$ with $\frac \epsilon 2$,
   \begin{align*}
     \binom{n}{\floor{(\frac{1}{2} - \epsilon)n}} &\leq (1-\epsilon)^{\epsilon \frac{n}{2} - 1} \binom{n}{\floor{(\frac{1}{2} - \frac{\epsilon}{2}) n}} \\
-                                                 &\leq 2(1-\epsilon)^{\epsilon/2} 2^n \\
-                                                 &\leq 2 e^{-\epsilon \cdot \epsilon n/2} 2^n,
+                                                 &\leq 2(1-\epsilon)^{\frac \epsilon 2} 2^n \\
+                                                 &\leq 2 e^{-\epsilon \cdot \epsilon \frac n2} 2^n,
   \end{align*}
   using $e^{-x} \geq 1-x$ in the final step.
   Thus
   \begin{equation*}
-    \sum_{i=0}^{\floor{(\frac{1}{2} - \epsilon) n}} \leq \frac{1}{2\epsilon} 2 e^{-\epsilon^2 n / 2} 2^n. \qedhere
+    \sum_{i=0}^{\floor{(\frac{1}{2} - \epsilon) n}} \binom{n}{i}\leq \frac{1}{2\epsilon} 2 e^{-\epsilon^2 \frac{n}{2}} \cdot 2^n. \qedhere
   \end{equation*}
 \end{proof}
+
+\begin{nthm}\label{thm:2.5}
+  \marginnote{\emph{Lecture 9}}[0cm]
+  Let $A \subset Q_n$ with $\frac{|A|}{2^n} \geq \frac{1}{2}$, and $0 < \epsilon < \frac{1}{4}$.
+  Then
+  \begin{equation*}
+    \frac{|A_{(\epsilon n)|}}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
+  \end{equation*}
+  `$\frac{1}{2}$-sized sets have exponentially large $\epsilon n$-neighbourhoods'
+\end{nthm}
+\begin{proof}
+  Enough to show that if $\epsilon n$ an integer, then
+  \begin{equation*}
+    \frac{|A_{(\epsilon n)}|}{2^n} \geq 1 - \frac{1}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
+  \end{equation*}
+  We have
+  \begin{equation*}
+    |A| \geq \sum_{i=0}^{\ceil{\frac{n}{2} - 1}} \binom{n}{i}
+  \end{equation*}
+  So by \nameref{thm:harper1}, we have
+  \begin{equation*}
+    |A_{(\epsilon n)}| \geq \sum_{i=0}^{\ceil{n(\frac{1}{2} + \epsilon) - 1}} \binom{n}{i}
+  \end{equation*}
+  i.e.,
+  \begin{equation*}
+    |{A_{(\epsilon n)}}^c| \leq \sum_{i=\ceil{n (\frac{1}{2} + \epsilon)}}^n \binom{n}{i} = \sum_{i=0}^{\floor{n(\frac{1}{2}- \epsilon)}} \binom{n}{i} \leq \frac{1}{\epsilon} e^{-\epsilon^2 \frac{n}{2}} \cdot 2^n
+  \end{equation*}
+\end{proof}
+\subsection{Concentration of measure}
+\begin{defi}[Lipschitz]\hypertarget{def:lips}
+Say $f: Q_n \to \mathbb{R}$ is \named{Lipschitz} if $|f(x) - f(y)| \leq 1$ for all $x,y \in Q_n$ adjacent.
+\end{defi}
+
+\begin{defi}[Median]\hypertarget{def:median}
+Say $M \in \mathbb{R}$ is a \named{median} or \textbf{L\'evy mean} of $f$ if
+\begin{equation*}
+  |\set{x | f(x) \leq M}|,\ |\set{x | f(x) \geq M}| \geq \frac{1}{2} \cdot 2^n.
+\end{equation*}
+\end{defi}
+Now ready to show `every well-behaved function on $Q_n$ is roughly constant nearly everywhere'.
+
+\begin{nthm}\label{thm:2.6}
+  Let $f: Q_n \to \mathbb{R}$ be \hyperlink{def:lips}{Lipschitz} with \hyperlink{def:median}{median} $M$, and $0 < \epsilon < \frac{1}{4}$.
+  Then
+  \begin{equation*}
+    \frac{|\set{x | f(x) - M| \leq \epsilon n}|}{2} \geq 1 - \frac{4}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
+  \end{equation*}
+\end{nthm}
+\begin{proof}
+  Let $A = \set{x | f(x) \leq M}$.
+  Then $\frac{|A|}{2^n} \geq \frac{1}{2}$,
+  so
+  \begin{equation*}
+    \frac{|A_{\epsilon n}|}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
+  \end{equation*}
+  But $x \in A_{(\epsilon n)} \implies f(x) \leq M + \epsilon n$ (as $f$ is \hyperlink{def:lips}{Lipschitz}), so
+  \begin{equation*}
+    \frac{|\set{x | f(x) \leq M + \epsilon n}|}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
+  \end{equation*}
+  Similarly,
+  \begin{equation*}
+    \frac{|\set{x | f(x) \leq M - \epsilon n}|}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}
+  \end{equation*}
+  and intersect these.
+\end{proof}
+
+\begin{remark}
+  This is the `concentration of measure phenomenon'.
+\end{remark}
+Let $G$ be a graph of diameter $D$ (recall the diameter is $\max\set{d(x,y) | x, y \in G}$).
+Let
+\begin{equation*}
+  \alpha(G,\epsilon) = \max\Set{1 - \frac{\left\lvert A_{(\epsilon D)}\right\rvert}{\left\lvert G \right\rvert} | A \subset G, \frac{|A|}{|G|} \geq \frac{1}{2}}.
+\end{equation*}
+So $\alpha(G,\epsilon)$ \emph{small} says `$\frac{1}{2}$-sized sets have big $\epsilon D$-neighbourhoods.'
+
+\begin{defi}[L\'evy family]\hypertarget{def:levyfam}
+Say a sequence of graphs $G_1, G_2, \dotsc$ is a \named{L\'evy family} if $\alpha(G_n, \epsilon) \to 0$ as $n \to \infty$ (for each fixed $\epsilon$).
+\end{defi}
+
+Thus \cref{thm:2.5} says $Q_1, Q_2, Q_3, \dotsc$ forms a \hyperlink{def:levyfam}{L\'evy family} and even a \textbf{normal} L\'evy family, meaning $\alpha(G_n, \epsilon)$ exponentially small in $n$ (for each fixed $\epsilon$), so have concentration of measure as in (\cref{thm:2.6}) for any \hyperlink{def:levyfam}{L\'evy family}.
+
+Many natural families of graphs form \hyperlink{def:levyfam}{L\'evy families}, e.g.\ symmetric group $S_n$ - made into a graph by joining $x,y$ if $x y^{-1}$ is a transposition.
+
+Similarly, we can define $\alpha(X, \epsilon)$ for $X$ any metric measure space (of finite diameter and finite measure) - so again have concentration of measure for any \hyperlink{def:levyfam}{L\'evy family}.
+\begin{eg}
+  Take the sphere $S^n \subset \mathbb{R}^{n+1}$.
+  \begin{center}
+    \begin{tikzpicture}
+      \node [left] at (-1.2,0) {$S^2 \subseteq \mathbb{R}^3$};
+        \draw [dashed, very thin] (1,0) arc (0:180:1 and 0.3);
+        \shade [ball color = bred!40, opacity = 0.5] (0,0) circle (1cm);
+        \draw [very thin] (0,0) circle (1cm);
+        \draw [very thin] (-1,0) arc (180:360:1 and 0.3);
+    \end{tikzpicture}
+  \end{center}
+  To show `$\frac{1}{2}$-sized sets have big $\epsilon$-neighbourhoods', we need two ingredients:
+  \begin{enumerate}[label=\arabic*)]
+    \item An isoperimetric inequality: if $A \subset S^n$ and $C \subset S^n$ is the circular cap with $|C| = |A|$, then $|A_{(\epsilon)}| \geq |C_{(\epsilon)}|$.
+      \begin{center}
+        \begin{tikzpicture}[scale=2]
+          \draw [dashed, very thin] (1,0) arc (0:180:1 and 0.3);
+          \shade [ball color = bred!40, opacity = 0.5] (0,0) circle (1cm);
+          \draw [very thin] (0,0) circle (1cm);
+          \draw [very thin] (-1,0) arc (180:360:1 and 0.3);
+          \begin{scope}[every path/.style={fill=white, fill opacity=0.5, very thin}]
+            \draw (0.4, 0.4) circle [x radius=0.25cm, y radius=0.22cm, rotate=120];
+            \draw [decorate, decoration={random steps, segment length=1.5pt, amplitude=0.8pt}] (-0.3, 0.2) circle [x radius=0.25cm, y radius=0.2cm, rotate=-10];
+          \end{scope}
+          \node at (-0.1,-0.1) {$A$};
+          \node at (0.4,0) {$C$};
+        \end{tikzpicture}
+      \end{center}
+
+  Compression is `stamp on your set', i.e.\ we always move a point above the equator to corresponding point below the equator, called 2-point symmetrisation.
+      \begin{center}
+        \begin{tikzpicture}[scale=1.5]
+          \draw (0.3,0.5) -- (0.3,-0.5);
+          \draw [dashed, very thin] (1,0) arc (0:180:1 and 0.3);
+          \shade [ball color = bred!40, opacity = 0.5] (0,0) circle (1cm);
+          \draw [very thin] (0,0) circle (1cm);
+          \draw [very thin] (-1,0) arc (180:360:1 and 0.3);
+          \node [circle, fill, inner sep=0.3mm] at (0.3,0.5) {};
+          \node [circle, fill, inner sep=0.3mm] at (0.3,-0.5) {};
+        \end{tikzpicture}
+      \end{center}
+
+    \item An estimate: Let $C$ be the circular cap with $|C| = \frac{1}{2}$, i.e.\ angle = $\frac{\pi}{2}$.
+      \begin{center}
+        \begin{tikzpicture}[scale=1.5]
+            %\draw [very thin] (-0.979,0.2) arc (180:360:0.979 and 0.27);
+            \draw [very thin] (-1,0) arc (180:360:1 and 0.3);
+            %\draw [very thin] (0,0) circle (1cm);
+          \begin{scope}
+            \clip (-0.98,0.2) arc (180:360:0.98 and 0.27) -- (0,0.47) -- (-0.98,0.2);
+            \clip (1,0) arc (0:180:1 and 0.3) -- (0,-0.3) -- (1,0);
+            \begin{scope}[transform canvas={rotate=180}]
+              \shade [ball color = red!60!black, opacity = 0.2] (0,0) circle (1cm);
+            \end{scope}
+          \end{scope}
+          \begin{scope}
+            \path [clip] (0,0.2) ellipse (0.98 and 0.27);
+            \path [clip] (1,0) arc (0:180:1 and 0.3) -- (-1,0.47) -- (1,0.47) -- (1,0);
+            \begin{scope}[transform canvas={rotate=180}]
+              \shade [ball color = green!60!black, opacity = 0.2] (0,0) circle (1cm);
+            \end{scope}
+          \end{scope}
+          \begin{scope}
+            \clip (-0.98,0.2) arc (180:360:0.98 and 0.27) -- (1,0.2) -- (1,0) arc (360:180:1 and 0.3) -- (-1,0.2) -- (-0.98,0.2);
+            \shade [ball color = bgreen!40, opacity = 0.5] (0,0) circle (1cm);
+          \end{scope}
+          \begin{scope}
+            \path [clip] (-1,0) arc (180:360:1 and 0.3) -- (1,-1) -- (-1,-1) -- (-1,0);
+            \shade [ball color = bred!40, opacity = 0.5] (0,0) circle (1cm);
+          \end{scope}
+        \end{tikzpicture}
+      \end{center}
+      Then $C_{(\epsilon)}$ is the circular cap of angle $\frac{\pi}{2} + \epsilon$. But the remaining volume is proportional to $\int_\epsilon^{\frac{\pi}{2}} (\cos \theta)^n \, d\theta$, which $\to 0$ (exponentially fast) as $n \to \infty$.
+      %\begin{center}
+      %  \begin{tikzpicture}[scale=2]
+      %    \draw (0,1) to[out=-85, in=95] (0.02,0.5) to[out=-88] (0.1,0.01) to (1,0);
+      %  \end{tikzpicture}
+      %\end{center}
+  \end{enumerate}
+\end{eg}
+% new lecture
+\marginnote{\emph{Lecture 10}}
+% missing
+%We deduced concentration of measure from isoperimetric inequalities. Conversely,
+%\begin{nprop}\label{prop:2.7}
+%  Let $G$ be a graph such that for any Lipschitz function $G \to \mathbb{R}$ with median $M$, we have
+%  \begin{equation*}
+%    \frac{|\set{x \in G | |f(x) - M| \leq t}|}{|G|} \geq 1-\alpha
+%  \end{equation*}
+%  for some given $t,\alpha$.
+%  Then for $A \subset G$ with $\frac{|A|}{|G|} \geq \frac{1}{2}$, we have $\frac{|A_{(t)}|}{|G|} \geq 1 - \alpha$.
+%\end{nprop}
+%\begin{proof}
+%  The function $f(x) = d(x,A)$ is Lipschitz and has $0$ as a median (as $|A| \geq \frac{1}{2} |G|$).
+%\end{proof}
+%\subsection{Edge-isoperimetric inequalities}
+%For $A \subset G$ ($G$ a graph), the \textbf{edge-boundary} of $A$ is $\partial A = \set{xy \in E(G) | x \in A, y \notin A}$.
+%Eg
+%In $Q_n$ how should we choose $A$ (with $|A|$ given) to minimise $|\partial A|$?
+%Eg
+%This suggest that perhaps subcubes are best. But what if $2^k < |A| < 2^{k+1}$? Maybe fill up all of $Q_k$, then add in subcubes.
+%Say $x<y$ in the \textbf{binary} ordering on $Q_n$ if $\max(x \triangle y) \in y$.
+%Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in subcubes'.
+%
+%\begin{aim}
+%  Initial segments of binary are best for $\partial A$ (minimise).
+%  In particular, $|A|=2^k \Rightarrow |\partial A| \geq 2^k (n-k)$.
+%\end{aim}
+%For $A \subset Q_n$ and $1 \leq i \leq n$, the $i$-binary compression $B_i(A)$ is defined by giving its $i$-sections:
+%\begin{align*}
+%  B_i(A)_+^{(i)} &= \text{first }|A_+^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in binary} \\
+%  B_i(A)_-^{(i)} &= \text{first }|A_-^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in binary}
+%\end{align*}
+%Note that $|B_i(A)| = |A|$. Say $A$ is $i$-binary compressed if $B_i(A) = A$.
+%\begin{nthm}[Edge-isoperimetric inequality in the cube]\label{thm:2.8}
+%  Let $A \subset Q_n$, and let $C$ be the initial segment of the binary ordering with $|C| = |A|$. Then $|\partial A| \geq |\partial C|$.
+%  In particular, if $|A|=2^k$ then $|\partial A| \geq 2^k (n-k)$.
+%\end{nthm}
+%\begin{remark}
+%  Sometimes called the theorem of Harper, Lindsey, Bernstein and Hart.
+%\end{remark}
+%\begin{proof}
+%  Induction on $n$: $n=1$ is immediate.
+%  Given $A \subset Q_n$ for $n > 1$ and $1 \leq i \leq n$: Claim $|\partial B_i(A)| \leq |\partial A|$.
+%
+%  Proof of claim: Write $B$ for $B_i(A)$.
+%  We have
+%  \begin{align*}
+%    |\partial A| &= |\partial(A_-)| + |\partial(A_+)| + |A_i \triangle A_+| \\
+%    |\partial B| &= |\partial(B_-)| + |\partial(B_+)| + |B_i \triangle B_+|.
+%  \end{align*}
+%  Now, $|\partial (B_-)| \leq |\partial (A_-)|$ and $|\partial(B_+)| \leq |\partial(A_+)|$ by induction.
+%  Also, $|A_-| = |B_-|$, $|A_+| = |B_+|$ and $B_-, B_+$ nested (as both initial segments of binary).
+%  Whence $|B_- \triangle B_+| \leq |A_i \triangle A_+|$.
+%  Among all $B \subset Q_n$ with $|B| = |A|$ and $|\partial B| \leq |\partial A|$, choose one with $\sum_{x \in B} (\text{position of $x$ in binary order})$ minimal, completing the claim.
+%
+%  Then $B$ is $i$-binary compressed $\forall i$ by claim.
+%  This $B$ need not be an initial segment of binary, e.g.\
+%  However, claim: If $B< Q_n$ is $i$-binary-compressed $\forall i$ but not an initial segment of binary, then $B = \mathcal{P}(n-1) \cup \{n\} - \{123\dotsm(n-1)\}$.
+%  (Bottom half, last point removed, first point of top half added).
+%  Then done, as clearly $|\partial B| \geq |\partial C|$.
+%
+%  Proof of claim:
+%  Have some $x < y$ with $x \notin B$ and $y \in B$.
+%  Then $\forall i$, cannot have $i \notin x,y$ and cannot have $i \in xy$ as $B_i(B) = B$. So $x = y^c$.
+%  Thus for each $y \in B$, there is at most 1 $x < y$ with $x \notin B$ (namely $x^c$), and for each $x \notin B$, there is at most one $y > x$ with $y \in B$ (namely $y^c$).
+%  Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
+%  Hence $y = \{n\}$.
+%\end{proof}
+%\begin{remark}
+%  In the proofs of \cref{thm:harper1} and \cref{thm:2.8}, vital that the extremal sets in dimension $n-1$ were nested, i.e.\ were the initial segments of some ordering.
+%\end{remark}
 \clearpage
 \section{Projections}
 \printindex
