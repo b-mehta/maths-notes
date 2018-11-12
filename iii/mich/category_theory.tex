@@ -1678,14 +1678,13 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
               && TB \arrow[from=1-2, to=here, "\scriptstyle\hyperlink{eq:monad1}{(1)}" description, phantom, pos=0.67]
     \end{tikzcd}
   \end{equation*}
-  (commutes by \hyperlink{eq:monad1}{(1)}) and
+  and
   \begin{equation*}
     \begin{tikzcd}[row sep=large]
     A \rar{f} \dar{\eta_A} & TB \drar{1_{TB}} \dar[']{\eta_{TB}} \\
-    TA \rar[']{Tf} & TTB \arrow[r,"\mu_B"'{name=here}] & TB\arrow[from=1-2, to=here, "\scriptstyle\hyperlink{eq:monad2}{(2)}" description, phantom, pos=0.67]
+    TA \rar[']{Tf} & TTB \arrow[r,"\mu_B"'{name=here}] & TB.\arrow[from=1-2, to=here, "\scriptstyle\hyperlink{eq:monad2}{(2)}" description, phantom, pos=0.67]
     \end{tikzcd}
   \end{equation*}
-  which commutes by \hyperlink{eq:monad2}{(2)}.
 \end{ndef}
 \begin{nlemma}\label{lem:5.6}\hypertarget{def:fsubt}
   There \marginnote{\emph{Lecture 15}}exists an \hyperlink{def:adj}{adjunction}
@@ -1802,7 +1801,7 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
 \end{proof}
 If \marginnote{\emph{Lecture 16}}$\mathscr{C}$ has \hyperlink{def:lcoprod}{coproducts}, then so does $\hyperlink{def:kleisli}{\mathscr{C}_\mathbb{T}}$, since $\hyperlink{def:fsubt}{F_\mathbb{T}}$ preserves them.
 But in general, it has few other \hyperlink{def:limit}{limits} or colimits. In contrast, we have
-\begin{nthm}\leavevmode
+\begin{nthm}\label{thm:5.8}\leavevmode
   \begin{enumerate}[label=(\roman*)]
     \item The \hyperlink{def:forgFunc}{forgetful functor} $G: \hyperlink{def:em}{\mathscr{C}^\mathbb{T}} \to \mathscr{C}$ \hyperlink{def:clim}{creates all limits} which exist in $\mathscr{C}$.
     \item If $\mathscr{C}$ \hyperlink{def:haslimits}{has colimits} of \hyperlink{def:limit}{shape $J$}, then $G: \mathscr{C}^\mathbb{T} \to \mathscr{C}$ creates them $\iff T$ \hyperlink{def:plim}{preserves them}.
@@ -1846,7 +1845,7 @@ But in general, it has few other \hyperlink{def:limit}{limits} or colimits. In c
       The rest of the argument is like (i). \qedhere
   \end{enumerate}
 \end{proof}
-\begin{ndef}[Monadic adjunction]
+\begin{ndef}[Monadic adjunction]\hypertarget{def:monadic}
   Given an \hyperlink{def:adj}{adjunction} $\left(\begin{tikzcdi}\mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G}\end{tikzcdi}\right)$, with $(F \dashv G)$ we say the adjunction (or the functor $G$) is \textbf{monadic} if the \hyperlink{def:emcomp}{comparison functor} $K : \mathscr{D} \to \mathscr{C}^\mathbb{T}$ is part of an \hyperlink{def:equicat}{equivalence} of \hyperlink{def:cat}{categories}.
 \end{ndef}
 (Note that, since the \hyperlink{def:klcomp}{Kleisli comparison} $\mathscr{C}_\mathbb{T} \to \mathscr{D}$ is \hyperlink{def:full}{full} and \hyperlink{def:full}{faithful}, it's part of an \hyperlink{def:equicat}{equivalence} if and only if it (equivalently, $F$) is \hyperlink{def:full}{essentially surjective} on objects.)
@@ -1877,24 +1876,23 @@ But in general, it has few other \hyperlink{def:limit}{limits} or colimits. In c
     \end{equation*}
     These equations imply that $h$ is a coequalizer of $(f,g)$; if $B \overset{x}\to D$ satisfies $xf = xg$ then $x = xgt = xft = xsh$, so $x$ factors through $h$, and the factorisation is unique since $h$ is \hyperlink{def:split}{split} \hyperlink{def:epic}{epic}.
     Note that split coequalizers are preserved by all \hyperlink{def:funct}{functors}.
-    \item Given a functor $G: \mathscr{D} \to \mathscr{C}$, a parallel pair $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is called $G$-\textbf{split} if there exists a split coequalizer diagram
+\item \hypertarget{def:gsplit}Given a functor $G: \mathscr{D} \to \mathscr{C}$, a parallel pair $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is called $G$-\textbf{split} if there exists a split coequalizer diagram
     \begin{equation*}
       \begin{tikzcd}[column sep=large]
         GA \rar[shift left]{Gf} \rar[shift right,']{Gg} & GB \lar[bend left=40]{t} \rar{h} & C \lar[bend left=40]{s}
       \end{tikzcd}
     \end{equation*}
     in $\mathscr{C}$.
-
- Note that $\begin{tikzcd}[cramped, column sep=large]FGFGB \rar[shift left]{FG\epsilon_B} \rar[shift right,']{\epsilon_{FGB}} & FGB\end{tikzcd}$ is $G$-split, since
-    \begin{equation*}
-      \begin{tikzcd}[column sep=large]
-      GFGFGB \rar[shift left]{GFG\epsilon_B} \rar[shift right,']{G\epsilon_{FGB}} & GFGB \lar[bend left=40]{\eta_{GFGB}} \rar{G\epsilon_B} & GB \lar[bend left]{\eta_{GB}}
-      \end{tikzcd}
-    \end{equation*}
-    is a split coequalizer.
   \end{enumerate}
 \end{ndef}
-\begin{nlemma}
+Note that $\begin{tikzcd}[cramped, column sep=large]FGFGB \rar[shift left]{FG\epsilon_B} \rar[shift right,']{\epsilon_{FGB}} & FGB\end{tikzcd}$ is \hyperlink{def:gsplit}{$G$-split}, since
+\begin{equation*}
+  \begin{tikzcd}[column sep=large]
+  GFGFGB \rar[shift left]{GFG\epsilon_B} \rar[shift right,']{G\epsilon_{FGB}} & GFGB \lar[bend left=40]{\eta_{GFGB}} \rar{G\epsilon_B} & GB \lar[bend left]{\eta_{GB}}
+  \end{tikzcd}
+\end{equation*}
+is a \hyperlink{def:splitcoeq}{split coequalizer}.
+\begin{nlemma}\label{lem:5.11}
   Suppose given an \hyperlink{def:adj}{adjunction}
   $ \begin{tikzcdi} \mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G} \end{tikzcdi} $
   where \(F \dashv G\), inducing a \hyperlink{def:monad}{monad} $\mathbb{T}$ on \(\mathscr{C}\).
@@ -1914,7 +1912,116 @@ But in general, it has few other \hyperlink{def:limit}{limits} or colimits. In c
   \begin{equation*}
     \check f \alpha = Gf = G(\epsilon_B(F \check f)) = (G\epsilon_B)(T \check f)
   \end{equation*}
-  i.e.\ to algebra homomorphisms $(A, \alpha) \to KB$. And these bijections are natural in $(A, \alpha)$ and in $B$.
+  i.e.\ to \hyperlink{def:em}{algebra homomorphisms} $(A, \alpha) \to KB$. And these bijections are natural in $(A, \alpha)$ and in $B$.
 \end{proof}
+\begin{nthm}[Precise Monadicity Theorem]\label{thm:5.12}
+  \marginnote{\emph{Lecture 17}}$G: \dc \to \cc$ is \hyperlink{def:monadic}{monadic} iff $G$ has a \hyperlink{def:adj}{left adjoint} and \hyperlink{def:clim}{creates} \hyperlink{def:equalizer}{coequalizers} of \hyperlink{def:gsplit}{$G$-split} pairs.
+\end{nthm}
+\begin{nthm}[Refined/Reflexive Monadicity Theorem]\label{thm:5.13}
+  Suppose $\dc$ has and $G: \dc \to \cc$ preserves \hyperlink{def:reflexive}{reflexive coequalizers} and that $G$ reflects isomorphisms and has a \hyperlink{def:adj}{left adjoint}. Then $G$ is \hyperlink{def:monadic}{monadic}.
+\end{nthm}
+\begin{proof}[Proof of \cref{thm:5.12} $\Rightarrow$]
+  It is sufficient to show that $\hyperlink{def:fsupt}{G^\mathbb{T}}: \hyperlink{def:em}{\cc^\mathbb{T}}\to\cc$ \hyperlink{def:clim}{creates} \hyperlink{def:equalizer}{coequalizers} of \hyperlink{def:gsplit}{$G^\mathbb{T}$ split}-pairs.
+   But this follows from the argument of \cref{thm:5.8}(ii), since if $\begin{tikzcdi}(A,\alpha) \rar[shift left]{f} \rar[shift right,']{g} & (B, \beta)\end{tikzcdi}$ is a $G^\mathbb{T}$-split pair, the coequalizer of $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is preserved by $T$ and $TT$.
+\end{proof}
+\begin{proof}[Proof of \cref{thm:5.12} $\Leftarrow$ and \cref{thm:5.13}]
+  Let $\mathbb{T}$ be the \hyperlink{def:monad}{monad} induced by $\hyperlink{def:adj}{(F \dashv G)}$.
+  For any \hyperlink{def:em}{$\mathbb{T}$-algebra} $(A, \alpha)$, the pair
+  $
+  \begin{tikzcdi}
+    FGFA \rar[shift left]{F\alpha} \rar[shift right,']{\epsilon_{FA}} & FA
+  \end{tikzcdi}
+  $
+  is both \hyperlink{def:reflexive}{reflexive} and \hyperlink{def:gsplit}{$G$-split}, so has a \hyperlink{def:equalizer}{coequalizer} in $\dc$, and hence by \cref{lem:5.11}, $\hyperlink{def:emcomp}{K: \dc \to \cc^\mathbb{T}}$ has a \hyperlink{def:adj}{left adjoint} $L$.
+
+  The \hyperlink{def:unit}{unit} of $(L \dashv K)$ at an \hyperlink{def:em}{algebra} $(A, \alpha)$: the coequalizer defining $L(A, \alpha)$ is mapped by $K$ to the diagram
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+    F^\mathbb{T}TA \arrow[shift left,"F^\mathbb{T} A", rr] \arrow[rr, shift right, "\mu_A"'] && F^\mathbb{T} A \arrow[rr] \drar[']{\alpha} && KL(A,\alpha) \\
+                                                                                               &&&(A,\alpha) \arrow[ur, "\iota_{A,\alpha}"', dashed]
+    \end{tikzcd}
+  \end{equation*}
+  and $\iota_{A,\alpha}$ is the factorisation of this through the ($G^\mathbb{T}$-split) coequalizer $\alpha$.
+  But either set of hypotheses implies that $G$ preserves the coequalizer defining $L(A,\alpha)$ so $\iota_{(A,\alpha)}$ is an \hyperlink{def:iso}{isomorphism}.
+
+  For the counit $\zeta_B: LKB \to B$, we have a coequalizer
+  \begin{equation*}
+  \begin{tikzcd}
+    FGFGB \rar[shift left]{FG\epsilon_B} \rar[shift right,']{\epsilon_{FGB}} & FGB \rar \drar[']{\epsilon_B} & LKB \dar[dashed]{\zeta_B} \\ &&B
+  \end{tikzcd}
+  \end{equation*}
+
+  Again, either set of hypotheses implies that $\epsilon_B$ is a coequalizer of $(FG\epsilon_B, \epsilon_{FGB})$ so $\zeta_B$ is an isomorphism.
+\end{proof}
+\begin{nexample}\label{eg:5.14}\leavevmode
+  \begin{enumerate}
+    \item The \hyperlink{def:forgFunc}{forgetful functors} $\gpc \to \setc$, $\rngc \to \setc$, $\modc_R \to \setc, \dotsc$ all satisfy the hypotheses of \cref{thm:5.13}; for the \hyperlink{def:reflexive}{reflexive coequalizers}, use question 3 on example sheet 4 which shows that if
+      \begin{equation*}
+        \begin{tikzcd}
+          A \rar[shift left]{f} \rar[shift right,']{g} & B \rar{h} & C
+        \end{tikzcd}
+      \end{equation*}
+      is a reflexive coequalizer diagram in $\setc$, then so is
+      \begin{equation*}
+        \begin{tikzcd}
+          A^n \rar[shift left]{f^n} \rar[shift right,']{g^n} & B^n \rar{h^n} & C^n.
+        \end{tikzcd}
+      \end{equation*}
+    \item Any \hyperlink{def:refl}{reflection} is \hyperlink{def:monadic}{monadic:} this follows from q2 on example sheet 3, but also can be proved using \cref{thm:5.12}.
+      Let $\dc$ be a \hyperlink{def:refl}{reflective} (\hyperlink{def:fulls}{full}) subcategory of $\cc$ and suppose a pair
+      $
+      \begin{tikzcdi}
+        A \rar[shift left]{f} \rar[shift right,']{g} & B
+      \end{tikzcdi}
+      $ in $\dc$ fits into a \hyperlink{def:splitcoeq}{split coequalizer} diagram
+      \begin{equation*}
+        \begin{tikzcd}
+          A \rar[shift left]{f} \rar[shift right,']{g} & B \rar[bgreen]{h} \lar[bend left=40, bgreen]{t} & C \lar[bend left=40, bgreen]{s}
+        \end{tikzcd}
+      \end{equation*}
+      in $\cc$.
+      Then $t$ and $ft=sh$ belong to $\dc$ since $\dc$ is full, and hence $s$ is in $\dc$ since it's an equalizer of $(1_B, sh)$ and $\dc$ is closed under limits in $\cc$.
+      Hence also $h \in \mor \dc$.
+    \item Consider the composite adjunction
+      \begin{equation*}
+      \begin{tikzcd}
+        \setc \rar[shift left]{F} & \mathbf{AbGp} \rar[shift left]{L} \lar[shift left]{G} & \mathbf{tfAbGp}. \lar[shift left]{I}
+      \end{tikzcd}
+      \end{equation*}
+      The two factors are monadic by (a) and (b) respectively, but the composite isn't, since the monad it induces on $\setc$ is isomorphic to that induced by $(F \dashv U)$.
+    \item Consider the forgetful functor $\topc \overset{U}\to \setc$.
+      This is \hyperlink{def:full}{faithful} and has both \hyperlink{def:adj}{left and right adjoints} (so preserves all \hyperlink{def:equalizer}{coequalizers}), but the monad induced on $\setc$ is $(1,1,1)$ and the category of algebras is $\setc$.
+    \item Consider the composite adjunction
+      \begin{equation*}
+      \begin{tikzcd}
+        \setc \rar[shift left]{D} & \mathbf{Top} \rar[shift left]{\beta} \lar[shift left]{U} & \mathbf{KHaus}. \lar[shift left]{I}
+      \end{tikzcd}
+      \end{equation*}
+      We'll show that this satisfies the hypotheses of \cref{thm:5.12}.
+      Let
+      \begin{equation*}
+        \begin{tikzcd}
+          X \rar[shift left]{f} \rar[shift right,']{g} & Y \rar[bgreen]{h} \lar[bend left=40, bgreen]{t} & \color{bgreen}{Z} \lar[bend left=40, bgreen]{s}
+        \end{tikzcd}
+      \end{equation*}
+      be a split coequalizer in $\setc$, where $X,Y$ have compact Hausdorff topologies and $f,g$ are continuous.
+      Note that the quotient topology on $Z \cong Y/R$ is compact, so it's the only possible candidate for a compact Hausdorff topology making $h$ continuous.
+
+      We use the lemma from general topology: if $Y$ is compact Hausdorff, then a quotient $Y/R$ is Hausdorff $\iff R \subseteq Y \times Y$ is closed.
+      We note
+      \begin{align*}
+        R = \set{(y,y') | h(y) = h(y')} &= \set{(y,y') | sh(y) = sh(y')} \\
+                                        &= \set{(y,y') | ft(y) = ft(y')}.
+      \end{align*}
+      So if we define $S \subseteq X \times X = \set{(x,x') | f(x) = f(x')}$ then $R \subseteq (g \times g)(S)$, but the reverse inclusion also holds.
+      But
+      $
+      \begin{tikzcdi}
+        S \rar & X \times X \rar[shift left]{f \pi_1} \rar[shift right,']{f \pi_2} & Y
+      \end{tikzcdi}
+      $ is an equalizer, $Y$ is Hausdorff, so $S$ is closed in $X \times X$ and hence compact.
+      So $R = (g \times g)(S)$ is compact and hence closed in $Y \times Y$.
+  \end{enumerate}
+\end{nexample}
 \printindex
 \end{document}
