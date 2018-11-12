@@ -10,12 +10,15 @@
 % preamble
 \usepackage{imakeidx}
 \usepackage{marginnote}
+\usepackage{chngcntr}
 
 \input{header}
 \makeindex[intoc]
 \reversemarginpar
 
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
+
+\counterwithout{nthm}{section}
 
 \DeclareMathOperator*{\dlim}{D-lim}
 \DeclareMathOperator*{\clim}{C-lim}
@@ -1809,5 +1812,128 @@ for all $n \in \mathbb{Z}_{\geq 0}$.
 \end{proof}
 \color{black}
 Thus, the \hyperlink{def:h}{entropy} of $(\frac{1}{2},\frac{1}{2})$ \hyperlink{def:bernoullishift}{shift} is $\log 2$, and entropy of $(\frac{1}{3},\frac{1}{3},\frac{1}{3})$ shift is $\log 3$.
+\begin{nlemma}\label{lem:1}
+  \marginnote{\emph{Lecture 17}}Let $(X, \mathcal{B},\mu,T)$ be an \hyperlink{def:inv}{invertible} \hyperlink{def:mps}{measure preserving system}.
+  Let $\xi \subset \mathcal{B}$ be a \hyperlink{def:partition}{countable measurable partition}.
+  Then
+  \begin{equation*}
+    \hyperlink{def:h}{h_\mu}(T, \xi_{-n}^n) = h_\mu(T, \xi).
+  \end{equation*}
+\end{nlemma}
+\begin{nlemma}\label{lem:2}
+  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}. Let $\xi, \eta \subset \mathcal{B}$ be two \hyperlink{def:partition}{countable measurable partitions}. Then:
+  \begin{equation*}
+    h_\mu(T, \eta) \leq h_\mu(T, \xi) + H_\mu(\eta \mid \xi)
+  \end{equation*}
+\end{nlemma}
+\begin{nlemma}\label{lem:3}
+  For all $\epsilon > 0$, $k \in \mathbb{Z}_{>0}$, there is $\delta > 0$ such that the following holds.
+  Let $(X, \mathcal{B}, \mu)$ be a probability space.
+  Let $\xi \subset \mathcal{B}$ be a \hyperlink{def:partition}{countable} and $\eta \subset \mathcal{B}$ a \hyperlink{def:partition}{finite partition}.
+  Suppose that $\eta$ has $k$ \hyperlink{def:partition}{atoms} and for each $A \in \eta$, $\exists B \in \mathcal{B}(\xi)$ such that $\mu(A \sym B) < \delta$.
+  Then $\hyperlink{def:ent}{H_\mu}(\eta \mid \xi) \leq \epsilon$.
+\end{nlemma}
+\begin{proof}[Proof of \hyperlink{thm:ks}{Kolmogorov-Sinai theorem}]
+  \color{gray}
+  We first show $\hyperlink{def:h}{h_\mu}(T, \xi) = \sup_{\eta\text{ finite}} h_\mu(T,\eta)$.
+  We need to show that for all finite \hyperlink{def:partition}{partitions} $\eta \subset \mathcal{B}$, we have $h_\mu(T, \eta) \leq h_\mu(T, \xi)$.
+  Fix $\epsilon > 0$. By \cref{lem:3}, and definition of \hyperlink{def:gen}{2-sided generator}, $\exists n$ such that $H_\mu(\eta \mid \xi^n_{-n}) \leq \epsilon$.
+  Then we have
+  \begin{equation*}
+    h_\mu(T, \eta) \leq h_\mu(T, \xi^{n}_{-n}) + \epsilon % maybe more things?
+  \end{equation*}
+  We are done if % something small
+
+  Now it is left to show that $\forall \epsilon > 0$, for every countable partition $\eta \subset \mathcal{B}$, $\exists \tilde{\eta} \subset \mathcal{B}$ finite such that $h_\mu(T,\eta) \leq h_\mu(T, \tilde{\eta}) + \epsilon$.
+  By Lemma 2, enough to show $H_\mu(\eta \mid \tilde{\eta}) \leq \epsilon$.
+  Let $\tilde{\eta} = (A_1, A_2, \dotsc, A_n, \bigcup_{j > n} A_j)$ for sufficiently large $n$, when $\eta = \{A_1, A_2, \dotsc\}$.
+  Then
+  \begin{equation*}
+    H_\mu(\eta) = H_\mu(\eta \vee \tilde{\eta}) = H_\mu(\tilde{\eta}) + H_\mu(\eta \mid \tilde{\eta})
+  \end{equation*}
+  Thus
+  \begin{align*}
+    H_\mu(\eta \mid \tilde{\eta}) &= \sum_{j > n} -\mu(A_j) \log \mu(A_j) + \mu\left(\bigcup_{j={n+1}}^\infty A_j\right) \cdot  \log \mu\left(\bigcup_{j=n+1}^\infty A_j\right) \\
+                                  &\leq \sum_{j > n} - \mu(A_j) \log \mu(A_j) \leq \epsilon
+  \end{align*}
+  if $n$ is sufficiently large.
+\end{proof}
+\color{black}
+\begin{proof}[Proof of \cref{lem:1}]
+  \begin{align*}
+    \hyperlink{def:h}{h_\mu}(T, \xi) &= \lim_{n \to \infty} \frac{1}{n} \hyperlink{def:ent}{H_\mu}(\xi_0^{n-1}) \\
+    h_\mu(T, \xi^m_{-m}) &= \lim_{n \to \infty} \frac{1}{n} H_\mu(\xi^{n+m-1}{-m}) \\
+                         &= \lim_{n \to \infty} \frac{1}{n} H_\mu(\xi^{n+2m-1}_0) \\
+                         &= \lim_{n \to \infty} \frac{1}{n+2m-1} H_\mu(\xi^{n+2m-1}_0) = h_\mu(T, \xi). \qedhere
+  \end{align*}
+\end{proof}
+\begin{proof}[Proof of \cref{lem:2}]
+  \begin{align*}
+    h_\mu(T, \eta) &= \lim \frac{1}{n} H_\mu(\eta_0^{n-1}) \leq \lim \frac{1}{n} H_\mu((\xi \vee \eta)_0^{n-1})  \\
+                   &= \lim \frac{1}{n} \left(H_\mu(\xi_0^{n-1}) + H_\mu(\eta_0^{n-1} \mid \xi_0^{n-1})\right) \\
+                   &= h_\mu(T, \xi) + \lim \frac{1}{n} \left(\sum_{j=0}^{n-1} H_\mu\left(\eta_j' \mid \xi_0^{n-1} \vee \eta_{j+1}^{n-1}\right)\right) \\
+                   &\leq h_\mu(T,\xi) + \lim \frac{1}{n} \left(\sum_{j=0}^{n-1} \underbrace{H_\mu(\eta_j^j \mid \xi_j^j)}_{H_\mu(\eta \mid \xi)}\right) = h_\mu(T,\xi) + H_\mu(\eta \mid \xi). \qedhere
+  \end{align*}
+\end{proof}
+\color{gray}
+\begin{proof}[Proof of \cref{lem:3}]
+  Write $A_1, \dotsc, A_k$ for the atoms of $\eta$.
+  And for each $i \in \{1, \dotsc, k\}$, let $B_i \in \mathcal{B}(\xi)$ such that $\mu(A_i \sym B_i) < \infty$.
+  We consider the partition $\lambda$ which has the following $k+1$ atoms.
+
+  \begin{align*}
+    C_0 &= \bigcup_{i=1}^k (A_i \cap (B_i \setminus \bigcup_{j\neq i} B_j)) \\
+    C_i &= A_i \setminus C_0 \text{ for } i = 1, \dotsc, k.
+  \end{align*}
+
+  Crucial properties:
+  \begin{itemize}[label=--]
+    \item $C_0$ is big:
+      \begin{align*}
+        \mu(C_0) &\geq \sum (\mu(A_i) - k \delta) \\
+        &= 1 - k^2 \delta
+      \end{align*}
+    \item If $x \in C_0$, then $x \in A_i \iff x \in B_i$.
+  \end{itemize}
+  Note
+  \begin{align*}
+    H_\mu(\lambda) &= -\mu(C_0) \log \mu(C_0) - \sum_{i=1}^k \mu(C_i) \log \mu(C_i) \\
+                   &\leq -\mu(C_0) \log \mu(C_0) - (\sum_{i=1}^k\mu(C_i) ) \log(\frac{\sum_{i=1}^k \mu(C_i)}{k})
+  \end{align*}
+  If $\delta$ is sufficiently small, then $\mu(C_0)$ as close to 1 as we want.
+  Then $H_\mu(\lambda) < \epsilon$ if $\delta$ is sufficiently small.
+  Now it is enough to show that $H_\mu(\eta \mid \xi \vee \lambda) = 0$.
+  Indeed,
+  \begin{align*}
+    H_\mu(\eta \mid \xi) &\leq H_\mu(\eta \vee \lambda \mid \xi) \\
+                         &\leq \underbrace{H_\mu(\lambda \mid \xi)}_{\leq H_\mu(\lambda) < \epsilon} + \underbrace{H_\mu(\eta \mid \xi \vee \lambda)}_{=0}
+  \end{align*}
+
+  Then it is enough to show
+  \begin{equation*}
+    I_\mu(\eta \mid \xi \vee \lambda)(x) = 0 \quad \forall x.
+  \end{equation*}
+  To this end, it is enough to show
+  \begin{equation*}
+    [x]_{\xi \vee \lambda} \subset [x]_\eta \quad \forall x.
+  \end{equation*}
+
+  We consider two cases.
+  \begin{enumerate}
+    \item $x \in C_0$. Let $A_i \in [x]_\eta$.
+      This means that $x \in A_i$. Because $x \in C_0$, we must have $x \in B_i$.
+      Now $C_0, B_i \in \mathcal{B}(\xi \vee \lambda)$.
+      Then $[x]_{\xi \vee \lambda} \subset C_0 \cap B_i \subset A_i$.
+    \item $x \in C_i$ for some $I$.
+    Then $[x]_\eta = A_i$.
+    \begin{align*}
+      x \in C_i \Rightarrow [x]_{\eta \vee \lambda} \subset C_i \subset A_i.
+    \end{align*} \qedhere
+  \end{enumerate}
+\end{proof}
+\color{black}
+
+%\marginnote{\emph{Lecture 18}}
+
 \printindex
 \end{document}

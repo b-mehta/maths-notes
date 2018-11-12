@@ -6,7 +6,7 @@
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader) up to lecture 7
 - [Introduction to Discrete Analysis](iii/mich/introduction_to_discrete_analysis.pdf) (2018, W. T. Gowers) up to lecture 3
 - [Model Theory](iii/mich/model_theory.pdf) (2018, S. Barbina) up to lecture 7
-- [Topics in Ergodic Theory](iii/mich/topics_in_ergodic_theory.pdf) (2018, P. Varju) lectures 1-3,5
+- [Topics in Ergodic Theory](iii/mich/topics_in_ergodic_theory.pdf) (2018, P. Varju) up to lecture 17, some parts in rough
 
 ## Part II notes
 
