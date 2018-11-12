@@ -1320,5 +1320,150 @@ Note the theorem says $g_n \to \gamma$ in $L^2$, and the corollary says $\langle
   if $N$ is large enough.
   \textbf{unfinished}
   % see pics - unfinished
+% new lecture
+\begin{proof}[Proof of theorem]
+  Induct\marginnote{\emph{Lecture 12}} on $k$.
+  If $k=1$, then this reduces to the \hyperlink{thm:meanet}{Mean Ergodic Theorem}.
+
+  Suppose that $k > 1$, and the theorem and corollary hold for $k-1$.
+  We first consider the special case $\int f_k \, d\mu = 0$, and apply \hyperlink{lem:vdC}{van der Corput's lemma} for
+  \begin{equation*}
+    u_n = U_T^n f_1 \cdot U_T^{2n} f_2 \dotsm U_T^{kn} f_k \in L^2(X).
+  \end{equation*}
+  It remains to check the conditions of van der Corput, so we compute $s_k$.
+  \begin{align*}
+    \langle u_n, u_{n+h} \rangle &= \int U_T^n f_1 \dotsm U_T^{kn} f_k \cdot U_T^{n+h} \overline{f_1} \dotsm U_T^{k(n+h)} \overline{f_k} \, d\mu \\
+                                 &= \int f_1 \cdot U_T^h \overline{f_1} \cdot U_T^n(f_2 U_T^{2h} \overline{f_2}) \dotsm U_T^{(k-1) n} (f_k U_T^{kh} \overline{f_k}) \, d\mu.
+  \end{align*}
+  Apply the corollary for $k-1$ and $f_j U_T^{jk} \overline{f_j}$ in the role of $f_{j-1}$.
+  Then we get:
+  \begin{align*}
+    \lim_{N \to \infty} \frac{1}{N} \sum_{n=1}^N \langle u_n, u_{n+h} \rangle &= \int f_1 U_T^h \overline{f_1} \, d\mu \dotsm \int f_k U_T^{kh} \overline{f_k} \, d\mu \\
+    \limsup_{N \to \infty} \frac{1}{N} \left|\sum_{k=1}^N \langle u_k, u_{n+k} \rangle \right| &\leq \|f_1\|^2_\infty \dotsm \|f_{k-1}\|^2_\infty \cdot \left|\int f_k U_T^{kh} \overline{f_k} \, d\mu\right|
+  \end{align*}
+  By an earlier lemma, $(X, \beta, \mu, T^k)$ is \hyperlink{def:wMixing}{weak mixing}.
+  By the other lemma, we then have:
+  \begin{equation*}
+    \dlim \int f_k U_T^{kh} \overline{f_k} \, d\mu = \int f_k \overline{f_k} \,d\mu = 0.
+  \end{equation*}
+  Therefore $\dlim s_k = 0$.
+  Then van der Corput's lemma applies.
+
+  This completes the proof of the special case.
+  General case: We can write $f_k = \int f_k \, d\mu + f_k'$, where $\int f_k' \, d\mu = 0$.
+  Then
+  \begin{align*}
+    &\phantom{=}\frac{1}{N} \sum_{n=0}^{N-1} U_T^n f_1 U_T^{2n} f_2 \dotsm U_T^{kn} f_k  \\
+    &= \underbrace{\frac{1}{N} \sum_{n=0}^{N-1} U_T^n f_1 U_T^{2n} f_2 \dotsm U_T^{kn} f_k'}_{\to 0} + \int f_k \, d\mu \cdot \underbrace{\frac{1}{N} \sum_{k=0}^{N-1} U_T^n f_1 \dotsm U_T^{(k-1)n} f_{k-1}}_{\to \int f_1 \, d\mu \dotsm \int f_{k-1} \, d\mu}. \qedhere
+  \end{align*}
+\end{proof}
+
+\subsection{Cutting and stacking}
+For each $n \in \mathbb{N}$, let $I_1^{(n)}, \dotsc, I_{N(n)}^{(n)}$ be a collection of subintervals $I_j^{(n)} = [a_j^{n}, b_j^{n}) \subset [0,1)$. %] %]
+Suppose they satisfy the following properties.
+\begin{enumerate}[label=(\arabic*)]
+  \item For each fixed $n$, $I_j^{(n)}$ are pairwise disjoint and they have the same length.
+  \item $\text{length}(I_1^{(n)}) \to 0$ as $n \to \infty$ and
+    \begin{equation*}
+        \mu\left([0,1) \setminus \bigcup_{j=1}^{N(n)} I_j^{(n)}\right) \to 0 \quad \text{ as } n \to \infty.
+    \end{equation*}
+  \item
+    \begin{equation*}\bigcup_{j = 1}^{N(n)} I_j^{(n)} \subset \bigcup_{j=1}^{N(n+1)} I_j^{(n+1)}.\end{equation*}
+  \item If $I_{j'}^{(n+1)} \cap I_j^{(n)} \neq \emptyset$ for some $n,j,j'$ then $I_{j'}^{(n+1)} \subset I_j^{(n)}$ and if $j \neq N(n)$ then $a_{j'+1}^{(n+1)} - a_{j'}^{(n+1)} = a_{j+1}^{(n)} - a_j^{(n)}$.
+\end{enumerate}
+\begin{lemma}
+  Given $I_j^{(n)}$ satisfying the above conditions, there is a unique (up to a set measure 0) transformation $T: [0,1) \to [0, 1)$ such that $T$ maps $I_j^{(n)}$ onto $I_{j+1}^{(n)}$ by a translation.%]]
+  That is,
+  \begin{equation*}
+    T|_{I_j^{(n)}}:  x \mapsto x + a_{j+1}^{(n)} - a_j^{(n)}.
+  \end{equation*}
+  This holds for all $n$ and for all $j = 1, \dotsc, N(n)-1$.
+  Moreover $T$ preserves Lebesgue measure on $[0,1)$. %]
+\end{lemma}
+For almost every point $x$, eventually $x \in I_j^{(n)}$ with $j \neq N(n)$, then we know $I_j^{(n)} \to I_{j+1}^{(n)}$ is a translation, giving $Tx$.
+
+\begin{defi}[Chac\'on map]
+  \index{Chac\'on map}\hypertarget{def:chacon}Let $I_1^{(1)} = [0, \frac{2}{3}%](
+  )$, $N(1) = 1$.
+  Suppose that $I_j^{(n)}$ are defined for some $n$.
+  Cut $I_j^{(n)}$ into $3$ equal pieces.
+  Define
+  \begin{itemize}
+    \item $I_j^{(n+1)}$: the piece on the left hand side
+    \item $I_{j + N(n)}^{(n+1)}$: the piece in the middle
+    \item $I_{j + 2N(n) + 1}^{(n+1)}$: the piece on the right hand side.
+    \item $N(n+1) = 3N(n) + 1$.
+    \item Finally, define $I_{2N(n) + 1}^{(n+1)}$: cut off an interval of the same length as the other $I_j^{(n+1)}$'s from the remaining part of $[0,1) \setminus \bigcup_{j=1}^{N(n)} I_j^{(n)}$, and let this be $I_{2N(n) + 1}^{(n+1)}$.
+  \end{itemize}
+\end{defi}
+\begin{lemma}
+  Consider $([0,1%](
+  ), \mathcal{B}, m, T)$ where $m$ is the Lebesgue measure and $T$ is the \hyperlink{def:chacon}{Chac\'on map}. Then $\forall n, j$: %]
+  \begin{align*}
+    m\left(I_j^{(n)} \cap T^{N(n)} I_j^{(n)}\right) \geq \frac{1}{3} m\left(I_j^{(n)}\right) \\
+    m\left(I_j^{(n)} \cap T^{N(n)+1} I_j^{(n)}\right) \geq \frac{1}{3} m\left(I_j^{(n)}\right) \\
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Note
+  \begin{equation*}I_j^{(n)} = I_j^{(n+1)} \cup I_{j+N(n)}^{(n+1)} \cup I_{j + 2N(n) + 1}^{(n+1)}\end{equation*}
+  and
+  $T^{N(n)} I_j^{(n+1)} = I_{j + N(n)}^{(n+1)}$ and $T^{N(n)+1} I_{j + N(n)}^{(n+1)} = I_{j + 2N(n)+1}^{(n+1)}$.
+  Thus $I_j^{(n)} \cap T^{N(n)} I_j^{(n)} \supseteq I_{j + N(n)}^{(n+1)}$ and $I_j^{(n)} \cap T^{N(n) +1} I_j^{(n)} \supseteq I_{j + 2N(n) +1}^{(n+1)}$.
+\end{proof}
+\begin{thm}
+  $([0,1), \mathcal{B}, m, T)$ is not mixing. %]
+\end{thm}
+\begin{proof}
+  Consider $A = I_1^{(2)}$ (recall $I_1^{(1)} = [0, \frac{2}{3})$ %]
+  ), $m(A) = \frac{2}{9}$.
+  For $n \geq 2$, $A$ is the union of some intervals of the form $I_j^{(n)}$.
+  Apply the lemma to each of these.
+  \begin{equation*}
+    m(A \cap T^{N(n)} A) \geq \frac{1}{3} m(A) = \frac{3}{2} m(A)^2
+  \end{equation*}
+  This contradicts the definition of mixing.
+\end{proof}
+\begin{thm}
+  $([0,1), \mathcal{B}, m, T)$ is weak mixing. %]
+\end{thm}
+\begin{proof}
+  Let $f \in L^2$ such that $\lambda \circ T = \lambda f$ a.e.
+  We aim to show that $f$ is constant a.e.
+  Note that $|\lambda| = 1$.
+  Fix $\epsilon > 0$ sufficiently small: $\epsilon< \frac{1}{12}$, also
+  \begin{equation*}
+    m(x \in [0,1 %](
+    ) : |f(x)| > 2) > 10 \epsilon.
+  \end{equation*}
+  This might require replacing $f$ by a suitable constant multiple.
+
+  By Luzin's theorem, there is $h: [0,1] \to \mathbb{C}$ continuous such that
+  \begin{equation*}
+    m(x \in [0,1 %](
+    ): f(x) \neq h(x)) < \epsilon.
+  \end{equation*}
+  Then if $n$ is sufficiently large, then $|h(x_1) - h(x_2)| < \epsilon$ whenever $|x_1 - x_2| < \frac{2}{3^n}$, in particular this holds when $x_1, x_2 \in I_j^{(n)}$ for some $j$.
+
+  The intervals $I_j^{(n)}$ fill at least half of $[0,1 %](
+  )$. Therefore $\exists j$ such that $m(x \in I_j^{(n)} | f(x) \neq h(x)) < 2 \epsilon m(I_j^{(n)})$.
+  Let $z = f(x)$ for some $x \in I_j^{(n)}$ such that $f(x) = h(x)$.
+  \begin{align*}
+    m(\underbrace{x \in I_j : |f(x) - \lambda^{N(n)} z| < \epsilon}_B) &\geq m(\underbrace{y \in I_j^{(n)} : T^{N(n)} y \in I_j^{(n)} \text{and} f(y) = h(y)}_A) \\
+                                                                       &\geq m(I_j^{(n)} \cap T^{N(n)} I_j^{(n)}) - m(y \in I_j^{(n)} : f(y) \neq h(y)) \\
+                                                                       &\geq \frac{1}{3} m(I_j^{(n)}) - 2\epsilon m(I_j^{(n)}).
+  \end{align*}
+  (If $y \in A$, then $x = T^{N(n)} y \in I_j^{(n)}$ and $f(T^{N(n)} y) = \lambda^{N(n)} f(y) = \lambda^{N(n)} h(y)$, and the LHS is exactly $f(x)$.
+  Since $|h(y) - z| < \epsilon$, $|f(x) - \lambda^{N(n)} z| < \epsilon$. So $x \in B$.)
+
+  We will show in a minute that $|z| \geq 1$.
+  Then $|1 - \lambda^{N(n)}| < 2\epsilon $.
+  Same argument using the second claim in the lemma gives
+  \begin{equation*}
+    |1 - \lambda^{N(n+1)}| < 2\epsilon.
+  \end{equation*}
+  Hence $|\lambda^{N(n)} - \lambda^{N(n)+1}| < 4\epsilon$, and $|1 - \lambda| < 4\epsilon$. Taking $\epsilon \searrow 0$, we get $\lambda = 1$.
+
+  % new lecture
 \printindex
 \end{document}
