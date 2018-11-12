@@ -1320,6 +1320,7 @@ Note the theorem says $g_n \to \gamma$ in $L^2$, and the corollary says $\langle
   if $N$ is large enough.
   \textbf{unfinished}
   % see pics - unfinished
+\end{proof}
 % new lecture
 \begin{proof}[Proof of theorem]
   Induct\marginnote{\emph{Lecture 12}} on $k$.
@@ -1465,5 +1466,111 @@ For almost every point $x$, eventually $x \in I_j^{(n)}$ with $j \neq N(n)$, the
   Hence $|\lambda^{N(n)} - \lambda^{N(n)+1}| < 4\epsilon$, and $|1 - \lambda| < 4\epsilon$. Taking $\epsilon \searrow 0$, we get $\lambda = 1$.
 
   % new lecture
+  \marginnote{\emph{Lecture 14}}
+  Recall:
+  \begin{equation*}
+    m(x \in I_j^{(n)} : ||f(x)| - |z|| > \epsilon) < 2 \epsilon m (I_j^{(n)}).
+  \end{equation*}
+  Using $T^{i-j} I_j^{(n)} = I_i^{(n)}$, and
+  \begin{equation*}
+    |f(T^{i-j} x)| = |f(x)| \tag{$*$}\label{eq:star}
+  \end{equation*}
+  we get
+  \begin{equation*}
+    m(x\in I_j^{(n)} : |f(x) - \lambda^{i-j} z| > \epsilon) < 2 \epsilon m(I_i^{(n)})
+  \end{equation*}
+  Summing for $i=1,\dotsc,N(n)$, we get
+  \begin{align*}
+    m(x \in [0,1)) &\geq (1 - 2 \epsilon) \sum_{i=1}^{N(n)} m(I_i^{(n)}) \\
+                   &= (1 - 2\epsilon) (1 - \frac{1}{3^n}).
+  \end{align*}
+  If $n$ is sufficiently large, then
+  \begin{equation*}
+    m(x \in [0,1) : |f(x)| \leq |z| + \epsilon) \geq 1 - 10\epsilon.
+  \end{equation*}
+  comparing this with our assumption on $\epsilon$ at the beginning of the proof, we get $|z| \geq 1$, so $\lambda = 1$.
+
+  Thus $f^{T^{i-j} x) = f(x)}$. The same argument using this instead of \eqref{eq:star} gives:
+  \begin{equation*}
+    m(x \in [0,1) | f(x) - z_{n,\epsilon} \leq \epsilon) \geq (1 - 2\epsilon) (1 - \frac{1}{3^n}) \label{eq:doublestar}\tag{$**$}
+  \end{equation*}
+  Choose sequences $\epsilon_m \to 0$, $n_m \to \infty$ such that $z_{n_m,e_m}$ converges to a complex number $\tilde{z}$.
+  (Possible by Bolzano-Weierstrass).
+  If $m$ is sufficiently large depending on $\delta > 0$, then
+  \begin{equation*}
+    m(x \in [0,1) : |f(x) - \tilde{z}| < \delta) > 1 - \delta
+  \end{equation*}
+  if we use \eqref{eq:doublestar} for $n_m$ and $\epsilon_m$.
+\end{proof}
+
+\clearpage
+\color{black}
+\section{Entropy}
+\begin{defi}[Bernoulli shift]\hypertarget{def:bernoullishift}
+  Let $(p_1, p_2, \dotsc, p_d)$ be a probability vector.
+  The $(p_1, \dotsc, p_d)$-\named{Bernoulli shift} is the \hyperlink{def:mps}{measure preserving system}
+  \begin{equation*}
+    (\{1,\dotsc,d\}^\mathbb{Z}, \mathcal{B}, \mu_{p_1, \dotsc, p_d}, \sigma)
+  \end{equation*}
+  where $\sigma$ is the shift map and $\mu_{p_1,\dotsc,p_d}$ is the product measure with $(p_1, \dotsc, p_d)$ on the coordinates.
+\end{defi}
+This is just a special case of the \hyperlink{def:markovshift}{Markov shift}.
+\begin{defi}[Isomorphic\hypertarget{def:iso}]
+  \hyperlink{def:mps}{Measure preserving systems} $(X_1, \mathcal{B}_1, \mu_1, T_1)$ and $(X_2, \mathcal{B}_2, \mu_2, T_2)$ are called \named{isomorphic} if there are maps
+  \begin{align*}
+    S_1: X_1 &\longrightarrow X_2 \\
+    S_2: X_2 &\longrightarrow X_1
+  \end{align*}
+  such that $S_1 \circ S_2 = \operatorname{id}_{X_2}$ and $S_2 \circ S_1 = \operatorname{id}_{X_1}$, the \hyperlink{def:pushforward}{pushforwards} ${S_1}_* \mu_1 = \mu_2$, ${S_2}_* \mu_2 = \mu_1$, and $T_1 \circ S_2 = S_1 \circ T_2$ almost everywhere.
+\end{defi}
+
+Question: Are the $(\frac{1}{2}, \frac{1}{2})$ and $(\frac{1}{3}, \frac{1}{3}, \frac{1}{3})$ \hyperlink{def:bernoullishift}{Bernoulli shifts} \hyperlink{def:iso}{isomorphic}?
+This question was open for a long time, but was solved by Kolmogorov when he defined the notion of entropy.
+
+\begin{itemize}
+  \item These two shifts have `the same' \hyperlink{def:koopman}{Koopman operators}, so attempts using operator theory are unlikely to succeed.
+  \item After Kolmogorov's proof, Meshalkin proved $(\frac{1}{4}, \frac14, \frac14, \frac14)$ and $(\frac12, \frac18,\frac18,\frac18,\frac18)$ Bernoulli shifts are isomorphic.
+    At first glance, these two shifts do not appear more different than the earlier two shifts, but these have the same entropy.
+  \item Much later, Ornstein proved two systems have the same entropy if and only if they are isomorphic.
+\end{itemize}
+
+Roughly, the entropy measures how difficult it is to predict the next element of the orbit if you know a long segment.
+
+\begin{defi}[Partition]\hypertarget{def:partition}
+  Let $(X,\mathcal{B}, \mu)$ be a probability space.
+  A countable measurable \named{partition} is a collection of measurable sets $A_1, A_2, \dotsc$ such that $A_i \cap A_j = \emptyset$ for all $i \neq j$ and $\bigcup A_i = X$.
+  The sets $A_i$ are called the \named{atoms} of the partition.
+  The \named{join} or coarsest common refinement of two countable measurable partitions $\xi,\eta$ is
+  \begin{equation*}
+    \xi\vee\eta = \set{A \cap B | A \in \xi, B \in \eta}.
+  \end{equation*}
+\end{defi}
+\begin{defi}[Entropy]\hypertarget{def:ent}
+  Define
+  \begin{equation*}
+    H(p_1, \dotsc, p_d) = -p_1 \log p_1 - \dotsb -p_d \log p_d
+  \end{equation*}
+  for all probability vectors $(p_1, \dotsc, p_d)$ with the convention $0 \log 0 = 0$ (and extended to countable vectors also).
+  The \index{entropy!of partition}\textbf{entropy} of a countable measurable \hyperlink{def:partition}{partition} $\xi$ is
+  \begin{equation*}
+    H_\mu(\xi) = H(\mu(A_1), \mu(A_2), \dotsc)
+  \end{equation*}
+  where $\xi = \set{A_1, A_2, \dotsc}$
+
+  The \textbf{conditional entropy} of $\xi = \{A_1, A_2, \dotsc\}$ relative to $\eta = \{B_1, B_2, \dotsc\}$ is
+  \begin{equation*}
+    H_\mu(\xi \mid \eta) = \sum_{n=1}^\infty \mu(B_n) \cdot H\left( \frac{\mu(A_1 \cap B_n)}{\mu(B_n)}, \frac{\mu(A_2 \cap B_n)}{\mu(B_n)}, \dotsc\right).
+  \end{equation*}
+\end{defi}
+\begin{lemma}\leavevmode
+  \begin{enumerate}[label=(\arabic*)]
+    \item $\hyperlink{def:ent}{H_\mu}(\xi) \geq 0$.
+    \item The value of $H_\mu(\xi)$ is maximal among \hyperlink{def:ent}{partitions} $\xi$ with $k$ atoms if all \hyperlink{def:partition}{atoms} have the same measure $\frac{1}{k}$.
+    \item
+      \begin{equation*}H_\mu(\{A_1, A_2, \dotsc, A_k\}) = H_\mu(A_{\rho_1}, \dotsc, A_{\rho_k})\end{equation*}
+      for all permutations $\rho: \{1,\dotsc,k\} \to \{1,\dotsc,k\}$.
+    \item $H_\mu(\xi \vee \eta) = H_\mu(\xi) + H_\mu(\eta \mid \xi)$, sometimes called the chain rule.
+  \end{enumerate}
+\end{lemma}
 \printindex
 \end{document}
