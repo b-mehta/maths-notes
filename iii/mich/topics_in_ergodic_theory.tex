@@ -7,6 +7,7 @@
 \def\ncourse{Topics in Ergodic Theory}
 \def\draft{Ongoing course, rough}
 
+% preamble
 \usepackage{imakeidx}
 \usepackage{marginnote}
 
@@ -14,9 +15,10 @@
 \makeindex[intoc]
 \reversemarginpar
 
-% preamble
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 
+\DeclareMathOperator*{\dlim}{D-lim}
+\DeclareMathOperator*{\clim}{C-lim}
 \DeclareMathOperator*{\limw}{lim-w}
 
 \newcommand{\B}{\mathcal{B}}
@@ -35,14 +37,14 @@
 Ergodic \marginnote{\emph{Lecture 1}}theory is all about measure preserving systems.
 \begin{defi}[Measure preserving system]\index{measure preserving!system}\hypertarget{def:mps}
   A \textbf{measure preserving system} $(X, \mathcal{B}, \mu, T)$ with $X$ a set, $\mathcal{B}$ a $\sigma$-algebra, $\mu$ a probability measure ($\mu(A) \geq 0$ $\forall A \in \mathcal{B}$ and $\mu(X) = 1$) and $T$ is a measure preserving transformation.
-  \index{measure preserving!transformation}Recall a measure preserving transformation $T : X \to X$ is a measurable function such that $\mu(T^{-1}(A)) = \mu(A)$ $\forall A \in \mathcal{B}$.
+  \index{measure preserving!transformation}Recall a \textbf{measure preserving transformation} $T : X \to X$ is a measurable function such that $\mu(T^{-1}(A)) = \mu(A)$ $\forall A \in \mathcal{B}$.
 \end{defi}
 If $Y$ is a random element of $X$ with distribution $\mu$, then $T(Y)$ also has distribution $\mu$.
 
 \begin{eg}
-  \index{rotation map}\hypertarget{def:circ}For example, consider a circle rotation. We have $X = \mathbb{R}/\mathbb{Z}$, $\mathcal{B}$ is the Borel sets, $\mu$ the Lebesgue measure, and $T = R_\alpha$, with $x \mapsto x + \alpha$ and $\alpha \in \mathbb{R}/\mathbb{Z}$ is a parameter.
+  \index{circle rotation map}\hypertarget{def:circ}For example, consider a circle rotation. We have $X = \mathbb{R}/\mathbb{Z}$, $\mathcal{B}$ is the Borel sets, $\mu$ the Lebesgue measure, and $T = R_\alpha$, with $x \mapsto x + \alpha$ and $\alpha \in \mathbb{R}/\mathbb{Z}$ is a parameter.
 
-  \index{doubling map}\hypertarget{def:doubling}We also have the `times 2 map', with the same $X, \mathcal{B}, \mu$ and $T = T_2$, $x \mapsto 2 \cdot x$.
+  \index{doubling map}\hypertarget{def:doubling}We also have the `times 2' or `doubling' map, with the same $X, \mathcal{B}, \mu$ and $T = T_2$, $x \mapsto 2 \cdot x$.
 \end{eg}
 \begin{proof}[Proof that \hyperlink{def:doubling}{$T_2$} is \hyperlink{def:mps}{measure preserving}]
   First check for intervals: Let $I = (a,b)$, then $\mu(I) = b-a$.
@@ -55,7 +57,6 @@ If $Y$ is a random element of $X$ with distribution $\mu$, then $T(Y)$ also has 
                   &= \sum \mu(I_j) \\
                   &= \mu(U).
   \end{align*}
-
   Let $K \subset \mathbb{R}/\mathbb{Z}$ be a compact set.
   \begin{align*}
     \mu(T^{-1} K) = 1 - \mu((T^{-1} K)^c) = 1 - \mu(T^{-1} K^c) = 1 - \mu(K^c) = \mu(K).
@@ -95,7 +96,7 @@ Some questions we might ask are:
   Also, we have $\mu(\set{x \in A | T_2^n x}) = \frac{1}{16}$ for any $n \geq 2$.
 \end{eg}
 
-\begin{eg}[Markov shift]\index{markov shift}\hypertarget{def:markovshift}
+\begin{eg}[Markov shift]\index{Markov shift}\hypertarget{def:markovshift}
   Let $(P_1, P_2, \dotsc, P_n)$ be a probability vector.
   Let $A \in \mathbb{R}^{n \times n}_{\geq 0}$ be the `matrix of transition probabilities'.
   Assume
@@ -138,7 +139,7 @@ In this course, we will give an ergodic theory proof of this, using Furstenberg'
   \begin{equation*}a, a+d, \dotsc, a+(l-1)d \in S.\end{equation*}
 \end{thm}
 
-\begin{thm}[Furstenberg, multiple recurrence]\index{Furstenberg's theorem}\hypertarget{thm:furs}
+\begin{thm}[Furstenberg, multiple recurrence]\index{Furstenberg multiple recurrence}\hypertarget{thm:furs}
   Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}. Let $A \in \mathcal{B}$ such that $\mu(A) > 0$. Let $l \in \mathbb{Z}_{>0}$.
   Then
   \begin{equation*}
@@ -198,7 +199,7 @@ We pause the proof to briefly recap material on weak limits.
 \begin{defi}[Weak limit]\hypertarget{def:weaklimit}
   Let $X$ be a compact metric space.
   Let $\mu_m$ be a sequence of Borel measures on $X$, and let $\mu$ be another Borel measure.
-  Then $\mu_m$ \textbf{converges weakly} to $\mu$ if for any $f\in C(X)$, we have
+  \index{weak limit}Then $\mu_m$ \textbf{converges weakly} to $\mu$ if for any $f\in C(X)$, we have
   \begin{equation*}
     \lim _{n \to \infty} \int_X f \,d \mu_{n} = \int_X f \,d \mu.
   \end{equation*}
@@ -207,7 +208,7 @@ We pause the proof to briefly recap material on weak limits.
 
 \begin{thm}[Banach-Alaoglu, or Helly]\hypertarget{thm:banachalaoglu}
   Let $X$ be a compact metric space.
-  Then $\mathcal{M}(X)$, the set of Borel probability measures on $X$, endowed with the topology of weak convergence, is compact and metrizable.
+  \index{Banach-Alaoglu theorem}Then $\mathcal{M}(X)$, the set of Borel probability measures on $X$, endowed with the topology of weak convergence, is compact and metrizable.
   That is, there is a \hyperlink{def:weaklimit}{weakly convergent subsequence} in any sequence of Borel probability measures.
 \end{thm}
 
@@ -283,7 +284,7 @@ where the inequality comes from satisfying the conditions of \hyperlink{thm:sze}
     \mu(A \cup T^{-1} A \cup \dotsb \cup T^{-n} A) &= \mu(A) \\
                                                    &+ \mu(T^{-1} A) - \underbrace{\mu(T^{-1}A \cap A)}_{=0} \\
                                                    &+ \mu(T^{-2} A) - \underbrace{\mu(T^{-2} A \cap (A \cup T^{-1} A))}_{=0} \\
-                                                   &\shortvdotswithin{-}
+                                                   &\vdotswithin{-}\\
                                                    &+ \mu(T^{-n} A) - \underbrace{\mu(T^{-n} A \cap (A \cup T^{-1} A \cup \dotsb \cup T^{-(n-1)} A))}_{=0} \\
                                                    &= (n+1) \mu(A),
   \end{align*}
@@ -291,7 +292,7 @@ where the inequality comes from satisfying the conditions of \hyperlink{thm:sze}
 \end{proof}
 \begin{thm}[Poincar\'{e} recurrence]\hypertarget{thm:poincare}
   Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
-  Let $A \in \mathcal{B}$ with $\mu(A) > 0$.
+  \index{Poincar\'e recurrence}Let $A \in \mathcal{B}$ with $\mu(A) > 0$.
   Then almost every $x \in A$ returns to $A$ infinitely often.
   That is:
   \begin{equation*}
@@ -334,10 +335,10 @@ The main issue that can occur is that $X$ splits into parts, which are preserved
 
 So, we define a notion of `irreducible' for \hyperlink{def:mps}{measure preserving systems}.
 \begin{defi}[Ergodic]\hypertarget{def:ergodic}
-  A \hyperlink{def:mps}{measure preserving system} is called \textbf{ergodic} if $A = T^{-1}A$ implies $\mu(A) = 0$ or $1$ for all $A \in \mathcal{B}$.
+  A \hyperlink{def:mps}{measure preserving system} is called \named{ergodic} if $A = T^{-1}A$ implies $\mu(A) = 0$ or $1$ for all $A \in \mathcal{B}$.
 \end{defi}
 
-If a \hyperlink{def:mps}{measure preserving system} is not \hyperlink{def:ergodic}{ergodic}, and we have $A \in \mathcal{B}$ with $0 < \mu(A) < 1$ such that $T^{-1} A = A$, then we can restrict the measure preserving system to $A$.
+If a \hyperlink{def:mps}{measure preserving system} is not \hyperlink{def:ergodic}{ergodic}, we have $A \in \mathcal{B}$ with $0 < \mu(A) < 1$ such that $T^{-1} A = A$, then we can restrict the measure preserving system to $A$.
 That is, we consider the measure preserving system $(A, \mathcal{B}_A, \mu_A, T|_A)$ where $\mathcal{B}_A = \set{B \in \mathcal{B} | B \subseteq A}$ and $\mu_A(B) = \frac{\mu(B)}{\mu(A)}$ for all $B \in \mathcal{B}_A$.
 \begin{thm}
   The following are equivalent for an \hyperlink{def:mps}{measure preserving system} $(X, \mathcal{B}, \mu,T)$.
@@ -402,7 +403,7 @@ That is, we consider the measure preserving system $(A, \mathcal{B}_A, \mu_A, T|
 \section{Ergodic theorems}
 In \marginnote{\emph{Lecture 4}}the previous section, we discussed recurrence, which is concerned with orbits visiting a particular set infinitely often.
 However, we have not addressed how frequent these visits are: the second question we asked earlier.
-\begin{thm}[Mean Ergodic Theorem, von Neumann]\hypertarget{thm:meanet}
+\begin{thm}[Mean Ergodic Theorem, von Neumann]\index{ergodic theorem!mean}\index{mean ergodic theorem}\hypertarget{thm:meanet}
   Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}, and write
   \begin{equation*}
     \hypertarget{def:invfunc}I \coloneqq \set{f \in L^2(X) | f \circ T = f \text{ a.e.}}
@@ -414,7 +415,7 @@ However, we have not addressed how frequent these visits are: the second questio
     \frac{1}{N} \sum_{n=0}^{N-1} f \circ T^n \to P_T f \quad \text{in } L^2(X).
   \end{equation*}
 \end{thm}
-\begin{thm}[Pointwise Ergodic Theorem, Birkhoff]\hypertarget{thm:pet}
+\begin{thm}[Pointwise Ergodic Theorem, Birkhoff]\index{ergodic theorem!pointwise}\index{pointwise ergodic theorem}\hypertarget{thm:pet}
   Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
   Then for every $f \in L^1(X)$, there is a $T$-invariant function
   $f^* \in L^1(X)$ such that
@@ -425,11 +426,11 @@ However, we have not addressed how frequent these visits are: the second questio
 
 \hypertarget{def:ergavg}When $f \in L^2(X)$, then the function $f^*$ in the \hyperlink{thm:pet}{Pointwise Ergodic Theorem} is $P_Tf$.
 The \hyperlink{thm:meanet}{Mean Ergodic Theorem} also holds in $L^p$ for $1 \leq p < \infty$, see the example sheet.
-We call the quantity $\frac{1}{N} \sum_{n=0}^{N-1} f \circ T^n$ the \textbf{ergodic average}.
+We call the quantity $\frac{1}{N} \sum_{n=0}^{N-1} f \circ T^n$ the \named{ergodic average}.
 
 \begin{lemma}
   Let $(X, \mathcal{B}, \mu)$ be a probability space, and let $T: X \to X$ be a measurable transformation.
-  Then $T$ is measure preserving if and only if
+  Then $T$ is \hyperlink{def:mps}{measure preserving} if and only if
   \begin{equation*}
     \int_X f \circ T \, d\mu = \int_X f \, d\mu \label{eq:4star} \tag{$*$}
   \end{equation*}
@@ -453,7 +454,7 @@ We call the quantity $\frac{1}{N} \sum_{n=0}^{N-1} f \circ T^n$ the \textbf{ergo
   \end{equation*}
   Finally, a general $f \in L^1(X)$ can be written as the difference of two non-negative functions, and conclude \eqref{eq:4star} by linearity.
 \end{proof}
-\begin{defi}[Koopman operator]\hypertarget{def:koopman}
+\begin{defi}[Koopman operator]\index{Koopman operator}\hypertarget{def:koopman}
   Let $(X,\mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
   For $f: X \to \mathbb{C}$ a measurable function, define
   \begin{equation*}
@@ -472,12 +473,12 @@ We call the quantity $\frac{1}{N} \sum_{n=0}^{N-1} f \circ T^n$ the \textbf{ergo
   Apply the previous lemma to $f \cdot \bar{g} \in L^1(X)$.
 \end{proof}
 
-\begin{defi}[Invertible]\hypertarget{def:inv}
+\begin{defi}[Invertible]\index{invertible}\index{measure preserving!system!invertible}\hypertarget{def:inv}
   A \hyperlink{def:mps}{measure preserving system} $(X, \mathcal{B}, \mu, T)$ is said to be \textbf{invertible} if there is a measure preserving map $S: X \to X$ such that $T \circ S = S \circ T = \operatorname{id}_X$ almost everywhere.
   If such a map exists, denote it as $T^{-1}$.
 \end{defi}
 \begin{eg}
-  The \hyperlink{def:circ}{circle rotation} is invertible, but the \hyperlink{def:doubling}{doubling map} is not.
+  The \hyperlink{def:circ}{circle rotation} is \hyperlink{def:inv}{invertible}, but the \hyperlink{def:doubling}{doubling map} is not.
 \end{eg}
 \begin{lemma}
   If the \hyperlink{def:mps}{measure preserving system} $(X, \mathcal{B}, \mu, T)$ is \hyperlink{def:inv}{invertible}, then \hyperlink{def:koopman}{$U_T$} is unitary on $L^2(X)$ and $U_T^* = U_{T^{-1}}$.
@@ -494,8 +495,8 @@ We call the quantity $\frac{1}{N} \sum_{n=0}^{N-1} f \circ T^n$ the \textbf{ergo
 \end{proof}
 The proofs we will give of the ergodic theorems rely on the idea that convergence is easy for certain special functions.
 
-First, the ergodic averages of a $T$-invariant function $f \hyperlink{def:invfunc}{\in I}$ are equal to $f$, so they converge to $f$.
-If $f = U_T g - g$ for some $g$, then the \hyperlink{def:ergavg}{ergodic averages} become telescopic sums and only the boundary terms remain, that is:
+First, the \hyperlink{def:ergavg}{ergodic averages} of a $T$-invariant function $f \hyperlink{def:invfunc}{\in I}$ are equal to $f$, so they converge to $f$.
+If $f = U_T g - g$ for some $g$, then the ergodic averages become telescopic sums and only the boundary terms remain, that is:
 \begin{equation*}
   \frac{1}{N} \sum_{n=0}^{N-1} U_T^n(U_T g - g) = \frac{1}{N} (U_T^N g - g)
 \end{equation*}
@@ -547,7 +548,7 @@ It is important to note that the space $B$ is not closed. So $L^2(X) = I \oplus 
 \clearpage
 \section{Proof of pointwise ergodic theorem}
 It\marginnote{\emph{Lecture 5}} is first useful to prove:
-\begin{thm}[Maximal Ergodic Theorem, Wiener]\hypertarget{thm:maxet}
+\begin{thm}[Maximal Ergodic Theorem, Wiener]\index{ergodic theorem!maximal}\index{maximal ergodic theorem}\hypertarget{thm:maxet}
   Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
   Let $f \in L^1$, $\alpha \in \mathbb{R}_{> 0}$. Let
   \begin{equation*}
@@ -653,5 +654,150 @@ First prove a useful proposition.
   \end{align*}
   Then $f^*(x) - f^*(Tx) = \lim \frac{1}{N} f(x) = 0$.
 \end{proof}
+
+\clearpage
+\section{Unique ergodicity}
+\begin{defi}[Normal]\index{normal}\hypertarget{def:normal}
+  A\marginnote{\emph{Lecture 6}} number $x \in [0,1)$ is called \textbf{normal} in base $K$, if for every $b_1, b_2, \dotsc, b_M \in \{0, \dotsc, K\}$, we have
+  \begin{equation*}
+    \frac{1}{N} \left| \set{n \in \{0, \dotsc, N-1\} | x_{n+1} = b_1, \dotsc, x_{n+M} = b_M} \right| \to \frac{1}{K^M}
+  \end{equation*}
+  where $x = 0.x_1 x_2 \dotsm_{(K)}$ is the base $K$ expansion.
+\end{defi}
+\begin{thm}
+  Almost every number (with respect to Lebesgue measure) is \hyperlink{def:normal}{normal} in every base $k \geq 2$.
+\end{thm}
+\begin{proof}
+  Consider the \hyperlink{def:mps}{measure preserving system} $(\mathbb{R}/\mathbb{Z}, \mathcal{B}, m, T_K)$ where $T_K(x) = K\cdot x$ and $m$ refers to Lebesgue measure.
+  On the example sheet, we show this is an \hyperlink{def:ergodic}{ergodic} measure preserving system.
+  Now fix $M$ and $b_1, \dotsc, b_M$ as in the definition and consider the set
+  \begin{equation*}
+    A = \bigg[{0.b_1 b_2 \dots b_M}_{(K)}, {0.b_1 b_2 \dots b_M} _{(K)} + \frac{1}{K^M}\bigg).
+  \end{equation*}
+  Note: $T^n x \in A \iff x_{n+1} = b_1, \dotsc, x_{n+M} = b_M$.
+  To see that $x$ is normal we need:
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N-1} \chi_A (T^n x) \to \frac{1}{K^M}.
+  \end{equation*}
+  This holds by the \hyperlink{thm:pet}{Pointwise Ergodic Theorem} for almost every $x$.
+  Since there are countably many choices for $K,M,b_1, \dotsc, b_m$, the theorem follows.
+\end{proof}
+
+The \hyperlink{thm:pet}{Pointwise Ergodic Theorem} as applied here shows that a property holds for almost every number, but gives no information about any specific numbers.
+Unique ergodicity attempts to ask when does the Pointwise Ergodic Theorem hold for \emph{all} points.
+
+If there is more than one $T$-invariant measure for a given transformation $T$, then we can apply the Pointwise Ergodic Theorem for both measures, which can give different limits for the \hyperlink{def:ergavg}{ergodic averages}.
+(This is not a contradiction, because the set where convergence holds in one case may be null with respect to the other measure).
+However, this suggests that \emph{everywhere} convergence of ergodic averages prohibits the existence of multiple invariant measures.
+
+\begin{defi}[Topological dynamical system]\hypertarget{def:tds}
+  A \named{topological dynamical system} is a tuple $(X, T)$, where $X$ is a compact metric space and $T: X \to X$ is a continuous map.
+\end{defi}
+\begin{defi}[Unique ergodicity]\index{ergodic!uniquely}\hypertarget{def:uerg}
+  We say that a \hyperlink{def:tds}{topological dynamical system} $(X, T)$ is \named{uniquely ergodic}, if there is only one $T$-invariant Borel probability measure on $X$.
+\end{defi}
+\begin{thm}
+  Let $(X,T)$ be a \hyperlink{def:tds}{topological dynamical system}. The following are equivalent:
+  \begin{enumerate}[label=(\arabic*)]
+    \item $(X,T)$ is \hyperlink{def:uerg}{uniquely ergodic}
+    \item For every $f \in C(X)$, there is $c_f \in \mathbb{C}$ such that
+      \begin{equation*}
+        \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x) \to c_f
+      \end{equation*}
+      uniformly on $X$.
+    \item There is a dense $A \subset C(X)$ such that for each $f \in A$ there is $c_f \in \mathbb{C}$ such that
+      \begin{equation*}
+        \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x) \to c_f
+      \end{equation*}
+      for all $x \in X$, not necessarily uniformly.
+  \end{enumerate}
+\end{thm}
+\begin{thm}[Riesz representation theorem]\index{Riesz representation theorem}\hypertarget{def:rr}
+  Let $X$ be a compact metric space.
+  Then to each finite Borel measure on $X$, we associate bounded linear functional on $C(X)$ as follows:
+  \begin{equation*}
+    L_\mu f = \int f\,d\mu.
+  \end{equation*}
+  Then $\mu \mapsto L_\mu$ is a bijection from the space of Borel measure $\mathcal{M}(X)$ on $X$ to bounded linear functionals on $C(X)$.
+\end{thm}
+\begin{cor}
+  Let $\mu_1, \mu_2$ be Borel measures on a compact metric space.
+  Then $\mu_1 = \mu_2$ iff
+  \begin{equation*}
+    \int f\,d\mu_1 = \int f\,d\mu_2 \quad \forall f \in C(X).
+  \end{equation*}
+\end{cor}
+\begin{defi}[Push-forward measure]\index{push-forward}\hypertarget{def:pushforward}
+  Let $(X,T)$ be a \hyperlink{def:tds}{topological dynamical system}, let $\mu$ be a Borel measure.
+  The \textbf{push-forward} of $\mu$ via $T$ is the measure
+  \begin{equation*}
+    T_* \mu(A) = \mu(T^{-1} A) \quad \forall A \in \mathcal{B}.
+  \end{equation*}
+\end{defi}
+\begin{lemma}
+  Let $X,T,\mu$ be as above. Then
+  \begin{equation*}
+    \int f\,d\hyperlink{def:pushforward}{T_*\mu} = \int f \circ T\,d\mu
+  \end{equation*}
+  for every bounded measurable $f$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+  First prove this for characteristic functions of sets.
+  Let $A \in \mathcal{B}$.
+  \begin{align*}
+    \int \chi_A \,dT_{*}\mu &= T_*\mu(A) \\
+                            &= \mu(T^{-1} A) \\
+                            &= \int \chi_{T^{-1} A}\,d\mu \\
+                            &= \int \chi_A \circ T\,d\mu.
+  \end{align*}
+  Using the standard argument, this can be extended to all bounded measurable $f$.
+\end{proof}
+\begin{lemma}
+  $\mu$ is $T$-invariant iff
+  \begin{equation}
+    \int f\,d\mu = \int f \circ T\,d\mu \quad \forall f \in C(X). \tag{$*$}\label{eq:6star}
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  We have already seen that $\mu$ being $T$-invariant $\Rightarrow$ \eqref{eq:6star}.
+  For the other direction:
+  Suppose that \eqref{eq:6star} holds. Then
+  \begin{equation*}
+    \int f\,d\hyperlink{def:pushforward}{T_* \mu} = \int f \circ T\,d\mu = \int f \, d\mu \quad \forall f \in C(X).
+  \end{equation*}
+  By the corollary, we have $\mu = T_* \mu$.
+\end{proof}
+\begin{thm}
+  Let $(X,T)$ be a \hyperlink{def:tds}{topological dynamical system}.
+  Let $\nu_j$ be a sequence of Borel probability measures on $X$.
+  Let $\{N_j\} \subset \mathbb{Z}_{\geq 0}$ be a sequence such that $N_j \to \infty$.
+  Let $\mu$ be the \hyperlink{def:weaklimit}{weak limit} of a subsequence of
+  \begin{equation*}
+    \frac{1}{N_j} \sum_{n=0}^{N_j - 1} T_*^n \nu_j.
+  \end{equation*}
+  Then $\mu$ is $T$-invariant.
+\end{thm}
+\begin{proof}
+  Fix $f \in C(X)$. Without loss of generality, assume
+  \begin{equation*}
+    \limw \frac{1}{N_j} \sum_{n=0}^{N_j - 1} T_*^n \nu_j = \mu
+  \end{equation*}
+  (if not, pass to a subsequence). Now,
+  \begin{align*}
+    \int f \circ T\,d\mu &= \lim_{j \to \infty} \int f \circ T\,d\!\left(\frac{1}{N_j} \sum_{n=0}^{N_j - 1}T^n_* \nu_j\right) \\
+               &= \lim_{j \to \infty} \frac{1}{N_j} \sum_{n=0}^{N_j - 1} \int f \circ T\,d T^n_* \nu_j \\
+               &= \lim_{j \to \infty} \frac{1}{N_j} \sum_{n=0}^{N_j - 1} \int f \circ T^{n+1}\,d \nu_j \\
+               &= \lim_{j \to \infty} \frac{1}{N_j} \sum_{n=1}^{N_j} \int f \circ T^n\,d \nu_j
+  \end{align*}
+  We can expand $\int f\,d\mu$ similarly:
+  \begin{equation*}
+    \int f\,d\mu = \lim_{j \to \infty} \frac{1}{N_j} \sum_{n=0}^{N_j-1} \int f \circ T^n d \nu_j
+  \end{equation*}
+  Then
+  \begin{equation*}
+    \left|\int f\,d\mu - \int f \circ T\,d\mu\right| \leq \limsup_{j \to \infty} \frac{\|f\|_\infty + \|f \circ T\|_\infty}{N_j} = \limsup_{j \to \infty} \frac{\|f\|_\infty + \|f\|_\infty}{N_j} \to 0. \qedhere
+  \end{equation*}
+\end{proof}
+
 \printindex
 \end{document}
