@@ -1443,7 +1443,7 @@ However, it only applies to \hyperlink{def:funct}{functors} between preorders (c
   Suppose given a \hyperlink{def:pullback}{pullback} square
   \begin{equation*}
     \begin{tikzcd}
-      P \rar{h} \dar{k} & A \dar{f} \\
+      P \rar{h} \dar{k} & A \dar[tail]{f} \\
       B \rar{g} & C
     \end{tikzcd}
   \end{equation*}
@@ -1555,39 +1555,30 @@ Suppose given
 with $\hyperlink{def:adj}{(F \dashv G)}$.
 How much of this structure can we describe without mentioning $\mathscr{D}$?
 
-We have the functor $T= GF: \mathscr{C} \to \cc$, and the unit $\eta: 1_\mathscr{C} \to T = GF$ and the natural transformation
+We have the \hyperlink{def:funct}{functor} $T= GF: \mathscr{C} \to \mathscr{C}$, and the \hyperlink{def:unit}{unit} $\eta: 1_\mathscr{C} \to T = GF$ and the \hyperlink{def:nattrans}{natural transformation}
 \begin{equation*}
   \mu = G\epsilon_F: TT = GFGF \to GF = T.
 \end{equation*}
 These satisfy the commutative diagrams
 
-\noindent
-\begin{tabularx}{\linewidth}{XX}
-\begin{equation}
-  \begin{tikzcd}[sep=large, ampersand replacement=\&]
-    T \rar{T\eta} \drar[']{1_T} \& TT \dar{\mu}\\
-                             \& T
-  \end{tikzcd} \label{eq:monad1}
-\end{equation}
-&
-\begin{equation}
-  \begin{tikzcd}[sep=large, ampersand replacement=\&]
-    TT \dar{\mu} \& T \lar[']{\eta_T} \arrow[dl, "1_T"] \\
-    T
-  \end{tikzcd} \label{eq:monad2}
-\end{equation}
-\end{tabularx}
-and
-\begin{equation}
+\begin{equation*}
   \begin{tikzcd}[sep=large]
-    TTT \rar{T\mu} \dar{\mu_T} & TT \dar{\mu} \\
+    T \rar{T\eta} \arrow[dr, "1_T"'{name=mid}]
+    & TT \arrow[d, "\mu"{name=here}] & T \lar[']{\eta_T} \arrow[dl, "1_T"]\\
+    & T \arrow[from=1-1, to=here, "\hypertarget{eq:monad1}\scriptstyle(1)" description, pos=0.67, phantom]\arrow[from=1-3, to=here, "\hypertarget{eq:monad2}\scriptstyle(2)" description, pos=0.67, phantom]
+  \end{tikzcd}
+\end{equation*}
+by \hyperlink{def:triId}{triangular identities} and
+\begin{equation*}
+  \begin{tikzcd}[row sep=large]
+  TTT \rar{T\mu} \dar{\mu_T} \arrow[dr, phantom, "\hypertarget{eq:monad3}\scriptstyle(3)" description]& TT \dar{\mu} \\
     TT \rar{\mu} & T
-  \end{tikzcd} \label{eq:monad3}
-\end{equation}
+  \end{tikzcd}
+\end{equation*}
 by naturality of $\epsilon$.
 
 \begin{ndef}[Monad]\hypertarget{def:monad}
-  A \named{monad} $\mathbb{T} = (T, \eta, \mu)$ on a \hyperlink{def:cat}{category} $\mathscr{C}$ consists of a \hyperlink{def:funct}{functor} $T: \mathscr{C} \to \mathscr{C}$ and \hyperlink{def:nattrans}{natural transformation} $\eta: 1_\mathscr{C} \to T$, $\mu: TT \to T$ satisfying equations \eqref{eq:monad1}-\eqref{eq:monad3}.
+  A \named{monad} $\mathbb{T} = (T, \eta, \mu)$ on a \hyperlink{def:cat}{category} $\mathscr{C}$ consists of a \hyperlink{def:funct}{functor} $T: \mathscr{C} \to \mathscr{C}$ and \hyperlink{def:nattrans}{natural transformation} $\eta: 1_\mathscr{C} \to T$, $\mu: TT \to T$ satisfying equations \hyperlink{eq:monad1}{(1)}-\hyperlink{eq:monad3}{(3)}.
   $\eta$ and $\mu$ are called the \textbf{unit} and \textbf{multiplication} of $\mathbb{T}$.
 \end{ndef}
 \begin{nexample}\leavevmode
@@ -1603,41 +1594,42 @@ Does every \hyperlink{def:monad}{monad} arise from an \hyperlink{def:adj}{adjunc
 
 In \cref{eg:5.2}(b) we have the \hyperlink{def:cat}{category} \hyperlink{def:functcat}{$[M, \mathbf{Set}]$}.
 Its \hyperlink{def:forgFunc}{forgetful functor} to $\mathbf{Set}$ has a left \hyperlink{def:adj}{adjoint}, sending $A$ to $M \times A$ with $M$ acting by multiplication on the left factor.
-This adjunction gives rise to the monad of \cref{eg:5.2}(b).
+This adjunction gives rise to the \hyperlink{def:monad}{monad} of \cref{eg:5.2}(b).
 
 \begin{ndef}[Eilenberg-Moore category]\label{def:5.3}
   \hypertarget{def:em}Let $\mathbb{T}$ be a \hyperlink{def:monad}{monad} on $\mathscr{C}$.
   A $\mathbb{T}$-\textbf{algebra}\index{Talgebra@$\mathbb{T}$-algebra} is a pair $(A, \alpha)$ with $A \in \ob \mathscr{C}$ and $TA \overset{\alpha}\to A$ satisfying the commutative diagrams
-  \begin{equation}
-    \begin{tikzcd}
-      A \rar{\eta_A} \drar[']{1_A} & TA \dar{\alpha} \\ & A
-    \end{tikzcd} \label{eq:em4}
-  \end{equation}
-  \begin{equation}
-    \begin{tikzcd}
-      TTA \rar{T\alpha} \dar{\mu_A} & TA \dar{\alpha} \\ TA \rar{\alpha} & A.
-    \end{tikzcd} \label{eq:em5}
-  \end{equation}
+  \begin{equation*}
+    \begin{tikzcd}[sep=large]
+      A \rar{\eta_A} \drar[']{1_A} & TA \arrow[d, "\alpha"{name=here}] \\ & A
+      \arrow[from=1-1, to=here, phantom, "\scriptstyle\hypertarget{eq:em4}(4)" description, pos=0.67]
+    \end{tikzcd}
+  \end{equation*}
+  \begin{equation*}
+    \begin{tikzcd}[sep=large]
+      TTA \rar{T\alpha} \dar{\mu_A} \arrow[dr, phantom, "\hypertarget{eq:em5}\scriptstyle(5)" description] & TA \dar{\alpha} \\ TA \rar{\alpha} & A.
+    \end{tikzcd}
+  \end{equation*}
   A \textbf{homomorphism}\index{algebra!homomorphism} $f: (A, \alpha) \to (B, \beta)$ is a morphism $A \overset{f}\to B$ such that
-  \begin{equation}
-  \begin{tikzcd}
-    TA \rar{Tf} \dar{\alpha} & TB \dar{\beta} \\ A \rar{f} & B  \label{eq:em6}
-  \end{tikzcd}
-  \end{equation}
+  \begin{equation*}
+    \begin{tikzcd}[sep=large]
+      TA \rar{Tf} \dar{\alpha} \arrow[dr, phantom, "\hypertarget{eq:em6}\scriptstyle(6)" description] & TB \dar{\beta} \\ A \rar{f} & B
+    \end{tikzcd}
+  \end{equation*}
   commutes.
   The category of $\mathbb{T}$-algebras is denoted $\mathscr{C}^\mathbb{T}$, and called the \named{Eilenberg-Moore category}.
 \end{ndef}
-\begin{nlemma}\label{lem:5.4}
-  The \hyperlink{def:forgFunc}{forgetful functor} $G^\mathbb{T}: \mathscr{C}^\mathbb{T}  \to \mathscr{C}$ has a \hyperlink{def:adj}{left adjoint} $F^\mathbb{T}$ and the adjunction induces $\mathbb{T}$.
+\begin{nlemma}\label{lem:5.4}\hypertarget{def:fsupt}
+  The \hyperlink{def:forgFunc}{forgetful functor} $G^\mathbb{T}: \hyperlink{def:em}{\mathscr{C}^\mathbb{T}} \to \mathscr{C}$ has a \hyperlink{def:adj}{left adjoint} $F^\mathbb{T}$ and the adjunction induces $\mathbb{T}$.
 \end{nlemma}
 \begin{proof}
-  We define $F^\mathbb{T} A = (TA, \mu_A)$ (an \hyperlink{def:em}{algebra} by \eqref{eq:monad2} and \eqref{eq:monad3}) and $F^\mathbb{T}(A \overset{f}\to B) = Tf$ (a \hyperlink{def:em}{homomorphism} by \hyperlink{def:nattrans}{naturality} of $\mu$).
+  We define $F^\mathbb{T} A = (TA, \mu_A)$ (an \hyperlink{def:em}{algebra} by \hyperlink{eq:monad2}{(2)} and \hyperlink{eq:monad3}{(3)}) and $F^\mathbb{T}(A \overset{f}\to B) = Tf$ (a \hyperlink{def:em}{homomorphism} by \hyperlink{def:nattrans}{naturality} of $\mu$).
 
   Clearly $G^\mathbb{T} F^\mathbb{T} = T$, the \hyperlink{def:unit}{unit} of the \hyperlink{def:adj}{adjunction} is $\eta$.
-  We define the counit
+  We define the \hyperlink{def:counit}{counit}
   \begin{equation*}\epsilon_{(A,a)} = \alpha: (TA, \mu_A) \to (A, \alpha)\end{equation*}
-  (a homomorphism by \eqref{eq:em5})
-  $\epsilon$ is natural by \eqref{eq:em6}; for the triangular identities, $\epsilon_{FA} (F \eta_A) = 1_{FA}$ is \eqref{eq:monad1}, $G \epsilon_{(A,\epsilon)} \eta_A = 1_A$ is \eqref{eq:em4}.
+  (a homomorphism by \hyperlink{eq:em5}{(5)})
+  $\epsilon$ is natural by \hyperlink{eq:em6}{(6)}; for the triangular identities, $\epsilon_{FA} (F \eta_A) = 1_{FA}$ is \hyperlink{eq:monad1}{(1)}, $G \epsilon_{(A,\epsilon)} \eta_A = 1_A$ is \hyperlink{eq:em4}{(4)}.
 
   The \hyperlink{def:monad}{monad} induced by $(F^\mathbb{T} \dashv G^\mathbb{T})$ has \hyperlink{def:funct}{functor} $T$ and unit $\eta$, and $G^\mathbb{T} \epsilon_{F^\mathbb{T} A} = \mu_A$ by definition of $F^\mathbb{T} A$.
 \end{proof}
@@ -1673,33 +1665,33 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
   Then
   \begin{equation*}
     \begin{tikzcd}[row sep=large]
-      A \rar{f} & TB \rar{Tg} & TTC \rar{TTh} \dar{\mu_C} & TTTD \dar{\mu_{TD}} \rar{T \mu_D} & TTD \dar{\mu_D} \\
+    A \rar{f} & TB \rar{Tg} & TTC \rar{TTh} \dar{\mu_C} & TTTD \dar{\mu_{TD}} \rar{T \mu_D} \arrow[dr, "\scriptstyle\hyperlink{eq:monad3}{(3)}" description, phantom] & TTD \dar{\mu_D} \\
                 && TC \rar{Th} & TTD \rar{\mu_D} & TD
     \end{tikzcd}
   \end{equation*}
-  commutes (left square is \hyperlink{def:nattrans}{naturality} of $\mu$, right square commutes by \eqref{eq:monad3}): the upper way round is $\green{(hg)f}$ and the lower is $\green{h(gf)}$.
+  commutes by naturality: the upper way round is $\green{(hg)f}$ and the lower is $\green{h(gf)}$.
 
   The unit laws for the \hyperlink{def:cat}{category} similarly follow from
   \begin{equation*}
     \begin{tikzcd}[row sep=large]
-    A \rar{f} & TB \rar{T\eta_B} \drar[']{1_{TB}} & TTB \dar{\mu_B}  \\
-              && TB
+    A \rar{f} & TB \rar{T\eta_B} \drar[']{1_{TB}} & TTB \arrow[d, "\mu_B"{name=here}]  \\
+              && TB \arrow[from=1-2, to=here, "\scriptstyle\hyperlink{eq:monad1}{(1)}" description, phantom, pos=0.67]
     \end{tikzcd}
   \end{equation*}
-  (commutes by \eqref{eq:monad1}) and
+  (commutes by \hyperlink{eq:monad1}{(1)}) and
   \begin{equation*}
     \begin{tikzcd}[row sep=large]
-    A \rar{f} \dar{\eta_A} & TB \drar{1_{TB}} \dar{\eta_{TB}} \\
-    TA \rar[']{Tf} & TTB \rar[']{\mu_B} & TB
+    A \rar{f} \dar{\eta_A} & TB \drar{1_{TB}} \dar[']{\eta_{TB}} \\
+    TA \rar[']{Tf} & TTB \arrow[r,"\mu_B"'{name=here}] & TB\arrow[from=1-2, to=here, "\scriptstyle\hyperlink{eq:monad2}{(2)}" description, phantom, pos=0.67]
     \end{tikzcd}
   \end{equation*}
-  which commutes by \eqref{eq:monad2}.
+  which commutes by \hyperlink{eq:monad2}{(2)}.
 \end{ndef}
-\begin{nlemma}\label{lem:5.6}
-  There exists an \hyperlink{def:adj}{adjunction}
+\begin{nlemma}\label{lem:5.6}\hypertarget{def:fsubt}
+  There \marginnote{\emph{Lecture 15}}exists an \hyperlink{def:adj}{adjunction}
   \begin{equation*}
     \begin{tikzcd}
-      \cc \rar[shift left]{F_\mathbb{T}} & \hyperlink{def:kleisli}{\cc_\mathbb{T}} \lar[shift left]{G_\mathbb{T}}
+      \mathscr{C} \rar[shift left]{F_\mathbb{T}} & \hyperlink{def:kleisli}{\mathscr{C}_\mathbb{T}} \lar[shift left]{G_\mathbb{T}}
     \end{tikzcd}
   \end{equation*}
   inducing the \hyperlink{def:monad}{monad} $\mathbb{T}$.
@@ -1710,40 +1702,39 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
   $F_\mathbb{T}$ preserves identities by definition; for composites, consider $A \overset{f}\to B \overset{g}\to C$.
   We get
   \begin{equation*}
-  \begin{tikzcd}
-    A \rar{f} & B \dar{g} \rar{\eta_B} & TB \dar{Tg} \\
-              & C \rar{\eta_C} & TC \rar{T\eta_c} \drar[']{1_{TC}} & TTC \dar{\mu_C} \\
-              &&& TC
-  \end{tikzcd}
+    \begin{tikzcd}[sep=large]
+      A \rar{f} & B \dar{g} \rar{\eta_B} & TB \dar{Tg} \\
+                & C \rar{\eta_C} & TC \rar{T\eta_c} \drar[']{1_{TC}} & TTC \arrow[d, "\mu_C"{name=me}] \\
+                &&& TC. \arrow[from=2-3, to=me, "\scriptstyle\hyperlink{eq:monad1}{(1)}" description, phantom, pos=0.67]
+    \end{tikzcd}
   \end{equation*}
-  (bottom right triangle commutes by \eqref{eq:monad1}). We define $G_\mathbb{T}A = TA$,
+  We define $G_\mathbb{T}A = TA$,
   \begin{equation*}
     G_\mathbb{T}(A \green{\overset{f}\to} B) = TA \overset{Tf}\to TTB \overset{\mu_B}\to TB.
   \end{equation*}
-
-  $G_\mathbb{T}$ preserves identities by \eqref{eq:monad1}; for composites, consider $A \green{\overset{f}\to} B \green{\overset{g}\to} C$.
+  $G_\mathbb{T}$ preserves identities by \hyperlink{eq:monad1}{(1)}; for composites, consider $A \green{\overset{f}\to} B \green{\overset{g}\to} C$.
   We get
   \begin{equation*}
-    \begin{tikzcd}
-      TA \rar{Tf} & TTB \rar{TTg} \dar{\mu_B} & TTTC \rar{T\mu_C} \dar{\mu_{TC}} & TTC \dar{\mu_C} \\
+    \begin{tikzcd}[row sep=large]
+    TA \rar{Tf} & TTB \rar{TTg} \dar{\mu_B} & TTTC \arrow[dr, phantom, "\scriptstyle\hyperlink{eq:monad3}{(3)}" description]\rar{T\mu_C} \dar{\mu_{TC}} & TTC \dar{\mu_C} \\
                   & TB \rar{Tg} & TTC \rar{\mu_C} & TC
     \end{tikzcd}
   \end{equation*}
-  $G_\mathbb{T} F_\mathbb{T} A = TA$, $G_\mathbb{T} F_\mathbb{T} f = \mu_B (T\eta_B) Tf = Tf$.
-
-  So we take $\eta: 1_\mathbb{C} \to T$ as the \hyperlink{def:unit}{unit} of $\hyperlink{def:adj}{(F_\mathbb{T} \dashv G_\mathbb{T})}$.
-  The counit $TA \green{\overset{\epsilon_A}\to} A$ is $1_{TA}$. To verify naturality, consider the square
+  We have
+  \begin{gather*}G_\mathbb{T} F_\mathbb{T} A = TA \\ G_\mathbb{T} F_\mathbb{T} f = \mu_B (T\eta_B) Tf = Tf\end{gather*}
+  so we take $\eta: 1_\mathbb{C} \to T$ as the \hyperlink{def:unit}{unit} of $\hyperlink{def:adj}{(F_\mathbb{T} \dashv G_\mathbb{T})}$.
+  The counit $TA \green{\overset{\epsilon_A}\to} A$ is $1_{TA}$. To verify \hyperlink{def:nattrans}{naturality}, consider the square
   \begin{equation*}
-    \begin{tikzcd}
+    \begin{tikzcd}[sep=large]
       TA \rar[red]{F_\mathbb{T}G_\mathbb{T}f} \dar[red]{\epsilon_A} & TB \dar[red]{\epsilon_B} \\
       A \rar[red]{f} & B
     \end{tikzcd}
   \end{equation*}
   This expands to
   \begin{equation*}
-    \begin{tikzcd}
-      TA \rar{Tf} & TTB \rar{\mu_B} & TB \rar{\eta_{TB}} \drar{1_{TB}} &TTB \dar{\mu_B} \\
-                  &               &                               &TB
+    \begin{tikzcd}[row sep=large]
+    TA \rar{Tf} & TTB \rar{\mu_B} & TB \rar{\eta_{TB}} \drar[']{1_{TB}} &TTB \arrow[d,"\mu_B"{name=me}] \\
+                &               &                               &TB \arrow[from=1-3, to=me, "\scriptstyle\hyperlink{eq:monad2}{(2)}" description, phantom, pos=0.67]
     \end{tikzcd}
   \end{equation*}
   so $\epsilon$ is natural.
@@ -1752,29 +1743,33 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
   \end{equation*}
   and $\green{(\epsilon_{F_\mathbb{T}A})(F_\mathbb{T}\eta_A)}$ is
   \begin{equation*}
-  \begin{tikzcd}
-    A \rar{\eta_A} & TA \rar{\eta_{TA}} \drar{1_{TA}} & TTA \dar{\mu_A} \\ &&TA
+    \begin{tikzcd}[row sep=large]
+    A \rar{\eta_A} & TA \rar{\eta_{TA}} \drar[']{1_{TA}} & TTA \arrow[d, "\mu_A"{name=me}] \\ &&TA \arrow[from=1-2,to=me, phantom, "\scriptstyle\hyperlink{eq:monad1}{(1)}" description]
   \end{tikzcd}
   \end{equation*}
   which is $\green{1_{F_\mathbb{T}A}}$.
-
-  Also $G_\mathbb{T}(\epsilon_{F_\mathbb{T}A}) = \mu_A$, so $(F_\mathbb{T} \dashv G_\mathbb{T})$ induces $\mathbb{T}$.
+  Also $G_\mathbb{T}(\green{\epsilon_{F_\mathbb{T}A}}) = \mu_A$, so $(F_\mathbb{T} \dashv G_\mathbb{T})$ induces $\mathbb{T}$.
 \end{proof}
 \begin{nthm}\label{thm:5.7}
-  Given a \hyperlink{def:monad}{monad} $\mathbb{T}$ on $\cc$, let $\mathbf{Adj}(\mathbb{T})$ be the category whose objects are the \hyperlink{def:adj}{adjunctions} $\left(\begin{tikzcdi}\cc \rar[shift left]{F} & \dc \lar[shift left]{G}\end{tikzcdi}\right)$ inducing $\mathbb{T}$, and whose morphisms $\left(\begin{tikzcdi}\cc \rar[shift left]{F} & \dc \lar[shift left]{G}\end{tikzcdi}\right)\to \left(\begin{tikzcdi}\cc \rar[shift left]{F'} & \dc' \lar[shift left]{G'}\end{tikzcdi}\right)$ are functors $H: \dc \to \dc'$ satisfying $HF = F'$ and $G'H = G$.
+  Given a \hyperlink{def:monad}{monad} $\mathbb{T}$ on $\mathscr{C}$, let $\mathbf{Adj}(\mathbb{T})$ be the category whose objects are the \hyperlink{def:adj}{adjunctions}
+  $\left(\begin{tikzcdi}\mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G}\end{tikzcdi}\right)$
+  inducing $\mathbb{T}$, and whose morphisms
+  \begin{equation*}\left(\begin{tikzcdi}\mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G}\end{tikzcdi}\right)\to \left(\begin{tikzcdi}\mathscr{C} \rar[shift left]{F'} & \mathscr{D}' \lar[shift left]{G'}\end{tikzcdi}\right)\end{equation*}
+  are functors $H: \mathscr{D} \to \mathscr{D}'$ satisfying $HF = F'$ and $G'H = G$.
   Then the \hyperlink{def:kleisli}{Kleisli} \hyperlink{def:adj}{adjunction} is an \hyperlink{def:initial}{initial} object of $\mathbf{Adj}(\mathbb{T})$, and the \hyperlink{def:em}{Eilenberg-Moore} adjunction is \hyperlink{def:terminal}{terminal}.
 \end{nthm}
 \begin{proof}
-  Let $\left(\begin{tikzcdi}\cc \rar[shift left]{F} & \dc \lar[shift left]{G}\end{tikzcdi}\right)$ be an object of $\mathbf{Adj}(\mathbb{T})$.
-  We define $K: \dc \to \cc^\mathbb{T}$ (the Eilenberg-Moore \textbf{comparison functor}) by $KB = G(B, G\epsilon_B)$ where $\epsilon$ is the \hyperlink{def:counit}{counit} of $(F \dashv G)$; note this is an algebra by one of the \hyperlink{def:triId}{triangular identities} for $(F \dashv G)$ and \hyperlink{def:nattrans}{naturality} of $\epsilon$ and $K(B \overset{g}\to B') = Gg$ (a homomorphism by naturality of $\epsilon$).
-  Clearly $G^\mathbb{T}K = G$ and $KFA = (GFA, G\epsilon_{FA}) = (TA, \mu_A) = F^\mathbb{T}A$.
-  $KF(A\overset{f}\to A') = Tf = F^\mathbb{T} f$.
+  \hypertarget{def:emcomp}Let $\left(\begin{tikzcdi}\mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G}\end{tikzcdi}\right)$ be an object of $\mathbf{Adj}(\mathbb{T})$.
+  We define $K: \mathscr{D} \to \hyperlink{def:em}{\mathscr{C}^\mathbb{T}}$ (the \textbf{Eilenberg-Moore comparison functor}) by $KB = (GB, G\epsilon_B)$ where $\epsilon$ is the \hyperlink{def:counit}{counit} of $(F \dashv G)$; note this is an \hyperlink{def:em}{algebra} by one of the \hyperlink{def:triId}{triangular identities} for $(F \dashv G)$ and \hyperlink{def:nattrans}{naturality} of $\epsilon$ and $K(B \overset{g}\to B') = Gg$ (a homomorphism by naturality of $\epsilon$).
+  Clearly $\hyperlink{def:fsupt}{G^\mathbb{T}}K = G$ and
+  \begin{gather*}KFA = (GFA, G\epsilon_{FA}) = (TA, \mu_A) = \hyperlink{def:fsupt}{F^\mathbb{T}}A,\\
+  KF(A\overset{f}\to A') = Tf = F^\mathbb{T} f.\end{gather*}
   So $K$ is a morphism of $\mathbf{Adj}(\mathbb{T})$.
 
-  Suppose $K': \dc \to \cc^\mathbb{T}$ is another such; then since $G^\mathbb{T} K' = G$, we know $K' B = (GB, \beta_B)$ where $\beta$ is a natural transformation $GFG \to G$.
+  Suppose $K': \mathscr{D} \to \mathscr{C}^\mathbb{T}$ is another such; then since $G^\mathbb{T} K' = G$, we know $K' B = (GB, \beta_B)$ where $\beta$ is a natural transformation $GFG \to G$.
   Also, since $K'F = F^\mathbb{T}$, we have $\beta_{FA} = \mu_A = G\epsilon_{FA}$.
 
-  Now, given any $B \in \ob \dc$, consider the diagram
+  Now, given any $B \in \ob \mathscr{D}$, consider the diagram
   \begin{equation*}
     \begin{tikzcd}[column sep=huge, row sep=scriptsize]
     GFGFGB \arrow[dd,shift right=2,',"G\epsilon_{FGB}"] \arrow[dd,shift left=2,"\beta_{FGB}"] \rar{GFG\epsilon_B} & GFGB \arrow[dd,shift right=2,',"G\epsilon_B"] \arrow[dd,shift left=2,"\beta_B"] \\ =\\
@@ -1784,9 +1779,12 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
   Both squares commute so $G\epsilon_B$ and $\beta_B$ have the same composite with $GFG\epsilon_B$.
   But this is \hyperlink{def:split}{split} \hyperlink{def:epic}{epic}, with splitting $GF\eta_{GB}$, so $\beta = G\epsilon$. Hence $K' = K$.
 
-  We now define the Kleisli comparison functor $L: \cc_\mathbb{T} \to \dc$ by $LA = FA$,
+  \hypertarget{def:klcomp}We now define the \textbf{Kleisli comparison functor} $L: \hyperlink{def:kleisli}{\mathscr{C}_\mathbb{T}} \to \mathscr{D}$ by $LA = FA$,
   \begin{equation*}
-  L(A \green{\overset{f}\to} B) = FA \overset{Ff}\to FGFB \overset{\epsilon_{FB}}\to FB.
+  L(A \green{\overset{f}\to} B) =
+  \begin{tikzcd}
+    FA \rar{Ff} & FGFB \rar{\epsilon_{FB}} & FB.
+  \end{tikzcd}
   \end{equation*}
   $L$ preserves identities by one of the \hyperlink{def:triId}{triangular identities} for $(F \dashv G)$; given $A \green{\overset{f}\to} B \green{\overset{g}\to} C$, we have
   \begin{equation*}
