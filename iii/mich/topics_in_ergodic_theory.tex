@@ -902,5 +902,234 @@ However, this suggests that \emph{everywhere} convergence of ergodic averages pr
   Observe that every point in $\bigcap_{f \in A} X_f$, where $A \subset C(X)$ is dense and countable is $\mu$-generic.
 \end{proof}
 
+\begin{thm}[Furstenberg's skew-product theorem]\hypertarget{thm:fursskew}
+  Let $(X,T)$ \index{skew product}\marginnote{\emph{Lecture 8}}be a \hyperlink{def:uerg}{uniquely ergodic} \hyperlink{def:tds}{topological dynamical system}.
+  Denote by $\mu$ the invariant measure.
+  Write $S: X \times \mathbb{R} / \mathbb{Z} \to X \times \mathbb{R} / \mathbb{Z}$ defined by
+  \begin{equation*}
+    S(x,y) = (Tx, y + c(x))
+  \end{equation*}
+  where $c: X \to \mathbb{R}/\mathbb{Z}$ is a fixed continuous function.
+  Then $\mu \times m$, where $m$ is the Lebesgue measure on $\mathbb{R}/\mathbb{Z}$ is $S$-invariant.
+  In addition, if $\mu \times m$ is \hyperlink{def:ergodic}{$S$-ergodic}, then $(X \times \mathbb{R}/\mathbb{Z}, S)$ is \hyperlink{def:uerg}{uniquely ergodic}.
+\end{thm}
+This result holds with any compact metrizable topological group in place of $\mathbb{R}/\mathbb{Z}$, called the skew-product construction.
+
+\begin{proof}
+  Let $f \in C(X \times \mathbb{R}/\mathbb{Z})$.
+  \begin{align*}
+    \iint f(S(x,y))\,d\mu(x)\, dy&=\int_X \int_0^1 f(Tx,y+c(x))\,dy\,d\mu(x)\\
+                                 &=\int_X \int_{-c(x)}^{1-c(x)} f(Tx,y) \,dy\,d\mu(x) \\
+                                 &=\int_{\mathbb{R}/\mathbb{Z}}\int_X f(Tx,y)\,d\mu(x)\,dy\\
+                                 &=\iint f(x,y)\,d\mu(x)\,dy.
+  \end{align*}
+  So $\mu \times m$ is indeed $S$-invariant.
+  Now we assume that $\mu \times m$ is \hyperlink{def:ergodic}{$S$-ergodic}.
+  We show that $(X \times \mathbb{R}/\mathbb{Z},S)$ is \hyperlink{def:uerg}{uniquely ergodic}.
+  Let $E$ be the set of $\mu\times m$-\hyperlink{def:generic}{generic} points.
+  We have seen that ergodicity implies $\mu \times m(E) = 1$.
+
+  \textbf{Claim:} If $(x,y) \in E$, then $(x, t+y) \in E$ for all $t \in \mathbb{R}/\mathbb{Z}$.
+
+  \textbf{Proof:} Observe $S \circ U_t = U_t \circ S$, where $U_t(x,y) = (x, t+y)$.
+  Indeed:
+  \begin{align*}
+    S \circ U_t(x,y) &= S(x, t+y) = (Tx, t+y+c(x)) \\
+                     &= U_t(Tx, y + c(x)) = U_t \circ S(x,y).
+  \end{align*}
+  Let $f \in C(X \times \mathbb{R}/\mathbb{Z})$. Write
+  \begin{align*}
+    \frac{1}{N} \sum_{n=0}^{N-1} f(S^n(x,t+y)) &= \frac{1}{N} \sum_{n=0}^{N-1} f(S^n U_t (x,y)) \\
+                                               &= \frac{1}{N} \sum_{n=0}^{N-1} f(U_t S^n (x,y)) \\
+                                               \shortintertext{using that $(x,y) \in E$}
+                                               &\to \iint f \circ U_t\,dm\,d\mu \\
+                                               &= \iint f\,dm\,d\mu
+  \end{align*}
+  So $(x,t+y)$ is indeed generic, i.e.\ $(x,t+y) \in E$. $\blacksquare$
+
+  This means $E = A \times \mathbb{R}/\mathbb{Z}$ for some $A \subset X$ Borel.
+  Note $\mu(A) = \mu \times m(E) = 1$. Let $\nu$ be an $S$-invariant measure on $X \times \mathbb{R}/\mathbb{Z}$.
+
+  Next, aim to show $\nu(E) = 1$.
+  Write $P$ for the projection $X \times \mathbb{R} / \mathbb{Z} \to X$. We show $P_* \nu = \mu$.
+  It is enough to show that $P_* \nu$ is $T$-invariant.
+  Let $B \subset X$ Borel.
+  \begin{equation*}
+    P_* \nu(T^{-1}(B)) = \nu(T^{-1} (B) \times \mathbb{R}/\mathbb{Z}) = \nu(S^{-1} (B \times \mathbb{R}/\mathbb{Z})) = \nu(B \times \mathbb{R}/\mathbb{Z}) = P_*\nu(B)
+  \end{equation*}
+  So indeed $P_*\nu= \mu$.
+  Then $P_*\nu(A) = \mu(A) = 1$, and $\nu(E) = \nu(A \times \mathbb{R}/\mathbb{Z}) = 1$.
+
+  Finally, we show that
+  \begin{equation*}
+    \int f\,d\nu=\iint f\,d\mu\,dm \quad \forall f \in C(X \times \mathbb{R}/\mathbb{Z}),
+  \end{equation*}
+  and this proves $\nu = \mu \times m$.
+  If $(x,y) \in E$, then
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N-1} f(S^n(x,y)) \to \iint f \, d\mu dm. \tag{$*$} \label{eq:8firststar}
+  \end{equation*}
+  Since $\nu(E) = 1$, \eqref{eq:8firststar} holds $\nu$-almost everywhere.
+  By dominated convergence,
+  \begin{equation*}
+    \underbrace{\int \frac{1}{N} \sum_{n=0}^{N-1} f(S^n(x,y))\, d\nu }_{=\int\!f\,d\nu \; \forall N} \to \iint f\,d\mu\,dm % why is the underbrace true?
+  \end{equation*}
+  So $\int f \,d\nu = \iint f\,d\mu\,dm$ indeed.
+\end{proof}
+\begin{cor}
+  Let $S : (\mathbb{R}/\mathbb{Z})^d \to (\mathbb{R}/\mathbb{Z})^d$ given by
+  \begin{equation*}
+    S(x_1, x_2, \dotsc, x_d) = (x_1 + \alpha, x_2 + x_1, \dotsc, x_d+x_{d-1})
+  \end{equation*}
+  where $\alpha \in \mathbb{R}/\mathbb{Z}$ is a fixed irrational number.
+  Then $((\mathbb{R}/\mathbb{Z})^d, S)$ is \hyperlink{def:uerg}{uniquely ergodic}.
+\end{cor}
+\begin{proof}
+  By induction on $d$. $d=1$ case is the \hyperlink{def:circ}{circle rotation} that has already been discussed.
+  Suppose $d \geq 2$, and the claim holds for $d-1$.
+  By \hyperlink{thm:fursskew}{Furstenberg's theorem}, it is enough to show that $((\mathbb{R}/\mathbb{Z})^d, \mathcal{B}, m^d, S)$ is ergodic (where $m$ is Lebesgue measure).
+
+  Let $f$ be a bounded measurable function on $(\mathbb{R}/\mathbb{Z})^d$.
+  Then
+  \begin{align*}
+    f(\vec{x}) &= \sum_{\vec{n} \in \mathbb{Z}^d} a_{\vec{n}} \exp(2\pi i \vec{n} \cdot x) \\
+    f(S\vec{x}) &= \sum_{\vec{n} \in \mathbb{Z}^d} a_{\vec{n}} \exp(2\pi i(n_1(x_1+\alpha)+n_2(x_2+x_1)+\dotsb+n_d(x_d+x_{d-1}))) \\
+          &=
+          \sum_{\vec{n} \in \mathbb{Z}^d} \exp\left(2\pi in_1\alpha\right)a_{\vec{n}} \exp\Big(2\pi i((n_1+n_2)x_1+(n_2+n_3)x_2+\dotsb\\
+          &\hspace{8cm}+(n_{d-1}+n_d)x_{d-1}+n_dx_d)\Big)\\
+          &= \sum_{\vec{n} \in \mathbb{Z}^d} e^{2\pi in_1\alpha} a_{\vec{n}} e^{2\pi i \hat{S}(\vec{n}) \cdot \vec{x}},
+  \end{align*}
+  where
+  \begin{equation*}\hat{S}(\vec{n}) = (n_1+n_2,n_2+n_3,\dotsc,n_{d-1}+n_d,n_d).\end{equation*}
+  Suppose $f = f \circ S$ almost everywhere.
+  Then
+  \begin{equation*}a_{\hat{S}(\vec{n})} = \exp(2\pi i \alpha n_1) a_{\vec{n}},\end{equation*}
+  in particular $|a_{\hat{S}(\vec{n})}| = |a_{\vec{n}}|$.
+
+  Suppose that $a_{\vec{m}} \neq 0$ for some $\vec{m} \in \mathbb{Z}^d$.
+  We aim to show $\vec{m}=\mathbf{0}$, which implies that $f$ is constant.
+  By Parseval's formula,
+  \begin{equation*}
+  \sum_{\vec{n}\in\mathbb{Z}} |a_{\vec{n}}|^2 = \|f\|_2^2 < \infty.
+  \end{equation*}
+  This means that there are at most finite $\vec{n}$'s such that $|a_{\vec{m}}| = |a_{\vec{n}}|$.
+  In particular, the orbit $\vec{m}, \hat{S}(\vec{m}), \hat{S}^2(\vec{m}), \dotsc$ must be periodic.
+  Note
+  \begin{equation*}
+    \left(\hat{S}^j(m)\right)_{d-1} = m_{d-1} + jm_d.
+  \end{equation*}
+  Thus $m_d = 0$.
+  A similar argument gives $m_j = 0\; \forall j=2,3,\dotsc,d$.
+  Then $\hat{S}^j(\vec{m}) = \vec{m}$.
+  We have
+  \begin{equation*}
+    a_{\vec{m}} = \exp(2\pi i\alpha m_1) a_{\vec{m}}.
+  \end{equation*}
+  Since $a_{\vec{m}} \neq 0$, we must have
+  \begin{equation*}
+    \exp(2\pi i \alpha m_1) = 1.
+  \end{equation*}
+  As $\alpha$ is irrational, $m_1 = 0$.
+\end{proof}
+% up to here
+
+\begin{thm}[Weyl]\hypertarget{thm:weyl}
+  Let $P(x) = a_d x^d + \dotsb + a_1 x + a_0$ be polynomials such that $a_j$ is irrational for at least one $j \neq 0$.
+  Then the sequence $(\{P(n)\})_{n \geq \mathbb{Z}_{> 0}}$ is \hyperlink{def:equid}{equidistributed} in $[0,1)$.%}(
+\end{thm}
+\begin{proof}
+  First consider the case where $a_d$ is irrational.
+  Recall that the system $((\mathbb{R}/\mathbb{Z})^d, S)$ is \hyperlink{def:uerg}{uniquely ergodic}, where $S(x_1, \dotsc, x_d) = (x_1 + \alpha, x_2 + x_1, \dotsc, x_d + x_{d-1})$ and $\alpha \in \mathbb{R}/\mathbb{Z}$ irrational.
+  Note
+  \begin{equation*}
+    S^n
+    \begin{pmatrix}
+      x_1 \\ x_2 \\ \vdots \\ x_d
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      \binom{n}{0} x_1 + \binom{n}{1} \alpha \\
+      \binom{n}{0} x_2 + \binom{n}{1} x_1 + \binom{n}{2} \alpha \\
+      \vdots \\
+      \binom{n}{0} x_d + \binom{n}{1} x_{d-1} + \dotsb + \binom{n}{d-1} x_1 + \binom{n}{d} \alpha
+    \end{pmatrix}
+  \end{equation*}
+  This can be proved by induction on $n$.
+  Consider the polynomials
+  \begin{equation*}
+    q_j = \frac{t(t-1) \dotsb (t-j+1)}{j!}.
+  \end{equation*}
+  The polynomials $q_0, q_1, \dotsc, q_d$ form a basis in the vector space of polynomials of degree $\leq d$.
+  In particular there are $x_1, x_2, \dotsc, x_d, \alpha \in \mathbb{R}$ such that
+  \begin{equation*}
+    p(t) = \alpha q_d(t) + x_1 q_{d-1}(t) + \dotsc + x_d q_0(t), \label{eq:8star} \tag{$*$}
+  \end{equation*}
+  and $\alpha = \alpha_d \cdot d!$ is irrational.
+  Then there are $\alpha, x_1, \dotsc, x_d \in \mathbb{R}/\mathbb{Z}$ such that
+  \begin{equation*}
+    p(n) = \alpha \binom{n}{d} + x_1 \binom{n}{d-1} + \dotsb + x_d \binom{n}{0} \pmod{\mathbb{Z}}
+  \end{equation*}
+  for all $n \in \mathbb{Z}$.
+  Let $f \in C(\mathbb{R}/\mathbb{Z})$ and let $g(x_1, \dotsc, x_d) = f(x_d) \in C((\mathbb{R}/\mathbb{Z})^d)$.
+
+  Now we have
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N-1} f(p(n)) = \frac{1}{N} \sum_{n=0}^{N-1} g(S^n (x_1, \dotsc, x_d)) \tag{$**$} \label{eq:8twostar}
+  \end{equation*}
+  where $x_1, \dotsc, x_d$ are as in \eqref{eq:8star} and $\alpha$ in the definition of $S$ is also coming from \eqref{eq:8star}.
+
+  By unique ergodicity,
+  \begin{equation*}
+    \eqref{eq:8twostar} \implies \int \dotsi \int g(t_1, \dotsc, t_d) \, dt_1 \dots dt_d = \int f(t) \, dt.
+  \end{equation*}
+  This proves \hyperlink{def:equid}{equidistribution}.
+
+  General case: Let $j$ be maximal such that $a_j$ is irrational.
+  Let $q \in \mathbb{Z}_{>0}$ be such that $q a_d, q a_{d-1} \dotsc, q a_{j+1} \in \mathbb{Z}$.
+  Fix $b \in \{0,1,\dotsc, q-1\}$. Note:
+  \begin{equation*}
+    p(qn+b) = a_d b^d + \dotsb + a_{j+1} b^{j+1} + a_j (qn+b)^j + \dotsb + a_1 (qn+j) + a_0 \pmod{\mathbb{Z}}
+  \end{equation*}
+  This is a polynomial in $n$ with irrational leading coefficient. By the special case, $\{P(qn+b)\}$ equidistributes for each fixed $b$.
+\end{proof}
+
+\clearpage
+\section{Mixing properties}
+\begin{defi}[Mixing]\hypertarget{def:mixing}
+  An \hyperlink{def:mps}{measure preserving system} $(X, \mathcal{B}, \mu, T)$ is called \named{mixing} if
+  \begin{gather*}
+  \forall A, B \in \mathcal{B},\; \forall \epsilon > 0,\; \exists N \text{ such that } \\
+    |\mu(A \cap T^{-n} B) - \mu(A) \mu(B)| < \epsilon \quad \forall n > N
+  \end{gather*}
+\end{defi}
+\begin{defi}[Mixing on $k$ sets]\hypertarget{def:mixingOn}
+  A \hyperlink{def:mps}{measure-preserving system} $(X, \mathcal{B}, \mu, T)$ is called \named{mixing!on $k$ sets}\textbf{mixing on $k$ sets} if $\forall A_0, A_1, \dotsc, A_{k-1} \in \mathcal{B}$ and $\forall \epsilon > 0$, $\exists N$ such that
+  \begin{equation*}
+    |\mu(A_0 \cap T^{-n_1} A_1 \cap \dotsb \cap T^{-n_{k-1}} A_{k-1}) - \mu(A_0) \mu(A_1) \dotsm \mu(A_{k-1})| < \epsilon
+  \end{equation*}
+  $\forall n_1, \dotsc, n_{k-1}$ if $n_1 > N, n_2 - n_1 > N, \dotsc, n_{k-1} - n_{k-2} > N$.
+\end{defi}
+Open problem: Is there a \hyperlink{def:mps}{measure preserving system} that is \hyperlink{def:mixingOn}{mixing on 2 sets} but not on 3 sets?
+
+\begin{defi}[Density]\hypertarget{def:dens}
+  A subset $S \subset \mathbb{Z}_{>0}$ has \textbf{full density} if
+  \begin{equation*}
+    \frac{|S \cap [1,N]|}{N} \to 1 \quad \text{as } N \to \infty.
+  \end{equation*}
+  We say that a sequence of complex numbers $a_n$ \index{convergence in density}\textbf{converges in density} to $a \in \mathbb{C}$ if:
+  $\set{n | |a_n - a|< \epsilon}$ has full density $\forall \epsilon > 0$.
+  In notation, write $\dlim a_n = a$.
+\end{defi}
+\begin{defi}[Ces\`aro convergence]
+  \hypertarget{def:cesaro}We say that $a_n$ \index{Ces\`aro convergence}\textbf{Ces\`aro-converges} to $a$ if
+  \begin{equation*}\frac{1}{N}\sum_{n=1}^N a_n \to a\quad\text{as }N \to \infty.\end{equation*}
+  Denote this $\clim a_n = a$.
+\end{defi}
+\begin{defi}\hypertarget{def:wMixing}
+  A \hyperlink{def:mps}{measure preserving system} $(X, \mathcal{B}, \mu,T)$ is \index{mixing!weak}\named{weak mixing} if $\forall A, B \in \mathcal{B}$, we have
+  \begin{equation*}
+    \hyperlink{def:dens}{\dlim_{n \to \infty}} \mu(A \cap T^{-n} B) = \mu(A) \mu(B).
+  \end{equation*}
+\end{defi}
 \printindex
 \end{document}
