@@ -15,7 +15,7 @@
 - [Galois Theory](ii/mich/galois_theory.pdf) (2017, C. Brookes)
 - [Graph Theory](ii/mich/graph_theory.pdf) (2017, P. Russell)
 - [Linear Analysis](ii/mich/linear_analysis.pdf) (2017, R. Bauerschmidt)
-- [Number Theory](ii/mich/number_theory.pdf) (2017, A. Scholl)
+- [Number Theory](ii/mich/number_theory2.pdf) (2017, A. Scholl)
 - ~~[Probability and Measure](ii/mich/probability_and_measure.pdf) (2017, E. Breuillard)~~ very incomplete. I'll be using [these notes](http://www.statslab.cam.ac.uk/~james/Lectures/pm.pdf) instead.
 
 ### Lent
