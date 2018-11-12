@@ -1,8 +1,10 @@
 # Cambridge notes
 
+Using these notes: I aim to have, at a minimum, everything written on the board, sometimes with my own examples, proofs and explanations added. I also have many hyperlinks throughout, marked by blue text, to help both learning and revising a topic.
+
 ## Part III notes
 ### Michaelmas
-- [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone) up to lecture 12
+- [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone) up to lecture 16
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader) up to lecture 7
 - [Introduction to Discrete Analysis](iii/mich/introduction_to_discrete_analysis.pdf) (2018, W. T. Gowers) up to lecture 3
 - [Model Theory](iii/mich/model_theory.pdf) (2018, S. Barbina) up to lecture 7

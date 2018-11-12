@@ -1793,13 +1793,128 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
                 & FB \rar{Fg}& FGFC \rar{\epsilon_{FC}} & FC
   \end{tikzcd}
   \end{equation*}
-  $GLA = TA = G_\mathbb{T}A$, \begin{equation*}GL(A \green{\overset{f}\to} B) = (G \epsilon_{FB}) (GFf) = \mu_B(Tf).\end{equation*}
-  $LF_\mathbb{T}A = FA$, \begin{equation*}LF_\mathbb{T}(A \overset{f}\to B) = (\epsilon_{FB})(F\eta_B) (Ff) = Ff = G_{\mathbb{T}} f.\end{equation*}
-
+  $GLA = TA = \hyperlink{def:fsubt}{G_\mathbb{T}}A$, \begin{equation*}GL(A \green{\overset{f}\to} B) = (G \epsilon_{FB}) (GFf) = \mu_B(Tf).\end{equation*}
+  $L\hyperlink{def:fsubt}{F_\mathbb{T}}A = FA$, \begin{equation*}LF_\mathbb{T}(A \overset{f}\to B) = (\epsilon_{FB})(F\eta_B) (Ff) = Ff = G_{\mathbb{T}} f.\end{equation*}
   Note that $L$ is full and faithful; its effect on morphisms (with given domain and codomain) is that of transposition across $(F \dashv G)$.
-  Suppose $L': \cc_\mathbb{T} \to \dc$ is a morphism of $\mathbf{Adj}(\mathbb{T})$.
+  Suppose $L': \mathscr{C}_\mathbb{T} \to \mathscr{D}$ is a morphism of $\mathbf{Adj}(\mathbb{T})$.
   We must have $L'A = FA$, and $L'$ maps the counit $TA \green{\to} A$ to the counit $FGFA \overset{\epsilon_{FA}} \to FA$.
   For any $A \green{\overset{f}\to} B$, we have $\green{f}=\green{1_{TA} (F_\mathbb{T} f)}$ so $L'(\green{f}) = \epsilon_{FA} \cdot (Ff) = L\green{f}$.
+\end{proof}
+If \marginnote{\emph{Lecture 16}}$\mathscr{C}$ has \hyperlink{def:lcoprod}{coproducts}, then so does $\hyperlink{def:kleisli}{\mathscr{C}_\mathbb{T}}$, since $\hyperlink{def:fsubt}{F_\mathbb{T}}$ preserves them.
+But in general, it has few other \hyperlink{def:limit}{limits} or colimits. In contrast, we have
+\begin{nthm}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item The \hyperlink{def:forgFunc}{forgetful functor} $G: \hyperlink{def:em}{\mathscr{C}^\mathbb{T}} \to \mathscr{C}$ \hyperlink{def:clim}{creates all limits} which exist in $\mathscr{C}$.
+    \item If $\mathscr{C}$ \hyperlink{def:haslimits}{has colimits} of \hyperlink{def:limit}{shape $J$}, then $G: \mathscr{C}^\mathbb{T} \to \mathscr{C}$ creates them $\iff T$ \hyperlink{def:plim}{preserves them}.
+  \end{enumerate}
+\end{nthm}
+
+\begin{proof}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item Suppose given $D: J \to \mathscr{C}^\mathbb{T}$; write $D(j) = (GD(j), \delta_j)$ and suppose
+      \begin{equation*}(L, \set{\mu_j: L \to GD(j) | j \in \ob J})\end{equation*}
+      is a \hyperlink{def:limit}{limit cone} for $GD$.
+      Then the composites
+      \begin{equation*}
+        \begin{tikzcd}
+          TL \rar{T\mu_j} & TGD(j) \rar{\delta_j} & GD(j)
+        \end{tikzcd}
+      \end{equation*}
+      form a cone over $GD$, since the edges of $GD$ are \hyperlink{def:em}{homomorphisms}, so they induce a unique $\lambda: TL \to L$ such that $\mu_j \lambda = \delta_j(T\mu)$ for all $j$.
+      The fact that $\lambda$ is a \hyperlink{def:em}{$\mathbb{T}$-algebra} structure on $L$ follows from the fact that the $\delta_j$ are algebra structures and uniqueness of factorisations through limits.
+
+      So $((L,\lambda), \set{\mu_j | j \in \ob J})$ is the unique lifting of the limit cone over $GD$ to a cone over $D$; and it's a limit, since given a cone over $D$ with apex $(A, \alpha)$, we get a unique factorisation $A \overset{f}\to L$ in $\mathscr{C}$ and $F$ is an algebra homomorphism by uniqueness of factorisations through $L$.
+
+    \item $(\Rightarrow)$ $F: \mathscr{C} \to \mathscr{C}^\mathbb{T}$ \hyperlink{def:plim}{preserves colimits} since it's a \hyperlink{def:adj}{left adjoint}, so $T = GF$ preserves colimits of shape $J$.
+
+      $(\Leftarrow)$ Suppose given $D: J \to \mathscr{C}^\mathbb{T}$ as in (i), and a colimit cone
+      \begin{equation*}
+        \set{GD(j) \overset{\mu_j}\to L | j \in \ob J}
+      \end{equation*}
+      in $\mathscr{C}$.
+      Then
+      \begin{equation*}
+        \set{TGD(j) \xrightarrow{T\mu_j} TL | j \in \ob J}
+      \end{equation*}
+      is also a colimit cone, so the composites
+      \begin{equation*}
+        \begin{tikzcd}
+          TGD(j) \rar{\delta_j} & GD(j) \rar{\mu_j}& L
+        \end{tikzcd}
+      \end{equation*}
+      induce a unique $\lambda: TL \to L$.
+      The rest of the argument is like (i). \qedhere
+  \end{enumerate}
+\end{proof}
+\begin{ndef}[Monadic adjunction]
+  Given an \hyperlink{def:adj}{adjunction} $\left(\begin{tikzcdi}\mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G}\end{tikzcdi}\right)$, with $(F \dashv G)$ we say the adjunction (or the functor $G$) is \textbf{monadic} if the \hyperlink{def:emcomp}{comparison functor} $K : \mathscr{D} \to \mathscr{C}^\mathbb{T}$ is part of an \hyperlink{def:equicat}{equivalence} of \hyperlink{def:cat}{categories}.
+\end{ndef}
+(Note that, since the \hyperlink{def:klcomp}{Kleisli comparison} $\mathscr{C}_\mathbb{T} \to \mathscr{D}$ is \hyperlink{def:full}{full} and \hyperlink{def:full}{faithful}, it's part of an \hyperlink{def:equicat}{equivalence} if and only if it (equivalently, $F$) is \hyperlink{def:full}{essentially surjective} on objects.)
+\begin{remark}
+  Given any \hyperlink{def:adj}{adjunction} $(F \dashv G)$, for each object $B$ of $\mathscr{D}$ we have a diagram
+  \begin{equation*}
+    \begin{tikzcd}[column sep=large]
+      FGFGB \rar[shift left]{FG\epsilon_B} \rar[shift right,']{\epsilon_{FGB}} & FGB \rar{\epsilon_B} & B
+    \end{tikzcd}
+  \end{equation*}
+  with equal composites. The `primeval monadicity theorem' asserts that $\hyperlink{def:em}{\mathscr{C}^\mathbb{T}}$ is characterised in $\mathbf{Adj}(\mathbb{T})$ by the fact that these diagrams are all \hyperlink{def:equalizer}{coequalizers}.
+\end{remark}
+
+\begin{ndef}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item \hypertarget{def:reflexive}We say a parallel pair $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is \named{reflexive} if there exists $B \overset{r}\to A$ such that $fr = gr = 1_B$.
+    (Note that $\begin{tikzcd}[cramped, column sep=large]FGFGB \rar[shift left]{FG\epsilon_B} \rar[shift right,']{\epsilon_{FGB}} & FGB\end{tikzcd}$ is reflexive, with $r = F\eta_{GB}$).
+    We say $\mathscr{C}$ has \textbf{reflexive coequalizers} if it has \hyperlink{def:equalizer}{coequalizers} of all reflexive pairs (equivalently, colimits of shape $J$ where $J = \begin{tikzcd}[cramped, column sep=large] \bullet \arrow[out=110, in=160, loop] \arrow[out=200, in=250, loop] \rar[shift left=2] \rar[shift right=2]& \bullet \lar \end{tikzcd}$)
+  \item \hypertarget{def:splitcoeq}By a \named{split coequalizer} diagram, we mean a diagram
+    \begin{equation*}
+      \begin{tikzcd}[column sep=large]
+        A \rar[shift left]{f} \rar[shift right,']{g} & B \lar[bend left=40]{t} \rar{h} & C \lar[bend left]{s}
+      \end{tikzcd}
+    \end{equation*}
+    satisfying
+    \begin{equation*}
+      hf = hg \quad hs = 1_C \quad gt = 1_B \quad ft = sh.
+    \end{equation*}
+    These equations imply that $h$ is a coequalizer of $(f,g)$; if $B \overset{x}\to D$ satisfies $xf = xg$ then $x = xgt = xft = xsh$, so $x$ factors through $h$, and the factorisation is unique since $h$ is \hyperlink{def:split}{split} \hyperlink{def:epic}{epic}.
+    Note that split coequalizers are preserved by all \hyperlink{def:funct}{functors}.
+    \item Given a functor $G: \mathscr{D} \to \mathscr{C}$, a parallel pair $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is called $G$-\textbf{split} if there exists a split coequalizer diagram
+    \begin{equation*}
+      \begin{tikzcd}[column sep=large]
+        GA \rar[shift left]{Gf} \rar[shift right,']{Gg} & GB \lar[bend left=40]{t} \rar{h} & C \lar[bend left=40]{s}
+      \end{tikzcd}
+    \end{equation*}
+    in $\mathscr{C}$.
+
+ Note that $\begin{tikzcd}[cramped, column sep=large]FGFGB \rar[shift left]{FG\epsilon_B} \rar[shift right,']{\epsilon_{FGB}} & FGB\end{tikzcd}$ is $G$-split, since
+    \begin{equation*}
+      \begin{tikzcd}[column sep=large]
+      GFGFGB \rar[shift left]{GFG\epsilon_B} \rar[shift right,']{G\epsilon_{FGB}} & GFGB \lar[bend left=40]{\eta_{GFGB}} \rar{G\epsilon_B} & GB \lar[bend left]{\eta_{GB}}
+      \end{tikzcd}
+    \end{equation*}
+    is a split coequalizer.
+  \end{enumerate}
+\end{ndef}
+\begin{nlemma}
+  Suppose given an \hyperlink{def:adj}{adjunction}
+  $ \begin{tikzcdi} \mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G} \end{tikzcdi} $
+  where \(F \dashv G\), inducing a \hyperlink{def:monad}{monad} $\mathbb{T}$ on \(\mathscr{C}\).
+  Then \hyperlink{def:emcomp}{$K: \mathscr{D} \to \mathscr{C}^\mathbb{T}$} has a left adjoint provided, for every $\mathbb{T}$-algebra \((A, \alpha)\), the pair
+  $\begin{tikzcdi}
+    FGFA \ar[r, shift left, "F\alpha"] \ar[r, shift right, "\epsilon_{FA}"'] & FA
+  \end{tikzcdi}$
+  has a \hyperlink{def:equalizer}{coequalizer} in $\mathscr{D}$.
+\end{nlemma}
+\begin{proof}
+  We define $L: \mathscr{C}^\mathbb{T} \to \mathscr{D}$ by taking $FA \to L(A, \alpha)$ to be a \hyperlink{def:equalizer}{coequalizer} for $(F\alpha, \epsilon_{FA})$.
+  Note that this is a functor $\mathscr{C}^\mathbb{T} \to \mathscr{D}$.
+
+  Recall that \hyperlink{def:emcomp}{$K$} is defined by $KB = (GB, G\varepsilon_B)$.
+  For any $B$, morphisms $LA \to B$ correspond bijectively to morphisms $FA \overset{f}\to B$ satisfying $f(F\alpha) = f(\epsilon_{FA})$.
+  These correspond to morphisms $A \overset{\check f}\to GB$ satisfying
+  \begin{equation*}
+    \check f \alpha = Gf = G(\epsilon_B(F \check f)) = (G\epsilon_B)(T \check f)
+  \end{equation*}
+  i.e.\ to algebra homomorphisms $(A, \alpha) \to KB$. And these bijections are natural in $(A, \alpha)$ and in $B$.
 \end{proof}
 \printindex
 \end{document}
