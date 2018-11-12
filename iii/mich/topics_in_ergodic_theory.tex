@@ -799,5 +799,108 @@ However, this suggests that \emph{everywhere} convergence of ergodic averages pr
   \end{equation*}
 \end{proof}
 
+\marginnote{\emph{Lecture 7}}Now, return to prove the equivalent conditions for \hyperlink{def:uerg}{unique ergodicity} stated earlier in this section.
+\begin{proof}
+  (1) $\Rightarrow$ (2). Suppose that (2) fails with $c_f = \int f \,d\mu$, where $\mu$ is the unique invariant measure.
+  Then
+  \begin{gather*}
+    \exists \epsilon > 0,\; \exists x_1, x_2, \dotsc X,\; \exists N_j \in \mathbb{Z} \text{ such that} \\
+    \left| \frac{1}{N_j} \sum_{n=0}^{N_j -1} f(T^n x_j) - \int f\,d\mu\right| > \epsilon. \tag{$*$} \label{eq:7star}
+  \end{gather*}
+  We may suppose that
+  \begin{equation*}
+    \frac{1}{N_j} \sum_{n=0}^{N_j - 1} f(T^n x_j) \to a
+  \end{equation*}
+  for some $a \in C$.
+  Moreover, we can also assume that
+  \begin{equation*}
+    \frac{1}{N_j} \sum_{n=0}^{N_j - 1} T^n_* \delta_{x_j} \xrightarrow{\text{weak}} \nu
+  \end{equation*}
+  for some probability measure $\nu$.
+  By the theorem earlier, $\nu$ is $T$-invariant. Also
+  \begin{align*}
+    \int f \, d\nu &= \lim_{j \to \infty} \frac{1}{N_j} \sum_{n=0}^{N_j - 1} \int f\,dT^n_* \delta_{x_j} \\
+                   &= \lim_{j \to \infty} \frac{1}{N_j} \sum_{n=0}^{N_j - 1} f(T^n x_j) = a.
+  \end{align*}
+  By \eqref{eq:7star}, $|a - \int f\,d\mu| > \epsilon$, so $\int f d\mu \neq \int f \, d\nu$, hence $\mu \neq \nu$, a contradiction.
+
+  (3) $\Rightarrow$ (1). Let $\mu,\nu$ be $T$-invariant probability measures.
+  We will show that $\int f \, d\mu = \int f \, d\nu$ $\forall f \in A$.
+  Since $A$ is dense, this also holds $\forall f \in C(X)$.
+  By the corollary to \hyperlink{def:rr}{Riesz Representation theorem}, $\mu = \nu$.
+  We know
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x) \to c_f \quad \forall x \in X.
+  \end{equation*}
+  By dominated convergence,
+  \begin{equation*}
+    \underbrace{\int \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x) \, d\mu}_{= \int f \, d\mu \; \forall N} \to c_f
+  \end{equation*}
+  Thus $\int f d\mu = c_f$. The same argument gives $\int f d\nu = c_f$.
+
+  Clearly (2) $\Rightarrow$ (3), closing the loop.
+\end{proof}
+\begin{eg}
+  Let $\alpha \in \mathbb{R}/\mathbb{Z}$ be irrational.
+  Then the \hyperlink{def:circ}{circle rotation} $(\mathbb{R}/\mathbb{Z}, R_\alpha)$ is \hyperlink{def:uerg}{uniquely ergodic}.
+  Indeed, let $\mu$ be an $R_\alpha$-invariant measure.
+  Then
+  \begin{align*}
+    \int \exp(2 \pi i n x) \, d\mu &= \int \exp(2 \pi i n R_\alpha(x)) \, d\mu  \\
+                                   &= \int \exp(2 \pi i n (x+\alpha)) \, d\mu \\
+                                   &= \exp(2 \pi i n \alpha) \exp(2\pi i n x) \, d\mu.
+  \end{align*}
+  Since $\alpha$ is irrational, $\exp(2 \pi i n x) \neq 1$ if $n \neq 0$.
+  Then
+  \begin{align*}
+    \int \exp(2\pi i n x) \, d\mu = 0 \quad \forall u \neq 0 \qquad \int 1\, d\mu = 1. \tag{$**$} \label{eq:7twostar}
+  \end{align*}
+  Let $f$ be a trigonometric polynomial, that is a finite linear combination of the functions $\exp(2\pi i n x)$ when $n \in \mathbb{Z}$.
+  Then \eqref{eq:7twostar} implies
+  \begin{equation*}
+    \int f \, d\mu = \int f(x) \, dx
+  \end{equation*}
+  Now use the fact that trigonometric polynomials are dense in $C(X)$: Stone-Weierstrass theorem.
+\end{eg}
+\begin{defi}[Equidistributed]\hypertarget{def:equid}
+  A sequence $x_1, x_2, \dotsc \in [0, 1)$ is said to be \named{equidistributed} if
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N-1} f(x_n) \to \int_{\mathbb{R}/\mathbb{Z}} f(x) \, dx \quad \forall f \in C(\mathbb{R}/\mathbb{Z}).
+  \end{equation*}
+\end{defi}
+\begin{remark}
+  Let $0 \leq a < b < 1$. Then $x_1, x_2, \dotsc$ is \hyperlink{def:equid}{equidistributed} if and only if
+  \begin{equation*}
+    \frac{1}{N} \left\lvert \set{n \in [0, N-1] | x_n \in [a,b]}\right\rvert \to b-a.
+  \end{equation*}
+\end{remark}
+\begin{cor}
+  $\{n \alpha + x\}$ is \hyperlink{def:equid}{equidistributed} for all $\alpha$ irrational $\forall x \in [0,1]$.
+\end{cor}
+\begin{proof}
+  This follows from the \hyperlink{def:uerg}{unique ergodicity} of the circle rotation.
+\end{proof}
+\clearpage
+\section{Equidistribution of polynomials}
+\begin{defi}[Generic]\hypertarget{def:generic}
+  Let \index{generic}$(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
+  Suppose that $X$ is a compact metric space, and $T: X \to X$ is continuous.
+  Then $x \in X$ is called \textbf{generic} with respect to $\mu$ if the following holds
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N-1} T_*^n \delta_x \xrightarrow{\text{\hyperlink{def:weaklimit}{weak}}} \mu.
+  \end{equation*}
+  Equivalently,
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x) \to \int f\,d\mu\quad\forall f\in C(X). \tag{$\dagger$} \label{eq:7threestar}
+  \end{equation*}
+\end{defi}
+\begin{lemma}
+  $\mu$-almost every $x \in X$ is \hyperlink{def:generic}{$\mu$-generic}.
+\end{lemma}
+\begin{proof}
+  By the \hyperlink{thm:pet}{Pointwise Ergodic Theorem}, $\forall f\in C(X)$, $\exists X_f$ with $\mu(X_f) = 1$ such that \eqref{eq:7threestar} holds.
+  Observe that every point in $\bigcap_{f \in A} X_f$, where $A \subset C(X)$ is dense and countable is $\mu$-generic.
+\end{proof}
+
 \printindex
 \end{document}
