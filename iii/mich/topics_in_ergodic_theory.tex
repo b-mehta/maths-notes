@@ -1247,6 +1247,78 @@ We will come back to prove this in a moment.
 
   (1) $\Leftrightarrow$ (4) is the same arguments.
 
+  \marginnote{\emph{Lecture 11}}
+  % new lecture
+  (3) $\Rightarrow$ (5). Suppose that $f \circ T = \lambda \cdot f$ $\mu-$a.e.
+  Consider the function $\tilde{f}(x,y) = f(x) \cdot \overline{f(y)}$.
+  We will show that $\tilde{f}$ is $T \times T$-invariant.
+  If $f$ is not constant, then $\tilde{f}$ is also not constant, so $(X \times X, \dotsc)$ is not ergodic.
+
+  \begin{equation*}
+    \tilde{f}(Tx, Ty) = f(Tx) \cdot \overline{f(Ty)} = \lambda f(x) \cdot \bar{\lambda} \overline{f(y)} = |\lambda|^2 \tilde{f}(x,y).
+  \end{equation*}
+  Since $U_T$ is an isometry,
+  \begin{equation*}
+    \langle f, f \rangle = \langle U_T f, U_T f \rangle = \langle \lambda f, \lambda f\rangle = |\lambda|^2 \langle f,f\rangle.
+  \end{equation*}
+  So $|\lambda| = 1$, and $\tilde{f} \circ T \times T = \tilde{f}$ indeed.
+
+  Showing condition (5) implies weak mixing is more difficult, and is non-examinable. Two approaches are given in questions 7 and 8 of example sheet 2.
 \end{proof}
+\begin{thm}
+  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:wMixing}{weak mixing} \hyperlink{def:mps}{measure preserving system} and let $k \in \mathbb{Z}_{>0}$.
+  Let $f_1, \dotsc, f_k \in L^\infty$. Then
+  \begin{equation*}
+    \underbrace{\frac{1}{N} \sum_{n=1}^N U_T^n f_1 \cdot U_T^{2n} f_2 \dotsm U_T^{kn} f_k}_{g_N} \overset{L^2}{\longrightarrow} \underbrace{\int\!f_1 \, d\mu\ \dots \int\!f_k \, d\mu}_\gamma.
+  \end{equation*}
+\end{thm}
+
+\begin{cor}
+  Let notation be as above, and let $f_0 \in L^\infty$.
+  Then
+  \begin{equation*}
+    \frac{1}{N}\sum_{n=1}^N f_0 U_T^n f_1 \cdot U_T^{2n} f_2 \dotsm U_T^{kn} f_k \longrightarrow \int\!f_0\,d\mu \int\!f_1\,d\mu\,\dotsi \int\!f_k\,d\mu.
+  \end{equation*}
+  In particular, let $f_0 = f_1 = \dotsb = f_k = \chi_A$ for some $A \in \mathcal{B}$.
+  Then
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=1}^N \mu(A \cap T^{-n} A \cap \dotsb \cap T^{-nk} A) \to \mu(A)^{k+1},
+  \end{equation*}
+  which gives \hyperlink{thm:furs}{Furstenberg's multiple recurrence} for \hyperlink{def:wMixing}{weak mixing} systems.
+\end{cor}
+Note the theorem says $g_n \to \gamma$ in $L^2$, and the corollary says $\langle f_0, \overline{g_n} \rangle \to \langle f_0, \overline{\gamma} \rangle$, so is certainly weaker.
+
+\begin{lemma}[van der Corput]\hypertarget{lem:vdC}
+  Let $u_1, u_2, \dotsc$ be a bounded sequence in a Hilbert space $\mathcal{H}$.
+  For each $h \in \mathbb{Z}_{\geq 0}$, write
+  \begin{equation*}
+    s_h = \limsup_{N \to \infty} \left|\frac{1}{N} \sum_{n=1}^N \langle u_n, u_{n+h} \rangle\right|.
+  \end{equation*}
+  Suppose that $\dlim_{n \to \infty} s_h = 0$.
+  Then
+  \begin{equation*}
+    \left\|\frac{1}{N} \sum_{n=1}^N u_n \right\| \to 0.
+  \end{equation*}
+\end{lemma}
+\color{gray}
+\begin{proof}[Proof idea]
+  \begin{align*}
+    \left\lVert \frac{1}{N} \sum_{n=1}^N u_n \right\rVert^2 &= \frac{1}{N^2} \sum_{n_1=1}^N \sum_{n_2=1}^N \langle u_{n_1}, u_{n_2} \rangle \\
+                                                            &= \frac{1}{N^2} \left(\sum_{n=1}^N \|u_n\|^2 + \sum_{n=1}^{N-1} \sum_{n=1}^{N-h} 2 \Re(\langle u_n, u_{n+h} \rangle)\right).
+  \end{align*}
+\end{proof}
+\begin{proof}
+  Fix $\epsilon > 0$. Let $H$ be such that
+  \begin{equation*}
+    \frac{1}{H} \sum_{h=0}^{H-1} s_h < \epsilon.
+  \end{equation*}
+  Write
+  \begin{align*}
+    \left\| \frac{1}{N} \sum_{n=1}^N u_n - \frac{1}{NH} \sum_{n=1}^N \sum_{h=1}^H u_{n+h} \right\| &\leq \frac{1}{N} \left[\sum_{n=1}^H \|u_n\| + \sum_{n=N+1}^{N+H} \|u_n\|\right] \\
+                                                                                                   &< \epsilon
+  \end{align*}
+  if $N$ is large enough.
+  \textbf{unfinished}
+  % see pics - unfinished
 \printindex
 \end{document}
