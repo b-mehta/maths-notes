@@ -1742,6 +1742,110 @@ Note that $|B_i(A)| = |A|$. Say $A$ is $i$-\textbf{binary compressed} if $B_i(A)
 \begin{remark}
   In the proofs of \cref{thm:harper1} and \cref{thm:2.8}, vital that the extremal sets in dimension $n-1$ were nested, i.e.\ were the initial segments of some ordering.
 \end{remark}
+
+\begin{defi}[Isoperimetric number]\hypertarget{def:i}
+  The \marginnote{\emph{Lecture 11}}\named{isoperimetric number} of a graph $G$ is
+  \begin{equation*}
+    i(G) \coloneqq \Set{\frac{\lvert\partial A\rvert}{\lvert A\rvert} | A \subset G, |A| \leq \frac{1}{2}|G|}.
+  \end{equation*}
+  `How small can the average out-degree be?'
+\end{defi}
+\begin{ncor}\label{cor:2.9}
+  $\hyperlink{def:i}{i(Q_n)}=1$.
+\end{ncor}
+\begin{proof}
+  The set $A = \mathcal{P}([n-1])$ shows $i(Q_n)\leq1$.
+  To show $i(Q_n) \geq 1$, sufficient to show (by \cref{thm:2.8}) that if $C$ is an initial segment of binary with $|C| \leq 2^{k-1}$ then $|\partial C| \geq |C|$.
+  But this is clear because $C \subset \mathbb{P}([n-1])$.
+\end{proof}
+
+\subsection{Inequalities in the grid}
+\begin{defi}[Grid]\hypertarget{def:grid}
+  The \named{grid} is the graph on vertex-set $[k]^n = \{1,2,\dotsc,k\}^n$ in which $(x_1, \dotsc, x_n)$ joined to $(y_1, \dotsc, y_n)$ if for some $i$, have $|x_i - y_i| = 1$ and $x_j = y_j \quad \forall j \neq i$ (`$\ell^1$-distance').
+  For $k=2$, this is the discrete cube $Q_n$.
+\end{defi}
+Do \cref{thm:harper1} and \cref{thm:2.8} have analogues in \hyperlink{def:grid}{$[k]^n$}?
+
+What is the best vertex-boundary? Take $[k]^2$ as an example:
+
+This suggests that sets of the form
+\begin{equation*}
+  \set{x | \lvert x \rvert \leq r}
+\end{equation*}
+are best.
+
+What about sizes in between?
+
+For given $|x|$, we'd `keep $x_1$ big'
+\begin{defi}[Simplicial ordering]\hypertarget{def:simplic}
+  We define the \index{simplicial ordering} on $[k]^n$ by setting $x<y$ if either $|x| < |y|$ or $|x| = |y|$ and $x_i > y_i$, where $i = \min\set{j | x_j \neq y_j}$.
+  Note: for $k=2$ this agrees with our \hyperlink{def:simplicial}{previous definition}.
+\end{defi}
+\begin{eg}\leavevmode
+  \begin{itemize}
+    \item On $[3]^2$, our ordering is
+      \begin{equation*}
+        (1,1),(2,1),(1,2),(3,1),(2,2),(1,3),(3,2),(2,3),(3,3).
+      \end{equation*}
+    \item On $[4]^3$, we get
+      \begin{equation*}
+        111,211,121,112,311,221,212,131,122,113,411,321,\dotsc
+      \end{equation*}
+  \end{itemize}
+\end{eg}
+\begin{aim}
+  Initial segments of \hyperlink{def:simplic}{simplicial} minimise neighbourhood.
+  In particular,
+  \begin{equation*}
+    |A| = |\set{x | |x|\leq r}| \implies |N(A)| \geq |\set{x | |x| \leq r+1}|.
+  \end{equation*}
+\end{aim}
+For $A \subset [k]^n$ and $1 \leq i \leq n$, the $i$-sections of $A$ are the sets $A_1, \dotsc, A_k$ (or $A_1^{(i)}, \dotsc, A_k^{(i)}$) in $[k]^{n-1}$ given by
+\begin{equation*}
+  A_t = \set{(x_1, \dotsc, x_{n-1}) \in [k]^{n-1} | (x_1, x_2, \dotsc, x_{i-1}, t, x_i, x_{i+1}, \dotsc, x_n) \in A} \quad \forall 1 \leq t \leq k
+\end{equation*}
+% picture
+\begin{defi}
+  The $i$-compression $C_i(A) \subseteq [k]^n$ is defined by giving its $i$-sections:
+  \begin{equation*}
+    C_i(A)_t = \text{first |$A_t|$ points in simplicial order on $[k]^{n-1}$}.
+  \end{equation*}
+\end{defi}
+Certainly $|C_i(A)| \leq |A|$.
+
+Say $A$ is $i$-compressed if $C_i(A) = A$.
+\begin{nthm}[Vertex-isoperimetric inequality in the grid]
+  Let $A \subseteq [k]^n$ and let $C$ be the initial segment of the simplicial roder on $[k]^n$ with $|C| = |A|$.
+  Then $|N(A)| \geq |N(C)|$. In particular, if $|A| \geq |\set{x | |x|\leq r}|$ then $|N(A)| \geq |\set{x | |x| \leq r+1}|$
+\end{nthm}
+\begin{proof}
+  Induction on $n$:
+  For $n=1$, if $A \subset [k]^1$ with $A \neq 0, [k]^1$ then $|N(A)| \geq |A|+1 = |N(C)|$, as required.
+
+  Given $A \subset [k]^n$ (for $n > 1$) and $1 \leq t \leq n$,
+  \textbf{claim} $|N(C_t(A))| \leq |N(A)|$.
+
+  \textbf{Proof of claim:}
+  For $1 \leq t \leq k$,
+  \begin{equation*}
+    N(A)_t = N(A_t) \cup A_{t-1} \cup A_{t+1} % from level t, from below, from above
+  \end{equation*}
+  (where $A_0 = A_{k+1}=\emptyset$) and similarly
+  \begin{equation*}
+    N(B)_t = N(B_t) \cup B_{t-1} \cup B_{t+1}.
+  \end{equation*}
+  Now, $|B_{t-1}| = |A_{t-1}|$ and $|B_{t+1}| = |A_{t+1}|$.
+  Also, $|N(B_t)| \leq |N(A_t)|$ (induction).
+
+  But the sets $B_{t-1}$, $B_{t+1}$, $N(B_t)$ are nested (as each is an initial segment), so $|N(B)_t| \leq |N(A)_t|$.
+  This holds for each $1 \leq t \leq k$. $\blacksquare$
+
+  Among all $B \subseteq [k]^n$ with $|B| = |A|$ and $|N(B)| \leq |N(A)|$, choose one with minimal
+  \begin{equation*}
+    \sum_{x \in B} (\text{position of $x$ in simplicial}).
+  \end{equation*}
+  Then $B$ is $i$-compressed $\forall i$ (else $C_i(B)$ contradicts our discussion of $B$).
+\end{proof}
 \clearpage
 \section{Projections}
 \printindex
