@@ -12,7 +12,7 @@
 \input{header}
 \usepackage{pgfplots}
 \makeindex[intoc]
-\usetikzlibrary{fadings, decorations.pathmorphing}
+\usetikzlibrary{fadings, decorations.pathmorphing, shadings}
 
 % preamble
 
@@ -23,6 +23,8 @@
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newcommand{\sym}{\bigtriangleup}
 
 \newcommand{\ihalf}[1]{\floor{\frac{#1}{2}}}
 \newcommand{\ihalfc}[1]{\ceil{\frac{#1}{2}}}
@@ -81,7 +83,7 @@ Unless otherwise stated,
 e.g.\ $|X^{\hyperlink{def:superr}{(r)}}| = \binom{n}{r}$.
 Thus $\hyperlink{def:ints}{[4]}^{(2)} = \{12,13,14,23,24,34\}$, so $|[4]^{(2)}| = 6$.
 
-Often, we make $\mathcal{P}(X)$ into a graph, called $Q_n$, by joining $A$ to $B$ if $|A \triangle B| = 1$, i.e.\ if $A = B \cup \{i\}$ for some $i \notin B$ (or vice versa).
+Often, we make $\mathcal{P}(X)$ into a graph, called $Q_n$, by joining $A$ to $B$ if $|A \sym B| = 1$, i.e.\ if $A = B \cup \{i\}$ for some $i \notin B$ (or vice versa).
 For instance, here is a picture of $Q_3$:
 \begin{center}
   \begin{tikzpicture}[xscale=1.4, every node/.style={fill=black, circle, inner sep=1pt}]
@@ -711,7 +713,7 @@ However:
   Actually showed $\partial C_{UV}(\mathcal{A}) \subseteq C_{UV}(\partial\mathcal{A})$.
 \end{remark}
 
-\begin{nthm}[Kruskal-Katona Theorem]\label{thm:kk7}\index{Kruskal-Katona theorem}
+\begin{nthm}[Kruskal-Katona theorem]\label{thm:kk7}\index{Kruskal-Katona theorem}
   Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ (for $1 \leq r \leq n$) and let $\mathcal{C}$ be the initial segment of \hyperlink{def:colex}{colex} on $X^{(r)}$ with $|\mathcal{C}| = |\mathcal{A}|$.
   Then $|\hyperlink{def:shadow}{\partial \mathcal{A}}| \geq |\partial \mathcal{C}|$.
   In particular, if $|\mathcal{A}| = \binom{k}{r}$ then $|\partial \mathcal{A}| \geq \binom{k}{r-1}$.
@@ -919,22 +921,31 @@ This follows (proof 1) from equality case of \nameref{thm:kk7}, or (proof 2) by 
 \marginnote{\emph{Lecture 7}}[0cm]We are familiar with this kind of inequality in the continuous sense:
 \begin{itemize}
   \item Among subsets of $\mathbb{R}^2$ of given area, the disc has smallest perimeter.
-  \item Among subsets of $\mathbb{R}^3$ of given volume, the disc has smallest surface area.
+  \item Among subsets of $\mathbb{R}^3$ of given volume, the sphere has smallest surface area.
   \item Among subsets of $S^2$ of given area, the cap has smallest perimeter.
 \end{itemize}
 
 \begin{center}
-  \begin{tikzpicture}
+  \begin{tikzpicture}[scale=1.5]
     \begin{scope}
       \draw [fill=bred!20] (0,0) circle [radius=1cm];
     \end{scope}
     \begin{scope}[xshift=3cm]
-      \shade [ball color = bred!40, opacity = 0.6] (0,0) circle (1cm);
-      \draw (0,0) circle (1cm);
-      \draw (-1,0) arc (180:360:1 and 0.3);
-      \draw [dashed] (1,0) arc (0:180:1 and 0.3);
+      \shade [ball color = bred!40, opacity = 0.7] (0,0) circle (1cm);
+      \draw [very thin] (0,0) circle (1cm);
+      \draw [very thin] (-1,0) arc (180:360:1 and 0.3);
+      \draw [dashed, very thin] (1,0) arc (0:180:1 and 0.3);
     \end{scope}
     \begin{scope}[xshift=6cm]
+      %\draw [dashed, very thin] (1,0) arc (0:180:1 and 0.3);
+      %\draw [ultra thin] (0,0) circle (1cm);
+      %\draw [ultra thin] (-1,0) arc (180:360:1 and 0.3);
+      \shade [ball color = bred!40, opacity = 0.3] (0,0) circle (1cm);
+    \begin{scope}
+      \clip (0.33, 0.4) circle [x radius=0.32cm, y radius=0.28cm, rotate=125];
+    \shade [ball color = bred!60, opacity = 0.4] (0,0) circle (1cm);
+    \end{scope}
+    \draw [ultra thin] (0.33, 0.4) circle [x radius=0.32cm, y radius=0.28cm, rotate=125];
     \end{scope}
   \end{tikzpicture}
 \end{center}
@@ -946,25 +957,44 @@ For a set $A$ of vertices in a graph $G$, the \named{boundary} is
 \end{equation*}
 \end{defi}
 For example, in the picture, if $A = \{1,2,3\}$, then $b(A) = \{4,5\}$.
+\begin{center}
+  \begin{tikzpicture}
+    \begin{scope}[every node/.style={draw=black, inner sep=1.5pt, circle}]
+      \node[fill=bred, label=above:{$1$}] (1) at (0,1) {};
+      \node[fill=bred, label=above:{$2$}] (2) at (1,1) {};
+      \node[fill=bred, label=below:{$3$}] (3) at (0,0) {};
+      \node[fill=bgreen, label=below:{$4$}] (4) at (1,0) {};
+      \node[fill=bgreen, label=above:{$5$}] (5) at (2,1) {};
+      \node[label=above:{$6$}] (6) at (3,1) {};
+      \node[label=below:{$7$}] (7) at (2,0) {};
+      \node[label=below:{$8$}] (8) at (3,0) {};
+      \draw (2) -- (4) -- (3) -- (1) -- (2) -- (5) -- (6) -- (8) -- (7) -- (5);
+  \end{scope}
+  \end{tikzpicture}
+\end{center}
 
+\begin{defi}[Isoperimetric inequality]
 An \named{isoperimetric inequality} on $G$ is an inequality of the form
 \begin{equation*}
   |b(A)| \geq f(|A|) \quad \forall \subseteq V(G).
 \end{equation*}
+\end{defi}
 
+\begin{defi}[Neighbourhood]\hypertarget{def:neighbourhood}
 Equivalently, minimise the \named{neighbourhood} of $A$:
 \begin{equation*}
   N(A) = A \cap b(A) = \set{x \in G | d(x,A) \leq 1}
 \end{equation*}
 where $d$ denotes the usual graph distance.
+\end{defi}
 
-A natural guess is often $B(x,r) = \set{y \in G | d(x,y) \leq r}$.
-
+A natural guess to minimise \hyperlink{def:neighbourhood}{neighbourhood} is often $B(x,r) = \set{y \in G | d(x,y) \leq r}$.
 What happens in $Q_n$?
 For example, try $|A|=4$ in $Q_3$:
 \begin{center}
   \begin{tikzpicture}[scale=2]
     \node at (0.65,-0.3) {$|b(A)| = 3$};
+    \node at (3.65,-0.3) {$|b(A)| = 4$};
     \begin{scope}[every node/.style={draw=black, inner sep=1.5pt, circle}]
       \node [fill=bred  ] (A) at (0,0) {};
       \node [fill=bred  ] (B) at (1,0) {};
@@ -1001,54 +1031,170 @@ For example, try $|A|=4$ in $Q_3$:
   \end{tikzpicture}
 \end{center}
 
-Guess: `Balls are best', i.e.\ if $|A| = |X^{(\leq r)}|$, then $|N(A)| \geq |X^{(\leq r + 1)}|$ (where $X^{(\leq r)}$ is shorthand for $X^{(0)} \cup \dotsb \cup X^{(r)}$).
-What if $|A|$ strictly between $\sum_{i=0}^r \binom{n}{i}$ and $\sum_{i=0}^{r+1} \binom{n}{i}$?
+Guess: `Balls are best', i.e.\
+\begin{equation*}
+  \text{if }|A| = |X^{(\leq r)}|,\text{ then }|\hyperlink{def:neighbourhood}{N(A)}| \geq |X^{(\leq r + 1)}|
+\end{equation*}
+\hypertarget{def:superrange}(where $X^{(\leq r)}$ is shorthand for $\hyperlink{def:superr}{X^{(0)}} \cup \dotsb \cup X^{(r)}$).
 
-Guess: Take $A = X^{(\leq r)} \cup B$, for some $B \subset X^{(r+1)}$ (called a \hypertarget{def:hamming}`Hamming Ball'\index{Hamming ball}).
-
-If we knew this, then $N(A) = X^{(\leq r+1)} \cup \partial^+ B$, so by \nameref{thm:kk7}, we'd take $B$ to be an initial segment of \hyperlink{def:lex}{lex}.
+But what if $|A|$ is strictly between $\sum_{i=0}^r \binom{n}{i}$ and $\sum_{i=0}^{r+1} \binom{n}{i}$?
+Guess: Take $A = X^{(\leq r)} \cup B$, for some $B \subset \hyperlink{def:superr}{X^{(r+1)}}$ (called a \hypertarget{def:hamming}`Hamming Ball'\index{Hamming ball}).
+If we knew this, then
+\begin{equation*}\hyperlink{def:neighbourhood}{N(A)} = X^{(\leq r+1)} \cup \hyperlink{def:upshad}{\partial^+} B,\end{equation*}
+so by \nameref{thm:kk7} we'd take $B$ to be an initial segment of \hyperlink{def:lex}{lex}.
 
 \begin{defi}[Simplicial order]\hypertarget{def:simplicial}
   Define the \named{simplicial order} on $Q_n$ by $x<y$ if either $|x| < |y|$ or $|x|=|y|$ and $x<y$ in \hyperlink{def:lex}{lex}.
 \end{defi}
-`Go up in levels, and use lex inside a level.'
-Aim: Initial segments of \hyperlink{def:simplicial}{simplicial} order are best.
+The slogan for the \hyperlink{def:simplicial}{simplicial order} is `Go up in levels, and use \hyperlink{def:lex}{lex} inside a level.'
+\begin{aim}
+Initial segments of \hyperlink{def:simplicial}{simplicial} order are best for minimising $\hyperlink{def:neighbourhood}{N(A)}$.
+\end{aim}
 
-\begin{defi}[Sections]
-  Given $A \subset \hyperlink{def:qn}{Q_n}$ and $1 \leq i \leq n$, the \named{section}\textbf{$i$-sections} are the \hyperlink{def:ss}{set systems} $A_+^{(i)}, A_-^{(i)} \subset \mathcal{P}(X-i)$ given by
-  \begin{align*}
-    A_-^{(i)} = \set{ x \in A | i \notin x} \subset \mathcal{P}(X-i)
-    A_+^{(i)} = \set{ x - \{i\} | x \in A, i \in x} \subset \mathcal{P}(X-i)
-  \end{align*}
+\begin{defi}[Sections]\hypertarget{def:section}
+  Given $A \subset \hyperlink{def:qn}{Q_n}$ and $1 \leq i \leq n$, the \index{section}\textbf{$i$-sections} are the \hyperlink{def:ss}{set systems} $A_+^{(i)}, A_-^{(i)} \subset \mathcal{P}(X-i)$ given by
+  \begin{gather*}
+    A_-^{(i)} = \set{ x \in A | i \notin x} \subset \mathcal{P}(X-\{i\}) \\
+    A_+^{(i)} = \set{ x - \{i\} | x \in A, i \in x} \subset \mathcal{P}(X-\{i\}).
+  \end{gather*}
+  Note $\mathcal{P}(X-\{i\})$ is \hyperlink{def:iso}{isomorphic} to $\hyperlink{def:qn}{Q_{n-1}}$.
+  \begin{center}
+    \begin{tikzpicture}[scale=2]
+      \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}]
+        \begin{scope}
+          \node (A) at (0,0) {};
+          \node (B) at (1,0) {};
+          \node (C) at (1,1) {};
+          \node (D) at (0,1) {};
+          \node (E) at (0.3,0.3) {};
+          \node (F) at (1.3,0.3) {};
+          \node (G) at (1.3,1.3) {};
+          \node (H) at (0.3,1.3) {};
+          \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+          \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+          \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+          \foreach \x in {B,C,D,H} {\node [mymark] at (\x) {};}
+        \end{scope}
+        \begin{scope}[yshift=-1.8cm]
+          \node (A) at (0,0) {};
+          \node (B) at (1,0) {};
+          \node (C) at (1,1) {};
+          \node (D) at (0,1) {};
+          \node (E) at (0.3,0.3) {};
+          \node (F) at (1.3,0.3) {};
+          \node (G) at (1.3,1.3) {};
+          \node (H) at (0.3,1.3) {};
+          \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+          \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+          \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+          \foreach \x in {D,F,G} {\node [mymark] at (\x) {};}
+        \end{scope}
+      \end{scope}
+      \draw [->] (0.65, -0.4) -- (0.65, -0.1) node [left, midway] {$i$};
+      \node [right] at (1.3, 0.7) {$A_+^{(i)}$};
+      \node [right] at (1.3, -1.1) {$A_-^{(i)}$};
+      \draw [decorate,decoration={brace,amplitude=10pt}, xshift=-0.4cm] (0,-1.8) -- (0,1.3) node [black,midway,xshift=-0.7cm] {$Q_n$};
+    \end{tikzpicture}
+  \end{center}
 \end{defi}
 \begin{defi}[Compression]\hypertarget{def:icomp}
-  Define the \textbf{$i$-compression} $C_i(A)$ of $A$ by giving its $i$-sections.
+  Define the \textbf{$i$-compression} $C_i(A)$ of $A$ by giving its \hyperlink{def:section}{$i$-sections}.
   \begin{itemize}
     \item $C_i(A)_+^{i}$ is the initial segment of $Q_{n-1}$ of size $|A^{(i)}_+|$
     \item $C_i(A)_-^{i}$ is the initial segment of $Q_{n-1}$ of size $|A^{(i)}_-|$
   \end{itemize}
 \end{defi}
+\begin{center}
+  \begin{tikzpicture}[scale=2]
+    \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}]
+      \begin{scope}
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \foreach \x in {B,C,D,E,H} {\node [mymark] at (\x) {};}
+      \end{scope}
+      \begin{scope}[yshift=-1.8cm]
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \foreach \x in {D,E,F,G} {\node [mymark] at (\x) {};}
+      \end{scope}
+      \begin{scope}[xshift=2.7cm]
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \foreach \x in {A,B,D,E,F} {\node [mymark] at (\x) {};}
+      \end{scope}
+      \begin{scope}[xshift=2.7cm, yshift=-1.8cm]
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \foreach \x in {A,B,D,E} {\node [mymark] at (\x) {};}
+      \end{scope}
+    \end{scope}
+    \draw [->] (0, -0.4) -- (0, -0.1) node [right, midway] {$i$};
+    \node at (0.65,-2) {$A$};
+    \node at (3.35,-2) {$C_i(A)$};
+    \draw [->] (1.5, -0.25) -- (2.5, -0.25) node [above, midway] {$C_i$};
+    \draw [decorate,decoration={brace,amplitude=10pt}, xshift=-0.4cm] (0,-1.8) -- (0,1.3) node [midway,xshift=-0.7cm] {$Q_n$};
+  \end{tikzpicture}
+\end{center}
 Certainly $|\hyperlink{def:icomp}{C_i(A)}| = |A|$.
 Also, $C_i(A)$ `looks more like' an initial segment of \hyperlink{def:simplicial}{simplicial} than $A$ did.
 
 Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
 
 \begin{nthm}[Harper's theorem]\label{thm:harper1}
-  Let $A \subset Q_n$, and let $C$ be the initial segment of simplicial order with $|C| = |A|$.
-  Then $|N(A)| \geq |N(C)|$. In particular, if $|A| \geq \sum_{i=0}^r \binom{n}{i}$ then $|N(A)| \geq \sum_{i=0}^{r+1} \binom{n}{i}$.
+  Let $A \subset \hyperlink{def:qn}{Q_n}$, and let $C$ be the initial segment of \hyperlink{def:simplicial}{simplicial} order with $|C| = |A|$.
+  Then $|\hyperlink{def:neighbourhood}{N(A)}| \geq |N(C)|$.
+  In particular, if
+  \begin{equation*}|A| \geq \sum_{i=0}^r \binom{n}{i}\end{equation*}
+  then
+  \begin{equation*}|N(A)| \geq \sum_{i=0}^{r+1} \binom{n}{i}.\end{equation*}
 \end{nthm}
 \begin{remark}\leavevmode
   \begin{enumerate}[label=\arabic*.]
     \item If we know $A$ is a \hyperlink{def:hamming}{Hamming ball}, then done by \nameref{thm:kk7}.
-    \item \nameref{thm:harper1} $\implies$ \nameref{thm:kk7}. Indeed, given $B \subset X^{(r)}$.
-      Apply \nameref{thm:harper1} to $A = B \cup X^{(\leq r-1)}$
+    \item \nameref{thm:harper1} $\Rightarrow$ \nameref{thm:kk7}: Given $B \subset X^{(r)}$, apply \nameref{thm:harper1} to $A = B \cup X^{(\leq r-1)}$
   \end{enumerate}
 \end{remark}
 \begin{proof}
   Induction on $n$. $n=1$ works.
   Given $A \subset Q_n$ for $n > 1$, fix $1 \leq i \leq n$.
 
-  \textbf{Claim:} $|N(C_i(A))| \leq |N(A)|$.
+  \textbf{Claim:} $|N(\hyperlink{def:icomp}{C_i(A)})| \leq |\hyperlink{def:neighbourhood}{N(A)}|$.
 
   \textbf{Proof of claim:} Write $B = C_i(A)$.
   We have
@@ -1060,68 +1206,130 @@ Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
   Now, $|B_+| = |A_+|$ and $|N(B_-)| \leq |N(A_-)|$ by induction.
 
   But $N(B_-)$ is an initial segment of \hyperlink{def:simplicial}{simplicial} on $Q_{n-1}$ as is $B_+$.
-
-  So $N(B_-)$ and $B_+$ are nested.
+  So $N(B_-)$ and $B_+$ are nested (in some direction).
   Hence
   \begin{align*}
     |B_+ \cup N(B_-)| &\leq |A_+ \cup N(A_-)| \\
+    \shortintertext{and similarly}
     |B_- \cup N(B_+)| &\leq |A_- \cup N(A_+)|
   \end{align*}
-  Thus $|N(B)| \leq |N(A)|$.
-\end{proof}
-\marginnote{\emph{Lecture 8}}[0cm]Among all $B \subset Q_n$ with $|B| = |A|$ and $|N(B)| \leq |N(A)|$, choose one with
-\begin{equation*}
-  \sum_{x \in B} f(x)
-\end{equation*}
-minimal, where $f(x)=$ the position of $x$ in the \hyperlink{def:simplicial}{simplicial order} on $Q_n$.
-Then $B$ is $i$-compressed $\forall i$.
+  Thus $|N(B)| \leq |N(A)|$. $\blacksquare$
 
-Must such a $B$ be an initial segment of simplicial?
-Unfortunately, no - e.g.\ $A = \{\emptyset,1,2,12\} \subset Q_3$.
-
-However,
-\begin{nlemma}\label{lem:2.2}
-  Let $B \subset Q_n$ be $i$-compressed $\forall i$ but not an initial segment of the simplicial order.
-  Then if $n$ is odd, say $n = 2k+1$, we have
+  \marginnote{\emph{Lecture 8}}[0cm]Among all $B \subset Q_n$ with $|B| = |A|$ and $|N(B)| \leq |N(A)|$, choose one with
   \begin{equation*}
-    B = X^{(\leq k)} - \{\text{last $k$-set}\} \cup \{\text{first $k$-set}\}, % mark the last kset as (k+2),...,(2k+1) and the first as 1,2,...,k,(k+1)
+    \sum_{x \in B} f(x)
   \end{equation*}
-  while if $n$ is even, say $n = 2k$, we have
-  \begin{equation*}
-    B = X^{(\leq k-1)} \cup \set{x \in X^{(k)} | 1 \in x} - \{\text{last $k$-set with 1}\} \cup \{\text{first $k$-set without $1$}\}. % mark the last kset as 1(k+2),...,(2k) and the first as 2,3,4,...,k,(k+1)
-  \end{equation*}
-\end{nlemma}
-Once we have proved this, we are done, as in each case $|N(B)| \geq |N(C)|$.
-\begin{proof}
-  We have $x \notin B, y \in B$ for some $x,y$ with $x<y$ in simplicial.
-  We cannot have $i \in x, i \in y$ (as $B$ is $i$-compressed), and cannot have $i \notin x, i \notin y$ (as $B$ is $i$-compressed).
+  minimal, where $f(x)=$ the position of $x$ in the \hyperlink{def:simplicial}{simplicial order} on $Q_n$.
+  Then $B$ is $i$-compressed $\forall i$.
+  Must such a $B$ be an initial segment of simplicial?
+  Unfortunately, no - e.g.\ $B = \{\emptyset,1,2,12\} \subset Q_3$.
 
-  So, for each $i$, $i$ belongs to exactly one of $x,y$.
-  Thus $y = x^c$.
+  However,
+  \begin{nlemma}\label{lem:2.2}
+    Let $B \subset Q_n$ be $i$-compressed $\forall i$ but not an initial segment of simplicial order.
+    Then if $n$ is odd, say $n = 2k+1$, we have
+    \begin{align*}
+      B &= X^{(\leq k)} - \{\text{last $k$-set}\} \cup {\{\text{first $k+1$-set}\}}\\ % mark the last kset as (k+2),...,(2k+1) and the first as 1,2,...,k,(k+1)
+        &= X^{(\leq k)} - \{(k+2) \dotsc (2k+1)\} \cup \{12\dotsc k(k+1)\}
+    \end{align*}
+    while if $n$ is even, say $n = 2k$, we have
+    \begin{align*}
+      B &= X^{(\leq k-1)} \cup \set{x \in X^{(k)} | 1 \in x} - \{\text{last $k$-set with 1}\} \cup \{\text{first $k$-set without $1$}\}\\ % mark the last kset as 1(k+2),...,(2k) and the first as 2,3,4,...,k,(k+1)
+        &= X^{(\leq k-1)} \cup \set{x \in X^{(k)} | 1 \in x} - \{1(k+2)\dotsc(2k)\} \cup \{234\dotsc k(k+1)\}
+    \end{align*}
+  \end{nlemma}
 
-  Hence for each $y \in B$, at most one $x < y$ has $x \notin B$ (namely $Y^c$) and for each $x \notin B$, at most $y > x$ has $y \in B$ (namely $X^c$).
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{scope}
+        \node at (-2, 3) {$n=2k$};
 
-  Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
-  But then $x=$ last $k$-set (if $n=2k+1$) or the last $k$-set containing $1$ (if $n = 2k$)
-  by definition of simplicial ordering.
+        \draw (0,3.2) circle [x radius=1mm, y radius=1mm];
+        \draw (0,2.7) circle [x radius=4.5mm, y radius=2mm];
+        \draw (0,1.9) circle [x radius=9mm, y radius=4mm];
+
+        \node at (0,1.25) {$\vdots$};
+
+        \begin{scope}
+          \clip (0,0) circle [x radius=16mm, y radius=8mm];
+          \draw [very thin, fill=bred!40] (-1.6,-0.8) -- (0.2,-0.8) arc (0:90:2mm) -- (0,0.6) arc (-90:-180:2mm) -- (-1.6,0.8) -- cycle;
+          \draw [very thin] (0,0.8) -- (0,-0.8);
+        \end{scope}
+        \draw (0,0) circle [x radius=16mm, y radius=8mm];
+        \node [right] at (1.6, 0) {$X^{(k)}$};
+        \node at (-1.3,0.9) {$1 \in$};
+        \node at (1.3,0.9) {$1 \notin$};
+
+        \node at (0,-1.05) {$\vdots$};
+
+        \draw [fill=bred!40] (0,-1.9) circle [x radius=9mm, y radius=4mm];
+        \draw [fill=bred!40] (0,-2.7) circle [x radius=4.5mm, y radius=2mm];
+        \draw [fill=bred!40] (0,-3.2) circle [x radius=1mm, y radius=1mm];
+      \end{scope}
+
+      \begin{scope}[xshift=6cm]
+        \node at (-2, 3) {$n=2k+1$};
+
+        \draw (0,3.2) circle [x radius=1mm, y radius=0.8mm];
+        \draw (0,2.8) circle [x radius=4.5mm, y radius=1.5mm];
+        \draw (0,2.1) circle [x radius=9mm, y radius=3mm];
+
+        \node at (0,1.55) {$\vdots$};
+
+        \begin{scope}
+          \clip (0,0.6) circle [x radius=16mm, y radius=5mm];
+          \fill [bred!40] (-1.9,0.6) circle [radius=5mm];
+        \end{scope}
+        \draw (0,0.6) circle [x radius=16mm, y radius=5mm];
+        \node [right] at (1.6, 0.6) {$X^{(k+1)}$};
+
+        \begin{scope}
+          \clip (0,-0.6) circle [x radius=16mm, y radius=5mm];
+          \fill [bred!40] (1.9,-0.6) circle [radius=5mm] (-1.6,-1.1) rectangle (1.6,-0.1);
+        \end{scope}
+        \draw (0,-0.6) circle [x radius=16mm, y radius=5mm];
+        \node [right] at (1.6, -0.6) {$X^{(k)}$};
+
+        \node at (0,-1.35) {$\vdots$};
+
+        \draw [fill=bred!40] (0,-2.1) circle [x radius=9mm, y radius=3mm];
+        \draw [fill=bred!40] (0,-2.8) circle [x radius=4.5mm, y radius=1.5mm];
+        \draw [fill=bred!40] (0,-3.2) circle [x radius=1mm, y radius=0.8mm];
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  Once we have proved this, we are done, as in each case $|N(B)| \geq |N(C)|$.
+  \begin{proof}
+    We have $x \notin B, y \in B$ for some $x,y$ with $x<y$ in simplicial.
+    We cannot have $i \in x, i \in y$ (as $B$ is $i$-compressed), and cannot have $i \notin x, i \notin y$ (as $B$ is $i$-compressed).
+
+    So, for each $i$, $i$ belongs to exactly one of $x,y$.
+    Thus $y = x^c$.
+
+    Hence for each $y \in B$, at most one $x < y$ has $x \notin B$ (namely $y^c$) and for each $x \notin B$, at most $y > x$ has $y \in B$ (namely $x^c$).
+
+    Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
+    But then $x=$ last $k$-set (if $n=2k+1$) or the last $k$-set containing $1$ (if $n = 2k$)
+    by definition of simplicial ordering.
+  \end{proof}
 \end{proof}
 
 \begin{remark}\leavevmode
   \begin{enumerate}[label=\arabic*.]
-    \item Can also prove \nameref{thm:harper1} by $UV$-compressions.
+    \item Can also prove \nameref{thm:harper1} by \hyperlink{def:uvcomp}{$UV$-compressions}.
     \item Can also use these `codimension 1' compressions to prove \nameref{thm:kk7}.
   \end{enumerate}
 \end{remark}
 \begin{defi}[Neighbourhood]
-  \hypertarget{def:neighbourhood}For\index{neighbourhood} $A \subset Q_i$, the \textbf{$t$-neighbourhood} of $A$ is
+  \hypertarget{def:tneighbourhood}For $A \subset Q_i$, the \textbf{$t$-neighbourhood} of $A$ is
   \begin{equation*}
     A_{(t)} \coloneqq N^t(A) = \set{x \in Q_n | d(x,A) \leq t}.
   \end{equation*}
 \end{defi}
 \begin{ncor}\label{cor:2.3}
-  Let $A \subset Q_n$ with $|A| = |X^{(\leq r)}|$. Then, for $1 \leq t \leq n-r$, have
+  Let $A \subset \hyperlink{def:qn}{Q_n}$ with $|A| = |\hyperlink{def:superrange}{X^{(\leq r)}}|$. Then, for $1 \leq t \leq n-r$, have
   \begin{equation*}
-    |A_{(t)}| \geq |X^{(\leq r + t)}|
+    |\hyperlink{def:tneighbourhood}{A_{(t)}}| \geq |X^{(\leq r + t)}|
   \end{equation*}
 \end{ncor}
 \begin{proof}
@@ -1129,7 +1337,7 @@ Once we have proved this, we are done, as in each case $|N(B)| \geq |N(C)|$.
 \end{proof}
 To get a feel for what \cref{cor:2.3} is saying, we'll need some estimates for things like $\sum_{i=0}^r \binom{n}{i}$.
 \begin{nprop}\label{prop:2.4}
-  Let $0 \leq \epsilon < \frac{1}{4}$.
+  Let $0 \leq \epsilon < \frac{1}{4}$, then
   \begin{equation*}
     \sum_{i=0}^{\floor{(\frac{1}{2} - \epsilon) n}} \binom{n}{i} < \frac{1}{\epsilon} e^{(-\epsilon^2 \frac{n}{2})} 2^n
   \end{equation*}
@@ -1140,11 +1348,11 @@ Roughly we are going around $\epsilon \sqrt{n}$ standard deviations from the mea
 \begin{proof}
   For $i \leq (\frac{1}{2} - \epsilon) n:$
   \begin{equation*}
-    \frac{\binom{n}{n-i}}{\binom{n}{i}} = \frac{i}{n-i+1} \leq \frac{\frac{1}{2} - \epsilon}{\frac{1}{2} + \epsilon} = 1 - \frac{2\epsilon}{\frac{1}{2} + \epsilon} \leq 1 - 2\epsilon.
+    \frac{\binom{n}{i-1}}{\binom{n}{i}} = \frac{i}{n-i+1} \leq \frac{\frac{1}{2} - \epsilon}{\frac{1}{2} + \epsilon} = 1 - \frac{2\epsilon}{\frac{1}{2} + \epsilon} \leq 1 - 2\epsilon.
   \end{equation*}
   Hence
   \begin{equation*}
-    \sum_{i=0}^{\floor{(\frac{1}{2}-\epsilon) n}} \binom{n}{i} \leq \frac{1}{2\epsilon} \binom{n}{\floor{(\frac{1}{2} + \epsilon) n}}
+    \sum_{i=0}^{\floor{(\frac{1}{2}-\epsilon) n}} \binom{n}{i} \leq \frac{1}{2\epsilon} \binom{n}{\floor{(\frac{1}{2} - \epsilon) n}}
   \end{equation*}
   as a geometric progression.
   Similarly, replacing $\epsilon$ with $\frac \epsilon 2$,
@@ -1184,12 +1392,12 @@ Roughly we are going around $\epsilon \sqrt{n}$ standard deviations from the mea
   \end{equation*}
   i.e.,
   \begin{equation*}
-    |{A_{(\epsilon n)}}^c| \leq \sum_{i=\ceil{n (\frac{1}{2} + \epsilon)}}^n \binom{n}{i} = \sum_{i=0}^{\floor{n(\frac{1}{2}- \epsilon)}} \binom{n}{i} \leq \frac{1}{\epsilon} e^{-\epsilon^2 \frac{n}{2}} \cdot 2^n
+    |{A_{(\epsilon n)}}^c| \leq \sum_{i=\ceil{n (\frac{1}{2} + \epsilon)}}^n \binom{n}{i} = \sum_{i=0}^{\floor{n(\frac{1}{2}- \epsilon)}} \binom{n}{i} \leq \frac{1}{\epsilon} e^{-\epsilon^2 \frac{n}{2}} \cdot 2^n. \qedhere
   \end{equation*}
 \end{proof}
 \subsection{Concentration of measure}
 \begin{defi}[Lipschitz]\hypertarget{def:lips}
-Say $f: Q_n \to \mathbb{R}$ is \named{Lipschitz} if $|f(x) - f(y)| \leq 1$ for all $x,y \in Q_n$ adjacent.
+Say $f: Q_n \to \mathbb{R}$ is \named{Lipschitz} if $|f(x) - f(y)| \leq 1$ for all $x,y \in \hyperlink{def:qn}{Q_n}$ adjacent.
 \end{defi}
 
 \begin{defi}[Median]\hypertarget{def:median}
@@ -1198,13 +1406,13 @@ Say $M \in \mathbb{R}$ is a \named{median} or \textbf{L\'evy mean} of $f$ if
   |\set{x | f(x) \leq M}|,\ |\set{x | f(x) \geq M}| \geq \frac{1}{2} \cdot 2^n.
 \end{equation*}
 \end{defi}
-Now ready to show `every well-behaved function on $Q_n$ is roughly constant nearly everywhere'.
+Now ready to show `every well-behaved function on \hyperlink{def:qn}{$Q_n$} is roughly constant nearly everywhere'.
 
 \begin{nthm}\label{thm:2.6}
-  Let $f: Q_n \to \mathbb{R}$ be \hyperlink{def:lips}{Lipschitz} with \hyperlink{def:median}{median} $M$, and $0 < \epsilon < \frac{1}{4}$.
+  Let $f: \hyperlink{def:qn}{Q_n} \to \mathbb{R}$ be \hyperlink{def:lips}{Lipschitz} with \hyperlink{def:median}{median} $M$, and $0 < \epsilon < \frac{1}{4}$.
   Then
   \begin{equation*}
-    \frac{|\set{x | f(x) - M| \leq \epsilon n}|}{2} \geq 1 - \frac{4}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
+    \frac{\left\lvert\Set{x | \lvert f(x) - M \rvert \leq \epsilon n}\right\rvert}{2} \geq 1 - \frac{4}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
   \end{equation*}
 \end{nthm}
 \begin{proof}
@@ -1226,14 +1434,14 @@ Now ready to show `every well-behaved function on $Q_n$ is roughly constant near
 \end{proof}
 
 \begin{remark}
-  This is the `concentration of measure phenomenon'.
+  This is the `\named{concentration of measure} phenomenon'.
 \end{remark}
 Let $G$ be a graph of diameter $D$ (recall the diameter is $\max\set{d(x,y) | x, y \in G}$).
 Let
 \begin{equation*}
-  \alpha(G,\epsilon) = \max\Set{1 - \frac{\left\lvert A_{(\epsilon D)}\right\rvert}{\left\lvert G \right\rvert} | A \subset G, \frac{|A|}{|G|} \geq \frac{1}{2}}.
+  \alpha(G,\epsilon) = \max\Set{1 - \frac{\left\lvert \hyperlink{def:tneighbourhood}{A_{(\epsilon D)}}\right\rvert}{\left\lvert G \right\rvert} | A \subset G, \frac{|A|}{|G|} \geq \frac{1}{2}}.
 \end{equation*}
-So $\alpha(G,\epsilon)$ \emph{small} says `$\frac{1}{2}$-sized sets have big $\epsilon D$-neighbourhoods.'
+So $\alpha(G,\epsilon)$ \emph{small} says `$\frac{1}{2}$-sized sets have big \hyperlink{def:tneighbourhood}{$\epsilon D$-neighbourhoods}.'
 
 \begin{defi}[L\'evy family]\hypertarget{def:levyfam}
 Say a sequence of graphs $G_1, G_2, \dotsc$ is a \named{L\'evy family} if $\alpha(G_n, \epsilon) \to 0$ as $n \to \infty$ (for each fixed $\epsilon$).
@@ -1325,77 +1533,215 @@ Similarly, we can define $\alpha(X, \epsilon)$ for $X$ any metric measure space 
   \end{enumerate}
 \end{eg}
 % new lecture
-\marginnote{\emph{Lecture 10}}
-% missing
-%We deduced concentration of measure from isoperimetric inequalities. Conversely,
-%\begin{nprop}\label{prop:2.7}
-%  Let $G$ be a graph such that for any Lipschitz function $G \to \mathbb{R}$ with median $M$, we have
-%  \begin{equation*}
-%    \frac{|\set{x \in G | |f(x) - M| \leq t}|}{|G|} \geq 1-\alpha
-%  \end{equation*}
-%  for some given $t,\alpha$.
-%  Then for $A \subset G$ with $\frac{|A|}{|G|} \geq \frac{1}{2}$, we have $\frac{|A_{(t)}|}{|G|} \geq 1 - \alpha$.
-%\end{nprop}
-%\begin{proof}
-%  The function $f(x) = d(x,A)$ is Lipschitz and has $0$ as a median (as $|A| \geq \frac{1}{2} |G|$).
-%\end{proof}
-%\subsection{Edge-isoperimetric inequalities}
-%For $A \subset G$ ($G$ a graph), the \textbf{edge-boundary} of $A$ is $\partial A = \set{xy \in E(G) | x \in A, y \notin A}$.
-%Eg
-%In $Q_n$ how should we choose $A$ (with $|A|$ given) to minimise $|\partial A|$?
-%Eg
-%This suggest that perhaps subcubes are best. But what if $2^k < |A| < 2^{k+1}$? Maybe fill up all of $Q_k$, then add in subcubes.
-%Say $x<y$ in the \textbf{binary} ordering on $Q_n$ if $\max(x \triangle y) \in y$.
-%Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in subcubes'.
-%
-%\begin{aim}
-%  Initial segments of binary are best for $\partial A$ (minimise).
-%  In particular, $|A|=2^k \Rightarrow |\partial A| \geq 2^k (n-k)$.
-%\end{aim}
-%For $A \subset Q_n$ and $1 \leq i \leq n$, the $i$-binary compression $B_i(A)$ is defined by giving its $i$-sections:
-%\begin{align*}
-%  B_i(A)_+^{(i)} &= \text{first }|A_+^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in binary} \\
-%  B_i(A)_-^{(i)} &= \text{first }|A_-^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in binary}
-%\end{align*}
-%Note that $|B_i(A)| = |A|$. Say $A$ is $i$-binary compressed if $B_i(A) = A$.
-%\begin{nthm}[Edge-isoperimetric inequality in the cube]\label{thm:2.8}
-%  Let $A \subset Q_n$, and let $C$ be the initial segment of the binary ordering with $|C| = |A|$. Then $|\partial A| \geq |\partial C|$.
-%  In particular, if $|A|=2^k$ then $|\partial A| \geq 2^k (n-k)$.
-%\end{nthm}
-%\begin{remark}
-%  Sometimes called the theorem of Harper, Lindsey, Bernstein and Hart.
-%\end{remark}
-%\begin{proof}
-%  Induction on $n$: $n=1$ is immediate.
-%  Given $A \subset Q_n$ for $n > 1$ and $1 \leq i \leq n$: Claim $|\partial B_i(A)| \leq |\partial A|$.
-%
-%  Proof of claim: Write $B$ for $B_i(A)$.
-%  We have
-%  \begin{align*}
-%    |\partial A| &= |\partial(A_-)| + |\partial(A_+)| + |A_i \triangle A_+| \\
-%    |\partial B| &= |\partial(B_-)| + |\partial(B_+)| + |B_i \triangle B_+|.
-%  \end{align*}
-%  Now, $|\partial (B_-)| \leq |\partial (A_-)|$ and $|\partial(B_+)| \leq |\partial(A_+)|$ by induction.
-%  Also, $|A_-| = |B_-|$, $|A_+| = |B_+|$ and $B_-, B_+$ nested (as both initial segments of binary).
-%  Whence $|B_- \triangle B_+| \leq |A_i \triangle A_+|$.
-%  Among all $B \subset Q_n$ with $|B| = |A|$ and $|\partial B| \leq |\partial A|$, choose one with $\sum_{x \in B} (\text{position of $x$ in binary order})$ minimal, completing the claim.
-%
-%  Then $B$ is $i$-binary compressed $\forall i$ by claim.
-%  This $B$ need not be an initial segment of binary, e.g.\
-%  However, claim: If $B< Q_n$ is $i$-binary-compressed $\forall i$ but not an initial segment of binary, then $B = \mathcal{P}(n-1) \cup \{n\} - \{123\dotsm(n-1)\}$.
-%  (Bottom half, last point removed, first point of top half added).
-%  Then done, as clearly $|\partial B| \geq |\partial C|$.
-%
-%  Proof of claim:
-%  Have some $x < y$ with $x \notin B$ and $y \in B$.
-%  Then $\forall i$, cannot have $i \notin x,y$ and cannot have $i \in xy$ as $B_i(B) = B$. So $x = y^c$.
-%  Thus for each $y \in B$, there is at most 1 $x < y$ with $x \notin B$ (namely $x^c$), and for each $x \notin B$, there is at most one $y > x$ with $y \in B$ (namely $y^c$).
-%  Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
-%  Hence $y = \{n\}$.
-%\end{proof}
-%\begin{remark}
-%  In the proofs of \cref{thm:harper1} and \cref{thm:2.8}, vital that the extremal sets in dimension $n-1$ were nested, i.e.\ were the initial segments of some ordering.
-%\end{remark}
+We\marginnote{\emph{Lecture 10}} deduced concentration of measure from isoperimetric inequalities. Conversely,
+
+\begin{nprop}\label{prop:2.7}
+  Let $G$ be a graph such that for any \hyperlink{def:lips}{Lipschitz} function $G \to \mathbb{R}$ with median $M$, we have
+  \begin{equation*}
+    \frac{|\set{x \in G | |f(x) - M| \leq t}|}{|G|} \geq 1-\alpha
+  \end{equation*}
+  for some given $t,\alpha$.
+  Then for $A \subset G$ with $\frac{|A|}{|G|} \geq \frac{1}{2}$, we have $\frac{|\hyperlink{def:tneighbourhood}{A_{(t)}}|}{|G|} \geq 1 - \alpha$.
+\end{nprop}
+\begin{proof}
+  The function $f(x) = d(x,A)$ is Lipschitz and has $0$ as a median (as $|A| \geq \frac{1}{2} |G|$).
+\end{proof}
+\subsection{Edge-isoperimetric inequalities}
+\begin{defi}[Edge boundary]\hypertarget{def:ebound}
+For $A \subset G$ ($G$ a graph), the \textbf{edge-boundary} of $A$ is $\partial A = \set{xy \in E(G) | x \in A, y \notin A}$.
+\end{defi}
+\begin{center}
+  \begin{tikzpicture}[scale=1.5]
+    \begin{scope}[every node/.style={draw, circle, inner sep=1.5pt}]
+      \node [label=below:$3$, fill=bred] (3) at (0  ,0) {};
+      \node [label=below:$4$, fill=bred] (4) at (1  ,0) {};
+      \node [label=above:$2$] (2) at (1  ,1) {};
+      \node [label=above:$1$, fill=bred] (1) at (0  ,1) {};
+      \node [label=above:$5$] (5) at (2.3,1) {};
+      \node [label=below:$6$] (6) at (1.8,0) {};
+      \node [label=below:$7$] (7) at (2.8,0) {};
+      \draw [ultra thick, bgreen] (1) -- (2) -- (4);
+      \draw (2) -- (4) -- (3) -- (1) -- (2) -- (5) -- (6) -- (7) -- (5);
+      \draw (1) -- (4);
+    \end{scope}
+    \node at (1.4, -0.5) {$|{\color{bgreen}\partial A}| = 2$};
+  \end{tikzpicture}
+\end{center}
+In $\hyperlink{def:qn}{Q_n}$ how should we choose $A$ (with $|A|$ given) to minimise $|\hyperlink{def:ebound}{\partial A}|$?
+
+Take for example $|A|=4$ in $Q_3$:
+\begin{center}
+  \begin{tikzpicture}[scale=2]
+    \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}]
+      \begin{scope}
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (E) -- (F);
+        \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (E) -- (H);
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (B) -- (C);
+        \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (D) -- (C);
+        \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (D) -- (H);
+        \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (B) -- (F);
+        \foreach \x in {A,B,D,E} {\node [mymark] at (\x) {};}
+      \end{scope}
+      \begin{scope}[xshift=3cm]
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (E) -- (H);
+        \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (F) -- (G);
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (C) -- (B);
+        \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (A) -- (D);
+        \foreach \x in {A,B,E,F} {\node [mymark] at (\x) {};}
+      \end{scope}
+  \end{scope}
+  \node [below] at (0.65, -0.2) {$|\partial A| = 6$};
+  \node [below] at (3.65, -0.2) {$|\partial A| = 4$};
+\end{tikzpicture}
+\end{center}
+
+This suggest that perhaps subcubes are best. But what if $2^k < |A| < 2^{k+1}$? Maybe fill up all of $Q_k$, then add in subcubes.
+\begin{defi}[Binary ordering]\hypertarget{def:binary}
+  Say $x<y$ in the \named{binary} ordering on $Q_n$ if $\max(x \sym y) \in y$.
+\end{defi}
+Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in subcubes'.
+
+\begin{aim}
+  Initial segments of \hyperlink{def:binary}{binary} are best (minimise) for $\partial A$.
+  In particular,
+  \begin{equation*}|A|=2^k \Rightarrow |\partial A| \geq 2^k (n-k).\end{equation*}
+\end{aim}
+\begin{defi}[Binary compression]
+For $A \subset \hyperlink{def:qn}{Q_n}$ and $1 \leq i \leq n$, the \textbf{$i$-binary compression} $B_i(A)$ is defined by giving its \hyperlink{def:section}{$i$-sections:}
+\begin{align*}
+  B_i(A)_+^{(i)} &= \text{first }|A_+^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in \hyperlink{def:binary}{binary}} \\
+  B_i(A)_-^{(i)} &= \text{first }|A_-^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in binary}
+\end{align*}
+Note that $|B_i(A)| = |A|$. Say $A$ is $i$-\textbf{binary compressed} if $B_i(A) = A$.
+\end{defi}
+\begin{center}
+  \begin{tikzpicture}[scale=2]
+    \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}]
+      \begin{scope}
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \foreach \x in {B,C,D,G} {\node [mymark] at (\x) {};}
+      \end{scope}
+      \begin{scope}[yshift=-1.8cm]
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \foreach \x in {B,D,G} {\node [mymark] at (\x) {};}
+      \end{scope}
+      \begin{scope}[xshift=2.7cm]
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \foreach \x in {A,B,E,F} {\node [mymark] at (\x) {};}
+      \end{scope}
+      \begin{scope}[xshift=2.7cm, yshift=-1.8cm]
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \foreach \x in {A,B,E} {\node [mymark] at (\x) {};}
+      \end{scope}
+    \end{scope}
+    \draw [->] (0, -0.4) -- (0, -0.1) node [right, midway] {$i$};
+    \node at (0.65,-2) {$A$};
+    \node at (3.35,-2) {$B_i(A)$};
+    \draw [->] (1.5, -0.25) -- (2.5, -0.25) node [above, midway] {$B_i$};
+  \end{tikzpicture}
+\end{center}
+\begin{nthm}[Edge-isoperimetric inequality in the cube]\label{thm:2.8}
+  Let $A \subset \hyperlink{def:qn}{Q_n}$, and let $C$ be the initial segment of the \hyperlink{def:binary}{binary ordering} with $|C| = |A|$. Then $|\hyperlink{def:ebound}{\partial} A| \geq |\partial C|$.
+  In particular, if $|A|=2^k$ then $|\partial A| \geq 2^k (n-k)$.
+\end{nthm}
+\begin{remark}
+  Sometimes called the theorem of Harper, Lindsey, Bernstein and Hart.
+\end{remark}
+\begin{proof}
+  Induction on $n$: $n=1$ is immediate.
+  Given $A \subset \hyperlink{def:qn}{Q_n}$ for $n > 1$ and $1 \leq i \leq n$: \textbf{Claim} $|\hyperlink{def:ebound}{\partial} B_i(A)| \leq |\partial A|$.
+
+  \textbf{Proof of claim:} Write $B$ for $B_i(A)$.
+  We have
+  \begin{align*}
+    |\partial A| &= |\partial(A_-)| + |\partial(A_+)| + |A_i \sym A_+| \\
+    |\partial B| &= |\partial(B_-)| + |\partial(B_+)| + |B_i \sym B_+|.
+  \end{align*}
+  Now, $|\partial (B_-)| \leq |\partial (A_-)|$ and $|\partial(B_+)| \leq |\partial(A_+)|$ by induction.
+  Also, $|A_-| = |B_-|$, $|A_+| = |B_+|$ and $B_-, B_+$ nested (as both initial segments of binary).
+  Whence $|B_- \sym B_+| \leq |A_i \sym A_+|$.
+  Among all $B \subset Q_n$ with $|B| = |A|$ and $|\partial B| \leq |\partial A|$, choose one with
+  \begin{equation*}\sum_{x \in B} (\text{position of $x$ in binary order})\end{equation*}
+  minimal, completing the claim. $\blacksquare$
+
+  Then $B$ is $i$-binary compressed $\forall i$ by claim.
+  This $B$ need not be an initial segment of binary, e.g.\
+  However, claim: If $B< Q_n$ is $i$-binary-compressed $\forall i$ but not an initial segment of binary, then $B = \mathcal{P}(n-1) \cup \{n\} - \{123\dotsm(n-1)\}$.
+  (Bottom half, last point removed, first point of top half added).
+  Then done, as clearly $|\partial B| \geq |\partial C|$.
+
+  Proof of claim:
+  Have some $x < y$ with $x \notin B$ and $y \in B$.
+  Then $\forall i$, cannot have $i \notin x,y$ and cannot have $i \in xy$ as $B_i(B) = B$. So $x = y^c$.
+  Thus for each $y \in B$, there is at most 1 $x < y$ with $x \notin B$ (namely $x^c$), and for each $x \notin B$, there is at most one $y > x$ with $y \in B$ (namely $y^c$).
+  Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
+  Hence $y = \{n\}$.
+\end{proof}
+\begin{remark}
+  In the proofs of \cref{thm:harper1} and \cref{thm:2.8}, vital that the extremal sets in dimension $n-1$ were nested, i.e.\ were the initial segments of some ordering.
+\end{remark}
 \clearpage
 \section{Projections}
 \printindex
