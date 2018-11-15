@@ -1915,13 +1915,13 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
   i.e.\ to \hyperlink{def:em}{algebra homomorphisms} $(A, \alpha) \to KB$. And these bijections are natural in $(A, \alpha)$ and in $B$.
 \end{proof}
 \begin{nthm}[Precise Monadicity Theorem]\label{thm:5.12}
-  \marginnote{\emph{Lecture 17}}$G: \dc \to \cc$ is \hyperlink{def:monadic}{monadic} iff $G$ has a \hyperlink{def:adj}{left adjoint} and \hyperlink{def:clim}{creates} \hyperlink{def:equalizer}{coequalizers} of \hyperlink{def:gsplit}{$G$-split} pairs.
+  \marginnote{\emph{Lecture 17}}$G: \mathscr{D} \to \mathscr{C}$ is \hyperlink{def:monadic}{monadic} iff $G$ has a \hyperlink{def:adj}{left adjoint} and \hyperlink{def:clim}{creates} \hyperlink{def:equalizer}{coequalizers} of \hyperlink{def:gsplit}{$G$-split} pairs.
 \end{nthm}
 \begin{nthm}[Refined/Reflexive Monadicity Theorem]\label{thm:5.13}
-  Suppose $\dc$ has and $G: \dc \to \cc$ preserves \hyperlink{def:reflexive}{reflexive coequalizers} and that $G$ reflects isomorphisms and has a \hyperlink{def:adj}{left adjoint}. Then $G$ is \hyperlink{def:monadic}{monadic}.
+  Suppose $\mathscr{D}$ has and $G: \mathscr{D} \to \mathscr{C}$ preserves \hyperlink{def:reflexive}{reflexive coequalizers} and that $G$ reflects isomorphisms and has a \hyperlink{def:adj}{left adjoint}. Then $G$ is \hyperlink{def:monadic}{monadic}.
 \end{nthm}
 \begin{proof}[Proof of \cref{thm:5.12} $\Rightarrow$]
-  It is sufficient to show that $\hyperlink{def:fsupt}{G^\mathbb{T}}: \hyperlink{def:em}{\cc^\mathbb{T}}\to\cc$ \hyperlink{def:clim}{creates} \hyperlink{def:equalizer}{coequalizers} of \hyperlink{def:gsplit}{$G^\mathbb{T}$ split}-pairs.
+  It is sufficient to show that $\hyperlink{def:fsupt}{G^\mathbb{T}}: \hyperlink{def:em}{\mathscr{C}^\mathbb{T}}\to\mathscr{C}$ \hyperlink{def:clim}{creates} \hyperlink{def:equalizer}{coequalizers} of \hyperlink{def:gsplit}{$G^\mathbb{T}$ split}-pairs.
    But this follows from the argument of \cref{thm:5.8}(ii), since if $\begin{tikzcdi}(A,\alpha) \rar[shift left]{f} \rar[shift right,']{g} & (B, \beta)\end{tikzcdi}$ is a $G^\mathbb{T}$-split pair, the coequalizer of $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is preserved by $T$ and $TT$.
 \end{proof}
 \begin{proof}[Proof of \cref{thm:5.12} $\Leftarrow$ and \cref{thm:5.13}]
@@ -1932,7 +1932,7 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
     FGFA \rar[shift left]{F\alpha} \rar[shift right,']{\epsilon_{FA}} & FA
   \end{tikzcdi}
   $
-  is both \hyperlink{def:reflexive}{reflexive} and \hyperlink{def:gsplit}{$G$-split}, so has a \hyperlink{def:equalizer}{coequalizer} in $\dc$, and hence by \cref{lem:5.11}, $\hyperlink{def:emcomp}{K: \dc \to \cc^\mathbb{T}}$ has a \hyperlink{def:adj}{left adjoint} $L$.
+  is both \hyperlink{def:reflexive}{reflexive} and \hyperlink{def:gsplit}{$G$-split}, so has a \hyperlink{def:equalizer}{coequalizer} in $\mathscr{D}$, and hence by \cref{lem:5.11}, $\hyperlink{def:emcomp}{K: \mathscr{D} \to \mathscr{C}^\mathbb{T}}$ has a \hyperlink{def:adj}{left adjoint} $L$.
 
   The \hyperlink{def:unit}{unit} of $(L \dashv K)$ at an \hyperlink{def:em}{algebra} $(A, \alpha)$: the coequalizer defining $L(A, \alpha)$ is mapped by $K$ to the diagram
   \begin{equation*}
@@ -1955,46 +1955,46 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
 \end{proof}
 \begin{nexample}\label{eg:5.14}\leavevmode
   \begin{enumerate}
-    \item The \hyperlink{def:forgFunc}{forgetful functors} $\gpc \to \setc$, $\rngc \to \setc$, $\modc_R \to \setc, \dotsc$ all satisfy the hypotheses of \cref{thm:5.13}; for the \hyperlink{def:reflexive}{reflexive coequalizers}, use question 3 on example sheet 4 which shows that if
+    \item The \hyperlink{def:forgFunc}{forgetful functors} $\mathbf{Gp} \to \mathbf{Set}$, $\mathbf{Rng} \to \mathbf{Set}$, $\mathbf{Mod}_R \to \mathbf{Set}, \dotsc$ all satisfy the hypotheses of \cref{thm:5.13}; for the \hyperlink{def:reflexive}{reflexive coequalizers}, use question 3 on example sheet 4 which shows that if
       \begin{equation*}
         \begin{tikzcd}
           A \rar[shift left]{f} \rar[shift right,']{g} & B \rar{h} & C
         \end{tikzcd}
       \end{equation*}
-      is a reflexive coequalizer diagram in $\setc$, then so is
+      is a reflexive coequalizer diagram in $\mathbf{Set}$, then so is
       \begin{equation*}
         \begin{tikzcd}
           A^n \rar[shift left]{f^n} \rar[shift right,']{g^n} & B^n \rar{h^n} & C^n.
         \end{tikzcd}
       \end{equation*}
     \item Any \hyperlink{def:refl}{reflection} is \hyperlink{def:monadic}{monadic:} this follows from q2 on example sheet 3, but also can be proved using \cref{thm:5.12}.
-      Let $\dc$ be a \hyperlink{def:refl}{reflective} (\hyperlink{def:fulls}{full}) subcategory of $\cc$ and suppose a pair
+      Let $\mathscr{D}$ be a \hyperlink{def:refl}{reflective} (\hyperlink{def:fulls}{full}) subcategory of $\mathscr{C}$ and suppose a pair
       $
       \begin{tikzcdi}
         A \rar[shift left]{f} \rar[shift right,']{g} & B
       \end{tikzcdi}
-      $ in $\dc$ fits into a \hyperlink{def:splitcoeq}{split coequalizer} diagram
+      $ in $\mathscr{D}$ fits into a \hyperlink{def:splitcoeq}{split coequalizer} diagram
       \begin{equation*}
         \begin{tikzcd}
           A \rar[shift left]{f} \rar[shift right,']{g} & B \rar[bgreen]{h} \lar[bend left=40, bgreen]{t} & C \lar[bend left=40, bgreen]{s}
         \end{tikzcd}
       \end{equation*}
-      in $\cc$.
-      Then $t$ and $ft=sh$ belong to $\dc$ since $\dc$ is full, and hence $s$ is in $\dc$ since it's an equalizer of $(1_B, sh)$ and $\dc$ is closed under limits in $\cc$.
-      Hence also $h \in \mor \dc$.
+      in $\mathscr{C}$.
+      Then $t$ and $ft=sh$ belong to $\mathscr{D}$ since $\mathscr{D}$ is full, and hence $s$ is in $\mathscr{D}$ since it's an equalizer of $(1_B, sh)$ and $\mathscr{D}$ is closed under limits in $\mathscr{C}$.
+      Hence also $h \in \mor \mathscr{D}$.
     \item Consider the composite adjunction
       \begin{equation*}
       \begin{tikzcd}
-        \setc \rar[shift left]{F} & \mathbf{AbGp} \rar[shift left]{L} \lar[shift left]{G} & \mathbf{tfAbGp}. \lar[shift left]{I}
+        \mathbf{Set} \rar[shift left]{F} & \mathbf{AbGp} \rar[shift left]{L} \lar[shift left]{G} & \mathbf{tfAbGp}. \lar[shift left]{I}
       \end{tikzcd}
       \end{equation*}
-      The two factors are monadic by (a) and (b) respectively, but the composite isn't, since the monad it induces on $\setc$ is isomorphic to that induced by $(F \dashv U)$.
-    \item Consider the forgetful functor $\topc \overset{U}\to \setc$.
-      This is \hyperlink{def:full}{faithful} and has both \hyperlink{def:adj}{left and right adjoints} (so preserves all \hyperlink{def:equalizer}{coequalizers}), but the monad induced on $\setc$ is $(1,1,1)$ and the category of algebras is $\setc$.
+      The two factors are monadic by (a) and (b) respectively, but the composite isn't, since the monad it induces on $\mathbf{Set}$ is isomorphic to that induced by $(F \dashv U)$.
+    \item Consider the forgetful functor $\mathbf{Top} \overset{U}\to \mathbf{Set}$.
+      This is \hyperlink{def:full}{faithful} and has both \hyperlink{def:adj}{left and right adjoints} (so preserves all \hyperlink{def:equalizer}{coequalizers}), but the monad induced on $\mathbf{Set}$ is $(1,1,1)$ and the category of algebras is $\mathbf{Set}$.
     \item Consider the composite adjunction
       \begin{equation*}
       \begin{tikzcd}
-        \setc \rar[shift left]{D} & \mathbf{Top} \rar[shift left]{\beta} \lar[shift left]{U} & \mathbf{KHaus}. \lar[shift left]{I}
+        \mathbf{Set} \rar[shift left]{D} & \mathbf{Top} \rar[shift left]{\beta} \lar[shift left]{U} & \mathbf{KHaus}. \lar[shift left]{I}
       \end{tikzcd}
       \end{equation*}
       We'll show that this satisfies the hypotheses of \cref{thm:5.12}.
@@ -2004,7 +2004,7 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
           X \rar[shift left]{f} \rar[shift right,']{g} & Y \rar[bgreen]{h} \lar[bend left=40, bgreen]{t} & \color{bgreen}{Z} \lar[bend left=40, bgreen]{s}
         \end{tikzcd}
       \end{equation*}
-      be a split coequalizer in $\setc$, where $X,Y$ have compact Hausdorff topologies and $f,g$ are continuous.
+      be a split coequalizer in $\mathbf{Set}$, where $X,Y$ have compact Hausdorff topologies and $f,g$ are continuous.
       Note that the quotient topology on $Z \cong Y/R$ is compact, so it's the only possible candidate for a compact Hausdorff topology making $h$ continuous.
 
       We use the lemma from general topology: if $Y$ is compact Hausdorff, then a quotient $Y/R$ is Hausdorff $\iff R \subseteq Y \times Y$ is closed.
@@ -2023,5 +2023,141 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
       So $R = (g \times g)(S)$ is compact and hence closed in $Y \times Y$.
   \end{enumerate}
 \end{nexample}
+\begin{ndef}\label{def:5.15}
+  \hypertarget{def:mtower}Let\marginnote{\emph{Lecture 18}} $\begin{tikzcdi}\mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G} \end{tikzcdi}$ be an \hyperlink{def:adj}{adjunction}, and suppose $\mathscr{D}$ has \hyperlink{def:reflexive}{reflexive coequalizers}.
+  The \textbf{monadic tower} of $F \dashv G$ is the diagram
+  \begin{equation*}
+    \begin{tikzcd}[column sep={between origins, 3em},row sep=large]
+      \mathscr{D} \arrow[rrrddd, shift left=0.7, shorten <=2mm,"G"] \arrow[rrrrdd, shift left=0.7, shorten <=1.5mm, "K", pos=0.6] \arrow[rrrrrd, shift left=0.7, shorten <=2mm, "K'"]
+      &&&&&& \phantom{x} \arrow[dl, shift left=0.7, dotted, no head] \\
+      &&&&&(\mathscr{C}^\mathbb{T})^\mathbb{S} \arrow [lllllu, shift left=0.7, shorten >=2mm, "L'"] \arrow[dl, shift left=0.7] \arrow[ur, shift left=0.7, dotted, no head]\\
+      &&&&\mathscr{C}^\mathbb{T} \arrow[lllluu, shift left=0.7, shorten >=1.5mm, "L", pos=0.4] \arrow[dl, shift left=0.7, "G^\mathbb{T}"] \arrow[ur, shift left=0.7]\\
+      &&&\mathscr{C} \arrow[llluuu, shift left=0.7, shorten >=2mm, "F"] \arrow [ur, shift left=0.7, "F^\mathbb{T}"] \\
+    \end{tikzcd}
+  \end{equation*}
+  where $\mathbb{T}$ is the \hyperlink{def:monad}{monad} induced by $(F \dashv G)$, $K$ is as in \cref{thm:5.7}, $L$ as in \cref{lem:5.11}, $\mathbb{S}$ is the monad induced by $(L \dashv K)$, and so on.
+
+  We say $(F \dashv G)$ has \textbf{monadic length} $n$ if we reach an \hyperlink{def:equicat}{equivalence} after $n$ steps.
+\end{ndef}
+For example, the \hyperlink{def:adj}{adjunction} of \cref{eg:5.14}(c) has \hyperlink{def:mtower}{monadic length} 2, and the adjunction of \cref{eg:5.14}(d) has monadic length $\infty$.
+
+\begin{nthm}\label{thm:5.16}
+  Suppose given an \hyperlink{def:adj}{adjunction} $\begin{tikzcdi}\mathscr{C} \rar[shift left]{R} & \lar[shift left]{L} \mathscr{D}\end{tikzcdi}$ and \hyperlink{def:monad}{monads} $\mathbb{T}, \mathbb{S}$ on $\mathscr{C}, \mathscr{D}$ respectively, and a \hyperlink{def:funct}{functor} $\bar{R}: \hyperlink{def:fsupt}{\mathscr{D}^\mathbb{S}} \to \mathscr{C}^\mathbb{T}$ such that
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathscr{D}^\mathbb{S} \rar{\bar{R}} \dar{\hyperlink{def:fsupt}{G^\mathbb{S}}} & \mathscr{C}^\mathbb{T} \dar{G^\mathbb{T}} \\
+      \mathscr{D} \rar{R} & \mathscr{C}
+    \end{tikzcd}
+  \end{equation*}
+  commutes up to isomorphism.
+
+  Suppose also that $\mathscr{D}^\mathbb{S}$ has \hyperlink{def:reflexive}{reflexive coequalizers}.
+  Then $\bar{R}$ has a \hyperlink{def:adj}{left adjoint} $\bar{L}$.
+\end{nthm}
+\begin{proof}
+  Note that if $\bar{L}$ exists, we must have $\bar{L} \hyperlink{def:fsupt}{F^\mathbb{T}} \cong F^\mathbb{S} L$, by \cref{cor:3.6}.
+  So we'd expect $\bar{L}(A,\alpha)$ to be a \hyperlink{def:equalizer}{coequalizer} of two morphisms
+  \begin{equation*}
+    \begin{tikzcd}[column sep=large]
+      F^\mathbb{S} L T A \rar[shift left]{F^\mathbb{S} L \alpha} \rar[shift right,']{?} & F^\mathbb{S} L A
+    \end{tikzcd}
+  \end{equation*}
+  To construct the second morphism, note first that we can assume wlog $G^\mathbb{T} \bar{R} = R G^\mathbb{S}$, by transporting \hyperlink{def:em}{$\mathbb{T}$-algebra} structures along the isomorphism $G^\mathbb{T} R(B, \beta) \to RB$.
+  We obtain $\theta: TR \to RS$ by
+  \begin{align*}
+    R &\overset{R_\iota}\to RS = RG^\mathbb{S} F^\mathbb{S} = G^\mathbb{T} \bar{R} F^\mathbb{S} \\
+    F^\mathbb{T} R &\to \bar{R} F^\mathbb{S} \\
+    TR = G^\mathbb{T} F^\mathbb{T} R &\overset{\theta}\to G^\mathbb{T} \bar{R} F^\mathbb{S} = R G^\mathbb{S} F^\mathbb{S} = RS
+  \end{align*}
+  % see pic
+
+  Convert it into $\varphi: LT \to SL$ by
+  \begin{equation*}
+    \begin{tikzcd}
+      LT \rar{LT\gamma} & LTRL \rar{L\theta_L} & LRSL \rar{\delta_{SL}} & SL
+    \end{tikzcd}
+  \end{equation*}
+  where $\gamma$ and $\delta$ are the unit and counit of $(L \dashv R)$.
+  Transposing across $(F^\mathbb{S} \dashv G^\mathbb{S})$, we get $F^\mathbb{S} LT \overset{\bar{\varphi}}\to F^\mathbb{S} L$.
+  The pair $(F^\mathbb{S} L \alpha, \bar{\varphi}_A)$ is \hyperlink{def:reflexive}{reflexive}, with common splitting $F^\mathbb{S} L \eta$.
+
+  It can be verified that the coequalizer of this pair has the universal property we require for $\bar{L}(A,\alpha)$.
+\end{proof}
+
+\clearpage
+\section{Cartesian Closed Categories}
+\begin{ndef}\label{def:6.1}
+  \hypertarget{def:exp}Let \hypertarget{def:cc}$\mathscr{C}$ be a \hyperlink{def:cat}{category} with \hyperlink{def:lprod}{finite products}.
+  \index{exponential}We say $A \in \hyperlink{def:cat}{\ob} \mathscr{C}$ is \textbf{exponentiable} if the \hyperlink{def:funct}{functor} $(-) \times A: \mathscr{C} \to \mathscr{C}$ has \hyperlink{def:adj}{right adjoint} $(-)^A$.
+  If every object of $\mathscr{C}$ is exponentiable, we say $\mathscr{C}$ is \named{Cartesian closed}.
+\end{ndef}
+\begin{nexample}\label{eg:6.2}
+  \leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item $\mathbf{Set}$ is \hyperlink{def:cc}{cartesian closed}, with $B^A = \mathbf{Set}(A,B)$.
+      A function $f: C \times A \to B$ corresponds to $\bar{f}: C \to B^A$.
+    \item $\mathbf{Cat}$ is cartesian closed, with $\mathscr{D}^\mathscr{C} = \hyperlink{def:functcat}{[\mathscr{C}, \mathscr{D}]}$.
+    \item In $\mathbf{Top}$, if an exponential $Y^X$ exists, its points must be the continuous maps $X \to Y$.
+      The compact-open topology on $\mathbf{Top}(X,Y)$ has the universal property of an \hyperlink{def:exp}{exponential} iff $X$ is locally compact.
+
+      Note that finite products of exponentiable objects are exponentiable: since
+      \begin{equation*}(-) \times (A \times B) \cong (- \times A) \times B,\end{equation*}
+      we have $(-)^{A \times B} \cong ((-)^B)^A$.
+      However, even if $X,Y$ are locally compact, $Y^X$ needn't be, so the exponentiable objects don't form a cartesian closed \hyperlink{def:fulls}{full subcategory}.
+    \item \hypertarget{def:heyts}A cartesian closed poset is called a \named{Heyting semilattice}: it's a poset with finite meets and a binary operation $\Rightarrow$ satisfying $a \leq (b \Rightarrow c)$ iff $a \land b \leq c$.
+      For example, a complete poset is a Heyting semilattice iff it satisfies the infinite distributive law
+      \begin{equation*}
+        a \land \bigvee \set{b_i | i \in I} = \bigvee \set{a \land b_i | i \in I}.
+      \end{equation*}
+
+      For any topological space $X$, the lattice $\mathcal{O}(X)$ of open subsets satisfies this condition, since $\land$ and $\bigvee$ coincide with $\cap$ and $\bigcup$.
+  \end{enumerate}
+\end{nexample}
+
+\hypertarget{def:slice}Recall from example sheets that, if $B \in \ob \mathscr{C}$, we define $\mathscr{C}/B$ to have objects which are morphisms $\left(\begin{tikzcdi}A\dar \\ B\end{tikzcdi}\right)$ in $\mathscr{C}$ and morphisms are commutative triangles
+\begin{equation*}
+  \begin{tikzcd}[column sep=small]
+    A \arrow[dr] \arrow[rr] && A' \arrow[dl] \\ & B.
+  \end{tikzcd}
+\end{equation*}
+\hypertarget{def:sumb}The \hyperlink{def:forgFunc}{forgetful functor} $\mathscr{C}/B \to \mathscr{C}$ will be denoted $\Sigma_B$.
+\hypertarget{def:bstar}If $\mathscr{C}$ has finite products, $\Sigma_B$ has a right adjoint $B^*$ which sends $A$ to $\left(\begin{tikzcdi} A \times B\dar{\pi_2} \\ B\end{tikzcdi}\right)$, since morphisms
+\begin{equation*}
+  \begin{tikzcd}[column sep=small]
+    C \arrow[rr, "{(f,g)}"] \arrow[dr,"g"']&& A \times B \dlar{\pi_2} \\ & B
+  \end{tikzcd}
+\end{equation*}
+correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
+
+\begin{nlemma}
+  \hypertarget{def:prodb}If $\mathscr{C}$ has all \hyperlink{def:limit}{finite limits}, then an object $B$ is \hyperlink{def:exp}{exponentiable} iff $\hyperlink{def:bstar}{B^*}: \mathscr{C} \to \mathscr{C}/B$ has a \hyperlink{def:adj}{right adjoint} $\Pi_B$.
+\end{nlemma}
+\begin{proof}
+  $\Leftarrow$. The composite $\hyperlink{def:sumb}{\Sigma_B} B^*$ is equal to $(-) \times B$, so we take $(-)^B$ to be $\Pi_B B^*$.
+
+  $\Rightarrow$. If $B$ is \hyperlink{def:exp}{exponentiable}, for any $A \overset{f}\to B$ we define $\Pi_B(f)$ to be the \hyperlink{def:pullback}{pullback}
+  \begin{equation*}
+  \begin{tikzcd}
+    \Pi_B(f) \rar \dar & A^B \dar{f^B} \\
+    1 \rar{\overline{\pi_2}} & B^B.
+  \end{tikzcd}
+  \end{equation*}
+  The morphisms $C \to \Pi_B(f)$ correspond to morphisms $C \to A^B$ making
+
+  \begin{equation*}
+  \begin{tikzcd}
+    C \rar \dar & A^B \dar{f^B} \\
+    1 \rar{\overline{\pi_2}} & B^B
+  \end{tikzcd}
+  \end{equation*}
+  i.e.\ to homomorphisms $C \times B \to A$ making
+  \begin{equation*}
+  \begin{tikzcd}
+    C \times B \rar \drar[']{\pi_2} & A \dar{f}\\
+                    & B
+  \end{tikzcd}
+  \end{equation*}
+  commute.
+\end{proof}
 \printindex
 \end{document}
