@@ -72,7 +72,7 @@ In Logic and Set Theory, the focus was on what was provable from a theory and la
   Also, $L_{\text{lo}} = \{<\}$ a single binary relation, for linear orders.
 \end{eg}
 
-\begin{ndef}[$L$-structure]\label{def:1.2}\index{structure}\hypertarget{def:lstr}
+\begin{ndef}[$L$-structure]\label{def:1.2}\index{structure}\hypertarget{def:str}
   Given a \hyperlink{def:lang}{language} $L$, say, an \textbf{$L$-structure} consists of
   \begin{enumerate}[label=(\roman*)]
     \item a set $M$, the \named{domain}
@@ -83,20 +83,20 @@ In Logic and Set Theory, the focus was on what was provable from a theory and la
   $f^M, R^M, c^M$ are the \named{interpretations} of $f,R,c$ respectively.
 \end{ndef}
 \begin{nremark}\label{rem:1.3}
-  We often fail to distinguish between the \hyperlink{def:lang}{symbols} in $L$ and their \hyperlink{def:lstr}{interpretations} in a \hyperlink{def:lstr}{structure}, if the interpretations are clear from the context.
+  We often fail to distinguish between the \hyperlink{def:lang}{symbols} in $L$ and their \hyperlink{def:str}{interpretations} in a \hyperlink{def:str}{structure}, if the interpretations are clear from the context.
 \end{nremark}
 
 We may write $\mathcal{M} = \langle M, \mathscr{F}, \mathscr{R}, \mathscr{C} \rangle$.
 
 \begin{nexample}\label{eg:1.4}\leavevmode
   \begin{enumerate}[label=(\alph*)]
-    \item $\mathcal{R} = \langle \mathbb{R}^+, \{\cdot, ^{-1}\}, 1 \rangle$ is an \hyperlink{def:lgp}{$L_{\text{gp}}$}-\hyperlink{def:lstr}{structure}.
+    \item $\mathcal{R} = \langle \mathbb{R}^+, \{\cdot, ^{-1}\}, 1 \rangle$ is an \hyperlink{def:lgp}{$L_{\text{gp}}$}-\hyperlink{def:str}{structure}.
     \item $\mathcal{Z} = \langle \mathbb{Z}, \{+, -\}, 0 \rangle$ is an $L_{\text{gp}}$-structure.
     \item $\mathcal{Q} = \langle \mathbb{Q}, < \rangle$ is an \hyperlink{def:lgp}{$L_{\text{lo}}$}-structure.
   \end{enumerate}
 \end{nexample}
 \begin{ndef}[Embedding]\label{def:1.5}\hypertarget{def:embedding}
-  Let $L$ be a \hyperlink{def:lang}{language}, let $\mathcal{M}, \mathcal{N}$ be \hyperlink{def:lstr}{$L$-structures}.
+  Let $L$ be a \hyperlink{def:lang}{language}, let $\mathcal{M}, \mathcal{N}$ be \hyperlink{def:str}{$L$-structures}.
   An \named{embedding} of $\mathcal{M}$ into $\mathcal{N}$ is a one-to-one mapping $\alpha: M \to N$ such that
   \begin{enumerate}[label=(\roman*)]
     \item for all $f \in \mathscr{F}$, and $a_1, \dotsc, a_{m_f} \in M$,
@@ -104,7 +104,7 @@ We may write $\mathcal{M} = \langle M, \mathscr{F}, \mathscr{R}, \mathscr{C} \ra
         \alpha(f^\mathcal{M}(a_1, \dotsc, a_{n_f})) = f^\mathcal{N}(\alpha(a_1), \dotsc, \alpha(a_{n_f}))
       \end{equation*}
       \begin{center}
-        \begin{tikzpicture}[scale=1]
+        \begin{tikzpicture}[scale=2]
           \node at (-2, 1.6) {$\mathcal{M}$};
           \node at (2, 1.6) {$\mathcal{N}$};
           \draw (-2, 0) circle [x radius=10mm, y radius=14mm];
@@ -139,9 +139,9 @@ In addition to the \hyperlink{def:lang}{symbols} of $L$, we also have
 \begin{enumerate}[label=(\roman*)]
   \item infinitely many variables $\{x_i\}_{i \in I}$
   \item logical connectives $\wedge, \neg$ (also expresses $\vee, \implies, \iff$)
-    \item quantifier $\exists$ (also expresses $\forall$)
-    \item $(\phantom{-},\phantom{-})$
-    \item equality symbol $=$
+  \item quantifier $\exists$ (also expresses $\forall$)
+  \item $(\phantom{-},\phantom{-})$
+  \item equality symbol $=$
 \end{enumerate}
 
 \begin{ndef}[\hypertarget{def:lterm}{$L$-terms}]\label{def:2.1}
@@ -161,26 +161,26 @@ Notation: we write $t(x_1, \dotsc, x_m)$ to mean that the variables appearing in
   Then $\cdot ( \cdot(x_1, x_2), x_3)$ is a \hyperlink{def:lterm}{term}, usually written $(x_1 \cdot x_2) \cdot x_3$.
   Also, $(\cdot (1, x_1))^{-1}$ is a \hyperlink{def:lterm}{term}, written $(1\cdot x)^{-1}$
 \end{eg}
-\begin{ndef}\label{def:2.2}
-  If $\mathcal{M}$ is an \hyperlink{def:lstr}{$L$-structure}, to each \hyperlink{def:lterm}{$L$-term} $t(x_1, \dotsc, x_k)$ we assign a function
+\begin{ndef}\label{def:2.2}\hypertarget{def:funcAssign}
+  If $\mathcal{M}$ is an \hyperlink{def:str}{$L$-structure}, to each \hyperlink{def:lterm}{$L$-term} $t(x_1, \dotsc, x_k)$ we assign a function
   a function $t^\mathcal{M}: M^k \to M$ defined as follows:
   \begin{enumerate}[label=(\roman*)]
     \item If $t = x_i$, $t^\mathcal{M}[a_1, \dotsc, a_k] = a_i$
     \item If $t = c$, $t^\mathcal{M}[a_1, \dotsc, a_k] = c^\mathcal{M}$.
-    \item If $t = f(t(x_1, \dotsc, x_k), \dotsc, t_{m_f}(x_1, \dotsc, x_k))$,
+    \item If $t = f(t(x_1, \dotsc, x_k), \dotsc, t_{m_f}(x_1, \dotsc, x_k))$, then
       \begin{equation*}
-        t^\mathcal{M}(a_1, \dotsc, a_k) = f^\mathcal{M}(t_1^\mathcal{M}(a_1, \dotsc, a_k), \dotsc, t^\mathcal{M}_{m_f}(a_1, \dotsc, a_k))
+        t^\mathcal{M}(a_1, \dotsc, a_k) = f^\mathcal{M}(t_1^\mathcal{M}(a_1, \dotsc, a_k), \dotsc, t^\mathcal{M}_{m_f}(a_1, \dotsc, a_k)).
       \end{equation*}
   \end{enumerate}
 \end{ndef}
 
-Notice in $L_{\text{gp}}$, the term $x_2 \cdot x_3$ can be described as $t_1(x_1, x_2, x_3)$ or $t_2(x_1, x_2, x_3, x_4)$, or infinitely many other ways.
-Then $t_1$ is assigned to $t_1^\mathcal{M}: M^3 \to M$, with $(a_1, a_2, a_3) \mapsto (a_2, a_3)$, and $t_2$ is assigned to $t_2^\mathcal{M} : M^4 \to M$, with $(a_1, a_2, a_3, a_4) \mapsto a_2 \cdot a_3$.
+Notice in $\hyperlink{def:lgp}{L_{\text{gp}}}$, the term $x_2 \cdot x_3$ can be described as $t_1(x_1, x_2, x_3)$ or $t_2(x_1, x_2, x_3, x_4)$, or infinitely many other ways.
+In these cases, $t_1$ is \hyperlink{def:funcAssign}{assigned} to $t_1^\mathcal{M}: M^3 \to M$, with $(a_1, a_2, a_3) \mapsto (a_2, a_3)$, and $t_2$ is assigned to $t_2^\mathcal{M} : M^4 \to M$, with $(a_1, a_2, a_3, a_4) \mapsto a_2 \cdot a_3$.
 \begin{nfact}\label{fact:2.3}
-  Let $\mathcal{M}, \mathcal{N}$ be \hyperlink{def:lstr}{$L$-structures}, and let $\alpha: \mathcal{M} \to \mathcal{N}$ be an \hyperlink{def:embedding}{embedding}.
+  Let $\mathcal{M}, \mathcal{N}$ be \hyperlink{def:str}{$L$-structures}, and let $\alpha: \mathcal{M} \to \mathcal{N}$ be an \hyperlink{def:embedding}{embedding}.
   For any \hyperlink{def:lterm}{$L$-term} $t(x_1, \dotsc, x_k)$ and $a_1, \dotsc, a_k \in M$ we have
   \begin{equation*}
-    \alpha(t^\mathcal{M}(a_1, \dotsc, a_k)) = t^\mathcal{N}(\alpha(a_1), \dotsc, \alpha(a_k))
+    \alpha(\hyperlink{def:funcAssign}{t^\mathcal{M}}(a_1, \dotsc, a_k)) = t^\mathcal{N}(\alpha(a_1), \dotsc, \alpha(a_k))
   \end{equation*}
 \end{nfact}
 \begin{proof}
@@ -198,7 +198,7 @@ Then $t_1$ is assigned to $t_1^\mathcal{M}: M^3 \to M$, with $(a_1, a_2, a_3) \m
   \end{enumerate}
 \end{proof}
 \begin{nexercise}\label{ex:2.4}
-  Exercise: conclude the proof of \cref{fact:2.3}.
+  Conclude the proof of \cref{fact:2.3}.
 \end{nexercise}
 \begin{ndef}[Atomic formula]\label{def:2.5}\index{formula!atomic}\hypertarget{def:atomform}
   The set of \named{atomic formulas} of $L$ is defined as follows
@@ -219,20 +219,20 @@ Then $t_1$ is assigned to $t_1^\mathcal{M}: M^3 \to M$, with $(a_1, a_2, a_3) \m
   \end{enumerate}
 \end{ndef}
 \begin{eg}
-  In $L_{\text{gp}}$, $x_1 \cdot x_1 = x_2$ and $x_1 \cdot x_2 = 1$ are \hyperlink{def:form}{atomic formulas}, and $\exists x_1 \; (x_1 \cdot x_2) = 1$ is an $L_{\text{gp}}$-formula.
+  In $\hyperlink{def:lgp}{L_{\text{gp}}}$, $x_1 \cdot x_1 = x_2$ and $x_1 \cdot x_2 = 1$ are \hyperlink{def:form}{atomic formulas}, and $\exists x_1 \; (x_1 \cdot x_2) = 1$ is an $L_{\text{gp}}$-formula.
 \end{eg}
 \hypertarget{def:free}A variable occurs freely in a formula if it does not occur within the scope of a quantifier $\exists$ (the variable is \named{free}). Otherwise the variable is \named{bound}. For instance, in $\exists x_1 \; (x_1 \cdot x_2) = 1$, $x_1$ is bound and $x_2$ is free.
 
 \textbf{Important convention:} no variable occurs both \hyperlink{def:free}{freely} and as a bound variable in the same formula.
 
-\hypertarget{def:sentence}A \named{sentence} is a \hyperlink{def:form}{formula} with no \hyperlink{def:free}{free} variables. $\exists x_1 \exists x_2 \; (x_1 \cdot x_2 = 1)$ is an $L_{\text{gp}}$-sentence.
+\hypertarget{def:sentence}A \named{sentence} is a \hyperlink{def:form}{formula} with no \hyperlink{def:free}{free} variables. $\exists x_1 \exists x_2 \; (x_1 \cdot x_2 = 1)$ is an \hyperlink{def:lgp}{$L_{\text{gp}}$}-sentence.
 Notation: $\phi(x_1, \dotsc, x_k)$ means that the free variables in $\phi$ are among $x_1, \dotsc, x_k$.
 
 \begin{ndef}[$\models$]\label{def:2.7}\index{$\models$}\hypertarget{def:models}
-  Let $\phi(x_1, \dotsc, x_k)$ be an \hyperlink{def:form}{$L$-formula}, let $\mathcal{M}$ be an \hyperlink{def:lstr}{$L$-structure}, and let $\bar{a} = (a_1, \dotsc, a_k)$ be elements of $M$.
-  We define $\mathcal{M} \models \phi(\bar{a})$ as follows.
+  Let $\phi(x_1, \dotsc, x_k)$ be an \hyperlink{def:form}{$L$-formula}, let $\mathcal{M}$ be an \hyperlink{def:str}{$L$-structure}, and let $\bar{a} = (a_1, \dotsc, a_k)$ be elements of $M$.
+  We define $\mathcal{M} \models \phi(\bar{a})$ recursively as follows.
   \begin{enumerate}[label=(\roman*)]
-    \item if $\phi$ is $t_1 = t_2$, then $\mathcal{M} \models \phi(\bar{a})$ if and only if $t_1^\mathcal{M}(\bar{a}) = t_2^\mathcal{M}(\bar{a})$.
+    \item if $\phi$ is $t_1 = t_2$, then $\mathcal{M} \models \phi(\bar{a})$ if and only if $\hyperlink{def:funcAssign}{t_1^\mathcal{M}}(\bar{a}) = t_2^\mathcal{M}(\bar{a})$.
     \item if $\phi$ is $R(t_1, \dotsc, t_{m_k})$ then $\mathcal{M} \models \phi(\bar{a})$ iff
       \begin{equation*}
         (t_1^\mathcal{M}(\bar{a}),\dotsc,t_{m_k}^\mathcal{M}(\bar{a})) \in R^\mathcal{M}.
@@ -256,7 +256,7 @@ Notation: $\phi(x_1, \dotsc, x_k)$ means that the free variables in $\phi$ are a
   \end{itemize}
 \end{nnotation}
 \begin{nprop}\label{prop:2.9}
-  Let $\mathcal{M}, \mathcal{N}$ be \hyperlink{def:lstr}{$L$-structures}, let $\alpha: \mathcal{M} \to \mathcal{N}$ be an \hyperlink{def:embedding}{embedding}.
+  Let $\mathcal{M}, \mathcal{N}$ be \hyperlink{def:str}{$L$-structures}, let $\alpha: \mathcal{M} \to \mathcal{N}$ be an \hyperlink{def:embedding}{embedding}.
   Let $\phi(\bar{x})$ be \hyperlink{def:atomform}{atomic} and $\bar{a} \in M^{|\bar{x}|}$, then
   \begin{equation*}
     M \hyperlink{def:models}{\models} \phi(\bar{a}) \iff \mathcal{N} \models \phi(\alpha(\bar{a})).
@@ -265,9 +265,8 @@ Notation: $\phi(x_1, \dotsc, x_k)$ means that the free variables in $\phi$ are a
 
 Question: If $\phi$ is an \hyperlink{def:form}{$L$-formula}, not necessarily \hyperlink{def:atomform}{atomic}, does \cref{prop:2.9} hold?
 
-\marginnote{\emph{Lecture 3}}[0cm]
 \begin{proof}[Proof of \cref{prop:2.9}]
-  Cases:
+  Cases:\marginnote{\emph{Lecture 3}}[0cm]
   \begin{enumerate}[label=(\roman*)]
     \item $\phi(\bar{x})$ is of the form $t_1(\bar{x}) = t_2(\bar{x})$ where $t_1,t_2$ are terms.
       (Exercise: complete this case, using \cref{fact:2.3})
@@ -281,7 +280,7 @@ Question: If $\phi$ is an \hyperlink{def:form}{$L$-formula}, not necessarily \hy
 \end{nexercise}
 \begin{nexample}\label{ex:2.11}
   Do \hyperlink{def:embedding}{embeddings} preserve \emph{all} \hyperlink{def:form}{formulas}? No.
-  Take $\mathcal{Z} = (\mathbb{Z}, <)$ and $\mathcal{Q} = (\mathbb{Q}, <)$ an \hyperlink{def:lgp}{$L_{\text{lo}}$}-\hyperlink{def:lstr}{structure}
+  Take $\mathcal{Z} = (\mathbb{Z}, <)$ and $\mathcal{Q} = (\mathbb{Q}, <)$ an \hyperlink{def:lgp}{$L_{\text{lo}}$}-\hyperlink{def:str}{structure}.
   Then $\alpha: \mathbb{Z} \to \mathbb{Q}$ (inclusion) is an embedding, but
   \begin{gather*}
     \phi(x_1, x_2) = \exists x_3\,(x_1 < x_3 \wedge x_3 < x_2). \\
@@ -301,14 +300,14 @@ Question: If $\phi$ is an \hyperlink{def:form}{$L$-formula}, not necessarily \hy
 
 \clearpage
 \section{Theories and elementarity}
-Throughout, $L$ is a \hyperlink{def:lang}{language}, $\mathcal{M}, \mathcal{N}$ are \hyperlink{def:lstr}{$L$-structures}.
+Throughout, $L$ is a \hyperlink{def:lang}{language}, $\mathcal{M}, \mathcal{N}$ are \hyperlink{def:str}{$L$-structures}.
 \begin{ndef}[$L$-theory]\label{def:3.1}\index{theory}\hypertarget{def:ltheory}
   An \textbf{$L$-theory} $T$ is a set of \hyperlink{def:sentence}{$L$-sentences}.
   \hypertarget{def:model}$\mathcal{M}$ is a \named{model} of $T$ if $\mathcal{M} \hyperlink{def:models}{\models} \sigma$ for all $\sigma \in T$. We write $\mathcal{M} \models T$.
   The class of all the models of $T$ is written $\Mod(T)$.
   The theory of $\mathcal{M}$ is the set
   \begin{equation*}
-    \Th(\mathcal{M}) = \set{\sigma | \sigma \text{ is an } L\text{-\hyperlink{def:lstr}{structure} and } \mathcal{M} \models \sigma}.
+    \Th(\mathcal{M}) = \set{\sigma | \sigma \text{ is an } L\text{-\hyperlink{def:str}{structure} and } \mathcal{M} \models \sigma}.
   \end{equation*}
 \end{ndef}
 \begin{nexample}\label{eg:3.2}
@@ -324,22 +323,22 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
 \begin{ndef}[Elementarily equivalent]\label{def:3.3}
   \hypertarget{def:eleq}Say $\mathcal{M}$ and $\mathcal{N}$ are \named{elementarily equivalent} if $\Th(\mathcal{M}) = \Th(\mathcal{N})$.
   We write $\mathcal{M} \equiv \mathcal{N}$.
-  Clearly if $\mathcal{M} \hyperlink{def:iso}{\simeq} \mathcal{N}$, then $\mathcal{M} \equiv \mathcal{N}$ but if $\mathcal{M}$ and $\mathcal{N}$ are not isomorphic, establishing whether $\mathcal{M} \equiv \mathcal{N}$ can be highly non-trivial!
-
-  We'll see $(\mathbb{Q}, <) \equiv (\mathbb{R}, <)$ as $L_{\text{lo}}$-structures.
 \end{ndef}
+Clearly if $\hyperlink{def:iso}{\mathcal{M} \simeq \mathcal{N}}$, then \hyperlink{def:eleq}{$\mathcal{M} \equiv \mathcal{N}$} but if $\mathcal{M}$ and $\mathcal{N}$ are not \hyperlink{def:iso}{isomorphic}, establishing whether $\mathcal{M} \equiv \mathcal{N}$ can be highly non-trivial!
+
+We'll see $(\mathbb{Q}, <) \equiv (\mathbb{R}, <)$ as \hyperlink{def:lgp}{$L_{\text{lo}}$}-\hyperlink{def:str}{structures}.
 \begin{ndef}[Elementary substructure]\label{def:3.4}\leavevmode
   \begin{enumerate}[label=(\roman*)]
-    \item \index{elementary embedding}\hypertarget{def:el}an \hyperlink{def:embedding}{embedding} $\beta: \mathcal{M} \to \mathcal{N}$ is \named{elementary} if for all \hyperlink{def:form}{formulas} $\phi(\bar{x})$ and $\bar{a} \in M^{|\bar{x}|}$,
+    \item \index{elementary embedding, elementary map}\hypertarget{def:el}an \hyperlink{def:embedding}{embedding} $\beta: \mathcal{M} \to \mathcal{N}$ is \named{elementary} if for all \hyperlink{def:form}{formulas} $\phi(\bar{x})$ and $\bar{a} \in M^{|\bar{x}|}$,
       \begin{equation*}
-        \mathcal{M} \hyperlink{def:models}{\models} \phi(\bar{a}) \iff \mathcal{N} \models \phi(\beta(\bar{a}))
+        \mathcal{M} \hyperlink{def:models}{\models} \phi(\bar{a}) \iff \mathcal{N} \models \phi(\beta(\bar{a})).
       \end{equation*}
     \item \index{substructure}\hypertarget{def:subs}if $M \subseteq N$ and $\operatorname{id}: \mathcal{M} \to \mathcal{N}$ is an embedding, then $\mathcal{M}$ is said to be a \named{substructure} of $\mathcal{N}$, written $\mathcal{M} \subseteq \mathcal{N}$.
     \item \index{elementary substructure}\hypertarget{def:elsubs}if $M \subseteq N$ and $\operatorname{id}: \mathcal{M} \to \mathcal{N}$ is an elementary embedding, then $\mathcal{M}$ is said to be an \named{elementary substructure} of $\mathcal{N}$, written $\mathcal{M} \preccurlyeq \mathcal{N}$.
   \end{enumerate}
 \end{ndef}
 \begin{nexample}\label{eg:3.5}
-  Consider $\mathcal{M} = [0,1] \subseteq \mathbb{R}$, an \hyperlink{def:lgp}{$L_{\text{lo}}$}-\hyperlink{def:lstr}{structure}, where $<$ is the usual order, and $\mathcal{N} = [0,2] \subseteq \mathbb{R}$ in the same way.
+  Consider $\mathcal{M} = [0,1] \subseteq \mathbb{R}$, an \hyperlink{def:lgp}{$L_{\text{lo}}$}-\hyperlink{def:str}{structure}, where $<$ is the usual order, and $\mathcal{N} = [0,2] \subseteq \mathbb{R}$ in the same way.
   Then $\hyperlink{def:iso}{\mathcal{M} \simeq \mathcal{N}}$ as $L_{\text{lo}}$-structures.
 
   Is \hyperlink{def:eleq}{$\mathcal{M} \equiv \mathcal{N}$}? Yes: they are isomorphic!
@@ -351,26 +350,26 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
     \mathcal{N} \models \phi(1)\quad\text{and}\quad\mathcal{M} \nModels \phi(1).
   \end{equation*}
 \end{nexample}
-\begin{ndef}\label{def:3.6}
-  \hypertarget{def:la}Let $\mathcal{M}$ be an $L$-\hyperlink{def:lstr}{structure}, $A \subseteq M$, then
+\begin{ndef}[Parameter]\label{def:3.6}
+  \hypertarget{def:la}Let $\mathcal{M}$ be an $L$-\hyperlink{def:str}{structure}, $A \subseteq M$, then define
   \begin{equation*}
     L(A) \coloneqq L \cup \set{c_a | a \in A}
   \end{equation*}
   for $c_a$ each constant symbols.
-  An \hyperlink{def:lstr}{interpretation} of $\mathcal{M}$ as an $L$-structure extends to an interpretation of $\mathcal{M}$ as an $L(A)$-structure in the obvious way ($c_a^\mathcal{M} = a$).
+  An \hyperlink{def:str}{interpretation} of $\mathcal{M}$ as an $L$-structure extends to an interpretation of $\mathcal{M}$ as an $L(A)$-structure in the obvious way ($c_a^\mathcal{M} = a$).
   The elements of $A$ are called \named{parameters}.
-  \hypertarget{def:eleqa}If $\mathcal{M}, \mathcal{N}$ are $L$-structures and $A \subseteq M \cap N$, then $\mathcal{M} \equiv_A \mathcal{N}$ when $\mathcal{M}, \mathcal{N}$ satisfy exactly the same $L(A)$ sentences.
+  \hypertarget{def:eleqa}If $\mathcal{M}, \mathcal{N}$ are $L$-structures and $A \subseteq M \cap N$, then we write $\mathcal{M} \equiv_A \mathcal{N}$ when $\mathcal{M}, \mathcal{N}$ satisfy exactly the same $L(A)$-\hyperlink{def:sentence}{sentences}.
 \end{ndef}
 
 \begin{nexercise}\label{ex:3.7}
   \marginnote{\emph{Lecture 4}}[0cm]
-  $ \hyperlink{def:elsubs}{\mathcal{M}\preccurlyeq \mathcal{N}} \iff \hyperlink{def:eleqa}{\mathcal{M} \equiv_M \mathcal{N}}$ (where $M$ is the \hyperlink{def:lstr}{domain} of $\mathcal{M}$).
+  $ \hyperlink{def:elsubs}{\mathcal{M}\preccurlyeq \mathcal{N}} \iff \hyperlink{def:eleqa}{\mathcal{M} \equiv_M \mathcal{N}}$ (where $M$ is the \hyperlink{def:str}{domain} of $\mathcal{M}$).
 \end{nexercise}
 \begin{nlemma}[Tarski-Vaught test]\label{lem:3.8}
-  Let $\mathcal{N}$ be an \hyperlink{def:lstr}{$L$-structure}, let $A \subseteq N$. The following are equivalent:
+  Let $\mathcal{N}$ be an \hyperlink{def:str}{$L$-structure}, let $A \subseteq N$. The following are equivalent:
   \begin{enumerate}[label=(\roman*)]
-    \item $A$ is the \hyperlink{def:lstr}{domain} of a structure $\mathcal{M}$ such that $\mathcal{M} \hyperlink{def:elsubs}{\preccurlyeq} \mathcal{N}$.
-    \item if $\phi(x) \in \hyperlink{def:la}{L(A)}$, if $\mathcal{N} \hyperlink{def:models}{\models} \exists x \; \phi(x)$, then $\mathcal{N} \models \phi(b)$ for some $b \in A$.
+    \item $A$ is the \hyperlink{def:str}{domain} of a structure $\mathcal{M}$ such that $\hyperlink{def:elsubs}{\mathcal{M} \preccurlyeq \mathcal{N}}$.
+    \item for every $L(A)$-formula $\phi(x)$ with one free variable, if $\mathcal{N} \hyperlink{def:models}{\models} \exists x \; \phi(x)$, then $\mathcal{N} \models \phi(b)$ for some $b \in A$.
   \end{enumerate}
 \end{nlemma}
 \begin{proof}\leavevmode
@@ -398,6 +397,7 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
         \item if $\chi(\bar{x}) = \exists y \; \psi(\bar{x},y)$ where $\psi(\bar{x},y)$ is an $L$-formula, suppose that $\mathcal{M} \models \chi(\bar{a})$.
           Then $\mathcal{M} \models \exists y \; \psi(\bar{a}, y)$, hence $\mathcal{M} \models \psi(\bar{a},b)$ for some $b \in A = \dom \mathcal{M}$.
           But then $\mathcal{N} \models \psi(\bar{a},b)$ by inductive hypothesis, so $\mathcal{N} \models \chi(\bar{a})$.
+
           Now let $\mathcal{N} \models \chi(\bar{a})$, i.e.\ $\mathcal{N} \models \exists y \; \psi(\bar{a},y)$.
           By property (ii), $\mathcal{N} \models \psi(\bar{a},b)$ for some $b \in A = \dom(\mathcal{M})$.
           By inductive hypothesis, $\mathcal{M} \models \psi(\bar{a},b)$ and so $\mathcal{M} \models \chi(\bar{a})$. \qedhere
@@ -407,12 +407,12 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
 \begin{nremark}\label{rem:3.9}
   Assume the set of variables is countably infinite. Then
   \begin{itemize}[label=--]
-    \item the cardinality of the set of $L$-formulas is $|L| + \omega$. (We abuse notation and write $\omega$ for the ordinal and cardinal, and define the cardinality of $L$ as the \# of symbols in it: $|\hyperlink{def:lgp}{L_{\text{gp}}}| = 3$, $|\hyperlink{def:lgp}{L_{\text{lo}}}| = 1$).
+    \item \index{cardinal}\hypertarget{def:cardlang}the cardinality of the set of $L$-formulas is $|L| + \omega$. (We abuse notation and write $\omega$ for the ordinal and cardinal, and define the cardinality of $L$ as the number of symbols in it: $|\hyperlink{def:lgp}{L_{\text{gp}}}| = 3$, $|\hyperlink{def:lgp}{L_{\text{lo}}}| = 1$).
     \item if $A$ is a set of parameters in some structure, the cardinality of the set $L(A)$-formulas is $|A| + |L| + \omega$.
   \end{itemize}
 \end{nremark}
-\begin{ndef}\label{def:3.10}
-  Let $\lambda$ be an ordinal. Then \index{chain}\textbf{a chain of length $\lambda$} of sets is a sequence $\langle M_i : i < \lambda \rangle$, where $M_i \subseteq M_j$ for all $i \leq j < \lambda$.
+\begin{ndef}[Chain]\label{def:3.10}
+  \hypertarget{def:chain}Let $\lambda$ be an ordinal. Then \index{chain}\textbf{a chain of length $\lambda$} of sets is a sequence $\langle M_i : i < \lambda \rangle$, where $M_i \subseteq M_j$ for all $i \leq j < \lambda$.
   A \textbf{chain of $L$-structures} is a sequence $\langle \mathcal{M}_i : i < \lambda \rangle$ such that $\mathcal{M}_i \subseteq \mathcal{M}_j$ for $i \leq j < \lambda$.
 
   The \textbf{union} of this chain is the $L$-structure $\mathcal{M}$ is defined as follows:
@@ -425,9 +425,9 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
 \end{ndef}
 
 \begin{nthm}[Downward L\"owenheim-Skolem]\label{thm:3.11DLS}
-  Let $\mathcal{N}$ be an $L$-structure, and $|N| \geq |L| + \omega$.
+  \index{Downward L\"owenheim-Skolem}Let $\mathcal{N}$ be an \hyperlink{def:str}{$L$-structure}, and $|N| \geq \hyperlink{def:cardlang}{|L|} + \omega$.
   Let $A \subseteq N$.
-  Then for any cardinal $\lambda$ such that $|L| + |A| + \omega \leq \lambda \leq |\mathcal{N}|$, there is $\mathcal{M} \preccurlyeq \mathcal{N}$ such that
+  Then for any cardinal $\lambda$ such that $|L| + |A| + \omega \leq \lambda \leq |\mathcal{N}|$, there is \hyperlink{def:elsubs}{$\mathcal{M} \preccurlyeq \mathcal{N}$} such that
   \begin{enumerate}[label=(\roman*)]
     \item $A \subseteq M$
     \item $|\mathcal{M}| = \lambda$.
@@ -435,26 +435,28 @@ Clearly for a group $G$, $G \hyperlink{def:models}{\models} T_{\text{gp}}$. For 
 \end{nthm}
 (It helps to think about the case $|L| \leq \omega$, $|A| = \omega$ and $|N|$ is uncountable).
 
-For instance, think of $(\mathbb{C}, + , \cdot, -, ^{-1}, 0,1)$ as a field. Then $\mathbb{Q} \subseteq \mathbb{C}$, it is a subset and a substructure.
+For instance, think of $(\mathbb{C}, + , \cdot, -, ^{-1}, 0,1)$ as a field.
+Then $\mathbb{Q} \subseteq \mathbb{C}$: it is a subset and a substructure.
 In particular, the property of being algebraically closed is in the theory of $\mathbb{C}$.
-Thus \cref{thm:3.11DLS} gives a algebraically closed field, which is countable and contains $\mathbb{Q}$ - the algebraic closure of $\mathbb{Q}$.
+Thus \cref{thm:3.11DLS} gives a algebraically closed field, which is countable and contains $\mathbb{Q}$ - a possibility is the algebraic closure of $\mathbb{Q}$.
 
 \begin{proof}
-  We build a chain $\langle A_i  : i < \omega \rangle$, with $A_i \subseteq N$, such that $|A_i| = \lambda$.
+  We inductively build a \hyperlink{def:chain}{chain} $\langle A_i  : i < \omega \rangle$, with $A_i \subseteq N$, such that $|A_i| = \lambda$.
   (Our goal is to define $M = \bigcup_{i < \omega} A_i$).
 
   Let $A_0 \subseteq N$ be such that $A \subseteq A_0$ and $|A_0| = \lambda$.
-  At stage $i+1$, we assume that $A_i$ has been built, with $|A_i| = \lambda$.
-  Let $\langle \phi_k(x) : k < \lambda  \rangle$ be an enumeration of those $L(A_i)$-formulas such that $\mathcal{N} \models \phi_k(x)$.
+  At stage $i+1$, assume that $A_i$ has been built, with $|A_i| = \lambda$.
+  Let $\langle \phi_k(x) : k < \lambda  \rangle$ be an enumeration of those $\hyperlink{def:la}{L(A_i)}$-\hyperlink{def:formula}{formulas} such that $\mathcal{N} \models \phi_k(x)$ (observe there are no more than $\lambda$, since $\hyperlink{def:cardlang}{|L(A)|} = |L| + |A| + \omega \leq \lambda$).
   Let $a_k$ be such that $\mathcal{N} \models \phi_k(a_k)$ and let $A_{i+1} = A_i \cup \set{a_k : k < \lambda}$.
   Then $|A_{i+1}| = \lambda$.
 
-  Now let $M = \cup_{i < \omega} A_i$.
-  We use \cref{lem:3.8} to show that $M$ is the domain of $\mathcal{M} \preccurlyeq \mathcal{N}$, and $|M| = \lambda$:
-  Let $\mathcal{N} \models \exists x \psi(x,\bar{a})$, where $\bar{a}$ is a tuple in $M$.
+  Now let $M = \bigcup_{i < \omega} A_i$.
+  We use the \nameref{lem:3.8} to show that $M$ is the domain of a \hyperlink{def:structure}{structure} $\hyperlink{def:elsubs}{\mathcal{M} \preccurlyeq \mathcal{N}}$, and $|M| = \lambda$:
+
+  Let $\mathcal{N} \models \exists x \; \psi(x,\bar{a})$, where $\bar{a}$ is a tuple in $M$.
   Then $\bar{a}$ is a \emph{finite} tuple, so there is an $i$ such that $\bar{a}$ is in $A_i$.
   Then $A_{i+1}$, by construction, contains $b$ such that $\mathcal{N} \models \phi(b, \bar{a})$.
-  But $A_{i+1} \subseteq M$, $b \in M$.
+  But $A_{i+1} \subseteq M$, so $b \in M$.
 \end{proof}
 
 \clearpage
