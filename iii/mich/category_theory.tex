@@ -54,7 +54,7 @@
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 
 % special categories
-\newcommand{\cat}{\mathbf{Cat}}
+\newcommand{\catc}{\mathbf{Cat}}
 \newcommand{\setc}{\mathbf{Set}}
 \newcommand{\gpc}{\mathbf{Gp}}
 \newcommand{\partc}{\mathbf{Part}}
@@ -147,12 +147,13 @@ As long as some examples make sense, it is not a point of concern that some exam
   \begin{enumerate}[label=(\alph*)]\hypertarget{def:categ}
     \item The \hyperlink{def:cat}{category} \textbf{Set} has all sets as objects, and all functions between sets as morphisms.
       (Strictly, morphisms $\begin{tikzcdi} A \rar& B \end{tikzcdi}$ are pairs $(f,B)$ where $f$ is a set-theoretic function.)
-    \item The category \textbf{Gp} has all groups as objects, and group homomorphisms as morphisms. Similarly, \textbf{Rng} is the category of rings, \textbf{Mod}$_R$ the category of $R$-modules.
+    \item The category $\mathbf{Gp}$ has all groups as objects, and group homomorphisms as morphisms.
+      Similarly, \textbf{Rng} is the category of rings, \textbf{Mod}$_R$ the category of $R$-modules.
     \item The category \textbf{Top} has all topological spaces as objects and continuous functions as morphisms. Similarly \textbf{Unif} has uniform spaces and uniformly continuous functions, and \textbf{Mf} has manifolds and smooth maps.
     \item The category \textbf{Htpy} has the same objects as \textbf{Top}, but morphisms are homotopy classes of continuous functions.
       More generally, given $\mathscr{C}$, we call an equivalence relation $\simeq$ on $\mor \mathscr{C}$ a \textbf{congruence} if $f \simeq g \implies \dom f = \dom g$ and $\cod f = \cod g$, and $f \simeq g \implies f h \simeq g h$ and $k f \simeq k g$ whenever the composites are defined. Then we have a category $\mathscr{C}/\simeq$ with the same objects as $\mathscr{C}$, but congruence classes as morphisms.
-    \item \index{opposite}\index{duality}\hypertarget{def:duality}Given $\mathscr{C}$, the \textbf{opposite category} $\mathscr{C}^\text{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^\text{op}$ is $gf$ in $\mathscr{C}$.
-      This leads to the \textbf{Duality principle} if $P$ is a true statement about categories, so is the statement $P^*$ obtained from $P$ by reversing all arrows.
+    \item \index{opposite}\index{duality}\hypertarget{def:duality}Given $\mathscr{C}$, the \named{opposite category} $\mathscr{C}^\text{op}$ has the same objects and morphisms as $\mathscr{C}$, but $\dom$ and $\cod$ are interchanged, and $f g $ in $\mathscr{C}^\text{op}$ is $gf$ in $\mathscr{C}$.
+      This leads to the \textbf{Duality principle}: if $P$ is a true statement about categories, so is the statement $P^*$ obtained from $P$ by reversing all arrows.
     \item \index{isomorphism}\index{morphism!iso-}\hypertarget{def:monoid}A \hyperlink{def:small}{small} category with one object is a \named{monoid}, i.e.\ a semigroup with $1$.
       \hypertarget{def:group}In particular, \hypertarget{def:iso}a group is a small category with one object, in which every morphism is an isomorphism ($f$ is an \textbf{isomorphism} if $\exists g$ such that $fg$ and $gf$ are identities).
     \item A \textbf{groupoid} is a category in which every morphism is an isomorphism. For a topological space $X$, the fundamental groupoid $\pi(X)$ has all points of $X$ as objects and morphisms $x \to y$ are homotopy classes rel $\{0,1\}$ of paths $u: [0,1] \to X$ with $u(0) = x$, $u(1) = y$.
@@ -556,7 +557,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
 
       This pair has the property that, for any pair $(C \overset{f}\to A, C \overset{g}{\to} B)$ there's a unique $C \overset{h}{\to} A \times B$ with $\pi_1 h = f$ and $\pi_2 h = g$.
 
-      Products exist in many categories of interest: in $\mathbf{Set}, \mathbf{Gp}, \mathbf{Rng}, \mathbf{Top}$ they are `just' Cartesian products, in posets they are binary meets.
+      Products exist in many categories of interest: in $\mathbf{Set}, \mathbf{Gp}, \mathbf{Rng}, \mathbf{Top}$ they are `just' cartesian products, in posets they are binary meets.
 
       \hypertarget{def:coprod}Dually we have the notion of \index{coproduct}\textbf{coproduct} $(A + B, (A \overset{\nu_1}\to A + B, B \overset{\nu_2}\to A + B))$.
       These also exist in many categories of interest.
@@ -1232,7 +1233,7 @@ Dually, $\mathscr{C}$ \textbf{has colimits} of shape $J$ iff $\Delta: \mathscr{C
   We say a \hyperlink{def:cat}{category} $\mathscr{C}$ is \named{complete} if it has all \hyperlink{def:small}{small} \hyperlink{def:limit}{limits}.
   (Dually, \textbf{cocomplete} = all small colimits).
 \end{defi}
-Set is \hyperlink{def:complete}{complete} and cocomplete: \hyperlink{def:lprod}{products} are Cartesian products, \hyperlink{def:lcoprod}{coproducts} are disjoint unions.
+Set is \hyperlink{def:complete}{complete} and cocomplete: \hyperlink{def:lprod}{products} are cartesian products, \hyperlink{def:lcoprod}{coproducts} are disjoint unions.
 Similarly, $\hyperlink{def:categ}{\mathbf{Gp}}, \mathbf{AbGp}, \hyperlink{def:categ}{\mathbf{Rng}, \mathbf{Mod}_R}, \dotsc$ are all complete and cocomplete.
 $\mathbf{Top}$ is also complete and cocomplete.
 \begin{ndef}\label{def:4.4}
@@ -1954,7 +1955,7 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
   Again, either set of hypotheses implies that $\epsilon_B$ is a coequalizer of $(FG\epsilon_B, \epsilon_{FGB})$ so $\zeta_B$ is an isomorphism.
 \end{proof}
 \begin{nexample}\label{eg:5.14}\leavevmode
-  \begin{enumerate}
+  \begin{enumerate}[label=(\alph*)]
     \item The \hyperlink{def:forgFunc}{forgetful functors} $\mathbf{Gp} \to \mathbf{Set}$, $\mathbf{Rng} \to \mathbf{Set}$, $\mathbf{Mod}_R \to \mathbf{Set}, \dotsc$ all satisfy the hypotheses of \cref{thm:5.13}; for the \hyperlink{def:reflexive}{reflexive coequalizers}, use question 3 on example sheet 4 which shows that if
       \begin{equation*}
         \begin{tikzcd}
@@ -2025,7 +2026,7 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
 \end{nexample}
 \begin{ndef}\label{def:5.15}
   \hypertarget{def:mtower}Let\marginnote{\emph{Lecture 18}} $\begin{tikzcdi}\mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G} \end{tikzcdi}$ be an \hyperlink{def:adj}{adjunction}, and suppose $\mathscr{D}$ has \hyperlink{def:reflexive}{reflexive coequalizers}.
-  The \textbf{monadic tower} of $F \dashv G$ is the diagram
+  The \named{monadic tower} of $F \dashv G$ is the diagram
   \begin{equation*}
     \begin{tikzcd}[column sep={between origins, 3em},row sep=large]
       \mathscr{D} \arrow[rrrddd, shift left=0.7, shorten <=2mm,"G"] \arrow[rrrrdd, shift left=0.7, shorten <=1.5mm, "K", pos=0.6] \arrow[rrrrrd, shift left=0.7, shorten <=2mm, "K'"]
@@ -2037,7 +2038,7 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
   \end{equation*}
   where $\mathbb{T}$ is the \hyperlink{def:monad}{monad} induced by $(F \dashv G)$, $K$ is as in \cref{thm:5.7}, $L$ as in \cref{lem:5.11}, $\mathbb{S}$ is the monad induced by $(L \dashv K)$, and so on.
 
-  We say $(F \dashv G)$ has \textbf{monadic length} $n$ if we reach an \hyperlink{def:equicat}{equivalence} after $n$ steps.
+  We say $(F \dashv G)$ has \named{monadic length} $n$ if we reach an \hyperlink{def:equicat}{equivalence} after $n$ steps.
 \end{ndef}
 For example, the \hyperlink{def:adj}{adjunction} of \cref{eg:5.14}(c) has \hyperlink{def:mtower}{monadic length} 2, and the adjunction of \cref{eg:5.14}(d) has monadic length $\infty$.
 
@@ -2089,7 +2090,7 @@ For example, the \hyperlink{def:adj}{adjunction} of \cref{eg:5.14}(c) has \hyper
 \begin{ndef}\label{def:6.1}
   \hypertarget{def:exp}Let \hypertarget{def:cc}$\mathscr{C}$ be a \hyperlink{def:cat}{category} with \hyperlink{def:lprod}{finite products}.
   \index{exponential}We say $A \in \hyperlink{def:cat}{\ob} \mathscr{C}$ is \textbf{exponentiable} if the \hyperlink{def:funct}{functor} $(-) \times A: \mathscr{C} \to \mathscr{C}$ has \hyperlink{def:adj}{right adjoint} $(-)^A$.
-  If every object of $\mathscr{C}$ is exponentiable, we say $\mathscr{C}$ is \named{Cartesian closed}.
+  If every object of $\mathscr{C}$ is exponentiable, we say $\mathscr{C}$ is \named{cartesian closed}.
 \end{ndef}
 \begin{nexample}\label{eg:6.2}
   \leavevmode
@@ -2097,10 +2098,10 @@ For example, the \hyperlink{def:adj}{adjunction} of \cref{eg:5.14}(c) has \hyper
     \item $\mathbf{Set}$ is \hyperlink{def:cc}{cartesian closed}, with $B^A = \mathbf{Set}(A,B)$.
       A function $f: C \times A \to B$ corresponds to $\bar{f}: C \to B^A$.
     \item $\mathbf{Cat}$ is cartesian closed, with $\mathscr{D}^\mathscr{C} = \hyperlink{def:functcat}{[\mathscr{C}, \mathscr{D}]}$.
-    \item In $\mathbf{Top}$, if an exponential $Y^X$ exists, its points must be the continuous maps $X \to Y$.
+    \item In $\mathbf{Top}$, if an \hyperlink{def:exp}{exponential} $Y^X$ exists, its points must be the continuous maps $X \to Y$.
       The compact-open topology on $\mathbf{Top}(X,Y)$ has the universal property of an \hyperlink{def:exp}{exponential} iff $X$ is locally compact.
 
-      Note that finite products of exponentiable objects are exponentiable: since
+      Note that \hyperlink{def:lprod}{finite products} of exponentiable objects are exponentiable: since
       \begin{equation*}(-) \times (A \times B) \cong (- \times A) \times B,\end{equation*}
       we have $(-)^{A \times B} \cong ((-)^B)^A$.
       However, even if $X,Y$ are locally compact, $Y^X$ needn't be, so the exponentiable objects don't form a cartesian closed \hyperlink{def:fulls}{full subcategory}.
@@ -2114,14 +2115,16 @@ For example, the \hyperlink{def:adj}{adjunction} of \cref{eg:5.14}(c) has \hyper
   \end{enumerate}
 \end{nexample}
 
-\hypertarget{def:slice}Recall from example sheets that, if $B \in \ob \mathscr{C}$, we define $\mathscr{C}/B$ to have objects which are morphisms $\left(\begin{tikzcdi}A\dar \\ B\end{tikzcdi}\right)$ in $\mathscr{C}$ and morphisms are commutative triangles
+\hypertarget{def:slice}Recall from example sheets that, if $B \in \ob \mathscr{C}$, we define the \named{slice category} $\mathscr{C}/B$ to have objects which are morphisms
+\begin{equation*}\begin{tikzcd}[sep=small]A\dar \\ B\end{tikzcd}\end{equation*}
+in $\mathscr{C}$ and morphisms are commutative triangles
 \begin{equation*}
   \begin{tikzcd}[column sep=small]
     A \arrow[dr] \arrow[rr] && A' \arrow[dl] \\ & B.
   \end{tikzcd}
 \end{equation*}
 \hypertarget{def:sumb}The \hyperlink{def:forgFunc}{forgetful functor} $\mathscr{C}/B \to \mathscr{C}$ will be denoted $\Sigma_B$.
-\hypertarget{def:bstar}If $\mathscr{C}$ has finite products, $\Sigma_B$ has a right adjoint $B^*$ which sends $A$ to $\left(\begin{tikzcdi} A \times B\dar{\pi_2} \\ B\end{tikzcdi}\right)$, since morphisms
+\hypertarget{def:bstar}If $\mathscr{C}$ has \hyperlink{def:lprod}{finite products}, $\Sigma_B$ has a right adjoint $B^*$ which sends $A$ to $\left(\begin{tikzcdi} A \times B\dar{\pi_2} \\ B\end{tikzcdi}\right)$, since morphisms
 \begin{equation*}
   \begin{tikzcd}[column sep=small]
     C \arrow[rr, "{(f,g)}"] \arrow[dr,"g"']&& A \times B \dlar{\pi_2} \\ & B
@@ -2129,13 +2132,14 @@ For example, the \hyperlink{def:adj}{adjunction} of \cref{eg:5.14}(c) has \hyper
 \end{equation*}
 correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
 
-\begin{nlemma}
+\begin{nlemma}\label{lem:6.3}
   \hypertarget{def:prodb}If $\mathscr{C}$ has all \hyperlink{def:limit}{finite limits}, then an object $B$ is \hyperlink{def:exp}{exponentiable} iff $\hyperlink{def:bstar}{B^*}: \mathscr{C} \to \mathscr{C}/B$ has a \hyperlink{def:adj}{right adjoint} $\Pi_B$.
 \end{nlemma}
-\begin{proof}
-  $\Leftarrow$. The composite $\hyperlink{def:sumb}{\Sigma_B} B^*$ is equal to $(-) \times B$, so we take $(-)^B$ to be $\Pi_B B^*$.
+\begin{proof}\leavevmode
+  \begin{itemize}
+    \item [$\Leftarrow$] The composite $\hyperlink{def:sumb}{\Sigma_B} B^*$ is equal to $(-) \times B$, so we take $(-)^B$ to be $\Pi_B B^*$.
 
-  $\Rightarrow$. If $B$ is \hyperlink{def:exp}{exponentiable}, for any $A \overset{f}\to B$ we define $\Pi_B(f)$ to be the \hyperlink{def:pullback}{pullback}
+    \item [$\Rightarrow$] If $B$ is \hyperlink{def:exp}{exponentiable}, for any $A \overset{f}\to B$ we define $\Pi_B(f)$ to be the \hyperlink{def:pullback}{pullback}
   \begin{equation*}
   \begin{tikzcd}
     \Pi_B(f) \rar \dar & A^B \dar{f^B} \\
@@ -2157,7 +2161,147 @@ correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
                     & B
   \end{tikzcd}
   \end{equation*}
-  commute.
+  commute. \qedhere
+  \end{itemize}
 \end{proof}
+\begin{nlemma}\label{lem:6.4}
+  Suppose\marginnote{\emph{Lecture 19}} $\mathscr{C}$ has finite \hyperlink{def:limit}{limits}.
+  If $A$ is \hyperlink{def:exp}{exponentiable} in $\mathscr{C}$, then $\hyperlink{def:bstar}{B^*} A$ is exponentiable in $\hyperlink{def:slice}{\mathscr{C}/B}$ for any $B$.
+  Moreover, $B^*$ \hyperlink{def:plim}{preserves} exponentials.
+\end{nlemma}
+\begin{proof}
+  Given an object $\begin{tikzcd}C \dar{f} \\ B\end{tikzcd}$, form the \hyperlink{def:pullback}{pullback}
+  \begin{equation*}
+    \begin{tikzcd}
+      P \rar \dar[']{f^{(B^*A)}} & C^A \dar{f^A}\\
+      B \rar[']{\overline{\pi_1}} & B^A.
+    \end{tikzcd}
+  \end{equation*}
+  Then, for any $\begin{tikzcd}D \dar{g} \\ B\end{tikzcd}$, morphisms $g \to f^{B^*A}$ in $\mathscr{C}/B$ correspond to morphisms $D \overset{\bar{h}}\to C^A$ making
+  \begin{equation*}
+  \begin{tikzcd}
+    D \rar{\bar{h}} \dar[']{g} & C^A \dar{f^A} \\ B \rar[']{\overline{\pi_1}} & B^A
+  \end{tikzcd}
+  \end{equation*}
+  commute, and hence to morphisms $D \times A \overset{h}\to C$ making
+  \begin{equation*}
+  \begin{tikzcd}
+    D\times A \rar{h} \drar[']{g \pi_1} & C \dar{f} \\
+                                     & B
+  \end{tikzcd}
+  \end{equation*}
+  commute. But
+  \begin{equation*}
+    \begin{tikzcd}
+      D \times A \rar{g \times 1_A} \dar[']{\pi_1} & B \times A \dar{\pi_1} \\
+      D \rar[']{g} & B
+    \end{tikzcd}
+  \end{equation*}
+  is a pullback in $\mathscr{C}$, i.e.\ a product in $\mathscr{C}/B$.
+
+  For the second assertion, note that if $\begin{tikzcd}C \dar{f} \\ B\end{tikzcd}$ is of the form $\begin{tikzcd}B \times E \dar{\pi_1} \\ B\end{tikzcd}$, then the pullback defining $f^{B^* A}$ becomes
+  \begin{equation*}
+  \begin{tikzcd}
+    B \times E^A \rar{\overline{\pi_1} \times 1} \dar[']{\pi_1} & B^A \times E^A \dar{\pi_1} \\
+    B \rar[']{\overline{\pi_1}} & B^A
+  \end{tikzcd}
+  \end{equation*}
+  so $f^{B^* A} \cong B^*(E^A)$.
+\end{proof}
+\begin{remark}
+  \hyperlink{def:slice}{$\mathscr{C}/B$} is isomorphic to the category of \hyperlink{def:em}{coalgebras} for the \hyperlink{def:monad}{monad} structure on $(-) \times B$ (\cref{eg:5.2}(a)); so the first part of \cref{lem:6.4} could have been proved using \cref{thm:5.16}.
+\end{remark}
+\begin{ndef}\label{def:6.5}
+  \hypertarget{def:lcc}We say $\mathscr{C}$ is \index{cartesian closed!locally}\named{locally cartesian closed} if it has all finite \hyperlink{def:limit}{limits} and each \hyperlink{def:slice}{$\mathscr{C}/B$} is \hyperlink{def:cc}{cartesian closed}.
+  (Note that this includes the fact that $\mathscr{C} \cong \mathscr{C}/1$ is cartesian closed).
+\end{ndef}
+\begin{nexample}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item $\mathbf{Set}$ is \hyperlink{def:lcc}{locally cartesian closed}, since $\mathbf{Set}/B \cong \mathbf{Set}^B$ for any $B$.
+    \item For any \hyperlink{def:small}{small} category $\mathscr{C}$, $[\mathscr{C}, \mathbf{Set}]$ is \hyperlink{def:cc}{cartesian closed}: by Yoneda,
+      \begin{align*}
+        G^F(A) &\cong [\mathscr{C},\mathbf{Set}] (\mathscr{C}(A,-), G^F) \\&\cong [\mathscr{C}, \mathbf{Set}](\mathscr{C}(A,-) \times F, G),
+      \end{align*}
+      so we take the right hand side as a definiition of $G^F(A)$ and define $G^F$ on morphisms $A \overset{f}\to B$ by composition with $\mathscr{C}(f,-) \times 1_F$.
+      Note that the class of functors $H$ for which we have
+      \begin{equation*}
+        [\mathscr{C}, \mathbf{Set}](H, G^F)  \cong [\mathscr{C}, \mathbf{Set}] (H \times F, G)
+      \end{equation*}
+      is closed under \hyperlink{def:limit}{colimits}; but every \hyperlink{def:funct}{functor} $\mathscr{C} \to \mathbf{Set}$ is a colimit of \hyperlink{def:repr}{representables}.
+
+      In fact $[\mathscr{C}, \mathbf{Set}]$ is locally cartesian closed, since all its slice categories $[\mathscr{C}, \mathbf{Set}]/F$ are of the same form (see question 6 on example sheet 4).
+    \item Any \hyperlink{def:heyts}{Heyting semilattice} $H$ is locally cartesian closed, since $H/B \cong\; \downarrow \!\!(b)$, the poset of elements $\leq b$, and $b^* = (-) \land b$ is surjective.
+    \item $\catc$ is cartesian closed and not locally cartesian closed, since not all strong \hyperlink{def:epic}{epis} are regular (cf question 6 on example sheet 3).
+  \end{enumerate}
+\end{nexample}
+Note that, given $\begin{tikzcdi}A \dar{f} \\ B\end{tikzcdi}$ in $\mathscr{C}/B$, the iterated slice $(\mathscr{C}/B)/f$ is isomorphic to $\mathscr{C}/A$, and this identifies
+\begin{equation*}\hyperlink{def:bstar}{f^*}: \mathscr{C}/B \to (\mathscr{C}/B)/f\end{equation*}
+with the operation of pulling back morphisms along $f$.
+So by \cref{lem:6.3}, $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed} iff it has \hyperlink{def:limit}{finite limits} and $f^*: \mathscr{C}/B \to \mathscr{C}/A$ has a \hyperlink{def:adj}{right adjoint} $\Pi_f$ for every $A \overset{f}\to B$ in $\mathscr{C}$.
+
+\begin{nthm}\label{thm:6.7}
+  Suppose $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed} and has \hyperlink{def:reflexive}{reflexive coequalizers}.
+  Then every morphism $A \overset{f}\to B$ factors as
+  \begin{equation*}
+    \begin{tikzcd}
+      & I\arrow[rd, tail, "m"] \\
+      A \arrow[ur, two heads, "q"] \arrow[rr, "f"] & & B
+    \end{tikzcd}
+  \end{equation*}
+  where $q$ is \hyperlink{def:regular}{regular} \hyperlink{def:epic}{epic} and $m$ is \hyperlink{def:monic}{monic}.
+\end{nthm}
+\begin{proof}
+  First form the \hyperlink{def:pullback}{pullback}
+  \begin{equation*}
+    \begin{tikzcd}
+      R \rar{a} \dar{b} & A \dar{f}\\
+      A \rar{f} & B
+    \end{tikzcd}
+  \end{equation*}
+  and then form the \hyperlink{def:equalizer}{coequalizer}
+  \begin{equation*}
+    \begin{tikzcd}
+      R \rar[shift left]{a} \rar[shift right,']{b} & A \rar{q} &I.
+    \end{tikzcd}
+  \end{equation*}
+  Since $fa = fb$, $f$ factors as $A \overset{q}\to I \overset{m}\to B$.
+
+  Suppose given $\begin{tikzcdi}D \rar[shift left]{g} \rar[shift right, ']{h} & I\end{tikzcdi}$ with $mg = mh$.
+  Form the pullback
+  \begin{equation*}
+  \begin{tikzcd}
+    E \rar{n} \dar[']{(k,l)} & D \dar{(g,h)} \\
+    A \times A \rar[']{q \times q} & I \times I.
+  \end{tikzcd}
+  \end{equation*}
+  Since $q \times q$ factors as $(q \times 1_I)(1_A \times q)$ and both factors are pullbacks of $q$, it's an \hyperlink{def:epic}{epimorphism}, and hence so is $n$.
+  Now $fk=mqk=mgn=mhn=mql=fl$, so $\exists E \overset{p}\to R$ with $ap = k$, $bp=l$.
+  Now $qk=qap=qbp=ql$, i.e.\ $gn=hn$. But $n$ is epic, so $g=h$.
+  Hence $m$ is monic.
+\end{proof}
+Note that this implies any strong epimorphism $A \overset{f}\to B$ is \hyperlink{def:regular}{regular}, since the \hyperlink{def:monic}{monic} part of its image factorization is an \hyperlink{def:iso}{isomorphism}.
+In particular, regular epimorphisms are stable under composition.
+\begin{ndef}\label{def:6.8}\hypertarget{def:ccfunct}
+  If $\mathscr{C}$ and $\mathscr{D}$ are \hyperlink{def:cc}{cartesian closed categories} and $F: \mathscr{C} \to \mathscr{D}$ \hyperlink{def:plim}{preserves} \hyperlink{def:lprod}{finite products}, then for each pair of objects $A,B$ of $\mathscr{C}$ we get a natural morphism
+  \begin{equation*}\theta: F(B^A) \to FB^{FA},\end{equation*}
+  namely the transpose of
+  \begin{equation*}F(B^A) \times FA \cong F(B^A \times A) \xrightarrow{F(\text{ev})} FB\end{equation*}
+  where $\text{ev}$ is the counit of $((-) \times A \dashv (-)^A)$.
+  We say $F$ is a \index{cartesian closed!functor}\textbf{cartesian closed functor} if $\theta$ is an isomorphism for every pair $(A,B)$.
+\end{ndef}
+Note that the second part of \cref{lem:6.4} says that if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed} then $\hyperlink{def:bstar}{f^*}: \mathscr{C}/B \to \mathscr{C}/A$ is a \hyperlink{def:ccfunct}{cartesian closed functor} for any $A \overset{f}\to B$.
+\begin{nthm}\label{thm:6.9}
+  Let $\mathscr{C}$ and $\mathscr{D}$ be \hyperlink{def:cc}{cartesian closed categories} and $F: \mathscr{C} \to \mathscr{D}$ a \hyperlink{def:funct}{functor} having a \hyperlink{def:adj}{left adjoint} $L$.
+  Then $F$ is \hyperlink{def:cc}{cartesian closed} iff the canonical morphism
+  \begin{equation*}
+    \begin{tikzcd}[column sep=huge]
+      L(A \times FB) \rar{(L\pi_1, L\pi_2)} & LA \times LFB \rar{1_{LA} \times \epsilon_B} & LA \times B
+    \end{tikzcd}
+  \end{equation*}
+  is an \hyperlink{def:iso}{isomorphism} for all $A \in \ob \mathscr{D}$, $B \in \ob \mathscr{C}$.
+\end{nthm}
+\hypertarget{def:fr}This condition is called \named{Frobenius reciprocity}.
+
+Note that if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed}, then $\hyperlink{def:bstar}{f^*}: \hyperlink{def:slice}{\mathscr{C}/B} \to \mathscr{C}/A$ has a \hyperlink{def:adj}{left adjoint} $\hyperlink{def:sumb}{\Sigma_f}$ given by composition with $f$ and it's easy to verify that $\Sigma_f (g \times f^* h) \cong \Sigma_f g \times h$.
 \printindex
 \end{document}
