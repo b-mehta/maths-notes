@@ -11,6 +11,7 @@
 \usepackage{marginnote}
 \input{header}
 \makeindex[intoc]
+\usetikzlibrary{intersections}
 
 % preamble
 
@@ -23,9 +24,11 @@
 \setcounter{section}{-1}
 
 \DeclareMathOperator{\Mod}{Mod}
+\DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\Th}{Th}
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\tp}{tp}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
@@ -37,12 +40,6 @@
 
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 
-%\newtheorem{manualtheoreminner}{Theorem}
-%\newenvironment{manualtheorem}[1]{%
-%    \renewcommand\themanualtheoreminner{#1}%
-%    \manualtheoreminner
-%}{\endmanualtheoreminner}
-
 % and here we go!
 
 \begin{document}
@@ -51,9 +48,8 @@
 \tableofcontents
 
 \clearpage
-\marginnote{\emph{Lecture 1}}[0cm]
 \section{Introduction}
-Model theory is a part of logic that began by looking at algebraic objects such as groups and combinatorial objects such like graphs, described in formal language.
+Model\marginnote{\emph{Lecture 1}}[0cm] theory is a part of logic that began by looking at algebraic objects such as groups and combinatorial objects such like graphs, described in formal language.
 The basic question in model theory is: `how powerful is our description of these objects to pin them down'?
 In Logic and Set Theory, the focus was on what was provable from a theory and language, but here we focus on whether or not a model exists.
 
@@ -915,7 +911,291 @@ Axiom $(r_n)$ effectively says that for disjoint subsets $(x_i)$ and $(y_i)$ eac
   \begin{equation*}
     \mathcal{M} \models \varphi(\bar{a}) \iff \mathcal{N} \models \varphi(\bar{b})
   \end{equation*}
-  \textbf{Proof:} By induction on $\phi(\bar{x})$. (Exercise: Fill in the details). $\blacksquare$
+  but $\beta(\bar{a}) = \bar{b}$ so we have \hyperlink{def:el}{elementarity}.
+
+  \item[($\Leftarrow$)] If $\beta: \mathcal{M} \to \mathcal{N}$ is elementary, then $\beta(\bar{a})$ satisfies $q(\bar{x})$ in $\mathcal{N}$. \qedhere
+  \end{itemize}
 \end{proof}
+This lemma is sometimes also called the Diagram Lemma, and stated as: Suppose $\Th(\mathcal{M}_M)$ is a theory in $L(M)$.
+Then if $\mathcal{N} \hyperlink{def:models}{\models} \Th(\mathcal{M}_M)$, then $\mathcal{M}$ \hyperlink{def:el}{embeds elementarily} in $\mathcal{N}$.
+\begin{nremark}\label{rem:5.10}
+  We can consider types in $\hyperlink{def:la}{L(A)}$, where $A \subseteq M$.
+  In particular, we can have $M = A$.
+
+  \hypertarget{def:typeparam}Types of this kind are said to have \textbf{parameters in $A$} (or to be over $A$).
+  If $p(\bar{x})$ is a type over $M$, then there is $\bar{a}$, an enumeration of $M$, and a type $p'(\bar{x}, \bar{z})$ in $L$ where the $\bar{z}$ are new constants, $|\bar{z}| = |\bar{a}|$, and $p(\bar{x}) = p'(\bar{x}, \bar{a})$.
+\end{nremark}
+\begin{nthm}\label{thm:5.11}
+  If $\mathcal{M}$ is a \hyperlink{def:str}{structure}, and $p(\bar{x})$ is a \hyperlink{def:type}{type} in $L(M)$ that is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{M}$, then $p(\bar{x})$ is \hyperlink{def:type}{satisfiable} in some $\mathcal{N}$ such that $\mathcal{M} \hyperlink{def:elsubs}{\preccurlyeq} \mathcal{N}$.
+\end{nthm}
+\begin{eg}
+  Take $\mathcal{M} = (\mathbb{Q}, <)$, and let $\langle a_i : i < \omega \rangle$ a sequence in $\mathbb{Q}$ that converges to $\sqrt{2}$ from below, and let $\langle b_i : i < \omega \rangle \subseteq \mathbb{Q}$ tend to $\sqrt{2}$ from above.
+  Set $\phi_n(x) \coloneqq a_n < x < b_n$. Then let $p(x) = \set{\phi_n(x) | n < \omega}$.
+  Then $p(x)$ is an $L(\mathbb{Q})$-\hyperlink{def:type}{type} which is \hyperlink{def:type}{finitely satisfiable} in $\mathbb{Q}$.
+  But $p(x)$ is not \hyperlink{def:type}{satisfiable} in $\mathcal{M}$.
+  It is, however, satisfiable in $(\mathbb{R}, <) \succcurlyeq (\mathbb{Q}, <)$.
+\end{eg}
+\begin{proof}[Proof of \cref{thm:5.11}]
+  Let $\langle a_i : i < \lambda \rangle$ enumerate $\mathcal{M}$, let
+  \begin{equation*}q(\bar{z}) \coloneqq \set{\varphi(\bar{z}) | \mathcal{M} \models \varphi(\bar{a})}\end{equation*}
+  where $|\bar{z}| = \lambda$ and the $z_i$ are new variables (so not among the $\bar{x}$).
+  Write $p(\bar{x})$ as $p'(\bar{x}, \bar{a})$ for some $p'(\bar{x}, \bar{z})$ (an $L$-\hyperlink{def:type}{type}).
+
+  \textbf{Claim}: $p'(\bar{x},\bar{z}) \cup q(\bar{z})$ is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{M}$.
+
+  \textbf{Proof:} $p'(\bar{x},\bar{a})$ is finitely satisfiable by hypothesis and $q(\bar{z})$ is \hyperlink{def:type}{realized} by $\bar{a}$.
+
+  Then, by \nameref{thm:5.8}, $p'(\bar{x}, \bar{z}) \cup q(\bar{z})$ is satisfiable.
+  That is, there is $\mathcal{N}$ and $\bar{b} \in \mathcal{N}^{|\bar{z}|}$ and $\bar{c} \in \mathcal{N}^{|\bar{x}|}$ such that
+  \begin{equation*}
+    \mathcal{N} \models p'(\bar{c}, \bar{b}) \cup q(\bar{b}).
+  \end{equation*}
+  In particular, $\mathcal{N} \models q(\bar{b})$, then by \cref{lem:5.9}, $\beta: a_i \mapsto b_i$ is an \hyperlink{def:el}{elementary embedding}.
+\end{proof}
+\begin{nthm}[Upward L\"owenheim-Skolem]\label{thm:5.12}
+  Let $\mathcal{M}$ be such that $|\mathcal{M}| \geq \omega$.
+  Then for any $\lambda \geq |\mathcal{M}| + |L|$, there is $\mathcal{N}$ such that \hyperlink{def:elsubs}{$\mathcal{M} \preccurlyeq \mathcal{N}$}, and $|\mathcal{N}| = \lambda$.
+\end{nthm}
+\begin{proof}
+  Let $\bar{x} = \langle x_i : i < \lambda \rangle$ a tuple of distinct variables.
+  Let
+  \begin{equation*}
+    p(\bar{x}) = \set{x_i \neq x_j | i < j < \lambda}.
+  \end{equation*}
+  Then $p(\bar{x})$ is \hyperlink{def:type}{finitely consistent} in $\mathcal{M}$.
+  By \cref{thm:5.11}, $p(\bar{x})$ is \hyperlink{def:type}{realized} in some $\mathcal{M} \preccurlyeq \mathcal{N}$, and $|\mathcal{N}| \geq \lambda$.
+  By \nameref{thm:3.11DLS}, we may assume $|\mathcal{N}| = \lambda$.
+\end{proof}
+
+% up to here
+\clearpage
+\section{Saturation}
+\begin{ndef}[Saturated]\label{def:6.1}\hypertarget{def:sat}
+  Let $\lambda$ be an infinite cardinal, let $|\mathcal{M}| \geq \omega$.
+  Then $\mathcal{M}$ is \textbf{$\lambda$-saturated} if $\mathcal{M}$ \hyperlink{def:type}{realizes} every \hyperlink{def:type}{type} $p(x)$ with one \hyperlink{def:free}{free variable} such that
+  \begin{enumerate}[label=(\roman*)]
+    \item $p(x)$ has \hyperlink{def:typeparam}{parameters} in $A \subseteq M$ and $|A| < \lambda$.
+    \item $p(x)$ is \hyperlink{def:type}{finitely consistent} in $\mathcal{M}$.
+  \end{enumerate}
+  $\mathcal{M}$ is \named{saturated} if it is $|\mathcal{M}|$-saturated.
+\end{ndef}
+
+Can $\mathcal{M}$ be \hyperlink{def:sat}{$\lambda$-saturated} if $\lambda > |\mathcal{M}|$? If so, $\mathcal{M}$ would satisfy \hyperlink{def:type}{finitely satisfiable types} in $L(M)$.
+For example,
+\begin{equation*}
+    p(x) = \set{x \neq a_i | i < |\mathcal{M}|}
+\end{equation*}
+where $\langle a_i : i < |\mathcal{M}| \rangle$ enumerates $\mathcal{M}$. $p(x)$ is finitely satisfiable, but not satisfied in $\mathcal{M}$.
+
+\begin{ndef}[Type of tuple]\label{def:6.2}
+  \marginnote{\emph{Lecture 10}}
+  \hypertarget{def:tp}Let $\mathcal{M}$ be an \hyperlink{def:str}{$L$-structure}, $A \subseteq M$, $\bar{b}$ a tuple in $M$ (possibly infinite).
+  The \textbf{type of $\bar{b}$ over $A$} is the following $L(A)$-\hyperlink{def:type}{type}:
+  \begin{equation*}
+    \tp_\mathcal{M}(\bar{b}/A) \coloneqq \set{\varphi(\bar{x}) \in L(A) | \mathcal{M} \models \varphi(\bar{b})}.
+  \end{equation*}
+  The subscript $\mathcal{M}$ is often omitted if clear from context.
+\end{ndef}
+\begin{nremark}\label{rem:6.3}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item $\hyperlink{def:tp}{\tp_{\mathcal{M}}(\bar{b}/A)}$ is \hyperlink{def:complete}{complete}, i.e.\ for every $L(A)$ \hyperlink{def:form}{formula} $\phi(\bar{x})$, either $\phi(\bar{x}) \in \tp(\bar{b}/A)$ or $\lnot \phi(x) \in \tp(\bar{b}/A)$.
+    \item If $\hyperlink{def:elsubs}{\mathcal{M} \preccurlyeq \mathcal{N}}$, then for $A \subseteq M$, $\bar{b}$ a tuple:
+      \begin{equation*}
+        \tp_\mathcal{M}(\bar{b}/A)= \tp_\mathcal{N}(\bar{b}/A).
+      \end{equation*}
+  \end{enumerate}
+\end{nremark}
+\begin{nfact}\label{fact:6.4}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item If $f: A \subseteq \mathcal{M} \to \mathcal{N}$ is a (partial) \hyperlink{def:elmap}{elementary map}, then in particular $f$ preserves \hyperlink{def:sentence}{$L$-sentences}, so $\mathcal{M} \hyperlink{def:eleq}{\equiv} \mathcal{N}$.
+    \item If $\mathcal{M} \equiv \mathcal{N}$, then $\emptyset$, the empty map, is an \hyperlink{def:el}{elementary map}, as it preserves sentences.
+    \item If $f: A \subseteq \mathcal{M} \to \mathcal{N}$ is elementary, and $\bar{a}$ is an enumeration of $A = \dom(f)$, then
+      \begin{equation*}
+        \tp(\bar{a}/\emptyset) = \tp(f(\bar{a})/\emptyset).
+      \end{equation*}
+      More generally, if $f: \mathcal{M} \to \mathcal{N}$ is (partial) elementary and there is $A \subseteq M \cap N$ such that $A \subseteq \dom f$, $f|_A = \operatorname{id}$, then for every $\bar{b}$, a tuple in $\dom(f)$,
+      \begin{equation*}
+        \tp_\mathcal{M}(\bar{b}/A) = \tp_{\mathcal{N}}(f(\bar{b})/A).
+      \end{equation*}
+      %\begin{center}
+      %  \begin{tikzpicture}
+      %  \end{tikzpicture}
+      %\end{center}
+    \item Let $\bar{a}$ enumerate $A \subseteq M$, $A = \dom(f)$ where $f: \mathcal{M} \to \mathcal{N}$ is elementary.
+      Let $p(\bar{x},\bar{a})$ be a \hyperlink{def:type}{type} in $L(A)$ that is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{M}$.
+      Then $p(\bar{x},f(\bar{a}))$ is finitely satisfiable in $\mathcal{N}$:
+
+      Let
+      \begin{equation*}\{\varphi_1(\bar{x},\bar{a}), \dotsc, \varphi_n(\bar{x},\bar{a})\} \subseteq p(\bar{x},\bar{a}).\end{equation*}
+      By finite satisfiability of $p(\bar{x},\bar{a})$,
+    \begin{equation*}\mathcal{M} \models \exists \bar{x} \; \bigwedge_{i=1}^n \varphi_i(\bar{x},\bar{a}).\end{equation*}
+      Then $\mathcal{N} \models \exists x \; \bigwedge_{i=1}^m \varphi_i(\bar{x},f(\bar{a}))$ by elementarity of $f$.
+      (Does $p(\bar{x},\bar{a})$ satisfiable in $\mathcal{M}$ imply $p(\bar{x},f(\bar{a}))$ satisfiable in $\mathcal{N}$? No.)
+  \end{enumerate}
+\end{nfact}
+\begin{nthm}\label{thm:6.5}
+  Let $\mathcal{N}$ be such that $|\mathcal{N}| \geq \lambda \geq |L|+\omega$. The following are equivalent:
+  \begin{enumerate}[label=(\roman*)]
+    \item $\mathcal{N}$ is \hyperlink{def:sat}{$\lambda$-saturated}.
+    \item if $\mathcal{M} \hyperlink{def:eleq}{\equiv} \mathcal{N}$, $b \in M$ and $f: \mathcal{M} \to \mathcal{N}$ \hyperlink{def:elmap}{partial elementary map} such that $|f| < \lambda$, then there is a partial elementary $\hat{f} \supseteq f$ and such that $b \in \dom(\hat{f})$.
+    \item If $p(\bar{z})$ is an \hyperlink{def:typeparam}{$L(A)$-type} where $|\bar{z}| \leq \lambda$ and $|A| < \lambda$ and $p(\bar{z})$ is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{N}$, then $p(\bar{z})$ is \hyperlink{def:type}{satisfiable} in $\mathcal{N}$.
+  \end{enumerate}
+\end{nthm}
+\begin{proof}
+  (i) $\Rightarrow$ (ii). Let $f: \mathcal{M} \to \mathcal{N}$ be as in (ii), let $b \in M$.
+  Let $\bar{a}$ be an enumeration of $\dom(f)$, so $|\bar{a}| < \lambda$. Let
+  \begin{equation*}
+    p(x / \bar{a}) \coloneqq \hyperlink{def:tp}{\tp_\mathcal{M}}(b/\bar{a}).
+  \end{equation*}
+  \begin{center}
+    \begin{tikzpicture}[scale=2]
+      \draw [name path=M] (-1.5,0) circle [x radius=1cm, y radius=1.2cm];
+      \node [fill=white, circle, inner sep=0] at (-1.5,1.2) {$\mathcal{M}$};
+      \draw [name path=N] (1.5,0) circle [x radius=1cm, y radius=1.2cm];
+      \node [fill=white, circle, inner sep=0] at (1.5,1.2) {$\mathcal{N}$};
+      \draw [->] (-1.4, -0.8) to[bend right=30] node[midway, above] {$f$} (1.4,-0.8);
+      \begin{scope}
+        \clip (-1.5,0) circle [x radius=1cm, y radius=1.2cm];
+        \draw [name path=D] (-1.2,-1.3) circle [radius=1cm];
+        \node [fill=white, rectangle, inner sep=1mm] at (-1.5,-0.35) {$\scriptstyle\dom(f)$};
+        \node [fill=black, inner sep=1pt, circle, label=above:$b$] (b) at (-1.5,0.5) {};
+        \path [name intersections={of=D and M}];
+        \draw [dashed, gray, ultra thin] (b) -- (intersection-1);
+        \draw [dashed, gray, ultra thin] (b) -- (intersection-2);
+      \end{scope}
+      \begin{scope}
+        \clip (1.5,0) circle [x radius=1cm, y radius=1.2cm];
+        \draw [name path=I] (1.2,-1.3) circle [radius=1cm];
+        \node [fill=white, rectangle, inner sep=1mm] at (1.5,-0.35) {$\scriptstyle\img(f)$};
+        \node [fill=black, inner sep=1pt, circle, label=above:$c$] (c) at (1.5,0.5) {};
+        \path [name intersections={of=I and N}];
+        \draw [dashed, gray, ultra thin] (c) -- (intersection-1);
+        \draw [dashed, gray, ultra thin] (c) -- (intersection-2);
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  Then $p(x/\bar{a})$ is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{M}$, hence $\tp(x/f(\bar{a}))$ is finitely satisfiable in $\mathcal{N}$ (by \cref{fact:6.4}(iv)).
+  Since $|f(\bar{a})| < \lambda$ and $\mathcal{N}$ is \hyperlink{def:sat}{$\lambda$-saturated}, $\tp(x/f(\bar{a}))$ is \hyperlink{def:type}{realized} in $\mathcal{N}$ by some $c$.
+  Then $f \cup \{\langle b,c \rangle\}$ is the required extension of $f$:
+  \begin{equation*}
+    \mathcal{M} \models \phi(b,\bar{a}) \iff \mathcal{N} \models \phi(c, f(\bar{a}))
+  \end{equation*}
+
+\marginnote{\emph{Lecture 11}}
+  (ii) $\Rightarrow$ (iii). %Let $p(\bar{z})$ be as in (iii), $p(\bar{z})$ is finitely satisfiable in $\mathcal{N}$. Then by \cref{thm:5.11}, $p(\bar{z})$ is realized in some $\mathcal{M}' \succcurlyeq \mathcal{N}$, by some tuple $\bar{b}$ (where $|\bar{b}| = |\bar{z}|$).
+  Let $p(\bar{z})$ be as in (iii). There is $\mathcal{M}$ such that $\mathcal{N} \preccurlyeq \mathcal{M}$ and $\mathcal{M} \models p(\bar{b})$.
+  The identity map $\operatorname{id}_A: \mathcal{M} \to \mathcal{N}$ is \hyperlink{def:elmap}{partial elementary}.
+  Idea: build $\langle f_i : i < |\bar{b}| \rangle$ of partial elementary maps extending $\operatorname{id}_A$.
+  Then $\bigcup_i f_i$ is partial elementary, and $\bar{b} \in \dom \bigcup_{i < |\bar{a}|} f_i$.
+
+  Set $f_0 = \operatorname{id}_A$, at stage $i+1$ use $(ii)$ to put $b_i$ in $\dom(f_{i+1})$.
+  At limit stages, $\mu < \lambda$, let $f_{\mu} = \bigcup_{i < \mu} f_i$.
+
+  (iii) $\Rightarrow$ (i) is trivial.
+  % By Downward LS Theorem, there is $\mathcal{M} \preccurlyeq \mathcal{M}'$ such that $A \cup \{\bar{b}\} \subseteq M$, parameter set of the type.
+\end{proof}
+\begin{ncor}\label{cor:6.6}
+  If $\mathcal{M}$ and $\mathcal{N}$ are \hyperlink{def:sat}{saturated} and $\mathcal{M} \hyperlink{def:eleq}{\equiv} \mathcal{N}$ and $|\mathcal{M}| = |\mathcal{N}|$ then any \hyperlink{def:elmap}{elementary} $f: \mathcal{M} \to \mathcal{N}$ extends to an \hyperlink{def:iso}{isomorphism} (in particular \hyperlink{def:iso}{$\mathcal{M} \simeq \mathcal{N}$}).
+\end{ncor}
+\begin{proof}
+  Use \cref{thm:6.5}(ii) to extend $f: \mathcal{M} \to \mathcal{N}$ to an \hyperlink{def:iso}{isomorphism} by back-and-forth (take unions at limit stages).
+\end{proof}
+\begin{ncor}\label{cor:6.7}
+  Models of of $T_{\text{dlo}}$ and $T_{\text{rg}}$ are \hyperlink{def:sat}{$\omega$-saturated}.
+\end{ncor}
+\begin{proof}
+  By \cref{thm:6.5} and \cref{lem:4.3} for $T_{\text{dlo}}$ and \cref{lem:4.17} for $T_{\text{rg}}$.
+\end{proof}
+
+So $(\mathbb{Q}, <)$ is \hyperlink{def:sat}{$\omega$-saturated}.
+Is $(\mathbb{R}, <)$ $\omega_1$ saturated? No. It does not realize
+\begin{equation*}p(x) \coloneqq \set{x > q | q \in \mathbb{Q}}.\end{equation*}
+
+\begin{ndef}[Automorphism]\label{def:6.8}
+  \hypertarget{def:aut}An isomorphism $\alpha: \mathcal{N} \to \mathcal{N}$ is called an \named{automorphism}.
+  The automorphisms of $\mathcal{N}$ form a group denoted by $\Aut(\mathcal{N})$.
+  If $A \subseteq N$, then
+  \begin{equation*}\Aut(\mathcal{N}/A) \coloneqq \set{\alpha \in \Aut(\mathcal{M}) | \alpha|_A = \operatorname{id}}.\end{equation*}
+\end{ndef}
+\begin{ndef}[Universality, homogeneity]\label{def:6.9}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item \hypertarget{def:univ}An \hyperlink{def:str}{$L$-structure} $\mathcal{N}$ is \index{universal}\textbf{$\lambda$-universal} if for every \hyperlink{def:eleq}{$\mathcal{M} \equiv \mathcal{N}$} such that $|\mathcal{M}| \leq \lambda$ there is an \hyperlink{def:el}{elementary embedding} $\beta: \mathcal{M} \to \mathcal{N}$. $\mathcal{N}$ is \textbf{universal} if it is $|\mathcal{N}|$-universal.
+    \item \hypertarget{def:homogeneous}$\mathcal{N}$ is \index{homogeneous}\textbf{$\lambda$-homogeneous} if every elementary map $f: \mathcal{N} \to \mathcal{N}$ such that $|f| < \lambda$ extends to an \hyperlink{def:iso}{isomorphism} of $\mathcal{N}$.
+  \end{enumerate}
+\end{ndef}
+% Homogeneity is sometimes called `strong homogeneity'
+% Ultra homogeneity contains partial embeddings
+
+\begin{nthm}\label{thm:6.10}
+  Let $\mathcal{N}$ be such that $|\mathcal{N}| \geq \hyperlink{def:cardlang}{|L|} + \omega$. The following are equivalent
+  \begin{enumerate}[label=(\roman*)]
+    \item $\mathcal{N}$ is \hyperlink{def:sat}{saturated}
+    \item $\mathcal{N}$ is \hyperlink{def:univ}{universal} and \hyperlink{homogeneous}{homogeneous}.
+  \end{enumerate}
+\end{nthm}
+\begin{proof}
+  (i) $\Rightarrow$ (ii). Assume $\mathcal{N}$ is \hyperlink{def:sat}{saturated}, and $\mathcal{M} \hyperlink{def:eleq}{\equiv} \mathcal{N}$ is such that $|\mathcal{M}| \leq |\mathcal{N}|$.
+  Then let $\bar{a}$ enumerate $\mathcal{M}$, let $p(\bar{x}) = \tp(\bar{a}/\emptyset)$.
+  Then $p(\bar{x})$ is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{M}$.
+
+  Claim: $p(\bar{x})$ is finitely satisfiable in $\mathcal{N}$.
+  Indeed, let $\{\varphi_1(\bar{x}), \dotsc, \varphi_n(\bar{x})\} \subseteq p(\bar{x})$, $\mathcal{M} \hyperlink{def:models}{\models} \exists \bar{x} \; \bigwedge _{i=1}^n \varphi_i(\bar{x})$, and so $\mathcal{N} \models \exists x \; \bigwedge \varphi_i(\bar{x})$ since $\mathcal{M} \equiv \mathcal{N}$.
+
+  Since $|\bar{x}| \leq |\mathcal{N}|$, $\mathcal{N}$ realizes $p(\bar{x})$ by saturation (\cref{thm:6.5}).
+  \hyperlink{def:homogeneous}{Homogeneity} follows from \cref{cor:6.6}.
+
+  (ii) $\Rightarrow$ (i). We show that if $\mathcal{M} \equiv \mathcal{N}$, $b \in M$, $f: \mathcal{M} \to \mathcal{N}$ \hyperlink{def:elmap}{elementary} such that $|f| < |\mathcal{N}|$ then there is $\hat{f} \supseteq f$ elementary defined on $b$.
+
+  By working in $\mathcal{M}' \preccurlyeq \mathcal{M}$ such that $\dom(f) \cup \{b\} \subseteq \mathcal{M}'$ if necessary (using \cref{thm:3.11DLS}), we may assume $|\mathcal{M}| \leq |\mathcal{N}|$.
+  Since $\mathcal{M} \equiv \mathcal{N}$, by \hyperlink{def:univ}{universality} there is an \hyperlink{def:el}{elementary embedding} $\beta: \mathcal{M} \to \mathcal{N}$. Then $\beta(\mathcal{M}) \preccurlyeq \mathcal{N}$.
+
+  \begin{center}
+    \begin{tikzpicture}[scale=2.3, gaplabel/.style={fill=white, rectangle, inner sep=1mm}]
+      \draw (-1.5,0) circle [x radius=1.1cm, y radius=1.2cm];
+      \node [gaplabel] at (-1.5,1.2) {$\mathcal{M}$};
+      \draw (1.5,0) circle [x radius=1.1cm, y radius=1.2cm];
+      \node [gaplabel] at (1.5,1.2) {$\mathcal{N}$};
+      \begin{scope}
+        \clip (-1.5,0) circle [x radius=1.1cm, y radius=1.2cm];
+        \draw (-0.8,-1.4) circle [radius=1cm];
+        \node [fill=black, inner sep=1pt, circle, label=above:$b$] (b) at (-1.2,0.6) {};
+        \node [gaplabel] at (-1.3,-0.5) {$\scriptstyle\dom(f)$};
+      \end{scope}
+      \begin{scope}
+        \clip (1.5,0) circle [x radius=1.1cm, y radius=1.2cm];
+        \draw (0.8,-1.4) circle [radius=1cm];
+        \draw (2, 0.2) circle [x radius=0.7cm, y radius=0.75cm];
+        \draw (2.7, 0.3) circle [radius=0.5cm];
+        \node [fill=black, inner sep=1pt, circle, label=above right:$\beta(b)$] (c) at (1.8,0.6) {};
+        \begin{scope}[every node/.style={gaplabel}]
+          \node at (1.3,-0.5) {$\scriptstyle\img(f)$};
+          \node at (1.4, 0.6) {$\scriptstyle\beta(\mathcal{M})$};
+          \node at (2.2, 0.1) {$\scriptstyle\beta(\dom(f))$};
+        \end{scope}
+      \end{scope}
+
+      \draw[->] (-1.1,-0.8) to[bend right] node[midway, above] {$f$} (1.1,-0.8);
+      \draw[->] (-0.6,0.8) to[bend left] node[midway, below] {$\beta$} (1.6,0.9);
+      \draw[->] (2.4,-0.2) to[bend left=20] node[midway, below=2] {$\scriptstyle f \circ \beta^{-1}$} (1.7, -0.8);
+    \end{tikzpicture}
+  \end{center}
+  Then the map $f \circ \beta^{-1}: \beta(\dom(f)) \to \img(f)$ is elementary.
+  By \hyperlink{def:homogeneous}{homogeneity}, there is $\alpha \in \hyperlink{def:aut}{\Aut}(\mathcal{N})$ such that $f \circ \beta^{-1} \subseteq \alpha$.
+  Then $f \cup \{\langle b, \alpha(\beta(b))\}$ is elementary (it is a restriction of $\alpha \circ \beta$).
+\end{proof}
+\begin{ndef}[Orbit, defined set]\label{def:6.11}
+  \hypertarget{def:orbit}Let $\bar{a}$ be a tuple in $\mathcal{N}$ and $A \subseteq N$.
+  The \named{orbit} of $\bar{a}$ over $A$ is the set
+  \begin{equation*}
+    O_\mathcal{N} (\bar{a}/A) = \set{\alpha(\bar{a}) | \alpha \in \hyperlink{def:aut}{\Aut(\mathcal{N}/A)}}.
+  \end{equation*}
+  \hypertarget{def:setdef}If $\varphi(\bar{x})$ is an \hyperlink{def:la}{$L(A)$-formula}, then
+  \begin{equation*}
+    \varphi(\mathcal{N}) \coloneqq \set{\bar{a} \in N^{\lvert\bar{x}\rvert} | \mathcal{N} \models \varphi(\bar{a})}
+  \end{equation*}
+  is the \textbf{set defined by $\varphi(\bar{x})$}.
+  A set is \named{definable} over $A$ if it is defined by some $L(A)$-formula.
+  There are analogous notions of a type defining a set, and a set being type-definable.
+\end{ndef}
 \printindex
 \end{document}
