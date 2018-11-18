@@ -29,6 +29,8 @@
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\img}{img}
 \DeclareMathOperator{\tp}{tp}
+\DeclareMathOperator{\dcl}{dcl}
+\DeclareMathOperator{\acl}{acl}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
@@ -1130,7 +1132,7 @@ Is $(\mathbb{R}, <)$ $\omega_1$ saturated? No. It does not realize
   Let $\mathcal{N}$ be such that $|\mathcal{N}| \geq \hyperlink{def:cardlang}{|L|} + \omega$. The following are equivalent
   \begin{enumerate}[label=(\roman*)]
     \item $\mathcal{N}$ is \hyperlink{def:sat}{saturated}
-    \item $\mathcal{N}$ is \hyperlink{def:univ}{universal} and \hyperlink{homogeneous}{homogeneous}.
+    \item $\mathcal{N}$ is \hyperlink{def:univ}{universal} and \hyperlink{def:homogeneous}{homogeneous}.
   \end{enumerate}
 \end{nthm}
 \begin{proof}
@@ -1197,5 +1199,228 @@ Is $(\mathbb{R}, <)$ $\omega_1$ saturated? No. It does not realize
   A set is \named{definable} over $A$ if it is defined by some $L(A)$-formula.
   There are analogous notions of a type defining a set, and a set being type-definable.
 \end{ndef}
+\begin{nremark}\label{rem:6.12}
+  If\marginnote{\emph{Lecture 12}} $\bar{a}$, $\bar{b}$ are tuples in $\mathcal{N}$ of the same length, and $A\subseteq N$, then the following are equivalent.
+  \begin{enumerate}[label=(\roman*)]
+    \item $\hyperlink{def:tp}{\tp_{\mathcal{N}}(\bar{a}/A)}= \tp_{\mathcal{N}}(\bar{b}/A)$
+    \item $ \set{a_i\mapsto b_i|i < |\bar{a}|}\cup\text{id}_A $ is an \hyperlink{def:el}{elementary map} from $\mathcal{M}$ to $\mathcal{N}$
+  \end{enumerate}
+\end{nremark}
+\begin{nprop}\label{prop:6.13}
+  Let $ \mathcal{N} $ be \hyperlink{def:homogeneous}{$\lambda$-homogeneous}, $A\subseteq N$, with $|A|<\lambda$ and let $\bar{a}$ a tuple in $\mathcal{N}$ such that $|\bar{a}|<\lambda$.
+  Then
+  \begin{equation*}\hyperlink{def:orbit}{O_{\mathcal{N}}(\bar{a}/A)}=\hyperlink{def:setdef}{p(\mathcal{N})}\end{equation*}
+  where $p(\bar{x})=\hyperlink{def:tp}{\tp_{\mathcal{N}}(\bar{b}/A)}$.
+\end{nprop}
+\begin{proof}
+  If $\alpha(\bar{a})=\bar{b}$, where $\alpha\in\hyperlink{def:aut}{\Aut(\mathcal{N}/A)}$, then $\hyperlink{def:tp}{\tp_{\mathcal{N}}(\bar{a}/A)}=\tp_{\mathcal{N}}(\bar{b}/A) $.
+
+  If $\tp_{\mathcal{N}}(\bar{a}/A)=\tp_{\mathcal{N}}(\bar{b}/A)$, then $\set{\langle a_i, b_i \rangle | i < |\bar{a}|} \cup \operatorname{id}_A$ is \hyperlink{def:elmap}{elementary}, and by \hyperlink{def:homogeneous}{homogeneity} it extends to $\alpha\in\Aut(\mathcal{N})$, and in particular $\alpha \in \Aut(\mathcal{N}/A)$.
+\end{proof}
+
+\clearpage
+\section{The Monster Model}
+Given a \hyperlink{def:complete}{complete theory} $T$ with an infinite \hyperlink{def:model}{model},
+we work in a \hyperlink{def:sat}{saturated} \hyperlink{def:str}{structure} $\mathcal{U}$ (sometimes denoted $\mathbb{M}$) that is a model of $T$, which is sufficiently large such that any other model of $T$ we might be interested in is an \hyperlink{def:elsubs}{elementary substructure} of $\mathcal{U}$.
+($\mathcal{U}$ is an expository device - see Tent/Ziegler for more details, also Marker).
+
+\begin{ndef}[Terminology and conventions]\label{def:7.1}
+  When working in $\mathcal{U}$, we say
+  \begin{itemize}
+    \item `$\varphi(\bar{x})$ \textbf{holds}' to mean that $\mathcal{U}\hyperlink{def:models}{\models}\forall \bar{x} \;\varphi(\bar{x})$
+    \item `$\varphi(\bar{x})$ is \textbf{consistent}' to mean $\mathcal{U}\models\exists\bar{x}\;\varphi(\bar{x})$
+    \item `the type $p(\bar{x})$ is \textbf{consistent}/\textbf{satisfiable}' to mean $\mathcal{U}\models\exists\bar{x}\;p(\bar{x})$
+    \item A cardinality $\lambda$ is \textbf{small} if $\lambda< |U|$ (usually denote $|U|$ by $\kappa$)
+    \item a \textbf{model} is some $\mathcal{M}\preccurlyeq\mathcal{U}$ such that $|M|$ is small
+  \end{itemize}
+  Conventions:
+  \begin{itemize}
+    \item all tuples assumed to have small length, unless specified otherwise
+    \item \hyperlink{def:form}{formulas} have parameters in $U$
+    \item \hyperlink{def:type}{types} have parameters in small sets
+    \item \hyperlink{def:setdef}{definable sets} have the form $\varphi(U)$ for some $L(U)$-formula $\varphi(\bar{x})$
+    \item \hyperlink{def:setdef}{type definable sets} have the form $p(U)$ for some type $ p(\bar{x},A)$ where $|A| < \kappa$.
+    \item Orbits and types of tuples are within $\mathcal{U}$, so $\tp(\bar{a}/A)$ means $\tp_{\mathcal{U}}(\bar{a}/A)$,
+      \begin{equation*} O(\bar{a}/A)=O_{\mathcal{U}}(\bar{a}/A) \end{equation*}
+    \item If $p(\bar{x})$, $q(\bar{x})$ are \hyperlink{def:type}{types}, we write $p(\bar{x})\to q(\bar{x})$ to mean $p(\mathcal{N})\subseteq q(\mathcal{N})$ (think of $p(\bar{x})$ as an infinite conjunction of formulas)
+  \end{itemize}
+\end{ndef}
+\begin{nfact}\label{fact:7.2}
+  Let $p(\bar{x})$ be a \hyperlink{def:type}{satisfiable} \hyperlink{def:typeparam}{$L(A)$-type}, and $q(\bar{x})$ a satisfiable $L(B)$-type, such that
+  \begin{equation*}p(\bar{x})\to \lnot q(\bar{x})\end{equation*}
+  (explicitly, $p(\bar{x})$ and $q(\bar(x))$ have no common realisations).
+
+  Then there are $\varphi_i(\bar{x}) \in p(\bar{x})$ and $\psi_i(\bar{x}) \in q(\bar{x})$ such that
+  \begin{equation*} \bigwedge_{i=1}^n\varphi_i(\bar{x})\to \lnot \left(\bigwedge_{i=1}^m\psi_i(\bar{x})\right).\end{equation*}
+\end{nfact}
+\begin{proof}
+  $p(\bar{x})\cup q(\bar{x})$ is not \hyperlink{def:type}{realized} in $\mathcal{U}$.
+  By \hyperlink{def:sat}{saturation} of $\mathcal{U}$, $p(\bar{x}) \cup q(\bar{x})$ is not \hyperlink{def:type}{finitely satisfiable},
+  hence there exist finite subsets
+  $\{\varphi_1(\bar{x}), \dotsc, \varphi_n(\bar{x})\} \subseteq p(\bar{x}),$
+  $\{\psi_1(\bar{x}), \dotsc, \psi_n(\bar{x})\}\subseteq q(\bar{x})$
+  such that their union is not satisfiable.
+  Then
+  \begin{equation*} \bigwedge \varphi_i(\bar{x}) \to \lnot\left(\bigwedge \psi_i(\bar{x}) \right). \qedhere \end{equation*}
+\end{proof}
+\begin{nremark}\label{rem:7.3}
+  Let $ \varphi(\mathcal{U},\bar{b}) $ be such that $\varphi(\bar{x},\bar{z})$ is an \hyperlink{def:form}{$L$-formula}, $\bar{b}\in \mathcal{U}^{|\bar{z}|} $.
+  If $ \alpha\in\hyperlink{def:aut}{\Aut(\mathcal{U})} $, then
+  \begin{align*}
+    \alpha[\varphi(\mathcal{U},\bar{b})] &= \set{\alpha(\bar{a})|\varphi(\bar{a},\bar{b}), \bar{a} \in \mathcal{U}^{|\bar{x}|}}\\
+                                         &= \set{\alpha(\bar{a})|\varphi(\alpha(\bar{a}),\alpha(\bar{b})), \bar{a} \in \mathcal{U}^{|\bar{x}|}}\\
+                                         &= \varphi(\mathcal{U},\alpha(\bar{b}))
+  \end{align*}
+  So $\Aut(\mathcal{U})$ acts on the definable sets in a natural way. (Similarly for the type-definable sets)
+\end{nremark}
+\begin{ndef}[Invariant]\label{def:7.4}
+  \hypertarget{def:inv}A set $D\subseteq U^\lambda$ is \named{invariant} under $\hyperlink{def:aut}{\Aut}(\mathcal{U}/A)$ (\textbf{invariant over $A$})
+  if $\hyperlink{def:setdef}{\alpha(D)}=D$ for every $\alpha\in\Aut(\mathcal{U}/A)$.
+
+  Equivalently, for all $\bar{a}\in D$, $\hyperlink{def:orbit}{O(\bar{a}/A)}\subseteq D$.
+
+  If $\bar{a}\in D$, $q(\bar{x})=\tp(\bar{a}/A)$ and $\bar{b}\models q(\bar{x})$, then $\bar{b}\in D$.
+  ($\tp(\bar{b}/A) =\tp(\bar{a}/A)$, so there is $\alpha\in\Aut(\mathcal{U}/A)$ s.t.\ $\alpha(\bar{a})=\bar{b}$ by \hyperlink{def:homogeneous}{homogeneity} of $\mathcal{U}$).
+  Hence we could also define invariance over $A$ as
+  \begin{equation*}
+  \forall \bar{a}\in D,\qquad \bar{b}\hyperlink{def:eleqa}{\equiv_A}\bar{a}\implies \bar{b}\in D.
+  \end{equation*}
+\end{ndef}
+\begin{nprop}\label{prop:7.5}
+  Let $\varphi(\bar{x})$ be an \hyperlink{def:la}{$L(U)$}-\hyperlink{def:form}{formula}, then the following are equivalent:
+  \begin{enumerate}[label=(\roman*)]
+    \item $\varphi(\bar{x})$ is equivalent to some $L(A)$-formula $\psi(\bar{x})$
+    \item $ \varphi(\mathcal{U}) $ is \hyperlink{def:inv}{invariant} over $A$
+  \end{enumerate}
+\end{nprop}
+\begin{proof}
+  (i) $\Rightarrow$ (ii) is clear.
+
+  (ii) $\Rightarrow$ (i): Let $\varphi(\bar{x},\bar{z})$ be an \hyperlink{def:form}{$L$-formula} such that $\varphi(\mathcal{U},\bar{b})$ is \hyperlink{def:inv}{invariant} over $A$, for suitable $ \bar{b} \in U^{|\bar{z}|}$.
+
+  Let $q(\bar{z})$ be the \hyperlink{def:type}{type} $\tp(\bar{b}/A)$.
+  If $ \bar{c}\hyperlink{def:models}{\models} q(\bar{z}) $, then there is $ \alpha\in\hyperlink{def:aut}{\Aut(\mathcal{U}/A)}$
+  such that $\alpha(\bar{b})=\bar{c}$.
+  Then
+    \begin{align*}
+      \varphi(\mathcal{U},\bar{c})&=\alpha(\varphi(\mathcal{U},\bar{b}))\qquad\text{by \cref{rem:7.3}} \\
+                                       &= \varphi(\mathcal{U},\bar{b})\qquad\text{by invariance}
+    \end{align*}
+  Hence
+  \begin{equation*}
+    q(\bar{z})\to \forall\bar{x}\;(\varphi(\bar{x},\bar{z})\leftrightarrow\varphi(\bar{x},\bar{b}))
+  \end{equation*}
+  by an argument similar to \cref{fact:7.2}.
+
+  There is $\theta(\bar{z})\in q(\bar{z})$ such that $\theta(\bar{z})\to\forall\bar{x}\;(\varphi(\bar{x},\bar{z})\leftrightarrow\varphi(\bar{x},\bar{b}))$.
+  Then $\theta(\bar{z})$ is an $L(A)$-formula and $\exists z\;[\theta(\bar{z})\land\varphi(\bar{x},\bar{z})]$ defines $ \varphi(\mathcal{U},\bar{b}) $.
+\end{proof}
+%\begin{ndef}\label{def:7.6}
+%  \marginnote{\emph{Lecture 13}}An injective map $p: A \subseteq \mathcal{M} \to \mathcal{N}$ is a \textbf{partial embedding} if for all tuples in $A = \dom(p)$, $p$ satisfies conditions (i), (ii), (iii) in \cref{def:1.5}.
+%  Idea: a partial embedding preserves quantifier-free formulas.
+%\end{ndef}
+%\begin{nprop}\label{prop:7.7}
+%  Let $\varphi(\bar{x})$  be an $L$-formula. The following are equivalent:
+%  \begin{enumerate}[label=(\roman*)]
+%    \item there is $\psi(\bar{x})$, a quantifier-free $L$-formula such that
+%      \begin{equation*}
+%        U \models \forall x\; [\varphi(\bar{x}) \leftrightarrow \psi(\bar{x})].
+%      \end{equation*}
+%    \item for all partial embeddings $p: U \to U$, for all $\bar{a}$ from $\dom(\bar{p})$,
+%      \begin{equation*}
+%        \varphi(\bar{a}) \leftrightarrow \varphi(p(\bar{a}))
+%      \end{equation*}
+%  \end{enumerate}
+%\end{nprop}
+%\begin{proof}
+%  (i) $\Rightarrow$ (ii): clear.
+%  (ii) $\Rightarrow$ (i). For $\bar{a} \in U$,
+%  \begin{equation*}\operatorname{qftp}\set{\psi(\bar{x}) | \psi(\bar{a}) \text{ and } \psi(\bar{x}) \text{ is quantifier free})}\end{equation*}.
+%  Let
+%  \begin{equation*}
+%  D = \set{q(\bar{x}) | q(\bar{x}) = qftp(\bar{a}) \text{ for some }\bar{a} \text{ such that } \phi(\bar{a})}.
+%  \end{equation*}
+%  Claim: $\phi(U) = \bigcup_{q(\bar{x}) \in D} q(U)$.
+%
+%  By (an argument similar to) \cref{fact:7.2}, there is $\theta_q(\bar{x})$, in $q(\bar(x)$ a finite conjunction of formulas such that $\theta_q(\bar{x}) \to \phi(x)$.
+%  So we have
+%  \begin{equation*}
+%    \varphi(\bar{x}) \leftrightarrow \bigvee_{q(\bar{x}) \in D} \{\theta_q(\bar{x})\}.
+%  \end{equation*}
+%
+%  By \cref{fact:7.2}, there are $\psi_{q_1}(\bar{x}), \dotsc, \psi_{q_m}(\bar{x})$ such that
+%  \begin{equation*}
+%    \varphi(\bar{x}) \leftrightarrow \bigvee_{i=1}^n \psi_{q_i}(\bar{x}).
+%  \end{equation*}
+%  So $\bigvee \psi_{q_i}(\bar{x})$ is the required quantifier-free formula.
+%\end{proof}
+%\begin{ndef}\label{def:7.8}
+%  An $L$-theory $T$ has \named{quantifier elimination} if for every $L$-formula $\varphi(\bar{x})$ there is $\psi(\bar{x})$ quantifier free such that
+%  \begin{equation*}
+%    T \vdash \forall \bar{x}\; (\varphi(\bar{x}) \leftrightarrow \psi(\bar{x})).
+%  \end{equation*}
+%\end{ndef}
+%\begin{nthm}
+%  Let $T$ be a complete theory, with an infinite model. Then the following are equivalent.
+%  \begin{enumerate}[label=(\roman*)]
+%    \item $T$ has quantifier elimination
+%    \item every $p: U \to U$ partial embedding is elementary
+%    \item If $p: U \to U$ is partial embedding and $|\dom p| < |U|$ and $b \in U$, then there is a partial embedding $\hat{p} \supseteq p$ such that $b \in \dom \hat{p}$.
+%  \end{enumerate}
+%\end{nthm}
+%\begin{proof}
+%  (i) $\Leftrightarrow$ (ii). Follows from \cref{prop:7.7}.
+%
+%  (ii) $\Rightarrow$ (iii). If $p: \mathcal{U} \to \mathcal{U}$ is partial embedding, then it is elementary. Let $b \in \mathcal{U}$.
+%  By homogeneity of $\mathcal{U}$, there is $\alpha \in \Aut(\mathcal{U})$ such that $p \subseteq \alpha$, and so $p \cup \{\langle b, \alpha(b) \rangle \}$ is the required extension of $p$.
+%
+%  (iii) $\Rightarrow$ (ii). Prove that if $p: \mathcal{U} \to \mathcal{U}$ is partial embedding, then any finite restriction $p_0$ of $p$ is an elementary map.
+%  Idea: Let $\mathcal{M} \supseteq \dom(p_0)$, $\mathcal{N} \supseteq \img(p_0)$ such that $|\mathcal{M}| = |\mathcal{N}|$, and extend $p_0$ to $\beta: \mathcal{M} \to \mathcal{N}$ by back-and-forth (use saturation of $\mathcal{U}$).
+%\end{proof}
+%\begin{remark}
+%  There is a fourth condition equivalent to (i), (ii), (iii):
+%  \begin{enumerate}[label=(\roman*)]\setcounter{enumi}{3}
+%    \item for every finite partial embedding $p: \mathcal{U} \to \mathcal{U}$ and $b \in \mathcal{U}$ there is $\hat{p} \supseteq p$, a partial embedding such that $b \in \dom(\hat{p})$.
+%  \end{enumerate}
+%
+%  Proof: Later, exercise.
+%\end{remark}
+%
+%This gives quantifier elimination for $T_{\text{rg}}$ and $T_{\text{dlo}}$.
+%\begin{remark}
+%  if $T$ has quantifier elimination and $\mathcal{M} \models T$, any substructure of $\mathcal{M}$ is an elementary substructure ($T$ is `model-complete').
+%\end{remark}
+%\begin{ndef}
+%  An element $a \in \mathcal{U}$ is \textbf{definable} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $\varphi(U) = \{a\}$. (In particular, any element of $A$ is definable over $A$; $x=a$ for $a \in A$).
+%
+%  An element $a \in U$ is \textbf{algebraic} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $|\varphi(U)| < \omega$ and $a \in \phi(U)$.
+%
+%  The definable closure of $A$ is
+%  \begin{equation*}
+%    \dcl(A) = \set{a \in U | a \text{ definable over }A}
+%  \end{equation*}
+%  and the algebraic closure of $A$ is
+%  \begin{equation*}
+%    \acl(A) = \set{a \in U | a \text{ algebraic over }A}.
+%  \end{equation*}
+%\end{ndef}
+%\begin{nprop}\label{prop:7.11}
+%  For $a \in U$ and $A \subseteq U$, the following are equivalent
+%  \begin{enumerate}[label=(\roman*)]
+%    \item $a \in \dcl(A)$
+%    \item $O(a/A) = \{a\}$. % Orb(a/A)
+%  \end{enumerate}
+%\end{nprop}
+%\begin{proof}
+%  $a \in \dcl(A)$ iff there is $\varphi(x) \in L(A)$ such that $\varphi(U) = \{a\}$. By \cref{prop:7.5} this is equivalent to invariance under $\Aut(U/A)$.
+%\end{proof}
+%\begin{nthm}\label{thm:7.12}
+%  Let $A \subseteq U$, $a \in U$, the following are equivalent
+%  \begin{enumerate}[label=(\roman*)]
+%    \item $a \in \acl(A)$
+%    \item $|O(a/A)| < \omega$
+%    \item $a \in \mathcal{M}$ for any model $\mathcal{M}$ which contains $A$.
+%  \end{enumerate}
+%\end{nthm}
 \printindex
 \end{document}
