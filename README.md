@@ -9,7 +9,7 @@ There are many hyperlinks, marked in blue, to help both learning and revising a 
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader) up to lecture 12, some parts in rough, some pictures missing
 - [Introduction to Discrete Analysis](iii/mich/introduction_to_discrete_analysis.pdf) (2018, W. T. Gowers) up to lecture 3
 - [Model Theory](iii/mich/model_theory.pdf) (2018, S. Barbina) up to lecture 12
-- [Topics in Ergodic Theory](iii/mich/topics_in_ergodic_theory.pdf) (2018, P. Varju) up to lecture 17, some parts in rough
+- [Topics in Ergodic Theory](iii/mich/topics_in_ergodic_theory.pdf) (2018, P. Varju) up to lecture 19, some parts in rough
 
 ## Part II notes
 
