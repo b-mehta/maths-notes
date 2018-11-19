@@ -13,6 +13,7 @@
 \usepackage{pgfplots}
 \makeindex[intoc]
 \usetikzlibrary{fadings, decorations.pathmorphing, shadings}
+%\pagecolor{black}
 
 % preamble
 
@@ -43,6 +44,7 @@
 \let\subset\subseteq
 
 \begin{document}
+%\color{white}
 \maketitle
 
 \tableofcontents
@@ -779,7 +781,7 @@ Also, the \hyperlink{def:shadow}{shadow} of an initial segment of \hyperlink{def
 Indeed, if
 \begin{equation*}\mathcal{C} = \set{A \in X^{(r)} | A \leq a_1 a_2 \dots a_r}\end{equation*}
 then
-\begin{equation*}\hyperlink{def:shadow}{\partial \mathcal{C}} = \set{B \in X^{(r-1)}| B \leq a_2 \dots a_r}\end{equation*}.
+\begin{equation*}\hyperlink{def:shadow}{\partial \mathcal{C}} = \set{B \in X^{(r-1)}| B \leq a_2 \dots a_r}.\end{equation*}
 
 \begin{ncor}\label{cor:9}
   Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ and let $\mathcal{C} \subset X^{(r)}$ be the initial segment of \hyperlink{def:colex}{colex} with $|\mathcal{C}| = |\mathcal{A}|$.
@@ -845,10 +847,11 @@ If $r > \frac{n}{2}$, this is a silly question, as we can take $\A = X^{(r)}$.
 If $r = \frac{n}{2}$, the maximum is $\frac{1}{2} \binom nr$ - just choose one of $A,A^c$ for each $A \in X^{(r)}$.
 So assume $r < \frac{n}{2}$.
 
-Taking $\mathcal{A} = \set{A \in X^{(r)} | 1 \in A}$ gives $|\A| = \binom{n-1}{r-1} = \frac{r}{n} \binom nr$.
-
-Could also try, e.g.\ $\mathcal{B} = \set{A \in X^{(r)} | |A \cap \{1,2,3\}| \geq 2}$.
-
+Taking
+\begin{equation*}\mathcal{A} = \set{A \in X^{(r)} | 1 \in A}\end{equation*}
+gives $|\A| = \binom{n-1}{r-1} = \frac{r}{n} \binom nr$.
+Could also try, e.g.\
+\begin{equation*}\mathcal{B} = \set{A \in X^{(r)} | |A \cap \{1,2,3\}| \geq 2}.\end{equation*}
 Try both on $[8]^{(3)}$:
 \begin{gather*}
   |\A| = \binom{7}{2} = 21 \\
@@ -950,11 +953,11 @@ This follows (proof 1) from equality case of \nameref{thm:kk7}, or (proof 2) by 
   \end{tikzpicture}
 \end{center}
 
-\begin{defi}[Boundary]
-For a set $A$ of vertices in a graph $G$, the \named{boundary} is
-\begin{equation*}
-  b(A) = \set{x \in V(G) | x \notin A, xy \in E \text{ for some } y \in A}.
-\end{equation*}
+\begin{defi}[Boundary]\hypertarget{def:boundary}
+  For a set $A$ of vertices in a graph $G$, the \named{boundary} is
+  \begin{equation*}
+    b(A) = \set{x \in V(G) | x \notin A, xy \in E \text{ for some } y \in A}.
+  \end{equation*}
 \end{defi}
 For example, in the picture, if $A = \{1,2,3\}$, then $b(A) = \{4,5\}$.
 \begin{center}
@@ -976,14 +979,14 @@ For example, in the picture, if $A = \{1,2,3\}$, then $b(A) = \{4,5\}$.
 \begin{defi}[Isoperimetric inequality]
 An \named{isoperimetric inequality} on $G$ is an inequality of the form
 \begin{equation*}
-  |b(A)| \geq f(|A|) \quad \forall \subseteq V(G).
+  |\hyperlink{def:boundary}{b(A)}| \geq f(|A|) \quad \forall \subseteq V(G).
 \end{equation*}
 \end{defi}
 
 \begin{defi}[Neighbourhood]\hypertarget{def:neighbourhood}
 Equivalently, minimise the \named{neighbourhood} of $A$:
 \begin{equation*}
-  N(A) = A \cap b(A) = \set{x \in G | d(x,A) \leq 1}
+  N(A) = A \cap \hyperlink{def:boundary}{b(A)} = \set{x \in G | d(x,A) \leq 1}
 \end{equation*}
 where $d$ denotes the usual graph distance.
 \end{defi}
@@ -1252,7 +1255,7 @@ Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
 
         \begin{scope}
           \clip (0,0) circle [x radius=16mm, y radius=8mm];
-          \draw [very thin, fill=bred!40] (-1.6,-0.8) -- (0.2,-0.8) arc (0:90:2mm) -- (0,0.6) arc (-90:-180:2mm) -- (-1.6,0.8) -- cycle;
+          \fill [bred!40] (-1.6,-0.8) -- (0.2,-0.8) arc (0:90:2mm) -- (0,0.6) arc (-90:-180:2mm) -- (-1.6,0.8) -- cycle;
           \draw [very thin] (0,0.8) -- (0,-0.8);
         \end{scope}
         \draw (0,0) circle [x radius=16mm, y radius=8mm];
@@ -1474,7 +1477,7 @@ Similarly, we can define $\alpha(X, \epsilon)$ for $X$ any metric measure space 
           \draw [very thin] (-1,0) arc (180:360:1 and 0.3);
           \begin{scope}[every path/.style={fill=white, fill opacity=0.5, very thin}]
             \draw (0.4, 0.4) circle [x radius=0.25cm, y radius=0.22cm, rotate=120];
-            \draw [decorate, decoration={random steps, segment length=1.5pt, amplitude=0.8pt}] (-0.3, 0.2) circle [x radius=0.25cm, y radius=0.2cm, rotate=-10];
+            \draw [decorate, decoration={random steps, segment length=1.8pt, amplitude=1.2pt}] (-0.3, 0.2) circle [x radius=0.25cm, y radius=0.2cm, rotate=-10];
           \end{scope}
           \node at (-0.1,-0.1) {$A$};
           \node at (0.4,0) {$C$};
@@ -1617,7 +1620,7 @@ Take for example $|A|=4$ in $Q_3$:
 \end{tikzpicture}
 \end{center}
 
-This suggest that perhaps subcubes are best. But what if $2^k < |A| < 2^{k+1}$? Maybe fill up all of $Q_k$, then add in subcubes.
+This suggests that perhaps subcubes are best. But what if $2^k < |A| < 2^{k+1}$? Maybe fill up all of $Q_k$, then add in subcubes.
 \begin{defi}[Binary ordering]\hypertarget{def:binary}
   Say $x<y$ in the \named{binary} ordering on $Q_n$ if $\max(x \sym y) \in y$.
 \end{defi}
@@ -1628,13 +1631,13 @@ Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in sub
   In particular,
   \begin{equation*}|A|=2^k \Rightarrow |\partial A| \geq 2^k (n-k).\end{equation*}
 \end{aim}
-\begin{defi}[Binary compression]
-For $A \subset \hyperlink{def:qn}{Q_n}$ and $1 \leq i \leq n$, the \textbf{$i$-binary compression} $B_i(A)$ is defined by giving its \hyperlink{def:section}{$i$-sections:}
-\begin{align*}
-  B_i(A)_+^{(i)} &= \text{first }|A_+^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in \hyperlink{def:binary}{binary}} \\
-  B_i(A)_-^{(i)} &= \text{first }|A_-^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in binary}
-\end{align*}
-Note that $|B_i(A)| = |A|$. Say $A$ is $i$-\textbf{binary compressed} if $B_i(A) = A$.
+\begin{defi}[Binary compression]\hypertarget{def:binarycomp}
+  For $A \subset \hyperlink{def:qn}{Q_n}$ and $1 \leq i \leq n$, the \textbf{$i$-binary compression} $B_i(A)$ is defined by giving its \hyperlink{def:section}{$i$-sections:}
+  \begin{align*}
+    B_i(A)_+^{(i)} &= \text{first }|A_+^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in \hyperlink{def:binary}{binary}} \\
+    B_i(A)_-^{(i)} &= \text{first }|A_-^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in binary}
+  \end{align*}
+  Note that $|B_i(A)| = |A|$. Say $A$ is $i$-\textbf{binary compressed} if $B_i(A) = A$.
 \end{defi}
 \begin{center}
   \begin{tikzpicture}[scale=2]
@@ -1698,7 +1701,7 @@ Note that $|B_i(A)| = |A|$. Say $A$ is $i$-\textbf{binary compressed} if $B_i(A)
     \end{scope}
     \draw [->] (0, -0.4) -- (0, -0.1) node [right, midway] {$i$};
     \node at (0.65,-2) {$A$};
-    \node at (3.35,-2) {$B_i(A)$};
+    \node at (3.35,-2) {$\hyperlink{def:binarycomp}{B_i(A)}$};
     \draw [->] (1.5, -0.25) -- (2.5, -0.25) node [above, midway] {$B_i$};
   \end{tikzpicture}
 \end{center}
@@ -1711,7 +1714,7 @@ Note that $|B_i(A)| = |A|$. Say $A$ is $i$-\textbf{binary compressed} if $B_i(A)
 \end{remark}
 \begin{proof}
   Induction on $n$: $n=1$ is immediate.
-  Given $A \subset \hyperlink{def:qn}{Q_n}$ for $n > 1$ and $1 \leq i \leq n$: \textbf{Claim} $|\hyperlink{def:ebound}{\partial} B_i(A)| \leq |\partial A|$.
+  Given $A \subset \hyperlink{def:qn}{Q_n}$ for $n > 1$ and $1 \leq i \leq n$: \textbf{Claim} $|\hyperlink{def:ebound}{\partial} \hyperlink{def:binarycomp}{B_i}(A)| \leq |\partial A|$.
 
   \textbf{Proof of claim:} Write $B$ for $B_i(A)$.
   We have
@@ -1720,21 +1723,53 @@ Note that $|B_i(A)| = |A|$. Say $A$ is $i$-\textbf{binary compressed} if $B_i(A)
     |\partial B| &= |\partial(B_-)| + |\partial(B_+)| + |B_i \sym B_+|.
   \end{align*}
   Now, $|\partial (B_-)| \leq |\partial (A_-)|$ and $|\partial(B_+)| \leq |\partial(A_+)|$ by induction.
-  Also, $|A_-| = |B_-|$, $|A_+| = |B_+|$ and $B_-, B_+$ nested (as both initial segments of binary).
+  Also, $|A_-| = |B_-|$, $|A_+| = |B_+|$ and $B_-, B_+$ nested (as both initial segments of \hyperlink{def:binary}{binary}).
   Whence $|B_- \sym B_+| \leq |A_i \sym A_+|$.
   Among all $B \subset Q_n$ with $|B| = |A|$ and $|\partial B| \leq |\partial A|$, choose one with
   \begin{equation*}\sum_{x \in B} (\text{position of $x$ in binary order})\end{equation*}
   minimal, completing the claim. $\blacksquare$
 
-  Then $B$ is $i$-binary compressed $\forall i$ by claim.
+  Then $B$ is \hyperlink{def:binarycomp}{$i$-binary compressed} $\forall i$ by claim.
   This $B$ need not be an initial segment of binary, e.g.\
-  However, claim: If $B< Q_n$ is $i$-binary-compressed $\forall i$ but not an initial segment of binary, then $B = \mathcal{P}(n-1) \cup \{n\} - \{123\dotsm(n-1)\}$.
-  (Bottom half, last point removed, first point of top half added).
+  \begin{center}
+    \begin{tikzpicture}[scale=2]
+      \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}]
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \foreach \x in {B,D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \foreach \x in {A,B,D,E} {\node [mymark] at (\x) {};}
+    \end{scope}
+    \end{tikzpicture}
+  \end{center}
+
+  However, claim: If $B< Q_n$ is $i$-binary compressed $\forall i$ but not an initial segment of binary, then
+  \begin{equation*}B = \mathcal{P}([n-1]) \cup \{n\} - \{123\dotsm(n-1)\}.\end{equation*}
+  (Bottom half with last point removed, first point of top half added).
+  \begin{center}
+    \begin{tikzpicture}[scale=2]
+      \fill [bred!40] (0,0) -- (1,0) -- (1,0.85) arc [start angle=-90, end angle=-180, radius=1.5mm] -- (0,1);
+      \fill [bred!40] (0.15,1.5) arc [start angle=0, end angle=90, radius=1.5mm] -- (0,1.5);
+      \draw (0,0) rectangle (1,1);
+      \draw (0,1.5) rectangle (1,2.5);
+      \draw [->] (-0.2,0.9) to node[midway, left] {$n$} (-0.2,1.6);
+      \node [right] at (1.1, 0.5) {$Q_{n-1}$};
+      \node [right] at (1.1, 2) {$Q_{n-1}$};
+    \end{tikzpicture}
+  \end{center}
   Then done, as clearly $|\partial B| \geq |\partial C|$.
 
   Proof of claim:
   Have some $x < y$ with $x \notin B$ and $y \in B$.
-  Then $\forall i$, cannot have $i \notin x,y$ and cannot have $i \in xy$ as $B_i(B) = B$. So $x = y^c$.
+  Then $\forall i$, cannot have $i \notin x,y$ and cannot have $i \in x,y$ as $B_i(B) = B$.
+  So $x = y^c$.
   Thus for each $y \in B$, there is at most 1 $x < y$ with $x \notin B$ (namely $x^c$), and for each $x \notin B$, there is at most one $y > x$ with $y \in B$ (namely $y^c$).
   Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
   Hence $y = \{n\}$.
@@ -1750,32 +1785,131 @@ Note that $|B_i(A)| = |A|$. Say $A$ is $i$-\textbf{binary compressed} if $B_i(A)
   \end{equation*}
   `How small can the average out-degree be?'
 \end{defi}
+\begin{center}
+  \begin{tikzpicture}
+    \begin{scope}
+      \coordinate (0) at (-1,-0.1);
+      \coordinate (1) at (-0.7,0.1);
+      \coordinate (2) at (-0.5, 0);
+      \coordinate (3) at (-0.3,0.2);
+      \coordinate (4) at (0,-0.15);
+      \coordinate (5) at (0.1,0);
+      \coordinate (6) at (0.3,0.1);
+      \coordinate (7) at (0.4,-0.2);
+      \coordinate (8) at (0.6,0);
+      \clip (0,0) circle [x radius=1cm, y radius=1.5cm];
+      \draw [bred, fill=bred!40] plot coordinates {(0) (1) (2) (3) (4) (5) (6) (7) (8) (1,-0.1) (1,-1.6) (-1,-1.6)};
+      \foreach \x in {1,3,6,8} {
+        \draw [bgreen] (\x) -- ++(110+rand*20:0.25);
+        \draw [bgreen] (\x) -- ++(60+rand*20:0.25);
+      }
+      \draw [bgreen] (5) -- ++(100:0.2);
+      \draw [bgreen] (2) -- ++(90:0.2);
+      \draw [bgreen] (-0.15,0.025) -- ++(80:0.2);
+    \end{scope}
+    \draw (0,0) circle [x radius=1cm, y radius=1.5cm];
+    \node [bred!70!black] at (0,-1) {$A$};
+  \end{tikzpicture}
+\end{center}
 \begin{ncor}\label{cor:2.9}
   $\hyperlink{def:i}{i(Q_n)}=1$.
 \end{ncor}
+
+\begin{center}
+  \begin{tikzpicture}[scale=2]
+    \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}, mymarkline/.style={line cap=round, ultra thick, bgreen, opacity=0.5}]
+      \begin{scope}
+        \node (A) at (0,0) {};
+        \node (B) at (1,0) {};
+        \node (C) at (1,1) {};
+        \node (D) at (0,1) {};
+        \node (E) at (0.3,0.3) {};
+        \node (F) at (1.3,0.3) {};
+        \node (G) at (1.3,1.3) {};
+        \node (H) at (0.3,1.3) {};
+        \fill [bred!40] (A) -- (B) -- (1.3,0.3) -- (0.3,0.3) -- (0,0);
+        \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+        \draw [mymarkline] (E) -- (H);
+        \foreach \x in {D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+        \draw (C) -- (B);
+        \draw [mymarkline] (G) -- (F);
+        \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+        \draw [mymarkline] (B) -- (C);
+        \draw [mymarkline] (A) -- (D);
+      \end{scope}
+  \end{scope}
+  \node [bred!70!black] at (0.65,0.15) {$A$};
+  \end{tikzpicture}
+\end{center}
+
 \begin{proof}
-  The set $A = \mathcal{P}([n-1])$ shows $i(Q_n)\leq1$.
+  The set $A = \mathcal{P}(\hyperlink{def:ints}{[n-1]})$ shows $\hyperlink{def:i}{i(Q_n)}\leq1$.
   To show $i(Q_n) \geq 1$, sufficient to show (by \cref{thm:2.8}) that if $C$ is an initial segment of binary with $|C| \leq 2^{k-1}$ then $|\partial C| \geq |C|$.
-  But this is clear because $C \subset \mathbb{P}([n-1])$.
+  \begin{center}
+    \begin{tikzpicture}[scale=2]
+      \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}, mymarkline/.style={->, bgreen, opacity=0.9}]
+        \begin{scope}
+          \node (A) at (0,0) {};
+          \node (B) at (1,0) {};
+          \node (C) at (1,1) {};
+          \node (D) at (0,1) {};
+          \node (E) at (0.3,0.3) {};
+          \node (F) at (1.3,0.3) {};
+          \node (G) at (1.3,1.3) {};
+          \node (H) at (0.3,1.3) {};
+          %\fill [bred!40] (A) -- (B) -- (1.3,0.3) -- (0.3,0.3) -- (0,0);
+          \draw [bred, fill=bred!40] decorate[decoration={random steps,segment length=2pt,amplitude=1pt}] {(0.6,0.3) -- (0.95,0)} -- (0,0) -- (0.3,0.3) -- (0.6,0.3);
+          \foreach \x in {A,F,H} {\draw [opacity=0.5] (E) -- (\x);};
+          \draw [mymarkline] (E) -- (0.3,0.9);
+          \draw [mymarkline] (0.6,0.3) -- (0.6,0.9);
+          \foreach \x in {D,G} {\draw [over] (C) -- (\x); \draw (C) -- (\x);};
+          \draw (C) -- (B);
+          %\draw [mymarkline] (G) -- (F);
+          \draw [line cap=round, opacity=0.8] (A) -- (B) -- (F) -- (G) -- (H) -- (D) -- (A);
+          \draw [mymarkline] (0.95,0) -- (0.95,0.6);
+          \draw [mymarkline] (A) -- (0,0.6);
+        \end{scope}
+      \end{scope}
+    \node [bred!70!black] at (0.45,0.15) {$C$};
+    \end{tikzpicture}
+  \end{center}
+  But this is clear because $C \subset \mathcal{P}([n-1])$.
 \end{proof}
 
 \subsection{Inequalities in the grid}
 \begin{defi}[Grid]\hypertarget{def:grid}
   The \named{grid} is the graph on vertex-set $[k]^n = \{1,2,\dotsc,k\}^n$ in which $(x_1, \dotsc, x_n)$ joined to $(y_1, \dotsc, y_n)$ if for some $i$, have $|x_i - y_i| = 1$ and $x_j = y_j \quad \forall j \neq i$ (`$\ell^1$-distance').
-  For $k=2$, this is the discrete cube $Q_n$.
 \end{defi}
+\begin{center}
+  \begin{tikzpicture}[scale=0.5]
+    \draw (0,0) grid (3,3);
+    \node at (4.5,1.5) {$\hyperlink{def:grid}{[4]^2}$};
+  \end{tikzpicture}
+\end{center}
+For $k=2$, this is the \hyperlink{def:qn}{discrete cube $Q_n$}.
+
 Do \cref{thm:harper1} and \cref{thm:2.8} have analogues in \hyperlink{def:grid}{$[k]^n$}?
+What is the best \hyperlink{def:boundary}{vertex-boundary}? Take $[k]^2$ as an example:
+\begin{center}
+  \begin{tikzpicture}[scale=2]
+    \begin{scope}
+    \draw [bred, fill=bred!40] (0,0) -- (0.7,0) -- (0,0.7);
+    \draw (0,0) rectangle (1,1);
+    \draw [decorate, decoration={brace, amplitude=2mm}, xshift=-0.5mm] (0,0) -- node [midway, left, xshift=-2mm] {$d$} (0,0.7);
+    \node [right] at (1.1,0.5) {has $|\hyperlink{def:boundary}{b(A)}| \sim d \sim \sqrt{2|A|}$};
+    \end{scope}
+    \begin{scope}[yshift=-1.4cm]
+      \draw [bred, fill=bred!40] (0,0) -- (0.4,0) -- (0.4,0.4) -- (0,0.4);
+      \draw (0,0) rectangle (1,1);
+      \draw [decorate, decoration={brace, amplitude=2mm}, xshift=-0.5mm] (0,0) -- node [midway, left, xshift=-2mm] {$d$} (0,0.4);
+      \node [right] at (1.1,0.5) {has $|\hyperlink{def:boundary}{b(A)}| \sim 2d \sim 2\sqrt{|A|}$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
 
-What is the best vertex-boundary? Take $[k]^2$ as an example:
-
-This suggests that sets of the form
-\begin{equation*}
-  \set{x | \lvert x \rvert \leq r}
-\end{equation*}
-are best.
+This suggests that sets of the form $ \set{x | \lvert x \rvert \leq r} $ are best.
 
 What about sizes in between?
-
 For given $|x|$, we'd `keep $x_1$ big'
 \begin{defi}[Simplicial ordering]\hypertarget{def:simplic}
   We define the \index{simplicial ordering} on $[k]^n$ by setting $x<y$ if either $|x| < |y|$ or $|x| = |y|$ and $x_i > y_i$, where $i = \min\set{j | x_j \neq y_j}$.
@@ -1787,6 +1921,14 @@ For given $|x|$, we'd `keep $x_1$ big'
       \begin{equation*}
         (1,1),(2,1),(1,2),(3,1),(2,2),(1,3),(3,2),(2,3),(3,3).
       \end{equation*}
+      \begin{center}
+        \begin{tikzpicture}
+          \draw (0,0) grid (2,2);
+          \draw (1,0) -- (0,1);
+          \draw (2,0) -- (0,2);
+          \draw (2,1) -- (1,2);
+        \end{tikzpicture}
+      \end{center}
     \item On $[4]^3$, we get
       \begin{equation*}
         111,211,121,112,311,221,212,131,122,113,411,321,\dotsc
@@ -1794,26 +1936,27 @@ For given $|x|$, we'd `keep $x_1$ big'
   \end{itemize}
 \end{eg}
 \begin{aim}
-  Initial segments of \hyperlink{def:simplic}{simplicial} minimise neighbourhood.
+  Initial segments of \hyperlink{def:simplic}{simplicial} minimise \hyperlink{def:neighbourhood}{neighbourhood}.
   In particular,
   \begin{equation*}
-    |A| = |\set{x | |x|\leq r}| \implies |N(A)| \geq |\set{x | |x| \leq r+1}|.
+    |A| = |\set{x | |x|\leq r}| \implies |\hyperlink{def:neighbourhood}{N(A)}| \geq |\set{x | |x| \leq r+1}|.
   \end{equation*}
 \end{aim}
-For $A \subset [k]^n$ and $1 \leq i \leq n$, the $i$-sections of $A$ are the sets $A_1, \dotsc, A_k$ (or $A_1^{(i)}, \dotsc, A_k^{(i)}$) in $[k]^{n-1}$ given by
-\begin{equation*}
-  A_t = \set{(x_1, \dotsc, x_{n-1}) \in [k]^{n-1} | (x_1, x_2, \dotsc, x_{i-1}, t, x_i, x_{i+1}, \dotsc, x_n) \in A} \quad \forall 1 \leq t \leq k
-\end{equation*}
-% picture
-\begin{defi}
-  The $i$-compression $C_i(A) \subseteq [k]^n$ is defined by giving its $i$-sections:
+\begin{defi}[Sections]
+  \hypertarget{def:sections}For $A \subset [k]^n$ and $1 \leq i \leq n$, the \textbf{$i$-sections} of $A$ are the sets $A_1, \dotsc, A_k$ (or $A_1^{(i)}, \dotsc, A_k^{(i)}$) in $[k]^{n-1}$ given by
   \begin{equation*}
-    C_i(A)_t = \text{first |$A_t|$ points in simplicial order on $[k]^{n-1}$}.
+    A_t = \set{(x_1, \dotsc, x_{n-1}) \in [k]^{n-1} | (x_1, x_2, \dotsc, x_{i-1}, t, x_i, x_{i+1}, \dotsc, x_n) \in A} \quad \forall 1 \leq t \leq k
+  \end{equation*}
+\end{defi}
+% picture
+\begin{defi}[$i$-compression]\hypertarget{def:icomp2}
+  The \textbf{$i$-compression} $C_i(A) \subseteq [k]^n$ is defined by giving its \hyperlink{def:sections}{$i$-sections}:
+  \begin{equation*}
+    C_i(A)_t = \text{first $|A_t|$ points in \hyperlink{def:simplic}{simplicial order} on }[k]^{n-1}.
   \end{equation*}
 \end{defi}
 Certainly $|C_i(A)| \leq |A|$.
-
-Say $A$ is $i$-compressed if $C_i(A) = A$.
+Say $A$ is \textbf{$i$-compressed} if $C_i(A) = A$.
 \begin{nthm}[Vertex-isoperimetric inequality in the grid]
   Let $A \subseteq [k]^n$ and let $C$ be the initial segment of the simplicial roder on $[k]^n$ with $|C| = |A|$.
   Then $|N(A)| \geq |N(C)|$. In particular, if $|A| \geq |\set{x | |x|\leq r}|$ then $|N(A)| \geq |\set{x | |x| \leq r+1}|$
@@ -1845,7 +1988,98 @@ Say $A$ is $i$-compressed if $C_i(A) = A$.
     \sum_{x \in B} (\text{position of $x$ in simplicial}).
   \end{equation*}
   Then $B$ is $i$-compressed $\forall i$ (else $C_i(B)$ contradicts our discussion of $B$).
+
+  \marginnote{\emph{Lecture 12}}We want to show $N(B) \geq N(C)$.
+  \begin{itemize}
+    \item \textbf{Case 1}: $n=2$.
+      $B$ is $i$-compressed $\forall i$ if and only if $B$ is a \textbf{down-set} (if $x_i \leq y_i \; \forall i$ and $y \in B)$ then $x \in B$). That is, `going down or left, we stay in $B$'.
+      Suppose $B \neq C$.
+      Let
+      \begin{align*}
+        r &= \min \set{\lvert x \rvert | x \notin B} \\
+        s &= \max \set{\lvert x \rvert | x \in B}.
+      \end{align*}
+      We must have $r \leq s$, since $r > s \Rightarrow B = C$, as $B$ would be an exact ball.
+
+      If $r=s$, have
+      \begin{equation*}
+        \set{x : |x| \leq r-1} \subset B \subset \set{x | |x|\leq r},
+      \end{equation*}
+      so clearly $|N(B)| \geq |N(C)|$.
+
+      If $r < s$, we cannot have $\set{x | |x| = r}$ disjoint from $B$ (as $B$ is a down-set and $\exists x \in B$ with $|x| = s$).
+      Similarly cannot have $\set{x | |x| = s} \subset B$ (as $B$ a down-set and $\exists x \notin B, |x| = r$).
+      So $\exists x,x'$ on level $r$ with $x \notin B, x' \in B$ and $x' = x \pm (e_1 - e_2)$, and $\exists y,y'$ on level $s$ with $y \in B$, $y' \notin B$ and $y' = y \pm (e_1 - e_2)$.
+
+      Now let $B' = B \cup \{x\} - \{y\}$. Then $N(B') \leq N(B)$ (we lose $\geq 1$ point from level $s+1$ and gain $\leq 1$ point from level $r+1$), contradicting choice of $B$.
+    \item \textbf{Case 2}: $n \geq 3$.
+      If $x \in B$ then must have $x-e_n+e_i \in B$ (for any $1 \leq i \leq n-1$, $x_n > 1$, $x_i \leq k$), because $B$ is $j$-compressed, any $j \neq n,i$ (as $n \geq 3$).
+      So $N(B_t) \subset B_{t-1}$.
+      We had $N(B)_t = N(B_t) \cup B_{t-1} \cup B_{t+1}$, so $N(B)_t = B_{t-1}$.
+      Thus
+
+      \begin{equation*}
+        |N(B)| = |B_{k-1}| + |B_{k-2}| + \dotsb + |B_1| + |N(B_1)| = |B| - |B_k| + |N(B_1)|
+      \end{equation*}
+      where $B_1$ is in level 2, and $N(B_1)$ is in level 1.
+      Similarly,
+      \begin{equation*}
+        |N(C)| = |C| - |C_k| + |N(C_1)|.
+      \end{equation*}
+      Thus it is sufficient to show that $|B_k| \leq |C_k|$ and $|B_1| \geq |C_1|$.
+      Focus on the former first:
+      Define  $D \subset [k]^n$ by
+      \begin{align*}
+        D_k &= B_k \\
+        D_t &= N(D_{t+1}), \quad t = k-1, k-2, \dotsc, 1
+      \end{align*}
+      Then $D$ is an initial segment of simplicial, and $D \subset B$, so $|D| \leq |B| = |C|$, whence $D \subset C$ (as $D,C$ nested as initial segments of simplicial).
+      Hence $D_k \subset C_k$.
+
+      Now aim to show $|B_1| \geq |C_1|$:
+      Define $E \subset [k]^n$ by
+      \begin{align*}
+        E_1 &= B_1 \\
+        E_t &= \set{x \in [k]^{n-1} | N(\{x\}) \subset E_{t-1}}, \quad t=2,3,\dotsc,k.
+      \end{align*}
+      Then $E$ is an initial segment of simplicial and $E \supset B$, so $|E| \geq |B| = |C|$, whence $E \supset C$ (as $E,C$ nested). Hence $E_1 \supset C_1$.
+      This completes the claim, and thus completes the induction. \qedhere
+  \end{itemize}
 \end{proof}
+\begin{ncor}\label{cor:2.11}
+  Let $A \subset [k]^n$ with $|A| = |\set{x | |x| \leq r}|$. Then $|A_{(t)}| \geq |\set{x | |x| \leq r + t}$.
+\end{ncor}
+\begin{proof}
+  Induction on $t$.
+\end{proof}
+\begin{remark}
+  Can check from this that, for fixed $k$, the sequence $[k]^1, [k]^2, [k]^3, \dotsc$ is a \hyperlink{def:levyfam}{normal L\'evy family}.
+\end{remark}
+\subsection{Edge-isoperimetric inequalities in the grid}
+We aim to minimise $|\partial A|$ in $[k]^m$.
+For example, in $[k]^2$:
+\begin{center}
+  pictures
+\end{center}
+% draw some pictures
+This suggests squares are best.
+But,
+\begin{center}
+  more pictures
+\end{center}
+% draw some more pictures
+so have `phase transitions' at $|A| = \frac{k^2}{4}$ and $|A| = \frac{3k^2}{4}$.
+The extremal sets are not nested! (So cannot compress, $\nexists$ an ordering, etc.)
+
+In $[k]^3$:
+\begin{center}
+  equation
+\end{center}
+
+Similarly in higher dimensions.
+This has been proved: `edge-isoperimetric inequality in the grid'.
+
+Very few isoperimetric inequalities are known exactly or asymptotically.
 \clearpage
 \section{Projections}
 \printindex
