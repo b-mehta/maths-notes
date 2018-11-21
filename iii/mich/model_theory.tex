@@ -11,7 +11,7 @@
 \usepackage{marginnote}
 \input{header}
 \makeindex[intoc]
-\usetikzlibrary{intersections}
+\usetikzlibrary{intersections, decorations.pathmorphing}
 
 % preamble
 
@@ -29,6 +29,7 @@
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\img}{img}
 \DeclareMathOperator{\tp}{tp}
+\DeclareMathOperator{\qftp}{qftp}
 \DeclareMathOperator{\dcl}{dcl}
 \DeclareMathOperator{\acl}{acl}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
@@ -41,6 +42,10 @@
 \newtheorem{nnotation}[nthm]{Notation}
 
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
+\newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
+\newcommand{\M}{\mathcal{M}}
+\renewcommand{\N}{\mathcal{N}}
+\newcommand{\U}{\mathcal{U}}
 
 % and here we go!
 
@@ -969,7 +974,6 @@ Then if $\mathcal{N} \hyperlink{def:models}{\models} \Th(\mathcal{M}_M)$, then $
   By \nameref{thm:3.11DLS}, we may assume $|\mathcal{N}| = \lambda$.
 \end{proof}
 
-% up to here
 \clearpage
 \section{Saturation}
 \begin{ndef}[Saturated]\label{def:6.1}\hypertarget{def:sat}
@@ -1315,112 +1319,118 @@ we work in a \hyperlink{def:sat}{saturated} \hyperlink{def:str}{structure} $\mat
   There is $\theta(\bar{z})\in q(\bar{z})$ such that $\theta(\bar{z})\to\forall\bar{x}\;(\varphi(\bar{x},\bar{z})\leftrightarrow\varphi(\bar{x},\bar{b}))$.
   Then $\theta(\bar{z})$ is an $L(A)$-formula and $\exists z\;[\theta(\bar{z})\land\varphi(\bar{x},\bar{z})]$ defines $ \varphi(\mathcal{U},\bar{b}) $.
 \end{proof}
-%\begin{ndef}\label{def:7.6}
-%  \marginnote{\emph{Lecture 13}}An injective map $p: A \subseteq \mathcal{M} \to \mathcal{N}$ is a \textbf{partial embedding} if for all tuples in $A = \dom(p)$, $p$ satisfies conditions (i), (ii), (iii) in \cref{def:1.5}.
-%  Idea: a partial embedding preserves quantifier-free formulas.
-%\end{ndef}
-%\begin{nprop}\label{prop:7.7}
-%  Let $\varphi(\bar{x})$  be an $L$-formula. The following are equivalent:
-%  \begin{enumerate}[label=(\roman*)]
-%    \item there is $\psi(\bar{x})$, a quantifier-free $L$-formula such that
-%      \begin{equation*}
-%        U \models \forall x\; [\varphi(\bar{x}) \leftrightarrow \psi(\bar{x})].
-%      \end{equation*}
-%    \item for all partial embeddings $p: U \to U$, for all $\bar{a}$ from $\dom(\bar{p})$,
-%      \begin{equation*}
-%        \varphi(\bar{a}) \leftrightarrow \varphi(p(\bar{a}))
-%      \end{equation*}
-%  \end{enumerate}
-%\end{nprop}
-%\begin{proof}
-%  (i) $\Rightarrow$ (ii): clear.
-%  (ii) $\Rightarrow$ (i). For $\bar{a} \in U$,
-%  \begin{equation*}\operatorname{qftp}\set{\psi(\bar{x}) | \psi(\bar{a}) \text{ and } \psi(\bar{x}) \text{ is quantifier free})}\end{equation*}.
-%  Let
-%  \begin{equation*}
-%  D = \set{q(\bar{x}) | q(\bar{x}) = qftp(\bar{a}) \text{ for some }\bar{a} \text{ such that } \phi(\bar{a})}.
-%  \end{equation*}
-%  Claim: $\phi(U) = \bigcup_{q(\bar{x}) \in D} q(U)$.
-%
-%  By (an argument similar to) \cref{fact:7.2}, there is $\theta_q(\bar{x})$, in $q(\bar(x)$ a finite conjunction of formulas such that $\theta_q(\bar{x}) \to \phi(x)$.
-%  So we have
-%  \begin{equation*}
-%    \varphi(\bar{x}) \leftrightarrow \bigvee_{q(\bar{x}) \in D} \{\theta_q(\bar{x})\}.
-%  \end{equation*}
-%
-%  By \cref{fact:7.2}, there are $\psi_{q_1}(\bar{x}), \dotsc, \psi_{q_m}(\bar{x})$ such that
-%  \begin{equation*}
-%    \varphi(\bar{x}) \leftrightarrow \bigvee_{i=1}^n \psi_{q_i}(\bar{x}).
-%  \end{equation*}
-%  So $\bigvee \psi_{q_i}(\bar{x})$ is the required quantifier-free formula.
-%\end{proof}
-%\begin{ndef}\label{def:7.8}
-%  An $L$-theory $T$ has \named{quantifier elimination} if for every $L$-formula $\varphi(\bar{x})$ there is $\psi(\bar{x})$ quantifier free such that
-%  \begin{equation*}
-%    T \vdash \forall \bar{x}\; (\varphi(\bar{x}) \leftrightarrow \psi(\bar{x})).
-%  \end{equation*}
-%\end{ndef}
-%\begin{nthm}
-%  Let $T$ be a complete theory, with an infinite model. Then the following are equivalent.
-%  \begin{enumerate}[label=(\roman*)]
-%    \item $T$ has quantifier elimination
-%    \item every $p: U \to U$ partial embedding is elementary
-%    \item If $p: U \to U$ is partial embedding and $|\dom p| < |U|$ and $b \in U$, then there is a partial embedding $\hat{p} \supseteq p$ such that $b \in \dom \hat{p}$.
-%  \end{enumerate}
-%\end{nthm}
-%\begin{proof}
-%  (i) $\Leftrightarrow$ (ii). Follows from \cref{prop:7.7}.
-%
-%  (ii) $\Rightarrow$ (iii). If $p: \mathcal{U} \to \mathcal{U}$ is partial embedding, then it is elementary. Let $b \in \mathcal{U}$.
-%  By homogeneity of $\mathcal{U}$, there is $\alpha \in \Aut(\mathcal{U})$ such that $p \subseteq \alpha$, and so $p \cup \{\langle b, \alpha(b) \rangle \}$ is the required extension of $p$.
-%
-%  (iii) $\Rightarrow$ (ii). Prove that if $p: \mathcal{U} \to \mathcal{U}$ is partial embedding, then any finite restriction $p_0$ of $p$ is an elementary map.
-%  Idea: Let $\mathcal{M} \supseteq \dom(p_0)$, $\mathcal{N} \supseteq \img(p_0)$ such that $|\mathcal{M}| = |\mathcal{N}|$, and extend $p_0$ to $\beta: \mathcal{M} \to \mathcal{N}$ by back-and-forth (use saturation of $\mathcal{U}$).
-%\end{proof}
-%\begin{remark}
-%  There is a fourth condition equivalent to (i), (ii), (iii):
-%  \begin{enumerate}[label=(\roman*)]\setcounter{enumi}{3}
-%    \item for every finite partial embedding $p: \mathcal{U} \to \mathcal{U}$ and $b \in \mathcal{U}$ there is $\hat{p} \supseteq p$, a partial embedding such that $b \in \dom(\hat{p})$.
-%  \end{enumerate}
-%
-%  Proof: Later, exercise.
-%\end{remark}
-%
-%This gives quantifier elimination for $T_{\text{rg}}$ and $T_{\text{dlo}}$.
-%\begin{remark}
-%  if $T$ has quantifier elimination and $\mathcal{M} \models T$, any substructure of $\mathcal{M}$ is an elementary substructure ($T$ is `model-complete').
-%\end{remark}
-%\begin{ndef}
-%  An element $a \in \mathcal{U}$ is \textbf{definable} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $\varphi(U) = \{a\}$. (In particular, any element of $A$ is definable over $A$; $x=a$ for $a \in A$).
-%
-%  An element $a \in U$ is \textbf{algebraic} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $|\varphi(U)| < \omega$ and $a \in \phi(U)$.
-%
-%  The definable closure of $A$ is
-%  \begin{equation*}
-%    \dcl(A) = \set{a \in U | a \text{ definable over }A}
-%  \end{equation*}
-%  and the algebraic closure of $A$ is
-%  \begin{equation*}
-%    \acl(A) = \set{a \in U | a \text{ algebraic over }A}.
-%  \end{equation*}
-%\end{ndef}
-%\begin{nprop}\label{prop:7.11}
-%  For $a \in U$ and $A \subseteq U$, the following are equivalent
-%  \begin{enumerate}[label=(\roman*)]
-%    \item $a \in \dcl(A)$
-%    \item $O(a/A) = \{a\}$. % Orb(a/A)
-%  \end{enumerate}
-%\end{nprop}
-%\begin{proof}
-%  $a \in \dcl(A)$ iff there is $\varphi(x) \in L(A)$ such that $\varphi(U) = \{a\}$. By \cref{prop:7.5} this is equivalent to invariance under $\Aut(U/A)$.
-%\end{proof}
-%\begin{nthm}\label{thm:7.12}
-%  Let $A \subseteq U$, $a \in U$, the following are equivalent
-%  \begin{enumerate}[label=(\roman*)]
-%    \item $a \in \acl(A)$
-%    \item $|O(a/A)| < \omega$
-%    \item $a \in \mathcal{M}$ for any model $\mathcal{M}$ which contains $A$.
-%  \end{enumerate}
-%\end{nthm}
+\begin{ndef}\label{def:7.6}
+  \marginnote{\emph{Lecture 13}}\hypertarget{def:upe}An injective map $p: A \subseteq \mathcal{M} \to \mathcal{N}$ is a \named{partial embedding} if for all tuples in $A = \dom(p)$, $p$ satisfies conditions (i), (ii), (iii) in \cref{def:1.5}.
+\end{ndef}
+Idea: a \hyperlink{def:upe}{partial embedding} preserves quantifier-free \hyperlink{def:form}{formulas}.
+\begin{nprop}\label{prop:7.7}
+  Let $\varphi(\bar{x})$ be an \hyperlink{def:form}{$L$-formula}. The following are equivalent:
+  \begin{enumerate}[label=(\roman*)]
+    \item there is $\psi(\bar{x})$, a quantifier-free $L$-formula such that
+      \begin{equation*}
+        \mathcal{U} \hyperlink{def:models}{\models} \forall x\; [\varphi(\bar{x}) \leftrightarrow \psi(\bar{x})].
+      \end{equation*}
+    \item for all \hyperlink{def:upe}{partial embeddings} $p: \mathcal{U} \to \mathcal{U}$, for all $\bar{a}$ from $\dom(\bar{p})$,
+      \begin{equation*}
+        \varphi(\bar{a}) \leftrightarrow \varphi(p(\bar{a}))
+      \end{equation*}
+  \end{enumerate}
+\end{nprop}
+\begin{proof}
+  (i) $\Rightarrow$ (ii): clear.
+
+  (ii) $\Rightarrow$ (i). For $\bar{a} \in U$, set
+  \begin{equation*}
+    \hypertarget{def:qftp}\qftp(\bar{a}) \coloneqq \set{\psi(\bar{x}) | \psi(\bar{a}) \text{ and } \psi(\bar{x}) \text{ is quantifier free}}. % fix this
+  \end{equation*}
+  Let
+  \begin{equation*}
+  D = \set{q(\bar{x}) | q(\bar{x}) = \qftp(\bar{a}) \text{ for some }\bar{a} \text{ such that } \varphi(\bar{a})}.
+  \end{equation*}
+  Claim: $\varphi(U) = \bigcup_{q(\bar{x}) \in D} q(U)$.
+
+  By (an argument similar to) \cref{fact:7.2}, there is $\theta_q(\bar{x})$ in $q(\bar{x})$ a finite conjunction of formulas such that $\theta_q(\bar{x}) \to \varphi(x)$.
+  So we have
+  \begin{equation*}
+    \varphi(\bar{x}) \leftrightarrow \bigvee_{q(\bar{x}) \in D} \{\theta_q(\bar{x})\}.
+  \end{equation*}
+  By \cref{fact:7.2}, there are $\psi_{q_1}(\bar{x}), \dotsc, \psi_{q_m}(\bar{x})$ such that
+  \begin{equation*}
+    \varphi(\bar{x}) \leftrightarrow \bigvee_{i=1}^n \psi_{q_i}(\bar{x}).
+  \end{equation*}
+  So $\bigvee \psi_{q_i}(\bar{x})$ is the required quantifier-free formula.
+\end{proof}
+\begin{ndef}\label{def:7.8}
+  \hypertarget{def:qe}An $L$-theory $T$ has \named{quantifier elimination} if for every $L$-formula $\varphi(\bar{x})$ there is $\psi(\bar{x})$ quantifier free such that
+  \begin{equation*}
+    T \vdash \forall \bar{x}\; (\varphi(\bar{x}) \leftrightarrow \psi(\bar{x})).
+  \end{equation*}
+\end{ndef}
+\begin{nthm}
+  Let $T$ be a complete theory with an infinite model. Then the following are equivalent:
+  \begin{enumerate}[label=(\roman*)]
+    \item $T$ has \hyperlink{def:qe}{quantifier elimination}
+    \item every $p: \mathcal{U} \to \mathcal{U}$ \hyperlink{def:upe}{partial embedding} is \hyperlink{def:el}{elementary}
+    \item If $p: \mathcal{U} \to \mathcal{U}$ is partial embedding and $|\dom p| < |\mathcal{U}|$ and $b \in \mathcal{U}$, then there is a partial embedding $\hat{p} \supseteq p$ such that $b \in \dom \hat{p}$.
+  \end{enumerate}
+\end{nthm}
+\begin{proof}
+  (i) $\Leftrightarrow$ (ii). Follows from \cref{prop:7.7}.
+
+  (ii) $\Rightarrow$ (iii). If $p: \mathcal{U} \to \mathcal{U}$ is a \hyperlink{def:upe}{partial embedding}, then it is \hyperlink{def:elmap}{elementary}.
+  Let $b \in \mathcal{U}$.
+  By \hyperlink{def:homogeneous}{homogeneity} of $\mathcal{U}$, there is $\alpha \in \Aut(\mathcal{U})$ such that $p \subseteq \alpha$, and so $p \cup \{\langle b, \alpha(b) \rangle \}$ is the required extension of $p$.
+
+  %(iii) $\Rightarrow$ (ii). Prove that if $p: \mathcal{U} \to \mathcal{U}$ is partial embedding, then any finite restriction $p_0$ of $p$ is an elementary map.
+  %Idea: Let $\mathcal{M} \supseteq \dom(p_0)$, $\mathcal{N} \supseteq \img(p_0)$ such that $|\mathcal{M}| = |\mathcal{N}|$, and extend $p_0$ to $\beta: \mathcal{M} \to \mathcal{N}$ by back-and-forth (use saturation of $\mathcal{U}$).
+  (iii) $\Rightarrow$ (ii). Let $p: \mathcal{U} \to \mathcal{U}$ be a partial embedding.
+  Consider $p_0 \subseteq p$, $p_0$ finite or small. Use property (iii) and saturation to extend $p_0$ to $\alpha \in \Aut(U)$ by back and forth.
+\end{proof}
+\begin{remark}
+  There is a fourth condition equivalent to (i), (ii), (iii):
+  \begin{enumerate}[label=(\roman*)]\setcounter{enumi}{3}
+    \item for every finite partial embedding $p: \mathcal{U} \to \mathcal{U}$ and $b \in \mathcal{U}$ there is $\hat{p} \supseteq p$, a partial embedding such that $b \in \dom(\hat{p})$.
+  \end{enumerate}
+
+  Proof: Later, exercise.
+\end{remark}
+
+This gives \hyperlink{def:qe}{quantifier elimination} for $T_{\text{rg}}$ and $T_{\text{dlo}}$.
+\begin{remark}
+  If $T$ has \hyperlink{def:qe}{quantifier elimination} and $\mathcal{M} \models T$, any \hyperlink{def:subs}{substructure} of $\mathcal{M}$ is an \hyperlink{def:elsubs}{elementary substructure} ($T$ is `model-complete').
+\end{remark}
+\begin{ndef}
+  \hypertarget{def:def}An element $a \in \mathcal{U}$ is \textbf{definable} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $\varphi(U) = \{a\}$. (In particular, any element of $A$ is definable over $A$; $x=a$ for $a \in A$).
+
+  \hypertarget{def:alg}An element $a \in \mathcal{U}$ is \textbf{algebraic} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $|\varphi(U)| < \omega$ and $a \in \phi(\mathcal{U})$.
+
+  The \textbf{definable closure} of $A$ is
+  \begin{equation*}
+    \dcl(A) = \set{a \in \mathcal{U} | a \text{ definable over }A}
+  \end{equation*}
+  and the \textbf{algebraic closure} of $A$ is
+  \begin{equation*}
+    \acl(A) = \set{a \in \mathcal{U} | a \text{ algebraic over }A}.
+  \end{equation*}
+\end{ndef}
+\begin{nprop}\label{prop:7.11}
+  For $a \in \mathcal{U}$ and $A \subseteq \mathcal{U}$, the following are equivalent
+  \begin{enumerate}[label=(\roman*)]
+    \item $a \in \hyperlink{def:def}{\dcl(A)}$
+    \item $\hyperlink{def:orbit}{O(a/A)} = \{a\}$. % Orb(a/A)
+  \end{enumerate}
+\end{nprop}
+\begin{proof}
+  $a \in \hyperlink{def:def}{\dcl(A)}$ iff there is $\varphi(x) \in \hyperlink{def:la}{L(A)}$ such that $\varphi(U) = \{a\}$.
+  By \cref{prop:7.5} this is equivalent to \hyperlink{def:inv}{invariance} under $\hyperlink{def:aut}{\Aut}(U/A)$.
+\end{proof}
+\begin{nthm}\label{thm:7.12}
+  Let $A \subseteq \U$, $a \in \U$, the following are equivalent:
+  \begin{enumerate}[label=(\roman*)]
+    \item $a \in \hyperlink{def:alg}{\acl(A)}$
+    \item $|\hyperlink{def:orbit}{O(a/A)}| < \omega$
+    \item $a \in \mathcal{M}$ for any \hyperlink{def:model}{model} $\mathcal{M}$ which contains $A$.
+  \end{enumerate}
+\end{nthm}
 \printindex
 \end{document}
