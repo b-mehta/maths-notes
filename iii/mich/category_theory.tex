@@ -50,6 +50,7 @@
 \DeclareMathOperator{\mor}{mor}
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\cod}{cod}
+\DeclareMathOperator{\Sub}{Sub}
 
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 
@@ -68,6 +69,7 @@
 
 \newcommand{\cc}{\mathscr{C}}
 \newcommand{\dc}{\mathscr{D}}
+\newcommand{\ec}{\mathscr{E}}
 
 \newenvironment{tikzcdi}{\begin{tikzcd}[cramped, sep=scriptsize]}{\end{tikzcd}}
 
@@ -1860,7 +1862,7 @@ But in general, it has few other \hyperlink{def:limit}{limits} or colimits. In c
   with equal composites. The `primeval monadicity theorem' asserts that $\hyperlink{def:em}{\mathscr{C}^\mathbb{T}}$ is characterised in $\mathbf{Adj}(\mathbb{T})$ by the fact that these diagrams are all \hyperlink{def:equalizer}{coequalizers}.
 \end{remark}
 
-\begin{ndef}\leavevmode
+\begin{ndef}[Reflexive coequalizers]\leavevmode
   \begin{enumerate}[label=(\alph*)]
     \item \hypertarget{def:reflexive}We say a parallel pair $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is \named{reflexive} if there exists $B \overset{r}\to A$ such that $fr = gr = 1_B$.
     (Note that $\begin{tikzcd}[cramped, column sep=large]FGFGB \rar[shift left]{FG\epsilon_B} \rar[shift right,']{\epsilon_{FGB}} & FGB\end{tikzcd}$ is reflexive, with $r = F\eta_{GB}$).
@@ -2024,7 +2026,7 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
       So $R = (g \times g)(S)$ is compact and hence closed in $Y \times Y$.
   \end{enumerate}
 \end{nexample}
-\begin{ndef}\label{def:5.15}
+\begin{ndef}[Monadic tower]\label{def:5.15}
   \hypertarget{def:mtower}Let\marginnote{\emph{Lecture 18}} $\begin{tikzcdi}\mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G} \end{tikzcdi}$ be an \hyperlink{def:adj}{adjunction}, and suppose $\mathscr{D}$ has \hyperlink{def:reflexive}{reflexive coequalizers}.
   The \named{monadic tower} of $F \dashv G$ is the diagram
   \begin{equation*}
@@ -2087,7 +2089,7 @@ For example, the \hyperlink{def:adj}{adjunction} of \cref{eg:5.14}(c) has \hyper
 
 \clearpage
 \section{Cartesian Closed Categories}
-\begin{ndef}\label{def:6.1}
+\begin{ndef}[Exponentiable object]\label{def:6.1}
   \hypertarget{def:exp}Let \hypertarget{def:cc}$\mathscr{C}$ be a \hyperlink{def:cat}{category} with \hyperlink{def:lprod}{finite products}.
   \index{exponential}We say $A \in \hyperlink{def:cat}{\ob} \mathscr{C}$ is \textbf{exponentiable} if the \hyperlink{def:funct}{functor} $(-) \times A: \mathscr{C} \to \mathscr{C}$ has \hyperlink{def:adj}{right adjoint} $(-)^A$.
   If every object of $\mathscr{C}$ is exponentiable, we say $\mathscr{C}$ is \named{cartesian closed}.
@@ -2116,7 +2118,7 @@ For example, the \hyperlink{def:adj}{adjunction} of \cref{eg:5.14}(c) has \hyper
 \end{nexample}
 
 \hypertarget{def:slice}Recall from example sheets that, if $B \in \ob \mathscr{C}$, we define the \named{slice category} $\mathscr{C}/B$ to have objects which are morphisms
-\begin{equation*}\begin{tikzcd}[sep=small]A\dar \\ B\end{tikzcd}\end{equation*}
+\begin{equation*}\begin{tikzcd}A\dar \\ B\end{tikzcd}\end{equation*}
 in $\mathscr{C}$ and morphisms are commutative triangles
 \begin{equation*}
   \begin{tikzcd}[column sep=small]
@@ -2133,7 +2135,7 @@ in $\mathscr{C}$ and morphisms are commutative triangles
 correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
 
 \begin{nlemma}\label{lem:6.3}
-  \hypertarget{def:prodb}If $\mathscr{C}$ has all \hyperlink{def:limit}{finite limits}, then an object $B$ is \hyperlink{def:exp}{exponentiable} iff $\hyperlink{def:bstar}{B^*}: \mathscr{C} \to \mathscr{C}/B$ has a \hyperlink{def:adj}{right adjoint} $\Pi_B$.
+  \hypertarget{def:prodb}If $\mathscr{C}$ has all \hyperlink{def:limit}{finite limits}, then an object $B$ is \hyperlink{def:exp}{exponentiable} iff $\hyperlink{def:bstar}{B^*}: \mathscr{C} \to \hyperlink{def:slice}{\mathscr{C}/B}$ has a \hyperlink{def:adj}{right adjoint} $\Pi_B$.
 \end{nlemma}
 \begin{proof}\leavevmode
   \begin{itemize}
@@ -2192,12 +2194,12 @@ correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
   \end{equation*}
   commute. But
   \begin{equation*}
-    \begin{tikzcd}
+    \begin{tikzcd}[sep=large]
       D \times A \rar{g \times 1_A} \dar[']{\pi_1} & B \times A \dar{\pi_1} \\
       D \rar[']{g} & B
     \end{tikzcd}
   \end{equation*}
-  is a pullback in $\mathscr{C}$, i.e.\ a product in $\mathscr{C}/B$.
+  is a pullback in $\mathscr{C}$, i.e.\ a product in \hyperlink{def:slice}{$\mathscr{C}/B$}.
 
   For the second assertion, note that if $\begin{tikzcd}C \dar{f} \\ B\end{tikzcd}$ is of the form $\begin{tikzcd}B \times E \dar{\pi_1} \\ B\end{tikzcd}$, then the pullback defining $f^{B^* A}$ becomes
   \begin{equation*}
@@ -2211,7 +2213,7 @@ correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
 \begin{remark}
   \hyperlink{def:slice}{$\mathscr{C}/B$} is isomorphic to the category of \hyperlink{def:em}{coalgebras} for the \hyperlink{def:monad}{monad} structure on $(-) \times B$ (\cref{eg:5.2}(a)); so the first part of \cref{lem:6.4} could have been proved using \cref{thm:5.16}.
 \end{remark}
-\begin{ndef}\label{def:6.5}
+\begin{ndef}[Locally cartesian closed]\label{def:6.5}
   \hypertarget{def:lcc}We say $\mathscr{C}$ is \index{cartesian closed!locally}\named{locally cartesian closed} if it has all finite \hyperlink{def:limit}{limits} and each \hyperlink{def:slice}{$\mathscr{C}/B$} is \hyperlink{def:cc}{cartesian closed}.
   (Note that this includes the fact that $\mathscr{C} \cong \mathscr{C}/1$ is cartesian closed).
 \end{ndef}
@@ -2281,13 +2283,13 @@ So by \cref{lem:6.3}, $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian clo
 \end{proof}
 Note that this implies any strong epimorphism $A \overset{f}\to B$ is \hyperlink{def:regular}{regular}, since the \hyperlink{def:monic}{monic} part of its image factorization is an \hyperlink{def:iso}{isomorphism}.
 In particular, regular epimorphisms are stable under composition.
-\begin{ndef}\label{def:6.8}\hypertarget{def:ccfunct}
+\begin{ndef}[Cartesian closed functor]\label{def:6.8}\hypertarget{def:ccfunct}
   If $\mathscr{C}$ and $\mathscr{D}$ are \hyperlink{def:cc}{cartesian closed categories} and $F: \mathscr{C} \to \mathscr{D}$ \hyperlink{def:plim}{preserves} \hyperlink{def:lprod}{finite products}, then for each pair of objects $A,B$ of $\mathscr{C}$ we get a natural morphism
   \begin{equation*}\theta: F(B^A) \to FB^{FA},\end{equation*}
   namely the transpose of
   \begin{equation*}F(B^A) \times FA \cong F(B^A \times A) \xrightarrow{F(\text{ev})} FB\end{equation*}
-  where $\text{ev}$ is the counit of $((-) \times A \dashv (-)^A)$.
-  We say $F$ is a \index{cartesian closed!functor}\textbf{cartesian closed functor} if $\theta$ is an isomorphism for every pair $(A,B)$.
+  \hypertarget{def:ev}where $\text{ev}$ is the \hyperlink{def:counit}{counit} of $((-) \times A \hyperlink{def:adj}{\dashv} \hyperlink{def:exp}{(-)^A})$.
+  We say $F$ is a \index{cartesian closed!functor}\textbf{cartesian closed functor} if $\theta$ is an \hyperlink{def:iso}{isomorphism} for every pair $(A,B)$.
 \end{ndef}
 Note that the second part of \cref{lem:6.4} says that if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed} then $\hyperlink{def:bstar}{f^*}: \mathscr{C}/B \to \mathscr{C}/A$ is a \hyperlink{def:ccfunct}{cartesian closed functor} for any $A \overset{f}\to B$.
 \begin{nthm}\label{thm:6.9}
@@ -2295,13 +2297,205 @@ Note that the second part of \cref{lem:6.4} says that if $\mathscr{C}$ is \hyper
   Then $F$ is \hyperlink{def:cc}{cartesian closed} iff the canonical morphism
   \begin{equation*}
     \begin{tikzcd}[column sep=huge]
-      L(A \times FB) \rar{(L\pi_1, L\pi_2)} & LA \times LFB \rar{1_{LA} \times \epsilon_B} & LA \times B
+      L(B \times FA) \rar{(L\pi_1, L\pi_2)} & LB \times LFA \rar{1_{LB} \times \epsilon_A} & LB \times A
     \end{tikzcd}
   \end{equation*}
   is an \hyperlink{def:iso}{isomorphism} for all $A \in \ob \mathscr{D}$, $B \in \ob \mathscr{C}$.
 \end{nthm}
 \hypertarget{def:fr}This condition is called \named{Frobenius reciprocity}.
-
 Note that if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed}, then $\hyperlink{def:bstar}{f^*}: \hyperlink{def:slice}{\mathscr{C}/B} \to \mathscr{C}/A$ has a \hyperlink{def:adj}{left adjoint} $\hyperlink{def:sumb}{\Sigma_f}$ given by composition with $f$ and it's easy to verify that $\Sigma_f (g \times f^* h) \cong \Sigma_f g \times h$.
+\begin{proof}\leavevmode
+  \begin{itemize}
+    \item[($\Rightarrow$)] \marginnote{\emph{Lecture 20}} Given an inverse for $\theta: F(C^A) \to FC^{FA}$, we define $\varphi_{A,B}^{-1}$ to be the composite
+      \begin{equation*}
+        \begin{tikzcd}[sep=huge]
+        LB \times A \arrow[r, "L\lambda \times 1"] & L((B \times FA)^{FA}) \arrow[r, "L(\eta^{FA}) \times 1"] & L(FL(B \times FA)^{FA}) \times A \arrow[d, "L\theta^{-1} \times 1"] \\
+        L(B \times FA) & \arrow[l, "\text{ev}"] L(B \times FA)^A \times A & LF(L(B \times FA)^A) \times A\arrow[l, "\epsilon \times 1"]
+        \end{tikzcd}
+      \end{equation*}
+    \item [($\Leftarrow$)] Given an inverse for $\varphi$, we define $\theta^{-1}$ to be
+      \begin{equation*}
+      \begin{tikzcd}[sep=huge]
+        F((L(FC^{FA}) \times A)^A) \dar[']{F({\varphi^{-1}}^A)} & \lar[']{F\lambda} FL(FC^{FA}) & FC^{FA} \lar[']{\eta} \\
+        F((L(FC^{FA} \times FA))^A) \rar[']{F\left((L(\text{ev}))^A\right)} & F((LFC)^A) \rar[']{F(\epsilon^A)} & F(C^A).
+      \end{tikzcd}
+      \end{equation*}
+  \end{itemize}
+  We omit checking that these work.
+\end{proof}
+\begin{ncor}\label{cor:6.10}
+  Suppose $\mathscr{C}$ and $\mathscr{D}$ are \hyperlink{def:cc}{cartesian closed}, and $F: \mathscr{C} \to \mathscr{D}$ has a \hyperlink{def:adj}{left adjoint} $L$ which \hyperlink{def:plim}{preserves} finite \hyperlink{def:lprod}{products.}
+  Then $F$ is \hyperlink{def:ccfunct}{cartesian closed} $\iff$ $F$ is \hyperlink{def:full}{full} and \hyperlink{def:full}{faithful}.
+\end{ncor}
+\begin{proof}\leavevmode
+  \begin{itemize}
+    \item[($\Rightarrow$)] $L$ \hyperlink{def:plim}{preserves} \hyperlink{def:terminal}{$1$}, so if we substitute $B=1$ in the definition of $\varphi$, we get
+      \begin{equation*}LFA \overset{\epsilon_A} \to A.\end{equation*}
+    But $\epsilon$ an \hyperlink{def:iso}{isomorphism} $\iff F$ is \hyperlink{def:full}{full} and \hyperlink{def:full}{faithful} by \cref{lem:3.9}.
+    \item[($\Leftarrow$)] If $L$ preserves \hyperlink{def:lprod}{binary products} and \hyperlink{def:counit}{$\epsilon$} is isomorphic, then both factors in the definition of $\varphi$ are isomorphisms. \qedhere
+  \end{itemize}
+\end{proof}
+\begin{ndef}[Exponential ideal]
+  \hypertarget{def:expIdeal}Let $\mathscr{C}$ be a \hyperlink{def:cc}{cartesian closed category}.
+  By an \named{exponential ideal} in $\mathscr{C}$, we mean a class of objects (or a \hyperlink{def:fulls}{full subcategory}) $\mathscr{E}$ such that
+  $B \in \mathscr{E} \implies \hyperlink{def:exp}{B^A} \in \mathscr{E}$ for all $A \in \ob \mathscr{C}$.
+\end{ndef}
+\begin{nexample}\leavevmode\label{eg:6.12}
+  \begin{enumerate}[label=(\alph*)]
+    \item \hypertarget{def:subterm}We say $A$ is \named{subterminal} if $A \to 1$ is \hyperlink{def:monic}{monic}.
+      In any \hyperlink{def:cc}{cartesian closed category} $\mathscr{C}$, the class $\operatorname{Sub}_\mathscr{C}(1)$ of subterminal objects is an \hyperlink{def:expIdeal}{exponential ideal}, since
+      \begin{align*}
+        A \text{ subterminal} &\iff \exists \leq 1 \quad B \to A, \text{ for any B} \\
+        &\implies \exists \leq 1 \quad C\times B \to A, \text{ for any $B$ and $C$,} \\
+        &\iff \exists \leq 1 \quad C \to \hyperlink{def:exp}{A^B} \\
+                                &\iff A^B \text{ subterminal}
+      \end{align*}
+      More generally, if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed}, then $\operatorname{Sub}_\mathscr{C}(A)$ is an exponential ideal in $\hyperlink{def:slice}{\mathscr{C}/A}$, for any $A$.
+      If $\mathscr{C}$ also satisfies the hypotheses of \cref{thm:6.7}, then $\operatorname{Sub}_\mathscr{C}(A)$ is \hyperlink{def:refl}{reflective} in $\mathscr{C}/A$.
+    \item \hypertarget{def:presheaf}Let $X$ be a topological space. By a \named{presheaf} on $X$, we mean a \hyperlink{def:funct}{functor}
+      \begin{equation*}\mathcal{O}(X)^{\text{op}} \overset{F}\to \mathbf{Set},\end{equation*}
+      where $\mathcal{O}(X)$ is the poset of open subsets of $X$.
+      So $F$ has sets $F(U)$ for each open $U$, and \index{restriction maps}{restriction maps} $x \mapsto x|_V: F(U) \to F(V)$ whenever $V \subseteq U$.
+      We say $F$ is a \named{sheaf} if, whenever $U = \bigcup_{i \in I} U_i$ and we're given $x_i \in F(U_i)$ for each $i$ such that
+      \begin{equation*}
+        x_i|_{U_i \cap U_j} = x_j|_{U_i \cap U_j}
+      \end{equation*}
+      for all $(i,j)$, there exists a unique $x \in F(U)$ such that $x|_{U_i} = x_i$ for all $i$.
+
+      We write $\mathbf{Sh}(X) \subseteq \hyperlink{def:functcat}{[\mathcal{O}(X)^{\text{op}}, \mathbf{Set}]}$ for the \hyperlink{def:fulls}{full subcategory} of sheaves.
+      We'll show $\mathbf{Sh}(X)$ is an exponential ideal:
+
+      Given presheaves $F,G$, $G^F(U)$ is the set of \hyperlink{def:nattrans}{natural transformations}
+      \begin{equation*}
+        F \times \mathcal{O}(X)(-, U) \to G
+      \end{equation*}
+      or equivalently the set of natural transformations $F|_U \to G|_U$, where
+      \begin{equation*}F|_U: \mathcal{O}(U)^{\text{op}} \to \mathbf{Set}\end{equation*}
+      is the presheaf obtained by restricting $F$ to open sets $\subseteq U$.
+
+      Now suppose $G$ is a sheaf, suppose $U = \bigcup_{i \in I} U_i$ and suppose given $\alpha_i: F|_{U_i} \to G|_{U_i}$ for each, such that
+      \begin{equation*}\alpha_i|_{U_i \cap U_j} = \alpha_j|_{U_i \cap U_j}\end{equation*}
+      for all $i,j$.
+      Given $x \in F(V)$ where $V \subseteq U$, write $V_i = V \cap U_i$, then $V = \bigcup_{i \in I} V_i$.
+
+      The elements $x|_{V_i},\, i \in I$, satisfy the compatibility condition, and hence so do the elements
+      \begin{equation*}(\alpha_i)_{V_i} (x|_{V_i}) \in G(V_i).\end{equation*}
+      So there's a unique $y \in G(V)$ such that $y|_{V_i} = (\alpha_i)_{V_i} (x|_{V_i})$ for all $i$, and we define this to be $\alpha_V(x)$.
+      This defines a natural transformation $\alpha:F|_U \to G|_U$, and it's the unique transformation where restriction to $U_i$ is $\alpha_i$, for each $i$.
+
+      Note that, since $\mathbf{Sh}(X)$ is closed under \hyperlink{def:lprod}{finite products} (and in fact all \hyperlink{def:limit}{limits}) in $[\mathcal{O}(X)^{\text{op}}, \mathbf{Set}]$, it is itself \hyperlink{def:cc}{cartesian closed}.
+  \end{enumerate}
+\end{nexample}
+\begin{nlemma}\label{lem:6.13}
+  Suppose $\mathscr{C}$ is \hyperlink{def:cc}{cartesian closed}, $\mathscr{D} \subseteq \mathscr{C}$ is a \hyperlink{def:fulls}{(full)} \hyperlink{def:refl}{reflective} subcategory, with reflector $L: \mathscr{C} \to \mathscr{D}$.
+  Then $\mathscr{D}$ is an \hyperlink{def:expIdeal}{exponential ideal} $\iff L$ preserves \hyperlink{def:lprod}{binary products}.
+\end{nlemma}
+\begin{proof}\leavevmode
+  \begin{itemize}
+    \item[($\Rightarrow$)] Suppose $A,B \in \ob \mathscr{C}$, $C \in \ob \mathscr{D}$.
+      Then we have bijections
+      \begin{align*}
+        \hyperlink{def:lprod}{A \times B} &\to C  \\
+        A &\to \hyperlink{def:exp}{C^B} \\
+        LA &\to C^B \\
+        LA \times B &\to C \\
+        B &\to C^{LA} \\
+        LB &\to C^{LA} \\
+        LA \times LB &\to C
+      \end{align*}
+      so $LA \times LB$ has the universal property of $L(A \times B)$.
+    \item [($\Leftarrow$)] Suppose $B \in \ob \mathscr{D}$, $A,C \in \ob \mathscr{C}$. We have bijections
+      \begin{align*}
+        C &\to B^A \\
+        C \times A &\to B \\
+        LC \times LA \cong L(C \times A) &\to B \\
+        L(LC \times A) &\to B \\
+        LC \times A &\to B \\
+        LC &\to B^A
+      \end{align*}
+      So every $C \to B^A$ factors through $C \to LC$, hence $B^A \in \ob \mathscr{D}$. \qedhere
+  \end{itemize}
+\end{proof}
+
+\clearpage
+\section{Toposes}
+Grothendieck\marginnote{\emph{Lecture 21}} (around 1963) introduced toposes as \hyperlink{def:cat}{categories} of `generalized \hyperlink{def:presheaf}{sheaves}'.
+J.\ Giraud gave a characterization of such categories by (set-theoretic) categorical properties.
+
+F.\ W.\ Lawvere and M.\ Tierney (1969-70) investigated the elementary categorical properties of these categories and came up with the elementary definition.
+In fact a Grothendieck topos is exactly a Lawvere-Tierney topos which is \hyperlink{def:complete}{(co)complete} and \hyperlink{def:lsmall}{locally small}, and has a \hyperlink{def:separating}{separating set of objects}.
+\begin{ndef}[Subobject classifier, topos]\label{def:7.1}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item \hypertarget{def:sc}Let $\mathscr{E}$ be a \hyperlink{def:cat}{category} with finite \hyperlink{def:limit}{limits}.
+      A \named{subobject classifier} for $\mathscr{E}$ is a \hyperlink{def:monic}{monomorphism} $\Omega' \overset{\top}{\rightarrowtail} \Omega$ such that for every monomorphism $A' \overset{m}\rightarrowtail A$ in $\mathscr{E}$, there is a unique $\chi_m: A \to \Omega$ for which there is a \hyperlink{def:pullback}{pullback} square
+      \begin{equation*}
+      \begin{tikzcd}
+        A' \rar \dar[tail]{m} & \Omega' \dar[tail]{\top}\\
+        A \rar{\chi_m} & \Omega
+      \end{tikzcd}
+      \end{equation*}
+      Note that, for any $A$, there's a unique $A \to \Omega$ which factors through $\Omega' \overset{\top}\rightarrowtail \Omega$, so the \hyperlink{def:cat}{domain} of $\top$ is actually a \hyperlink{def:terminal}{terminal object}.
+
+      \hypertarget{def:sub}If $\mathscr{E}$ is \hyperlink{def:wp}{well-powered}, we have a \hyperlink{def:funct}{functor}
+      \begin{equation*}
+        \operatorname{Sub}_\mathscr{E} (-): \mathscr{E}^{\text{op}} \to \mathbf{Set}
+      \end{equation*}
+      sending $A$ to the set of (isomorphism classes of) \hyperlink{def:subobj}{subobjects} of $A$ and acting on morphisms by pullback, and a subobject classifier is \hyperlink{def:repr}{representation} of this functor.
+    \item \hypertarget{def:topos}A \index{topos} is a category which has finite limits, is \hyperlink{def:cc}{cartesian closed} and has a subobject classifier.
+    \item \hypertarget{def:lFunct}If $\mathscr{E}$ and $\mathscr{F}$ are toposes, a \textbf{logical functor} $F: \mathscr{E} \to \mathscr{F}$ is one which preserves finite limits, \hyperlink{def:exp}{exponentials} and the subobject classifier.
+  \end{enumerate}
+\end{ndef}
+\begin{nexample}\leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item $\mathbf{Set}$ is a \hyperlink{def:topos}{topos}, with $\Omega = \{0,1\}$ and $\top=1:1 \to \{0,1\}$.
+      Here
+      \begin{equation*}
+        \chi_m(a) =
+        \begin{cases}
+          1 & \text{if } a \in A'\\
+          0 & \text{if } a \notin A'.
+        \end{cases}
+      \end{equation*}
+      So also is the category $\mathbf{Set}_f$ of finite sets, or the category $\mathbf{Set}_\kappa$ of sets of cardinality $<\kappa$, where $\kappa$ is an infinite cardinal such that $\lambda < \kappa \implies 2^\lambda < \kappa$.
+    \item For any \hyperlink{def:small}{small} category $\mathscr{C}$, $\hyperlink{def:functcat}{[\mathscr{C}^{\text{op}}, \mathbf{Set}]}$ is a topos: we've seen that it's \hyperlink{def:cc}{cartesian closed}, and $\Omega$ is determined by \hyperlink{lem:yoneda}{Yoneda}:
+      \begin{equation*}
+        \Omega(A) \cong [\mathscr{C}^\text{op}, \mathbf{Set}] (\mathscr{C}(-,A), \Omega) \cong \{\text{subfunctors of }\mathscr{C}(-,A)\}
+      \end{equation*}
+      \hypertarget{def:sieve}So we define $\Omega(A)$ to be the set of \textbf{sieves} on $A$, i.e.\ sets of morphisms with $\cod = A$, such that $f \in R \implies fg \in R$ for any $g$.
+
+      Given $B \overset{f}\to A$ and a sieve $R$ on $A$, we define $f^* R$ to be the set of $g$ with codomain $B$ such that $fg \in R$.
+      This makes $\Omega$ into a \hyperlink{def:funct}{functor} $\mathscr{C}^{\text{op}} \to \mathbf{Set}$, as follows.
+      $\top: 1 \to \Omega$ is defined by $\top_A(*) = \{\text{all morphisms with codomain }A\}$.
+      Given a subfunctor $F' \overset{m}\rightarrowtail F$, we define $\chi_m:F \to \Omega$ by
+      \begin{equation*}
+        (\chi_m)_A(x) = \set{f : B \to A | Ff(x) \in F'(B)}.
+      \end{equation*}
+      This is the unique \hyperlink{def:nattrans}{natural transformation} making
+      \begin{equation*}
+        \begin{tikzcd}
+          F' \rar \dar[tail]{m} & 1 \dar[tail]{\top} \\
+          F \rar & \Omega
+        \end{tikzcd}
+      \end{equation*}
+      a \hyperlink{def:pullback}{pullback}.
+    \item For any space $X$, $\hyperlink{def:presheaf}{\mathbf{Sh}}(X)$ is a topos.
+      It's \hyperlink{def:cc}{cartesian closed} by \cref{eg:6.12}(ii); for the subobject classifier, we take
+      \begin{equation*}\Omega(U)  = \set{V \in \mathcal{O}(X) | V \subseteq U},\end{equation*}
+      $\Omega(U' \to U)$ is the map $V \mapsto V \cap U'$ and $\Omega$ is a \hyperlink{def:presheaf}{sheaf} since if we have $U = \bigcup_{i \in I} U_i$, and $V_i \subseteq U_i$ such that $V_i \cap U_j = V_j \cap U_i$ for each $i,j$,
+      then $V = \bigcup_{i \in I} V_i$ is the unique open subset of $U$ with $V \cap U_i = V_i$ for each $i$.
+
+      If $F' \overset{m}\rightarrowtail F$ is a subsheaf, then for any $x \in F(U)$, the sieve $\set{V \subseteq U | x|_V \in F'(V)}$ has a greatest element since $F'$ is a sheaf, so we define $\chi_m: F \to \Omega$ to send $x$ to this element.
+    \item Let $\mathscr{C}$ be a group $G$.
+      The topos structure on $[G, \mathbf{Set}]$ is particularly simple: $B^A$ is the set of all $G$-equivariant maps $A \times G \overset{f}\to B$, but such an $f$ is determined by its values at elements of the form $(a,1)$ since $f(a,g) = g \cdot f(g^{-1} \cdot a, 1)$, and this restriction can be any mapping $A \times \{1\} \to B$.
+      So we can take $B^A$ to be the set of functions $A \to B$, with $G$ acting by $(g \cdot f) (a) = g (f (g^{-1} \cdot a))$, and $\Omega = \{0,1\}$ with trivial $G$-action.
+
+      So the \hyperlink{def:forgFunc}{forgetful functor} $[G, \mathbf{Set}]\to \mathbf{Set}$ is \hyperlink{def:lFunct}{logical}, as is the functor which equips a set $A$ with trivial $G$-action.
+      Moreover, even if $G$ is infinite, $[G, \mathbf{Set}_f]$ is a topos, and the inclusion $[G, \mathbf{Set}_f] \to [G, \mathbf{Set}]$ is logical.
+      Similarly, if $\mathcal{G}$ is a large group, then $[\mathcal{G}, \mathbf{Set}]$ is a topos.
+    \item Let $\mathscr{C}$ be a category such that every \hyperlink{def:slice}{slice $\mathscr{C}/A$} is equivalent to a finite category.
+      Then $[\mathscr{C}^\text{op}, \mathbf{Set}_f]$ is a topos; similarly if $\mathscr{C}$ is large but all $\mathscr{C}/A$ are small then $[\mathscr{C}^{\text{op}}, \mathbf{Set}]$ is a topos.
+      In particular, $[\mathbf{On}^{\text{op}}, \mathbf{Set}]$ is a topos, but it's not \hyperlink{def:lsmall}{locally small}.
+  \end{enumerate}
+\end{nexample}
 \printindex
 \end{document}
