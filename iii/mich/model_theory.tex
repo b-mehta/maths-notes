@@ -1224,7 +1224,7 @@ Is $(\mathbb{R}, <)$ $\omega_1$ saturated? No. It does not realize
 
 \clearpage
 \section{The Monster Model}
-Given a \hyperlink{def:complete}{complete theory} $T$ with an infinite \hyperlink{def:model}{model},
+\hypertarget{def:monster}Given a \hyperlink{def:complete}{complete theory} $T$ with an infinite \hyperlink{def:model}{model},
 we work in a \hyperlink{def:sat}{saturated} \hyperlink{def:str}{structure} $\mathcal{U}$ (sometimes denoted $\mathbb{M}$) that is a model of $T$, which is sufficiently large such that any other model of $T$ we might be interested in is an \hyperlink{def:elsubs}{elementary substructure} of $\mathcal{U}$.
 ($\mathcal{U}$ is an expository device - see Tent/Ziegler for more details, also Marker).
 
@@ -1234,7 +1234,7 @@ we work in a \hyperlink{def:sat}{saturated} \hyperlink{def:str}{structure} $\mat
     \item `$\varphi(\bar{x})$ \textbf{holds}' to mean that $\mathcal{U}\hyperlink{def:models}{\models}\forall \bar{x} \;\varphi(\bar{x})$
     \item `$\varphi(\bar{x})$ is \textbf{consistent}' to mean $\mathcal{U}\models\exists\bar{x}\;\varphi(\bar{x})$
     \item `the type $p(\bar{x})$ is \textbf{consistent}/\textbf{satisfiable}' to mean $\mathcal{U}\models\exists\bar{x}\;p(\bar{x})$
-    \item A cardinality $\lambda$ is \textbf{small} if $\lambda< |U|$ (usually denote $|U|$ by $\kappa$)
+    \item A cardinality $\lambda$ is \hypertarget{def:small}{\named{small}} if $\lambda< |U|$ (usually denote $|U|$ by $\kappa$)
     \item a \textbf{model} is some $\mathcal{M}\preccurlyeq\mathcal{U}$ such that $|M|$ is small
   \end{itemize}
   Conventions:
@@ -1432,5 +1432,93 @@ This gives \hyperlink{def:qe}{quantifier elimination} for $T_{\text{rg}}$ and $T
     \item $a \in \mathcal{M}$ for any \hyperlink{def:model}{model} $\mathcal{M}$ which contains $A$.
   \end{enumerate}
 \end{nthm}
+\begin{proof}
+  \marginnote{\emph{Lecture 14}}
+  (i) $\Rightarrow$ (ii). If $a \in \hyperlink{def:alg}{\acl}(A)$, then there is an \hyperlink{def:la}{$L(A)$}-\hyperlink{def:form}{formula} $\varphi(x)$ such that $\varphi(a)$ holds and $|\varphi(U)| < \omega$.
+  But $\varphi(U)$ is \hyperlink{def:inv}{invariant} over $A$, and so $O(a/A) \subseteq \varphi(U)$, and so $|\mathcal{O}(a/A)| < \omega$.
+
+  (ii) $\Rightarrow$ (i). If $|\hyperlink{def:orbit}{O(a/A)}| < \omega$, then $O(a/A)$ is \hyperlink{def:def}{definable} by $\bigvee_{i=1}^n (x = a_i)$ where $O(a/A) = \{a_1, \dotsc, a_n\}$.
+  Also $O(a/A)$ is \hyperlink{def:inv}{invariant} over $A$, so by \cref{prop:7.5}, there is an $L(A)$-formula $\varphi(x)$ that defines $O(a/A)$.
+
+  (i) $\Rightarrow$ (iii). $a \in \acl(A)$, so there is $\varphi(x)$, an $L(A)$-formula such that there is $n \in \omega\setminus\{0\}$ with
+  \begin{equation*}
+    \varphi(a) \wedge \exists^{\leq n} x \; \varphi(x).
+  \end{equation*}
+  Then by \hyperlink{def:elmap}{elementarity}, $\varphi(a) \wedge \exists^{\leq n} x \; \varphi(x)$ holds in every $\mathcal{M} \supseteq A$, and the $n$ realizations of $\varphi(x)$ in $\mathcal{U}$ must coincide with the realizations in $\mathcal{M}$.
+  Therefore $a \in \mathcal{M}$.
+
+  (iii) $\Rightarrow$ (i). Suppose $a \notin \acl(A)$, let $p(x) = \tp(a/A)$. Then for $\varphi(x) \in p(x)$, $|\varphi(\mathcal{U})| \geq \omega$.
+  Then from sheet 2, $|p(\mathcal{U})| \geq \omega$.
+  By an argument similar to the one in exercise 7 on sheet 2, $|p(\mathcal{U})| = |\mathcal{U}|$.
+
+  Let $\mathcal{M} \supseteq A$, then $p(\mathcal{U}) \setminus \mathcal{M} \neq \emptyset$.
+  So there is $b \in p(\mathcal{U}) \setminus \mathcal{M}$.
+  Since $\hyperlink{def:tp}{\tp}(a/A) = \tp(b/A)$, there is $\alpha \in \hyperlink{def:aut}{\Aut}(\mathcal{U}/A)$ such that $\alpha(b) = a$.
+
+  But then $\alpha[\mathcal{M}]$ is a \hyperlink{def:model}{model} that contains $A$, but $a \notin \alpha[\mathcal{M}]$ while $a = \alpha(b)$.
+\end{proof}
+
+\begin{nprop}\label{prop:7.13}
+  Let $a \in \mathcal{U}$, $A \subseteq \mathcal{U}$. Then:
+  \begin{enumerate}[label=(\roman*)]
+    \item if $a \in \hyperlink{def:alg}{\acl}(A)$, then there is finite $A_0 \subseteq A$ such that $a \in \acl(A_0)$.
+    \item if $A \subseteq B$, then $\acl(A) \subseteq \acl(B)$.
+    \item $\acl(A) = \acl(\acl(A))$
+    \item $A \subseteq \acl(A)$.
+    \item $\acl(A) = \bigcap_{A \subseteq \mathcal{M}} \mathcal{M}$
+      where $\mathcal{M}$ is a \hyperlink{def:small}{small} \hyperlink{def:elsubs}{elementary substructure} of $\mathcal{U}$.
+  \end{enumerate}
+\end{nprop}
+\begin{proof}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item[(iv)] $a \in A$ is \hyperlink{def:def}{definable} over $A$, hence \hyperlink{def:alg}{algebraic}.
+    \item[(iii)] $\hyperlink{def:alg}{\acl}(A) \subseteq \acl(\acl(A))$ by monotonicity.
+      For $\supseteq$, let $a \in \acl(\acl(A))$. By \cref{thm:7.12}, $a \in \mathcal{M}$ for every $\mathcal{M} \supseteq \acl(A)$.
+      But $\acl(A) \subseteq \mathcal{M} \iff A \subseteq \mathcal{M}$, so $a \in \mathcal{M}$ for every $\mathcal{M} \supseteq A$, i.e.\ $a \in \acl(A)$.
+      \item[(v)] follows from \cref{thm:7.12}. \qedhere
+  \end{enumerate}
+\end{proof}
+\begin{nprop}\label{prop:7.14}
+  If $\beta\in \hyperlink{def:aut}{\Aut(\mathcal{U})}$, $A \subseteq \mathcal{U}$, then $\beta[\hyperlink{def:alg}{\acl}(A)] = \acl(\beta[A])$.
+\end{nprop}
+\begin{proof}
+  $\subseteq$: Let $a \in \hyperlink{def:alg}{\acl}(A)$, let $\varphi(x, \bar{z})$ be an $L$-\hyperlink{def:form}{formula} such that $\varphi(a, \bar{b})$ holds for $\bar{b}$ in $A$ and $|\varphi(U, \bar{b}) < \omega$.
+  Then $\varphi(\beta(a), \beta(\bar{b}))$ holds, $|\varphi(U, \beta(\bar{b}))|<\omega$, and so $\beta(a)$ is \hyperlink{def:alg}{algebraic} over $\beta[\bar{b}]$.
+
+  The same proof with $\beta^{-1}$ in place of $\beta$ and $\beta[A]$ in place of $A$ shows $\supseteq$.
+\end{proof}
+
+\clearpage
+\section{Strongly Minimal Theories}
+\begin{ndef}[Cofinite]\label{def:8.1}
+  \hypertarget{def:cofinite}For $\mathcal{M}$ a \hyperlink{def:str}{structure}, $A \subseteq M$ is \named{cofinite} if $M \setminus A$ is finite.
+\end{ndef}
+\begin{nremark}
+  Finite and \hyperlink{def:cofinite}{cofinite} sets are \hyperlink{def:def}{definable} in every \hyperlink{def:str}{structure}.
+\end{nremark}
+In this chapter, we'll look at \hyperlink{def:str}{structures} where these are the only \hyperlink{def:def}{definable} sets.
+\begin{ndef}[Minimality, strong minimality]\hypertarget{def:minimal}
+  A \hyperlink{def:str}{structure} $\mathcal{M}$ is \named{minimal} if all its \hyperlink{def:def}{definable} subsets are finite or \hyperlink{def:cofinite}{cofinite}.
+  $\mathcal{M}$ is \named{strongly minimal} if it is minimal and all its elementary extensions are minimal.
+
+  If $T$ is a \hyperlink{def:consistent}{consistent} theory without finite \hyperlink{def:models}{models}, $T$ is \textbf{strongly minimal} if for every formula $\varphi(x, \bar{z})$ there is $n \in \omega \setminus \{0\}$ such that
+  \begin{equation*}
+    T \vdash \forall \bar{z} \; [\exists^{\leq n} x \; \varphi(x, \bar{z}) \lor \exists^{\leq n} x \; \neg \varphi(x, \bar{z})].
+  \end{equation*}
+\end{ndef}
+\begin{eg}
+  Take $L = \{E\}$, a binary relation, let $\mathcal{M}$ be the $L$-\hyperlink{def:str}{structure} where $E$ is an equivalence relation with exactly one class of size $n$ for all $n \in \omega$ and no infinite classes.
+  Then can show $\mathcal{M}$ is \hyperlink{def:minimal}{minimal} (can only say things like `$x$ is in the same class as a').
+
+  But, there is $\mathcal{N} \hyperlink{def:elsubs}{\succcurlyeq} \mathcal{M}$ where $\mathcal{N}$ has an infinite class.
+  Then if the equivalence class of $a \in \mathcal{N}$ is infinite, the set defined by $E(x,a)$ is infinite/coinfinite, so $\M$ is not \hyperlink{def:minimal}{strongly minimal}.
+\end{eg}
+(Remark: \hyperlink{def:minimal}{strongly minimal} \hyperlink{def:ltheory}{theories} have \hyperlink{def:monster}{monster models}).
+From now on: $T$ is strongly minimal, \hyperlink{def:complete}{complete}, and has an infinite \hyperlink{def:model}{model}.
+\begin{ndef}[Independence]\label{def:8.4}
+  \hypertarget{def:indep}Let $a \in \mathcal{U}$, $B \subseteq \mathcal{U}$. Then $a$ is \named{independent} from $B$ if $a \notin \hyperlink{def:alg}{\acl}(B)$.
+  The set $B$ is \textbf{independent} if for all $a \in B$, $a \notin \acl(B\setminus\{a\})$.
+\end{ndef}
+% new lecture
 \printindex
 \end{document}
