@@ -51,6 +51,7 @@
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\cod}{cod}
 \DeclareMathOperator{\Sub}{Sub}
+\DeclarePairedDelimiter\ceil{\ulcorner\!}{\!\urcorner}
 
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 
@@ -2457,7 +2458,7 @@ In fact a Grothendieck topos is exactly a Lawvere-Tierney topos which is \hyperl
         \end{cases}
       \end{equation*}
       So also is the category $\mathbf{Set}_f$ of finite sets, or the category $\mathbf{Set}_\kappa$ of sets of cardinality $<\kappa$, where $\kappa$ is an infinite cardinal such that $\lambda < \kappa \implies 2^\lambda < \kappa$.
-    \item For any \hyperlink{def:small}{small} category $\mathscr{C}$, $\hyperlink{def:functcat}{[\mathscr{C}^{\text{op}}, \mathbf{Set}]}$ is a topos: we've seen that it's \hyperlink{def:cc}{cartesian closed}, and $\Omega$ is determined by \hyperlink{lem:yoneda}{Yoneda}:
+    \item For any \hyperlink{def:small}{small} category $\mathscr{C}$, $\hyperlink{def:functcat}{[\mathscr{C}^{\hyperlink{def:duality}{\text{op}}}, \mathbf{Set}]}$ is a topos: we've seen that it's \hyperlink{def:cc}{cartesian closed}, and $\Omega$ is determined by \nameref{lem:2.2}:
       \begin{equation*}
         \Omega(A) \cong [\mathscr{C}^\text{op}, \mathbf{Set}] (\mathscr{C}(-,A), \Omega) \cong \{\text{subfunctors of }\mathscr{C}(-,A)\}
       \end{equation*}
@@ -2497,5 +2498,172 @@ In fact a Grothendieck topos is exactly a Lawvere-Tierney topos which is \hyperl
       In particular, $[\mathbf{On}^{\text{op}}, \mathbf{Set}]$ is a topos, but it's not \hyperlink{def:lsmall}{locally small}.
   \end{enumerate}
 \end{nexample}
+\begin{nlemma}\label{lem:7.3}
+  \marginnote{\emph{Lecture 22}} Suppose $\mathscr{E}$ has \hyperlink{def:limit}{finite limits} and a \hyperlink{def:sc}{subobject classifier}.
+  Then every \hyperlink{def:monic}{monomorphism} in $\mathscr{E}$ is \hyperlink{def:regular}{regular}.
+  In particular, $\mathscr{E}$ is \hyperlink{def:balanced}{balanced}.
+\end{nlemma}
+\begin{proof}
+  The universal \hyperlink{def:monic}{monomorphism} $1 \overset{\top}\rightarrowtail \Omega$ is \hyperlink{def:split}{split} and hence \hyperlink{def:regular}{regular}.
+  But any \hyperlink{def:pullback}{pullback} of a regular monomorphism is regular: if $f$ is an \hyperlink{def:equalizer}{equalizer} of $(g,h)$ then $k^*(f)$ is an equalizer of $(gk,hk)$.
+  The second assertion follows since regular monomorphism together with epimorphism implies isomorphism.
+\end{proof}
+Given an object $A$ in a \hyperlink{def:topos}{topos} $\mathscr{E}$, we write $PA$ for the \hyperlink{def:exp}{exponential} $\Omega^A$, and $\ni_A \rightarrowtail PA \times A$ for the \hyperlink{def:subobj}{subobject} corresponding to $PA \times A \overset{\hyperlink{def:ev}{\text{ev}}}\to \Omega$.
+This has the property that, for any $B$ and any $R \overset{m}\rightarrowtail B \times A$ there is a unique $\ceil{m}: B \to PA$ such that
+\begin{equation*}
+  \begin{tikzcd}[sep=large]
+  R \rar \dar[tail]{m}& \ni_A \dar[tail] \\
+  B \times A \rar{\ceil{m} \times 1_A} & PA \times A
+\end{tikzcd}
+\end{equation*}
+is a \hyperlink{def:pullback}{pullback}.
+\begin{ndef}[Power object, weak topos]
+  \hypertarget{def:power}By a \named{power object} for $A$ in a \hyperlink{def:cat}{category} $\mathscr{E}$ with \hyperlink{def:limit}{finite limits}, we mean an object $PA$ equipped with $\ni_A \rightarrowtail PA \times A$ satisfying the above.
+
+  \hypertarget{def:wtopos}We say $\mathscr{E}$ is a \named{weak topos} if every $A \in \ob \mathscr{E}$ has a power-object.
+  Similarly, we say $F: \mathscr{E} \to \mathscr{F}$ is \named{weakly logical} if $F(\ni_A) \rightarrowtail F(PA) \times FA$ is a power-object for $FA$, for every $A \in \ob \mathscr{E}$.
+\end{ndef}
+\begin{nlemma}\label{lem:7.5}
+  $P$ is a \hyperlink{def:funct}{functor} $\mathscr{E}^{\text{\hyperlink{def:duality}op}} \to \mathscr{E}$. Moreover, it is \hyperlink{def:adjointr}{self-adjoint on the right}.
+\end{nlemma}
+\begin{proof}
+  Given $A \overset{f}\to B$, we define $PB \overset{Pf}\to PA$ to correspond to the \hyperlink{def:pullback}{pullback}
+  \begin{equation*}
+  \begin{tikzcd}
+    E_f \rar \dar[tail] & \ni_B \dar[tail]\\ PB\times A \rar{1 \times f} & PB \times B.
+  \end{tikzcd}
+  \end{equation*}
+  For any $C \overset{\hyperlink{def:power}{\ceil{m}}}\to PB$, it's easy to see that $(Pf) \ceil{m}$ corresponds to $(1_C \times f)^* (m)$; hence $f \mapsto Pf$ is \hyperlink{def:funct}{functorial}.
+  For any $A,B$, we have a bijection between \hyperlink{def:subobj}{subobjects} of $A \times B$ and of $B \times A$, given by composition with $(\pi_2, \pi_1) : A \times B \to B \times A$; this yields a (natural) bijection between morphisms $A \to PB$ and $B \to PA$.
+\end{proof}
+\hypertarget{def:brace}We write $\{\}_A: A \to PA$ for the morphism corresponding to $\begin{tikzcd}[cramped, sep=large]A \rar[tail]{(1_A, 1_A)} & A \times A\end{tikzcd}$.
+\begin{nlemma}\label{lem:7.6}
+  Given $A \overset{f}\to B$, $\hyperlink{def:brace}{\{\}_B} f$ corresponds to $\begin{tikzcd}[cramped]A \rar[tail]{(1_A, f)} & A \times B\end{tikzcd}$ and $(\hyperlink{def:power}{Pf})\{\}_B$ corresponds to $\begin{tikzcd}[cramped]A \rar[tail]{(f, 1_A)} & B \times A\end{tikzcd}$.
+\end{nlemma}
+\begin{proof}
+  The square
+  \begin{equation*}
+    \begin{tikzcd}[row sep=large]
+    A \rar{f} \dar[tail]{(1,f)} & B \dar[tail]{(1,1)} \\
+    A \times B \rar{f \times 1} & B \times B
+  \end{tikzcd}
+  \end{equation*}
+  is a \hyperlink{def:pullback}{pullback}. Similarly for the second assertion.
+\end{proof}
+\begin{ncor}\label{cor:7.7}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item $\hyperlink{def:brace}{\{\}}: A \to \hyperlink{def:power}{PA}$ is \hyperlink{def:monic}{monic}.
+    \item $P$ is \hyperlink{def:full}{faithful}.
+  \end{enumerate}
+\end{ncor}
+\begin{proof}\leavevmode
+  \begin{enumerate}[label=(i)]
+    \item If $\hyperlink{def:brace}{\{\}}f = \{\}g$, then $(1_A, f)$ and $(1_A,g)$ are isomorphic as \hyperlink{def:subobj}{subobjects} of $A \times B$, which forces $f=g$.
+    \item Similarly, if $\hyperlink{def:power}{Pf} = Pg$ then $(Pf)\{\} = (Pg)\{\}$, so we again deduce $f=g$.\qedhere
+  \end{enumerate}
+\end{proof}
+\hypertarget{def:exists}Given a \hyperlink{def:monic}{monomorphism} $A \overset{f}\to B$ in $\mathscr{E}$, we define $\exists f: \hyperlink{def:power}{PA} \to PB$ to correspond to the composite
+\begin{equation*}
+\begin{tikzcd}
+  \ni_A \rar[tail] & PA \times A \rar[tail]{1 \times f} &PA \times B
+\end{tikzcd}
+\end{equation*}
+Then, for any $C \overset{\hyperlink{def:power}{\ceil{m}}} \to PA$, $(\exists f) \ceil{m}$ corresponds to
+\begin{equation*}
+\begin{tikzcd}
+  R \rar[tail]{m} & C \times A \rar[tail]{1 \times f} & C \times B.
+\end{tikzcd}
+\end{equation*}
+So $f \mapsto \exists f$ is a functor $\textbf{Mono}(\mathscr{E}) \to \mathscr{E}$.
+\begin{nlemma}[Beck-Chevalley condition]\label{lem:7.8}
+  Suppose
+  \begin{equation*}
+  \begin{tikzcd}
+    D \rar{h} \dar[tail]{k} & A \dar[tail]{f} \\ B \rar{g} & C
+  \end{tikzcd}
+  \end{equation*}
+  is a \hyperlink{def:pullback}{pullback} with $f$ \hyperlink{def:monic}{monic}.
+  Then the diagram
+  \begin{equation*}
+  \begin{tikzcd}
+    PA \rar{\hyperlink{def:exists}{\exists f}} \dar{Ph} & PC \dar{Pg} \\
+    PD \rar{\exists k} & PB
+  \end{tikzcd}
+  \end{equation*}
+  commutes.
+\end{nlemma}
+\begin{proof}
+  Consider the diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=large]
+    E_n \dar[tail] \rar & \hyperlink{def:power}{\ni_A} \dar[tail]\\
+    \hyperlink{def:power}{PA} \times D \rar{1 \times h} \dar[tail]{1 \times k} & PA \times A \dar[tail]{1 \times f} \\ PA \times B \rar{1 \times g} & PA \times C
+  \end{tikzcd}
+  \end{equation*}
+  The lower square is a \hyperlink{def:pullback}{pullback}, so the upper square is a pullback if and only if the composite is a pullback.
+\end{proof}
+\begin{nthm}[Par\'e]\label{thm:7.9}
+  The \hyperlink{def:funct}{functor} $\hyperlink{def:power}{P:} \mathscr{E}^{\text{\hyperlink{def:duality}{op}}} \to \mathscr{E}$ is \hyperlink{def:monadic}{monadic}.
+\end{nthm}
+\begin{proof}
+  It has a \hyperlink{def:adj}{left adjoint} $P: \mathscr{E} \to \mathscr{E}^{\text{op}}$ by \cref{lem:7.5}.
+  It's \hyperlink{def:full}{faithful} by \cref{cor:7.7}(ii) and hence reflects \hyperlink{def:iso}{isomorphisms} by \cref{lem:7.3}.
+  $\mathscr{E}^\text{op}$ has \hyperlink{def:equalizer}{coequalizers}, since $\mathscr{E}$ has equalizers.
+  Suppose
+  \begin{equation*}
+    \begin{tikzcd}
+    A \rar[shift left=3]{f} \rar[shift right=3,']{g} & B \lar{r}
+    \end{tikzcd}
+  \end{equation*}
+  is a \hyperlink{def:reflexive}{coreflexive pair} in $\mathscr{E}$; then $f$ and $g$ are (split) \hyperlink{def:monic}{monic}, and the equalizer $E \overset{e}\to A$ makes
+  \begin{equation*}
+  \begin{tikzcd}
+    E \rar{e} \dar[tail]{e} & A \dar[tail]{g} \\ A \rar{f} & B
+  \end{tikzcd}
+  \end{equation*}
+  a \hyperlink{def:pullback}{pullback square} since any cone over
+  \begin{equation*}
+    \begin{tikzcd}
+      &A \dar{g} \\ A \rar{f} & B
+    \end{tikzcd}
+  \end{equation*}
+  has both legs equal.
+  So by \cref{lem:7.8} we have $(Pf)(\hyperlink{def:exists}{\exists} g) = (\exists e)(Pe)$; but we also have $(Pg)(\exists g) = 1_{PA}$ since
+  \begin{equation*}
+  \begin{tikzcd}
+    A \rar{1} \dar{1} & A \dar{g} \\
+    A \rar{g} & B
+  \end{tikzcd}
+  \end{equation*}
+  is a pullback, and similarly $(Pe)(\exists e) = 1_{PE}$.
+  So
+  \begin{equation*}
+    \begin{tikzcd}[sep=large]
+    PB \rar[shift left]{Pf} \rar[shift right,']{Pg} & PA \lar[bend left=40]{\exists g} \rar{Pe} & PE \lar[bend left=40]{\exists e}
+  \end{tikzcd}
+  \end{equation*}
+  is a \hyperlink{def:splitcoeq}{split coequalizer}, and in particular a coequalizer.
+  Hence by \cref{thm:5.13}, $P$ is \hyperlink{def:monadic}{monadic}.
+\end{proof}
+\begin{ncor}\label{lem:7.10}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item A \hyperlink{def:wtopos}{weak topos} has finite \hyperlink{def:limit}{colimits}.
+      Moreover, if it has any infinite \hyperlink{def:limit}{limits}, then it has the corresponding colimits.
+    \item If a \hyperlink{def:wtopos}{weakly logical} functor has a \hyperlink{def:adj}{left adjoint}, then it has a right adjoint.
+  \end{enumerate}
+\end{ncor}
+\begin{proof}\leavevmode
+  \begin{enumerate}[label=(\roman*)]
+    \item $P$ \hyperlink{def:clim}{creates all limits} which exist, by \cref{thm:5.8}.
+    \item By definition, if $F$ is \hyperlink{def:wtopos}{weakly logical} then
+      \begin{equation*}
+      \begin{tikzcd}
+        \mathscr{E}^\text{op} \rar{F} \dar{P}& \mathscr{F}^\text{op} \dar{P}\\
+        \mathscr{E} \rar{F} & \mathscr{F}
+      \end{tikzcd}
+      \end{equation*}
+      commutes up to \hyperlink{def:iso}{isomorphism}. So this follows from \cref{thm:5.16}.
+  \end{enumerate}
+\end{proof}
 \printindex
 \end{document}
