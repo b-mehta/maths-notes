@@ -54,6 +54,7 @@
 \DeclarePairedDelimiter\ceil{\ulcorner\!}{\!\urcorner}
 
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
+\newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
 
 % special categories
 \newcommand{\catc}{\mathbf{Cat}}
@@ -2665,5 +2666,164 @@ So $f \mapsto \exists f$ is a functor $\textbf{Mono}(\mathscr{E}) \to \mathscr{E
       commutes up to \hyperlink{def:iso}{isomorphism}. So this follows from \cref{thm:5.16}.
   \end{enumerate}
 \end{proof}
+
+% new lecture
+\begin{nlemma}\label{lem:7.11}
+  \marginnote{\emph{Lecture 23}}Let $\mathscr{E}$ be a \hyperlink{def:cat}{category} with \hyperlink{def:limit}{finite limits}, suppose $A \in \ob \mathscr{E}$ has a \hyperlink{def:power}{power object} $PA$.
+  Then for any $B$, $\hyperlink{def:bstar}{B^*}(PA)$ is a power object for $\hyperlink{def:bstar}{B^*}A$ in $\hyperlink{def:slice}{\mathscr{E}/B}$.
+\end{nlemma}
+\begin{proof}
+  Given $\begin{tikzcdi}C \dar{g}\\B\end{tikzcdi}$, we have a \hyperlink{def:pullback}{pullback square}
+  \begin{equation*}
+    \begin{tikzcd}
+      C \times A \rar{g \times 1} \dar{\pi_1} & B \times A \dar{\pi_1} \\
+      C \rar{g} & B
+    \end{tikzcd}
+  \end{equation*}
+  So $\Sigma_B(g \times B^* A) \cong C \times A$.
+  Hence $\hyperlink{def:sub}{\Sub_{\mathscr{E}/B}} (g \times \hyperlink{def:bstar}{B^*} A) \cong \Sub_{\mathscr{E}} (C \times A)$, but if $C \overset{h}\to PA$ corresponds to $\begin{tikzcdi} R \dar[tail] \\ C \times A \end{tikzcdi}$, then the upper square of the diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=large]
+      R \ar[d, tail] \arrow[rr]  && B \times \ni_A \ar[d, tail] \\
+      C \times A \arrow[rr, "{(g,h)} \times 1_A"] \arrow[dr, "g \pi_1"']&& B \times PA \times A \arrow[dl, "\pi_1"]\\
+                                          & B
+    \end{tikzcd}
+  \end{equation*}
+  is a pullback.
+  So $\begin{tikzcd}[cramped] B \times PA \dar{\pi_1} \\ B\end{tikzcd}$, equipped with $B^*(\ni_A) \rightarrowtail B^*(PA \times A)$ is a power object for $B^* A$.
+\end{proof}
+\begin{nthm}\label{cor:7.12}
+  Suppose $\mathscr{E}$ is a \hyperlink{def:wtopos}{weak topos}.
+  Then for any $B \in \ob \mathscr{E}$, \hyperlink{def:slice}{$\mathscr{E}/B$} is a weak topos and $\hyperlink{def:bstar}{B^*}: \mathscr{E} \to \mathscr{E}/B$ is \hyperlink{def:lFunct}{weakly logical}.
+\end{nthm}
+\begin{proof}
+  The second assertion follows from \cref{lem:7.11}.
+  For the first, we need to construct a \hyperlink{def:power}{power object} for an arbitrary $\begin{tikzcdi}A \dar{f} \\ B\end{tikzcdi}$ in $\mathscr{E}/B$.
+  Then the \hyperlink{def:pullback}{pullback}
+  \begin{equation*}
+    \begin{tikzcd}
+      \hyperlink{def:sumb}{\Sigma_B}(g \times f) \rar \dar & f \dar{f}  \\
+      C \rar{g} & B
+    \end{tikzcd}
+  \end{equation*}
+  is a \hyperlink{def:subobj}{subobject} of $C \times A$, namely the \hyperlink{def:equalizer}{equalizer} of
+  \begin{equation*}
+    \begin{tikzcd}
+      C \times A \rar[shift left]{f \pi_2} \rar[shift right,']{g \pi_1} & B.
+    \end{tikzcd}
+  \end{equation*}
+
+  Define $\land: \hyperlink{def:power}{PA} \times PA \to PA$ to correspond to the intersection of $\pi_{13}^*(\ni_A \rightarrowtail PA \times A)$ and $\pi_{23}^*(\ni_A \rightarrowtail PA \times A)$
+  and define $P_1 A \rightarrowtail PA \times PA$ to be the equalizer of $\begin{tikzcdi}PA \times PA \rar[shift left]{\land} \rar[shift right,']{\pi_1} & PA\end{tikzcdi}$.
+  Then, for any $C$,
+  \begin{equation*}C \xrightarrow{(\ceil{m}, \ceil{n})} PA \times PA\end{equation*}
+  factors through $P_1 A$ iff $m \leq n$ in $\hyperlink{def:sub}{\Sub_{\mathscr{E}}} (C \times A)$.
+  Now form the pullback
+  \begin{equation*}
+    \begin{tikzcd}[row sep=large]
+      Q \arrow[rr]\dar[tail]{(h,k)} && P_1 A \dar[tail] \\
+      PA \times B \rar{1 \times \hyperlink{def:brace}{\{\}}} & PA \times PB \rar{1 \times Pf} & PA \times PA.
+    \end{tikzcd}
+  \end{equation*}
+  Given any $\begin{tikzcd}C \dar{g} \\ B\end{tikzcd}$, morphisms $g \overset{l}\to k$ in $\mathscr{E}/B$ correspond to morphisms
+  $C \overset{hl}\to PA$ such that the subobject named by $hl$ is contained in that named by $(Pf)(\{\})g$.
+  But the latter is indeed $\Sigma_B (g \times f) \rightarrowtail C \times A$.
+  So $k$ is a power-object for $f$ in $\mathscr{E}/B$.
+\end{proof}
+
+\begin{ncor}\label{cor:7.13}
+  A \hyperlink{def:wtopos}{weak topos} is \hyperlink{def:lcc}{locally cartesian closed} (in particular, it's a \hyperlink{def:topos}{topos}).
+\end{ncor}
+\begin{proof}
+  For any $f: A \to B$ in $\mathscr{E}$, we can identify $(\hyperlink{def:slice}{\mathscr{E}/B})/f$ with $\mathscr{E}/A$, and $\hyperlink{def:bstar}{f^*}: \mathscr{E}/B \to \mathscr{E}/A$ with \hyperlink{def:pullback}{pullback} along $f$.
+  Hence all such \hyperlink{def:funct}{functors} are \hyperlink{def:wtopos}{weakly logical}.
+
+  But $f^*$ has a \hyperlink{def:adj}{left adjoint} $\Sigma_f$, so by \cref{lem:7.10}(ii) it has a right adjoint $\Pi_f$.
+  Hence by \cref{lem:6.3}, $\mathscr{E}/B$ is \hyperlink{def:cc}{cartesian closed} for any $B$.
+\end{proof}
+\begin{remark}
+  It can be shown that a \hyperlink{def:wtopos}{weakly logical functor} is \hyperlink{def:ccfunct}{cartesian closed} (and hence \hyperlink{def:lFunct}{logical}).
+\end{remark}
+\begin{ncor}\leavevmode\label{cor:7.14}
+  \begin{enumerate}[label=(\roman*)]
+    \item Any \hyperlink{def:epic}{epimorphism} in a \hyperlink{def:topos}{topos} is \hyperlink{def:regular}{regular}.
+    \item Any $A \overset{f}\to B$ in a topos factors uniquely up to isomorphism as
+      \begin{equation*}
+        \begin{tikzcd}
+        A \rar[two heads]{q} & I \rar[tail]{m} & B.
+        \end{tikzcd}
+      \end{equation*}
+  \end{enumerate}
+\end{ncor}
+\begin{proof}
+  For a topos $\ec$, it is \hyperlink{def:lcc}{locally cartesian closed} by \cref{cor:7.13} and has \hyperlink{def:equalizer}{coequalizers} by \cref{lem:7.10}(i), so by \cref{thm:6.7} every $f$ factors uniquely as \hyperlink{def:epic}{regular epi} + \hyperlink{def:monic}{mono}.
+  If $f$ itself is epic, then the monic part of this factorization is isomorphic by \cref{lem:7.3}, so $f$ is regular epic.
+\end{proof}
+\clearpage
+\section*{*Sheaves and local operators}
+Recall that $\hyperlink{def:presheaf}{\mathbf{Sh}(X)} \subseteq \hyperlink{def:functcat}{[\mathcal{O}(X)^{\text{op}}, \mathbf{Set}]}$ is a \hyperlink{def:fulls}{full subcategory} closed under \hyperlink{def:limit}{limits:} in fact it's \hyperlink{def:refl}{reflective} and the reflector $L: [\mathcal{O}(X)^{\text{op}}, \mathbf{Set}] \to \mathbf{Sh}(X)$ \hyperlink{def:plim}{preserves finite limits}.
+This suggests considering reflective subcategories $\mathscr{D} \subseteq \mathscr{E}$ for which the reflector preserves finite limits (equivalently, \hyperlink{def:pullback}{pullbacks}).
+\begin{nlemma}\label{lem:7.15}
+  Given such a \hyperlink{def:refl}{reflective subcategory}, and a \hyperlink{def:monic}{monomorphism} $\begin{tikzcdi} A' \rar[tail] & A \end{tikzcdi}$ in $\mathscr{E}$, define $\begin{tikzcdi} c(A') \rar[tail] & A \end{tikzcdi}$ by the \hyperlink{def:pullback}{pullback} diagram
+  \begin{equation*}
+  \begin{tikzcd}
+    c(A') \rar \dar[tail] & LA' \dar[tail] \\
+    A \rar{\eta_A} & LA.
+  \end{tikzcd}
+  \end{equation*}
+  Then $A' \mapsto c(A')$ is a closure operation on $\Sub_\mathscr{E}(A)$, and commutes with pullback along a fixed morphism of $\mathscr{E}$.
+\end{nlemma}
+\begin{proof}
+  Since
+  \begin{equation*}
+  \begin{tikzcd}
+    A' \rar \dar[tail]{\eta_{A'}} & LA' \dar[tail] \\
+    A \rar{\eta_A} & LA.
+  \end{tikzcd}
+  \end{equation*}
+  commutes, we have $A' \leq c(A)'$ and $A' \leq A''$ in \hyperlink{def:sub}{$\Sub(A)$} implies $LA' \leq LA''$ in $\Sub(LA)$ and hence $c(A') \leq c(A'')$.
+  Since $L \eta$ is iso,
+  \begin{equation*}
+    \begin{tikzcd}
+      LA' \rar \dar[tail]{L\eta_{A'}} & LLA' \dar[tail] \\
+      LA \rar{L\eta_A} & LLA.
+    \end{tikzcd}
+  \end{equation*}
+  is a \hyperlink{def:pullback}{pullback}, and since $L$ \hyperlink{def:plim}{preserves} pullbacks we deduce $Lc(A') \cong LA'$ is $\Sub(LA)$.
+  Hence $c(c(A')) \cong c(A')$.
+  For stability under pullback, suppose
+  \begin{equation*}
+    \begin{tikzcd}
+      A' \rar \dar[tail] & B' \dar[tail] \\ A \rar{f} & B
+    \end{tikzcd}
+  \end{equation*}
+  is a pullback. Then in the cube
+  \begin{equation*}
+  \begin{tikzcd}
+    c(A') \arrow[rr] \arrow[dd] \arrow[dr] && LA' \arrow[rd] \arrow[dd] \\
+                                           & c(B') \arrow[rr, crossing over]  && LB' \arrow[dd] \\
+    A \arrow[rr, "\eta_A", pos=0.7] \arrow[rd, "f"] && LA \arrow[rd, "Lf"] \\
+                                           & B \arrow[rr, "\eta_B"] \arrow[from=uu, crossing over] && LB
+  \end{tikzcd}
+  \end{equation*}
+  the front, back and right faces are pullbacks, whence the left face is too.
+\end{proof}
+\begin{ndef}[Local operator]
+  Let $\mathscr{E}$ be a \hyperlink{def:topos}{topos}.
+  By a \bonusnamed{local operator} on $\mathscr{E}$, we mean a morphism $j: \Omega \to \Omega$ satsifying the commutative diagrams
+  \begin{equation*} \begin{tikzcd}
+    1 \rar{\top} \arrow[rd, "\top",'] & \Omega \dar{j} & \Omega \lar \arrow[ld, "j"]\\ &\Omega
+  \end{tikzcd}
+  \quad \text{and} \quad
+  \begin{tikzcd}
+    \Omega_1 \rar \dar[tail] & \Omega_1 \dar[tail] \\
+    \Omega \times \Omega \rar{j \times j} & \Omega \times \Omega
+  \end{tikzcd}
+  \end{equation*}
+  where $\Omega_1$ is the order-relation in $\Omega$, defined as in \cref{cor:7.12}.
+\end{ndef}
+
+Given a closure operator on \hyperlink{def:subobj}{subobjects} as in \cref{lem:7.15}, define $\begin{tikzcdi} J \rar[tail] & \Omega \end{tikzcdi}$ to be the closure of $1 \overset{T}\rightarrowtail \Omega$ and $j: \Omega \to \Omega$ to be the classifying map of $\begin{tikzcdi} J \rar[tail] & \Omega \end{tikzcdi}$.
+ Then for any $\begin{tikzcdi} A' \rar[tail] & A \end{tikzcdi}$ with classifying map $\chi_m: A \to \Omega$, the composite $j \chi_m$ classifies $\begin{tikzcdi} c(A') \rar[tail] & A\end{tikzcdi}$.
 \printindex
 \end{document}
