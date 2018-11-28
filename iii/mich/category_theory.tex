@@ -5,7 +5,6 @@
 \def\nterm{Michaelmas}
 \def\nlecturer{Professor P.\ T.\ Johnstone}
 \def\ncourse{Category Theory}
-\def\draft{Ongoing course}
 
 \usepackage{mathrsfs}
 \usepackage{imakeidx}
@@ -68,6 +67,7 @@
 \newcommand{\fdmodc}{\mathbf{FdMod}}
 \newcommand{\modc}{\mathbf{Mod}}
 \newcommand{\topc}{\mathbf{Top}}
+\newcommand{\sh}{\mathbf{sh}}
 
 \newcommand{\cc}{\mathscr{C}}
 \newcommand{\dc}{\mathscr{D}}
@@ -2443,7 +2443,7 @@ In fact a Grothendieck topos is exactly a Lawvere-Tierney topos which is \hyperl
         \operatorname{Sub}_\mathscr{E} (-): \mathscr{E}^{\text{op}} \to \mathbf{Set}
       \end{equation*}
       sending $A$ to the set of (isomorphism classes of) \hyperlink{def:subobj}{subobjects} of $A$ and acting on morphisms by pullback, and a subobject classifier is \hyperlink{def:repr}{representation} of this functor.
-    \item \hypertarget{def:topos}A \index{topos} is a category which has finite limits, is \hyperlink{def:cc}{cartesian closed} and has a subobject classifier.
+    \item \hypertarget{def:topos}A \named{topos} is a category which has finite limits, is \hyperlink{def:cc}{cartesian closed} and has a subobject classifier.
     \item \hypertarget{def:lFunct}If $\mathscr{E}$ and $\mathscr{F}$ are toposes, a \textbf{logical functor} $F: \mathscr{E} \to \mathscr{F}$ is one which preserves finite limits, \hyperlink{def:exp}{exponentials} and the subobject classifier.
   \end{enumerate}
 \end{ndef}
@@ -2772,24 +2772,25 @@ This suggests considering reflective subcategories $\mathscr{D} \subseteq \maths
   \end{tikzcd}
   \end{equation*}
   Then $A' \mapsto c(A')$ is a closure operation on $\Sub_\mathscr{E}(A)$, and commutes with pullback along a fixed morphism of $\mathscr{E}$.
+  (A \hypertarget{def:closure}{\bonusnamed{closure}} operation is an order-preserving inflationary idempotent operator.)
 \end{nlemma}
 \begin{proof}
   Since
   \begin{equation*}
   \begin{tikzcd}
-    A' \rar \dar[tail]{\eta_{A'}} & LA' \dar[tail] \\
+    A' \rar \dar[tail,']{\eta_{A'}} & LA' \dar[tail] \\
     A \rar{\eta_A} & LA.
   \end{tikzcd}
   \end{equation*}
-  commutes, we have $A' \leq c(A)'$ and $A' \leq A''$ in \hyperlink{def:sub}{$\Sub(A)$} implies $LA' \leq LA''$ in $\Sub(LA)$ and hence $c(A') \leq c(A'')$.
-  Since $L \eta$ is iso,
+  commutes, we have $A' \leq c(A')$ and $A' \leq A''$ in \hyperlink{def:sub}{$\Sub(A)$} implies $LA' \leq LA''$ in $\Sub(LA)$ and hence $c(A') \leq c(A'')$.
+  Since $L \eta$ is an isomorphism,
   \begin{equation*}
     \begin{tikzcd}
-      LA' \rar \dar[tail]{L\eta_{A'}} & LLA' \dar[tail] \\
+      LA' \rar \dar[tail,']{L\eta_{A'}} & LLA' \dar[tail] \\
       LA \rar{L\eta_A} & LLA.
     \end{tikzcd}
   \end{equation*}
-  is a \hyperlink{def:pullback}{pullback}, and since $L$ \hyperlink{def:plim}{preserves} pullbacks we deduce $Lc(A') \cong LA'$ is $\Sub(LA)$.
+  is a \hyperlink{def:pullback}{pullback}, and since $L$ \hyperlink{def:plim}{preserves} pullbacks we deduce $Lc(A') \cong LA'$ in $\Sub(LA)$.
   Hence $c(c(A')) \cong c(A')$.
   For stability under pullback, suppose
   \begin{equation*}
@@ -2802,15 +2803,15 @@ This suggests considering reflective subcategories $\mathscr{D} \subseteq \maths
   \begin{tikzcd}
     c(A') \arrow[rr] \arrow[dd] \arrow[dr] && LA' \arrow[rd] \arrow[dd] \\
                                            & c(B') \arrow[rr, crossing over]  && LB' \arrow[dd] \\
-    A \arrow[rr, "\eta_A", pos=0.7] \arrow[rd, "f"] && LA \arrow[rd, "Lf"] \\
+    A \arrow[rr, "\eta_A", pos=0.7] \arrow[rd, "f"'] && LA \arrow[rd, "Lf"] \\
                                            & B \arrow[rr, "\eta_B"] \arrow[from=uu, crossing over] && LB
   \end{tikzcd}
   \end{equation*}
   the front, back and right faces are pullbacks, whence the left face is too.
 \end{proof}
-\begin{ndef}[Local operator]
+\begin{ndef}[Local operator]\hypertarget{def:lop}
   Let $\mathscr{E}$ be a \hyperlink{def:topos}{topos}.
-  By a \bonusnamed{local operator} on $\mathscr{E}$, we mean a morphism $j: \Omega \to \Omega$ satsifying the commutative diagrams
+  By a \bonusnamed{local operator} on $\mathscr{E}$, we mean a morphism $j: \Omega \to \Omega$ satisfying the commutative diagrams
   \begin{equation*} \begin{tikzcd}
     1 \rar{\top} \arrow[rd, "\top",'] & \Omega \dar{j} & \Omega \lar \arrow[ld, "j"]\\ &\Omega
   \end{tikzcd}
@@ -2823,7 +2824,166 @@ This suggests considering reflective subcategories $\mathscr{D} \subseteq \maths
   where $\Omega_1$ is the order-relation in $\Omega$, defined as in \cref{cor:7.12}.
 \end{ndef}
 
-Given a closure operator on \hyperlink{def:subobj}{subobjects} as in \cref{lem:7.15}, define $\begin{tikzcdi} J \rar[tail] & \Omega \end{tikzcdi}$ to be the closure of $1 \overset{T}\rightarrowtail \Omega$ and $j: \Omega \to \Omega$ to be the classifying map of $\begin{tikzcdi} J \rar[tail] & \Omega \end{tikzcdi}$.
+Given a \hyperlink{def:closure}{closure} operator on \hyperlink{def:subobj}{subobjects} as in \cref{lem:7.15}, define $\begin{tikzcdi} J \rar[tail] & \Omega \end{tikzcdi}$ to be the closure of $\begin{tikzcdi}1 \rar[tail]{\top} & \Omega\end{tikzcdi}$ and $j: \Omega \to \Omega$ to be the \hyperlink{def:sc}{classifying map} of $\begin{tikzcdi} J \rar[tail] & \Omega \end{tikzcdi}$.
  Then for any $\begin{tikzcdi} A' \rar[tail] & A \end{tikzcdi}$ with classifying map $\chi_m: A \to \Omega$, the composite $j \chi_m$ classifies $\begin{tikzcdi} c(A') \rar[tail] & A\end{tikzcdi}$.
+
+\hypertarget{def:denseclosed}Given\marginnote{\emph{Lecture 24}} a \hyperlink{def:pullback}{pullback}-stable operator $c$ on \hyperlink{def:subobj}{subobjects}, we say $A' \rightarrowtail A$ is \bonusnamed{dense} if $c(A') \rightarrowtail A$ is an \hyperlink{def:iso}{isomorphism}, and \bonusnamed{closed} if $A' \rightarrowtail c(A')$ is an isomorphism.
+
+\begin{nlemma}\label{lem:7.17}
+  Suppose given a commutative square
+  \begin{equation*}
+    \begin{tikzcd}[sep=large]
+    B' \rar{f'} \dar[tail]{n} & A' \dar[tail]{m}\\
+    B \rar{f} & A
+  \end{tikzcd}
+  \end{equation*}
+  with $n$ \hyperlink{def:denseclosed}{dense} and $m$ \hyperlink{def:denseclosed}{closed}.
+  Then there is a unique $B \overset{g}\to A'$ with $mg = f$ (and $gn=f'$).
+\end{nlemma}
+\begin{proof}
+  We have $n \leq f^*(m)$ in $\hyperlink{def:sub}{\Sub}(B)$, so
+  \begin{equation*}1_B \cong c(n) \leq f^*(c(m)) \cong f^*(m).\end{equation*}
+  So we define $g$ as $B \overset{\cong}\to f^*(A') \to A'$.
+\end{proof}
+
+Note that $c(A')$ may be characterised as the unique (up to isomorphism) subobject $A''$ such that $A' \rightarrowtail A''$ is dense and $A'' \rightarrowtail A'$ is closed.
+
+\begin{nlemma}\label{lem:7.18}
+  Suppose $c$ is induced as in \cref{lem:7.15} by a \hyperlink{def:refl}{reflector} $L: \ec \to \dc$
+  \hyperlink{def:plim}{preserving} finite \hyperlink{def:limit}{limits}.
+  Then an object $A$ of $\ec$ belongs to $\dc$ (up to \hyperlink{def:iso}{isomorphism}) iff, given any diagram
+  \begin{equation*}
+  \begin{tikzcd}
+    B' \dar[tail]{m} \rar{f'} & A \\
+    B
+  \end{tikzcd}
+  \end{equation*}
+  with $m$ \hyperlink{def:denseclosed}{dense}, there exists a unique $B \overset{f}\to A$ such that $fm=f'$.
+\end{nlemma}
+\begin{proof}
+  Note first that $m$ is \hyperlink{def:denseclosed}{dense} $\iff Lm$ is an \hyperlink{def:iso}{isomorphism}:
+  $\Leftarrow$ follows from the definition; $\Rightarrow$ follows, since by the proof of \cref{lem:7.15}, we know $L(B')$ and $L(c(B'))$ are isomorphic in $\hyperlink{def:sub}{\Sub}(B)$.
+
+  Given this, if $A$ is in $\dc$ then the given diagram extends uniquely to
+  \begin{equation*}
+    \begin{tikzcd}
+      B' \rar{\eta_{B'}} \dar[tail] & LB' \dar[tail]{\cong} \rar& A. \\
+      B \rar{\eta_B}& LB \arrow[ur]
+    \end{tikzcd}
+  \end{equation*}
+  Conversely, suppose $A$ satisfies the condition.
+  Let
+  \begin{equation*}
+    \begin{tikzcd}
+      R \rar[shift left]{a} \rar[shift right,']{b} & A
+    \end{tikzcd}
+  \end{equation*}
+  be the kernel-pair of $A \overset{\eta_A}{\to} LA$ and $d: \begin{tikzcdi}A \rar[tail]& R\end{tikzcdi}$ the factorisation of $(1_A,1_A)$ through $(a,b)$.
+  Since $L \eta_A$ is an isomorphism and $L$ preserves pullbacks, $Ld$ is an isomorphism, so $d$ is dense.
+  This forces $a=b$, so $\eta_A$ is \hyperlink{def:monic}{monic}.
+  And $\eta_A$ is dense, so we get a unique $r: LA \to A$ with $r \eta_A = 1_A$.
+  Now $\eta_A r \eta_A = \eta_A$ and since $LA$ satisfies the condition, we have $\eta_A r = 1_{LA}$.
+\end{proof}
+
+\hypertarget{def:sheaf}We say $A$ is a \textbf{sheaf} (for $c$, or for $j$) if it satisfies the condition in \cref{lem:7.18}.
+Given a \hyperlink{def:lop}{local operator} $j$ on $\ec$, we write $\sh_j(\ec)$ for the \hyperlink{def:fulls}{full subcategory} of $j$-\hyperlink{def:sheaf}{sheaves} in $\mathscr{E}$.
+
+\begin{nlemma}\label{lem:7.19}
+  $\sh_j(\ec)$ is closed under \hyperlink{def:limit}{limits} in $\ec$, and is an \hyperlink{def:expIdeal}{exponential ideal}.
+\end{nlemma}
+\begin{proof}
+  The first assertion follows since the definition involves only morphisms with codomain $A$.
+  For the second, note if $\begin{tikzcdi}B' \rar[tail]{m} & B\end{tikzcdi}$ is \hyperlink{def:denseclosed}{dense} then so is $ \begin{tikzcd}[cramped] B' \times C \rar[tail]{(m,1)} & B \times C \end{tikzcd} $
+  for any $C$ (since it is $\pi_1^*(m)$) so if $A$ is a \hyperlink{def:sheaf}{sheaf} then any morphism $B' \to A^C$ extends uniquely to a morphism $B \to A^C$.
+\end{proof}
+\begin{nlemma}\label{lem:7.20}
+  If $A$ is a \hyperlink{def:sheaf}{sheaf}, then a \hyperlink{def:subobj}{subobject} $\begin{tikzcdi}A'\rar[tail]{m} & A\end{tikzcdi}$ in $\ec$ is a sheaf iff it is \hyperlink{def:denseclosed}{closed}.
+\end{nlemma}
+\begin{proof}\leavevmode
+  \begin{itemize}
+    \item[$\Leftarrow$] Immediate by \cref{lem:7.17}.
+    \item[$\Rightarrow$] Consider
+  \begin{equation*}
+  \begin{tikzcd}
+    A' \rar[tail]{p} & c(A') \rar[tail]{q} & A
+  \end{tikzcd}
+  \end{equation*}
+  with $p$ \hyperlink{def:denseclosed}{dense}, so if $A$ is a \hyperlink{def:sheaf}{sheaf}, we get a unique $r: c(A') \to A'$ with $rp = 1_{A'}$.
+  But $c(A')$ is a sheaf and $prp = p$, so deduce $pr = 1_{c(A')}$.\leavevmode
+  \end{itemize}
+\end{proof}
+
+We define $\begin{tikzcdi}\Omega_j \rar[tail] & \Omega\end{tikzcdi}$ to be the \hyperlink{def:equalizer}{equalizer} of
+\begin{equation*}
+  \begin{tikzcd}
+    \Omega \rar[shift left]{j} \rar[shift right,']{1} & \Omega.
+  \end{tikzcd}
+\end{equation*}
+Then, for any $A$, morphisms $A \to \Omega_j$ correspond to \hyperlink{def:denseclosed}{closed} \hyperlink{def:subobj}{subobjects} of $A$ (a `closed subobject' classifier).
+
+\begin{nlemma}\label{lem:7.21}
+  $\Omega_j$ is a $j$-\hyperlink{def:sheaf}{sheaf}.
+\end{nlemma}
+\begin{proof}
+  We have to show that if $\begin{tikzcdi}B \rar[tail]{m} & A\end{tikzcdi}$ is \hyperlink{def:denseclosed}{dense}, then the \hyperlink{def:pullback}{pullback} along $m$ yields a bijection from \hyperlink{def:denseclosed}{closed} \hyperlink{def:subobj}{subobjects} of $A$ to closed subobjects of $B$.
+  If $\begin{tikzcdi}A' \rar[tail]{n} & A\end{tikzcdi}$ is closed, then in the \hyperlink{def:pullback}{pullback}
+  \begin{equation*}
+    \begin{tikzcd}[sep=large]
+      B' \rar[tail]{m'} \dar[tail]{n'} & A' \dar[tail]{n} \\
+      B \rar[tail]{m} & A
+    \end{tikzcd}
+  \end{equation*}
+  $m'$ is dense, so $\begin{tikzcdi}A' \rar[tail] & A\end{tikzcdi}$ is the closure of $\begin{tikzcdi}B' \rar[tail] & B \rar[tail] & A\end{tikzcdi}$.
+
+  It remains to show that if $\begin{tikzcdi}B' \rar[tail] & B\end{tikzcdi}$ is closed, it is \hyperlink{def:iso}{isomorphic} to the pullback of its closure in $A$.
+  But (writing $\begin{tikzcdi}A'\rar[tail] & A\end{tikzcdi}$ for the closure) we have a factorisation $B' \to f^* A'$ which is dense since $B' \to A'$ is dense, and closed since $B' \to B$ is closed.
+\end{proof}
+\begin{nthm}\label{thm:7.22}
+  For any \hyperlink{def:lop}{local operator} $j$ on $\ec$, $\sh_j(\ec)$ is a \hyperlink{def:topos}{topos}.
+  Moreover, it's \hyperlink{def:refl}{reflective} in $\ec$ and the reflector \hyperlink{def:plim}{preserves} finite \hyperlink{def:limit}{limits}.
+\end{nthm}
+\begin{proof}
+  We have that $\hyperlink{def:sheaf}{\sh_j}(\ec)$ is \hyperlink{def:cc}{cartesian closed} by \cref{lem:7.19} and has \hyperlink{def:sc}{subobject classifier} $\Omega_j$ by \cref{lem:7.20} and \cref{lem:7.21}.
+  To construct the \hyperlink{def:refl}{reflector}, consider the composite
+  \begin{equation*}
+    \begin{tikzcd}
+      f: A \rar[tail]{\{\}} & \Omega^A \rar{j^A} &\Omega_j^A.
+    \end{tikzcd}
+  \end{equation*}
+  This corresponds to the closure $\begin{tikzcdi}\overline{A} \rar[tail]{(a,b)} & A \times A\end{tikzcdi}$ of the diagonal \hyperlink{def:subobj}{subobject} $\begin{tikzcd}[cramped, row sep=scriptsize, column sep=large]A \rar[tail]{(1_A, 1_A)} & A \times A\end{tikzcd}$.
+
+  Claim: $\begin{tikzcdi}\overline{A} \rar[shift left]{a} \rar[shift right,']{b} & A\end{tikzcdi}$ is the kernel-pair of $f$ (proof omitted).
+  Hence any morphism $g: A \to B$ for \hyperlink{def:sheaf}{sheaf} $B$ satisfies $ga = gb$.
+  So if we form the image
+  \begin{equation*}
+    \begin{tikzcd}
+      A \rar[two heads]{q} & I \rar[tail]{m} & \Omega_j^A
+    \end{tikzcd}
+  \end{equation*}
+  of $f$, any such $g$ factorises uniquely through $q$.
+
+  Now $\Omega_j^A$ is a sheaf by \cref{lem:7.19} and \cref{lem:7.21} so if we form the closure $\begin{tikzcdi} LA \rar[tail] & \Omega_j^A \end{tikzcdi}$ of $m$, we get a morphism $A \to LA$, through which any morphism from $A$ to a sheaf factors uniquely.
+  Hence $L$ becomes a functor $\ec \to \sh_j(\ec)$, \hyperlink{def:adj}{left adjoint} to inclusion.
+
+  By \cref{lem:6.13}, we know $L$ preserves finite \hyperlink{def:lprod}{products}.
+  In fact it preserves \hyperlink{def:equalizer}{equalizers} as well (omitted).
+\end{proof}
+\begin{nthm}\label{thm:7.23}
+  Let $\ec$ be a \hyperlink{def:cat}{category}. The following are equivalent:
+  \begin{enumerate}[label=(\roman*)]
+    \item $\ec$ is a \hyperlink{def:topos}{topos}, \hyperlink{def:complete}{complete}, \hyperlink{def:lsmall}{locally small} with a \hyperlink{def:separating}{separating set of objects}.
+    \item $\exists$ a \hyperlink{def:small}{small} category $\cc$ and a \hyperlink{def:lop}{local operator} on $\hyperlink{def:functcat}{[\cc^{\text{op}}, \setc]}$ such that
+      \begin{equation*}
+        \ec \cong \hyperlink{def:sheaf}{\sh_j}([\cc^{\text{op}}, \setc]).
+      \end{equation*}
+  \end{enumerate}
+\end{nthm}
+\begin{proof}
+  (ii) $\Rightarrow$ (i): since $\sh_j([\cc^{\text{op}}, \setc])$ has given properties.
+  (i) $\Rightarrow$ (ii): take $\cc$ the \hyperlink{def:fulls}{full subcategory} of $\ec$ on the separating set and consider $\ec \overset{Y}\to [\ec^{\text{op}}, \setc] \to [\cc^{\text{op}}, \setc]$.
+  %SAFT given left adjoint.
+  %May prove left adjoint preserves finite limits.
+  %Done by proven results.
+\end{proof}
 \printindex
-\end{document}
+ \end{document}

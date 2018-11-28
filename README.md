@@ -5,7 +5,7 @@ There are many hyperlinks, marked in blue, to help both learning and revising a 
 
 ## Part III notes
 ### Michaelmas
-- [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone) up to lecture 23
+- [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone) up to lecture 24
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader) up to lecture 12, some parts in rough, some pictures missing
 - [Introduction to Discrete Analysis](iii/mich/introduction_to_discrete_analysis.pdf) (2018, W. T. Gowers) up to lecture 3
 - [Model Theory](iii/mich/model_theory.pdf) (2018, S. Barbina) up to lecture 12
