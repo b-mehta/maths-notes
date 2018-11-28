@@ -1633,7 +1633,79 @@ From now on: $T$ is strongly minimal, \hyperlink{def:complete}{complete}, and ha
   \begin{enumerate}[label=(\roman*)]
     \item If $\langle B_i : i < \lambda \rangle$ is a chain of \hyperlink{def:indep}{independent} sets containing $B$, then $\bigcup_{i < \lambda} B_i$ is independent (by \cref{prop:7.13}(i)).
       By Zorn's lemma, there is a maximal independent subset of $C$ that contains $B$. By \cref{cor:8.8}, that maximal subset is a \hyperlink{def:basis}{basis} of $C$.
+    \item \marginnote{\emph{Lecture 16}}Let $|B| \geq \omega$, assume (for contradiction) that $|A| < |B|$.
+      Then $a \in A$ is also in $\hyperlink{def:alg}{\acl}(B)$.
+      Let $D_a \subseteq B$ be finite such that $a \in \acl(D_a)$. Let $D = \bigcup_{a \in A} D_a$.
+      Then $A \subseteq \acl(D)$ and $C \subseteq \acl(D)$, but $|D| < |B|$ contradicting the independence of $B$.
+
+      If $A$ and $B$ are finite, show that $|A| \leq |B|$  (and symmetrically) by using: if there is $a \in A \setminus B$, then there is $b \in B \setminus A$ such that $\{b\} \cup A \setminus \{a\}$ is independent.
+      This holds because if $a \in A \setminus B$, then since $a \in \acl(B)$, we have that $B \nsubseteq \acl(A \setminus \{a\})$ (otherwise $A$ is not independent).
+      So let $b \in B \setminus \acl(A \setminus a)$.
+      Then $\{b\} \cup (A \setminus a)$ is independent by \cref{lem:8.7}.
+
+      Use finite induction argument to get $|A| \leq |B|$. \qedhere
   \end{enumerate}
 \end{proof}
+\begin{ndef}[Dimension]\label{def:8.10}
+  \hypertarget{def:dim}Let $C \subseteq \mathcal{U}$ be \hyperlink{def:alg}{algebraically closed}.
+  Then the \named{dimension} of $C$ is $\dim(C) = |A|$ where $A$ is any \hyperlink{def:basis}{basis} of $C$.
+\end{ndef}
+
+\begin{nprop}\label{prop:8.11}
+  Let $f: \mathcal{U} \to \mathcal{U}$ be \hyperlink{def:upe}{(partial) elementary}.
+  Let $b \notin \hyperlink{def:alg}{\acl}(\dom(f))$ and $c \notin \acl(\img(f))$.
+  Then $f \cup \{\langle b, c \rangle\}$ is elementary.
+\end{nprop}
+\begin{proof}
+  Let $\bar{a}$ enumerate $\dom(f)$, let $\varphi(x, \bar{a})$ be a formula with parameters in $\bar{a}$.
+  Claim: $\varphi(b,\bar{a})) \leftrightarrow \varphi(c, f(\bar{a}))$. Cases:
+  \begin{enumerate}
+  \item $|\varphi(\mathcal{U}, \bar{a})| < \omega$. Then $|\varphi(\mathcal{U}, f(\bar{a}))| < \omega$.
+    Then $b \notin \varphi(\mathcal{U}, \bar{a})$ (because $b \notin \acl(\bar{a})$) and $c \notin \varphi(\mathcal{U}, f(\bar{a}))$.
+    Then
+    \begin{equation*}
+      \lnot \varphi(b, \bar{a}) \land \neg \varphi(c, f(\bar{a})).
+    \end{equation*}
+  \item $|\varphi(U, \bar{a})| \geq \omega$. Then $|\neg \varphi(\mathcal{U}, \bar{a})| < \omega$, and so
+    \begin{equation*}
+      \varphi(b, \bar{a}) \land \varphi(c, f(\bar{a})). \qedhere
+    \end{equation*}
+  \end{enumerate}
+\end{proof}
+\begin{ncor}\label{cor:8.12}
+  Every bijection between \hyperlink{def:indep}{independent} subsets of $\mathcal{U}$ is \hyperlink{def:upe}{elementary}.  \end{ncor}
+\begin{proof}
+  Pick $A,B \subseteq C$ \hyperlink{def:indep}{independent} and let $f: A \to B$ be any bijection.
+  Let $\bar{a}$ enumerate $A$, write $f(a_i) = b_i$.
+  Then $a_0 \notin \acl(\emptyset)$ and $b_0 \notin \acl(\emptyset)$ (otherwise $A,B$ not independent). By \cref{prop:8.11}, $\{\langle a_0, b_0 \rangle \}$ is an elementary map.
+
+  At stage $i+1$, $a_{i+1} \notin \acl(a_0, \dotsc, a_i)$ so use the same argument.
+\end{proof}
+
+\begin{nremark}\label{rem:8.13}
+If $\M \subseteq \U$, then by \cref{prop:7.13}, $\M$ is algebraically closed.
+\end{nremark}
+
+\begin{nthm}\label{thm:8.14}
+  Suppose that $\M, \N \subseteq \U$ are such that $\hyperlink{def:dim}{\dim}(M) = \dim(N)$, then $\M \hyperlink{def:iso}{\simeq} \N$.
+\end{nthm}
+\begin{proof}
+  Let $A,B$ be \hyperlink{def:basis}{bases} of $\M,\N$ respectively.
+  Then a bijection $f: A \to B$ is \hyperlink{def:upe}{elementary} (by \cref{cor:8.12}).
+  Then there is $\alpha \in \hyperlink{def:aut}{\Aut}(\U)$ such that $f \subseteq \alpha$. Then by \cref{prop:7.14},
+  \begin{equation*}
+    \alpha(\M) = \alpha(\hyperlink{def:alg}{\acl}(\M)) = \acl(\alpha(A)) = \acl(B) = \N. \qedhere
+  \end{equation*}
+\end{proof}
+\begin{ncor}\label{cor:8.15}
+  Let $T$ be \hyperlink{def:minimal}{strongly minimal}, let $\lambda > |L|$. Then $T$ is $\lambda$-\hyperlink{def:wcat}{categorical}.
+\end{ncor}
+\begin{proof}
+  If $A \subseteq \mathcal{U}$, then $|\hyperlink{def:alg}{\acl}(A)| \leq |L(A)| + \omega$ (there are at most $|L(A)| + \omega$ formulas, each element $m$ in $\acl(A)$ is one of finitely many solutions of one of those formulas).
+  If $|\mathcal{M}| = \lambda$, then a \hyperlink{def:basis}{basis} of $\M$ must have cardinality $\lambda$.
+\end{proof}
+
+In \hyperlink{def:vsk}{$T_{VSK}$}, if $K$ is infinite countable, the vector space can have finite dimension (\hyperlink{def:wcat}{$\omega$-categoricity} fails). If $K$ is finite, the vector space must have dimension $\geq \omega$.
+
 \printindex
 \end{document}
