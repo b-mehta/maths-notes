@@ -105,8 +105,7 @@ We may write $\mathcal{M} = \langle M, \mathscr{F}, \mathscr{R}, \mathscr{C} \ra
   \begin{enumerate}[label=(\roman*)]
     \item for all $f \in \mathscr{F}$, and $a_1, \dotsc, a_{m_f} \in M$,
       \begin{equation*}
-        \alpha(f^\mathcal{M}(a_1, \dotsc, a_{n_f})) = f^\mathcal{N}(\alpha(a_1), \dotsc, \alpha(a_{n_f}))
-      \end{equation*}
+        \alpha(f^\mathcal{M}(a_1, \dotsc, a_{m_f})) = f^\mathcal{N}(\alpha(a_1), \dotsc, \alpha(a_{m_f})) \end{equation*}
       \begin{center}
         \begin{tikzpicture}[scale=2]
           \node at (-2, 1.6) {$\mathcal{M}$};
@@ -123,13 +122,13 @@ We may write $\mathcal{M} = \langle M, \mathscr{F}, \mathscr{R}, \mathscr{C} \ra
           \draw [->] (aa) to [bend right=10] node[right]{$f^\mathcal{N}$} (faa);
         \end{tikzpicture}
       \end{center}
-    \item for all $R \in \mathscr{R}$, and $a_1, \dotsc, a_{n_R} \in M$
+    \item for all $R \in \mathscr{R}$, and $a_1, \dotsc, a_{m_R} \in M$
       \begin{equation*}
-        (a_1, \dotsc, a_{n_R}) \in R^\mathcal{M} \iff (\alpha(a_1), \dotsc, \alpha(a_{n_R})) \in R^\mathcal{N}
+        (a_1, \dotsc, a_{m_R}) \in R^\mathcal{M} \iff (\alpha(a_1), \dotsc, \alpha(a_{m_R})) \in R^\mathcal{N}
       \end{equation*}
     \item for all $c \in \mathscr{C}$, $\alpha(c^\mathcal{M}) = c^\mathcal{N}$.
   \end{enumerate}
-  \hypertarget{def:iso}An \named{isomorphism} of $\mathcal{M}$ into $\mathcal{N}$ is a surjective embedding (onto).
+  \hypertarget{def:iso}An \named{isomorphism} of $\mathcal{M}$ into $\mathcal{N}$ is a surjective embedding (onto), written $\M \simeq \N$.
 \end{ndef}
 
 \begin{nexercise}\label{ex:1.6}
@@ -333,7 +332,7 @@ Clearly if $\hyperlink{def:iso}{\mathcal{M} \simeq \mathcal{N}}$, then \hyperlin
 We'll see $(\mathbb{Q}, <) \equiv (\mathbb{R}, <)$ as \hyperlink{def:lgp}{$L_{\text{lo}}$}-\hyperlink{def:str}{structures}.
 \begin{ndef}[Elementary substructure]\label{def:3.4}\leavevmode
   \begin{enumerate}[label=(\roman*)]
-    \item \index{elementary embedding, elementary map}\hypertarget{def:el}an \hyperlink{def:embedding}{embedding} $\beta: \mathcal{M} \to \mathcal{N}$ is \named{elementary} if for all \hyperlink{def:form}{formulas} $\phi(\bar{x})$ and $\bar{a} \in M^{|\bar{x}|}$,
+    \item \index{elementary embedding}\index{elementary map}\hypertarget{def:el}an \hyperlink{def:embedding}{embedding} $\beta: \mathcal{M} \to \mathcal{N}$ is \named{elementary} if for all \hyperlink{def:form}{formulas} $\phi(\bar{x})$ and $\bar{a} \in M^{|\bar{x}|}$,
       \begin{equation*}
         \mathcal{M} \hyperlink{def:models}{\models} \phi(\bar{a}) \iff \mathcal{N} \models \phi(\beta(\bar{a})).
       \end{equation*}
@@ -1707,5 +1706,111 @@ If $\M \subseteq \U$, then by \cref{prop:7.13}, $\M$ is algebraically closed.
 
 In \hyperlink{def:vsk}{$T_{VSK}$}, if $K$ is infinite countable, the vector space can have finite dimension (\hyperlink{def:wcat}{$\omega$-categoricity} fails). If $K$ is finite, the vector space must have dimension $\geq \omega$.
 
+\clearpage
+\section{Bonus Lecture: Existence of saturated models}
+If $\mathcal{M}$ is \hyperlink{def:sat}{saturated}, then
+\begin{itemize}
+  \item $\mathcal{M}$ is \hyperlink{def:homogeneous}{homogeneous}.
+  \item $\mathcal{M}$ is \hyperlink{def:univ}{universal}.
+\end{itemize}
+If $\M$ is $\lambda$-\hyperlink{def:sat}{saturated}, then:
+\begin{itemize}
+  \item $\M$ is weakly $\lambda$-homogeneous, i.e.\ for all $f:\M \to \M$ (partial) \hyperlink{def:elmap}{elementary} such that $|f| < \lambda$, for every $b \in \M$, then $\exists \hat{f} \supseteq f$ elementary and such that $b \in \dom f$.
+\end{itemize}
+Can prove: $\lambda$-homogeneous is equivalent to homogeneity when $|\M| = \lambda$.
+\begin{defi}[Cofinality]\hypertarget{def:cofinal}
+  If $\alpha$ is a limit ordinal $\geq \omega$, $\operatorname{cof}(\alpha)$ (\bonusnamed{cofinality} of $\alpha$) is the least $\lambda$ such that there is $f: \lambda \to \alpha$ such that $\img(f)$ is unbounded in $\alpha$.
+\end{defi}
+\begin{eg}
+  \begin{equation*}
+    \hyperlink{def:cofinal}{\cof}(\omega) = \aleph_0 \qquad \cof(\omega_\omega) = \aleph_0.
+  \end{equation*}
+\end{eg}
+\begin{defi}[Regular]\hypertarget{def:regular}
+  A cardinal $\kappa$ is \bonusnamed{regular} if $\cof(\kappa) = \kappa$.
+\end{defi}
+\begin{eg}
+  $\aleph_0$ is \hyperlink{def:regular}{regular}.  Also, every successor cardinal is regular.
+\end{eg}
+Are there any limit cardinals other than $\aleph_0$ that are \hyperlink{def:regular}{regular}?
+
+\begin{defi}[$S_1^\M$]\hypertarget{def:s1}
+  If $\M \hyperlink{def:models}{\models} T$, $A \subseteq \M$, then define
+  \begin{align*}
+    S_1^\M(A) \coloneqq \set{p(x) | p(x) \text{ is a \hyperlink{def:type}{complete type} in a single variable with \hyperlink{def:typeparam}{parameters} in }A}
+  \end{align*}
+\end{defi}
+\begin{lemma}
+  If $\M$ is such that $|\M| \geq |L| + \omega$, let $\kappa > \aleph_0$.
+  Then there is $\M' \succcurlyeq \M$ such that for all $A \subseteq \M$ with $|A|< \kappa$, if $p(x) \in \hyperlink{def:s1}{S^\M_1}(A)$, then $p(x)$ is \hyperlink{def:type}{realized} in $\M'$, $|\M'| \leq |\M|^\kappa$.
+\end{lemma}
+\begin{proof}
+  First, note
+  \begin{gather*}
+    \abs{\set{A \subseteq \M | \abs{A} \leq \kappa}} \leq \abs{\M}^\kappa \\
+    \abs{\hyperlink{def:s1}{S_1^\M(A)}} \leq 2^\kappa.
+  \end{gather*}
+  Enumerate $S_1^\M(A)$ as $\langle p_\alpha : \alpha < \abs{\M}^\kappa \rangle$.
+  Build $\langle \M_\alpha : \alpha < \abs{\M}^\kappa \rangle$ as follows:
+  \begin{itemize}
+    \item $\M_0 = \M$
+    \item $\M_\alpha = \bigcup_{\beta < \alpha} \M_\beta$ when $\alpha$ is a limit.
+  \item $\M_\alpha \preccurlyeq \M_{\alpha + 1}$ such that $\M_{\alpha+1}$ realizes $p_\alpha(x)$ and $|\M_{\alpha+1}| = |\M_\alpha|$.
+    Then $\bigcup_{\alpha < |\M|^\kappa} \M_\alpha$ realizes all types in $S_1^\M(A)$ and
+    \begin{align*}
+    \abs{\bigcup_{\alpha < |\M|^\kappa} \M_\alpha} \leq |\M|^\kappa. \qedhere
+    \end{align*}
+  \end{itemize}
+\end{proof}
+\begin{thm}
+  Let $\kappa > \aleph_0$, let $\M \models T$. Then there is a $\kappa^+$-saturated $\mathcal{N} \succcurlyeq \M$ such that $\abs{\N} \leq \abs{\M}^\kappa$.
+\end{thm}
+\begin{proof}
+  Build an elementary chain $\langle \N : \alpha < \kappa^+ \rangle$ such that
+  \begin{itemize}
+    \item $\N_0 = \M$
+    \item take unions at limit stages
+    \item Given $\N_\alpha$, find $\N_{\alpha + 1} \succcurlyeq \N_\alpha$ such that all types in $S_1^{\N_\alpha}(A)$ with $|A| \leq \kappa$ are realized.
+  \end{itemize}
+  Moreover, $|\N_\alpha| \leq \abs{\M}^\kappa$ (follows from previous result).
+  Let $\N = \bigcup_{\alpha < \kappa^+} \N_\alpha$. Since $\kappa^+ \leq |\mathcal{M}|^\kappa$, $\N$ is the union of at most $|\M|^\kappa$ sets each of size at most $|\M|^\kappa$, hence $|\N| \leq |\M|^\kappa$.
+
+  To see that $\N$ is $\kappa^+$ saturated, pick $A \subseteq \N$ such that $|A| \leq \kappa$.
+  By the regularity of $\kappa^+$, there is $\alpha$ such that
+  $A \subseteq \N_\alpha$, hence all types $/A$ with one free variable are realized in $\N$.
+\end{proof}
+Recap: For arbitrarily large $\kappa$, there is a $\kappa^+$ saturated $\N \succcurlyeq \M$ with $|\N| \leq |\M|^\kappa$.
+If $\kappa$, $|\M|$ are such that $|\M|\leq 2^\kappa$, then $|\M|^\kappa = 2^\kappa$ so you get a $\kappa^+$-saturated $\N \succcurlyeq \M$ such that $|\N| = 2^\kappa$.
+So GCH implies saturated models exist.
+
+Alternatively, suppose there are arbitrarily large cardinals $\kappa$ such that
+\begin{align*}
+  \kappa^{< \kappa} = \bigcup \set{\kappa^\alpha | \alpha < \kappa} = \kappa
+\end{align*}
+(strongly inaccessible cardinals).
+Then the chain stabilises, giving the required structure. % this sentence is mine
+\begin{defi}
+  Take $T$ a complete theory in a countable language, $\kappa \geq \aleph_0$ a cardinal.
+  Then $T$ is $\kappa$-\bonusnamed{stable} if for all $\mathcal{M} \models T$, $A \subseteq \mathcal{M}$, $|A| \leq \kappa$, $\forall n \leq \omega$,
+  we have
+  \begin{equation*}
+    |S_n^\mathcal{M}(A)| \leq \kappa
+  \end{equation*}
+  where $S_n^\mathcal{M}(A)$ is the set of complete types with $n$ variables and parameters in $A$.
+\end{defi}
+\begin{thm}
+  Let $\kappa$ be a regular cardinal, and $T$ $\kappa$-stable. Then there is a $\mathcal{M} \models T$, $|\mathcal{M}| = \kappa$, $\M$ saturated.
+\end{thm}
+\begin{proof}
+  We build an elementary chain $\langle \M_\alpha : \alpha < \kappa \rangle$ where $|\M_\alpha| < \kappa$ as follows:
+  \begin{itemize}
+    \item $\M_0 \models T$
+    \item unions at limit stages
+    \item given $\M_\alpha$, $|\M_\alpha|=\kappa \Rightarrow S^{\M_\alpha}_1(\M_\alpha) = \kappa$,
+      there is $\M_{\alpha+1} \succcurlyeq \M_\alpha$ that realizes all types in $S_1^{\M_\alpha}(\M_\alpha)$ and $|\M_{\alpha+1}| = |\M_\alpha|$.
+      Let $\bigcup_{\alpha < \kappa} \M_\alpha$, then $\abs{\bigcup \M_\alpha} = \kappa$ and $\bigcup \M_\alpha$ is $\kappa$-saturated by construction.
+  \end{itemize}
+  Now, $\mathcal{M}$ $\kappa$-saturated, $\kappa$-strongly homogeneous, $|\M| \gg \kappa$.
+\end{proof}
 \printindex
 \end{document}
