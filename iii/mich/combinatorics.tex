@@ -2441,5 +2441,113 @@ Iterating:
   \begin{equation*}|S| \leq x_Y x_{Y^c} \leq \prod_{i \in Y} x_i \prod_{i \notin Y} x_i = x_1 \dotsm x_n = |S|.\qedhere\end{equation*}
 \end{proof}
 
+\subsection{Intersecting families of graphs}
+So far, for \hyperlink{def:inter}{intersecting}\marginnote{\emph{Lecture 16}} families our objects lived in $\hyperlink{def:ints}{[n]}$.
+What if the ground set has some structure?
+For example, take the ground set as $[n]^{\hyperlink{def:superr}{(2)}}$, the edges of a graph on $[n]$, equivalently the subgraphs of $K_n$.
+There are $2^{\binom n 2}$ possible graphs.
+
+\begin{defi}[Intersecting]
+  \hypertarget{def:hinter}Let $A \subset \mathcal{P}([n]^{(2)})$ be a family of graphs on $n$ vertices.
+  For any fixed graph $H$, we say $A$ is \textbf{$H$-intersecting}\index{H-intersecting@$H$-intersecting}\index{intersecting} if $\forall G, G' \in A$, $G \cap G'$ contains a copy of $H$ (``$G \cap G' \supseteq H$'').
+\end{defi}
+For instance, take $H = P_1 =$ a single edge $=
+  \begin{tikzpicture}[every node/.style=dot, scale=0.6]
+    \node (A) at (0,0) {};
+    \node (B) at (1,0) {};
+    \draw (A) -- (B);
+\end{tikzpicture}$
+
+Then $A$ is \hyperlink{def:hinter}{$H$-intersecting} $\Rightarrow |A| \leq \frac{1}{2} 2^{\binom{n}{2}}$ (as we cannot have $G, G^c \subset A$), and can achieve this, e.g.\ $A = \set{G | 12 \in G}$.
+(Indeed, for any non-empty $H$, we have $A$ $H$-intersecting $\Rightarrow |A| \leq \frac{1}{2} 2^{\binom n 2}$).
+
+What about $H = P_2 =
+\begin{tikzpicture}[baseline=2pt, scale=0.3]
+\node [dot] (A) at (0,0) {};
+\node [dot] (B) at (2,1) {};
+\node [dot] (C) at (4,0) {};
+\draw [dot] (A) -- (B) -- (C);
+\end{tikzpicture}$?
+Obvious guess: the best is $A = \set{G | G \text{ contains } H_0}$, where $H_0$ is some fixed copy of $P_2$.
+This has size $|A| = \frac{1}{4} 2^{\binom n 2}$.
+
+But can do better, e.g.\ $A = \set{G | d_G(1) \geq \frac{n}{2} + 1}$, where $d_G(1)$ is the number of edges out of $1$.
+This has size
+\begin{equation*}
+  |A| = 2^{\binom n 2} \left(\frac{1}{2} - \frac{c}{\sqrt n}\right) = \left(\frac{1}{2} - o(1)\right) 2^{\binom n 2}.
+\end{equation*}
+Similarly if $H$ is any star
+\begin{center}
+  \begin{tikzpicture}
+    \node [dot] (A) at (0,0) {};
+    \foreach \x in {0,60,...,300} {
+      \draw (A) -- (\x:0.7);
+    }
+  \end{tikzpicture}
+\end{center}
+we have \hyperlink{def:hinter}{$H$-intersecting} families of size $\left(\frac{1}{2} - o(1)\right) 2^{\binom n 2}$.
+
+What about \hyperlink{def:hinter}{$\triangle$-intersecting}? Obvious guess is $|A| = \frac{1}{8} 2^{\binom n 2}$, achieved by
+\begin{equation*}A = \set{G | G \supseteq \text{ fixed triangle}}.\end{equation*}
+\begin{conjecture}[Simonovits-Sos]
+  If $A$ is \hyperlink{def:hinter}{$\triangle$-intersecting} then $|A| \leq \frac{1}{8} 2^{\binom{n}{2}}.$
+\end{conjecture}
+\begin{nthm}\label{thm:3.8}
+  Let $A \subset \mathcal{P}(\hyperlink{def:ints}{[n]}^{\hyperlink{def:superr}{(2)}})$ be \hyperlink{def:hinter}{$\triangle$-intersecting}.
+  Then $|A| \leq \frac{1}{4} 2^{\binom n 2}$.
+\end{nthm}
+\begin{proof}
+  Say $n$ even.
+  Consider the \hyperlink{def:proj}{projection} of $A$ onto the edge-set $Y = B^{\hyperlink{def:superr}{(2)}} \cup (B^c)^{(2)}$, for any $B \subset \hyperlink{def:ints}{[n]}$ with $|B| = \frac{n}{2}$.
+  Then $G, G' \in A \Rightarrow G \cap G'$ must meet $Y$ (because every triangle meets $Y$).
+  % TODO: picture
+  Then \hyperlink{def:proj}{$A \mid Y$} is an \hyperlink{def:inter}{intersecting} family of sets, so
+  \begin{equation*}
+    |A \mid Y| \leq \frac{1}{2} 2^{2 \binom{n/2}{2}} = 2^{2 \binom{n/2}{2} \cdot \left(1 - \frac{1}{2 \binom{n/2}{2}}\right)}.
+  \end{equation*}
+  But the $Y$ form a uniform cover of $[n]^{(2)}$ (as $B$ varies), so by \cref{cor:3.5} have
+  \begin{equation*}
+    |A| \leq 2^{\binom{n}{2} \cdot \left(1 - \frac{1}{2 \binom{n/2}{2}}\right)}.
+  \end{equation*}
+  So done if
+  \begin{align*}
+    \binom{n}{2} \frac{1}{2 \binom{n/2}{2}} \geq 2.
+  \end{align*}
+  But LHS = $\frac{n(n-1)}{2 \frac{n}{2} (\frac{n}{2}-1)} = \frac{n-1}{\frac{n}{2}-1} > 2$.
+
+  For $n$ odd: same with $|B| = \frac{n-1}{2}$.
+\end{proof}
+The Simonovits-Sos conjecture was proved in 2010 (Ellis, Filmus, Friedgut).
+
+\begin{defi}[Common]\hypertarget{def:common}
+  Say $H$ \named{common} if
+  \begin{equation*}
+    \max \set{\abs{A} | A \subset \mathcal{P}(\hyperlink{def:ints}{[n]}^{\hyperlink{def:superr}{(2)}}) \text{ is \hyperlink{def:hinter}{$H$-intersecting}}} = \left(\frac{1}{2} - o(1)\right) 2^{\binom n 2}.
+  \end{equation*}
+\end{defi}
+For instance, every star is \hyperlink{def:common}{common}, and $\triangle$ not common.
+Any disjoint union of stars is also common, e.g.\ take $n$ very large, $k$ large and
+\begin{equation*}
+  A = \Set{G | \text{at least }\frac{n}{2} + 3\text{ of vertices $1,\dotsc,k$ have degree } \geq \frac{n}{2} + 5}.
+\end{equation*}
+\begin{center}
+  \begin{tikzpicture}
+    \foreach \y in {0,2,4} {
+      \foreach \x in {90,162,...,378} {
+        \draw (\y,0) -- ++(\x:0.7);
+      }
+    }
+  \end{tikzpicture}
+\end{center}
+
+Key question: Is $P_3$ \hyperlink{def:common}{common}? This is open.
+%TODO: picture of P3
+Easy fact: Every $G$ not a union of stars contains $\triangle$ of $P_3$.
+So, if we know $P_3$ not common, we would know:
+
+\begin{conjecture}[Alor's common graphs conjecture]
+  $H$ \hyperlink{def:common}{common} $\iff H$ is a union of stars.
+\end{conjecture}
+But Christofides (2008) gave a \hyperlink{def:hinter}{$P_3$-intersecting} family with density $\frac{17}{128} > \frac{1}{8}$.
 \printindex
 \end{document}
