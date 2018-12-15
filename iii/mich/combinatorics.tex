@@ -24,6 +24,11 @@
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclareMathOperator\tr{tr}
+
+\tikzset{
+    dot/.style={fill=black, circle, inner sep=1pt}
+}
 
 \newcommand{\sym}{\bigtriangleup}
 
@@ -564,13 +569,15 @@ This is known as the Kruskal-Katona theorem.
 In particular, \begin{equation*}|\mathcal{A}| = \binom{k}{r} \implies |\partial A| \geq \binom{k}{r-1}.\end{equation*}
 
 \subsection{Compressions}
-Idea: We want to `replace' $\mathcal{A} \subset X^{(r)}$ with some $\mathcal{A}' \subset X^{(r)}$ such that
+\begin{idea}
+We want to `replace' $\mathcal{A} \subset X^{(r)}$ with some $\mathcal{A}' \subset X^{(r)}$ such that
 \begin{enumerate}[label=(\roman*)]
   \item $|\mathcal{A}'| = |\mathcal{A}|$
   \item $|\hyperlink{def:shadow}{\partial \mathcal{A}'}| \leq |\partial \mathcal{A}|$
   \item $\mathcal{A}'$ `looks more like $\mathcal{C}$' than $\mathcal{A}$ did.
 \end{enumerate}
 Ideally, we'd compress $\mathcal{A} \to \mathcal{A}' \to \mathcal{A}'' \to \dotsm \to \mathcal{B}$ where either $\mathcal{B} = \mathcal{C}$ or $\mathcal{B}$ is so similar to $\mathcal{C}$ that we can see directly that $|\partial \mathcal{B}| \geq |\partial \mathcal{C}|$.
+\end{idea}
 
 \marginnote{\emph{Lecture 4}}[0cm]
 Use the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
@@ -806,7 +813,6 @@ Can achieve $|\mathcal{A}| = 2^{n-1}$, by taking, e.g.\ $\mathcal{A} = \set{A \s
   For each $A \subset X$, can have $\leq 1$ of $A, A^c$ in $\mathcal{A}$.
 \end{proof}
 Note: there are many examples with $|\A| = 2^{n-1}$, e.g.\ for $n$ odd we can take \begin{equation*}\Set{A \subset X |\ |A| > \frac{n}{2}}.\end{equation*}
-% top of cube
 \begin{center}
   \begin{tikzpicture}
     \draw [red, dashed] (0,1.65) circle [x radius=2.4cm, y radius=1.7cm];
@@ -1535,7 +1541,6 @@ Similarly, we can define $\alpha(X, \epsilon)$ for $X$ any metric measure space 
       %\end{center}
   \end{enumerate}
 \end{eg}
-% new lecture
 We\marginnote{\emph{Lecture 10}} deduced concentration of measure from isoperimetric inequalities. Conversely,
 
 \begin{nprop}\label{prop:2.7}
@@ -1942,13 +1947,13 @@ For given $|x|$, we'd `keep $x_1$ big'
     |A| = |\set{x | |x|\leq r}| \implies |\hyperlink{def:neighbourhood}{N(A)}| \geq |\set{x | |x| \leq r+1}|.
   \end{equation*}
 \end{aim}
-\begin{defi}[Sections]
+\begin{defi}[Sections]\index{$i$-section}
   \hypertarget{def:sections}For $A \subset [k]^n$ and $1 \leq i \leq n$, the \textbf{$i$-sections} of $A$ are the sets $A_1, \dotsc, A_k$ (or $A_1^{(i)}, \dotsc, A_k^{(i)}$) in $[k]^{n-1}$ given by
   \begin{equation*}
     A_t = \set{(x_1, \dotsc, x_{n-1}) \in [k]^{n-1} | (x_1, x_2, \dotsc, x_{i-1}, t, x_i, x_{i+1}, \dotsc, x_n) \in A} \quad \forall 1 \leq t \leq k
   \end{equation*}
 \end{defi}
-% picture
+% TODO: picture
 \begin{defi}[$i$-compression]\hypertarget{def:icomp2}
   The \textbf{$i$-compression} $C_i(A) \subseteq [k]^n$ is defined by giving its \hyperlink{def:sections}{$i$-sections}:
   \begin{equation*}
@@ -1958,7 +1963,7 @@ For given $|x|$, we'd `keep $x_1$ big'
 Certainly $|C_i(A)| \leq |A|$.
 Say $A$ is \textbf{$i$-compressed} if $C_i(A) = A$.
 \begin{nthm}[Vertex-isoperimetric inequality in the grid]
-  Let $A \subseteq [k]^n$ and let $C$ be the initial segment of the simplicial roder on $[k]^n$ with $|C| = |A|$.
+  Let $A \subseteq [k]^n$ and let $C$ be the initial segment of the simplicial order on $[k]^n$ with $|C| = |A|$.
   Then $|N(A)| \geq |N(C)|$. In particular, if $|A| \geq |\set{x | |x|\leq r}|$ then $|N(A)| \geq |\set{x | |x| \leq r+1}|$
 \end{nthm}
 \begin{proof}
@@ -1971,7 +1976,7 @@ Say $A$ is \textbf{$i$-compressed} if $C_i(A) = A$.
   \textbf{Proof of claim:}
   For $1 \leq t \leq k$,
   \begin{equation*}
-    N(A)_t = N(A_t) \cup A_{t-1} \cup A_{t+1} % from level t, from below, from above
+    N(A)_t = N(A_t) \cup A_{t-1} \cup A_{t+1} % TODO: from level t, from below, from above
   \end{equation*}
   (where $A_0 = A_{k+1}=\emptyset$) and similarly
   \begin{equation*}
@@ -2061,13 +2066,13 @@ For example, in $[k]^2$:
 \begin{center}
   pictures
 \end{center}
-% draw some pictures
+% TODO: draw some pictures
 This suggests squares are best.
 But,
 \begin{center}
   more pictures
 \end{center}
-% draw some more pictures
+% TODO: draw some more pictures
 so have `phase transitions' at $|A| = \frac{k^2}{4}$ and $|A| = \frac{3k^2}{4}$.
 The extremal sets are not nested! (So cannot compress, $\nexists$ an ordering, etc.)
 
