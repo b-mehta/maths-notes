@@ -2087,5 +2087,161 @@ This has been proved: `edge-isoperimetric inequality in the grid'.
 Very few isoperimetric inequalities are known exactly or asymptotically.
 \clearpage
 \section{Projections}
+`If a set has small projections, must it be small?'
+\begin{center}
+  \begin{tikzpicture}
+    \draw [->] (-0.1,0) -- (3.1,0);
+    \draw [->] (0,-0.1) -- (0,3.1);
+    \draw [very thin] (2.8,2.528) -- (0,2.528);
+    \draw [very thin] (2.8,0.4) -- (0,0.4);
+    \draw [very thin] (0.6,0) -- (0.6,2.8);
+    \draw [very thin] (2.605,0) -- (2.605,2.8);
+    \draw [xshift=1.6cm,yshift=1.6cm, bred, fill=bred!40] plot [smooth cycle, tension=0.7] coordinates {(0:1) (45:1.15) (90:0.9) (135:1.05) (180:1) (-135:1) (-90:1.2) (-45:1.1)};
+    \node [bred!70!black] at (1.6,1.6) {$A$};
+    \node [below] at (0.6,0) {$4$};
+    \node [below] at (2.605,0) {$10$};
+    \node [left] at (0,0.4) {$2$};
+    \node [left] at (0,2.528) {$13$};
+    \node [right] at (3,1.6) {$|A| \leq 6 \cdot 11$};
+  \end{tikzpicture}
+\end{center}
+\begin{defi}[Projection]\hypertarget{def:proj}
+  Let\marginnote{\emph{Lecture 13}} $A \subset \mathcal{P}(X)$. For $Y \subset X$ the \named{projection} or \named{trace} of $A$ on $Y$ is
+  \begin{equation*}A \mid Y \coloneqq \set{x \cap Y | x \in A}.\end{equation*}
+`Project $A$ onto coordinates corresponding to $Y$'.
+\end{defi}
+\begin{eg}
+  If $A = \{14,25,26,127,128\}$. Then $A \mid \{1,2\} = \{1,2,12\}$, so $A \mid Y \subset \mathcal{P}(Y)$.
+\end{eg}
+\begin{defi}[Cover]\hypertarget{def:tr}
+  Say $A$ \textbf{covers} or \textbf{shatters} $Y$ if $\hyperlink{def:proj}{A \mid Y} = \mathcal{P}(Y)$.
+  The \textbf{trace number} or \textbf{VC-dimension} of $A$ is
+  \begin{equation*}
+    \tr A \coloneqq \max\{|Y| : A \text{ shatters } Y\}.
+  \end{equation*}
+\end{defi}
+Given $|A|$, how small can $\hyperlink{def:tr}{\tr} A$ be?
+Equivalently, if $\tr A < k$ ($A$ does not shatter any $k$-set), how large can $A$ be?
+
+Trivially, must have
+\begin{equation*}
+  |A| \leq \left(1 - \frac{1}{2^k}\right) 2^n
+\end{equation*}
+else $A$ \hyperlink{def:tr}{shatters} every \hyperlink{def:superr}{$k$-set}.
+Could take $A = X^{(<k)}$ - no $k$-set $Y$ is shattered, as $Y \notin A \hyperlink{def:proj}{\mid} Y$.
+
+\begin{aim}
+  This is best.
+\end{aim}
+\begin{remark}
+  Very striking, as from each $k$-\hyperlink{def:proj}{projection} having size $\leq (1 - \frac{1}{2^k}) \cdot \text{total}$, we are getting a very small (polynomial in $n$) bound on $|A|$.
+\end{remark}
+
+\begin{idea}
+  \hypertarget{def:downset}Trivial that $|A| \leq |X^{(<k)}|$ if $A$ is a \textbf{down-set} (if $x \in A$ and $y \subset x$ then $y \in A$).
+  Indeed, must have $A \subset X^{(<k)}$, since if $A$ contains a set $x$ with $|x| \geq k$ then $A \mid x = \mathcal{P}(x)$.
+  So `try to make $A$ into a down-set'.
+\end{idea}
+
+\begin{defi}[Down compression]
+  \hypertarget{def:downcomp}For $A \subset \mathcal{P}(X)$ and $1 \leq i \leq n$, the $i$-\named{down-compression} of $A$ is defined as follows:
+  For $x \in \mathcal{P}(X)$, set
+  \begin{equation*}
+    D_i(x) =
+    \begin{cases}
+      x & \text{if } i \notin x \\
+      x-\{i\} & \text{if } i \in x \\
+    \end{cases}
+  \end{equation*}
+  and set
+  \begin{equation*}
+    D_i(A) = \set{D_i(x) | x \in A} \cup \set{x \in A | D_i(x) \in A}
+  \end{equation*}
+  i.e.\ remove element $i$ where possible.
+\end{defi}
+\begin{nthm}[Sauer-Shelah Lemma]\label{thm:3.1}
+  Let $A \subset \mathcal{P}(X)$ with $\hyperlink{def:tr}{\tr} A < k$. Then $|A| \leq |X^{(<k)}|$
+\end{nthm}
+\begin{proof}
+  Given $1 \leq i \leq n$:
+  Claim $\hyperlink{def:tr}{\tr}(\hyperlink{def:downcomp}{D_i(A)}) \leq \tr A$.
+
+  Proof: Write $B = D_i(A)$.
+  We'll show that if $B$ \hyperlink{def:tr}{shatters} $Y$ for some $Y$, then $A$ shatters $Y$.
+  If $i \notin Y$ then $B \hyperlink{def:proj}{\mid} Y = A \mid Y$, so may assume $i \in Y$.
+  Given $z \subset Y$ with $i \notin z$, we'll show $z, z \cup \{i\} \in A \mid Y$.
+  Since $z \cup \{i\} \in B \mid Y$, we have $z \cup \{i\} \cup x \in B$, for some $x \subset X \setminus Y$.
+  Hence $z \cup x$ and $z \cup \{i\} \cup x \in A$ (by definition of $D_i$)
+  whence $z,z \cup \{i\} \in A \mid Y$, completing the claim.
+
+  Now let $D = D_n(D_{n-1}(\dotsb D_1(A) \dotsb))$.
+  Then $|D| = |A|$, $D$ is a \hyperlink{def:downset}{down-set}, and $\tr D \leq \tr A < k$.
+  Thus $|D| \leq |X^{(<k)}|$.
+\end{proof}
+\begin{remark}
+  We had $1$-dimensional compression.
+\end{remark}
+Have: if all $k$-dimensional \hyperlink{def:proj}{projections} have size $\leq 2^k - 1$, then $A$ small:
+\begin{equation*}|A| \leq \sum_{i=0}^{k-1} \binom{n}{k}.\end{equation*}
+What about other bounds?
+For example, what if each $k$-dimensional projection is $\leq \frac{1}{2}$-sized: $|A \mid Y| \leq 2^{k-1}$?
+
+\begin{defi}[Box]
+  \hypertarget{def:box}A \named{box} or \named{brick} in $\mathbb{R}^n$ is a set of the form $[a_1, b_1] \times [a_2, b_2] \times \dotsb \times [a_n, b_n]$, where $a_i \leq b_i \; \forall i$.
+\end{defi}
+\begin{defi}[Body]\hypertarget{def:body}
+  A \named{body} $S \subset \mathbb{R}^n$ is a finite union of \hyperlink{def:box}{bricks}.
+  Write $|S|$ or $m(S)$ for the volume of $S$.
+\end{defi}
+\begin{remark}\leavevmode
+  \begin{enumerate}[label=\arabic*.]
+    \item Everything is unchanged if we only assume $S$ compact (or just bounded and measurable).
+    \item For $A \subset \mathcal{P}(X) \leftrightarrow \{0,1\}^n$ we have corresponding \hyperlink{def:body}{body} $\hat{A} \subset \mathbb{R}^n$ with $m(\hat{A})= |A|$, namely:
+      \begin{equation*}
+        \hat{A} = \bigcup_{x \in A} [x_1,x_1+1] \times [x_2, x_2+1] \times \dotsb \times [x_n, x_n+1].
+      \end{equation*}
+      \begin{center}
+        \begin{tikzpicture}[scale=1.5]
+          \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}]
+            \draw [bgreen, fill=bgreen!20!white, very thin] (0,0) -- (2,0) -- (2,1) -- (1,1) -- (1,2) -- (0,2) -- (0,0);
+            \node [mymark] (A) at (0,0) {};
+            \node [mymark] (B) at (1,0) {};
+            \node [mymark] (C) at (0,1) {};
+            \node (D) at (1,1) {};
+            \draw (A) -- (B) -- (D) -- (C) -- (A);
+            \node [left] at (-0.1,0.5) {${\color{bred!80!black}A} \subset Q_2$};
+            \node [right] at (1.1,1.5) {${\color{bgreen!70!black}\hat{A}} \subset \mathbb{R}^2$};
+        \end{scope}
+        \end{tikzpicture}
+      \end{center}
+  \end{enumerate}
+\end{remark}
+\hypertarget{not:sy}For a body $S \subset \mathbb{R}^n$, and $Y \subseteq \{1,\dotsc,n\}$, write $S_Y$ for the projection of $S$ onto the subspace spanned by the $e_i,\ i \in Y$.
+\begin{eg}
+  For $S \subset \mathbb{R}^3$: $S_1$ is the projection of $S$ onto the $x$-axis, i.e.\
+  \begin{equation*}
+    S_1 = \set{x_1 | (x_1, x_2, x_3) \in S, \text{ some } x_2,x_3}
+  \end{equation*}
+  $S_{12}$ is the projection of $S$ onto the $xy$-plane.
+  \begin{equation*}
+    S_{12} = \set{(x_1,x_2) | (x_1, x_2, x_3) \in S, \text{ some } x_3}
+  \end{equation*}
+\end{eg}
+\begin{center}
+  \begin{tikzpicture}
+    \draw [->] (0,0) -- (3,-1);
+    \draw [->] (0,0) -- (0,4);
+    \draw [->] (0,0) -- (4,0.5);
+    \begin{scope}[transform canvas={yscale=0.8}, xshift=2cm, yshift=2.5cm]
+      \shade [ball color = bred!40, opacity = 0.7] (0,0) circle (1cm);
+    \end{scope}
+    \draw (2,2) ellipse (1cm and 0.8cm);
+    \draw (1,-0.1) -- (1,2);
+    \draw (3,-0.1) -- (3,2);
+    \draw (2,-0.1) ellipse (1cm and 0.2cm);
+  \end{tikzpicture}
+\end{center}
+Do bounds on some of the $|S_Y|$ give bounds on $|S|$?
+
 \printindex
 \end{document}
