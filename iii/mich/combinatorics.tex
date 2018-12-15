@@ -2243,5 +2243,115 @@ For example, what if each $k$-dimensional projection is $\leq \frac{1}{2}$-sized
 \end{center}
 Do bounds on some of the $|S_Y|$ give bounds on $|S|$?
 
+For \marginnote{\emph{Lecture 14}}example, for $S \subset \mathbb{R}^3$, we have both $|S| \leq |S_1| |S_2| \abs{S_3}$, as $S \subset S_1 \times S_2 \times S_3$, and $|S| \leq |S_{12}| |S_3|$, as $S \subset S_{12} \times S_3$.
+
+But $|S_{12}| |S_{13}|$ does not bound $|S|$ - take for instance
+\begin{equation*}
+  S = \left[0, \frac{1}{N}\right] \times [0,N] \times [0,N].
+\end{equation*}
+How about $|S_{12}|,\ |S_{13}|,\ |S_{23}|$?
+\begin{nprop}\label{prop:3.2}
+  Let $S$ be a body in $\mathbb{R}^3$. Then $|S^2| \leq |S_{12}| |S_{13}| |S_{23}|$.
+\end{nprop}
+\begin{remark}\leavevmode
+  \begin{enumerate}
+    \item Can have equality, e.g.\ when $S$ is a \hyperlink{def:box}{brick}.
+  \item \hypertarget{def:sectionr}For $S \subset \mathbb{R}^n$, the \named{section}\textbf{s} of $S$ are the sets $S(x) \subset \mathbb{R}^{n-1}$ (for $x \in \mathbb{R}$)
+      given by
+      \begin{equation*}
+        S(x) = \set{(x_1, \dotsc, x_{n-1}) \in \mathbb{R}^{n-1} | (x_1, \dotsc, x_{n-1}, x) \in S}.
+      \end{equation*}
+  \end{enumerate}
+\end{remark}
+% TODO: picture
+\begin{proof}
+  Suppose first that every \hyperlink{def:sectionr}{section} of $S$ is a square: \begin{equation*}S(x) = [0, f(x)] \times [0, f(x)]\ \forall x.\end{equation*}
+  Then $|S_{12}| = M^2$, where $M = \max f$.
+  % TODO: picture
+  Also,
+  \begin{equation*}
+    |S_{13}| = |S_{23}| = \int\!f(x) \, dx.
+  \end{equation*}
+  So want
+  \begin{equation*}
+    \left(\int\!f^2\right)^2 \leq M^2 \left(\int\!f\right)^2
+  \end{equation*}
+  i.e.\ $\int\!f^2 \leq M \int\!f$, which is true because $f(x)^2 \leq M f(x)$ for all $x$.
+
+  For general $S$, define a body $T \subseteq \mathbb{R}^3$ by giving its sections:
+  \begin{equation*}
+    T(x) = \left[0, \sqrt{|S(x)|}\right] \times \left[0, \sqrt{|S(x)|}\right].
+  \end{equation*}
+  So $|T| = |S|$.
+  Certainly have $|T_{12}| \leq |S_{12}|$ - since $|T_{12}| = \max|T(x)|$.
+  Write
+  \begin{equation*}
+    \begin{aligned}
+      g(x) &= |S(x)_1| \\
+      h(x) &= |S(x)_2|
+    \end{aligned}
+    \qquad\text{so}\qquad
+    |S(x)| \leq g(x) h(x).
+  \end{equation*}
+  % TODO: picture
+  We have $|S_{13}| = \int g(x) \, dx$ and $|S_{23}| = \int h(x) \, dx$.
+  Also,
+  \begin{equation*}|T_{13}| = |T_{23}| = \int \sqrt{|S(x)|} \, dx \leq \int \sqrt{g(x) h(x)} \, dx.\end{equation*}
+  So, we need $(\int\! \sqrt{gh})^2 \leq (\int\!g) (\int\!h)$, i.e.\ $\int\!\sqrt{gh} \leq (\int\!g)^{\frac{1}{2}} (\int\!h)^{\frac{1}{2}}$, which is Cauchy-Schwarz applied to $g^{\frac{1}{2}}, h^{\frac{1}{2}}$.
+\end{proof}
+
+\begin{defi}[Cover, uniform cover]\hypertarget{def:cover}
+  Sets $Y_1, \dotsc, Y_r \subseteq \hyperlink{def:ints}{[n]}$ \named{cover} $[n]$ if $Y_1 \cup \dotsb \cup Y_r = [n]$.
+  They are a \named{$k$-uniform cover} if each $i \in [n]$ belongs to exactly $k$ of $Y_1, \dotsc, Y_r$.
+\end{defi}
+
+\begin{eg}\leavevmode
+  \begin{itemize}[label=--]
+    \item $\{1\},\{2\},\{3\}$ is a \hyperlink{def:cover}{$1$-uniform cover} of $\hyperlink{def:ints}{[3]}$.
+    \item $\{1\},\{2,3\}$ is a $1$-uniform cover of $[3]$.
+    \item $\{1,2\},\{1,3\}$ is not a uniform cover of $[3]$.
+    \item $\{1,2\},\{1,3\}, \{2,3\}$ is a $2$-uniform cover of $[3]$.
+  \end{itemize}
+\end{eg}
+\begin{aim}
+  $|S|^k \leq |S_{Y_1}| \dotsb |S_{Y_r}|$ where $Y_1, \dotsc, Y_r$ a \hyperlink{def:cover}{$k$-uniform cover} of $[n]$.
+\end{aim}
+Let $\mathcal{C} = {Y_1, \dotsc, Y_r}$ be a \hyperlink{def:cover}{$k$-uniform cover} of $[n]$.
+This is a multiset, i.e.\ repetition allowed e.g.\ $\mathcal{C} = \{1,1,2,3,23\}$ is a $2$-uniform cover of $[3]$.
+Let
+\begin{equation*}
+  \mathcal{C}_- = \set{Y \in \mathcal{C} | n \notin Y}, \qquad \mathcal{C}_+ = \set{Y - \{n\} | Y \in \mathcal{C}, n \in Y}.
+\end{equation*}
+So $|\mathcal{C}_+| = k$ and $\mathcal{C}_- \cup \mathcal{C}_+$ is a $k$-uniform cover of $[n-1]$.
+Note that for a \hyperlink{def:body}{body} $S \subseteq \mathbb{R}^n$, if $n \notin Y$ then $|S_Y| \geq |S(x)_Y|\ \forall x$, e.g.\ $|S_1| \geq |S(x)_1|\ \forall x$ when $S \subseteq \mathbb{R}^3$.
+Also, if $n \in Y$ then
+\begin{equation*}
+  |S_Y| = \int \left|S(x)_{Y-\{n\}}\right| \, dx
+\end{equation*}
+e.g.\ $|S_{13}| = \int |S(x)_1| \, dx.$
+
+In the proof of \cref{prop:3.2}, we used Cauchy-Schwarz:
+\begin{equation*}\int\!fg \leq \left(\int\!f^2\right)^\frac{1}{2}\, \left(\int\!g^2\right)^{\frac{1}{2}}.\end{equation*}
+Here we'll need H\"older:
+\begin{equation*}\int\!fg \leq \left(\int\!f^p\right)^\frac{1}{p} \left(\int\!g^q\right)^\frac{1}{q},\end{equation*}
+where $\frac{1}{p} + \frac{1}{q} = 1$.
+Iterating:
+\begin{equation*}\int f_1 \dotsm f_k \leq \left(\int\!f_1^k\right)^\frac{1}{k} \dotsm \left(\int\!f_k^k\right)^\frac{1}{k}.\end{equation*}
+
+\begin{nthm}[Uniform covers theorem]\label{thm:3.3}
+  Let $S$ be a \hyperlink{def:body}{body} in $\mathbb{R}^n$, and let $\mathcal{C}$ be a \hyperlink{def:cover}{$k$-uniform cover} of $\hyperlink{def:ints}{[n]}$.
+  Then $|S|^k \leq \prod_{Y \in \mathcal{C}} |S_Y|$.
+\end{nthm}
+\begin{proof}
+  Induction on $n$: $n=1$ case works.
+  Given $S \subset \mathbb{R}^n$ for $n \geq 2$:
+  \begin{align*}
+    |S| = \int\!|S(x)|\,dx &\leq \int \prod_{Y \in \mathcal{C}_-} |S(x)_Y|^{\frac 1 k}\prod_{Y \in \mathcal{C}_+} |S(x)_Y|^{\frac 1 k} \\
+    \shortintertext{by induction, as $\mathcal{C}_- \cup \mathcal{C}_+$ a $k$-uniform cover of $[n-1]$}
+                           &\leq \prod_{Y \in \mathcal{C}_-} |S_Y|^{\frac 1 k} \int \prod_{Y \in \mathcal{C}_+} \abs{S(x)_Y}^{\frac 1 k} \\
+                           &\leq \prod_{Y \in \mathcal{C}_-} |S_Y|^{\frac 1 k} \prod_{Y \in \mathcal{C}_+} \left(\int \abs{S(x)_Y}\right)^{\frac 1 k} \\
+                           &\leq \prod_{Y \in \mathcal{C}_-} |S_Y|^{\frac 1 k} \prod_{Y \in \mathcal{C}_+} \abs{S_{Y \cup \{n\}}}^{\frac 1 k} = \prod_{Y \in \mathcal{C}} |S_Y|^{\frac 1 k}. \qedhere
+  \end{align*}
+\end{proof}
 \printindex
 \end{document}
