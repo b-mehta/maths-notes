@@ -2353,5 +2353,93 @@ Iterating:
                            &\leq \prod_{Y \in \mathcal{C}_-} |S_Y|^{\frac 1 k} \prod_{Y \in \mathcal{C}_+} \abs{S_{Y \cup \{n\}}}^{\frac 1 k} = \prod_{Y \in \mathcal{C}} |S_Y|^{\frac 1 k}. \qedhere
   \end{align*}
 \end{proof}
+
+\begin{ncor}[Loomis-Whitney theorem]\label{cor:3.4}
+  \marginnote{\emph{Lecture 15}}Let $S$ be a \hyperlink{def:body}{body} in $\mathbb{R}^n$.
+  Then
+  \begin{equation*}
+    |S|^{n-1} \leq \prod_{i=1}^n \abs{S_{\hyperlink{def:ints}{[n]} - \{i\}}}.
+  \end{equation*}
+\end{ncor}
+\begin{remark}
+  The $n=3$ case is \cref{prop:3.2}.
+\end{remark}
+\begin{proof}
+  The sets $\hyperlink{def:ints}{[n]}- \{i\}$ for $1 \leq i \leq n$ form an \hyperlink{def:cover}{$(n-1)$-uniform cover} of $[n]$.
+\end{proof}
+\begin{ncor}\label{cor:3.5}
+  Let $A \subset \mathcal{P}(\hyperlink{def:ints}{[n]})$ and let $\mathcal{C}$ be a \hyperlink{def:cover}{$k$-uniform cover} of $[n]$.
+  Then
+  \begin{equation*}|A|^k \leq \prod_{Y \in \mathcal{C}} |\hyperlink{def:proj}{A \mid Y}|.\end{equation*}
+  In particular, if $|A \mid Y| \leq (2^{|Y|})^c$ $\forall Y \in \mathcal{C}$ then $|A| \leq (2^n)^c$.
+\end{ncor}
+\begin{proof}
+  First part: identify $A$ with a body $\hat{A} \subseteq \mathbb{R}^n$.
+  Second part:
+  \begin{align*}
+    |A|^k &\leq \prod_{Y \in \mathcal{C}} \abs{\hyperlink{def:proj}{A \mid Y}} \\
+          &\leq \prod_{Y \in \mathcal{C}} (2^{|Y|})^c = (2^{\sum|Y|})^c \\
+          &= 2^{k nc}. \qedhere
+  \end{align*}
+\end{proof}
+\begin{aim}
+  Bollob\'as-Thomason Box Theorem: For any $S \subset \mathbb{R}^n$, $\exists$ a \hyperlink{def:box}{box} $B$ with $|B| = |S|$ and $|\hyperlink{not:sy}{B_Y}| \leq |S_Y|$ $\forall Y \subseteq [n].$
+
+  This looks way too strong to be true - e.g.\ it tells us that, to verify any proposed \hyperlink{def:proj}{projection} inequality, it suffices to check it on boxes.
+\end{aim}
+\begin{defi}[Irreducible cover]
+  \hypertarget{def:irred}A \hyperlink{def:cover}{uniform cover} $\mathcal{C}$ of $[n]$ is \named{irreducible} if we cannot write $\mathcal{C} = \mathcal{C}' \cup \mathcal{C}''$ for some uniform covers $\mathcal{C}', \mathcal{C}''$.
+\end{defi}
+\begin{eg}
+  If $n=3$, $\{12,13,23\}$ is \hyperlink{def:irred}{irreducible}, and $\{12,3,1,23\}$ is not.
+\end{eg}
+\begin{nlemma}
+  There are only finitely many \hyperlink{def:irred}{irreducible covers} of $\hyperlink{def:ints}{[n]}$.
+\end{nlemma}
+\begin{proof}
+  Suppose $\mathcal{C}_1, \mathcal{C}_2, \dotsc$ are \hyperlink{def:irred}{irreducible covers}.
+  List $\mathcal{P}(\hyperlink{def:ints}{[n]})$ as $E_1, \dotsc, E_{2^n}$.
+  There are subsequences $\mathcal{C}_{i_1}, \mathcal{C}_{i_2}, \dotsc$ on which the number of occurrences of $E_1$ is (not strictly) increasing.
+  Find a subsequence of this on which the number of occurrences of $E_2$ is (not strictly) increasing.
+  Repeating, we get $\mathcal{C}_{j_1}, \mathcal{C}_{j_2}, \dotsc$ on which $\forall E \subseteq [n]$, the number of occurrences of $E$ is increasing.
+  But then $\mathcal{C}_{j_2}$ contains $\mathcal{C}_{j_1}$, so $C_{j_2}$ is not irreducible, a contradiction.
+\end{proof}
+\begin{nthm}[Bollob\'as-Thomason Box Theorem]\label{thm:3.7}
+  Let $S \subset \mathbb{R}^n$ be a (non-empty) \hyperlink{def:body}{body}.
+  Then $\exists$ a \hyperlink{def:box}{box} $B \subset \mathbb{R}^n$ with $|B| = |S|$ and $|\hyperlink{not:sy}{B_Y}| \leq |S_Y|\ \forall Y$.
+\end{nthm}
+\begin{proof}
+  Without loss of generality, $|S| > 0$ and $n \geq 2$.
+  Take real variables $x_Y$ for each $Y \subseteq \hyperlink{def:ints}{[n]}$ with $Y \neq \emptyset, [n]$.
+  Consider the inequalities
+  \begin{enumerate}[label=(\roman*)]
+    \item $ 0 \leq x_Y \leq |\hyperlink{not:sy}{S_Y}|$ $\forall Y$.
+    \item $x_Y \leq \prod_{i \in Y} x_i$ for each $|Y| \geq 2$
+    \item $|S|^k \leq \prod_{Y \in \mathcal{C}} x_Y$, for each \hyperlink{def:irred}{irreducible} \hyperlink{def:cover}{$k$-uniform cover} $\mathcal{C}$ of $[n]$ and any $k$, with $\mathcal{C} \neq \{n\}$.
+  \end{enumerate}
+  (Our hope is to find such an $x_Y$ with $|S| = x_1 \dotsm x_n$ and $x_{12} = x_1 x_2$, etc - then the box is $[0, x_1] \times \dotsm \times [0, x_n]$.)
+
+  Note that (iii) therefore holds for \emph{all} uniform covers, as it holds for irreducible ones.
+  Now, $\exists$ a solution (e.g.\ set $x_Y = |S_Y|\ \forall Y$), and the solution set is compact, so $\exists$ a solution $(x_Y)$ with $\sum_Y x_Y$ minimal.
+  Must have $x_Y > 0$ $\forall Y$ (as $|S| \leq x_Y x_{Y^c}$, by (iii)).
+
+  \textbf{Claim:} For each $1 \leq i \leq n$, $x_i$ occurs on the right hand side of an inequality in (iii) in which equality holds.
+
+  \textbf{Proof:} Must have $x_i$ on the right hand side of some inequality in which equality holds otherwise, we could decrease $x_i$ (as the set of inequalities is finite).
+  It cannot be in (i) (as $x_i > 0$).
+  If it is in (iii), we are done. If it is in (ii), we have $x_Y = \prod_{j \in Y} x_j$, for some $Y$ with $i \in Y$.
+
+  But $x_Y$ must appear on right hand side of an equality (else could decrease it), which can only be in (iii).
+  So we have a $k$-uniform cover $\mathcal{C}$ with $Y \in \mathcal{C}$ and $|S|^k = \prod_{z \in \mathcal{C}} x_z$.
+  But then equality also holds for the cover $\mathcal{C}' = \mathcal{C} - \{Y\} \cup \set{\{j\} | j \in Y}$.
+  Now just take an irreducible $\mathcal{C}'' \subset \mathcal{C}$ with $\{i\} \in \mathcal{C}''$. $\blacksquare$
+
+  So, for each $i$, have a cover $\mathcal{C}_i$ with $\{i\} \in \mathcal{C}_i$ and equality holding in (iii).
+  Put $\mathcal{C} = \mathcal{C}_1 \cup \dotsb \cup \mathcal{C}_n$. Then $\{i\} \in \mathcal{C}$ $\forall i$, and have equality for $\mathcal{C}$ in (iii).
+  But $\mathcal{C} = \mathcal{C}' \cup \mathcal{C}''$ for some $\mathcal{C}''$, where $\mathcal{C}' = \set{\{i\} : 1 \leq i \leq n}$, hence have equality in (iii) for $\mathcal{C}'$, i.e.\ $|S| = x_1 \dotsm x_n$.
+  Now for any $Y$ with $|Y| \geq 2$, must have $x_Y = \prod_{i \in Y} x_i$, because $Y,Y^c$ is a uniform cover, so that
+  \begin{equation*}|S| \leq x_Y x_{Y^c} \leq \prod_{i \in Y} x_i \prod_{i \notin Y} x_i = x_1 \dotsm x_n = |S|.\qedhere\end{equation*}
+\end{proof}
+
 \printindex
 \end{document}
