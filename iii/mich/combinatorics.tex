@@ -5,7 +5,6 @@
 \def\nterm{Michaelmas}
 \def\nlecturer{Professor I.\ B.\ Leader}
 \def\ncourse{Combinatorics}
-\def\draft{Ongoing course, rough}
 \usepackage{imakeidx}
 \usepackage{chngcntr}
 \usepackage{marginnote}
@@ -13,12 +12,10 @@
 \usepackage{pgfplots}
 \makeindex[intoc]
 \usetikzlibrary{fadings, decorations.pathmorphing, shadings}
-%\pagecolor{black}
 
 % preamble
 
 \setcounter{section}{-1}
-% \counterwithout{nthm}{section}
 
 \reversemarginpar
 
@@ -27,7 +24,10 @@
 \DeclareMathOperator\tr{tr}
 
 \tikzset{
-    dot/.style={fill=black, circle, inner sep=1pt}
+    dot/.style={fill=black, circle, inner sep=1pt},
+    rough path/.style={decorate, decoration={random steps, segment length=1.5pt, amplitude=0.7pt}},
+    over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt},
+    mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}
 }
 
 \newcommand{\sym}{\bigtriangleup}
@@ -37,19 +37,12 @@
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 
-%\newtheorem{manualtheoreminner}{Theorem}
-%\newenvironment{manualtheorem}[1]{%
-%    \renewcommand\themanualtheoreminner{#1}%
-%    \manualtheoreminner
-%}{\endmanualtheoreminner}
-
 % and here we go!
 
 \let\oldsubset\subset
 \let\subset\subseteq
 
 \begin{document}
-%\color{white}
 \maketitle
 
 \tableofcontents
@@ -80,9 +73,11 @@ While all examinable proofs will be included in lectures, relevant books for thi
 \clearpage
 \section{Set systems}
 \begin{defi}[Set system]\index{set system}\hypertarget{def:ss}
-  Let $X$ be a set. A \named{set system} on $X$ (or \named{family of subsets} of $X$) is a family $\mathcal{A} \subseteq \mathcal{P}(X)$.
+  Let $X$ be a set. A \named{set system} on $X$ (or \named{family} of subsets of $X$) is a family $\mathcal{A} \subseteq \mathcal{P}(X)$.
 \end{defi}
-For instance, we write \hypertarget{def:superr}$X^{(r)} = \set{A \subset X | |A| = r}$, so $X^{(r)}$ is a \hyperlink{def:ss}{set system} on $X$.
+\hypertarget{def:superr}For instance, we write $X^{(r)} = \set{A \subset X | |A| = r}$, so $X^{(r)}$ is a \hyperlink{def:ss}{set system} on $X$.
+We often call refer to sets in $X^{(r)}$ as \textbf{$r$-sets}\index{r-set@$r$-set}.
+
 Unless otherwise stated,
 \begin{equation*}
   \hypertarget{def:ints}X = [n] \coloneqq \{1,2,\dotsc,n\},
@@ -90,7 +85,7 @@ Unless otherwise stated,
 e.g.\ $|X^{\hyperlink{def:superr}{(r)}}| = \binom{n}{r}$.
 Thus $\hyperlink{def:ints}{[4]}^{(2)} = \{12,13,14,23,24,34\}$, so $|[4]^{(2)}| = 6$.
 
-Often, we make $\mathcal{P}(X)$ into a graph, called $Q_n$, by joining $A$ to $B$ if $|A \sym B| = 1$, i.e.\ if $A = B \cup \{i\}$ for some $i \notin B$ (or vice versa).
+\index{Qn@$Q_n$}Often, we make $\mathcal{P}(X)$ into a graph, called $Q_n$, by joining $A$ to $B$ if $|A \sym B| = 1$, i.e.\ if $A = B \cup \{i\}$ for some $i \notin B$ (or vice versa).
 For instance, here is a picture of $Q_3$:
 \begin{center}
   \begin{tikzpicture}[xscale=1.4, every node/.style={fill=black, circle, inner sep=1pt}]
@@ -187,27 +182,27 @@ As we know, the picture gets `thicker' in the middle. But, for odd $n$, is it no
 If we identify a set $A \subseteq X$ with a $0$-$1$ sequence of length $n$, e.g.\ $134 \longleftrightarrow 1011000\dots0$, via $A \longleftrightarrow 1_{A}$ or $\chi_A$, the characteristic function,
 then $Q_3$ looks like
 \begin{center}
-  \begin{tikzpicture}[every node/.style={fill=black, circle, inner sep=1pt}, scale=2.5]
-    \node [label=below left:$\emptyset$] (empty) at (0,0) {};
-    \node [label=below right:$1$] (1) at (1, 0) {};
-    \node [fill opacity=0.5, label=left:$2$] (2) at (0.3,0.3) {};
-    \node [label=left:$3$] (3) at (0, 1) {};
-    \node [label=above left:$13$] (13) at (1, 1) {};
-    \node [label=right:$12$] (12) at (1.3, 0.3) {};
-    \node [label=above left:$23$] (23) at (0.3, 1.3) {};
-    \node [label=above right:$123$] (123) at (1.3, 1.3) {};
-    \draw (empty) -- (1);
-    \draw [opacity=0.7, very thin] (empty) -- (2);
-    \draw (empty) -- (3);
-    \draw (1) -- (12);
-    \draw (1) -- (13);
-    \draw [opacity=0.7, very thin] (2) -- (12);
-    \draw [opacity=0.7, very thin] (2) -- (23);
-    \draw (3) -- (13);
-    \draw (3) -- (23);
-    \draw (12) -- (123);
-    \draw (13) -- (123);
-    \draw (23) -- (123);
+  \begin{tikzpicture}[every node/.style=dot, hidden/.style={opacity=0.7, very thin}, scale=2.5]
+    \node [label=below left: $\emptyset$]                   (empty) at (0,  0)   {};
+    \node [label=below right:$1$]                   (1)     at (1,  0)   {};
+    \node [label=left:       $2$, fill opacity=0.5] (2)     at (0.3,0.3) {};
+    \node [label=left:       $3$]                   (3)     at (0,  1)   {};
+    \node [label=above left: $13$]                  (13)    at (1,  1)   {};
+    \node [label=right:      $12$]                  (12)    at (1.3,0.3) {};
+    \node [label=above left: $23$]                  (23)    at (0.3,1.3) {};
+    \node [label=above right:$123$]                 (123)   at (1.3,1.3) {};
+    \draw          (empty) -- (1);
+    \draw [hidden] (empty) -- (2);
+    \draw          (empty) -- (3);
+    \draw          (1) --     (12);
+    \draw          (1) --     (13);
+    \draw [hidden] (2) --     (12);
+    \draw [hidden] (2) --     (23);
+    \draw          (3) --     (13);
+    \draw          (3) --     (23);
+    \draw          (12) --    (123);
+    \draw          (13) --    (123);
+    \draw          (23) --    (123);
   \end{tikzpicture}
 \end{center}
 \begin{defi}[Hypercube]\index{hypercube}\hypertarget{def:qn}
@@ -217,13 +212,14 @@ It is important to keep \emph{both} these pictures in mind: for induction the cu
 
 \subsection{Chains and antichains}
 \begin{defi}[Chain]\index{chain}\hypertarget{def:chain}
-  A family $\mathcal{A} \subseteq \mathcal{P}(X)$ is a \named{chain} if $\forall A, B \in \mathcal{A}$, we have $A \subseteq B$ or $B \subseteq A$.
+  A \hyperlink{def:ss}{family} $\mathcal{A} \subseteq \mathcal{P}(X)$ is a \named{chain} if $\forall A, B \in \mathcal{A}$, we have $A \subseteq B$ or $B \subseteq A$.
 \end{defi}
 \begin{defi}[Antichain]\index{antichain}\hypertarget{def:antichain}
-  A family $\mathcal{A} \subseteq \mathcal{P}(X)$ is an \named{antichain} if $\forall A,B \in \mathcal{A}$ with $A \neq B \Rightarrow A \nsubseteq B$.
+  A \hyperlink{def:ss}{family} $\mathcal{A} \subseteq \mathcal{P}(X)$ is an \named{antichain} if $\forall A,B \in \mathcal{A}$, $A \neq B \Rightarrow A \nsubseteq B$.
 \end{defi}
 \begin{eg}
   For instance, $\{12, 125, 123589\}$ is an \hyperlink{def:chain}{chain}, and $\{1,467,2456\}$ is an \hyperlink{def:antichain}{antichain}.
+  (We write $125$ to refer to the set $\{1,2,5\}$ informally, with the promise that each element of the ground set has one digit.)
 \end{eg}
 
 In this course, we ask questions like, how large can a \hyperlink{def:chain}{chain} be?
@@ -253,16 +249,18 @@ It is easy to visualise this by picking `one per level':
   \end{tikzpicture}
 \end{center}
 
-We cannot exceed $n+1$, since a chain must meet each `level' $X^{(r)}$ ($0 \leq r \leq n$) in at most one place.
+We cannot exceed $n+1$, since a \hyperlink{def:chain}{chain} must meet each `level' $\hyperlink{def:superr}{X^{(r)}}$ ($0 \leq r \leq n$) in at most one place.
 
 How large can an \hyperlink{def:antichain}{antichain} be?
-We could achieve $\mathcal{A}=n$, e.g.\ $\mathcal{A} = \{1,2,3,\dotsc,n\}$ (and this is maximal).
-Indeed, we could take $\mathcal{A} = X^{(r)}$ for any $r$, so we can achieve $|\mathcal{A}| = \binom{n}{\floor{\frac{n}{2}}}$.
+We could achieve $\abs{\mathcal{A}}=n$, e.g.\ $\mathcal{A} = \{1,2,3,\dotsc,n\}$ (and this is maximal).
+Indeed, we could take $\mathcal{A} = \hyperlink{def:superr}{X^{(r)}}$ for any $r$, so we can achieve $|\mathcal{A}| = \binom{n}{\ihalf{n}}$.
 Can we beat this?
-Aim: Prove this is the winner.
+\begin{aim}
+  Prove this is the winner.
+\end{aim}
 
 \marginnote{\emph{Lecture 2}}[0cm]
-Inspired by `each \hyperlink{def:chain}{chain} meets each level $X^{(r)}$ in at most one place' for chains, we try to decompose $\hyperlink{def:qn}{Q_n}$ into chains to find large \hyperlink{def:antichain}{antichains}.
+Inspired by `each \hyperlink{def:chain}{chain} meets each \hyperlink{def:superr}{level $X^{(r)}$} in at most one place' for chains, we try to decompose $\hyperlink{def:qn}{Q_n}$ into chains to find large \hyperlink{def:antichain}{antichains}.
 \begin{nthm}[Sperner's Lemma]\label{thm:sperner1}\index{Sperner's Lemma}
   Let $\mathcal{A} \subseteq \mathcal{P}(X)$ be an \hyperlink{def:antichain}{antichain}.
   Then $|\mathcal{A}| \leq \binom{n}{\floor{\frac{n}{2}}}$.
@@ -275,7 +273,6 @@ Inspired by `each \hyperlink{def:chain}{chain} meets each level $X^{(r)}$ in at 
     \item $\forall r > \frac{n}{2}$, there is a matching from $X^{(r)}$ to $X^{(r-1)}$.
   \end{enumerate}
   Then put these matchings together to form chains, each passing through $X^{(\floor{\frac{n}{2}})}$, so there are $\binom{n}{\floor{\frac{n}{2}}}$ of them. (Recall we have a \hyperlink{def:ints}{natural graph structure} on \hyperlink{def:qn}{$Q_n$})
-
   \begin{center}
     \begin{tikzpicture}
         \tikzfading[name=fade up, bottom color=transparent!0,
@@ -339,10 +336,9 @@ Inspired by `each \hyperlink{def:chain}{chain} meets each level $X^{(r)}$ in at 
         \end{scope}
     \end{tikzpicture}
   \end{center}
-
   By taking complements, it is sufficient to prove (i).
-
-  Consider the subgraph of \hyperlink{def:qn}{$Q_n$} spanned by $\hyperlink{def:superr}{X^{(r)}} \cup X^{(r+1)}$. It is bipartite.
+  Consider the subgraph of \hyperlink{def:qn}{$Q_n$} spanned by $\hyperlink{def:superr}{X^{(r)}} \cup X^{(r+1)}$.
+  It is bipartite.
   For any $\mathcal{B} \subseteq X^{(r)}$, we have that
   \begin{itemize}
     \item The number of edges from $\mathcal{B}$ to $\Gamma(\mathcal{B})$ is $|\mathcal{B}| (n-r)$ (each point in $X^{(r)}$ has degree $n-r$).
@@ -358,13 +354,13 @@ Inspired by `each \hyperlink{def:chain}{chain} meets each level $X^{(r)}$ in at 
       \node [right] at (1.2, -1) {$X^{(r)}$};
       \node [left, bred] at (0.3, -0.9) {$\mathcal{B}$};
 
-      \begin{scope}[every path/.style={decorate, decoration={random steps, segment length=1.5pt, amplitude=0.7pt}, bred, fill=bred!20}]
+      \begin{scope}[every path/.style={rough path, bred, fill=bred!20}]
         \draw (0.6, -0.9) circle [x radius=0.3cm, y radius=0.25cm];
         \draw (0.7, 1.1) circle [x radius=0.6cm, y radius=0.45cm];
       \end{scope}
-      %\foreach \x in {0.4,0.5,...,1.1} {
-      %  \draw [very thin] (\x,1.1) to (\x*0.6+0.2,-0.9);
-      %}
+      \foreach \x in {0.3,0.4,...,1.1} {
+        \draw [very thin, bred!70!black] (\x,1.1) to (\x*0.5+0.23,-0.9);
+      }
     \end{tikzpicture}
   \end{center}
   Thus
@@ -378,17 +374,19 @@ Inspired by `each \hyperlink{def:chain}{chain} meets each level $X^{(r)}$ in at 
 
 \begin{remark}
   Recall $\binom{n}{\floor{\frac{n}{2}}}$ was achievable, for example $\mathcal{A} = \hyperlink{def:superr}{X^{(\floor{\frac{n}{2}})}}$.
-  This proof says nothing about extremal cases - which \hyperlink{def:antichain}{antichains} have size $\binom{n}{\floor{\frac{n}{2}}}$?
+  But this proof says nothing about extremal cases - which \hyperlink{def:antichain}{antichains} have size $\binom{n}{\floor{\frac{n}{2}}}$?
 \end{remark}
 
-Aim: For $\mathcal{A}$ an antichain,
-\begin{equation*}
-  \sum_{r=0}^n \frac{|\mathcal{A} \cap X^{(r)}|}{\binom{n}{r}} \leq 1.
-\end{equation*}
-This trivially implies \nameref{thm:sperner1}.
+\begin{aim}
+  For $\mathcal{A}$ an \hyperlink{def:antichain}{antichain},
+  \begin{equation*}
+    \sum_{r=0}^n \frac{|\mathcal{A} \cap X^{(r)}|}{\binom{n}{r}} \leq 1.
+  \end{equation*}
+  This trivially implies \nameref{thm:sperner1}.
+\end{aim}
 
 \begin{defi}[Shadow]\index{shadow}\hypertarget{def:shadow}
-  Let $\mathcal{A} \subseteq X^{(r)}$, for some $1 \leq r \leq n$.
+  Let $\mathcal{A} \subseteq \hyperlink{def:superr}{X^{(r)}}$, for some $1 \leq r \leq n$.
   The \named{shadow} or \named{corner shadow} of $\mathcal{A}$ is
   \begin{equation*}
     \partial \mathcal{A} \equiv \partial^- \mathcal{A} \coloneqq \set{A - \{i\} | A \in \mathcal{A},\; i \in A}
@@ -407,13 +405,13 @@ This trivially implies \nameref{thm:sperner1}.
     \draw (0, -1) circle [x radius=1.2cm, y radius=0.6cm];
     \node [right] at (1.2, -1) {$X^{(r-1)}$};
     \node [left, bgreen] at (0.2, -1) {$\partial A$};
-    \begin{scope}[every path/.style={decorate, decoration={random steps, segment length=1.5pt, amplitude=0.7pt}, bgreen, fill=bgreen!20}]
+    \begin{scope}[every path/.style={rough path, bgreen, fill=bgreen!20}]
       \draw (0.6, -1) circle [x radius=0.4cm, y radius=0.3cm];
       \draw (0.7, 1.1) circle [x radius=0.5cm, y radius=0.4cm];
     \end{scope}
   \end{tikzpicture}
 \end{center}
-For example, if $\mathcal{A} = \{123,124,134,135\} \subset X^{(3)}$, then
+For example, if $\mathcal{A} = \{123,124,134,135\} \subset \hyperlink{def:superr}{X^{(3)}}$, then
 \begin{equation*}\hyperlink{def:shadow}{\partial \mathcal{A}} = \{12,13,23,24,34,15,35\} \subset X^{(2)}.\end{equation*}
 
 \begin{nlemma}[Local LYM]\label{thm:locallym2}\index{Local LYM}
@@ -447,7 +445,7 @@ We can use \nameref{thm:locallym2} to prove:
   \end{equation*}
 \end{nthm}
 \begin{proof}[Proof 1: `Bubble down with \nameref{thm:locallym2}']
-  Write $\mathcal{A}_r = \mathcal{A} \cap X^{(r)}$.
+  Write $\mathcal{A}_r = \mathcal{A} \cap \hyperlink{def:superr}{X^{(r)}}$.
   We have $\frac{|\mathcal{A}_n|}{\binom{n}{n}} \leq 1$.
   Also, $\hyperlink{def:shadow}{\partial \mathcal{A}_n}$ and $\mathcal{A}_{n-1}$ are distinct since $\mathcal{A}$ was an \hyperlink{def:antichain}{antichain}, so
   \begin{align*}
@@ -495,12 +493,11 @@ We can use \nameref{thm:locallym2} to prove:
 
 When do we get equality in \nameref{thm:lym3}?
 We must have had equality in each use of \nameref{thm:locallym2}.
-So the first (greatest) $r$ with $\mathcal{A}_r \neq \emptyset$ must have $\mathcal{A}_r = X^{(r)}$ thus $\mathcal{\mathcal{A}} = X^{(r)}$.
-Hence equality in \nameref{thm:sperner1} $\iff$ $\mathcal{A} = X^{(\frac{n}{2})}$ for $n$ even and $\mathcal{A} = X^{(\ihalf{n})}$ or $X^{(\ihalfc{n})}$ for $n$ odd.
+So the first (greatest) $r$ with $\mathcal{A}_r \neq \emptyset$ must have $\mathcal{A}_r = \hyperlink{def:superr}{ X^{(r)}}$ thus $\mathcal{\mathcal{A}} = X^{(r)}$.
+Hence equality in \nameref{thm:sperner1} $\Leftrightarrow$ $\mathcal{A} = X^{(\frac{n}{2})}$ for $n$ even and $\mathcal{A} = X^{(\ihalf{n})}$ or $X^{(\ihalfc{n})}$ for $n$ odd.
 
-\marginnote{\emph{Lecture 3}}[0cm]
 \begin{proof}[Proof 2]
-  Choose uniformly at random a maximal \hyperlink{def:chain}{chain} $\mathcal{C}$ (i.e.\ $\mathcal{C}_0 \subset \mathcal{C}_1 \subset \mathcal{C}_2 \subset \dotsb \subset \mathcal{C}_n$) with $|\mathcal{C}_i| = i \; \forall i$.
+  Choose\marginnote{\emph{Lecture 3}}[0cm] uniformly at random, a maximal \hyperlink{def:chain}{chain} $\mathcal{C}$ (i.e.\ $\mathcal{C}_0 \subset \mathcal{C}_1 \subset \mathcal{C}_2 \subset \dotsb \subset \mathcal{C}_n$) with $|\mathcal{C}_i| = i \; \forall i$.
   For a given \hyperlink{def:superr}{$r$-set} $A$,
  \begin{align*}\mathbb{P}(A \in \mathcal{C}) = &\frac{1}{\binom{n}{r}} \qquad \qquad \text{(all $r$-sets are equally likely)} \\
     \mathbb{P}(\mathcal{A}_r \text{ meets } \mathcal{C}) = &\frac{|\mathcal{A}_r|}{\binom{n}{r}} \qquad \qquad \text{(events are disjoint)} \\
@@ -509,23 +506,24 @@ Hence equality in \nameref{thm:sperner1} $\iff$ $\mathcal{A} = X^{(\frac{n}{2})}
   \end{align*}
 \end{proof}
 \begin{remark}
-  Equivalently, the number of maximal chains is $n!$, and the number containing a given $r$-set is $r! (n-r)!$, so $\sum |\mathcal{A}_r| r! (n-r)! \leq n!$.
+  Equivalently, the number of maximal \hyperlink{def:chain}{chains} is $n!$, and the number containing a given $r$-set is $r! (n-r)!$, so $\sum |\mathcal{A}_r| r! (n-r)! \leq n!$.
 \end{remark}
 \subsection{Shadows}
-For $\mathcal{A} \subset X^{(r)}$, we know $|\partial A| \geq |A| \frac{r}{n-r+1}$ - but equality is rare (only for $\mathcal{A} = \emptyset$ or $\mathcal{A} = X^{(r)}$).
+For $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$, we know $|\partial A| \geq |A| \frac{r}{n-r+1}$ - but equality is rare (only for $\mathcal{A} = \emptyset$ or $\mathcal{A} = X^{(r)}$).
 
 Given $|\mathcal{A}|$, how should we choose $\mathcal{A} \subset X^{(r)}$ to minimise $|\partial A|$?
 (Ultimately, we are asking `how tightly can we pack some $r$-sets?')
 If $|\mathcal{A}| = \binom{k}{r}$, it is believable that we'd take $\mathcal{A} = [k]^{(r)}$ - giving $\partial \mathcal{A} = [k]^{(r-1)}$.
 What if $\binom{k}{r} < |\mathcal{A}| < \binom{k+1}{r}$? Believable that we'd take $[k]^{(r)}$ and some other $r$-sets from $[k+1]^{(r)}$.
-For instance, if $\mathcal{A} \subset X^{(3)}$ with $|\mathcal{A}| = \binom{7}{3} + \binom{4}{2}$, we'd take $\mathcal{A} = [7]^{(3)} \cup \set{A \cup \{8\} | A\in [4]^{(2)}}$
+For instance, if $\mathcal{A} \subset X^{(3)}$ with $|\mathcal{A}| = \binom{7}{3} + \binom{4}{2}$, we'd take
+\begin{equation*}\mathcal{A} = [7]^{(3)} \cup \set{A \cup \{8\} | A\in [4]^{(2)}}.\end{equation*}
 
 \subsubsection{Two total orderings on \texorpdfstring{$X^{(r)}$}{X(r)}}
 Given $A,B \in \hyperlink{def:superr}{X^{(r)}}$, say $A = a_1 \dotsb a_r$, $B = b_1 \dotsb b_r$.
-\begin{defi}[Lexicographic order]\index{lexicographic order}\hypertarget{def:lex}
+\begin{defi}[Lexicographic order]\index{lexicographic order}\index{order!lexicographic}\hypertarget{def:lex}
   Say $A < B$ in the \named{lexicographic order} or \textbf{lex order} if for some $i$ we have $a_i < b_i$ and $a_j = b_j \; \forall j < i$.
+  Equivalently, $a_i < b_i$, where $i = \min\set{j | a_j \neq b_j}$.
 \end{defi}
-Equivalently, $a_i < b_i$, where $i = \min\set{j | a_j \neq b_j}$.
 `Use small numbers', dictionary order.
 
 \begin{eg}\leavevmode
@@ -542,10 +540,10 @@ Equivalently, $a_i < b_i$, where $i = \min\set{j | a_j \neq b_j}$.
   \end{itemize}
 \end{eg}
 
-\begin{defi}[Colexicographic order]\index{colexicographic order}\hypertarget{def:colex}
+\begin{defi}[Colexicographic order]\index{colexicographic order}\index{order!colexicographic}\hypertarget{def:colex}
   Say $A < B$ in the \named{colexicographic order} or \textbf{colex order} if for some $i$ have $a_i < b_i$ and $a_j = b_j \; \forall j > i$.
-\end{defi}
 Equivalently, $a_i < b_i$ where $i = \max\set{j | a_j \neq b_j}$.
+\end{defi}
 `Avoid large numbers'. Equivalently, $A < B$ if $\sum_{i \in A} 2^i < \sum_{i \in B} 2^i$.
 \begin{eg}\leavevmode
   \begin{itemize}
@@ -565,12 +563,12 @@ Note: In \hyperlink{def:colex}{colex}, $\hyperlink{def:ints}{[k]}^{\hyperlink{de
 \begin{aim}
   Initial segments of \hyperlink{def:colex}{colex} minimise $\hyperlink{def:shadow}{\partial}$, i.e.\ if $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ and $\mathcal{C} \subset X^{(r)}$ is the first $|\mathcal{A}|$ $r$-sets in \hyperlink{def:colex}{colex}, then $|\partial \mathcal{A}| \geq |\partial \mathcal{C}|$.
 \end{aim}
-This is known as the Kruskal-Katona theorem.
-In particular, \begin{equation*}|\mathcal{A}| = \binom{k}{r} \implies |\partial A| \geq \binom{k}{r-1}.\end{equation*}
+\index{Kruskal-Katona theorem}This is known as the Kruskal-Katona theorem.
+In particular, \begin{equation*}|\mathcal{A}| = \binom{k}{r} \implies |\hyperlink{def:shadow}{\partial A}| \geq \binom{k}{r-1}.\end{equation*}
 
 \subsection{Compressions}
 \begin{idea}
-We want to `replace' $\mathcal{A} \subset X^{(r)}$ with some $\mathcal{A}' \subset X^{(r)}$ such that
+We want to `replace' $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ with some $\mathcal{A}' \subset X^{(r)}$ such that
 \begin{enumerate}[label=(\roman*)]
   \item $|\mathcal{A}'| = |\mathcal{A}|$
   \item $|\hyperlink{def:shadow}{\partial \mathcal{A}'}| \leq |\partial \mathcal{A}|$
@@ -579,9 +577,8 @@ We want to `replace' $\mathcal{A} \subset X^{(r)}$ with some $\mathcal{A}' \subs
 Ideally, we'd compress $\mathcal{A} \to \mathcal{A}' \to \mathcal{A}'' \to \dotsm \to \mathcal{B}$ where either $\mathcal{B} = \mathcal{C}$ or $\mathcal{B}$ is so similar to $\mathcal{C}$ that we can see directly that $|\partial \mathcal{B}| \geq |\partial \mathcal{C}|$.
 \end{idea}
 
-\marginnote{\emph{Lecture 4}}[0cm]
-Use the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
-\begin{defi}[$ij$-compression]\index{compression@$ij$-compression}\hypertarget{def:comp}
+Use\marginnote{\emph{Lecture 4}}[0cm] the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
+\begin{defi}[$ij$-compression]\index{ij-compression@$ij$-compression}\index{compression!$ij$}\hypertarget{def:ijcomp}
   For $1 \leq i < j \leq n$, the \textbf{$ij$-compression} $C_{ij}$ defined by: for $A \subset X$,
   \begin{equation*}
     C_{ij}(A) =
@@ -590,32 +587,31 @@ Use the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
       A & \text{otherwise}
     \end{cases}
   \end{equation*}
-  and for $\mathcal{A} \subset \mathbb{P}(X)$,
+  and for $\mathcal{A} \subset \mathcal{P}(X)$,
   \begin{equation*}
-    C_{i,j}(\mathcal{A}) = \set{C_{ij}(A) | A \in \mathcal{A}} \cup \set{A \in \mathcal{A} | C_{ij}(A) \in \mathcal{A}}.
+    C_{i,j}(\mathcal{A}) = \{C_{ij}(A) \mid A \in \mathcal{A}\} \cup \{A \in \mathcal{A} \mid C_{ij}(A) \in \mathcal{A}\}.
   \end{equation*}
-
   Say $\mathcal{A}$ is \textbf{$ij$-compressed} if $C_{ij}(\mathcal{A}) = \mathcal{A}$.
 \end{defi}
 \begin{eg}
   If $\mathcal{A} = \{123,134,234,235,247\}$, then
   \begin{equation*}
-    \hyperlink{def:comp}{C_{12}}(\mathcal{A}) = \set{123,134,234,135,147}.
+    \hyperlink{def:ijcomp}{C_{12}}(\mathcal{A}) = \{123,134,234,135,147\}.
   \end{equation*}
   So $|C_{ij}(\mathcal{A})| = |\mathcal{A}|$.
 \end{eg}
-\begin{nprop}\label{prop:4}
-  Let $\mathcal{A} \subset X^{(r)}$, $1 \leq i < j \leq n$.
+\begin{nprop}\label{prop:1.4}
+  Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$, $1 \leq i < j \leq n$.
   Then
   \begin{equation*}
-    |\hyperlink{def:shadow}{\partial} C_{ij}(\mathcal{A})| \leq |\partial \mathcal{A}|.
+    |\hyperlink{def:shadow}{\partial} \hyperlink{def:ijcomp}{C_{ij}}(\mathcal{A})| \leq |\partial \mathcal{A}|.
   \end{equation*}
 \end{nprop}
 \begin{proof}
-  Write $\mathcal{A}'$ for $C_{ij}(\mathcal{A})$.
-  We'll show that if $B \in \partial \mathcal{A}' - \partial \mathcal{A}$ then $i \in B, j \notin B$ and $B \cup \{j\} - \{i\} \in \partial \mathcal{A} - \partial \mathcal{A}'$, then done, since this gives an injection.
+  Write $\mathcal{A}'$ for $\hyperlink{def:ijcomp}{C_{ij}}(\mathcal{A})$.
+  We'll show that if $B \in \hyperlink{def:shadow}{\partial} \mathcal{A}' - \partial \mathcal{A}$ then $i \in B, j \notin B$ and $B \cup \{j\} - \{i\} \in \partial \mathcal{A} - \partial \mathcal{A}'$, then done, since this gives an injection.
 
-  We have $B \cup \{x\} \in \mathcal{A}'$, for some $x \notin B$, and $B \cup \{x\} \notin \mathcal{A}$ (as $B \notin \partial \mathcal{A}$).
+  We have $B \cup \{x\} \in \mathcal{A}'$ for some $x \notin B$, and $B \cup \{x\} \notin \mathcal{A}$ (as $B \notin \partial \mathcal{A}$).
   Hence $i \in B \cup \{x\}$, $j \notin B \cup \{x\}$ and $(B \cup \{x\}) \cup \{j\} - \{i\} \in \mathcal{A}$.
   Note that $x \neq i$, else $B \cup \{j\} \in \mathcal{A}$, contradicting $B \notin \partial \mathcal{A}$.
   Certainly $B \cup \{j\} - \{i\} \in \partial \mathcal{A}$.
@@ -630,7 +626,7 @@ Use the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
     j \in (B \cup \{j\} - \{i\}) \cup \{y\} \\
     i \notin (B \cup \{j\} - \{i\}) \cup \{y\}
     \shortintertext{so}
-    (B \cup \{j\} - \{i\}) \cup y \in \mathcal{A}
+    (B \cup \{j\} - \{i\}) \cup \{y\} \in \mathcal{A}
   \end{align*}
   and $B \cup \{y\} \in \mathcal{A}$ (definition of $C_{ij}$), contradicting the assumption that $B \in \partial \mathcal{A}' - \partial \mathcal{A}$.
 \end{proof}
@@ -638,44 +634,44 @@ Use the idea that `\hyperlink{def:colex}{colex} prefers $1$ to $2$' to inspire:
 \begin{remark}
   We actually showed
   \begin{equation*}
-    \partial C_{ij}(\mathcal{A}) \subset C_{ij}(\partial A).
+    \hyperlink{def:shadow}{\partial} \hyperlink{def:ijcomp}{C_{ij}}(\mathcal{A}) \subset C_{ij}(\partial A). % why?
   \end{equation*}
 \end{remark}
-\begin{defi}[Left-compressed]\index{compressed}\hypertarget{def:lcomp}
-  Say $\mathcal{A} \subset X^{(r)}$ is \textbf{left-compressed} if $C_{ij}(\mathcal{A}) = \mathcal{A} \; \forall i < j$.
+\begin{defi}[Left-compressed]\index{left compressed}\index{compressed!left}\hypertarget{def:leftcomp}
+  Say $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ is \textbf{left-compressed} if $\hyperlink{def:ijcomp}{C_{ij}}(\mathcal{A}) = \mathcal{A} \; \forall i < j$.
 \end{defi}
-\begin{nprop}\label{prop:5}
-  Let $\mathcal{A} \subset X^{(r)}$.
-  Then $\exists$ \hyperlink{def:lcomp}{left-compressed} $\mathcal{B} \subset X^{(r)}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\hyperlink{def:shadow}{\partial \mathcal{B}}| \leq |\partial \mathcal{A}|$
+\begin{nprop}\label{prop:1.5}
+  Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$.
+  Then $\exists$ \hyperlink{def:leftcomp}{left-compressed} $\mathcal{B} \subset X^{(r)}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\hyperlink{def:shadow}{\partial \mathcal{B}}| \leq |\partial \mathcal{A}|$.
 \end{nprop}
 \begin{proof}
-  Among all $\mathcal{B} \subset X^{(r)}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\hyperlink{def:shadow}{\partial \mathcal{B}}| \leq |\partial \mathcal{A}|$,
+  Among all $\mathcal{B} \subset \hyperlink{def:superr}{X^{(r)}}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\hyperlink{def:shadow}{\partial \mathcal{B}}| \leq |\partial \mathcal{A}|$,
   choose one with $\sum_{A \in \mathcal{B}} \sum_{x \in A} x$ minimal.
-  Then $\mathcal{B}$ left-compressed, as if $\hyperlink{def:comp}{C_{ij}}(\mathcal{B}) \neq \mathcal{B}$ we contradict minimality.
+  Then $\mathcal{B}$ \hyperlink{def:leftcomp}{left-compressed}, as if $\hyperlink{def:ijcomp}{C_{ij}}(\mathcal{B}) \neq \mathcal{B}$ we contradict minimality.
 \end{proof}
 \begin{remark}
-  Or apply a $\hyperlink{def:comp}{C_{ij}}$, then another, and so on - this must terminate.
+  Or apply a $\hyperlink{def:ijcomp}{C_{ij}}$, then another, and so on - this must terminate.
   In fact, can apply each $C_{ij}$ at most once, if you chose a sensible order.
 \end{remark}
 
-Certainly initial segments of \hyperlink{def:colex}{colex} are \hyperlink{def:lcomp}{left-compressed}.
+Certainly initial segments of \hyperlink{def:colex}{colex} are \hyperlink{def:leftcomp}{left-compressed}.
 The converse is false - e.g.\ $\mathcal{A} = \{123,124,125,126,127\}$.
 
 `\hyperlink{def:colex}{Colex} prefers $23$ to $14$' inspires:
-\begin{defi}[$UV$-compression]\index{compression@$UV$-compression}\hypertarget{def:uvcomp}
-  For $U,V \subset X$ with $|U| = |V|$ and $U \cap V = \emptyset$, the \textbf{$UV$-compression} $C_{UV}$ is defined by
+\begin{defi}[$UV$-compression]\index{compression!$UV$}\index{uv-compression@$UV$-compression}\hypertarget{def:uvcomp}
+  For $U,V \subset X$ with $|U| = |V|$ and $U \cap V = \emptyset$, the \textbf{$UV$-compression} $C_{UV}$ is defined as follows:
   For $A \subset X$,
   \begin{equation*}
+    C_{UV}(X) =
     \begin{cases}
       A \cup U - V & \text{if } V \subset A, U \cap A = \emptyset \\
       A & \text{otherwise}
     \end{cases}
   \end{equation*}
-  and if $\mathcal{A} \subset X^{(r)}$,
+  and if $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$,
   \begin{equation*}
-    C_{UV}(\mathcal{A}) = \set{C_{UV}(A) | A \in \mathcal{A}} \cup \set{A \in \mathcal{A} | C_{UV}(A) \in \mathcal{A}}
+    C_{UV}(\mathcal{A}) = \{C_{UV}(A) \mid A \in \mathcal{A}\} \cup \{A \in \mathcal{A} \mid C_{UV}(A) \in \mathcal{A}\}.
   \end{equation*}
-
   Say $\mathcal{A}$ is \textbf{$UV$-compressed} if $C_{UV}(\mathcal{A}) = \mathcal{A}$.
 \end{defi}
 
@@ -684,53 +680,55 @@ The converse is false - e.g.\ $\mathcal{A} = \{123,124,125,126,127\}$.
   \begin{equation*}\hyperlink{def:uvcomp}{C_{23,14}}(\mathcal{A}) = \{123,134,235,145,236,157\}.\end{equation*}
 \end{eg}
 Note that $|C_{UV}(\mathcal{A})| = |\mathcal{A}|$.
-
 Sadly, \hyperlink{def:uvcomp}{$C_{UV}$} need not decrease \hyperlink{def:shadow}{$\partial$} - e.g.\ $\mathcal{A} = \{146,467\}$ has $|\partial\mathcal{A}| = 5$, but $C_{23,14}(\mathcal{A}) = \{236,467\}$ has $|\partial C_{23,14}(\mathcal{A})| = 6$.
 $C_{23,14}$ moved some things a long way.
 However:
-\begin{nprop}\label{prop:6}
+\begin{nprop}\label{prop:1.6}
   Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ and $U,V \subseteq X$ with $|U| = |V|$ and $U \cap V = \emptyset$.
   Suppose $\forall x \in U$ $\exists y \in V$ such that $\mathcal{A}$ is \hyperlink{def:uvcomp}{$(U-x, V-y)$-compressed}.
   Then $|\hyperlink{def:shadow}{\partial} \hyperlink{def:uvcomp}{C_{UV}(\mathcal{A})}| \leq |\partial \mathcal{A}|$.
 \end{nprop}
 \begin{proof}
   \marginnote{\emph{Lecture 5}}[0cm]
-  \color{gray}
   Write $\mathcal{A}'$ for $\hyperlink{def:uvcomp}{C_{UV}(\mathcal{A})}$.
   Given $B \in \hyperlink{def:shadow}{\partial} \A' - \partial \A$, we'll show that $U \subset B$, $V \cap B = \emptyset$, and $B \cup V - U \in \partial \A - \partial \A'$ (then done).
 
   We have $B \cup \{x\} \in \mathcal{A}'$ for some $x \in B$, with $B \cup \{x\} \notin \mathcal{A}$.
-  So $U \subset B \cup \{x\}$, $V \cap (B \cup \{x\}) = \emptyset$, and $(B \cup \{x\}) \cup V - U \in \mathcal{A}$.
-  Thus certainly $V \cap B = \emptyset$.\bigskip
+  \begin{itemize}
+    \item So $U \subset B \cup \{x\}$, $V \cap (B \cup \{x\}) = \emptyset$, and $(B \cup \{x\}) \cup V - U \in \mathcal{A}$.
+      Thus certainly $V \cap B = \emptyset$.
 
-  If $x \in U$: We have $\mathcal{A}$ is $(U-x,V-y)$-compressed for some $y \in V$.
-  So from $(B \cup \{x\}) \cup V - U \in \mathcal{A}$, we obtain $B \cup \{y\} \in \mathcal{A}$,
-  contradicting $B \notin \partial \mathcal{A}$.
-  Hence $x \notin U$, and so $U \subset B$. \bigskip
+    \item If $x \in U$: We have $\mathcal{A}$ is $(U-x,V-y)$-compressed for some $y \in V$.
+      So from $(B \cup \{x\}) \cup V - U \in \mathcal{A}$, we obtain $B \cup \{y\} \in \mathcal{A}$,
+      contradicting $B \notin \partial \mathcal{A}$.
+      Hence $x \notin U$, and so $U \subset B$.
+    \item We have $B \cup V - U \in \partial \mathcal{A}$ (as $(B \cup \{x\}) \cup V - U \in \mathcal{A}$).
+      Suppose $B \cup V - U \in \partial \mathcal{A}'$.
+      Then $(B \cup V - U) \cup \{w\} \in \mathcal{A}'$ for some $w$.
 
-  Also, $B \cup V - U \in \partial \mathcal{A}$ (as $(B \cup \{x\}) \cup V - U \in \mathcal{A}$).
-  Suppose $B \cup V - U \in \partial \mathcal{A}'$.
-  Then $(B \cup V - U) \cup \{w\} \in \mathcal{A}'$ for some $w$.
+      \begin{itemize}
+        \item If $w \notin U$: Then $V \subset (B \cup V - U) \cup \{w\}$ and $U \cap ((B \cup V - U) \cup \{w\}) = \emptyset$, so from $(B \cup V - U) \cup \{w\} \in \mathcal{A}'$ we can conclude that both $(B \cup V - U) \cup \{w\} \in \mathcal{A}$ and $B \cup \{w\} \in \mathcal{A}$, contradicting $B \notin \partial A.$
 
-  If $w \notin U$: Then $V \subset (B \cup V - U) \cup \{w\}$ and $U \cap ((B \cup V - U) \cup \{w\}) = \emptyset$, so from $(B \cup V - U) \cup \{w\} \in \mathcal{A}'$ we can conclude that both $(B \cup V - U) \cup \{w\} \in \mathcal{A}$ and $B \cup \{w\} \in \mathcal{A}$, contradicting $B \notin \partial A.$
-
-  If $w \in U$: We know $\mathcal{A}$ is $(U-w,V-z)$-compressed for some $z \in V$.
-  So from $(B \cup V - U) \cup \{w\} \in \mathcal{A}$ (as it is in $\mathcal{A}'$ and contains $V$, so could not have moved).
-  We deduce $B \cup \{z\} \in \mathcal{A}$, contradicting $B \notin \partial \mathcal{A}$.
+        \item If $w \in U$: We know $\mathcal{A}$ is $(U-w,V-z)$-compressed for some $z \in V$.
+          So from $(B \cup V - U) \cup \{w\} \in \mathcal{A}$ (as it is in $\mathcal{A}'$ and contains $V$, so could not have moved).
+      \end{itemize}
+      We deduce $B \cup \{z\} \in \mathcal{A}$, contradicting $B \notin \partial \mathcal{A}$. \qedhere
+  \end{itemize}
 \end{proof}
 \begin{remark}
-  Actually showed $\partial C_{UV}(\mathcal{A}) \subseteq C_{UV}(\partial\mathcal{A})$.
+  Actually showed $\hyperlink{def:shadow}{\partial} \hyperlink{def:uvcomp}{C_{UV}}(\mathcal{A}) \subseteq C_{UV}(\partial\mathcal{A})$.
 \end{remark}
 
 \begin{nthm}[Kruskal-Katona theorem]\label{thm:kk7}\index{Kruskal-Katona theorem}
   Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ (for $1 \leq r \leq n$) and let $\mathcal{C}$ be the initial segment of \hyperlink{def:colex}{colex} on $X^{(r)}$ with $|\mathcal{C}| = |\mathcal{A}|$.
   Then $|\hyperlink{def:shadow}{\partial \mathcal{A}}| \geq |\partial \mathcal{C}|$.
-  In particular, if $|\mathcal{A}| = \binom{k}{r}$ then $|\partial \mathcal{A}| \geq \binom{k}{r-1}$.
+  In particular,
+  \begin{equation*}|\mathcal{A}| = \binom{k}{r} \implies |\partial \mathcal{A}| \geq \binom{k}{r-1}.\end{equation*}
 \end{nthm}
 \begin{proof}
   Let
   \begin{equation*}
-    \Gamma = \set{(U,V) | U,V \subset X, |U| = |V| > 0, U \cap V = \emptyset, \max U < \max V}.
+    \Gamma = \{(U,V) \mid U,V \subset X, |U| = |V| > 0, U \cap V = \emptyset, \max U < \max V\}.
   \end{equation*}
   Define a sequence of \hyperlink{def:ss}{set systems} $\mathcal{A}_0, \mathcal{A}_1, \dotsc$ in \hyperlink{def:superr}{$X^{(r)}$} as follows.
   Put $\mathcal{A}_0 = \mathcal{A}$.
@@ -740,28 +738,28 @@ However:
 
   Set $\mathcal{A}_{k+1} = C_{UV}(\mathcal{A}_k)$.
   Note that $\forall x \in U$ we have $(U-\{x\}, V - \{y\}) \in \Gamma \cup \{(\emptyset,\emptyset)\}$ for $y = \min V$.
-  So by \cref{prop:6}, $|\partial \mathcal{A}_{n+1}| \leq |\partial \mathcal{A}_n|$.
+  So by \cref{prop:1.6}, $|\hyperlink{def:shadow}{\partial} \mathcal{A}_{n+1}| \leq |\partial \mathcal{A}_n|$.
   Continue.
 
-  The sequence must terminate, e.g.\ as $\sum_{A \in \mathcal{A}_n} \sum_{i \in A} 2^i$ is decreasing in $\mathcal{A}$.
+  The sequence must terminate, e.g.\ as $\sum_{A \in \mathcal{A}_n} \sum_{i \in A} 2^i$ is decreasing in $n$.
   The final system $\mathcal{B} = \mathcal{A}_k$ satisfies $|\mathcal{B}| = |\mathcal{A}|$ and $|\partial \mathcal{B}| \leq |\partial \mathcal{A}|$, and is $(U,V)$-compressed $\forall (U,V) \in \Gamma$.
 
   \textbf{Claim:} $\mathcal{B} = \mathcal{C}$.
 
-  \textbf{Proof of claim}: Suppose $\mathcal{B}$ is not an initial segment of colex.
+  \textbf{Proof of claim}: Suppose $\mathcal{B}$ is not an initial segment of \hyperlink{def:colex}{colex}.
   Then $\exists A < B$ in colex with $A \notin \mathcal{B}$ and $B \in \mathcal{B}$, but then $U = A-B$ and $V = B-A$ have $(U,V) \in \Gamma$ and $C_{UV}(B) = A$, a contradiction.
 \end{proof}
 \begin{remark}\leavevmode
   \begin{enumerate}
-    \item Equivalently: If $\mathcal{A} \subset X^{(r)}$ with
+    \item Equivalently: If $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ with
       \begin{equation*}
         |\mathcal{A}| = \binom{k_r}{r} + \binom{k_{r-1}}{r-1} + \dotsb + \binom{k_s}{s},
       \end{equation*}
       where $k_r > k_{r-1} > \dotsb > k_s$ and $s > 0$, then
       \begin{equation*}
-        |\partial \mathcal{A}| = \binom{k_r}{r-1} + \binom{k_{r-1}}{r-2} + \dotsb + \binom{k_s}{s-1}.
+        |\hyperlink{def:shadow}{\partial} \mathcal{A}| = \binom{k_r}{r-1} + \binom{k_{r-1}}{r-2} + \dotsb + \binom{k_s}{s-1}.
       \end{equation*}
-    \item In the proof of the \nameref{thm:kk7}, we used only \cref{prop:6}, not \cref{prop:4} or \cref{prop:5}.
+    \item In the proof of the \nameref{thm:kk7}, we used only \cref{prop:1.6}, not \cref{prop:1.4} or \cref{prop:1.5}.
     \item Uniqueness? Can check that if $|\partial \mathcal{A}| = |\partial \mathcal{C}|$ and $|\mathcal{A}| = \binom{k}{r}$,
       then $\mathcal{A} = Y^{(r)}$, for some $k$-set $Y$ (i.e.\ uniqueness).
 
@@ -770,15 +768,15 @@ However:
   \end{enumerate}
 \end{remark}
 \begin{defi}[Upper shadow]\hypertarget{def:upshad}
-  For $A \subset X^{(r)}$ ($0 \leq r \leq n-1$), the \named{upper shadow} of $\mathcal{A}$ is
+  For $A \subset \hyperlink{def:superr}{X^{(r)}}$ ($0 \leq r \leq n-1$), the \index{shadow!upper}\named{upper shadow} of $\mathcal{A}$ is
   \begin{equation*}
-    \partial^+ \mathcal{A} = \set{A \cup \{x\} | A \in \mathcal{A}, x \notin A}.
+    \partial^+ \mathcal{A} = \{A \cup \{x\} \mid A \in \mathcal{A}, x \notin A\}.
   \end{equation*}
 \end{defi}
 Note also $A < B$ in \hyperlink{def:colex}{colex} $\iff$ $A^c < B^c$ in \hyperlink{def:lex}{lex} with ground-set order reversed.
 
-\begin{ncor}\label{cor:8}
-  Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ ($0 \leq r \leq n-1$) and let $\mathcal{C}$ be the initial segment of \hyperlink{def:lex}{lex} with $|\mathcal{C}| = |\mathcal{A}$.
+\begin{ncor}\label{cor:1.8}
+  Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ ($0 \leq r \leq n-1$) and let $\mathcal{C}$ be the initial segment of \hyperlink{def:lex}{lex} with $|\mathcal{C}| = |\mathcal{A}|$.
   Then $|\hyperlink{def:upshad}{\partial^+ \mathcal{A}}| \geq |\partial^+ \mathcal{C}|$.
 \end{ncor}
 \begin{proof}
@@ -786,36 +784,36 @@ Note also $A < B$ in \hyperlink{def:colex}{colex} $\iff$ $A^c < B^c$ in \hyperli
 \end{proof}
 Also, the \hyperlink{def:shadow}{shadow} of an initial segment of \hyperlink{def:colex}{colex} (in \hyperlink{def:superr}{$X^{(r)}$}) is again an initial segment of colex in $X^{(r-1)}$.
 Indeed, if
-\begin{equation*}\mathcal{C} = \set{A \in X^{(r)} | A \leq a_1 a_2 \dots a_r}\end{equation*}
+\begin{equation*}\mathcal{C} = \{A \in X^{(r)} \mid A \leq a_1 a_2 \dots a_r\}\end{equation*}
 then
-\begin{equation*}\hyperlink{def:shadow}{\partial \mathcal{C}} = \set{B \in X^{(r-1)}| B \leq a_2 \dots a_r}.\end{equation*}
+\begin{equation*}\hyperlink{def:shadow}{\partial \mathcal{C}} = \{B \in X^{(r-1)} \mid B \leq a_2 \dots a_r\}.\end{equation*}
 
-\begin{ncor}\label{cor:9}
+\begin{ncor}\label{cor:1.9}
   Let $\mathcal{A} \subset \hyperlink{def:superr}{X^{(r)}}$ and let $\mathcal{C} \subset X^{(r)}$ be the initial segment of \hyperlink{def:colex}{colex} with $|\mathcal{C}| = |\mathcal{A}|$.
   Then $|\hyperlink{def:shadow}{\partial}^t \mathcal{A}| \geq |\partial^t \mathcal{C}|$ $\forall 1 \leq t \leq r$.
   In particular, if $|\mathcal{A}| = \binom{k}{r}$ then $|\partial^t \mathcal{A}| \geq \binom{k}{r-t}$.
 \end{ncor}
 \begin{proof}
-  If $|\partial^t \mathcal{A}| \geq |\partial^t \mathcal{C}|$ then $|\partial^{t+1} \mathcal{A}| \geq |\partial^{t+1} \mathcal{C}|$ by \nameref{thm:kk7}.
+  If $|\hyperlink{def:shadow}{\partial}^t \mathcal{A}| \geq |\partial^t \mathcal{C}|$ then $|\partial^{t+1} \mathcal{A}| \geq |\partial^{t+1} \mathcal{C}|$ by \nameref{thm:kk7}.
 \end{proof}
 
 \subsection{Intersecting families}
 \begin{defi}[Intersecting]\hypertarget{def:inter}
-  A \marginnote{\emph{Lecture 6}}[0cm] family $\mathcal{A} \subset \mathbb{P}(X)$ is \named{intersecting} if $A \cap B \neq \emptyset \;\; \forall A, B \in \mathcal{A}$.
+  A \marginnote{\emph{Lecture 6}}[0cm] \hyperlink{def:ss}{family} $\mathcal{A} \subset \mathcal{P}(X)$ is \named{intersecting} if $A \cap B \neq \emptyset \;\; \forall A, B \in \mathcal{A}$.
 \end{defi}
 How large can $|\mathcal{A}|$ be?
-Can achieve $|\mathcal{A}| = 2^{n-1}$, by taking, e.g.\ $\mathcal{A} = \set{A \subset X | 1 \in A}$.
-\begin{nprop}\label{prop:10}
-  Let $\mathcal{A} \subset \mathbb{P}(X)$ be \hyperlink{def:inter}{intersecting}.
+Can achieve $|\mathcal{A}| = 2^{n-1}$, by taking, e.g.\ $\mathcal{A} = \{A \subset X \mid 1 \in A\}$.
+\begin{nprop}\label{prop:1.10}
+  Let $\A \subset \mathcal{P}(X)$ be \hyperlink{def:inter}{intersecting}.
   Then $|\A| \leq 2^{n-1}$.
 \end{nprop}
 \begin{proof}
-  For each $A \subset X$, can have $\leq 1$ of $A, A^c$ in $\mathcal{A}$.
+  For each $A \subset X$, can have at most $1$ of $A, A^c$ in $\mathcal{A}$.
 \end{proof}
-Note: there are many examples with $|\A| = 2^{n-1}$, e.g.\ for $n$ odd we can take \begin{equation*}\Set{A \subset X |\ |A| > \frac{n}{2}}.\end{equation*}
+Note: there are many examples with $|\A| = 2^{n-1}$, e.g.\ for $n$ odd we can take \begin{equation*}\left\{A \subset X\ \middle|\ \abs{A} > \tfrac{n}{2}\right\}.\end{equation*}
 \begin{center}
   \begin{tikzpicture}
-    \draw [red, dashed] (0,1.65) circle [x radius=2.4cm, y radius=1.7cm];
+    \draw [rounded corners, red, dashed] (-2.9,0) rectangle (2.9,3.4);
     \begin{scope}
       \draw (0,3.2) circle [x radius=1mm, y radius=0.8mm];
       \node [right] at (0.25, 3.2) {$X^{(n)}$};
@@ -847,18 +845,18 @@ Note: there are many examples with $|\A| = 2^{n-1}$, e.g.\ for $n$ odd we can ta
     \end{scope}
   \end{tikzpicture}
 \end{center}
-What if we insist $A \subset X^{(r)}$?
+What if we insist $\A \subset \hyperlink{def:superr}{X^{(r)}}$?
 
 If $r > \frac{n}{2}$, this is a silly question, as we can take $\A = X^{(r)}$.
 If $r = \frac{n}{2}$, the maximum is $\frac{1}{2} \binom nr$ - just choose one of $A,A^c$ for each $A \in X^{(r)}$.
 So assume $r < \frac{n}{2}$.
 
 Taking
-\begin{equation*}\mathcal{A} = \set{A \in X^{(r)} | 1 \in A}\end{equation*}
+\begin{equation*}\mathcal{A} = \{A \in X^{(r)} \mid 1 \in A\}\end{equation*}
 gives $|\A| = \binom{n-1}{r-1} = \frac{r}{n} \binom nr$.
 Could also try, e.g.\
-\begin{equation*}\mathcal{B} = \set{A \in X^{(r)} | |A \cap \{1,2,3\}| \geq 2}.\end{equation*}
-Try both on $[8]^{(3)}$:
+\begin{equation*}\mathcal{B} = \left\{A \in X^{(r)}\, \middle|\,\abs{A \cap \{1,2,3\}} \geq 2\right\}.\end{equation*}
+Try both on $\hyperlink{def:ints}{[8]}^{\hyperlink{def:superr}{(3)}}$:
 \begin{gather*}
   |\A| = \binom{7}{2} = 21 \\
   |\mathcal{B}| = 1 + \binom{3}{2} \binom{5}{1} = 16 < 21.
@@ -867,48 +865,65 @@ where the first term counts the number of $|A \cap \{1,2,3\}| = 3$, and the seco
 
 In fact, the size from $\A$ is optimal:
 \begin{nthm}[Erd\H{o}s-Ko-Rado]\label{thm:ekr11}\index{Erd\H{o}s-Ko-Rado theorem}
-  Let $r < \frac{n}{2}$, and let $\A \subset X^{(r)}$ be \hyperlink{def:inter}{intersecting}.
+  Let $r < \frac{n}{2}$, and let $\A \subset \hyperlink{def:superr}{X^{(r)}}$ be \hyperlink{def:inter}{intersecting}.
   Then $|\A| \leq \binom{n-1}{r-1}$.
 \end{nthm}
 \begin{proof}[Proof 1: `Bubble down with \nameref{thm:kk7}']
-  For $A,B \in \A$, have $A \cap B \neq 0$, i.e.\ $A \nsubseteq B^c$.
-  Writing $\bar{\A}$ for $\set{A^c | A \in \A} \subset X^{(n-r)}$, this says that $\partial^{n-2r} \bar{\A}$ is disjoint from $\A$.
-
+  For $A,B \in \A$, have $A \cap B \neq \emptyset$, i.e.\ $A \nsubseteq B^c$.
+  Writing
+  \begin{equation*}\overline{\A} \coloneqq \{A^c \mid A \in \A\} \subset \hyperlink{def:superr}{X^{(n-r)}},\end{equation*}
+  this says that $\hyperlink{def:shadow}{\partial^{n-2r}} \overline{\A}$ is disjoint from $\A$.
+  \begin{center}
+    \begin{tikzpicture}[scale=1.4]
+      \draw [bgreen] (0.1,1) -- (0.2,-1);
+      \draw [bgreen] (1.1,1) -- (1,-1);
+      \draw (0,1) ellipse (1.4cm and 0.7cm);
+      \node [right] at (1.4,1) {$X^{(n-r)}$};
+      \draw [rough path, bgreen, fill=bgreen!20] (0.6,1) ellipse (0.5cm and 0.35cm);
+      \node [bgreen] at (-0.1,1) {$\overline{\A}$};
+      \draw (0,-1) ellipse (1.4cm and 0.7cm);
+      \node [right] at (1.4,-1) {$X^{(r)}$};
+      \draw [rough path, bred, fill=bred!20] (-0.5,-1) ellipse (0.5cm and 0.35cm);
+      \node [bred] at (-0.2,-0.5) {$\A$};
+      \draw [rough path, bgreen, fill=bgreen!20] (0.6,-1) ellipse (0.4cm and 0.3cm);
+      \node [bgreen] at (0.1,-1.44) {$\partial^{n-2r}\overline{\A}$};
+    \end{tikzpicture}
+  \end{center}
   Suppose $|\A| > \binom{n-1}{r-1}$.
-  Then $|\A^c| > \binom{n-1}{r-1} = \binom{n-1}{n-r}$, so by \nameref{thm:kk7} (as given in \cref{cor:9}), have $|\partial^{n-2r} \bar{\A}| \geq \binom{n-1}{r}$.
+  Then $|\overline{\A}| > \binom{n-1}{r-1} = \binom{n-1}{n-r}$, so by \nameref{thm:kk7} (as given in \cref{cor:1.9}), have $|\partial^{n-2r} \overline{\A}| \geq \binom{n-1}{r}$.
   But
   \begin{equation*}
     \binom{n-1}{r-1} + \binom{n-1}{r} = \binom{n}{r}
   \end{equation*}
   i.e.\
   \begin{equation*}
-    |\partial^{n-2r} \bar{\A}| + |\A| > |X^{(r)}|.
+    |\partial^{n-2r} \overline{\A}| + |\A| > |X^{(r)}|.
   \end{equation*}
   a contradiction.
 \end{proof}
 \begin{remark}
-  The numbers \emph{had} to work, as we get equality for $\A = \set{A \in X^{(r)} | 1 \in A}$.
+  The numbers \emph{had} to work, as we get equality for $\A = \{A \in \hyperlink{def:superr}{X^{(r)}} \mid 1 \in A\}$.
 \end{remark}
 \begin{proof}[Proof 2]
   Consider a cyclic ordering of $[n]$, i.e.\ a bijection $C: [n] \to \mathbb{Z}_n$, e.g.
   \begin{center}
-    \begin{tikzpicture}[scale=1.5]
+    \begin{tikzpicture}[scale=1.3]
       \draw (0,0) circle [radius = 1cm];
-      \begin{scope}[every node/.style={fill=white, circle, inner sep=0.3mm}]
+      \begin{scope}[every node/.style={fill=white, circle, inner sep=0.5mm}]
       \node at (90:1) {1};
       \node at (45:1) {4};
-      \node at (0:1) {3};
+      \node at (0:1) {5};
       \node at (-45:1) {2};
       \node at (-90:1) {8};
       \node at (-135:1) {6};
-      \node at (180:1) {5};
+      \node at (180:1) {3};
       \node at (135:1) {7};
       \end{scope}
     \end{tikzpicture}
   \end{center}
   How many $A \in \A$ are intervals (sets of $r$ consecutive elements) in our ordering?
   Answer: $\leq r$. Indeed, suppose $c_1 \dots c_r \in \mathcal{A}$.
-  Then, for each $1 \leq i \leq r-1$, at most one of the two intervals $\dots c_{i-1} c_i$ and $c_{i+1} c_{i+2} \dots$ can belong to $\A$.
+  Then, for each $1 \leq i \leq r-1$, at most one of the two intervals (of length $r$) $\dots c_{i-1} c_i$ and $c_{i+1} c_{i+2} \dots$ can belong to $\A$.
 
   Also, a given $r$-set $A$ is an interval in exactly $n r! (n-r)!$ of the $n!$ cyclic orderings.
   Hence $|\A| n r! (n-r)! \leq n! r$, i.e.
@@ -918,11 +933,12 @@ In fact, the size from $\A$ is optimal:
 \end{proof}
 \begin{remark}\leavevmode
   \begin{enumerate}
-    \item Equivalently, we are double-counting the edges in the bipartite graph, vertex classes $\A$ and all cyclic orderings, in which $A$ is joined to $C$ if $A$ is an interval in $C$.
+    \item Equivalently, we are double-counting the edges in the bipartite graph, with vertex classes $\A$ and all cyclic orderings, in which $A$ is joined to $C$ if $A$ is an interval in $C$.
     \item This method is called \named{averaging}, or Katona's method.
   \end{enumerate}
 \end{remark}
-Equality in \nameref{thm:ekr11}? Can check equality holds $\iff \A = \set{A \in X^{(r)} | i \in A}$ for some $i$.
+Equality in \nameref{thm:ekr11}?
+Can check equality holds $\iff \A = \set{A \in \hyperlink{def:superr}{X^{(r)}} | i \in A}$ for some $i$.
 This follows (proof 1) from equality case of \nameref{thm:kk7}, or (proof 2) by considering changing the cyclic ordering bit by bit.
 \clearpage
 \section{Isoperimetric inequalities}
@@ -962,13 +978,13 @@ This follows (proof 1) from equality case of \nameref{thm:kk7}, or (proof 2) by 
 \begin{defi}[Boundary]\hypertarget{def:boundary}
   For a set $A$ of vertices in a graph $G$, the \named{boundary} is
   \begin{equation*}
-    b(A) = \set{x \in V(G) | x \notin A, xy \in E \text{ for some } y \in A}.
+    b(A) = \{x \in V(G) \mid x \notin A,\ xy \in E \text{ for some } y \in A\}.
   \end{equation*}
 \end{defi}
 For example, in the picture, if $A = \{1,2,3\}$, then $b(A) = \{4,5\}$.
 \begin{center}
-  \begin{tikzpicture}
-    \begin{scope}[every node/.style={draw=black, inner sep=1.5pt, circle}]
+  \begin{tikzpicture}[scale=0.8]
+    \begin{scope}[every node/.style={draw=black, inner sep=2pt, circle}]
       \node[fill=bred, label=above:{$1$}] (1) at (0,1) {};
       \node[fill=bred, label=above:{$2$}] (2) at (1,1) {};
       \node[fill=bred, label=below:{$3$}] (3) at (0,0) {};
@@ -978,33 +994,33 @@ For example, in the picture, if $A = \{1,2,3\}$, then $b(A) = \{4,5\}$.
       \node[label=below:{$7$}] (7) at (2,0) {};
       \node[label=below:{$8$}] (8) at (3,0) {};
       \draw (2) -- (4) -- (3) -- (1) -- (2) -- (5) -- (6) -- (8) -- (7) -- (5);
-  \end{scope}
+    \end{scope}
   \end{tikzpicture}
 \end{center}
 
-\begin{defi}[Isoperimetric inequality]
-An \named{isoperimetric inequality} on $G$ is an inequality of the form
-\begin{equation*}
-  |\hyperlink{def:boundary}{b(A)}| \geq f(|A|) \quad \forall \subseteq V(G).
-\end{equation*}
+\begin{defi}[Isoperimetric inequality]\hypertarget{def:isop}
+  An \named{isoperimetric inequality} on $G$ is an inequality of the form
+  \begin{equation*}
+    |\hyperlink{def:boundary}{b(A)}| \geq f(|A|) \quad \forall A \subseteq V(G).
+  \end{equation*}
 \end{defi}
 
 \begin{defi}[Neighbourhood]\hypertarget{def:neighbourhood}
-Equivalently, minimise the \named{neighbourhood} of $A$:
-\begin{equation*}
-  N(A) = A \cap \hyperlink{def:boundary}{b(A)} = \set{x \in G | d(x,A) \leq 1}
-\end{equation*}
-where $d$ denotes the usual graph distance.
+  Equivalently, minimise the \named{neighbourhood} of $A$:
+  \begin{equation*}
+    N(A) = A \cup \hyperlink{def:boundary}{b(A)} = \set{x \in G | d(x,A) \leq 1}
+  \end{equation*}
+  where $d$ denotes the usual graph distance.
 \end{defi}
 
-A natural guess to minimise \hyperlink{def:neighbourhood}{neighbourhood} is often $B(x,r) = \set{y \in G | d(x,y) \leq r}$.
-What happens in $Q_n$?
+A natural guess to minimise \hyperlink{def:neighbourhood}{neighbourhood} is often $B(x,r) = \{y \in G \mid d(x,y) \leq r\}$.
+What happens in \hyperlink{def:qn}{$Q_n$}?
 For example, try $|A|=4$ in $Q_3$:
 \begin{center}
-  \begin{tikzpicture}[scale=2]
-    \node at (0.65,-0.3) {$|b(A)| = 3$};
+  \begin{tikzpicture}[scale=1.7]
+    \node at (0.65,-0.3) {$|\hyperlink{def:boundary}{b(A)}| = 3$};
     \node at (3.65,-0.3) {$|b(A)| = 4$};
-    \begin{scope}[every node/.style={draw=black, inner sep=1.5pt, circle}]
+    \begin{scope}[every node/.style={draw=black, inner sep=2pt, circle}]
       \node [fill=bred  ] (A) at (0,0) {};
       \node [fill=bred  ] (B) at (1,0) {};
       \node [fill=bgreen] (C) at (1,1) {};
@@ -1039,37 +1055,37 @@ For example, try $|A|=4$ in $Q_3$:
   \end{scope}
   \end{tikzpicture}
 \end{center}
-
 Guess: `Balls are best', i.e.\
 \begin{equation*}
-  \text{if }|A| = |X^{(\leq r)}|,\text{ then }|\hyperlink{def:neighbourhood}{N(A)}| \geq |X^{(\leq r + 1)}|
+  |A| = |X^{(\leq r)}|\implies|\hyperlink{def:neighbourhood}{N(A)}| \geq |X^{(\leq r + 1)}|
 \end{equation*}
 \hypertarget{def:superrange}(where $X^{(\leq r)}$ is shorthand for $\hyperlink{def:superr}{X^{(0)}} \cup \dotsb \cup X^{(r)}$).
 
 But what if $|A|$ is strictly between $\sum_{i=0}^r \binom{n}{i}$ and $\sum_{i=0}^{r+1} \binom{n}{i}$?
-Guess: Take $A = X^{(\leq r)} \cup B$, for some $B \subset \hyperlink{def:superr}{X^{(r+1)}}$ (called a \hypertarget{def:hamming}`Hamming Ball'\index{Hamming ball}).
+Guess: Take
+\begin{equation*}A = X^{(\leq r)} \cup B,\end{equation*} for some $B \subset \hyperlink{def:superr}{X^{(r+1)}}$ (called a \hypertarget{def:hamming}`Hamming Ball'\index{Hamming ball}).
 If we knew this, then
 \begin{equation*}\hyperlink{def:neighbourhood}{N(A)} = X^{(\leq r+1)} \cup \hyperlink{def:upshad}{\partial^+} B,\end{equation*}
 so by \nameref{thm:kk7} we'd take $B$ to be an initial segment of \hyperlink{def:lex}{lex}.
 
 \begin{defi}[Simplicial order]\hypertarget{def:simplicial}
-  Define the \named{simplicial order} on $Q_n$ by $x<y$ if either $|x| < |y|$ or $|x|=|y|$ and $x<y$ in \hyperlink{def:lex}{lex}.
+  Define the \named{simplicial order}\index{order!simplicial} on $Q_n$ by $x<y$ if either $|x| < |y|$ or $|x|=|y|$ and $x<y$ in \hyperlink{def:lex}{lex}.
 \end{defi}
 The slogan for the \hyperlink{def:simplicial}{simplicial order} is `Go up in levels, and use \hyperlink{def:lex}{lex} inside a level.'
 \begin{aim}
-Initial segments of \hyperlink{def:simplicial}{simplicial} order are best for minimising $\hyperlink{def:neighbourhood}{N(A)}$.
+  Initial segments of \hyperlink{def:simplicial}{simplicial} order are best for minimising $\hyperlink{def:neighbourhood}{N(A)}$.
 \end{aim}
 
 \begin{defi}[Sections]\hypertarget{def:section}
-  Given $A \subset \hyperlink{def:qn}{Q_n}$ and $1 \leq i \leq n$, the \index{section}\textbf{$i$-sections} are the \hyperlink{def:ss}{set systems} $A_+^{(i)}, A_-^{(i)} \subset \mathcal{P}(X-i)$ given by
+  Given $A \subset \hyperlink{def:qn}{Q_n}$ and $1 \leq i \leq n$, the \index{section}\textbf{$i$-sections} are the \hyperlink{def:ss}{set systems} $A_+^{(i)}, A_-^{(i)} \subset \mathcal{P}(X-\{i\})$ given by
   \begin{gather*}
-    A_-^{(i)} = \set{ x \in A | i \notin x} \subset \mathcal{P}(X-\{i\}) \\
-    A_+^{(i)} = \set{ x - \{i\} | x \in A, i \in x} \subset \mathcal{P}(X-\{i\}).
+    A_-^{(i)} = \{ x \in A \mid i \notin x\} \subset \mathcal{P}(X-\{i\}) \\
+    A_+^{(i)} = \{ x - \{i\} \mid x \in A,\,i \in x\} \subset \mathcal{P}(X-\{i\}).
   \end{gather*}
   Note $\mathcal{P}(X-\{i\})$ is \hyperlink{def:iso}{isomorphic} to $\hyperlink{def:qn}{Q_{n-1}}$.
   \begin{center}
     \begin{tikzpicture}[scale=2]
-      \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}]
+      \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}]
         \begin{scope}
           \node (A) at (0,0) {};
           \node (B) at (1,0) {};
@@ -1107,15 +1123,16 @@ Initial segments of \hyperlink{def:simplicial}{simplicial} order are best for mi
   \end{center}
 \end{defi}
 \begin{defi}[Compression]\hypertarget{def:icomp}
-  Define the \textbf{$i$-compression} $C_i(A)$ of $A$ by giving its \hyperlink{def:section}{$i$-sections}.
+  Define the \textbf{$i$-compression}\index{i-compression@$i$-compression}\index{compression!$i$} $C_i(A)$ of $A$ by giving its \hyperlink{def:section}{$i$-sections}.
   \begin{itemize}
-    \item $C_i(A)_+^{i}$ is the initial segment of $Q_{n-1}$ of size $|A^{(i)}_+|$
-    \item $C_i(A)_-^{i}$ is the initial segment of $Q_{n-1}$ of size $|A^{(i)}_-|$
+    \item $\hyperlink{def:section}{C_i(A)_+^{i}}$ is the initial segment (in \hyperlink{def:simplicial}{simplicial}) of $Q_{n-1}$ of size $|A^{(i)}_+|$
+    \item $C_i(A)_-^{i}$ is the initial segment (in simplicial) of $Q_{n-1}$ of size $|A^{(i)}_-|$
   \end{itemize}
+  Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
 \end{defi}
 \begin{center}
   \begin{tikzpicture}[scale=2]
-    \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}]
+    \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}]
       \begin{scope}
         \node (A) at (0,0) {};
         \node (B) at (1,0) {};
@@ -1174,8 +1191,8 @@ Initial segments of \hyperlink{def:simplicial}{simplicial} order are best for mi
       \end{scope}
     \end{scope}
     \draw [->] (0, -0.4) -- (0, -0.1) node [right, midway] {$i$};
-    \node at (0.65,-2) {$A$};
-    \node at (3.35,-2) {$C_i(A)$};
+    \node at (0.65,-2.1) {$A$};
+    \node at (3.35,-2.1) {$C_i(A)$};
     \draw [->] (1.5, -0.25) -- (2.5, -0.25) node [above, midway] {$C_i$};
     \draw [decorate,decoration={brace,amplitude=10pt}, xshift=-0.4cm] (0,-1.8) -- (0,1.3) node [midway,xshift=-0.7cm] {$Q_n$};
   \end{tikzpicture}
@@ -1183,32 +1200,30 @@ Initial segments of \hyperlink{def:simplicial}{simplicial} order are best for mi
 Certainly $|\hyperlink{def:icomp}{C_i(A)}| = |A|$.
 Also, $C_i(A)$ `looks more like' an initial segment of \hyperlink{def:simplicial}{simplicial} than $A$ did.
 
-Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
 
-\begin{nthm}[Harper's theorem]\label{thm:harper1}
-  Let $A \subset \hyperlink{def:qn}{Q_n}$, and let $C$ be the initial segment of \hyperlink{def:simplicial}{simplicial} order with $|C| = |A|$.
+\begin{nthm}[Harper's theorem]\label{thm:harper1}\index{Harper's theorem}
+  Let $A \subset \hyperlink{def:qn}{Q_n}$, and let $C$ be the initial segment of the \hyperlink{def:simplicial}{simplicial} order with $|C| = |A|$.
   Then $|\hyperlink{def:neighbourhood}{N(A)}| \geq |N(C)|$.
-  In particular, if
-  \begin{equation*}|A| \geq \sum_{i=0}^r \binom{n}{i}\end{equation*}
-  then
-  \begin{equation*}|N(A)| \geq \sum_{i=0}^{r+1} \binom{n}{i}.\end{equation*}
+  In particular,
+  \begin{equation*}|A| \geq \sum_{i=0}^r \binom{n}{i} \implies
+  |N(A)| \geq \sum_{i=0}^{r+1} \binom{n}{i}.\end{equation*}
 \end{nthm}
 \begin{remark}\leavevmode
   \begin{enumerate}[label=\arabic*.]
     \item If we know $A$ is a \hyperlink{def:hamming}{Hamming ball}, then done by \nameref{thm:kk7}.
-    \item \nameref{thm:harper1} $\Rightarrow$ \nameref{thm:kk7}: Given $B \subset X^{(r)}$, apply \nameref{thm:harper1} to $A = B \cup X^{(\leq r-1)}$
+    \item \nameref{thm:harper1} $\Rightarrow$ \nameref{thm:kk7}: Given $B \subset \hyperlink{def:superr}{X^{(r)}}$, apply \nameref{thm:harper1} to $A = B \cup \hyperlink{def:superrange}{X^{(\leq r-1)}}$
   \end{enumerate}
 \end{remark}
 \begin{proof}
   Induction on $n$. $n=1$ works.
-  Given $A \subset Q_n$ for $n > 1$, fix $1 \leq i \leq n$.
+  Given $A \subset \hyperlink{def:qn}{Q_n}$ for $n > 1$, fix $1 \leq i \leq n$.
 
   \textbf{Claim:} $|N(\hyperlink{def:icomp}{C_i(A)})| \leq |\hyperlink{def:neighbourhood}{N(A)}|$.
 
   \textbf{Proof of claim:} Write $B = C_i(A)$.
   We have
   \begin{align*}
-    |N(A)| &= |A_+ \cup N(A_-)| + |A_- \cup N(A_+)| \\
+    |N(A)| &= |\hyperlink{def:section}{A_+} \cup N(A_-)| + |A_- \cup N(A_+)| \\
     |N(B)| &= |B_+ \cup N(B_-)| + |B_- \cup N(B_+)|
   \end{align*}
   where the first term is `downstairs', and the second term is `upstairs'.
@@ -1228,29 +1243,28 @@ Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
   \begin{equation*}
     \sum_{x \in B} f(x)
   \end{equation*}
-  minimal, where $f(x)=$ the position of $x$ in the \hyperlink{def:simplicial}{simplicial order} on $Q_n$.
-  Then $B$ is $i$-compressed $\forall i$.
+  minimal, where $f(x)=$ the position of $x$ in the simplicial order on $Q_n$.
+  Then $B$ is \hyperlink{def:icomp}{$i$-compressed} $\forall i$.
   Must such a $B$ be an initial segment of simplicial?
   Unfortunately, no - e.g.\ $B = \{\emptyset,1,2,12\} \subset Q_3$.
-
   However,
   \begin{nlemma}\label{lem:2.2}
-    Let $B \subset Q_n$ be $i$-compressed $\forall i$ but not an initial segment of simplicial order.
+    Let $B \subset \hyperlink{def:qn}{Q_n}$ be \hyperlink{def:icomp}{$i$-compressed} $\forall i$ but not an initial segment of \hyperlink{def:simplicial}{simplicial order}.
     Then if $n$ is odd, say $n = 2k+1$, we have
     \begin{align*}
-      B &= X^{(\leq k)} - \{\text{last $k$-set}\} \cup {\{\text{first $k+1$-set}\}}\\ % mark the last kset as (k+2),...,(2k+1) and the first as 1,2,...,k,(k+1)
+      B &= X^{(\leq k)} - \{\text{last $k$-set}\} \cup {\{\text{first $k+1$-set}\}}\\
         &= X^{(\leq k)} - \{(k+2) \dotsc (2k+1)\} \cup \{12\dotsc k(k+1)\}
     \end{align*}
     while if $n$ is even, say $n = 2k$, we have
     \begin{align*}
-      B &= X^{(\leq k-1)} \cup \set{x \in X^{(k)} | 1 \in x} - \{\text{last $k$-set with 1}\} \cup \{\text{first $k$-set without $1$}\}\\ % mark the last kset as 1(k+2),...,(2k) and the first as 2,3,4,...,k,(k+1)
+      B &= X^{(\leq k-1)} \cup \set{x \in X^{(k)} | 1 \in x} - \{\text{last $k$-set with 1}\} \cup \{\text{first $k$-set without $1$}\}\\
         &= X^{(\leq k-1)} \cup \set{x \in X^{(k)} | 1 \in x} - \{1(k+2)\dotsc(2k)\} \cup \{234\dotsc k(k+1)\}
     \end{align*}
   \end{nlemma}
 
   \begin{center}
     \begin{tikzpicture}
-      \begin{scope}
+      \begin{scope}[scale=0.9]
         \node at (-2, 3) {$n=2k$};
 
         \draw (0,3.2) circle [x radius=1mm, y radius=1mm];
@@ -1309,9 +1323,8 @@ Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
   \end{center}
   Once we have proved this, we are done, as in each case $|N(B)| \geq |N(C)|$.
   \begin{proof}
-    We have $x \notin B, y \in B$ for some $x,y$ with $x<y$ in simplicial.
-    We cannot have $i \in x, i \in y$ (as $B$ is $i$-compressed), and cannot have $i \notin x, i \notin y$ (as $B$ is $i$-compressed).
-
+    Suppose $x \notin B, y \in B$ for some $x,y$ with $x<y$ in \hyperlink{def:simplicial}{simplicial}.
+    We cannot have $i \in x, i \in y$ (as $B$ is \hyperlink{def:icomp}{$i$-compressed}), and cannot have $i \notin x, i \notin y$ (as $B$ is $i$-compressed).
     So, for each $i$, $i$ belongs to exactly one of $x,y$.
     Thus $y = x^c$.
 
@@ -1319,7 +1332,7 @@ Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
 
     Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
     But then $x=$ last $k$-set (if $n=2k+1$) or the last $k$-set containing $1$ (if $n = 2k$)
-    by definition of simplicial ordering.
+    by definition of simplicial ordering. \qedhere \qedhere
   \end{proof}
 \end{proof}
 
@@ -1329,16 +1342,16 @@ Say $A$ is \textbf{$i$-compressed} if $\hyperlink{def:icomp}{C_i(A)} = A$.
     \item Can also use these `codimension 1' compressions to prove \nameref{thm:kk7}.
   \end{enumerate}
 \end{remark}
-\begin{defi}[Neighbourhood]
-  \hypertarget{def:tneighbourhood}For $A \subset Q_i$, the \textbf{$t$-neighbourhood} of $A$ is
+\begin{defi}[$t$-neighbourhood]\index{t-neighbourhood@$t$-neighbourhood}
+  \hypertarget{def:tneighbourhood}For $A \subset \hyperlink{def:qn}{Q_n}$, the \textbf{$t$-neighbourhood} of $A$ is
   \begin{equation*}
-    A_{(t)} \coloneqq N^t(A) = \set{x \in Q_n | d(x,A) \leq t}.
+    A_{(t)} \coloneqq N^t(A) = \{x \in Q_n \mid d(x,A) \leq t\}.
   \end{equation*}
 \end{defi}
 \begin{ncor}\label{cor:2.3}
   Let $A \subset \hyperlink{def:qn}{Q_n}$ with $|A| = |\hyperlink{def:superrange}{X^{(\leq r)}}|$. Then, for $1 \leq t \leq n-r$, have
   \begin{equation*}
-    |\hyperlink{def:tneighbourhood}{A_{(t)}}| \geq |X^{(\leq r + t)}|
+    |\hyperlink{def:tneighbourhood}{A_{(t)}}| \geq |X^{(\leq r + t)}|.
   \end{equation*}
 \end{ncor}
 \begin{proof}
@@ -1379,10 +1392,10 @@ Roughly we are going around $\epsilon \sqrt{n}$ standard deviations from the mea
 
 \begin{nthm}\label{thm:2.5}
   \marginnote{\emph{Lecture 9}}[0cm]
-  Let $A \subset Q_n$ with $\frac{|A|}{2^n} \geq \frac{1}{2}$, and $0 < \epsilon < \frac{1}{4}$.
+  Let $A \subset \hyperlink{def:qn}{Q_n}$ with $\frac{|A|}{2^n} \geq \frac{1}{2}$, and $0 < \epsilon < \frac{1}{4}$.
   Then
   \begin{equation*}
-    \frac{|A_{(\epsilon n)|}}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
+    \frac{|A_{(\epsilon n)}|}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
   \end{equation*}
   `$\frac{1}{2}$-sized sets have exponentially large $\epsilon n$-neighbourhoods'
 \end{nthm}
@@ -1408,44 +1421,41 @@ Roughly we are going around $\epsilon \sqrt{n}$ standard deviations from the mea
 \begin{defi}[Lipschitz]\hypertarget{def:lips}
 Say $f: Q_n \to \mathbb{R}$ is \named{Lipschitz} if $|f(x) - f(y)| \leq 1$ for all $x,y \in \hyperlink{def:qn}{Q_n}$ adjacent.
 \end{defi}
-
 \begin{defi}[Median]\hypertarget{def:median}
 Say $M \in \mathbb{R}$ is a \named{median} or \textbf{L\'evy mean} of $f$ if
 \begin{equation*}
-  |\set{x | f(x) \leq M}|,\ |\set{x | f(x) \geq M}| \geq \frac{1}{2} \cdot 2^n.
+  \abs{\{x \mid f(x) \leq M \}},\ |\{x \mid f(x) \geq M\}| \geq \frac{1}{2} \cdot 2^n.
 \end{equation*}
 \end{defi}
-Now ready to show `every well-behaved function on \hyperlink{def:qn}{$Q_n$} is roughly constant nearly everywhere'.
-
+Now we are ready to show `every well-behaved function on \hyperlink{def:qn}{$Q_n$} is roughly constant nearly everywhere'.
 \begin{nthm}\label{thm:2.6}
   Let $f: \hyperlink{def:qn}{Q_n} \to \mathbb{R}$ be \hyperlink{def:lips}{Lipschitz} with \hyperlink{def:median}{median} $M$, and $0 < \epsilon < \frac{1}{4}$.
   Then
   \begin{equation*}
-    \frac{\left\lvert\Set{x | \lvert f(x) - M \rvert \leq \epsilon n}\right\rvert}{2} \geq 1 - \frac{4}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
+    \frac{\left\lvert\{x \mid \lvert f(x) - M \rvert \leq \epsilon n\}\right\rvert}{2} \geq 1 - \frac{4}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
   \end{equation*}
 \end{nthm}
 \begin{proof}
-  Let $A = \set{x | f(x) \leq M}$.
+  Let $A = \{x \mid f(x) \leq M\}$.
   Then $\frac{|A|}{2^n} \geq \frac{1}{2}$,
   so
   \begin{equation*}
-    \frac{|A_{\epsilon n}|}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
+    \frac{|A_{(\epsilon n)}|}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
   \end{equation*}
   But $x \in A_{(\epsilon n)} \implies f(x) \leq M + \epsilon n$ (as $f$ is \hyperlink{def:lips}{Lipschitz}), so
   \begin{equation*}
-    \frac{|\set{x | f(x) \leq M + \epsilon n}|}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
+    \frac{|\{x \mid f(x) \leq M + \epsilon n\}|}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}.
   \end{equation*}
   Similarly,
   \begin{equation*}
-    \frac{|\set{x | f(x) \leq M - \epsilon n}|}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}
+    \frac{|\{x \mid f(x) \leq M - \epsilon n\}|}{2^n} \geq 1 - \frac{2}{\epsilon} e^{-\epsilon^2 \frac{n}{2}}
   \end{equation*}
   and intersect these.
 \end{proof}
-
 \begin{remark}
   This is the `\named{concentration of measure} phenomenon'.
 \end{remark}
-Let $G$ be a graph of diameter $D$ (recall the diameter is $\max\set{d(x,y) | x, y \in G}$).
+\hypertarget{def:alpha}Let $G$ be a graph of diameter $D$ (recall the diameter is $\max\{d(x,y) \mid x, y \in G\}$).
 Let
 \begin{equation*}
   \alpha(G,\epsilon) = \max\Set{1 - \frac{\left\lvert \hyperlink{def:tneighbourhood}{A_{(\epsilon D)}}\right\rvert}{\left\lvert G \right\rvert} | A \subset G, \frac{|A|}{|G|} \geq \frac{1}{2}}.
@@ -1453,14 +1463,14 @@ Let
 So $\alpha(G,\epsilon)$ \emph{small} says `$\frac{1}{2}$-sized sets have big \hyperlink{def:tneighbourhood}{$\epsilon D$-neighbourhoods}.'
 
 \begin{defi}[L\'evy family]\hypertarget{def:levyfam}
-Say a sequence of graphs $G_1, G_2, \dotsc$ is a \named{L\'evy family} if $\alpha(G_n, \epsilon) \to 0$ as $n \to \infty$ (for each fixed $\epsilon$).
+Say a sequence of graphs $G_1, G_2, \dotsc$ is a \named{L\'evy family} if $\hyperlink{def:alpha}{\alpha(G_n, \epsilon)} \to 0$ as $n \to \infty$ (for each fixed $\epsilon$).
 \end{defi}
 
-Thus \cref{thm:2.5} says $Q_1, Q_2, Q_3, \dotsc$ forms a \hyperlink{def:levyfam}{L\'evy family} and even a \textbf{normal} L\'evy family, meaning $\alpha(G_n, \epsilon)$ exponentially small in $n$ (for each fixed $\epsilon$), so have concentration of measure as in (\cref{thm:2.6}) for any \hyperlink{def:levyfam}{L\'evy family}.
+\hypertarget{def:normlevy}Thus \cref{thm:2.5} says $Q_1, Q_2, Q_3, \dotsc$ forms a \hyperlink{def:levyfam}{L\'evy family} and even a \index{L\'evy family!normal}\textbf{normal} L\'evy family, meaning $\alpha(G_n, \epsilon)$ exponentially small in $n$ (for each fixed $\epsilon$). Thus we have concentration of measure as in (\cref{thm:2.6}) for any \hyperlink{def:levyfam}{L\'evy family}.
 
 Many natural families of graphs form \hyperlink{def:levyfam}{L\'evy families}, e.g.\ symmetric group $S_n$ - made into a graph by joining $x,y$ if $x y^{-1}$ is a transposition.
 
-Similarly, we can define $\alpha(X, \epsilon)$ for $X$ any metric measure space (of finite diameter and finite measure) - so again have concentration of measure for any \hyperlink{def:levyfam}{L\'evy family}.
+Similarly, we can define $\hyperlink{def:alpha}{\alpha(X, \epsilon)}$ for $X$ any metric measure space (of finite diameter and finite measure) - so again have concentration of measure for any \hyperlink{def:levyfam}{L\'evy family}.
 \begin{eg}
   Take the sphere $S^n \subset \mathbb{R}^{n+1}$.
   \begin{center}
@@ -1472,9 +1482,9 @@ Similarly, we can define $\alpha(X, \epsilon)$ for $X$ any metric measure space 
         \draw [very thin] (-1,0) arc (180:360:1 and 0.3);
     \end{tikzpicture}
   \end{center}
-  To show `$\frac{1}{2}$-sized sets have big $\epsilon$-neighbourhoods', we need two ingredients:
+  To show `$\frac{1}{2}$-sized sets have big \hyperlink{def:tneighbourhood}{$\epsilon$-neighbourhoods}', we need two ingredients:
   \begin{enumerate}[label=\arabic*)]
-    \item An isoperimetric inequality: if $A \subset S^n$ and $C \subset S^n$ is the circular cap with $|C| = |A|$, then $|A_{(\epsilon)}| \geq |C_{(\epsilon)}|$.
+    \item An \hyperlink{def:isop}{isoperimetric inequality:} if $A \subset S^n$ and $C \subset S^n$ is the circular cap with $|C| = |A|$, then $|\hyperlink{def:tneighbourhood}{A_{(\epsilon)}}| \geq |C_{(\epsilon)}|$.
       \begin{center}
         \begin{tikzpicture}[scale=2]
           \draw [dashed, very thin] (1,0) arc (0:180:1 and 0.3);
@@ -1490,7 +1500,7 @@ Similarly, we can define $\alpha(X, \epsilon)$ for $X$ any metric measure space 
         \end{tikzpicture}
       \end{center}
 
-  Compression is `stamp on your set', i.e.\ we always move a point above the equator to corresponding point below the equator, called 2-point symmetrisation.
+      Compression is `stamp on your set', i.e.\ we always move a point above the equator to corresponding point below the equator, called 2-point symmetrisation.
       \begin{center}
         \begin{tikzpicture}[scale=1.5]
           \draw (0.3,0.5) -- (0.3,-0.5);
@@ -1541,30 +1551,30 @@ Similarly, we can define $\alpha(X, \epsilon)$ for $X$ any metric measure space 
       %\end{center}
   \end{enumerate}
 \end{eg}
-We\marginnote{\emph{Lecture 10}} deduced concentration of measure from isoperimetric inequalities. Conversely,
+We\marginnote{\emph{Lecture 10}} deduced concentration of measure from \hyperlink{def:isop}{isoperimetric inequalities}. Conversely,
 
 \begin{nprop}\label{prop:2.7}
-  Let $G$ be a graph such that for any \hyperlink{def:lips}{Lipschitz} function $G \to \mathbb{R}$ with median $M$, we have
+  Let $G$ be a graph such that for any \hyperlink{def:lips}{Lipschitz} function $G \to \mathbb{R}$ with \hyperlink{def:median}{median} $M$, we have
   \begin{equation*}
-    \frac{|\set{x \in G | |f(x) - M| \leq t}|}{|G|} \geq 1-\alpha
+    \frac{|\{x \in G \mid |f(x) - M| \leq t\}|}{|G|} \geq 1-\alpha
   \end{equation*}
   for some given $t,\alpha$.
   Then for $A \subset G$ with $\frac{|A|}{|G|} \geq \frac{1}{2}$, we have $\frac{|\hyperlink{def:tneighbourhood}{A_{(t)}}|}{|G|} \geq 1 - \alpha$.
 \end{nprop}
 \begin{proof}
-  The function $f(x) = d(x,A)$ is Lipschitz and has $0$ as a median (as $|A| \geq \frac{1}{2} |G|$).
+  The function $f(x) = d(x,A)$ is \hyperlink{def:lips}{Lipschitz} and has $0$ as a \hyperlink{def:median}{median} (as $|A| \geq \frac{1}{2} |G|$).
 \end{proof}
 \subsection{Edge-isoperimetric inequalities}
 \begin{defi}[Edge boundary]\hypertarget{def:ebound}
-For $A \subset G$ ($G$ a graph), the \textbf{edge-boundary} of $A$ is $\partial A = \set{xy \in E(G) | x \in A, y \notin A}$.
+  For $A \subset G$ ($G$ a graph), the \textbf{edge-boundary} of $A$ is $\partial A = \{xy \in E(G) \mid x \in A, y \notin A\}$.
 \end{defi}
 \begin{center}
   \begin{tikzpicture}[scale=1.5]
     \begin{scope}[every node/.style={draw, circle, inner sep=1.5pt}]
-      \node [label=below:$3$, fill=bred] (3) at (0  ,0) {};
-      \node [label=below:$4$, fill=bred] (4) at (1  ,0) {};
+      \node [label=below:$3$, mymark] (3) at (0  ,0) {};
+      \node [label=below:$4$, mymark] (4) at (1  ,0) {};
       \node [label=above:$2$] (2) at (1  ,1) {};
-      \node [label=above:$1$, fill=bred] (1) at (0  ,1) {};
+      \node [label=above:$1$, mymark] (1) at (0  ,1) {};
       \node [label=above:$5$] (5) at (2.3,1) {};
       \node [label=below:$6$] (6) at (1.8,0) {};
       \node [label=below:$7$] (7) at (2.8,0) {};
@@ -1576,11 +1586,10 @@ For $A \subset G$ ($G$ a graph), the \textbf{edge-boundary} of $A$ is $\partial 
   \end{tikzpicture}
 \end{center}
 In $\hyperlink{def:qn}{Q_n}$ how should we choose $A$ (with $|A|$ given) to minimise $|\hyperlink{def:ebound}{\partial A}|$?
-
 Take for example $|A|=4$ in $Q_3$:
 \begin{center}
   \begin{tikzpicture}[scale=2]
-    \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}]
+    \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}]
       \begin{scope}
         \node (A) at (0,0) {};
         \node (B) at (1,0) {};
@@ -1619,25 +1628,25 @@ Take for example $|A|=4$ in $Q_3$:
         \draw [line cap=round, ultra thick, bgreen, opacity=0.5] (A) -- (D);
         \foreach \x in {A,B,E,F} {\node [mymark] at (\x) {};}
       \end{scope}
-  \end{scope}
-  \node [below] at (0.65, -0.2) {$|\partial A| = 6$};
-  \node [below] at (3.65, -0.2) {$|\partial A| = 4$};
-\end{tikzpicture}
+    \end{scope}
+    \node [below] at (0.65, -0.2) {$|\partial A| = 6$};
+    \node [below] at (3.65, -0.2) {$|\partial A| = 4$};
+  \end{tikzpicture}
 \end{center}
 
-This suggests that perhaps subcubes are best. But what if $2^k < |A| < 2^{k+1}$? Maybe fill up all of $Q_k$, then add in subcubes.
+This suggests that perhaps subcubes are best. But what if $2^k < |A| < 2^{k+1}$? Maybe fill up all of \hyperlink{def:qn}{$Q_k$}, then add in subcubes.
 \begin{defi}[Binary ordering]\hypertarget{def:binary}
-  Say $x<y$ in the \named{binary} ordering on $Q_n$ if $\max(x \sym y) \in y$.
+  Say $x<y$ in the \named{binary order}\index{order!binary} on \hyperlink{def:qn}{$Q_n$} if $\max(x \sym y) \in y$.
 \end{defi}
 Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in subcubes'.
 
 \begin{aim}
-  Initial segments of \hyperlink{def:binary}{binary} are best (minimise) for $\partial A$.
+  Initial segments of \hyperlink{def:binary}{binary} are best for (minimise) $\hyperlink{def:ebound}{\partial A}$.
   In particular,
-  \begin{equation*}|A|=2^k \Rightarrow |\partial A| \geq 2^k (n-k).\end{equation*}
+  \begin{equation*}|A|=2^k \implies |\hyperlink{def:ebound}{\partial A}| \geq 2^k (n-k).\end{equation*}
 \end{aim}
 \begin{defi}[Binary compression]\hypertarget{def:binarycomp}
-  For $A \subset \hyperlink{def:qn}{Q_n}$ and $1 \leq i \leq n$, the \textbf{$i$-binary compression} $B_i(A)$ is defined by giving its \hyperlink{def:section}{$i$-sections:}
+  For $A \subset \hyperlink{def:qn}{Q_n}$ and $1 \leq i \leq n$, the \index{binary compression}\index{compression!binary}\textbf{$i$-binary compression} $B_i(A)$ is defined by giving its \hyperlink{def:section}{$i$-sections:}
   \begin{align*}
     B_i(A)_+^{(i)} &= \text{first }|A_+^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in \hyperlink{def:binary}{binary}} \\
     B_i(A)_-^{(i)} &= \text{first }|A_-^{(i)}|\text{ elements of }\mathcal{P}(X-\{i\})\text{ in binary}
@@ -1711,17 +1720,19 @@ Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in sub
   \end{tikzpicture}
 \end{center}
 \begin{nthm}[Edge-isoperimetric inequality in the cube]\label{thm:2.8}
-  Let $A \subset \hyperlink{def:qn}{Q_n}$, and let $C$ be the initial segment of the \hyperlink{def:binary}{binary ordering} with $|C| = |A|$. Then $|\hyperlink{def:ebound}{\partial} A| \geq |\partial C|$.
-  In particular, if $|A|=2^k$ then $|\partial A| \geq 2^k (n-k)$.
+  Let $A \subset \hyperlink{def:qn}{Q_n}$, and let $C$ be the initial segment of the \hyperlink{def:binary}{binary ordering} with $|C| = |A|$. Then $|\hyperlink{def:ebound}{\partial A}| \geq |\partial C|$.
+  In particular,
+  \begin{equation*}|A|=2^k \implies |\partial A| \geq 2^k (n-k).\end{equation*}
 \end{nthm}
 \begin{remark}
   Sometimes called the theorem of Harper, Lindsey, Bernstein and Hart.
 \end{remark}
 \begin{proof}
   Induction on $n$: $n=1$ is immediate.
-  Given $A \subset \hyperlink{def:qn}{Q_n}$ for $n > 1$ and $1 \leq i \leq n$: \textbf{Claim} $|\hyperlink{def:ebound}{\partial} \hyperlink{def:binarycomp}{B_i}(A)| \leq |\partial A|$.
+  Given $A \subset \hyperlink{def:qn}{Q_n}$ for $n > 1$ and $1 \leq i \leq n$:
+  \textbf{Claim} $|\hyperlink{def:ebound}{\partial} \hyperlink{def:binarycomp}{B_i}(A)| \leq |\partial A|$.
 
-  \textbf{Proof of claim:} Write $B$ for $B_i(A)$.
+  \textbf{Proof of claim:} Write $B$ for $\hyperlink{def:binarycomp}{B_i(A)}$.
   We have
   \begin{align*}
     |\partial A| &= |\partial(A_-)| + |\partial(A_+)| + |A_i \sym A_+| \\
@@ -1738,7 +1749,7 @@ Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in sub
   This $B$ need not be an initial segment of binary, e.g.\
   \begin{center}
     \begin{tikzpicture}[scale=2]
-      \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}]
+      \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}]
         \node (A) at (0,0) {};
         \node (B) at (1,0) {};
         \node (C) at (1,1) {};
@@ -1755,7 +1766,7 @@ Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in sub
     \end{tikzpicture}
   \end{center}
 
-  However, claim: If $B< Q_n$ is $i$-binary compressed $\forall i$ but not an initial segment of binary, then
+  However, \textbf{claim:} If $B< Q_n$ is $i$-binary compressed $\forall i$ but not an initial segment of binary, then
   \begin{equation*}B = \mathcal{P}([n-1]) \cup \{n\} - \{123\dotsm(n-1)\}.\end{equation*}
   (Bottom half with last point removed, first point of top half added).
   \begin{center}
@@ -1771,16 +1782,16 @@ Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in sub
   \end{center}
   Then done, as clearly $|\partial B| \geq |\partial C|$.
 
-  Proof of claim:
-  Have some $x < y$ with $x \notin B$ and $y \in B$.
-  Then $\forall i$, cannot have $i \notin x,y$ and cannot have $i \in x,y$ as $B_i(B) = B$.
+  \textbf{Proof of claim}:
+  Suppose $x < y$ with $x \notin B$ and $y \in B$.
+  Then for any $i$, cannot have $i \notin x,y$ and cannot have $i \in x,y$ as $B_i(B) = B$.
   So $x = y^c$.
   Thus for each $y \in B$, there is at most 1 $x < y$ with $x \notin B$ (namely $x^c$), and for each $x \notin B$, there is at most one $y > x$ with $y \in B$ (namely $y^c$).
   Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
-  Hence $y = \{n\}$.
+  Hence $y = \{n\}$. $\blacksquare$
 \end{proof}
 \begin{remark}
-  In the proofs of \cref{thm:harper1} and \cref{thm:2.8}, vital that the extremal sets in dimension $n-1$ were nested, i.e.\ were the initial segments of some ordering.
+  In the proofs of \cref{thm:harper1} and \cref{thm:2.8}, it was vital that the extremal sets in dimension $n-1$ were nested, i.e.\ were the initial segments of some ordering.
 \end{remark}
 
 \begin{defi}[Isoperimetric number]\hypertarget{def:i}
@@ -1822,7 +1833,7 @@ Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in sub
 
 \begin{center}
   \begin{tikzpicture}[scale=2]
-    \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}, mymarkline/.style={line cap=round, ultra thick, bgreen, opacity=0.5}]
+    \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymarkline/.style={line cap=round, ultra thick, bgreen, opacity=0.5}]
       \begin{scope}
         \node (A) at (0,0) {};
         \node (B) at (1,0) {};
@@ -1849,10 +1860,10 @@ Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in sub
 
 \begin{proof}
   The set $A = \mathcal{P}(\hyperlink{def:ints}{[n-1]})$ shows $\hyperlink{def:i}{i(Q_n)}\leq1$.
-  To show $i(Q_n) \geq 1$, sufficient to show (by \cref{thm:2.8}) that if $C$ is an initial segment of binary with $|C| \leq 2^{k-1}$ then $|\partial C| \geq |C|$.
+  To show $i(Q_n) \geq 1$, sufficient to show (by \cref{thm:2.8}) that if $C$ is an initial segment of \hyperlink{def:binary}{binary} with $|C| \leq 2^{k-1}$ then $|\partial C| \geq |C|$.
   \begin{center}
     \begin{tikzpicture}[scale=2]
-      \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymark/.style={inner sep=1.5pt, draw=black, fill=red, circle}, over/.style={white, line width=1.2pt, double distance=0.4pt, shorten < = 1pt}, mymarkline/.style={->, bgreen, opacity=0.9}]
+      \begin{scope}[every node/.style={inner sep=0, minimum size=0, outer sep=0}, mymarkline/.style={->, bgreen, opacity=0.9}]
         \begin{scope}
           \node (A) at (0,0) {};
           \node (B) at (1,0) {};
@@ -1883,7 +1894,7 @@ Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in sub
 
 \subsection{Inequalities in the grid}
 \begin{defi}[Grid]\hypertarget{def:grid}
-  The \named{grid} is the graph on vertex-set $[k]^n = \{1,2,\dotsc,k\}^n$ in which $(x_1, \dotsc, x_n)$ joined to $(y_1, \dotsc, y_n)$ if for some $i$, have $|x_i - y_i| = 1$ and $x_j = y_j \quad \forall j \neq i$ (`$\ell^1$-distance').
+  The \named{grid} is the graph on vertex-set $[k]^n = \{1,2,\dotsc,k\}^n$ in which $(x_1, \dotsc, x_n)$ is joined to $(y_1, \dotsc, y_n)$ if for some $i$, we have $|x_i - y_i| = 1$ and $x_j = y_j \quad \forall j \neq i$ (`$\ell^1$-distance').
 \end{defi}
 \begin{center}
   \begin{tikzpicture}[scale=0.5]
@@ -1912,17 +1923,17 @@ What is the best \hyperlink{def:boundary}{vertex-boundary}? Take $[k]^2$ as an e
   \end{tikzpicture}
 \end{center}
 
-This suggests that sets of the form $ \set{x | \lvert x \rvert \leq r} $ are best.
+This suggests that sets of the form $ \{x \mid \lvert x \rvert \leq r\} $ are best.
 
 What about sizes in between?
 For given $|x|$, we'd `keep $x_1$ big'
 \begin{defi}[Simplicial ordering]\hypertarget{def:simplic}
-  We define the \index{simplicial ordering} on $[k]^n$ by setting $x<y$ if either $|x| < |y|$ or $|x| = |y|$ and $x_i > y_i$, where $i = \min\set{j | x_j \neq y_j}$.
+  We define the \named{simplicial order} on $\hyperlink{def:grid}{[k]^n}$ by setting $x<y$ if either $|x| < |y|$ or $|x| = |y|$ and $x_i > y_i$, where $i = \min\set{j | x_j \neq y_j}$.
   Note: for $k=2$ this agrees with our \hyperlink{def:simplicial}{previous definition}.
 \end{defi}
 \begin{eg}\leavevmode
   \begin{itemize}
-    \item On $[3]^2$, our ordering is
+    \item On $\hyperlink{def:grid}{[3]^2}$, our ordering is
       \begin{equation*}
         (1,1),(2,1),(1,2),(3,1),(2,2),(1,3),(3,2),(2,3),(3,3).
       \end{equation*}
@@ -1944,39 +1955,93 @@ For given $|x|$, we'd `keep $x_1$ big'
   Initial segments of \hyperlink{def:simplic}{simplicial} minimise \hyperlink{def:neighbourhood}{neighbourhood}.
   In particular,
   \begin{equation*}
-    |A| = |\set{x | |x|\leq r}| \implies |\hyperlink{def:neighbourhood}{N(A)}| \geq |\set{x | |x| \leq r+1}|.
+    |A| = |\{x \mid |x|\leq r\}| \implies |\hyperlink{def:neighbourhood}{N(A)}| \geq |\{x \mid |x| \leq r+1\}|.
   \end{equation*}
 \end{aim}
 \begin{defi}[Sections]\index{$i$-section}
-  \hypertarget{def:sections}For $A \subset [k]^n$ and $1 \leq i \leq n$, the \textbf{$i$-sections} of $A$ are the sets $A_1, \dotsc, A_k$ (or $A_1^{(i)}, \dotsc, A_k^{(i)}$) in $[k]^{n-1}$ given by
+  \hypertarget{def:sections}For $A \subset \hyperlink{def:grid}{[k]^n}$ and $1 \leq i \leq n$, the \textbf{$i$-sections} of $A$ are the sets $A_1, \dotsc, A_k$ (or $A_1^{(i)}, \dotsc, A_k^{(i)}$) in $[k]^{n-1}$ given by
   \begin{equation*}
-    A_t = \set{(x_1, \dotsc, x_{n-1}) \in [k]^{n-1} | (x_1, x_2, \dotsc, x_{i-1}, t, x_i, x_{i+1}, \dotsc, x_n) \in A} \quad \forall 1 \leq t \leq k
+    A_t = \{(x_1, \dotsc, x_{n-1}) \in [k]^{n-1} \mid (x_1, x_2, \dotsc, x_{i-1}, t, x_i, x_{i+1}, \dotsc, x_{n-1}) \in A\} \quad \forall 1 \leq t \leq k
   \end{equation*}
 \end{defi}
-% TODO: picture
+\begin{center}
+  \begin{tikzpicture}[scale=1.4]
+    \draw [->] (0,0) -- (0,3);
+    \begin{scope}[cm={1,0.125,0.75,-0.25,(0,0)}]
+      \draw [bred, fill=bred!40] plot [smooth] coordinates {(2,0) (1.5,0.4) (1,0.8) (0.8,1.5) (0,2)} -- (0,0) -- (2,0);
+      \draw [->] (0,0) -- (0,3);
+      \node [right] at (3,0) {$y$};
+      \node [right] at (0,3) {$x$};
+      \draw [->] (0,0) -- (3,0);
+      \node [bred] at (1.2,1.2) {$A_1$};
+    \end{scope}
+    \begin{scope}[cm={1,0.125,0.75,-0.25,(0,1)}]
+      \draw [bred, fill=bred!40] plot [smooth] coordinates {(2,0) (1.5,0.5) (1,0.7) (0.6,1.5) (0,2)} -- (0,0) -- (2,0);
+      \draw [->] (0,0) -- (0,2.5);
+      \draw [->] (0,0) -- (2.5,0);
+      \node [bred] at (1.2,1.2) {$A_2$};
+    \end{scope}
+    \begin{scope}[cm={1,0.125,0.75,-0.25,(0,2)}]
+      \draw [bred, fill=bred!40] plot [smooth] coordinates {(2,0) (1.5,0.5) (0.9,0.9) (0.5,1.5) (0,2)} -- (0,0) -- (2,0);
+      \draw [->] (0,0) -- (0,2.5);
+      \draw [->] (0,0) -- (2.5,0);
+      \node [bred] at (1.2,1.2) {$A_3$};
+    \end{scope}
+    \node [left] at (0,3) {$z$};
+  \end{tikzpicture}
+\end{center}
 \begin{defi}[$i$-compression]\hypertarget{def:icomp2}
   The \textbf{$i$-compression} $C_i(A) \subseteq [k]^n$ is defined by giving its \hyperlink{def:sections}{$i$-sections}:
   \begin{equation*}
-    C_i(A)_t = \text{first $|A_t|$ points in \hyperlink{def:simplic}{simplicial order} on }[k]^{n-1}.
+    C_i(A)_t = \text{first }|A_t|\text{ points in }\hyperlink{def:simplic}{\text{simplicial order}}\text{ on }[k]^{n-1}.
   \end{equation*}
+  Certainly $|C_i(A)| \leq |A|$.
+  Say $A$ is \textbf{$i$-compressed} if $C_i(A) = A$.
 \end{defi}
-Certainly $|C_i(A)| \leq |A|$.
-Say $A$ is \textbf{$i$-compressed} if $C_i(A) = A$.
-\begin{nthm}[Vertex-isoperimetric inequality in the grid]
-  Let $A \subseteq [k]^n$ and let $C$ be the initial segment of the simplicial order on $[k]^n$ with $|C| = |A|$.
-  Then $|N(A)| \geq |N(C)|$. In particular, if $|A| \geq |\set{x | |x|\leq r}|$ then $|N(A)| \geq |\set{x | |x| \leq r+1}|$
+\begin{center}
+  \begin{tikzpicture}[scale=1.4]
+    \begin{scope}[scale=0.2]
+      \draw (0,0) rectangle (10,10);
+      \node at (1,1) {$\times$};
+      \node at (3,1) {$\times$};
+      \node at (8,1) {$\times$};
+      \node at (1,6) {$\times$};
+      \node at (5,6) {$\times$};
+      \node at (2,9) {$\times$};
+      \node at (3,9) {$\times$};
+      \node at (5,-2) {$[k]^2$};
+    \end{scope}
+    \draw [->] (2.2,1) to node[midway, above] {$C_2$} (3,1);
+    \begin{scope}[scale=0.2, xshift=16cm]
+      \draw (0,0) rectangle (10,10);
+      \node at (1,1) {$\times$};
+      \node at (2,1) {$\times$};
+      \node at (3,1) {$\times$};
+      \node at (1,6) {$\times$};
+      \node at (2,6) {$\times$};
+      \node at (1,9) {$\times$};
+      \node at (2,9) {$\times$};
+      \node at (5,-2) {$[k]^2$};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+\begin{nthm}[Vertex-\hyperlink{def:isop}{isoperimetric inequality} in the \hyperlink{def:grid}{grid}]
+  Let $A \subseteq \hyperlink{def:grid}{[k]^n}$ and let $C$ be the initial segment of the \hyperlink{def:simplic}{simplicial order} on $[k]^n$ with $|C| = |A|$.
+  Then $|\hyperlink{def:neighbourhood}{N(A)}| \geq |N(C)|$.
+  In particular,
+  \begin{equation*}|A| \geq |\{x \mid |x|\leq r\}| \implies |N(A)| \geq |\{x \mid |x| \leq r+1\}|\end{equation*}
 \end{nthm}
 \begin{proof}
   Induction on $n$:
-  For $n=1$, if $A \subset [k]^1$ with $A \neq 0, [k]^1$ then $|N(A)| \geq |A|+1 = |N(C)|$, as required.
+  For $n=1$, if $A \subset \hyperlink{def:grid}{[k]^1}$ with $A \neq 0, [k]^1$ then $|\hyperlink{def:neighbourhood}{N(A)}| \geq |A|+1 = |N(C)|$, as required.
 
   Given $A \subset [k]^n$ (for $n > 1$) and $1 \leq t \leq n$,
-  \textbf{claim} $|N(C_t(A))| \leq |N(A)|$.
+  \textbf{claim} $|N(\hyperlink{def:icomp2}{C_t(A)})| \leq |N(A)|$.
 
   \textbf{Proof of claim:}
   For $1 \leq t \leq k$,
   \begin{equation*}
-    N(A)_t = N(A_t) \cup A_{t-1} \cup A_{t+1} % TODO: from level t, from below, from above
+    N(A)_t = \overset{\mathclap{\substack{\text{from level }t\\\downarrow}}}{N(A_t)} \cup \underset{\mathclap{\substack{\uparrow\\\text{from below}}}}{A_{t-1}} \cup \overset{\mathclap{\substack{\text{from above}\\\downarrow}}}{A_{t+1}}
   \end{equation*}
   (where $A_0 = A_{k+1}=\emptyset$) and similarly
   \begin{equation*}
@@ -1990,39 +2055,67 @@ Say $A$ is \textbf{$i$-compressed} if $C_i(A) = A$.
 
   Among all $B \subseteq [k]^n$ with $|B| = |A|$ and $|N(B)| \leq |N(A)|$, choose one with minimal
   \begin{equation*}
-    \sum_{x \in B} (\text{position of $x$ in simplicial}).
+    \sum_{x \in B} (\text{position of $x$ in }\hyperlink{def:simplic}{\text{simplicial}}).
   \end{equation*}
-  Then $B$ is $i$-compressed $\forall i$ (else $C_i(B)$ contradicts our discussion of $B$).
+  Then $B$ is \hyperlink{def:icomp2}{$i$-compressed} $\forall i$ (else $C_i(B)$ contradicts our discussion of $B$).
 
   \marginnote{\emph{Lecture 12}}We want to show $N(B) \geq N(C)$.
   \begin{itemize}
     \item \textbf{Case 1}: $n=2$.
-      $B$ is $i$-compressed $\forall i$ if and only if $B$ is a \textbf{down-set} (if $x_i \leq y_i \; \forall i$ and $y \in B)$ then $x \in B$). That is, `going down or left, we stay in $B$'.
+      \hypertarget{def:downset}$B$ is $i$-compressed $\forall i$ if and only if $B$ is a \named{down-set} (if $x_i \leq y_i \; \forall i$ and $y \in B)$ then $x \in B$). That is, `going down or left, we stay in $B$'.
+      \begin{center}
+        \begin{tikzpicture}[scale=2]
+          \draw [bred, fill=bred!40] plot [smooth] coordinates {(0,0.7) (0.2,0.6) (0.3,0.3) (0.5,0.2) (0.7,0)} -- (0,0) -- (0,0.7);
+          \draw (0,0) rectangle (1,1);
+        \end{tikzpicture}
+      \end{center}
       Suppose $B \neq C$.
       Let
       \begin{align*}
-        r &= \min \set{\lvert x \rvert | x \notin B} \\
-        s &= \max \set{\lvert x \rvert | x \in B}.
+        r &= \min \{\lvert x \rvert \mid x \notin B\} \\
+        s &= \max \{\lvert x \rvert \mid x \in B\}.
       \end{align*}
+      \begin{center}
+        \begin{tikzpicture}[scale=3]
+          \draw (0.7,0) -- (0,0.7);
+          \draw (0.4,1) -- (1,0.4);
+          \draw (0,0) rectangle (1,1);
+          \node [left] at (0,0.7) {$|x|=r$};
+          \node [right] at (1,0.4) {$|x|=s$};
+          \node [fill=white, draw=black, circle, inner sep=1pt, label=right:\small missing] at (0.3,0.4) {};
+          \node [fill=black, circle, inner sep=1pt, label=left:\small present] at (0.8,0.6) {};
+        \end{tikzpicture}
+      \end{center}
       We must have $r \leq s$, since $r > s \Rightarrow B = C$, as $B$ would be an exact ball.
 
       If $r=s$, have
       \begin{equation*}
-        \set{x : |x| \leq r-1} \subset B \subset \set{x | |x|\leq r},
+        \{x \mid\abs{x} \leq r-1\} \subset B \subset \{x \mid \abs{x}\leq r\},
       \end{equation*}
       so clearly $|N(B)| \geq |N(C)|$.
 
-      If $r < s$, we cannot have $\set{x | |x| = r}$ disjoint from $B$ (as $B$ is a down-set and $\exists x \in B$ with $|x| = s$).
-      Similarly cannot have $\set{x | |x| = s} \subset B$ (as $B$ a down-set and $\exists x \notin B, |x| = r$).
-      So $\exists x,x'$ on level $r$ with $x \notin B, x' \in B$ and $x' = x \pm (e_1 - e_2)$, and $\exists y,y'$ on level $s$ with $y \in B$, $y' \notin B$ and $y' = y \pm (e_1 - e_2)$.
+      If $r < s$, we cannot have $\{x \mid |x| = r\}$ disjoint from $B$ (as $B$ is a down-set and $\exists x \in B$ with $|x| = s$).
+      Similarly cannot have $\{x \mid |x| = s\} \subset B$ (as $B$ a down-set and $\exists x \notin B$ with $|x| = r$).
+      So $\exists x,x'$ on level $r$ with $x \notin B$, $x' \in B$ and $x' = x \pm (e_1 - e_2)$, and $\exists y,y'$ on level $s$ with $y \in B$, $y' \notin B$ and $y' = y \pm (e_1 - e_2)$.
+      \begin{center}
+        \begin{tikzpicture}[scale=3, dot/.style={circle, inner sep=1pt}, outd/.style={fill=white, draw=black}, ind/.style={fill=black}]
+          \draw (0.6,0) -- (0,0.6);
+          \draw (0.4,1) -- (1,0.4);
+          \draw (0,0) rectangle (1,1);
+          \node [ind, dot, label=above right:$x'$] at (0.3,0.3) {};
+          \node [outd, dot, label=above right:$x$] at (0.2,0.4) {};
+          \node [ind, dot, label=above right:$y$] at (0.7,0.7) {};
+          \node [outd, dot, label=above right:$y'$] at (0.8,0.6) {};
+        \end{tikzpicture}
+      \end{center}
 
       Now let $B' = B \cup \{x\} - \{y\}$. Then $N(B') \leq N(B)$ (we lose $\geq 1$ point from level $s+1$ and gain $\leq 1$ point from level $r+1$), contradicting choice of $B$.
     \item \textbf{Case 2}: $n \geq 3$.
-      If $x \in B$ then must have $x-e_n+e_i \in B$ (for any $1 \leq i \leq n-1$, $x_n > 1$, $x_i \leq k$), because $B$ is $j$-compressed, any $j \neq n,i$ (as $n \geq 3$).
+      If $x \in B$ then must have $x-e_n+e_i \in B$ (for any $1 \leq i \leq n-1$, $x_n > 1$, $x_i \leq k$), because $B$ is $j$-compressed for any $j \neq n,i$ (as $n \geq 3$).
+      % todo picture
       So $N(B_t) \subset B_{t-1}$.
       We had $N(B)_t = N(B_t) \cup B_{t-1} \cup B_{t+1}$, so $N(B)_t = B_{t-1}$.
       Thus
-
       \begin{equation*}
         |N(B)| = |B_{k-1}| + |B_{k-2}| + \dotsb + |B_1| + |N(B_1)| = |B| - |B_k| + |N(B_1)|
       \end{equation*}
@@ -2031,6 +2124,7 @@ Say $A$ is \textbf{$i$-compressed} if $C_i(A) = A$.
       \begin{equation*}
         |N(C)| = |C| - |C_k| + |N(C_1)|.
       \end{equation*}
+      % todo picture
       Thus it is sufficient to show that $|B_k| \leq |C_k|$ and $|B_1| \geq |C_1|$.
       Focus on the former first:
       Define  $D \subset [k]^n$ by
@@ -2052,27 +2146,81 @@ Say $A$ is \textbf{$i$-compressed} if $C_i(A) = A$.
   \end{itemize}
 \end{proof}
 \begin{ncor}\label{cor:2.11}
-  Let $A \subset [k]^n$ with $|A| = |\set{x | |x| \leq r}|$. Then $|A_{(t)}| \geq |\set{x | |x| \leq r + t}$.
+  Let $A \subset \hyperlink{def:grid}{[k]^n}$ with $|A| = |\{x \mid |x| \leq r\}|$.
+  Then $|\hyperlink{def:tneighbourhood}{A_{(t)}}| \geq |\{x \mid |x| \leq r + t\}$.
 \end{ncor}
 \begin{proof}
   Induction on $t$.
 \end{proof}
 \begin{remark}
-  Can check from this that, for fixed $k$, the sequence $[k]^1, [k]^2, [k]^3, \dotsc$ is a \hyperlink{def:levyfam}{normal L\'evy family}.
+  Can check from this that, for fixed $k$, the sequence $\hyperlink{def:grid}{[k]^1}, [k]^2, [k]^3, \dotsc$ is a \hyperlink{def:levyfam}{normal L\'evy family}.
 \end{remark}
 \subsection{Edge-isoperimetric inequalities in the grid}
-We aim to minimise $|\partial A|$ in $[k]^m$.
+We aim to minimise $|\hyperlink{def:ebound}{\partial A}|$ in $\hyperlink{def:grid}{[k]^m}$.
 For example, in $[k]^2$:
 \begin{center}
-  pictures
+  \begin{tikzpicture}[scale=2]
+    \begin{scope}
+      \draw [bred, fill=bred!40] (0,0) -- (0.4,0) -- (0.4,0.4) -- (0,0.4);
+      \draw (0,0) rectangle (1,1);
+      \draw [decorate, decoration={brace, amplitude=2mm}, xshift=-0.5mm] (0,0) -- node [midway, left, xshift=-2mm] {$d$} (0,0.4);
+      \node [right] at (1.1,0.5) {$|\hyperlink{def:ebound}{\partial A}| \sim 2d \sim 2\sqrt{|A|}$};
+    \end{scope}
+    \begin{scope}[yshift=-1.4cm]
+    \draw [bred, fill=bred!40] (0,0) -- (0.7,0) -- (0,0.7);
+    \draw (0,0) rectangle (1,1);
+    \draw [decorate, decoration={brace, amplitude=2mm}, xshift=-0.5mm] (0,0) -- node [midway, left, xshift=-2mm] {$d$} (0,0.7);
+    \node [right] at (1.1,0.5) {$|\partial A| \sim 2d \sim 2\sqrt{2|A|}$};
+    \end{scope}
+  \end{tikzpicture}
 \end{center}
-% TODO: draw some pictures
 This suggests squares are best.
 But,
 \begin{center}
-  more pictures
+  \begin{tikzpicture}[scale=2]
+    \def\x{1.3}
+    \begin{scope}
+      \node at (\x+0.5, -\x/2+0.5) {$=$};
+      \node at (\x/2+0.5, 0.5) {$\rightarrow$};
+      \node at (3*\x+0.5, -3*\x/2+0.5) {$=$};
+      \node at (3*\x/2+0.5, -\x+0.5) {$\rightarrow$};
+      \node at (5*\x/2+0.5, -\x+0.5) {$\rightarrow$};
+      \node at (7*\x/2+0.5, -2*\x+0.5) {$\rightarrow$};
+    \end{scope}
+    \begin{scope}
+      \draw [bred, fill=bred!40] (0,0) rectangle (0.3,0.3);
+      \draw (0,0) rectangle (1,1);
+    \end{scope}
+    \begin{scope}[xshift=\x cm]
+      \draw [bred, fill=bred!40] (0,0) rectangle (0.5,0.5);
+      \draw (0,0) rectangle (1,1);
+      \draw [decorate, decoration={brace, amplitude=1mm}, xshift=0.3mm] (0.5,0.5) -- node [midway, right] {$\tfrac{k}{2}$} (0.5,0);
+    \end{scope}
+    \begin{scope}[xshift=\x cm, yshift=-\x cm]
+      \draw [bred, fill=bred!40] (0,0) rectangle (0.25,1);
+      \draw (0,0) rectangle (1,1);
+      \draw [decorate, decoration={brace, amplitude=0.5mm}, yshift=-0.3mm] (0.25,0) -- node [midway, below] {$\tfrac{k}{4}$} (0,0);
+    \end{scope}
+    \begin{scope}[xshift=2*\x cm, yshift=-\x cm]
+      \draw [bred, fill=bred!40] (0,0) rectangle (0.5,1);
+      \draw (0,0) rectangle (1,1);
+    \end{scope}
+    \begin{scope}[xshift=3*\x cm, yshift=-\x cm]
+      \draw [bred, fill=bred!40] (0,0) rectangle (0.75,1);
+      \draw (0,0) rectangle (1,1);
+      \draw [decorate, decoration={brace, amplitude=1mm}, yshift=0.3mm] (0,1) -- node [midway, above, yshift=0.3mm] {$\tfrac{3k}{4}$} (0.75,1);
+    \end{scope}
+    \begin{scope}[xshift=3*\x cm, yshift=-2*\x cm]
+      \draw [bred, fill=bred!40] (0,0) -- (1,0) -- (1,0.5) -- (0.5,0.5) -- (0.5,1) -- (0,1) -- cycle;
+      \draw (0,0) rectangle (1,1);
+      \draw [decorate, decoration={brace, amplitude=1mm}, xshift=0.3mm] (0.5,1) -- node [midway, right] {$\tfrac{k}{2}$} (0.5,0.5);
+    \end{scope}
+    \begin{scope}[xshift=4*\x cm, yshift=-2*\x cm]
+      \draw [bred, fill=bred!40] (0,0) -- (1,0) -- (1,0.7) -- (0.7,0.7) -- (0.7,1) -- (0,1) -- cycle;
+      \draw (0,0) rectangle (1,1);
+    \end{scope}
+  \end{tikzpicture}
 \end{center}
-% TODO: draw some more pictures
 so have `phase transitions' at $|A| = \frac{k^2}{4}$ and $|A| = \frac{3k^2}{4}$.
 The extremal sets are not nested! (So cannot compress, $\nexists$ an ordering, etc.)
 
@@ -2082,9 +2230,9 @@ In $[k]^3$:
 \end{center}
 
 Similarly in higher dimensions.
-This has been proved: `edge-isoperimetric inequality in the grid'.
+This has been proved: `edge-\hyperlink{def:isop}{isoperimetric inequality} in the \hyperlink{def:grid}{grid}'.
 
-Very few isoperimetric inequalities are known exactly or asymptotically.
+Very few \hyperlink{def:isop}{isoperimetric inequalities} are known exactly or asymptotically.
 \clearpage
 \section{Projections}
 `If a set has small projections, must it be small?'
@@ -2111,13 +2259,14 @@ Very few isoperimetric inequalities are known exactly or asymptotically.
 `Project $A$ onto coordinates corresponding to $Y$'.
 \end{defi}
 \begin{eg}
-  If $A = \{14,25,26,127,128\}$. Then $A \mid \{1,2\} = \{1,2,12\}$, so $A \mid Y \subset \mathcal{P}(Y)$.
+  If $A = \{14,25,26,127,128\}$.
+  Then $\hyperlink{def:proj}{A \mid \{1,2\}} = \{1,2,12\}$, so $A \mid Y \subset \mathcal{P}(Y)$.
 \end{eg}
 \begin{defi}[Cover]\hypertarget{def:tr}
   Say $A$ \textbf{covers} or \textbf{shatters} $Y$ if $\hyperlink{def:proj}{A \mid Y} = \mathcal{P}(Y)$.
   The \textbf{trace number} or \textbf{VC-dimension} of $A$ is
   \begin{equation*}
-    \tr A \coloneqq \max\{|Y| : A \text{ shatters } Y\}.
+    \tr A \coloneqq \max\{|Y| \mid A \text{ shatters } Y\}.
   \end{equation*}
 \end{defi}
 Given $|A|$, how small can $\hyperlink{def:tr}{\tr} A$ be?
@@ -2128,7 +2277,7 @@ Trivially, must have
   |A| \leq \left(1 - \frac{1}{2^k}\right) 2^n
 \end{equation*}
 else $A$ \hyperlink{def:tr}{shatters} every \hyperlink{def:superr}{$k$-set}.
-Could take $A = X^{(<k)}$ - no $k$-set $Y$ is shattered, as $Y \notin A \hyperlink{def:proj}{\mid} Y$.
+Could take $A = \hyperlink{def:superrange}{X^{(<k)}}$ - no $k$-set $Y$ is shattered, as $Y \notin \hyperlink{def:proj}{A \mid Y}$.
 
 \begin{aim}
   This is best.
@@ -2138,7 +2287,7 @@ Could take $A = X^{(<k)}$ - no $k$-set $Y$ is shattered, as $Y \notin A \hyperli
 \end{remark}
 
 \begin{idea}
-  \hypertarget{def:downset}Trivial that $|A| \leq |X^{(<k)}|$ if $A$ is a \textbf{down-set} (if $x \in A$ and $y \subset x$ then $y \in A$).
+  Trivial that $|A| \leq |\hyperlink{def:superrange}{X^{(<k)}}|$ if $A$ is a \hyperlink{def:downset}{down-set} (if $x \in A$ and $y \subset x$ then $y \in A$).
   Indeed, must have $A \subset X^{(<k)}$, since if $A$ contains a set $x$ with $|x| \geq k$ then $A \mid x = \mathcal{P}(x)$.
   So `try to make $A$ into a down-set'.
 \end{idea}
@@ -2160,7 +2309,7 @@ Could take $A = X^{(<k)}$ - no $k$-set $Y$ is shattered, as $Y \notin A \hyperli
   i.e.\ remove element $i$ where possible.
 \end{defi}
 \begin{nthm}[Sauer-Shelah Lemma]\label{thm:3.1}
-  Let $A \subset \mathcal{P}(X)$ with $\hyperlink{def:tr}{\tr} A < k$. Then $|A| \leq |X^{(<k)}|$
+  Let $A \subset \mathcal{P}(X)$ with $\hyperlink{def:tr}{\tr A} < k$. Then $|A| \leq |\hyperlink{def:superrange}{X^{(<k)}}|$
 \end{nthm}
 \begin{proof}
   Given $1 \leq i \leq n$:
@@ -2176,7 +2325,7 @@ Could take $A = X^{(<k)}$ - no $k$-set $Y$ is shattered, as $Y \notin A \hyperli
 
   Now let $D = D_n(D_{n-1}(\dotsb D_1(A) \dotsb))$.
   Then $|D| = |A|$, $D$ is a \hyperlink{def:downset}{down-set}, and $\tr D \leq \tr A < k$.
-  Thus $|D| \leq |X^{(<k)}|$.
+  Thus $|D| \leq |\hyperlink{def:superrange}{X^{(<k)}}|$.
 \end{proof}
 \begin{remark}
   We had $1$-dimensional compression.
@@ -2184,7 +2333,7 @@ Could take $A = X^{(<k)}$ - no $k$-set $Y$ is shattered, as $Y \notin A \hyperli
 Have: if all $k$-dimensional \hyperlink{def:proj}{projections} have size $\leq 2^k - 1$, then $A$ small:
 \begin{equation*}|A| \leq \sum_{i=0}^{k-1} \binom{n}{k}.\end{equation*}
 What about other bounds?
-For example, what if each $k$-dimensional projection is $\leq \frac{1}{2}$-sized: $|A \mid Y| \leq 2^{k-1}$?
+For example, what if each $k$-dimensional \hyperlink{def:proj}{projection} is $\leq \frac{1}{2}$-sized: $|\hyperlink{def:proj}{A \mid Y}| \leq 2^{k-1}$?
 
 \begin{defi}[Box]
   \hypertarget{def:box}A \named{box} or \named{brick} in $\mathbb{R}^n$ is a set of the form $[a_1, b_1] \times [a_2, b_2] \times \dotsb \times [a_n, b_n]$, where $a_i \leq b_i \; \forall i$.
@@ -2218,30 +2367,38 @@ For example, what if each $k$-dimensional projection is $\leq \frac{1}{2}$-sized
 \end{remark}
 \hypertarget{not:sy}For a body $S \subset \mathbb{R}^n$, and $Y \subseteq \{1,\dotsc,n\}$, write $S_Y$ for the projection of $S$ onto the subspace spanned by the $e_i,\ i \in Y$.
 \begin{eg}
-  For $S \subset \mathbb{R}^3$: $S_1$ is the projection of $S$ onto the $x$-axis, i.e.\
+  For $S \subset \mathbb{R}^3$: $S_1$ is the \hyperlink{def:proj}{projection} of $S$ onto the $x$-axis, i.e.\
   \begin{equation*}
-    S_1 = \set{x_1 | (x_1, x_2, x_3) \in S, \text{ some } x_2,x_3}
+    S_1 = \{x_1 \mid (x_1, x_2, x_3) \in S, \text{ some } x_2,x_3\}
   \end{equation*}
   $S_{12}$ is the projection of $S$ onto the $xy$-plane.
   \begin{equation*}
-    S_{12} = \set{(x_1,x_2) | (x_1, x_2, x_3) \in S, \text{ some } x_3}
+    S_{12} = \{(x_1,x_2) \mid (x_1, x_2, x_3) \in S, \text{ some } x_3\}
   \end{equation*}
 \end{eg}
 \begin{center}
   \begin{tikzpicture}
     \draw [->] (0,0) -- (3,-1);
+    \draw [very thick, bred!40] (0,1.3) -- (0,2.9);
     \draw [->] (0,0) -- (0,4);
     \draw [->] (0,0) -- (4,0.5);
+    \draw [dashed, very thin] (1,-0.1) -- (1,2);
+    \draw [dashed, very thin] (3,-0.1) -- (3,2);
+    \draw [dashed, very thin] (2,1.2) -- (0,1.3);
+    \draw [dashed, very thin] (2,2.8) -- (0,2.9);
     \begin{scope}[transform canvas={yscale=0.8}, xshift=2cm, yshift=2.5cm]
-      \shade [ball color = bred!40, opacity = 0.7] (0,0) circle (1cm);
+      \shade [ball color = bred!40] (0,0) circle (1cm);
     \end{scope}
-    \draw (2,2) ellipse (1cm and 0.8cm);
-    \draw (1,-0.1) -- (1,2);
-    \draw (3,-0.1) -- (3,2);
-    \draw (2,-0.1) ellipse (1cm and 0.2cm);
+    \fill [bred!40, opacity=0.5] (2,-0.1) ellipse (1cm and 0.2cm);
+    \node [left] at (0,4) {$z$};
+    \node [right] at (3,-1) {$x$};
+    \node [right] at (4,0.5) {$y$};
+    \node [bred!70!black] at (3,-0.4) {$S_{12}$};
+    \node [bred!70!black] at (2.8,2.8) {$S$};
+    \node [bred!70!black] at (-0.3,2.4) {$S_3$};
   \end{tikzpicture}
 \end{center}
-Do bounds on some of the $|S_Y|$ give bounds on $|S|$?
+Do bounds on some of the $|\hyperlink{not:sy}{S_Y}|$ give bounds on $|S|$?
 
 For \marginnote{\emph{Lecture 14}}example, for $S \subset \mathbb{R}^3$, we have both $|S| \leq |S_1| |S_2| \abs{S_3}$, as $S \subset S_1 \times S_2 \times S_3$, and $|S| \leq |S_{12}| |S_3|$, as $S \subset S_{12} \times S_3$.
 
@@ -2251,7 +2408,7 @@ But $|S_{12}| |S_{13}|$ does not bound $|S|$ - take for instance
 \end{equation*}
 How about $|S_{12}|,\ |S_{13}|,\ |S_{23}|$?
 \begin{nprop}\label{prop:3.2}
-  Let $S$ be a body in $\mathbb{R}^3$. Then $|S^2| \leq |S_{12}| |S_{13}| |S_{23}|$.
+  Let $S$ be a \hyperlink{def:body}{body} in $\mathbb{R}^3$. Then $|S|^2 \leq |\hyperlink{not:sy}{S_{12}}| |S_{13}| |S_{23}|$.
 \end{nprop}
 \begin{remark}\leavevmode
   \begin{enumerate}
@@ -2259,15 +2416,65 @@ How about $|S_{12}|,\ |S_{13}|,\ |S_{23}|$?
   \item \hypertarget{def:sectionr}For $S \subset \mathbb{R}^n$, the \named{section}\textbf{s} of $S$ are the sets $S(x) \subset \mathbb{R}^{n-1}$ (for $x \in \mathbb{R}$)
       given by
       \begin{equation*}
-        S(x) = \set{(x_1, \dotsc, x_{n-1}) \in \mathbb{R}^{n-1} | (x_1, \dotsc, x_{n-1}, x) \in S}.
+        S(x) = \{(x_1, \dotsc, x_{n-1}) \in \mathbb{R}^{n-1} \mid (x_1, \dotsc, x_{n-1}, x) \in S\}.
       \end{equation*}
+      \begin{center}
+        \begin{tikzpicture}[scale=1.4]
+          \draw [->] (0,0) -- (0,3);
+          \begin{scope}[cm={1,0.125,0.75,-0.25,(0,0)}]
+            \draw [bred, scale=0.7, fill=bred!40, xshift=1cm, yshift=1.5cm] plot [smooth cycle, tension=0.7] coordinates {(0:1) (45:1.4) (90:1.2) (135:0.8) (180:0.6) (225:0.8) (270:1) (315:1.4)};
+            \draw [->] (0,0) -- (0,3);
+            \draw [->] (0,0) -- (3,0);
+            \node [right] at (0,3) {$x$};
+            \node [right] at (3,0) {$y$};
+            \node [right, bred!70!black] at (1.3,1.8) {$S(0)$};
+            \node [left] at (0,0) {$0$};
+          \end{scope}
+          \begin{scope}[cm={1,0.125,0.75,-0.25,(0,1.1)}]
+            \draw [bred, scale=0.7, fill=bred!40, xshift=1cm, yshift=1.5cm] plot [smooth cycle, tension=0.7] coordinates {(0:1.2) (45:1.4) (90:1) (135:0.6) (180:0.3) (225:0.8) (270:1.2) (315:1.5)};
+            \draw [->] (0,0) -- (0,2.5);
+            \draw [->] (0,0) -- (2.5,0);
+            \node [right, bred!70!black] at (1.3,1.8) {$S(2)$};
+            \node [left] at (0,0) {$2$};
+          \end{scope}
+          \begin{scope}[cm={1,0.125,0.75,-0.25,(0,2.5)}]
+            \draw [bred, scale=0.7, fill=bred!40, xshift=1cm, yshift=1.5cm] plot [smooth cycle, tension=0.7] coordinates {(0:1.3) (45:1.2) (90:0.8) (135:0.6) (180:0.8) (225:0.7) (270:0.8) (315:1.6)};
+            \draw [->] (0,0) -- (0,2.5);
+            \draw [->] (0,0) -- (2.5,0);
+            \node [right, bred!70!black] at (1.3,1.8) {$S(5)$};
+            \node [left] at (0,0) {$5$};
+          \end{scope}
+          \node [left] at (0,3) {$z$};
+        \end{tikzpicture}
+      \end{center}
   \end{enumerate}
 \end{remark}
-% TODO: picture
 \begin{proof}
   Suppose first that every \hyperlink{def:sectionr}{section} of $S$ is a square: \begin{equation*}S(x) = [0, f(x)] \times [0, f(x)]\ \forall x.\end{equation*}
-  Then $|S_{12}| = M^2$, where $M = \max f$.
-  % TODO: picture
+  \begin{center}
+    \begin{tikzpicture}[scale=1.4]
+      \draw [->] (0,0) -- (0,3);
+      \begin{scope}[cm={1,0.125,0.75,-0.25,(0,0)}]
+        \draw [bred, fill=bred!40, line join=bevel] (0,0) rectangle (0.9,0.9);
+        \draw [->] (0,0) -- (0,3);
+        \draw [->] (0,0) -- (3,0);
+        \node [right] at (0,3) {$1$};
+        \node [right] at (3,0) {$2$};
+      \end{scope}
+      \begin{scope}[cm={1,0.125,0.75,-0.25,(0,1)}]
+        \draw [bred, fill=bred!40, line join=bevel] (0,0) rectangle (1.4,1.4);
+        \draw [->] (0,0) -- (0,2.5);
+        \draw [->] (0,0) -- (2.5,0);
+      \end{scope}
+      \begin{scope}[cm={1,0.125,0.75,-0.25,(0,2)}]
+        \draw [bred, fill=bred!40, line join=bevel] (0,0) rectangle (1.1,1.1);
+        \draw [->] (0,0) -- (0,2.5);
+        \draw [->] (0,0) -- (2.5,0);
+      \end{scope}
+      \node [left] at (0,3) {$3$};
+    \end{tikzpicture}
+  \end{center}
+  Then $|\hyperlink{not:sy}{S_{12}}| = M^2$, where $M = \max f$.
   Also,
   \begin{equation*}
     |S_{13}| = |S_{23}| = \int\!f(x) \, dx.
@@ -2293,7 +2500,25 @@ How about $|S_{12}|,\ |S_{13}|,\ |S_{23}|$?
     \qquad\text{so}\qquad
     |S(x)| \leq g(x) h(x).
   \end{equation*}
-  % TODO: picture
+  \begin{center}
+    \begin{tikzpicture}[scale=1.4]
+      \draw [->] (0,0) -- (0,2);
+      \begin{scope}[cm={1,0.125,0.75,-0.25,(0,0.5)}]
+        \draw [decorate,decoration={brace,amplitude=2mm}, bred!70!black] (0,1.907) -- node [midway, yshift=-1mm, below] {$g(x)$} (0,0.44);
+        \draw [decorate,decoration={brace,amplitude=2mm}, bred!70!black] (0.35,0) -- node [midway, yshift=1mm, above] {$h(x)$} (1.845,0);
+        \node [bred!70!black, above right] at (1.3,2.2) {$S(x)$};
+        \draw [very thick, bred!40] (0,0.44) -- (0,1.907);
+        \draw [very thick, bred!40] (0.35,0) -- (1.845,0);
+        \draw [->] (0,0) -- (0,2.5);
+        \draw [->] (0,0) -- (2.5,0);
+        \draw [very thin, dashed] (0.35,0) -- (0.35,1.26);
+        \draw [very thin, dashed] (1.845,0) -- (1.845,1);
+        \draw [very thin, dashed] (0,0.44) -- (1.61,0.44);
+        \draw [very thin, dashed] (0,1.907) -- (1.35,1.907);
+        \draw [bred, scale=0.7, fill=bred!40, xshift=1.3cm, yshift=1.8cm] plot [smooth cycle, tension=0.7] coordinates {(0:1.3) (45:1.2) (90:0.8) (135:0.6) (180:0.8) (225:0.7) (270:0.8) (315:1.6)};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
   We have $|S_{13}| = \int g(x) \, dx$ and $|S_{23}| = \int h(x) \, dx$.
   Also,
   \begin{equation*}|T_{13}| = |T_{23}| = \int \sqrt{|S(x)|} \, dx \leq \int \sqrt{g(x) h(x)} \, dx.\end{equation*}
@@ -2314,13 +2539,13 @@ How about $|S_{12}|,\ |S_{13}|,\ |S_{23}|$?
   \end{itemize}
 \end{eg}
 \begin{aim}
-  $|S|^k \leq |S_{Y_1}| \dotsb |S_{Y_r}|$ where $Y_1, \dotsc, Y_r$ a \hyperlink{def:cover}{$k$-uniform cover} of $[n]$.
+  $|S|^k \leq |\hyperlink{not:sy}{S_{Y_1}}| \dotsb |S_{Y_r}|$ where $Y_1, \dotsc, Y_r$ a \hyperlink{def:cover}{$k$-uniform cover} of $[n]$.
 \end{aim}
 Let $\mathcal{C} = {Y_1, \dotsc, Y_r}$ be a \hyperlink{def:cover}{$k$-uniform cover} of $[n]$.
 This is a multiset, i.e.\ repetition allowed e.g.\ $\mathcal{C} = \{1,1,2,3,23\}$ is a $2$-uniform cover of $[3]$.
 Let
 \begin{equation*}
-  \mathcal{C}_- = \set{Y \in \mathcal{C} | n \notin Y}, \qquad \mathcal{C}_+ = \set{Y - \{n\} | Y \in \mathcal{C}, n \in Y}.
+  \mathcal{C}_- = \{Y \in \mathcal{C} \mid n \notin Y\}, \qquad \mathcal{C}_+ = \{Y - \{n\} \mid Y \in \mathcal{C}, n \in Y\}.
 \end{equation*}
 So $|\mathcal{C}_+| = k$ and $\mathcal{C}_- \cup \mathcal{C}_+$ is a $k$-uniform cover of $[n-1]$.
 Note that for a \hyperlink{def:body}{body} $S \subseteq \mathbb{R}^n$, if $n \notin Y$ then $|S_Y| \geq |S(x)_Y|\ \forall x$, e.g.\ $|S_1| \geq |S(x)_1|\ \forall x$ when $S \subseteq \mathbb{R}^3$.
@@ -2346,8 +2571,8 @@ Iterating:
   Induction on $n$: $n=1$ case works.
   Given $S \subset \mathbb{R}^n$ for $n \geq 2$:
   \begin{align*}
-    |S| = \int\!|S(x)|\,dx &\leq \int \prod_{Y \in \mathcal{C}_-} |S(x)_Y|^{\frac 1 k}\prod_{Y \in \mathcal{C}_+} |S(x)_Y|^{\frac 1 k} \\
-    \shortintertext{by induction, as $\mathcal{C}_- \cup \mathcal{C}_+$ a $k$-uniform cover of $[n-1]$}
+    |S| = \int\!|\hyperlink{def:sectionr}{S(x)}|\,dx &\leq \int \prod_{Y \in \mathcal{C}_-} |\hyperlink{not:sy}{S(x)_Y}|^{\frac 1 k}\prod_{Y \in \mathcal{C}_+} |S(x)_Y|^{\frac 1 k} \\
+    \shortintertext{by induction, as $\mathcal{C}_- \cup \mathcal{C}_+$ a \hyperlink{def:cover}{$k$-uniform cover} of \hyperlink{def:ints}{$[n-1]$}}
                            &\leq \prod_{Y \in \mathcal{C}_-} |S_Y|^{\frac 1 k} \int \prod_{Y \in \mathcal{C}_+} \abs{S(x)_Y}^{\frac 1 k} \\
                            &\leq \prod_{Y \in \mathcal{C}_-} |S_Y|^{\frac 1 k} \prod_{Y \in \mathcal{C}_+} \left(\int \abs{S(x)_Y}\right)^{\frac 1 k} \\
                            &\leq \prod_{Y \in \mathcal{C}_-} |S_Y|^{\frac 1 k} \prod_{Y \in \mathcal{C}_+} \abs{S_{Y \cup \{n\}}}^{\frac 1 k} = \prod_{Y \in \mathcal{C}} |S_Y|^{\frac 1 k}. \qedhere
@@ -2383,7 +2608,7 @@ Iterating:
   \end{align*}
 \end{proof}
 \begin{aim}
-  Bollob\'as-Thomason Box Theorem: For any $S \subset \mathbb{R}^n$, $\exists$ a \hyperlink{def:box}{box} $B$ with $|B| = |S|$ and $|\hyperlink{not:sy}{B_Y}| \leq |S_Y|$ $\forall Y \subseteq [n].$
+  Bollob\'as-Thomason Box Theorem: For any $S \subset \mathbb{R}^n$, $\exists$ a \hyperlink{def:box}{box} $B$ with $|B| = |S|$ and $|\hyperlink{not:sy}{B_Y}| \leq |S_Y|$ $\forall Y \subseteq \hyperlink{def:ints}{[n]}.$
 
   This looks way too strong to be true - e.g.\ it tells us that, to verify any proposed \hyperlink{def:proj}{projection} inequality, it suffices to check it on boxes.
 \end{aim}
@@ -2498,9 +2723,22 @@ What about \hyperlink{def:hinter}{$\triangle$-intersecting}? Obvious guess is $|
 \end{nthm}
 \begin{proof}
   Say $n$ even.
-  Consider the \hyperlink{def:proj}{projection} of $A$ onto the edge-set $Y = B^{\hyperlink{def:superr}{(2)}} \cup (B^c)^{(2)}$, for any $B \subset \hyperlink{def:ints}{[n]}$ with $|B| = \frac{n}{2}$.
+  Consider the \hyperlink{def:proj}{projection} of $A$ onto the edge-set $Y = \hyperlink{def:superr}{B^{(2)}} \cup (B^c)^{(2)}$, for any $B \subset \hyperlink{def:ints}{[n]}$ with $|B| = \frac{n}{2}$.
   Then $G, G' \in A \Rightarrow G \cap G'$ must meet $Y$ (because every triangle meets $Y$).
-  % TODO: picture
+  \begin{center}
+    \begin{tikzpicture}[scale=2]
+      \draw (0,0) rectangle (3,2);
+      \draw (0.8,1) ellipse (0.5cm and 0.7cm);
+      \draw (2.2,1) ellipse (0.5cm and 0.7cm);
+      \node at (0.7,1.2) {$B^{(2)}$};
+      \node at (2.3,1.2) {$(B^c)^{(2)}$};
+      \node [dot] (1) at (0.9,0.6) {};
+      \node [dot] (2) at (0.95,1.0) {};
+      \node [dot] (3) at (2.1,0.8) {};
+      \draw (1) -- (2);
+      \draw [gray, ultra thin] (2) -- (3) -- (1);
+    \end{tikzpicture}
+  \end{center}
   Then \hyperlink{def:proj}{$A \mid Y$} is an \hyperlink{def:inter}{intersecting} family of sets, so
   \begin{equation*}
     |A \mid Y| \leq \frac{1}{2} 2^{2 \binom{n/2}{2}} = 2^{2 \binom{n/2}{2} \cdot \left(1 - \frac{1}{2 \binom{n/2}{2}}\right)}.
@@ -2540,8 +2778,15 @@ Any disjoint union of stars is also common, e.g.\ take $n$ very large, $k$ large
   \end{tikzpicture}
 \end{center}
 
-Key question: Is $P_3$ \hyperlink{def:common}{common}? This is open.
-%TODO: picture of P3
+Key question: Is $P_3 =
+\begin{tikzpicture}[baseline=2pt, scale=0.3]
+\node [dot] (A) at (0,0) {};
+\node [dot] (B) at (2,1) {};
+\node [dot] (C) at (4,0) {};
+\node [dot] (D) at (6,1) {};
+\draw [dot] (A) -- (B) -- (C) -- (D);
+\end{tikzpicture}
+$ \hyperlink{def:common}{common}? This is open.
 Easy fact: Every $G$ not a union of stars contains $\triangle$ of $P_3$.
 So, if we know $P_3$ not common, we would know:
 
