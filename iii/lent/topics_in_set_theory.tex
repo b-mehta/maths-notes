@@ -1,0 +1,143 @@
+\documentclass{article}
+
+% preamble
+\def\npart{III}
+\def\nyear{2019}
+\def\nterm{Lent}
+\def\draft{Unfinished course}
+\def\nlecturer{Professor B. L\"owe}
+\def\ncourse{Topics in Set Theory}
+
+\usepackage{mathrsfs}
+\usepackage{imakeidx}
+\usepackage{marginnote}
+\usepackage{mathdots}
+\usepackage{tabularx}
+
+\input{header}
+\swapnumbers
+\reversemarginpar
+
+\makeindex[intoc]
+
+\newcommand{\named}[1]{\textbf{#1}\index{#1}}
+\newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
+
+\setcounter{section}{-1}
+
+% and here we go!
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\clearpage
+\section{Introduction}
+The \marginnote{\emph{Lecture 1}}[0cm]main `topic in set theory' covered in this course will be one of the most important: solving the Continuum Problem.
+A priori, set theory does not seem intrinsically related to logic, but the continuum hypothesis showed that logic was a very important tool in set theory.
+In contrast to many other disciplines of mathematics, in set theory we typically try to prove things are \emph{impossible}, rather than showing what is possible.
+
+The second international congress of mathematicians in 1900 was in Paris, where Hilbert spoke. At that time, Hilbert was a `universal' mathematician, and had worked in every major field of mathematics. He gave a list of problems for the century, the 23 Hilbert Problems. The first on this list was the Continuum Problem.
+
+\subsection{Continuum Hypothesis}\index{Continuum hypothesis}
+Here is Hilbert's formulation of the Continuum hypothesis (CH):
+Every set of infinitely many real numbers is either equinumerous with the set of natural numbers or the set of real numbers.
+More formally, we might write
+\begin{equation*}
+  \forall X \subseteq \mathbb{R}, (X \text{ is infinite} \Rightarrow X \sim \mathbb{N} \text{ or } X \sim \mathbb{R})
+\end{equation*}
+
+In more modern terms, we write this as the claim $2^{\aleph_0} = \aleph_1$.
+These two statements are equivalent (in ZFC).
+
+Assume that $2^{\aleph_0} > \aleph_1$, in particular $2^{\aleph_0} \geq \aleph_2$. Since $2^{\aleph_0} \sim \mathbb{R}$, we get an injection $i: \aleph_2 \to \mathbb{R}$.
+Consider $X \coloneqq i[\aleph_1] \subseteq \mathbb{R}$. Clearly, $i|_{\aleph_1}$ is a bijection between $\aleph_1$ and $X$, so $X \sim \aleph_1$.
+But $\aleph_1 \nsim \mathbb{N}$ and $\aleph_1 \nsim \mathbb{R}$.
+Thus $X$ refutes CH (in its earlier formulation).
+So: $2^{\aleph_0} \neq \aleph_1 \implies \neg \text{CH}$.
+
+If $2^{\aleph_0} = \aleph_1$.
+Let $X \subseteq \mathbb{R}$. Consider $b: 2^{\aleph_0} \to \mathbb{R}$ a bijection. If $X$ is infinite, then $b^{-1}[X] \subseteq 2^{\aleph_0}$.
+Thus the cardinality of $X$ is either $\aleph_0$, i.e.\ $X \sim \mathbb{N}$ or $\aleph_1$, i.e.\ $X \sim \mathbb{R}$.
+So, $2^{\aleph_0} = \aleph_1 \implies \text{CH}$.
+
+\subsection{History of CH}
+\begin{itemize}[label=--]
+  \item 1938, G\"odel: ZFC does not prove $\neg$CH.
+  \item 1963, Cohen: ZFC does not prove CH.
+\end{itemize}
+G\"odel's proof used the technique of inner models; Cohen's proof used forcing, sometimes referred to as outer models.
+
+G\"odel's Completeness Theorem:
+\begin{equation*}
+  \text{Cons}(T) \iff \exists(M, E) (M, E) \models T
+\end{equation*}
+From this, we might guess that G\"odel's and Cohen's proof will show there is a model of ZFC + CH, and a model of ZFC + $\neg$CH, but by the incompleteness phenomenon, we cannot prove there is a model of ZFC!
+So, we are not going to be able to prove Cons(ZFC+CH), but instead
+\begin{equation*}
+  \text{Cons(ZFC)} \rightarrow \text{Cons(ZFC+CH)}
+\end{equation*}
+Or, equivalently,
+\begin{equation*}
+  \text{if } M \models \text{ZFC, then there is } N \models \text{ZFC + CH}.
+\end{equation*}
+
+\clearpage
+\section{Model theory of set theory}
+Let's assume for a moment that
+\begin{equation*}
+  (M,\epsilon) \models ZFC.
+\end{equation*}
+We refer to the canonical objects in $M$ by the usual symbols, e.g., $0,1,2,3,4,\dotsc, \omega, \omega+1, \dotsc$
+
+What would an ``inner model'' be?
+Take $A \subseteq M$, and consider $(A, \epsilon)$. This is a substructure of $(M, \epsilon)$.
+
+Note: the language of set theory has no function or constant symbols. But we write down
+\begin{equation*}
+  X = \emptyset,\ X = \{Y\},\ X = \{Y,Z\},\ X = \bigcup Z,\ X = \mathcal{P}(Z)
+\end{equation*}
+which appear to use function or constant symbols. These are technically not part of the language of set theory; they are abbreviations:
+\begin{align*}
+  X &= \emptyset & &\text{ abbreviates } & &\forall w (\neg w \in X) \\
+  X &= \{Y\} & & \text{ abbreviates } & &\forall w (w \in X \leftrightarrow w = Y) \\
+  X &\subseteq Y & & \text{ abbreviates } & &\forall w (w \in X \rightarrow w \in Y)
+\end{align*}
+and so on.
+
+\begin{defi}\hypertarget{def:abso}
+  If $\varphi$ is a formula in $n$ free variables. We say
+  \begin{enumerate}[label=(\arabic*)]
+    \item $\varphi$ is \named{upwards absolute} between $A$ and $M$ if
+      \begin{equation*}
+        \text{for all } a_1, \dotsc, a_n \in A,\quad (A,\epsilon) \models \varphi(a_1, \dotsc, a_n) \implies (M, \epsilon) \models \varphi(a_1, \dotsc, a_n)
+      \end{equation*}
+    \item $\varphi$ is \named{downwards absolute} between $A$ and $M$ if
+      \begin{equation*}
+        \text{for all } a_1, \dotsc, a_n \in A,\quad (M,\epsilon) \models \varphi(a_1, \dotsc, a_n) \implies (A, \epsilon) \models \varphi(a_1, \dotsc, a_n)
+      \end{equation*}
+    \item $\varphi$ is \named{absolute} between $A$ and $M$ if it is upwards absolute and downwards absolute.
+  \end{enumerate}
+\end{defi}
+
+\begin{defi}\hypertarget{def:sigmaPi}
+      We say that a formula is $\Sigma_1$ if it is of the form
+      \begin{equation*}
+        \exists x_1 \dotsc \exists x_n\ \varphi(x_1, \dotsc, x_n) \text{ where } \varphi \text{ is quantifier-free}
+      \end{equation*}
+      or $\Pi_1$ if it is of the form
+      \begin{equation*}
+        \forall x_1 \dotsc \forall x_n\ \varphi(x_1, \dotsc, x_n) \text{ where } \varphi \text{ is quantifier-free}
+      \end{equation*}
+\end{defi}
+
+\begin{remark}
+  \leavevmode
+  \begin{enumerate}[label=(\alph*)]
+    \item If $\varphi$ is quantifier-free, then $\varphi$ is \hyperlink{def:abso}{absolute} between $A$ and $M$.
+    \item If $\varphi$ is \hyperlink{def:sigmaPi}{$\Pi_1$}, then it's downward absolute
+    \item If $\varphi$ is \hyperlink{def:sigmaPi}{$\Sigma_1$}, then it's upward absolute
+  \end{enumerate}
+\end{remark}
+\printindex
+\end{document}

@@ -75,7 +75,7 @@ While all examinable proofs will be included in lectures, relevant books for thi
 \begin{defi}[Set system]\index{set system}\hypertarget{def:ss}
   Let $X$ be a set. A \named{set system} on $X$ (or \named{family} of subsets of $X$) is a family $\mathcal{A} \subseteq \mathcal{P}(X)$.
 \end{defi}
-\hypertarget{def:superr}For instance, we write $X^{(r)} = \set{A \subset X | |A| = r}$, so $X^{(r)}$ is a \hyperlink{def:ss}{set system} on $X$.
+\hypertarget{def:superr}For instance, we write $X^{(r)} = \{A \subset X \mid |A| = r\}$, so $X^{(r)}$ is a \hyperlink{def:ss}{set system} on $X$.
 We often call refer to sets in $X^{(r)}$ as \textbf{$r$-sets}\index{r-set@$r$-set}.
 
 Unless otherwise stated,
@@ -389,7 +389,7 @@ Inspired by `each \hyperlink{def:chain}{chain} meets each \hyperlink{def:superr}
   Let $\mathcal{A} \subseteq \hyperlink{def:superr}{X^{(r)}}$, for some $1 \leq r \leq n$.
   The \named{shadow} or \named{corner shadow} of $\mathcal{A}$ is
   \begin{equation*}
-    \partial \mathcal{A} \equiv \partial^- \mathcal{A} \coloneqq \set{A - \{i\} | A \in \mathcal{A},\; i \in A}
+    \partial \mathcal{A} \equiv \partial^- \mathcal{A} \coloneqq \{A - \{i\} \mid A \in \mathcal{A},\; i \in A\}
   \end{equation*}
   so $\partial \mathcal{A} \subset X^{(r-1)}$.
 \end{defi}
@@ -516,13 +516,13 @@ Given $|\mathcal{A}|$, how should we choose $\mathcal{A} \subset X^{(r)}$ to min
 If $|\mathcal{A}| = \binom{k}{r}$, it is believable that we'd take $\mathcal{A} = [k]^{(r)}$ - giving $\partial \mathcal{A} = [k]^{(r-1)}$.
 What if $\binom{k}{r} < |\mathcal{A}| < \binom{k+1}{r}$? Believable that we'd take $[k]^{(r)}$ and some other $r$-sets from $[k+1]^{(r)}$.
 For instance, if $\mathcal{A} \subset X^{(3)}$ with $|\mathcal{A}| = \binom{7}{3} + \binom{4}{2}$, we'd take
-\begin{equation*}\mathcal{A} = [7]^{(3)} \cup \set{A \cup \{8\} | A\in [4]^{(2)}}.\end{equation*}
+\begin{equation*}\mathcal{A} = [7]^{(3)} \cup \{A \cup \{8\} \| A\in [4]^{(2)}\}.\end{equation*}
 
 \subsubsection{Two total orderings on \texorpdfstring{$X^{(r)}$}{X(r)}}
 Given $A,B \in \hyperlink{def:superr}{X^{(r)}}$, say $A = a_1 \dotsb a_r$, $B = b_1 \dotsb b_r$.
 \begin{defi}[Lexicographic order]\index{lexicographic order}\index{order!lexicographic}\hypertarget{def:lex}
   Say $A < B$ in the \named{lexicographic order} or \textbf{lex order} if for some $i$ we have $a_i < b_i$ and $a_j = b_j \; \forall j < i$.
-  Equivalently, $a_i < b_i$, where $i = \min\set{j | a_j \neq b_j}$.
+  Equivalently, $a_i < b_i$, where $i = \min\{j \mid a_j \neq b_j\}$.
 \end{defi}
 `Use small numbers', dictionary order.
 
@@ -542,7 +542,7 @@ Given $A,B \in \hyperlink{def:superr}{X^{(r)}}$, say $A = a_1 \dotsb a_r$, $B = 
 
 \begin{defi}[Colexicographic order]\index{colexicographic order}\index{order!colexicographic}\hypertarget{def:colex}
   Say $A < B$ in the \named{colexicographic order} or \textbf{colex order} if for some $i$ have $a_i < b_i$ and $a_j = b_j \; \forall j > i$.
-Equivalently, $a_i < b_i$ where $i = \max\set{j | a_j \neq b_j}$.
+Equivalently, $a_i < b_i$ where $i = \max\{j \mid a_j \neq b_j\}$.
 \end{defi}
 `Avoid large numbers'. Equivalently, $A < B$ if $\sum_{i \in A} 2^i < \sum_{i \in B} 2^i$.
 \begin{eg}\leavevmode
@@ -938,7 +938,7 @@ In fact, the size from $\A$ is optimal:
   \end{enumerate}
 \end{remark}
 Equality in \nameref{thm:ekr11}?
-Can check equality holds $\iff \A = \set{A \in \hyperlink{def:superr}{X^{(r)}} | i \in A}$ for some $i$.
+Can check equality holds $\iff \A = \{A \in \hyperlink{def:superr}{X^{(r)}} \mid i \in A\}$ for some $i$.
 This follows (proof 1) from equality case of \nameref{thm:kk7}, or (proof 2) by considering changing the cyclic ordering bit by bit.
 \clearpage
 \section{Isoperimetric inequalities}
@@ -1008,7 +1008,7 @@ For example, in the picture, if $A = \{1,2,3\}$, then $b(A) = \{4,5\}$.
 \begin{defi}[Neighbourhood]\hypertarget{def:neighbourhood}
   Equivalently, minimise the \named{neighbourhood} of $A$:
   \begin{equation*}
-    N(A) = A \cup \hyperlink{def:boundary}{b(A)} = \set{x \in G | d(x,A) \leq 1}
+    N(A) = A \cup \hyperlink{def:boundary}{b(A)} = \{x \in G \mid d(x,A) \leq 1\}
   \end{equation*}
   where $d$ denotes the usual graph distance.
 \end{defi}
@@ -1257,8 +1257,8 @@ Also, $C_i(A)$ `looks more like' an initial segment of \hyperlink{def:simplicial
     \end{align*}
     while if $n$ is even, say $n = 2k$, we have
     \begin{align*}
-      B &= X^{(\leq k-1)} \cup \set{x \in X^{(k)} | 1 \in x} - \{\text{last $k$-set with 1}\} \cup \{\text{first $k$-set without $1$}\}\\
-        &= X^{(\leq k-1)} \cup \set{x \in X^{(k)} | 1 \in x} - \{1(k+2)\dotsc(2k)\} \cup \{234\dotsc k(k+1)\}
+      B &= X^{(\leq k-1)} \cup \{x \in X^{(k)} \mid 1 \in x\} - \{\text{last $k$-set with 1}\} \cup \{\text{first $k$-set without $1$}\}\\
+        &= X^{(\leq k-1)} \cup \{x \in X^{(k)} \mid 1 \in x\} - \{1(k+2)\dotsc(2k)\} \cup \{234\dotsc k(k+1)\}
     \end{align*}
   \end{nlemma}
 
@@ -1330,7 +1330,7 @@ Also, $C_i(A)$ `looks more like' an initial segment of \hyperlink{def:simplicial
 
     Hence for each $y \in B$, at most one $x < y$ has $x \notin B$ (namely $y^c$) and for each $x \notin B$, at most $y > x$ has $y \in B$ (namely $x^c$).
 
-    Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
+    Hence $B = \{z \mid z \leq y\} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
     But then $x=$ last $k$-set (if $n=2k+1$) or the last $k$-set containing $1$ (if $n = 2k$)
     by definition of simplicial ordering. \qedhere \qedhere
   \end{proof}
@@ -1787,7 +1787,7 @@ Equivalently $x < y$ if $\sum_{i \in x} 2^i < \sum_{i \in y} 2^i$: `go up in sub
   Then for any $i$, cannot have $i \notin x,y$ and cannot have $i \in x,y$ as $B_i(B) = B$.
   So $x = y^c$.
   Thus for each $y \in B$, there is at most 1 $x < y$ with $x \notin B$ (namely $x^c$), and for each $x \notin B$, there is at most one $y > x$ with $y \in B$ (namely $y^c$).
-  Hence $B = \set{z | z \leq y} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
+  Hence $B = \{z \mid z \leq y\} - \{x\}$ where $x$ is the immediate predecessor of $y$ and $x = y^c$.
   Hence $y = \{n\}$. $\blacksquare$
 \end{proof}
 \begin{remark}
@@ -1928,7 +1928,7 @@ This suggests that sets of the form $ \{x \mid \lvert x \rvert \leq r\} $ are be
 What about sizes in between?
 For given $|x|$, we'd `keep $x_1$ big'
 \begin{defi}[Simplicial ordering]\hypertarget{def:simplic}
-  We define the \named{simplicial order} on $\hyperlink{def:grid}{[k]^n}$ by setting $x<y$ if either $|x| < |y|$ or $|x| = |y|$ and $x_i > y_i$, where $i = \min\set{j | x_j \neq y_j}$.
+  We define the \named{simplicial order} on $\hyperlink{def:grid}{[k]^n}$ by setting $x<y$ if either $|x| < |y|$ or $|x| = |y|$ and $x_i > y_i$, where $i = \min\{j \mid x_j \neq y_j\}$.
   Note: for $k=2$ this agrees with our \hyperlink{def:simplicial}{previous definition}.
 \end{defi}
 \begin{eg}\leavevmode
@@ -2139,7 +2139,7 @@ For given $|x|$, we'd `keep $x_1$ big'
       Define $E \subset [k]^n$ by
       \begin{align*}
         E_1 &= B_1 \\
-        E_t &= \set{x \in [k]^{n-1} | N(\{x\}) \subset E_{t-1}}, \quad t=2,3,\dotsc,k.
+        E_t &= \{x \in [k]^{n-1} \mid N(\{x\}) \subset E_{t-1}\}, \quad t=2,3,\dotsc,k.
       \end{align*}
       Then $E$ is an initial segment of simplicial and $E \supset B$, so $|E| \geq |B| = |C|$, whence $E \supset C$ (as $E,C$ nested). Hence $E_1 \supset C_1$.
       This completes the claim, and thus completes the induction. \qedhere
@@ -2255,7 +2255,7 @@ Very few \hyperlink{def:isop}{isoperimetric inequalities} are known exactly or a
 \end{center}
 \begin{defi}[Projection]\hypertarget{def:proj}
   Let\marginnote{\emph{Lecture 13}} $A \subset \mathcal{P}(X)$. For $Y \subset X$ the \named{projection} or \named{trace} of $A$ on $Y$ is
-  \begin{equation*}A \mid Y \coloneqq \set{x \cap Y | x \in A}.\end{equation*}
+  \begin{equation*}A \mid Y \coloneqq \{x \cap Y \mid x \in A\}.\end{equation*}
 `Project $A$ onto coordinates corresponding to $Y$'.
 \end{defi}
 \begin{eg}
@@ -2304,7 +2304,7 @@ Could take $A = \hyperlink{def:superrange}{X^{(<k)}}$ - no $k$-set $Y$ is shatte
   \end{equation*}
   and set
   \begin{equation*}
-    D_i(A) = \set{D_i(x) | x \in A} \cup \set{x \in A | D_i(x) \in A}
+    D_i(A) = \{D_i(x) \mid x \in A\} \cup \{x \in A \mid D_i(x) \in A\}
   \end{equation*}
   i.e.\ remove element $i$ where possible.
 \end{defi}
@@ -2656,12 +2656,12 @@ Iterating:
 
   But $x_Y$ must appear on right hand side of an equality (else could decrease it), which can only be in (iii).
   So we have a $k$-uniform cover $\mathcal{C}$ with $Y \in \mathcal{C}$ and $|S|^k = \prod_{z \in \mathcal{C}} x_z$.
-  But then equality also holds for the cover $\mathcal{C}' = \mathcal{C} - \{Y\} \cup \set{\{j\} | j \in Y}$.
+  But then equality also holds for the cover $\mathcal{C}' = \mathcal{C} - \{Y\} \cup \{\{j\} \mid j \in Y\}$.
   Now just take an irreducible $\mathcal{C}'' \subset \mathcal{C}$ with $\{i\} \in \mathcal{C}''$. $\blacksquare$
 
   So, for each $i$, have a cover $\mathcal{C}_i$ with $\{i\} \in \mathcal{C}_i$ and equality holding in (iii).
   Put $\mathcal{C} = \mathcal{C}_1 \cup \dotsb \cup \mathcal{C}_n$. Then $\{i\} \in \mathcal{C}$ $\forall i$, and have equality for $\mathcal{C}$ in (iii).
-  But $\mathcal{C} = \mathcal{C}' \cup \mathcal{C}''$ for some $\mathcal{C}''$, where $\mathcal{C}' = \set{\{i\} : 1 \leq i \leq n}$, hence have equality in (iii) for $\mathcal{C}'$, i.e.\ $|S| = x_1 \dotsm x_n$.
+  But $\mathcal{C} = \mathcal{C}' \cup \mathcal{C}''$ for some $\mathcal{C}''$, where $\mathcal{C}' = \{\{i\} \mid 1 \leq i \leq n\}$, hence have equality in (iii) for $\mathcal{C}'$, i.e.\ $|S| = x_1 \dotsm x_n$.
   Now for any $Y$ with $|Y| \geq 2$, must have $x_Y = \prod_{i \in Y} x_i$, because $Y,Y^c$ is a uniform cover, so that
   \begin{equation*}|S| \leq x_Y x_{Y^c} \leq \prod_{i \in Y} x_i \prod_{i \notin Y} x_i = x_1 \dotsm x_n = |S|.\qedhere\end{equation*}
 \end{proof}
@@ -2683,7 +2683,7 @@ For instance, take $H = P_1 =$ a single edge $=
     \draw (A) -- (B);
 \end{tikzpicture}$
 
-Then $A$ is \hyperlink{def:hinter}{$H$-intersecting} $\Rightarrow |A| \leq \frac{1}{2} 2^{\binom{n}{2}}$ (as we cannot have $G, G^c \subset A$), and can achieve this, e.g.\ $A = \set{G | 12 \in G}$.
+Then $A$ is \hyperlink{def:hinter}{$H$-intersecting} $\Rightarrow |A| \leq \frac{1}{2} 2^{\binom{n}{2}}$ (as we cannot have $G, G^c \subset A$), and can achieve this, e.g.\ $A = \{G \mid 12 \in G\}$.
 (Indeed, for any non-empty $H$, we have $A$ $H$-intersecting $\Rightarrow |A| \leq \frac{1}{2} 2^{\binom n 2}$).
 
 What about $H = P_2 =
@@ -2693,10 +2693,10 @@ What about $H = P_2 =
 \node [dot] (C) at (4,0) {};
 \draw [dot] (A) -- (B) -- (C);
 \end{tikzpicture}$?
-Obvious guess: the best is $A = \set{G | G \text{ contains } H_0}$, where $H_0$ is some fixed copy of $P_2$.
+Obvious guess: the best is $A = \{G \mid G \text{ contains } H_0\}$, where $H_0$ is some fixed copy of $P_2$.
 This has size $|A| = \frac{1}{4} 2^{\binom n 2}$.
 
-But can do better, e.g.\ $A = \set{G | d_G(1) \geq \frac{n}{2} + 1}$, where $d_G(1)$ is the number of edges out of $1$.
+But can do better, e.g.\ $A = \{G \mid d_G(1) \geq \frac{n}{2} + 1\}$, where $d_G(1)$ is the number of edges out of $1$.
 This has size
 \begin{equation*}
   |A| = 2^{\binom n 2} \left(\frac{1}{2} - \frac{c}{\sqrt n}\right) = \left(\frac{1}{2} - o(1)\right) 2^{\binom n 2}.
@@ -2713,7 +2713,7 @@ Similarly if $H$ is any star
 we have \hyperlink{def:hinter}{$H$-intersecting} families of size $\left(\frac{1}{2} - o(1)\right) 2^{\binom n 2}$.
 
 What about \hyperlink{def:hinter}{$\triangle$-intersecting}? Obvious guess is $|A| = \frac{1}{8} 2^{\binom n 2}$, achieved by
-\begin{equation*}A = \set{G | G \supseteq \text{ fixed triangle}}.\end{equation*}
+\begin{equation*}A = \{G \mid G \supseteq \text{ fixed triangle}\}.\end{equation*}
 \begin{conjecture}[Simonovits-Sos]
   If $A$ is \hyperlink{def:hinter}{$\triangle$-intersecting} then $|A| \leq \frac{1}{8} 2^{\binom{n}{2}}.$
 \end{conjecture}
@@ -2760,7 +2760,7 @@ The Simonovits-Sos conjecture was proved in 2010 (Ellis, Filmus, Friedgut).
 \begin{defi}[Common]\hypertarget{def:common}
   Say $H$ \named{common} if
   \begin{equation*}
-    \max \set{\abs{A} | A \subset \mathcal{P}(\hyperlink{def:ints}{[n]}^{\hyperlink{def:superr}{(2)}}) \text{ is \hyperlink{def:hinter}{$H$-intersecting}}} = \left(\frac{1}{2} - o(1)\right) 2^{\binom n 2}.
+    \max \{\abs{A} \mid A \subset \mathcal{P}(\hyperlink{def:ints}{[n]}^{\hyperlink{def:superr}{(2)}}) \text{ is \hyperlink{def:hinter}{$H$-intersecting}}\} = \left(\frac{1}{2} - o(1)\right) 2^{\binom n 2}.
   \end{equation*}
 \end{defi}
 For instance, every star is \hyperlink{def:common}{common}, and $\triangle$ not common.
