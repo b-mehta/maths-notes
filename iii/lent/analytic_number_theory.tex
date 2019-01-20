@@ -1,0 +1,198 @@
+\documentclass{article}
+
+% preamble
+\def\npart{III}
+\def\nyear{2019}
+\def\nterm{Lent}
+\def\draft{Unfinished course}
+\def\nlecturer{Dr T.\ Bloom}
+\def\ncourse{Analytic Number Theory}
+
+\usepackage{imakeidx}
+\usepackage{marginnote}
+\usepackage[intoc, refpage]{nomencl}
+
+\input{header}
+
+\reversemarginpar
+
+\makeindex[intoc]
+
+\makenomenclature
+\renewcommand{\pagedeclaration}[1]{, \hyperlink{page.#1}{#1}}
+\renewcommand{\nomname}{Index of Notation}
+
+\renewcommand{\nompreamble}{\begin{multicols}{2}}
+\renewcommand{\nompostamble}{\end{multicols}}
+
+\newcommand{\named}[1]{\textbf{#1}\index{#1}}
+\newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
+\newcommand{\bigO}{\mathcal{O}}
+
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\setcounter{section}{-1}
+
+% and here we go!
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\clearpage
+\section{Introduction}
+Analytic \marginnote{\emph{Lecture 1}}[0cm]Number Theory is the study of numbers using analysis. It is a fascinating field because because a number - in particular in this course an integer - is discrete, whilst analysis involves the real/complex numbers which are continuous.
+
+In this course, we will ask quantitative questions.
+
+\begin{eg}\leavevmode
+  \begin{enumerate}
+    \item How many primes? We can define the function $\pi(x) = |\{n \mid n \leq x \text{ and } n \text{ is prime} \}|$. Then the prime number theorem, which we will prove in this course states $$\pi(x) \sim \frac{x}{\log x}. $$
+      (We will always take `numbers' to mean natural numbers, not including zero).
+    \item  How many twin primes are there? That is, where $p,\,p+2$ are both prime.
+      It is not known whether there are infinitely many but since 2014, there has been immense progress by Zhang, Maynard and a Polymath project which has determined there are infinitely many primes at most 246 apart.
+      Guess: there are $\approx \frac{x}{(\log x)^2}$ many $\leq x$.
+    \item How many primes are there $\equiv a \bmod q $ where $(a,q) = 1$. We know, by Dirichlet's theorem proven in the 20th century, that there are infinitely many such.
+      The guess for how many is
+      \begin{equation*}
+        \frac{1}{\varphi(q)} \frac{x}{\log x}.
+      \end{equation*}
+      This is known for small $q$. Recall $\varphi(n) = |\{1\leq m \leq n \ | \ (m,n) =1 \}|$
+  \end{enumerate}
+\end{eg}
+The course will be split up into 4 (roughly equal) parts
+\begin{enumerate}
+  \item Elementary techniques (real analysis)
+  \item Sieve methods
+  \item Riemann Zeta function, Prime Number Theorem (complex analysis)
+  \item Primes in arithmetic progressions
+\end{enumerate}
+\clearpage
+
+\section{Elementary Techniques}
+We begin with a review of asymptotic notations:
+\begin{itemize}\hypertarget{def:asymp}
+  \item \nomenclature{$\bigO$}{Big $\bigO$ notation; Landau notation}$f(x) = \bigO(g(x))$ if there is $C>0$ such that $|f(x)| \leq C|g(x)|$ for all large enough $x$. (Landau notation)
+  \item \nomenclature{$\ll$}{Vinogradov notation}$f \ll g$ is the same as $f = \bigO(g)$ (Vinogradov notation)
+  \item \nomenclature{$\sim$}{asymptotic equality}$f\sim g$ if $\lim_{x \to \infty}\frac{f(x)}{g(x)} = 1 $ (i.e.\ $f = (1+o(1))g$).
+  \item \nomenclature{$o$}{Little $o$ notation}$f= o(g)$ if $\lim_{x \to \infty}\frac{f(x)}{g(x)} = 0$
+\end{itemize}
+
+\subsection{Arithmetic Functions}
+\begin{defi}[Arithmetic function]\hypertarget{def:arith}
+  An \named{arithmetic function} is just a function $f : \mathbb{N} \to \mathbb{C}$.
+\end{defi}
+\begin{defi}[Convolution]\hypertarget{def:conv}
+  An important operation for multiplicative number theory is the \textbf{multiplicative convolution\index{convolution}}
+  \nomenclature{$*$}{convolution}
+  \begin{equation*}f*g(n) \coloneqq \sum_{ab = n} f(a)g(b).\end{equation*}
+\end{defi}
+\begin{eg}\leavevmode
+  \begin{itemize}
+    \item \hypertarget{def:1}{$1(n) \coloneqq 1 \; \; \forall n$}. Caution: $1*f \neq f$.
+    \item \hypertarget{def:mu}M\"obius function:\index{M\"obius function}\nomenclature{$\mu$}{M\"obius function}
+      \begin{equation*}
+        \mu(n) =
+        \begin{cases*}
+          (-1)^k & if $n = p_1\dotsm p_k$ \\
+          0 & if $n$ not squarefree
+        \end{cases*}
+      \end{equation*}
+    \item \hypertarget{def:lamb}Liouville function:\index{Liouville function}\nomenclature{$\lambda$}{Liouville function}
+      \begin{equation*}
+        \lambda(n) = (-1)^k \text{ if } n = p_1\dotsm p_k, \text{ not necessarily distinct}
+      \end{equation*}
+    \item \hypertarget{def:tau}Divisor function:\index{divisor function}\nomenclature{$\tau$}{divisor function}
+      \begin{align*}
+        \tau(n) &= | \{ d \mid d\text{ a factor of }n \} | \\
+        \tau &= 1 \hyperlink{def:conv}{*}1
+      \end{align*}
+  \end{itemize}
+\end{eg}
+\begin{defi}[Multiplicative function]\hypertarget{def:multi}
+  An \hyperlink{def:arith}{arithmetic function} is a \named{multiplicative function} if $f(nm) = f(n)f(m)$ for $(n,m) =1$.
+  In particular, a multiplicative function is determined by its values on prime powers $f(p^k)$.
+\end{defi}
+\begin{fact}
+  If $f,g$ are \hyperlink{def:multi}{multiplicative}, then so is $\hyperlink{def:conv}{f*g}$.
+  $\log n $ is not \hyperlink{def:multi}{multiplicative}.
+  Note, almost all \hyperlink{def:arith}{arithmetic functions} are not multiplicative.
+\end{fact}
+\begin{lemma}[\hypertarget{def:mobinv}M\"obius inversion]\index{M\"obius function}
+  \begin{equation*}
+    \hyperlink{def:1}{1} \hyperlink{def:conv}{*} f = g \iff \hyperlink{def:mu}{\mu} * g = f.
+  \end{equation*}
+\end{lemma}
+
+\begin{proof}
+  \begin{equation*}
+    \sum_{d \mid n} \hyperlink{def:mu}{\mu(d)} =
+    \begin{cases*}
+      1 & if $n=1$ \\
+      0 & otherwise
+    \end{cases*}
+  \end{equation*}
+  Note the left hand side is $1\hyperlink{def:conv}{*}\mu$.
+  Since $1,\mu$ are \hyperlink{def:multi}{multiplicative}, $1*\mu$ is multiplicative.
+  Hence it is enough to check the identity for prime powers:
+  If $n= p^k$, then $\{d \mid d\text{ divides }n\} = \{1,p,\ldots,p^k\}$ so the left hand side is $1-1 + 0 + \ldots + 0 = 0$, unless $k=0$ when the left hand side is $\mu(1) =1$.
+
+  The right hand side is the identity of \hyperlink{def:conv}{convolution}, and convolution is associative, giving the required result.
+\end{proof}
+
+Our ultimate goal is to study the primes. This would suggest that we should work with
+\begin{equation*}
+  1_p(n) = \begin{cases*}
+    1 &if $n$ prime \\
+    0 & otherwise
+  \end{cases*}
+\end{equation*}
+For example $\pi(x) = \displaystyle \sum_{1\leq n\leq x} 1_p(n)$.
+This is an awkward function to work with.
+Instead, we work with the \nomenclature{$\Lambda$}{von Mangoldt function}\named{von Mangoldt function}
+\begin{equation*}
+  \hypertarget{def:vonMang}\Lambda(n) =
+  \begin{cases*}
+    \log p & if $n$ is a prime power\\
+    0 & otherwise.
+  \end{cases*}
+\end{equation*}
+This function is easier to understand. Why?
+\begin{nlemma}
+  \begin{equation*}
+    \hyperlink{def:1}{1} \hyperlink{def:conv}{*} \hyperlink{def:vonMang}{\Lambda} = \log \quad \text{and} \quad \hyperlink{def:mu}{\mu} * \log = \Lambda
+  \end{equation*}
+\end{nlemma}
+\begin{proof}
+  The second part follows immediately by \hyperlink{def:mobinv}{M\"obius inversion}.
+  \begin{align*}
+    1*\hyperlink{def:vonMang}{\Lambda}(n) & = \sum_{d \mid n}\Lambda(d) \quad \text{so if } n = p_1^{k_1}\ldots p_k^{n_k} \\
+                 &= \sum_{i=1}^r \sum_{j=1}^{k_i} \Lambda(p_i^j) \\
+                 &= \sum_{i=1}^r \sum_{j=1}^{k_i} \log p_i \\
+                 &= \sum_{i=1}^{r}k_i\log p_i
+                 = \sum_{i=1}^{r}\log p_i^{k_i}
+                 = \log n. \qedhere
+  \end{align*}
+\end{proof}
+We can write
+\begin{align*}
+  \Lambda(n) &= \sum_{d|n}\mu(d)\log\left(\frac{n}{d}\right) \\
+             &= \log n \sum_{d|n}\mu(d) - \sum_{d|n}\mu(d)\log d \\
+             &= - \sum_{d|n}\mu(d)\log d.
+\end{align*}
+
+\begin{eg}
+  \begin{align*}
+    \sum_{\mathclap{1\leq n \leq x}}\Lambda(n) &= -\sum_{1\leq n\leq x}\sum_{d|n}\mu(d)\log d \\
+                                    &= - \sum_{d\leq x}\mu(d)\log(d)\left(\sum_{\substack{1\leq n\leq x \\ d|n}}1\right) \\
+                                    &= - x \sum_{d\leq x}\mu(d) \frac{\log d}{d} + \hyperlink{def:asymp}{o}\left(\sum_{d\leq x}\mu(d)\log d \right)
+  \end{align*}
+  since
+  \begin{equation*}
+    \sum_{\mathclap{\substack{1\leq n\leq x \\ d|n}}}1 = \floor*{\frac{x}{d}}= \frac{x}{d} + o(1).
+  \end{equation*}
+\end{eg}
+\clearpage
+\printnomenclature
+\printindex
+\end{document}
