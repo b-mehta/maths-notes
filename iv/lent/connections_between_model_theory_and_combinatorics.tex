@@ -1,0 +1,34 @@
+\documentclass{article}
+
+% preamble
+\def\npart{IV}
+\def\nyear{2019}
+\def\nterm{Lent}
+\def\draft{Unfinished course}
+\def\nlecturer{Dr J.\ Wolf}
+\def\ncourse{Connections between Model Theory and Combinatorics}
+
+\usepackage{imakeidx}
+\usepackage{marginnote}
+
+\input{header}
+\swapnumbers
+\reversemarginpar
+
+\makeindex[intoc]
+
+\newcommand{\named}[1]{\textbf{#1}\index{#1}}
+\newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
+
+\setcounter{section}{-1}
+
+% and here we go!
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\clearpage
+\section{Introduction}
+\printindex
+\end{document}

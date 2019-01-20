@@ -2756,7 +2756,7 @@ So $f \mapsto \exists f$ is a functor $\textbf{Mono}(\mathscr{E}) \to \mathscr{E
   \end{enumerate}
 \end{ncor}
 \begin{proof}
-  For a topos $\ec$, it is \hyperlink{def:lcc}{locally cartesian closed} by \cref{cor:7.13} and has \hyperlink{def:equalizer}{coequalizers} by \cref{lem:7.10}(i), so by \cref{thm:6.7} every $f$ factors uniquely as \hyperlink{def:epic}{regular epi} + \hyperlink{def:monic}{mono}.
+  For a topos $\mathscr{E}$, it is \hyperlink{def:lcc}{locally cartesian closed} by \cref{cor:7.13} and has \hyperlink{def:equalizer}{coequalizers} by \cref{lem:7.10}(i), so by \cref{thm:6.7} every $f$ factors uniquely as \hyperlink{def:epic}{regular epi} + \hyperlink{def:monic}{mono}.
   If $f$ itself is epic, then the monic part of this factorization is isomorphic by \cref{lem:7.3}, so $f$ is regular epic.
 \end{proof}
 \clearpage
@@ -2849,9 +2849,9 @@ Given a \hyperlink{def:closure}{closure} operator on \hyperlink{def:subobj}{subo
 Note that $c(A')$ may be characterised as the unique (up to isomorphism) subobject $A''$ such that $A' \rightarrowtail A''$ is dense and $A'' \rightarrowtail A'$ is closed.
 
 \begin{nlemma}\label{lem:7.18}
-  Suppose $c$ is induced as in \cref{lem:7.15} by a \hyperlink{def:refl}{reflector} $L: \ec \to \dc$
+  Suppose $c$ is induced as in \cref{lem:7.15} by a \hyperlink{def:refl}{reflector} $L: \mathscr{E} \to \mathscr{D}$
   \hyperlink{def:plim}{preserving} finite \hyperlink{def:limit}{limits}.
-  Then an object $A$ of $\ec$ belongs to $\dc$ (up to \hyperlink{def:iso}{isomorphism}) iff, given any diagram
+  Then an object $A$ of $\mathscr{E}$ belongs to $\mathscr{D}$ (up to \hyperlink{def:iso}{isomorphism}) iff, given any diagram
   \begin{equation*}
   \begin{tikzcd}
     B' \dar[tail]{m} \rar{f'} & A \\
@@ -2864,7 +2864,7 @@ Note that $c(A')$ may be characterised as the unique (up to isomorphism) subobje
   Note first that $m$ is \hyperlink{def:denseclosed}{dense} $\iff Lm$ is an \hyperlink{def:iso}{isomorphism}:
   $\Leftarrow$ follows from the definition; $\Rightarrow$ follows, since by the proof of \cref{lem:7.15}, we know $L(B')$ and $L(c(B'))$ are isomorphic in $\hyperlink{def:sub}{\Sub}(B)$.
 
-  Given this, if $A$ is in $\dc$ then the given diagram extends uniquely to
+  Given this, if $A$ is in $\mathscr{D}$ then the given diagram extends uniquely to
   \begin{equation*}
     \begin{tikzcd}
       B' \rar{\eta_{B'}} \dar[tail] & LB' \dar[tail]{\cong} \rar& A. \\
@@ -2886,10 +2886,10 @@ Note that $c(A')$ may be characterised as the unique (up to isomorphism) subobje
 \end{proof}
 
 \hypertarget{def:sheaf}We say $A$ is a \textbf{sheaf} (for $c$, or for $j$) if it satisfies the condition in \cref{lem:7.18}.
-Given a \hyperlink{def:lop}{local operator} $j$ on $\ec$, we write $\sh_j(\ec)$ for the \hyperlink{def:fulls}{full subcategory} of $j$-\hyperlink{def:sheaf}{sheaves} in $\mathscr{E}$.
+Given a \hyperlink{def:lop}{local operator} $j$ on $\mathscr{E}$, we write $\sh_j(\mathscr{E})$ for the \hyperlink{def:fulls}{full subcategory} of $j$-\hyperlink{def:sheaf}{sheaves} in $\mathscr{E}$.
 
 \begin{nlemma}\label{lem:7.19}
-  $\sh_j(\ec)$ is closed under \hyperlink{def:limit}{limits} in $\ec$, and is an \hyperlink{def:expIdeal}{exponential ideal}.
+  $\sh_j(\mathscr{E})$ is closed under \hyperlink{def:limit}{limits} in $\mathscr{E}$, and is an \hyperlink{def:expIdeal}{exponential ideal}.
 \end{nlemma}
 \begin{proof}
   The first assertion follows since the definition involves only morphisms with codomain $A$.
@@ -2897,7 +2897,7 @@ Given a \hyperlink{def:lop}{local operator} $j$ on $\ec$, we write $\sh_j(\ec)$ 
   for any $C$ (since it is $\pi_1^*(m)$) so if $A$ is a \hyperlink{def:sheaf}{sheaf} then any morphism $B' \to A^C$ extends uniquely to a morphism $B \to A^C$.
 \end{proof}
 \begin{nlemma}\label{lem:7.20}
-  If $A$ is a \hyperlink{def:sheaf}{sheaf}, then a \hyperlink{def:subobj}{subobject} $\begin{tikzcdi}A'\rar[tail]{m} & A\end{tikzcdi}$ in $\ec$ is a sheaf iff it is \hyperlink{def:denseclosed}{closed}.
+  If $A$ is a \hyperlink{def:sheaf}{sheaf}, then a \hyperlink{def:subobj}{subobject} $\begin{tikzcdi}A'\rar[tail]{m} & A\end{tikzcdi}$ in $\mathscr{E}$ is a sheaf iff it is \hyperlink{def:denseclosed}{closed}.
 \end{nlemma}
 \begin{proof}\leavevmode
   \begin{itemize}
@@ -2939,11 +2939,11 @@ Then, for any $A$, morphisms $A \to \Omega_j$ correspond to \hyperlink{def:dense
   But (writing $\begin{tikzcdi}A'\rar[tail] & A\end{tikzcdi}$ for the closure) we have a factorisation $B' \to f^* A'$ which is dense since $B' \to A'$ is dense, and closed since $B' \to B$ is closed.
 \end{proof}
 \begin{nthm}\label{thm:7.22}
-  For any \hyperlink{def:lop}{local operator} $j$ on $\ec$, $\sh_j(\ec)$ is a \hyperlink{def:topos}{topos}.
-  Moreover, it's \hyperlink{def:refl}{reflective} in $\ec$ and the reflector \hyperlink{def:plim}{preserves} finite \hyperlink{def:limit}{limits}.
+  For any \hyperlink{def:lop}{local operator} $j$ on $\mathscr{E}$, $\sh_j(\mathscr{E})$ is a \hyperlink{def:topos}{topos}.
+  Moreover, it's \hyperlink{def:refl}{reflective} in $\mathscr{E}$ and the reflector \hyperlink{def:plim}{preserves} finite \hyperlink{def:limit}{limits}.
 \end{nthm}
 \begin{proof}
-  We have that $\hyperlink{def:sheaf}{\sh_j}(\ec)$ is \hyperlink{def:cc}{cartesian closed} by \cref{lem:7.19} and has \hyperlink{def:sc}{subobject classifier} $\Omega_j$ by \cref{lem:7.20} and \cref{lem:7.21}.
+  We have that $\hyperlink{def:sheaf}{\sh_j}(\mathscr{E})$ is \hyperlink{def:cc}{cartesian closed} by \cref{lem:7.19} and has \hyperlink{def:sc}{subobject classifier} $\Omega_j$ by \cref{lem:7.20} and \cref{lem:7.21}.
   To construct the \hyperlink{def:refl}{reflector}, consider the composite
   \begin{equation*}
     \begin{tikzcd}
@@ -2963,24 +2963,24 @@ Then, for any $A$, morphisms $A \to \Omega_j$ correspond to \hyperlink{def:dense
   of $f$, any such $g$ factorises uniquely through $q$.
 
   Now $\Omega_j^A$ is a sheaf by \cref{lem:7.19} and \cref{lem:7.21} so if we form the closure $\begin{tikzcdi} LA \rar[tail] & \Omega_j^A \end{tikzcdi}$ of $m$, we get a morphism $A \to LA$, through which any morphism from $A$ to a sheaf factors uniquely.
-  Hence $L$ becomes a functor $\ec \to \sh_j(\ec)$, \hyperlink{def:adj}{left adjoint} to inclusion.
+  Hence $L$ becomes a functor $\mathscr{E} \to \sh_j(\mathscr{E})$, \hyperlink{def:adj}{left adjoint} to inclusion.
 
   By \cref{lem:6.13}, we know $L$ preserves finite \hyperlink{def:lprod}{products}.
   In fact it preserves \hyperlink{def:equalizer}{equalizers} as well (omitted).
 \end{proof}
 \begin{nthm}\label{thm:7.23}
-  Let $\ec$ be a \hyperlink{def:cat}{category}. The following are equivalent:
+  Let $\mathscr{E}$ be a \hyperlink{def:cat}{category}. The following are equivalent:
   \begin{enumerate}[label=(\roman*)]
-    \item $\ec$ is a \hyperlink{def:topos}{topos}, \hyperlink{def:complete}{complete}, \hyperlink{def:lsmall}{locally small} with a \hyperlink{def:separating}{separating set of objects}.
-    \item $\exists$ a \hyperlink{def:small}{small} category $\cc$ and a \hyperlink{def:lop}{local operator} on $\hyperlink{def:functcat}{[\cc^{\text{op}}, \setc]}$ such that
+    \item $\mathscr{E}$ is a \hyperlink{def:topos}{topos}, \hyperlink{def:complete}{complete}, \hyperlink{def:lsmall}{locally small} with a \hyperlink{def:separating}{separating set of objects}.
+    \item $\exists$ a \hyperlink{def:small}{small} category $\mathscr{C}$ and a \hyperlink{def:lop}{local operator} on $\hyperlink{def:functcat}{[\mathscr{C}^{\text{op}}, \mathbf{Set}]}$ such that
       \begin{equation*}
-        \ec \cong \hyperlink{def:sheaf}{\sh_j}([\cc^{\text{op}}, \setc]).
+        \mathscr{E} \cong \hyperlink{def:sheaf}{\sh_j}([\mathscr{C}^{\text{op}}, \mathbf{Set}]).
       \end{equation*}
   \end{enumerate}
 \end{nthm}
 \begin{proof}
-  (ii) $\Rightarrow$ (i): since $\sh_j([\cc^{\text{op}}, \setc])$ has given properties.
-  (i) $\Rightarrow$ (ii): take $\cc$ the \hyperlink{def:fulls}{full subcategory} of $\ec$ on the separating set and consider $\ec \overset{Y}\to [\ec^{\text{op}}, \setc] \to [\cc^{\text{op}}, \setc]$.
+  (ii) $\Rightarrow$ (i): since $\sh_j([\mathscr{C}^{\text{op}}, \mathbf{Set}])$ has given properties.
+  (i) $\Rightarrow$ (ii): take $\mathscr{C}$ the \hyperlink{def:fulls}{full subcategory} of $\mathscr{E}$ on the separating set and consider $\mathscr{E} \overset{Y}\to [\mathscr{E}^{\text{op}}, \mathbf{Set}] \to [\mathscr{C}^{\text{op}}, \mathbf{Set}]$.
   %SAFT given left adjoint.
   %May prove left adjoint preserves finite limits.
   %Done by proven results.

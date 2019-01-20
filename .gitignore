@@ -7,10 +7,13 @@
 *.ilg
 *.ind
 *.log
+*.nav
 *.nlg
 *.nlo
 *.nls
 *.o
 *.out
+*.snm
 *.synctex.gz
 *.toc
+*.vrb
