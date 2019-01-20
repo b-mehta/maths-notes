@@ -1,0 +1,152 @@
+\documentclass{article}
+
+% preamble
+\def\npart{III}
+\def\nyear{2019}
+\def\nterm{Lent}
+\def\draft{Unfinished course}
+\def\nlecturer{Dr M. Tointon}
+\def\ncourse{Introduction to Approximate Groups}
+
+\usepackage{imakeidx}
+\usepackage{marginnote}
+
+\input{header}
+\reversemarginpar
+
+\makeindex[intoc]
+
+\newcommand{\named}[1]{\textbf{#1}\index{#1}}
+\newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
+
+\setcounter{section}{-1}
+\numberwithin{equation}{section}
+
+% and here we go!
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\clearpage
+\section{Introduction}
+A\marginnote{\emph{Lecture 1}}[0cm] subgroup $H < G$ is a non-empty set closed under products and inverses.
+Roughly, an `approximate subgroup' is a subset that is only `approximately closed' under products.  (Will make this precise soon).
+Such sets arise naturally in a number of branches of mathematics, and as such approximate groups have had a broad range of applications.
+In this course, we will look in detail, for example, at applications to \emph{polynomial growth} (fundamental in geometric group theory) and touch on construction of expander graphs (important in theoretical computer science).
+
+\clearpage
+\section{Small doubling}
+To start with, we will look at a preliminary notion of approximate closure called \emph{small doubling}.
+In this course, $G$ is always a group, arbitrary unless specified otherwise.
+\begin{notation}
+Given $A,B \subset G$, write
+\begin{align*}
+  AB &\coloneqq \{ab \mid a \in A, b \in B\} \quad \text{`Product sets'} \\
+  A^n &= \underbrace{A \cdot A \dotsm A}_{n\text{ times}} \\
+  A^{-1} &= \{a^{-1} \mid a \in A\} \\
+  A^{-n} &= (A^{-1})^n
+\end{align*}
+When $G$ is abelian, often switch to additive notation, e.g.\ $A + B$, $nA$, $-A$, $-nA$, called `Sum sets'.
+\end{notation}
+
+To say $A$ is closed is to say $A^2 = A$. If $A$ is finite, one way to say that $A$ is `approximately closed' is to say that
+\begin{equation*}
+  |A^2| \text{ is `not much bigger' than } |A|.
+\end{equation*}
+
+This is the notion of approximate closure that arises when studying polynomial growth or expansion, for example.
+
+To get a feel for what this should mean, let's look at the possible values of $|A^2|$.
+Trivially, $|A| \leq |A^2| \leq |A|^2$. Both bounds are attained. However, although the quadratic upper bound on $|A^2|$ in terms of $|A|$ is extremal, in a strict sense, it should not be seen as atypical for the size of $A^2$.
+We will see, for example, in Example Sheet 1 that if $A$ is a set of size $n$ chosen uniformly from $\{1, \dotsc, n^{100}\}$, then $\mathbb{E}(|A+A|)$ is close to $\frac{1}{2} |A|^2$ (about as large as it can be, because abelian).
+Therefore, we can view sets satisfying
+\begin{equation}
+  |A^2| = o\left(|A|^2\right) \label{eq:1.1}
+\end{equation}
+as being `exceptional', and so condition \eqref{eq:1.1} can already be seen as a form of `approximate closure'.
+In this course, we will concentrate on the strongest form of \eqref{eq:1.1}, where $|A^2|$ is \emph{linear} in $|A|$, in the sense that
+\begin{equation}
+  |A^2| \leq K |A| \label{eq:1.2}
+\end{equation}
+for some $K \geq 1$ fixed a priori.
+
+Since such sets are `far from random' we can expect \eqref{eq:1.2} to impose a significant restriction on $A$.
+The main aim of this course is to work out how significant.
+
+\begin{defi}[Small doubling]
+  Given $A \subset G$, the ratio $\frac{|A^2|}{|A|}$ is called the \named{doubling constant} of $A$.
+\end{defi}
+If $A$ satisfies \eqref{eq:1.2}, we'll say that $A$ has \named{doubling} at most $K$, or simply \named{small doubling}.
+
+\begin{eg}[Some simple examples]\leavevmode
+  \begin{itemize}
+    \item (Empty set)
+    \item $A$ a finite subgroup ($K=1$)
+    \item $|A| \leq K$
+    \item $A \subset \mathbb{Z}$, $A = \{-n, \dotsc, n\}$, $|A+A| \leq 2 |A|$.
+  \end{itemize}
+\end{eg}
+This last example is especially important as it shows the theory does not just reduce to subgroups and `small' sets.
+We'll develop these examples later in the course.
+
+One main aim will be to prove theorems along the lines of:
+\begin{center}
+  $A$ has small doubling $\Rightarrow A$ has a certain structure.
+\end{center}
+When $K$ is very small, this is quite easy, as follows:
+
+\begin{nthm}[Freiman; proof due to Tao]\label{thm:1.1}
+  Let $K < \frac{3}{2}$. Suppose $A \subset G$ and $|A^2| \leq K|A|$.
+  Then there is a subgroup $H < G$ with $|H| = |A^2| (\leq K|A|)$ such that $A \subset aH = Ha \quad \forall a \in A$
+  (i.e.\ $A$ is a large portion of a coset of a finite subgroup).
+\end{nthm}
+\begin{remark}
+  Converse: If $A \subset xH = Hx$ for $x \in G$, $H < G$, $|H| \leq K|A|$ then $|H^2| \leq K|A|$.
+  So this is a complete classification of sets of very small doubling.
+\end{remark}
+\begin{nlemma}[Identify $H$]\label{lem:1.2}
+  If $|A^2| \leq \frac{3}{2}\abs{A}$ then $H = A^{-1} A$ is a subgroup.
+  Moreover, $A^{-1}A = A A^{-1}$, and $|H| < 2 |A|$.
+\end{nlemma}
+\begin{proof}
+  Let $a,b \in A$.
+  The hypothesis gives $|aA \cap bA| > \frac{1}{2}|A|$, so there are $\geq \frac{1}{2}$ pairs $(x,y) \in A \times A$ such that $ax = by$, i.e.\ $a^{-1} b = x y^{-1}$.
+  This immediately gives $A^{-1} A \subseteq A A^{-1}$, and replacing $A$ by $A^{-1}$ gives $A A^{-1} \subseteq A^{-1} A$, so $A^{-1}A = A A^{-1}$ as required.
+
+  Since $|A \times A| = |A|^2$ it also implies that
+  \begin{equation*}
+    \abs{A^{-1}A} \leq \frac{\abs{A}^2}{\frac 12 \abs{A}} = 2 |A|,
+  \end{equation*}
+  (dividing by number of repetitions), as claimed.
+
+  Note also that $A^{-1}A$ is symmetric, so it remains to show that $A^{-1}A$ is closed under products.
+
+  Let $c,d \in A$. As above, $\exists > \frac{1}{2}|A|$ pairs $(u,v) \in A \times A$ such that $c^{-1} d = u v^{-1}$.
+  This means that for at least one pair $(x,y)$ from above and one pair $(u,v)$, we have $y=u$.
+  In particular, $a^{-1} b c^{-1} d = x v^{-1} \in A A^{-1} = A^{-1} A$.
+\end{proof}
+\begin{nlemma}[Size bound]
+  If $|A^2| < \frac{3}{2} |A|$ then $A^2 = a H a \quad \forall a \in A$ ($H$ as before). In particular, $|H| = |A^2|$.
+\end{nlemma}
+\begin{proof}
+  First, note that
+  \begin{equation}
+    A \subset aH \cap Ha \label{eq:1.3}
+  \end{equation}
+  by definition of $H$, so certainly $A^2 \subset a Ha$. For the reverse inclusion, let $z \in a H a$.
+  Since $H$ is a subgroup, there are $|H|$ pairs $(x,y) \in aH \times Ha$ such that $z = xy$.
+
+  Moreover, by \eqref{eq:1.3} and the bound $|H| < 2|A|$ from \cref{lem:1.2}, more than half of these $x$ and more than half of these $y$ belong to $A$.
+  In particular, this means that for at least one pair $x,y$, both have to belong to $A$.
+  Hence $z = xy \in A^2$, as required.
+\end{proof}
+\begin{proof}[Proof of \cref{thm:1.1}]
+  Given $a \in A$, we have $A a^{-1} \subset a H a^{-1} \cap H$ so
+  \begin{equation*}|a H a^{-1} \cap H| \geq |A| > \frac{1}{2} |H|\end{equation*}
+  by \cref{lem:1.2}, but the only subgroup of $H$ of size $> \frac{1}{2}|H|$ is $H$ itself.
+  Hence $a H a^{-1} = H$, so indeed $A \subset a H = Ha$ by \eqref{eq:1.3}.
+\end{proof}
+Classifying the sets of small doubling is much harder than this in general, and uses a much wider range of techniques, e.g.\ group theory, harmonic analysis, geometry of numbers...
+\printindex
+\end{document}

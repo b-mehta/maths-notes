@@ -185,11 +185,11 @@ We can write
   \begin{align*}
     \sum_{\mathclap{1\leq n \leq x}}\Lambda(n) &= -\sum_{1\leq n\leq x}\sum_{d|n}\mu(d)\log d \\
                                     &= - \sum_{d\leq x}\mu(d)\log(d)\left(\sum_{\substack{1\leq n\leq x \\ d|n}}1\right) \\
-                                    &= - x \sum_{d\leq x}\mu(d) \frac{\log d}{d} + \hyperlink{def:asymp}{o}\left(\sum_{d\leq x}\mu(d)\log d \right)
+                                    &= - x \sum_{d\leq x}\mu(d) \frac{\log d}{d} + \hyperlink{def:asymp}{O}\left(\sum_{d\leq x}\mu(d)\log d \right)
   \end{align*}
   since
   \begin{equation*}
-    \sum_{\mathclap{\substack{1\leq n\leq x \\ d|n}}}1 = \floor*{\frac{x}{d}}= \frac{x}{d} + o(1).
+    \sum_{\mathclap{\substack{1\leq n\leq x \\ d|n}}}1 = \floor*{\frac{x}{d}}= \frac{x}{d} + O(1).
   \end{equation*}
 \end{eg}
 \clearpage
