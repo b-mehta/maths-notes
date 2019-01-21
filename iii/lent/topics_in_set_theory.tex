@@ -4,7 +4,7 @@
 \def\npart{III}
 \def\nyear{2019}
 \def\nterm{Lent}
-\def\draft{Unfinished course}
+\def\draft{Ongoing course}
 \def\nlecturer{Professor B. L\"owe}
 \def\ncourse{Topics in Set Theory}
 
@@ -21,6 +21,10 @@
 \newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
 
 \setcounter{section}{-1}
+
+\let\oldmodels\models
+\let\models\vDash
+\let\nModels\nvDash
 
 % and here we go!
 \begin{document}
@@ -83,12 +87,12 @@ Or, equivalently,
 \section{Model theory of set theory}
 Let's assume for a moment that
 \begin{equation*}
-  (M,\epsilon) \models ZFC.
+  (M,\in) \models \text{ZFC}.
 \end{equation*}
 We refer to the canonical objects in $M$ by the usual symbols, e.g., $0,1,2,3,4,\dotsc, \omega, \omega+1, \dotsc$
 
 What would an ``inner model'' be?
-Take $A \subseteq M$, and consider $(A, \epsilon)$. This is a substructure of $(M, \epsilon)$.
+Take $A \subseteq M$, and consider $(A, \in)$. This is a substructure of $(M, \in)$.
 
 Note: the language of set theory has no function or constant symbols. But we write down
 \begin{equation*}
@@ -96,45 +100,171 @@ Note: the language of set theory has no function or constant symbols. But we wri
 \end{equation*}
 which appear to use function or constant symbols. These are technically not part of the language of set theory; they are abbreviations:
 \begin{align*}
-  X &= \emptyset & &\text{ abbreviates } & &\forall w (\neg w \in X) \\
-  X &= \{Y\} & & \text{ abbreviates } & &\forall w (w \in X \leftrightarrow w = Y) \\
-  X &\subseteq Y & & \text{ abbreviates } & &\forall w (w \in X \rightarrow w \in Y)
+  X &= \emptyset & &\text{ abbreviates } & &\forall w\; (\neg w \in X) \\
+  X &= \{Y\} & & \text{ abbreviates } & &\forall w\; (w \in X \leftrightarrow w = Y) \\
+  X &\subseteq Y & & \text{ abbreviates } & &\forall w\; (w \in X \rightarrow w \in Y)
 \end{align*}
 and so on.
 
 \begin{defi}\hypertarget{def:abso}
   If $\varphi$ is a formula in $n$ free variables. We say
   \begin{enumerate}[label=(\arabic*)]
-    \item $\varphi$ is \named{upwards absolute} between $A$ and $M$ if
+    \item $\varphi$ is \named{upwards absolute}\index{absolute!upwards-} between $A$ and $M$ if
       \begin{equation*}
-        \text{for all } a_1, \dotsc, a_n \in A,\quad (A,\epsilon) \models \varphi(a_1, \dotsc, a_n) \implies (M, \epsilon) \models \varphi(a_1, \dotsc, a_n)
+        \text{for all } a_1, \dotsc, a_n \in A,\quad (A,\in) \models \varphi(a_1, \dotsc, a_n) \implies (M, \in) \models \varphi(a_1, \dotsc, a_n)
       \end{equation*}
-    \item $\varphi$ is \named{downwards absolute} between $A$ and $M$ if
+    \item $\varphi$ is \named{downwards absolute}\index{absolute!downwards-} between $A$ and $M$ if
       \begin{equation*}
-        \text{for all } a_1, \dotsc, a_n \in A,\quad (M,\epsilon) \models \varphi(a_1, \dotsc, a_n) \implies (A, \epsilon) \models \varphi(a_1, \dotsc, a_n)
+        \text{for all } a_1, \dotsc, a_n \in A,\quad (M,\in) \models \varphi(a_1, \dotsc, a_n) \implies (A, \in) \models \varphi(a_1, \dotsc, a_n)
       \end{equation*}
     \item $\varphi$ is \named{absolute} between $A$ and $M$ if it is upwards absolute and downwards absolute.
   \end{enumerate}
 \end{defi}
 
-\begin{defi}\hypertarget{def:sigmaPi}
-      We say that a formula is $\Sigma_1$ if it is of the form
-      \begin{equation*}
-        \exists x_1 \dotsc \exists x_n\ \varphi(x_1, \dotsc, x_n) \text{ where } \varphi \text{ is quantifier-free}
-      \end{equation*}
-      or $\Pi_1$ if it is of the form
-      \begin{equation*}
-        \forall x_1 \dotsc \forall x_n\ \varphi(x_1, \dotsc, x_n) \text{ where } \varphi \text{ is quantifier-free}
-      \end{equation*}
+\begin{defi}
+  We\index{quantifier-free} say that a formula is \hypertarget{def:sig1}$\Sigma_1$ if it is of the form
+  \begin{equation*}
+    \exists x_1 \dotsc \exists x_n\ \varphi(x_1, \dotsc, x_n) \text{ where } \varphi \text{ is quantifier-free}
+  \end{equation*}
+  or \hypertarget{def:pi1}{$\Pi_1$} if it is of the form
+  \begin{equation*}
+    \forall x_1 \dotsc \forall x_n\ \varphi(x_1, \dotsc, x_n) \text{ where } \varphi \text{ is quantifier-free}.
+  \end{equation*}
 \end{defi}
 
 \begin{remark}
   \leavevmode
   \begin{enumerate}[label=(\alph*)]
     \item If $\varphi$ is quantifier-free, then $\varphi$ is \hyperlink{def:abso}{absolute} between $A$ and $M$.
-    \item If $\varphi$ is \hyperlink{def:sigmaPi}{$\Pi_1$}, then it's downward absolute
-    \item If $\varphi$ is \hyperlink{def:sigmaPi}{$\Sigma_1$}, then it's upward absolute
+    \item If $\varphi$ is \hyperlink{def:pi1}{$\Pi_1$}, then it's \hyperlink{def:abso}{downward absolute}
+    \item If $\varphi$ is \hyperlink{def:sig1}{$\Sigma_1$}, then it's \hyperlink{def:abso}{upward absolute}
   \end{enumerate}
 \end{remark}
+
+\marginnote{\emph{Lecture 2}}[0cm]
+Under our assumption that $(M,\in) \models \text{ZFC}$, which subsets $A \subseteq M$ give a model of ZFC?
+Using standard model theory, we observed that if $\varphi$ is quantifier-free, then $\varphi$ is \hyperlink{def:abso}{absolute} between $(A,\in)$ and $(M,\in)$, but hardly anything is quantifier-free:
+\begin{equation*}
+  \hypertarget{def:phi0}x = \emptyset \iff \forall w (w \notin x) \eqqcolon \Phi_0(x)
+\end{equation*}
+
+For instance, define $A \coloneqq M \setminus \{1\}$ (recall $0,1,2,\dotsc$ refer to the ordinals in $M$).
+In $A$, we have $0,2,\{1\}$. Clearly $(M,\in) \models \Phi_0(0)$.
+$\Phi_0(x)$ is a \hyperlink{def:pi1}{$\Pi_1$} formula, so by $\Pi_1$-\hyperlink{def:abso}{downwards absoluteness}, $(A,\in) \models \Phi_0(0)$.
+
+In reality, $2 = \{0,1\}$, but $1$ is not in $A$, so informally in $A$, the object $2$ has only one element.
+Similarly, in $A$, $\{1\}$ has no elements, since $1$ is missing from $A$. Thus
+\begin{equation*}
+  (A,\in) \models \Phi_0(\{1\}).
+\end{equation*}
+Clearly $(M,\in) \nModels \Phi_0(\{1\})$, so $\Phi_0$ is not \hyperlink{def:abso}{absolute} between $A$ and $M$.
+As a corollary, we get $(A,\in) \nModels$ Extensionality, since $0$ and $\{1\}$ have the same elements in $A$, but are not equal.
+
+(Remark: We could go on, defining formulas $\Phi_1(x), \Phi_2(x)$ etc.\ to analyse which of the elements correspond to the natural numbers in $A$.)
+
+\begin{defi}\hypertarget{def:transitive}
+  We call $A$ \named{transitive} in $M$, if for all $a \in A$ and $x \in M$ such that $(M,\in) \models x \in a$, we have $x \in A$.
+\end{defi}
+\begin{prop}
+  If $A$ is \hyperlink{def:transitive}{transitive}, then \hyperlink{def:phi0}{$\Phi_0$} is \hyperlink{def:abso}{absolute} between $A$ and $M$.
+\end{prop}
+\begin{proof}
+  Since \hyperlink{def:phi0}{$\Phi_0$} is \hyperlink{def:pi1}{$\Pi_1$}, we only need to show \hyperlink{def:abso}{upwards absoluteness}.
+  Suppose $a \in A$, such that $(A,\in) \models \Phi_0(a)$.
+  Suppose $a \neq 0$. Thus there is some $x \in a$. By \hyperlink{def:transitive}{transitivity}, $x \in A$.
+  So $(A,\in) \models x \in a$ and so $(A,\in) \nModels \Phi_0(a)$, contradiction.
+\end{proof}
+(Similarly, if $\Phi_n$ is the formula describing the natural number $n$, and there is $a \in A$ such that $(A,\in) \models \Phi_n(a)$ and $A$ is \hyperlink{def:transitive}{transitive}, then $a = n$.)
+\begin{prop}
+  If $A$ is \hyperlink{def:transitive}{transitive} in $M$, then
+  \begin{equation*}
+    (A,\in) \models \text{Extensionality}.
+  \end{equation*}
+\end{prop}
+\begin{proof}
+  Take $a,b \in A$ with $a \neq b$.
+  By Extensionality in $(M,\in)$, find without loss of generality some $c \in a \setminus b$.
+  Since $c \in a \in A$, by \hyperlink{def:transitive}{transitivity}, $c \in A$.
+  Thus
+  \begin{align*}
+    (A,\in) &\models c \in a \\
+    (A,\in) &\models c \notin b,
+  \end{align*}
+  so $a$ and $b$ do not satisfy the assumptions of Extensionality.
+\end{proof}
+
+Consider now $A \coloneqq \omega + 2 \subseteq M$, the ordinal consisting of $\{0,1,2,\dotsc, \omega, \omega+1\}$.
+This is a transitive subset of $M$ (since it's an ordinal).
+So
+\begin{equation*}
+  (A,\in) \models \text{Extensionality}.
+\end{equation*}
+Consider the formula $x = \mathcal{P}(y)$, which we can informally define as $x = \{z \mid z \subseteq y\}$, but this is not good enough. More properly, we try
+\begin{equation*}
+  \mathcal{P}(x) = \forall w \; (w \in x \leftrightarrow w \subseteq y).
+\end{equation*}
+This still includes the symbol $\subseteq$, so still needs improving.
+\begin{equation*}
+  \mathcal{P}(x) = \forall w \; (w \in x \leftrightarrow (\forall v \; (v \in w \rightarrow v \in y)))
+\end{equation*}
+In $A$, what is $\mathcal{P}(0)$?
+\begin{equation*}
+  (A,\in) \models \omega + 1 = \mathcal{P}(\omega)
+\end{equation*}
+
+\subsection{Bounded quantification}
+We define\index{bounded quantifier}
+\begin{align*}
+  \exists (v \in w) \; \varphi &:\Longleftrightarrow \exists v \; (v \in w \land \varphi) \\
+  \forall (v \in w) \; \varphi &\vcentcolon\Longleftrightarrow \forall v \; (v \in w \rightarrow \varphi).
+\end{align*}
+\begin{defi}\hypertarget{def:delta0}
+  A formula $\varphi$ is called $\Delta_0$ if it is in the smallest set of formulas with the following properties
+  \begin{enumerate}
+    \item All quantifier-free formulas are in $S$.
+    \item If $\varphi, \psi \in S$ then so are
+      \begin{enumerate}
+        \item $\varphi \land \psi$, $\varphi \lor \psi$, $\varphi \rightarrow \psi$, $\varphi \leftrightarrow \psi$
+        \item $\neg \varphi$
+        \item $\exists (v \in w) \; \varphi$, $\forall (v \in w)\; \varphi$.
+      \end{enumerate}
+  \end{enumerate}
+\end{defi}
+\begin{thm}
+  If $\varphi$ is \hyperlink{def:delta0}{$\Delta_0$} and $A$ is \hyperlink{def:transitive}{transitive}, then $\varphi$ is \hyperlink{def:abso}{absolute} between $A$ and $M$.
+\end{thm}
+\begin{proof}
+  We already knew that quantifier free formulas are \hyperlink{def:abso}{absolute}.
+  Absoluteness is obviously preserved under propositional connectives.
+  So, let's deal with (2c):
+  Let's just do
+  \begin{equation*}
+    \varphi \mapsto \exists (v \in w) \; \varphi = \exists v \; (v \in w \land \varphi).
+  \end{equation*}
+  So suppose $\varphi$ is absolute. We need to deal with \hyperlink{def:abso}{downwards absoluteness}.
+  \begin{align*}
+    (M,\in) &\models \exists (v \in a) \; \varphi(v,a) \quad \text{for some } a \in A \\
+    (M,\in) &\models \exists v \; (v \in a \land \varphi(v,a)).
+    \intertext{Let's find $m \in M$ such that }
+    (M,\in) &\models m \in a \land \varphi(m,a).
+  \end{align*}
+  \hyperlink{def:transitive}{Transitivity} gives $m \in A$.
+  By absoluteness of $\varphi$, we get
+  \begin{equation*}
+    (A,\in) \models m \in a \land \varphi(m,a) \implies (A,\in) \models \exists (v \in a) \; \varphi(v,a). \qedhere
+  \end{equation*}
+\end{proof}
+
+\begin{defi}
+  \hypertarget{def:delta0t}{\hypertarget{def:sig0t}{\hypertarget{def:pi0t}L}}et $T$ be any `set theory'.
+  Then we say that $\varphi$ is $\Delta_0^T$ if there is a \hyperlink{def:delta0}{$\Delta_0$} formula $\psi$ such that $T \vdash \phi \leftrightarrow \psi$.
+  \begin{itemize}
+    \item $\varphi$ is called $\Sigma_1^T$ if it is $T$-equivalent to $\exists v_1 \dots \exists v_n \; \psi$ where $\psi$ is $\Delta_0$.
+    \item $\varphi$ is called $\Pi_1^T$ if it is $T$-equivalent to $\forall v_1 \dots \forall v_n \; \psi$ where $\psi$ is $\Delta_0$.
+  \end{itemize}
+\end{defi}
+\begin{cor}
+  If $A$ is \hyperlink{def:transitive}{transitive} in $M$ and both $(M,\in)$ and $(A,\in)$ are models of $T$, then \hyperlink{def:delta0t}{$\Delta_0^T$} formulas are \hyperlink{def:abso}{absolute} between $A$ and $M$, and $\Sigma_1^T, (\Pi_1^T)$ formulas are upwards (downwards) absolute between $A$ and $M$.
+\end{cor}
 \printindex
 \end{document}
