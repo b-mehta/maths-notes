@@ -12,12 +12,14 @@
 \usepackage{marginnote}
 
 \input{header}
+\newtheorem{nexample}[nthm]{Example}
 \reversemarginpar
 
 \makeindex[intoc]
 
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 \newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
+\newcommand{\F}{\mathbb{F}}
 
 \setcounter{section}{-1}
 \numberwithin{equation}{section}
@@ -148,5 +150,125 @@ When $K$ is very small, this is quite easy, as follows:
   Hence $a H a^{-1} = H$, so indeed $A \subset a H = Ha$ by \eqref{eq:1.3}.
 \end{proof}
 Classifying the sets of small doubling is much harder than this in general, and uses a much wider range of techniques, e.g.\ group theory, harmonic analysis, geometry of numbers...
+
+% lecture 2
+\section{Covering and higher sum and products sets}
+We introduce two techniques we'll use repeatedly: \emph{covering} and \emph{bounding higher product sets}. A nice way to do this is by proving the following theorem.
+\begin{nthm}[Rusza]\label{thm:2.1}
+  missing % missing
+\end{nthm}
+% missing
+
+We'll start by proving the following weaker version:
+\begin{nprop}\label{prop:2.2}
+  Suppose $A \subset \F_p^r$ satisfies $|2A - 2A| \leq K|A|$. Then $\exists H < \F_p^r$ with $|H| \leq p^K |A - A| (\leq p^K K |A|)$ such that $A \subset H$.
+\end{nprop}
+We'll prove this using `covering', encapsulated by the following lemma
+\begin{nlemma}[Rusza's covering lemma]\label{lem:2.3}
+  missing % missing
+\end{nlemma}
+% missing
+\begin{proof}
+  First, disjointness of $xB \Rightarrow |XB| = |x| |B|$. Since $X \subset A$, $|XB| \leq |AB| \leq K|B|$, so $|X| \leq K$.
+  Maximality gives $\forall a \in A \; \exists x \in X$ such that $aB \cap xB \neq \emptyset$, and hence $a \in x B B^{-1}$.
+  Hence $A \subset X B B^{-1}$, as required.
+\end{proof}
+\begin{nlemma}\label{lem:2.4}
+  Suppose $A \subset G$ satisfies $A^{-1} A^2 A^{-1}| \leq K|A|$. Then $\exists x \subset A^{-1} A^2$, $|X| \leq K$ such that $A^{-1} A^n \subset X^{n-1} A^{-1} A \; \forall n \in \mathbb{N}$.
+\end{nlemma}
+\begin{proof}
+  \cref{lem:2.3} $\Rightarrow$ $\exists x \subset A^{-1} A^2$, $|X| \leq K$ such that
+  \begin{equation}
+    A^{-1} A^2 \subset X A^{-1} A. \label{eq:2.1}
+  \end{equation}
+  We then have
+  \begin{align*}
+    A^{-1} A^n &= A^{-1} A^{n-1} A \\
+    \subset X^{n-2} A^{-1} A^2 \quad\text{by induction}\\
+    \subset X^{n-1} A^{-1} A. \quad\text{by \eqref{eq:2.1}}\qedhere
+  \end{align*}
+\end{proof}
+\begin{proof}[Proof of \cref{prop:2.2}]
+  \Cref{lem:2.4} $\Rightarrow \exists X,\; |X| \leq K$ such that
+  \begin{equation*}
+    nA - A \subset (n-1) X + A - A \; \forall n \in \mathbb{N}.
+  \end{equation*}
+  This means that
+  $\langle A \rangle \subset \langle X \rangle + A - A$, so
+  \begin{equation*}
+    |\langle A \rangle | \leq \abs{\langle X \rangle} |A-A| \leq p^K |A-A|
+  \end{equation*}
+  as claimed.
+\end{proof}
+To strengthen \cref{prop:2.2} to \cref{thm:2.1}, we use the second technique of this section, bounding higher sum/product sets. The key result is the following, at least in the abelian case.
+\begin{nthm}[Pl\"unnecke-Rusza]\label{thm:2.5}
+  Suppose $A \subset G$ (abelian) and $|A+A| \leq K|A|$.
+  Then $|mA - nA| \leq K^{m+n} |A| \; \forall m, n \geq 0$.
+\end{nthm}
+Was proved in Introduction to Discrete Analysis last term. We won't redo the whole proof, but we will reprove some parts of it.
+\begin{proof}[Proof of \cref{thm:2.1}]
+  \cref{thm:2.5} $\Rightarrow |2A - 2A| \leq K^4 |A|$, and $|A-A| \leq K^2 |A|$. Then immediate from \cref{prop:2.2}.
+\end{proof}
+
+We'll spend the rest of this section discussing \cref{thm:2.5} and variants of it.
+We've seen it's useful, at least in one context. To see more philosophically why it's useful, let's think about what the genuine closure of subgroups undeer products and inverses means.
+One useful feature is that it can be iterated, given $h_1, h_2, \dotsc \in H$, a subgroup, this means that $h_1^{\epsilon_1} \dotsm h_m^{\epsilon_m} \in H\; \forall \epsilon_i = \pm 1$, $\forall n, \forall h_i \in H$.
+\cref{thm:2.5} allows us to `iterate' the `approximate closure' of a set of small doubling:
+$a_1 + \dotsb + a_m - a_1' - \dotsb - a_n'$ may not belong to $A$, but at least it belongs to $mA - nA$, which is
+\begin{enumerate}[label=(\alph*)]
+  \item not too large ($|mA + nA| \leq K^{m+n} |A|$)
+  \item itself a set of small doubling ($|2(mA-nA)| \leq K^{2m+2n} |mA - nA|$).
+\end{enumerate}
+This is an important part of why the theory works so well.
+
+It is therefore unfortunate that \cref{thm:2.5} does not hold for non-abelian groups:
+\begin{nexample}\label{eg:2.6}
+  Let $x$ generate an infinite cyclic group $\langle x \rangle$, $H$ be a finite group, set $G = H * \langle x \rangle$ (the free product, which has the important property that $x^{-1} H x \neq H$).
+  Set $A = H \cup \{x\}$.
+  $A^2 = H \cup x H \cup H x \cup \{x^2\}$, so $|A^2| \leq 3 |A|$. But $A^3$ contains $HxH$, which has size $|H|^2 \sim |A|^2$.
+
+  So as $|H| \to \infty$, \cref{thm:2.5} cannot hold.
+\end{nexample}
+
+Nonetheless, if we strengthen small doubling slightly, we can recover a form of \cref{thm:2.5}.
+One way is to replace small doubling with small tripling: i.e.\ $|A^3| \leq K|A|$.
+\begin{nprop}
+  Suppose $A \subset $, $|A^3| \leq K|A|$. Then $|A^{\epsilon_1} \dotsm A^{\epsilon_m}| \leq K^{3(m-2)} |A|$ $\forall \epsilon_i = \pm 1$, $\forall m \geq 3$.
+\end{nprop}
+Key ingredient is the following:
+\begin{nlemma}[Rusza's triangle inequality]\label{lem:2.8}
+  Given $U,V,W \subset G$, all finite, we have
+  \begin{equation*}
+    |U| |V^{-1} W| \leq |UV| |UW|.
+  \end{equation*}
+\end{nlemma}
+\begin{proof}
+  We'll define an injection $\varphi: U \times V^{-1} W \to UV \times UW$.
+  First, for $x \in V^{-1}W$, set $v(x) \in V$ and $w(x) \in W$ such that $x = v(x)^{-1} w(x)$.
+  Set $\varphi(u,x) = (uv(x), uw(x))$. To see injective, first $(uv(x))^{-1} (uw(x)) = x$, so $x$ determined by $\varphi(u,x)$, and then $(uv(x))v(x)^{-1} = u$, so $u$ is also determined by $\varphi(u,x)$.
+\end{proof}
+\begin{proof}
+  First we'll do the case $m=3$.
+  \begin{itemize}
+    \item $|A^3| = |A^{-3}| \leq K|A|$.
+    \item Apply \cref{lem:2.8} with $U=W=A$, $V = A^2$.
+      Get $|A| |A^{-2} A| \leq |A^3| |A^2| \leq K^2 |A|^2$, so $|A^{-2} A| \leq K^2 |A|$.
+    \item Note that $(A^{-2} A)^{-1} = A^{-1} A^2$, so $|A^{-1} A^2| = |A^{-2} A| \leq K^2 |A|$.
+    \item Replacing $A$ by $A^{-1}$ we get
+      \begin{equation*}
+        |A A^{-2}| = |A^2 A^{-1}| \leq K^2 |A|.
+      \end{equation*}
+    \item Finally, \cref{lem:2.8} with $U=V=A$< $W = A A^{-1}$ gives
+      \begin{equation*}
+        |A| |A^{-1} A A^{-1}| \leq |A^2| |A^2 A^{-1}| \leq K^3 |A|^2.
+      \end{equation*}
+      So $|A^{-1} A A^{-1}| \leq K^3 |A|$. For last case, swap $A,A^{-1}$ again.
+  \end{itemize}
+  For $m \geq 4$, \cref{lem:2.8} $\Rightarrow$
+  \begin{align*}
+    |A| |A^{\epsilon_1} \dotsm A^{\epsilon_m} &\leq |A A^{-\epsilon_2} A^{-\epsilon_1}| |A A^{\epsilon_3} \dotsm  A^{\epsilon_m}| \\
+                                              & \leq |K| |A| K^{3m} |A|.
+  \end{align*}
+\end{proof}
 \printindex
 \end{document}
