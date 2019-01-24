@@ -184,8 +184,8 @@ We'll prove this using `covering', encapsulated by the following lemma
   We then have
   \begin{align*}
     A^{-1} A^n &= A^{-1} A^{n-1} A \\
-    \subset X^{n-2} A^{-1} A^2 \quad\text{by induction}\\
-    \subset X^{n-1} A^{-1} A. \quad\text{by \eqref{eq:2.1}}\qedhere
+               &\subset X^{n-2} A^{-1} A^2 \quad\text{by induction}\\
+               & \subset X^{n-1} A^{-1} A. \quad\text{by \eqref{eq:2.1}}
   \end{align*}
 \end{proof}
 \begin{proof}[Proof of \cref{prop:2.2}]
@@ -232,7 +232,7 @@ It is therefore unfortunate that \cref{thm:2.5} does not hold for non-abelian gr
 
 Nonetheless, if we strengthen small doubling slightly, we can recover a form of \cref{thm:2.5}.
 One way is to replace small doubling with small tripling: i.e.\ $|A^3| \leq K|A|$.
-\begin{nprop}
+\begin{nprop}\label{prop:2.7}
   Suppose $A \subset $, $|A^3| \leq K|A|$. Then $|A^{\epsilon_1} \dotsm A^{\epsilon_m}| \leq K^{3(m-2)} |A|$ $\forall \epsilon_i = \pm 1$, $\forall m \geq 3$.
 \end{nprop}
 Key ingredient is the following:
@@ -247,7 +247,7 @@ Key ingredient is the following:
   First, for $x \in V^{-1}W$, set $v(x) \in V$ and $w(x) \in W$ such that $x = v(x)^{-1} w(x)$.
   Set $\varphi(u,x) = (uv(x), uw(x))$. To see injective, first $(uv(x))^{-1} (uw(x)) = x$, so $x$ determined by $\varphi(u,x)$, and then $(uv(x))v(x)^{-1} = u$, so $u$ is also determined by $\varphi(u,x)$.
 \end{proof}
-\begin{proof}
+\begin{proof}[Proof of \cref{prop:2.7}]
   First we'll do the case $m=3$.
   \begin{itemize}
     \item $|A^3| = |A^{-3}| \leq K|A|$.
@@ -269,6 +269,110 @@ Key ingredient is the following:
     |A| |A^{\epsilon_1} \dotsm A^{\epsilon_m} &\leq |A A^{-\epsilon_2} A^{-\epsilon_1}| |A A^{\epsilon_3} \dotsm  A^{\epsilon_m}| \\
                                               & \leq |K| |A| K^{3m} |A|.
   \end{align*}
+  % last line likely incorrect - check manually.
 \end{proof}
+
+\clearpage
+\section{Lecture 3 - Approximate groups}
+Last time, we saw that assuming small tripling instead of small doubling allowed us to control higher product sets of the form $A^{\epsilon_1} \dotsm A^{\epsilon_m}$.
+In this lecture, we'll see another possible strengthening of small doubling. We also saw, in the proofs of \cref{thm:2.1} and \cref{prop:2.2} an advantage of having a `covering' condition in place of a size bound. This motivates in part the following definition.
+\begin{defi}[Approximate group]
+  A set $A \subset G$ is called a \textbf{$K$-approximate group} (or $K$-approximate subgroup) if $1 \in A$, $A^{-1} = A$ and $\exists X \subset G$ with $|X| \leq K$ such that $A^2 \subset X A$. % missing...?
+\end{defi}
+
+Note that $A$ need not be finite although in this course it almost always will be. Also, if $A$ is finite, then $|A^2| \leq K|A|$.
+The conditions $1 \in A$ and $A^{-1} = A$ are convenient `notationally': for example, can write $A^m$ instead of $A^{\epsilon_1} \dotsm A^{\epsilon_m}$ and $1 \in A \Rightarrow A \subset A^2 \subset A^3 \subset \dotsb$, which is also convenient at times.
+It's the condition $A^2 \subset XA$ that is most important.
+
+For approximate groups, bounding higher product sets is easy:
+\begin{nlemma}\label{lem:3.1}
+  If $A$ is a finite $K$-approximate group then $|A^m| \leq K^{m-1} |A|$.
+\end{nlemma}
+\begin{proof}
+  If $X$ is as in definition of approximate group, in fact we have $A^m \subset X^{m-1} A$:
+  \begin{align*}
+    A^m &= A^{m-1} A \\
+        &\subset X^{m-2} A^2 \\ % induction
+        &\subset X^{m-1} A \qedhere % def of X
+  \end{align*}
+\end{proof}
+Another advantage is that if $\pi: G \to H$ is a homomorphism and $A$ is a $K$-approximate group then $\pi(A)$ is also trivially a $K$-approximate group (although we'll see that there is a version of this for small tripling).
+
+It turns out that sets of small tripling and approximate groups are essentially equivalent, in the following sense:
+\begin{nprop}\label{prop:3.2}
+  Let $A \subset G$ be finite. If $A$ is a $K$-approximate group then $|A^3| \leq K^2 |A|$.
+  Conversely if $|A^3| \leq K|A|$ then $\exists O(K^{12})$-approximate group $B$ with $A \subset B$ and $|B| \leq 7 K^3 |A|$ (`$A$ is a large proportion of an approximate group').
+  In fact, we may take $B = (A \cup \{1\} \cup A^{-1})^2$.
+\end{nprop}
+\begin{proof}
+  First bit is just \cref{lem:3.1}. For the converse, set $\hat{A} = A \cup \{1\} \cup A^{-1}$, and note that
+  \begin{equation*}
+    B = \hat{A}^2 = \{1\} \cup A \cup A^{-1} \cup A^2 \cup A^{-1} A \cup A A^{-1} \cup A^{-2}.
+  \end{equation*}
+  Each set in this union has size $\leq K^3 |A|$ by \cref{prop:2.7}, so $|B| \leq 7 K^3 |A|$, as claimed. Similarly,
+  \begin{equation*}
+    \hat{A}^k = \bigcup_{\substack{\epsilon_i = \pm 1 \ 0 \leq m \leq 4}} A^{\epsilon_1} \dotsm A^{\epsilon_m},
+  \end{equation*}
+  and the sets in this union have size $\leq K^6 |A|$.
+  It follows that $|\hat{A}^4| \leq O(K^6)|A|$.
+
+  So, \cref{lem:2.4} implies $\exists X \subset G$ with $|X| \leq O(K^6)$ such that $\hat{A}^n \subset X^{n-2} \hat{A}^2$ for every $n \geq 2$.
+  In particular, $|X^2| \leq O(K^{12})$ and $\hat{A}^4 = (\hat{A}^2)^2 \subset X^2 \hat{A}^2$, so $\hat{A}^2$ is an $O(K^{12})$-approximate group, as claimed.
+\end{proof}
+This is all well and good, but what if we are faced with a set like that from \cref{eg:2.6} which only has small doubling?
+In that specific example, a large proportion of $A$ was a set of small tripling, namely $H$. Rather helpfully, that turns out to be a general phenomenon:
+
+\begin{nthm}\label{thm:3.3}
+  If $A \subset G$ satisfies $|A^2| \leq K|A|$ then $\exists U \subset A$ with $|U| \geq \frac{1}{K} |A|$ such that $|U^m| \leq K^{m-1} |U|$ $\forall m \in \mathbb{N}$.
+\end{nthm}
+So small doubling reduces to small tripling, which reduces to approximate groups. In Example Sheet 1, we'll see a direct reduction from small doubling to approximate group.
+
+Tao proved a version of \cref{thm:3.3} when he introduced the definition of approximate groups.
+We will use instead a lemma of Petridis, which he proved when proving the Pl\"unnecke-Ruzsa inequalities.
+
+\begin{nlemma}[Petridis]\label{lem:3.4}
+  Suppose $A,B \subset G$ are finite, let $U \subset A$ be non-empty, chosen to minimise the ratio $|UB|/|U|$, and write $R = |UB|/|U|$.
+  Then $\forall$ finite $C \subset G$, we have
+  \begin{equation*}
+    |CUB| \leq R |CU|.
+  \end{equation*}
+\end{nlemma}
+\begin{proof}
+  Trivial if $C = \emptyset$, so we may assume $\exists x \in C$. Defining $C' = C \setminus \{x\}$, we may also assume by induction that $|C' U B| \leq R |C' U|$.
+  Set $W = \{u \in U \mid xu \in C' U\}$. Then
+  \begin{equation*}
+    CU = C' U \cup (x U \setminus x W)
+  \end{equation*}
+  is a disjoint union, so in particular
+  \begin{equation}
+    |CU| = |C' U| + |U| - |W|. \label{eq:3.1}
+  \end{equation}
+
+  We also have $x U B \subset C' U B$, by definition of $W$, so
+  \begin{equation*}
+    CUB \subset C' U B \cup (x U B \setminus x W B)
+  \end{equation*}
+  and hence
+  \begin{equation}
+    |CUB| \leq |C' U B| + |UB| - |WB|. \label{eq:3.2}
+  \end{equation}
+  We have $|C' U B| \leq R |C' U|$ by induction hypothesis, we have $|UB| = R|U|$ by definition of $R$, and $|WB| \geq R|W|$ by minimality in the definition of $U$. So
+  \begin{align*}
+    |CUB| &\leq R (|C' U| + |U| - |W|) \quad \text{by \eqref{eq:3.2}} \\
+          &= R|CU| \quad \text{by \eqref{eq:3.1}}.
+  \end{align*}
+\end{proof}
+\begin{proof}[Proof of \cref{thm:3.3}]
+  Set $U \subset A$ to be non-empty minimising $|UA| / |U|$, and write $R$ for this ratio, noting that $R \leq K$ by minimality.
+  Also, $U$ non-empty $\Rightarrow |UA| \geq |A|$, so $|U| \geq \frac{|A|}{K}$, as required.
+  Lemma \cref{lem:2.4} also implies that $|U^m A| \leq K|U^m|$ $\forall m$ (taking $C = U^{m-1}$) and since $U \subset A$, this gives $|U^{m+1}| \leq K |U^m| \forall m$, so $|U^m| \leq K^{m-1} |U|$.
+\end{proof}
+
+% start of non-examinable
+The reason $A$ in \cref{eg:2.6} failed to have small tripling was the existence of $x \in A$ with $A x A$ large. It turns out that this is the only obstruction to small doubling having small tripling:
+\begin{thm}[Tao; Petridis]\label{thm:3.5}
+  If $|A^2| \leq K|A|$ and $|AxA| \leq K|A|$ $\forall x \in A$ then $|A^m| \leq K^{O(m)} |A| \; \forall m \geq 3$.
+\end{thm}
+% end of non-examinable
 \printindex
 \end{document}
