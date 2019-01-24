@@ -193,6 +193,124 @@ We can write
   \end{equation*}
 \end{eg}
 \clearpage
+
+% missing
+\subsection{}
+\subsection{}
+% lecture 3
+\begin{thm}\label{thm:5}
+  For any $n \geq 1$,
+  \begin{equation*}
+    \tau(n) \leq n^{O\left(\frac{1}{\log \log n}\right)}
+  \end{equation*}
+  In particular,
+  \begin{equation*}
+    \tau(n) \ll_\epsilon n^\epsilon \; \forall \epsilon > 0
+  \end{equation*}
+  i.e.\ ($\forall e > 0$, $\exists C(\epsilon) > 0$ such that $\tau(n) \leq C n^\epsilon$).
+\end{thm}
+\begin{proof}
+  $\tau$ is multiplicative, so enough to calculate at prime powers. $\tau(p^k) = k+1$, so if $n = p_1^{k_1} \dotsm p_r^{k_r}$ then
+  \begin{equation*}
+    \tau(n) = \prod_{i=1}^r (k_i + 1).
+  \end{equation*}
+  Let $\epsilon > 0$ be chosen later and consider $\frac{\tau(n)}{n^\epsilon}$.
+  \begin{equation*}
+    \frac{\tau(n)}{n^\epsilon} = \prod_{i=1}^r \frac{k_i+1}{p^{k_i \epsilon}}.
+  \end{equation*}
+  Note as $p$ is large, $\frac{k+1}{p^{k\epsilon}} \to 0$. In particular, if $p \geq 2^{\frac{1}{\epsilon}}$, then $\frac{k+1}{p^{k\epsilon}} \leq \frac{k+1}{2^k} \leq 1$.
+
+  What about small $p$? Can't do better than $p \geq 2$.
+  In this case, $\frac{k+1}{p^{k\epsilon}} \leq \frac{k+1}{2^{k\epsilon}} \leq \frac{1}{\epsilon}$.
+  Why? Rearrange to say $\epsilon k + \epsilon \leq 2^{k \epsilon}$ (if $\epsilon \leq \frac{1}{2}$), which follows from $x + \frac{1}{2} \leq 2^x \; \forall x \geq 0$
+
+  So
+  \begin{equation*}
+    \frac{\tau(n)}{n^\epsilon} \leq \prod_{\substack{i=1 \\ p_i < 2^{\frac{1}{\epsilon}}}} \frac{k_i + 1}{p^{k_i \epsilon}} \leq \left(\frac{1}{\epsilon}\right)^{\pi(2^{\frac{1}{\epsilon}})} \leq \left(\frac{1}{\epsilon}\right)^{2^{\frac{1}{\epsilon}}}.
+  \end{equation*}
+
+  Now choose optimal $\epsilon$.
+  (Trick: if you want to choose $x$ to minimise $f(x) + g(x)$, choose $x$ such that $f(x) = g(x)$).
+
+  So have,
+  \begin{equation*}
+    \tau(n) \leq n^\epsilon \epsilon^{-2^{\frac{1}{\epsilon}}} = \exp\left(\epsilon \log n + 2^{\frac{1}{\epsilon}} \log \frac{1}{\epsilon}\right).
+  \end{equation*}
+  Choose $\epsilon$ such that $\log n \approx 2^{\frac{1}{\epsilon}}$, i.e.\ $\epsilon \approx \frac{1}{\log \log n}$.
+  \begin{equation*}
+    \tau(n) \leq n^{\frac{1}{\log \log n}} (\log \log n)^{2^{\log \log n}} = n^{\frac{1}{\log \log n}} e^{(\log n)^{\log 2} \log \log \log n} \leq n^{O(\frac{1}{\log \log n})}. \qedhere
+  \end{equation*}
+\end{proof}
+\subsection{Estimates for the primes}
+Recall
+\begin{align*}
+  \pi(x) &= \abs{\set{p \leq x}} = \sum_{1\leq n \leq x} 1_p(n)
+  \shortintertext{and}
+  \psi(x) = \sum_{1 \leq n \leq x} \Lambda(n).
+\end{align*}
+The Prime Number Theorem is $\pi(x) \sim \frac{x}{\log x}$ or equivalently $\psi(x) \sim x$.
+It was 1850 before the correct magnitude of $\pi(x)$ was proved.
+Chebyshev showed $p(x) \asymp \frac{x}{\log x}$, where ($f \asymp g$ means $g \ll f \ll g$).
+
+\begin{thm}[Chebyshev]\label{thm:6}
+  \begin{equation*}
+    \psi(x) \asymp x
+  \end{equation*}
+\end{thm}
+\begin{proof}
+  First we'll prove the lower bound, i.e.\ that $\psi(x) \gg x$.
+  \begin{equation*}
+    \psi(x) = \sum_{n \leq x} \Lambda(n).
+  \end{equation*}
+  $x \log x$ is a trivial upper bound for this, we'd like to remove the factor of $\log x$.
+  Recall $1 \star \Lambda = \log$, i.e.\ $\sum_{ab=n} \Lambda(a) = \log n$.
+  The trick is to find a sum $\Sigma$ such that $\Sigma \leq 1$. We'll use the identity $\floor{x} \leq 2 \floor{\frac{x}{2}} + 1$ ($\forall x \geq 0$).
+  (Say $\frac{x}{2} = n + \theta$, with $\theta \in [0,1)$, so $\floor{\frac{x}{2}} = n$ then $x = 2n + 2\theta$ so $\floor{x} = 2n$ or $2n+1$.)
+
+  So
+  \begin{align*}
+    \psi(x) &\geq \sum_{n \leq x} \Lambda(n) \left(\floor{\tfrac{x}{n}} - 2 \floor{\tfrac{x}{2n}}\right) \\
+    \shortintertext{Note $\floor{\frac{x}{n}} = \sum_{m \leq \frac{x}{n}} 1$}.
+            &= \sum_{n \leq x} \Lambda(n) \sum_{m \leq \frac xn} 1 - 2 \sum_{n \leq x} \Lambda(n) \sum_{m \leq \frac x {2n}} 1 \\
+            &= \sum_{n \leq x} \Lambda(n) - 2 \sum_{nm \leq \frac x2} \Lambda(n) \\
+            &= \sum_{d \leq x} 1 \star \Lambda(d) - 2 \sum_{d \leq \frac x2} 1 \star \Lambda(d) \\
+            &= \sum_{d \leq x} \log d - 2 \sum_{d \leq \frac{x}{2}} \log d \\
+            &= x \log x - x + O(\log x) - 2 \left(\frac{x}{2} \log \frac{x}{2} - \frac{x}{2} + O(\log x)\right) \\
+            &= (\log 2) x + O(\log x) \gg x.
+  \end{align*}
+
+  For the upper bound, note $\floor{x} = 2 \floor{\frac{x}{2}} + 1$ for $x \in (1,2)$ so
+  \begin{equation*}
+    \sum_{\frac{x}{2} < n < x} \Lambda(n) = \sum_{\frac{x}{2} < n < x} \Lambda(n) \left(\floor{\tfrac{x}{n}} - 2 \floor{\tfrac{x}{2n}}\right) \leq \sum_{1 \leq n \leq x} \Lambda(n) \left(\floor{\tfrac{x}{n}} - 2 \floor{\tfrac{x}{2n}}\right)
+  \end{equation*}
+  Thus
+  \begin{align*}
+    \psi(x) - \psi\left(\frac{x}{2}\right) &\leq (\log 2) x + \bigO(\log x). \\
+    \psi(x) &= \left(\psi(x) - \psi\left(\frac{x}{2}\right)\right) + \left(\psi(\frac{x}{2}) - \psi(\frac{x}{4})\right) + \dotsb  \\
+    &\leq \log 2\left(x + \frac{x}{2} + \frac{x}{4} + \dotsb\right) = 2 \log 2 x
+  \end{align*}
+  We ignored a $\bigO((\log x)^2)$ error term along the way.
+\end{proof}
+\begin{nlemma}\label{lem:7}
+  \begin{equation*}
+    \sum_{p \leq x} \frac{\log p}{p} = \log x + O(1).
+  \end{equation*}
+\end{nlemma}
+\begin{proof}
+  Recall $\log = 1 \star \Lambda$. So
+  \begin{align*}
+    \sum_{n \leq x} \log n &= \sum_{ab \leq x} \Lambda(a) = \sum_{a \leq x} \Lambda(a) \sum_{b \leq \frac{x}{a}} 1 = \sum_{a \leq x} \Lambda(a) \floor{\tfrac{x}{a}} = x \sum_{a \leq x} \frac{\Lambda(a)}{a} + \bigO(\psi(x)) \\
+&= x \sum_{a \leq x} \frac{\Lambda(a)}{a} + \bigO(x) \\
+&= x \log x - x + O(\log x) \\
+    \text{So }\sum_{n \leq x} \frac{\Lambda(n)}{n} &= \log x - 1 + \mathcal{O}(\tfrac{\log x}{x}) + \bigO(1) = \log x + \bigO(1).
+  \end{align*}
+  Remains to note
+  \begin{align*}
+    \sum_{p \leq x} \sum_{n=2}^\infty \frac{\log p}{p^k} = \sum_{p \leq x} \log p \sum_{k=2}^\infty \frac{1}{p^k} = \sum_{p \leq x} \frac{\log p}{p^2 - p} \leq \sum_{p=2}^\infty \frac{1}{p^{\frac{3}{2}}} = \bigO(1).
+  \end{align*}
+  So  $\sum_{n \leq x} \frac{\Lambda(n)}n = \sum_{p \leq x} \frac{\log p}{p} + \bigO(1)$.
+\end{proof}
+\clearpage
 \printnomenclature
 \printindex
 \end{document}
