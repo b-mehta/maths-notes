@@ -10,6 +10,7 @@
 
 \usepackage{imakeidx}
 \usepackage{marginnote}
+\usepackage{pbox}
 
 \input{header}
 \swapnumbers
@@ -17,8 +18,12 @@
 
 \makeindex[intoc]
 
+\renewcommand{\arraystretch}{1.3}
+
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 \newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\ran}{ran}
 
 \setcounter{section}{-1}
 
@@ -266,5 +271,99 @@ We define\index{bounded quantifier}
 \begin{cor}
   If $A$ is \hyperlink{def:transitive}{transitive} in $M$ and both $(M,\in)$ and $(A,\in)$ are models of $T$, then \hyperlink{def:delta0t}{$\Delta_0^T$} formulas are \hyperlink{def:abso}{absolute} between $A$ and $M$, and $\Sigma_1^T, (\Pi_1^T)$ formulas are upwards (downwards) absolute between $A$ and $M$.
 \end{cor}
+\begin{defi}\hypertarget{def:delta1t}
+  A \marginnote{\emph{Lecture 3}}formula is called $\Delta_1^T$ if it both $\Sigma_1^T$ and $\Pi_1^T$.
+\end{defi}
+\begin{cor}
+  If $A$ is \hyperlink{def:trans}{transitive}, $A,M \models T$ and $\varphi$ is $\Delta_1^T$, then $\varphi$ is \hyperlink{def:abso}{absolute} between $A$ and $M$.
+\end{cor}
+\subsection{`Set theory'}
+What do we mean by a `set theory'?
+
+\begin{center}
+\begin{tabular}{rl|rl}\hline
+  \color{mred}{FST$_0$} & \begin{tabular}{@{}l@{}} Extensionality \\ Pairing \\ Union \\ \vspace{1mm} PowerSet \\ \vspace{1mm}\pbox{5cm}{Separation\\ (Aussonderung)} \end{tabular} & \color{mred}{FST} & FST$_0$ + \pbox{5cm}{Foundation\\ (Regularity)} \\ \hline
+  \color{mred}{Z$_0$} & FST$_0$ + Infinity & \color{mred}{Z} & Z$_0$ + Foundation \\ \hline
+  \color{mred}{ZF$_0$} & Z$_0$ + \pbox{5cm}{\vspace{1mm}Replacement\\ \vspace{1mm}(Ersetzung)} & \color{mred}{ZF} & ZF$_0$ + Foundation \\ \hline
+  \color{mred}{ZFC$_0$} & ZF$_0$ + Choice & \color{mred}{ZFC} & ZFC$_0$ + Foundation \\ \hline
+\end{tabular}
+\end{center}
+
+These axioms are all true for finite sets, so these axioms together are sometimes denoted $\text{FST}_0$.
+The subscript 0 denotes the absence of Foundation (Regularity), and with this axiom included we have FST.
+
+\subsection{A long list of \texorpdfstring{$\Delta_0^T$}{Delta0T} formulas}
+We noted earlier that there are very few $\Delta_0$ formulas, so can we find any $\Delta_0^T$ formulas?
+\begin{enumerate}
+  \item $x \in y$ (in fact, $\Delta_0$)
+  \item $x = y$ (in fact, $\Delta_0$)
+  \item $x \subseteq y$. This is an abbreviation, so we have to define what it means:
+    \begin{equation*}\forall w (w \in x \rightarrow w \in y).\end{equation*}
+    But note this is $\forall (w \in x) \; (w \in y)$, so $\Delta_0$.
+  \item
+    \begin{align*}
+      \Phi_0(t) &:\Longleftrightarrow\ \forall w (w \notin x) \\
+                &\iff \forall w (\neg w \in x) \\
+                &\iff \forall w \; (w \in x \rightarrow \neg x = x)
+    \end{align*}
+    so it's $\Delta_0$ in predicate logic.
+\end{enumerate}
+We say that an operation $x_1, \dotsc, x_k \mapsto F(x_1, \dotsc, x_n)$ is defined by a formula in class $\Gamma$ (where $\Gamma$ is any class of formulas) in the theory $T$ if there is a formula $\Psi \in \Gamma$ such that
+\begin{enumerate}[label=(\arabic*)]
+  \item $T \vdash \forall x_1 \dotsm \forall x_n \ \exists y \ \Phi (x_1, \dotsc, x_n, y)$
+  \item $T \vdash \forall x_1 \dotsm \forall x_n \ \forall y,z \ \Phi(x_1, \dotsc, x_n, y) \land \Phi(x_1, \dotsc, x_n, z) \rightarrow y = z$
+  \item $\Phi(x_1, \dotsc, x_n, y)$ if and only if $y = F(x_1, \dotsc, x_n)$.
+\end{enumerate}
+\begin{eg}
+  \begin{align*}
+    x &\mapsto \{x\} \\
+    x,y &\mapsto \{x,y\}
+  \end{align*}
+  These are operations in FST$_0$!
+\end{eg}
+\begin{enumerate}
+  \setcounter{enumi}{4}
+  \item $x \mapsto \{x\}$. The formula to express this is
+    \begin{align*}
+      `z = \{x\}' &\iff \Phi(x,z) \\
+                  &\iff \forall w \; (w \in z \leftrightarrow w = x) \\
+                  &\iff \forall w \; ((w \in z \rightarrow w = x) \land (w = x \rightarrow w \in z)) \\
+                  &\iff \exists (w \in z) \; (w = w) \land \forall w \in z \ (w \in z \rightarrow w = x)
+    \end{align*}
+    So this is $\Delta_0$ in some weak set theory.
+  \item $x,y \mapsto \{x,y\}$
+  \item $x,y \mapsto x \cup y$
+  \item $x,y \mapsto x \cap y$
+  \item $x,y \mapsto x \setminus y$
+  \item $x,y \mapsto (x,y)$, where $(x,y) = \{\{x\},\{x,y\}\}$ which is the combination of earlier formulas
+\end{enumerate}
+If two operations $f, g_1, g_2$ are defined by $\Delta_0^T$-formulas, then so is the operation
+\begin{equation*}
+  x_1, \dotsc, x_n \mapsto f(g_1(x_1, \dotsc, x_n), \dotsc, g_k(x_1, \dotsc, x_n))
+\end{equation*}
+\begin{enumerate}
+  \setcounter{enumi}{10}
+  \item $x \mapsto x \cup \{x\} \eqqcolon S(x)$.
+    By the previous fact from 5.\ and 7.
+  \item $x \mapsto \bigcup x$
+  \item the formula describing `$x$ is transitive'
+  \item the formula describing `$x$ is an ordered pair' (the quantifiers for the two components of $x$ are bounded by $\bigcup x$)
+  \item $x,y \mapsto x \times y$
+  \item the formula `$x$ is a binary relation' (again, the quantifiers can be made bounded)
+  \item $x \mapsto \dom(x) \coloneqq \{y | \exists p \in x; (p\text{ is an ordered pair},\ p = (v,w),\ y=v)\}$
+  \item $x \mapsto \ran(x) \coloneqq \{y | \exists p \in x; (p\text{ is an ordered pair},\ p = (v,y))\}$
+  \item the formula `$x$ is a function'
+  \item the formula `$x$ is injective'
+  \item the formula `$x$ is function from $A$ to $B$'
+  \item the formula `$x$ is a surjection from $A$ to $B$'
+  \item the formula `$x$ is a bijection from $A$ to $B$'
+\end{enumerate}
+What is an ordinal?
+\begin{defi}
+$\alpha$ is an \named{ordinal} if $\alpha$ is a transitive set well-ordered by $\epsilon$, i.e.\ it is totally ordered (several axioms, all $\Delta_0^T$) and well-founded ($\forall X\; (X \subseteq \alpha \rightarrow X \text{ has a } \epsilon\text{-least element})$).
+\end{defi}
+
+Observe `$(X,R)$ is a well-founded relation' is not obviously absolute since the bound for the $\forall Z\; (Z \subseteq X \dots)$ quantifier is the power set, so this is $\Pi_1$.
+However, in models with the axiom of foundation, well-foundedness is automatic, so $\alpha$ is an ordinal iff $\alpha$ is transitive and totally ordered by $\epsilon$, which is $\Delta_0^T$.
 \printindex
 \end{document}
