@@ -297,7 +297,7 @@ Provided $f: \Sigma_1 \to \Sigma_2^*$ is injective, the following codes are alwa
 
     The total amount of water we can extract at the codewords is $\sum_{i=1}^m a^{-s_i}$, which is therefore $\leq 1$.
 
-    $(\Leftarrow)$ Conversely, suppose we can construct a prefix-free code with word lengths $s_1, \dotsc, s_m$, wlog $s_1 \leq s_2 \leq \dotsb \leq s_m$.
+    $(\Leftarrow)$ Conversely, we can construct a prefix-free code with word lengths $s_1, \dotsc, s_m$, wlog $s_1 \leq s_2 \leq \dotsb \leq s_m$.
     We pick codewords of lengths $s_1, s_2, \dotsc$ sequentially ensuring previous codewords are not prefixes.
     Suppose there is no valid choice for the $r$th codeword.
     Then reconstructing the tree as above gives $ \sum_{i=1}^{r-1} a^{-s_i} = 1 $, contradicting our assumption.
