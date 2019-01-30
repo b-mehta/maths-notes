@@ -4,7 +4,7 @@
 \def\npart{III}
 \def\nyear{2019}
 \def\nterm{Lent}
-\def\draft{Unfinished course}
+\def\draft{Ongoing course}
 \def\nlecturer{Dr M. Tointon}
 \def\ncourse{Introduction to Approximate Groups}
 
@@ -20,6 +20,7 @@
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 \newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
 \newcommand{\F}{\mathbb{F}}
+\newcommand{\ratio}[2]{\frac{\abs{#1}}{\abs{#2}}}
 
 \setcounter{section}{-1}
 \numberwithin{equation}{section}
@@ -64,7 +65,7 @@ Trivially, $|A| \leq |A^2| \leq |A|^2$. Both bounds are attained. However, altho
 We will see, for example, in Example Sheet 1 that if $A$ is a set of size $n$ chosen uniformly from $\{1, \dotsc, n^{100}\}$, then $\mathbb{E}(|A+A|)$ is close to $\frac{1}{2} |A|^2$ (about as large as it can be, because abelian).
 Therefore, we can view sets satisfying
 \begin{equation}
-  |A^2| = o\left(|A|^2\right) \label{eq:1.1}
+  |A^2| = o\!\left(|A|^2\right) \label{eq:1.1}
 \end{equation}
 as being `exceptional', and so condition \eqref{eq:1.1} can already be seen as a form of `approximate closure'.
 In this course, we will concentrate on the strongest form of \eqref{eq:1.1}, where $|A^2|$ is \emph{linear} in $|A|$, in the sense that
@@ -76,10 +77,10 @@ for some $K \geq 1$ fixed a priori.
 Since such sets are `far from random' we can expect \eqref{eq:1.2} to impose a significant restriction on $A$.
 The main aim of this course is to work out how significant.
 
-\begin{defi}[Small doubling]
+\begin{defi}\hypertarget{def:doubling}
   Given $A \subset G$, the ratio $\frac{|A^2|}{|A|}$ is called the \named{doubling constant} of $A$.
+  If $A$ satisfies \eqref{eq:1.2}, we'll say that $A$ has \named{doubling} at most $K$, or simply \named{small doubling}.
 \end{defi}
-If $A$ satisfies \eqref{eq:1.2}, we'll say that $A$ has \named{doubling} at most $K$, or simply \named{small doubling}.
 
 \begin{eg}[Some simple examples]\leavevmode
   \begin{itemize}
@@ -94,26 +95,27 @@ We'll develop these examples later in the course.
 
 One main aim will be to prove theorems along the lines of:
 \begin{center}
-  $A$ has small doubling $\Rightarrow A$ has a certain structure.
+  $A$ has \hyperlink{def:doubling}{small doubling} $\Rightarrow A$ has a certain structure.
 \end{center}
 When $K$ is very small, this is quite easy, as follows:
 
 \begin{nthm}[Freiman; proof due to Tao]\label{thm:1.1}
   Let $K < \frac{3}{2}$. Suppose $A \subset G$ and $|A^2| \leq K|A|$.
-  Then there is a subgroup $H < G$ with $|H| = |A^2| (\leq K|A|)$ such that $A \subset aH = Ha \quad \forall a \in A$
+  Then there is a subgroup $H < G$ with $|H| = |A^2| (\leq K|A|)$ such that
+  \begin{equation*}A \subset aH = Ha \quad \forall a \in A\end{equation*}
   (i.e.\ $A$ is a large portion of a coset of a finite subgroup).
 \end{nthm}
 \begin{remark}
-  Converse: If $A \subset xH = Hx$ for $x \in G$, $H < G$, $|H| \leq K|A|$ then $|H^2| \leq K|A|$.
-  So this is a complete classification of sets of very small doubling.
+  Converse: If $A \subset xH = Hx$ for $x \in G$, with $H < G$ and $|H| \leq K|A|$ then $|H^2| \leq K|A|$.
+  So this is a complete classification of sets of very \hyperlink{def:doubling}{small doubling}.
 \end{remark}
 \begin{nlemma}[Identify $H$]\label{lem:1.2}
-  If $|A^2| \leq \frac{3}{2}\abs{A}$ then $H = A^{-1} A$ is a subgroup.
-  Moreover, $A^{-1}A = A A^{-1}$, and $|H| < 2 |A|$.
+  If $|A^2| < \frac{3}{2}\abs{A}$ then $H = A^{-1} A$ is a subgroup.
+  Moreover, $A^{-1}A = A A^{-1}$ and $|H| < 2 |A|$.
 \end{nlemma}
 \begin{proof}
   Let $a,b \in A$.
-  The hypothesis gives $|aA \cap bA| > \frac{1}{2}|A|$, so there are $\geq \frac{1}{2}$ pairs $(x,y) \in A \times A$ such that $ax = by$, i.e.\ $a^{-1} b = x y^{-1}$.
+  The hypothesis gives $|aA \cap bA| > \frac{1}{2}|A|$, so there are more than $\frac{1}{2} |A|$ pairs $(x,y) \in A \times A$ such that $ax = by$, i.e.\ $a^{-1} b = x y^{-1}$.
   This immediately gives $A^{-1} A \subseteq A A^{-1}$, and replacing $A$ by $A^{-1}$ gives $A A^{-1} \subseteq A^{-1} A$, so $A^{-1}A = A A^{-1}$ as required.
 
   Since $|A \times A| = |A|^2$ it also implies that
@@ -124,8 +126,8 @@ When $K$ is very small, this is quite easy, as follows:
 
   Note also that $A^{-1}A$ is symmetric, so it remains to show that $A^{-1}A$ is closed under products.
 
-  Let $c,d \in A$. As above, $\exists > \frac{1}{2}|A|$ pairs $(u,v) \in A \times A$ such that $c^{-1} d = u v^{-1}$.
-  This means that for at least one pair $(x,y)$ from above and one pair $(u,v)$, we have $y=u$.
+  Let $c,d \in A$. As above, there are more than $\frac{1}{2}|A|$ pairs $(u,v) \in A \times A$ such that $c^{-1} d = u v^{-1}$.
+  This means that for at least one pair $(x,y)$ as above and one pair $(u,v)$, we have $y=u$.
   In particular, $a^{-1} b c^{-1} d = x v^{-1} \in A A^{-1} = A^{-1} A$.
 \end{proof}
 \begin{nlemma}[Size bound]
@@ -149,35 +151,46 @@ When $K$ is very small, this is quite easy, as follows:
   by \cref{lem:1.2}, but the only subgroup of $H$ of size $> \frac{1}{2}|H|$ is $H$ itself.
   Hence $a H a^{-1} = H$, so indeed $A \subset a H = Ha$ by \eqref{eq:1.3}.
 \end{proof}
-Classifying the sets of small doubling is much harder than this in general, and uses a much wider range of techniques, e.g.\ group theory, harmonic analysis, geometry of numbers...
+Classifying the sets of \hyperlink{def:doubling}{small doubling} is much harder than this in general, and uses a much wider range of techniques, e.g.\ group theory, harmonic analysis, geometry of numbers...
 
 % lecture 2
-\section{Covering and higher sum and products sets}
-We introduce two techniques we'll use repeatedly: \emph{covering} and \emph{bounding higher product sets}. A nice way to do this is by proving the following theorem.
+\section{Covering and higher sum and product sets}
+We introduce two techniques we'll use repeatedly: \emph{covering} and \emph{bounding higher product sets}.
+A nice way to do this is by proving the following theorem.
 \begin{nthm}[Rusza]\label{thm:2.1}
-  missing % missing
+  Suppose $A \subset \mathbb{F}_p^r$ satisfies $|A+A| \leq K|A|$. Then $\exists H \leq \mathbb{F}_p^r$ with
+  \begin{equation*}
+    |H| \leq p^{K^4} K^2 |A| \quad \text{ such that } A \subset H.
+  \end{equation*}
 \end{nthm}
-% missing
+So again, like \cref{thm:1.1}, $A$ is a large proportion of a finite subgroup.
+\begin{remark}
+  It is not ideal that $\ratio{A}{H}$ depends on $p$. We will remove this dependency in a few lectures' time.
+\end{remark}
 
 We'll start by proving the following weaker version:
 \begin{nprop}\label{prop:2.2}
-  Suppose $A \subset \F_p^r$ satisfies $|2A - 2A| \leq K|A|$. Then $\exists H < \F_p^r$ with $|H| \leq p^K |A - A| (\leq p^K K |A|)$ such that $A \subset H$.
+  Suppose $A \subset \F_p^r$ satisfies $|2A - 2A| \leq K|A|$. Then $\exists H < \F_p^r$ with
+  \begin{equation*}|H| \leq p^K |A - A| (\leq p^K K |A|) \quad \text{such that }A \subset H.\end{equation*}
 \end{nprop}
 We'll prove this using `covering', encapsulated by the following lemma
 \begin{nlemma}[Rusza's covering lemma]\label{lem:2.3}
-  missing % missing
+  Suppose $A,B \subset G$ and $|AB| \leq K|B|$. Then $\exists X \subset A$ with $|X| \leq K$ such that $A \subset X B B^{-1}$.
+  Indeed, we may take $X \subset A$ maximal such that the sets $xB$ (for $x \in X$) are disjoint.
 \end{nlemma}
-% missing
+The term \index{covering}`covering' refers to the conclusion $A \subset X B B^{-1}$, which says `$A$ can be covered by a few left-translates of $BB^{-1}$.
 \begin{proof}
-  First, disjointness of $xB \Rightarrow |XB| = |x| |B|$. Since $X \subset A$, $|XB| \leq |AB| \leq K|B|$, so $|X| \leq K$.
-  Maximality gives $\forall a \in A \; \exists x \in X$ such that $aB \cap xB \neq \emptyset$, and hence $a \in x B B^{-1}$.
+  First, disjointness of $xB$ gives that $|XB| = |X| |B|$. Since $X \subset A$,
+  \begin{equation*}|XB| \leq |AB| \leq K|B|,\end{equation*}
+  so $|X| \leq K$.
+  By maximality, for all $a \in A$, there is $x \in X$ such that $aB \cap xB \neq \emptyset$, and hence $a \in x B B^{-1}$.
   Hence $A \subset X B B^{-1}$, as required.
 \end{proof}
 \begin{nlemma}\label{lem:2.4}
-  Suppose $A \subset G$ satisfies $A^{-1} A^2 A^{-1}| \leq K|A|$. Then $\exists x \subset A^{-1} A^2$, $|X| \leq K$ such that $A^{-1} A^n \subset X^{n-1} A^{-1} A \; \forall n \in \mathbb{N}$.
+  Suppose $A \subset G$ satisfies $|A^{-1} A^2 A^{-1}| \leq K|A|$. Then $\exists X \subset A^{-1} A^2$, with $|X| \leq K$ such that $A^{-1} A^n \subset X^{n-1} A^{-1} A$ for any $n \in \mathbb{N}$.
 \end{nlemma}
 \begin{proof}
-  \cref{lem:2.3} $\Rightarrow$ $\exists x \subset A^{-1} A^2$, $|X| \leq K$ such that
+  By \cref{lem:2.3}, $\exists X \subset A^{-1} A^2$, $|X| \leq K$ such that
   \begin{equation}
     A^{-1} A^2 \subset X A^{-1} A. \label{eq:2.1}
   \end{equation}
@@ -185,13 +198,13 @@ We'll prove this using `covering', encapsulated by the following lemma
   \begin{align*}
     A^{-1} A^n &= A^{-1} A^{n-1} A \\
                &\subset X^{n-2} A^{-1} A^2 \quad\text{by induction}\\
-               & \subset X^{n-1} A^{-1} A. \quad\text{by \eqref{eq:2.1}}
+               & \subset X^{n-1} A^{-1} A. \quad\text{by }\eqref{eq:2.1} \qedhere
   \end{align*}
 \end{proof}
 \begin{proof}[Proof of \cref{prop:2.2}]
-  \Cref{lem:2.4} $\Rightarrow \exists X,\; |X| \leq K$ such that
+  By \Cref{lem:2.4}, $\exists X$ with $|X| \leq K$ such that
   \begin{equation*}
-    nA - A \subset (n-1) X + A - A \; \forall n \in \mathbb{N}.
+    nA - A \subset (n-1) X + A - A \quad \forall n \in \mathbb{N}.
   \end{equation*}
   This means that
   $\langle A \rangle \subset \langle X \rangle + A - A$, so
@@ -202,21 +215,23 @@ We'll prove this using `covering', encapsulated by the following lemma
 \end{proof}
 To strengthen \cref{prop:2.2} to \cref{thm:2.1}, we use the second technique of this section, bounding higher sum/product sets. The key result is the following, at least in the abelian case.
 \begin{nthm}[Pl\"unnecke-Rusza]\label{thm:2.5}
-  Suppose $A \subset G$ (abelian) and $|A+A| \leq K|A|$.
-  Then $|mA - nA| \leq K^{m+n} |A| \; \forall m, n \geq 0$.
+  Suppose $A \subset G$ for $G$ abelian, and $|A+A| \leq K|A|$.
+  Then for all $m,n \geq 0$,
+  \begin{equation*}|mA - nA| \leq K^{m+n} |A|.\end{equation*}
 \end{nthm}
-Was proved in Introduction to Discrete Analysis last term. We won't redo the whole proof, but we will reprove some parts of it.
+This was proved in Introduction to Discrete Analysis last term.
+We won't redo the whole proof in lectures, but we will reprove some parts of it. See the Example Sheet for the full result.
 \begin{proof}[Proof of \cref{thm:2.1}]
-  \cref{thm:2.5} $\Rightarrow |2A - 2A| \leq K^4 |A|$, and $|A-A| \leq K^2 |A|$. Then immediate from \cref{prop:2.2}.
+  Using \cref{thm:2.5}, $|2A - 2A| \leq K^4 |A|$, and $|A-A| \leq K^2 |A|$. Then immediate from \cref{prop:2.2}.
 \end{proof}
 
 We'll spend the rest of this section discussing \cref{thm:2.5} and variants of it.
-We've seen it's useful, at least in one context. To see more philosophically why it's useful, let's think about what the genuine closure of subgroups undeer products and inverses means.
-One useful feature is that it can be iterated, given $h_1, h_2, \dotsc \in H$, a subgroup, this means that $h_1^{\epsilon_1} \dotsm h_m^{\epsilon_m} \in H\; \forall \epsilon_i = \pm 1$, $\forall n, \forall h_i \in H$.
-\cref{thm:2.5} allows us to `iterate' the `approximate closure' of a set of small doubling:
+We've seen it's useful, at least in one context. To see more philosophically why it's useful, let's think about what the genuine closure of subgroups under products and inverses means.
+One useful feature is that it can be iterated: given $h_1, h_2, \dotsc \in H$, a subgroup, this means that $h_1^{\epsilon_1} \dotsm h_m^{\epsilon_m} \in H\; \forall \epsilon_i = \pm 1$, $\forall n, \forall h_i \in H$.
+\cref{thm:2.5} allows us to `iterate' the `approximate closure' of a set of \hyperlink{def:doubling}{small doubling}:
 $a_1 + \dotsb + a_m - a_1' - \dotsb - a_n'$ may not belong to $A$, but at least it belongs to $mA - nA$, which is
 \begin{enumerate}[label=(\alph*)]
-  \item not too large ($|mA + nA| \leq K^{m+n} |A|$)
+  \item not too large ($|mA - nA| \leq K^{m+n} |A|$)
   \item itself a set of small doubling ($|2(mA-nA)| \leq K^{2m+2n} |mA - nA|$).
 \end{enumerate}
 This is an important part of why the theory works so well.
@@ -230,12 +245,12 @@ It is therefore unfortunate that \cref{thm:2.5} does not hold for non-abelian gr
   So as $|H| \to \infty$, \cref{thm:2.5} cannot hold.
 \end{nexample}
 
-Nonetheless, if we strengthen small doubling slightly, we can recover a form of \cref{thm:2.5}.
-One way is to replace small doubling with small tripling: i.e.\ $|A^3| \leq K|A|$.
+Nonetheless, if we strengthen \hyperlink{def:doubling}{small doubling} slightly, we can recover a form of \cref{thm:2.5}.
+One way is to replace small doubling with \named{small tripling}\hypertarget{def:tripling}:  $|A^3| \leq K|A|$.
 \begin{nprop}\label{prop:2.7}
-  Suppose $A \subset $, $|A^3| \leq K|A|$. Then $|A^{\epsilon_1} \dotsm A^{\epsilon_m}| \leq K^{3(m-2)} |A|$ $\forall \epsilon_i = \pm 1$, $\forall m \geq 3$.
+  Suppose $A \subset G$, $|A^3| \leq K|A|$. Then $|A^{\epsilon_1} \dotsm A^{\epsilon_m}| \leq K^{3(m-2)} |A|$ $\forall \epsilon_i = \pm 1$, $\forall m \geq 3$.
 \end{nprop}
-Key ingredient is the following:
+The key ingredient is the following:
 \begin{nlemma}[Rusza's triangle inequality]\label{lem:2.8}
   Given $U,V,W \subset G$, all finite, we have
   \begin{equation*}
@@ -245,63 +260,74 @@ Key ingredient is the following:
 \begin{proof}
   We'll define an injection $\varphi: U \times V^{-1} W \to UV \times UW$.
   First, for $x \in V^{-1}W$, set $v(x) \in V$ and $w(x) \in W$ such that $x = v(x)^{-1} w(x)$.
-  Set $\varphi(u,x) = (uv(x), uw(x))$. To see injective, first $(uv(x))^{-1} (uw(x)) = x$, so $x$ determined by $\varphi(u,x)$, and then $(uv(x))v(x)^{-1} = u$, so $u$ is also determined by $\varphi(u,x)$.
+  Set $\varphi(u,x) = (uv(x), uw(x))$.
+  To see that $\varphi$ is injective, first observe
+  \begin{equation*}(uv(x))^{-1} (uw(x)) = x,\end{equation*}
+  so $x$ determined by $\varphi(u,x)$, and then
+  \begin{equation*}(uv(x))v(x)^{-1} = u,\end{equation*}
+  so $u$ is also determined by $\varphi(u,x)$.
 \end{proof}
 \begin{proof}[Proof of \cref{prop:2.7}]
   First we'll do the case $m=3$.
   \begin{itemize}
     \item $|A^3| = |A^{-3}| \leq K|A|$.
-    \item Apply \cref{lem:2.8} with $U=W=A$, $V = A^2$.
-      Get $|A| |A^{-2} A| \leq |A^3| |A^2| \leq K^2 |A|^2$, so $|A^{-2} A| \leq K^2 |A|$.
+    \item Apply \nameref{lem:2.8} with $U=W=A$, $V = A^2$:
+      \begin{equation*}
+        |A| |A^{-2} A| \leq |A^3| |A^2| \leq K^2 |A|^2,
+      \end{equation*}
+      so $|A^{-2} A| \leq K^2 |A|$.
     \item Note that $(A^{-2} A)^{-1} = A^{-1} A^2$, so $|A^{-1} A^2| = |A^{-2} A| \leq K^2 |A|$.
     \item Replacing $A$ by $A^{-1}$ we get
       \begin{equation*}
         |A A^{-2}| = |A^2 A^{-1}| \leq K^2 |A|.
       \end{equation*}
-    \item Finally, \cref{lem:2.8} with $U=V=A$< $W = A A^{-1}$ gives
+    \item Finally, \nameref{lem:2.8} with $U=V=A$, $W = A A^{-1}$ gives
       \begin{equation*}
         |A| |A^{-1} A A^{-1}| \leq |A^2| |A^2 A^{-1}| \leq K^3 |A|^2.
       \end{equation*}
-      So $|A^{-1} A A^{-1}| \leq K^3 |A|$. For last case, swap $A,A^{-1}$ again.
+      So $|A^{-1} A A^{-1}| \leq K^3 |A|$.
+    \item For the last case, swap $A,A^{-1}$ again.
   \end{itemize}
-  For $m \geq 4$, \cref{lem:2.8} $\Rightarrow$
+  For $m \geq 4$, \nameref{lem:2.8} gives
   \begin{align*}
-    |A| |A^{\epsilon_1} \dotsm A^{\epsilon_m} &\leq |A A^{-\epsilon_2} A^{-\epsilon_1}| |A A^{\epsilon_3} \dotsm  A^{\epsilon_m}| \\
-                                              & \leq |K| |A| K^{3m} |A|.
+    |A| |A^{\epsilon_1} \dotsm A^{\epsilon_m}| &\leq |A A^{-\epsilon_2} A^{-\epsilon_1}| |A A^{\epsilon_3} \dotsm  A^{\epsilon_m}| \\
+                                              & \leq K^3 |A|\ K^{3(m-2)} |A|.
   \end{align*}
   % last line likely incorrect - check manually.
 \end{proof}
 
 \clearpage
-\section{Lecture 3 - Approximate groups}
-Last time, we saw that assuming small tripling instead of small doubling allowed us to control higher product sets of the form $A^{\epsilon_1} \dotsm A^{\epsilon_m}$.
-In this lecture, we'll see another possible strengthening of small doubling. We also saw, in the proofs of \cref{thm:2.1} and \cref{prop:2.2} an advantage of having a `covering' condition in place of a size bound. This motivates in part the following definition.
-\begin{defi}[Approximate group]
-  A set $A \subset G$ is called a \textbf{$K$-approximate group} (or $K$-approximate subgroup) if $1 \in A$, $A^{-1} = A$ and $\exists X \subset G$ with $|X| \leq K$ such that $A^2 \subset X A$. % missing...?
+\section{Approximate Groups}
+In the last section, we saw that assuming \hyperlink{def:tripling}{small tripling} instead of \hyperlink{def:doubling}{small doubling} allowed us to control higher product sets of the form $A^{\epsilon_1} \dotsm A^{\epsilon_m}$.
+In this section, we'll see another possible strengthening of small doubling. We also saw, in the proofs of \cref{thm:2.1} and \cref{prop:2.2}, an advantage of having a `covering' condition in place of a size bound. This motivates in part the following definition.
+\begin{defi}
+  \hypertarget{def:appGroup}A set $A \subset G$ is called a \textbf{$K$-approximate group} (or $K$-approximate subgroup) if $1 \in A$, $A^{-1} = A$ and $\exists X \subset G$ with $|X| \leq K$ such that $A^2 \subset X A$.
 \end{defi}
 
-Note that $A$ need not be finite although in this course it almost always will be. Also, if $A$ is finite, then $|A^2| \leq K|A|$.
-The conditions $1 \in A$ and $A^{-1} = A$ are convenient `notationally': for example, can write $A^m$ instead of $A^{\epsilon_1} \dotsm A^{\epsilon_m}$ and $1 \in A \Rightarrow A \subset A^2 \subset A^3 \subset \dotsb$, which is also convenient at times.
+Note that $A$ need not be finite, although in this course it almost always will be.
+Also, if $A$ is finite, then $|A^2| \leq K|A|$.
+The conditions $1 \in A$ and $A^{-1} = A$ are convenient `notationally': for example, this lets us write $A^m$ instead of $A^{\epsilon_1} \dotsm A^{\epsilon_m}$ and $1 \in A$ gives us that $A \subset A^2 \subset A^3 \subset \dotsb$, which is also convenient at times.
 It's the condition $A^2 \subset XA$ that is most important.
 
-For approximate groups, bounding higher product sets is easy:
+For \hyperlink{def:appGroup}{approximate groups}, bounding higher product sets is easy:
 \begin{nlemma}\label{lem:3.1}
-  If $A$ is a finite $K$-approximate group then $|A^m| \leq K^{m-1} |A|$.
+  If $A$ is a finite \hyperlink{def:appGroup}{$K$-approximate group} then $|A^m| \leq K^{m-1} |A|$.
 \end{nlemma}
 \begin{proof}
-  If $X$ is as in definition of approximate group, in fact we have $A^m \subset X^{m-1} A$:
+  If $X$ is as in the definition of \hyperlink{def:appGroup}{approximate group}, in fact we have $A^m \subset X^{m-1} A$:
   \begin{align*}
     A^m &= A^{m-1} A \\
-        &\subset X^{m-2} A^2 \\ % induction
-        &\subset X^{m-1} A \qedhere % def of X
+        &\subset X^{m-2} A^2 \quad \text{induction}\\ % induction
+        &\subset X^{m-1} A \quad \text{definition of $X$} \qedhere
   \end{align*}
 \end{proof}
-Another advantage is that if $\pi: G \to H$ is a homomorphism and $A$ is a $K$-approximate group then $\pi(A)$ is also trivially a $K$-approximate group (although we'll see that there is a version of this for small tripling).
+Another advantage of approximate groups is that if $\pi: G \to H$ is a homomorphism and $A \subset G$ is a \hyperlink{def:appGroup}{$K$-approximate group} then $\pi(A)$ is also trivially a $K$-approximate group (although we'll see that there is a version of this for small tripling).
 
-It turns out that sets of small tripling and approximate groups are essentially equivalent, in the following sense:
+It turns out that sets of \hyperlink{def:tripling}{small tripling} and \hyperlink{def:appGroup}{approximate groups} are essentially equivalent, in the following sense:
 \begin{nprop}\label{prop:3.2}
-  Let $A \subset G$ be finite. If $A$ is a $K$-approximate group then $|A^3| \leq K^2 |A|$.
-  Conversely if $|A^3| \leq K|A|$ then $\exists O(K^{12})$-approximate group $B$ with $A \subset B$ and $|B| \leq 7 K^3 |A|$ (`$A$ is a large proportion of an approximate group').
+  Let $A \subset G$ be finite.
+  If $A$ is a \hyperlink{def:appGroup}{$K$-approximate group} then $|A^3| \leq K^2 |A|$.
+  Conversely if $|A^3| \leq K|A|$ then there is a $\mathcal{O}(K^{12})$-approximate group $B$ with $A \subset B$ and $|B| \leq 7 K^3 |A|$ (`$A$ is a large proportion of an approximate group').
   In fact, we may take $B = (A \cup \{1\} \cup A^{-1})^2$.
 \end{nprop}
 \begin{proof}
@@ -311,28 +337,28 @@ It turns out that sets of small tripling and approximate groups are essentially 
   \end{equation*}
   Each set in this union has size $\leq K^3 |A|$ by \cref{prop:2.7}, so $|B| \leq 7 K^3 |A|$, as claimed. Similarly,
   \begin{equation*}
-    \hat{A}^k = \bigcup_{\substack{\epsilon_i = \pm 1 \ 0 \leq m \leq 4}} A^{\epsilon_1} \dotsm A^{\epsilon_m},
+    \hat{A}^k = \bigcup_{\mathclap{\substack{\epsilon_i = \pm 1 \\ 0 \leq m \leq 4}}} A^{\epsilon_1} \dotsm A^{\epsilon_m},
   \end{equation*}
   and the sets in this union have size $\leq K^6 |A|$.
-  It follows that $|\hat{A}^4| \leq O(K^6)|A|$.
+  It follows that $|\hat{A}^4| \leq \mathcal{O}(K^6)|A|$.
 
-  So, \cref{lem:2.4} implies $\exists X \subset G$ with $|X| \leq O(K^6)$ such that $\hat{A}^n \subset X^{n-2} \hat{A}^2$ for every $n \geq 2$.
-  In particular, $|X^2| \leq O(K^{12})$ and $\hat{A}^4 = (\hat{A}^2)^2 \subset X^2 \hat{A}^2$, so $\hat{A}^2$ is an $O(K^{12})$-approximate group, as claimed.
+  So, \cref{lem:2.4} implies $\exists X \subset G$ with $|X| \leq \mathcal{O}(K^6)$ such that $\hat{A}^n \subset X^{n-2} \hat{A}^2$ for every $n \geq 2$.
+  In particular, $|X^2| \leq \mathcal{O}(K^{12})$ and $\hat{A}^4 = (\hat{A}^2)^2 \subset X^2 \hat{A}^2$, so $\hat{A}^2$ is an $\mathcal{O}(K^{12})$-approximate group, as claimed.
 \end{proof}
-This is all well and good, but what if we are faced with a set like that from \cref{eg:2.6} which only has small doubling?
-In that specific example, a large proportion of $A$ was a set of small tripling, namely $H$. Rather helpfully, that turns out to be a general phenomenon:
+This is all well and good, but what if we are faced with a set like that from \cref{eg:2.6} which only has \hyperlink{def:doubling}{small doubling}?
+In that specific example, a large proportion of $A$ was a set of \hyperlink{def:tripling}{small tripling}, namely $H$. Rather helpfully, that turns out to be a general phenomenon:
 
 \begin{nthm}\label{thm:3.3}
-  If $A \subset G$ satisfies $|A^2| \leq K|A|$ then $\exists U \subset A$ with $|U| \geq \frac{1}{K} |A|$ such that $|U^m| \leq K^{m-1} |U|$ $\forall m \in \mathbb{N}$.
+  If $A \subset G$ satisfies $|A^2| \leq K|A|$ then there is $U \subset A$ with $|U| \geq \frac{1}{K} |A|$ such that $|U^m| \leq K^{m-1} |U|$ $\forall m \in \mathbb{N}$.
 \end{nthm}
-So small doubling reduces to small tripling, which reduces to approximate groups. In Example Sheet 1, we'll see a direct reduction from small doubling to approximate group.
+So \hyperlink{def:doubling}{small doubling} reduces to \hyperlink{def:tripling}{small tripling}, which reduces to \hyperlink{def:appGroup}{approximate groups}. In Example Sheet 1, we'll see a direct reduction from small doubling to approximate group.
 
 Tao proved a version of \cref{thm:3.3} when he introduced the definition of approximate groups.
-We will use instead a lemma of Petridis, which he proved when proving the Pl\"unnecke-Ruzsa inequalities.
+We will use instead a lemma of Petridis, which he proved when proving the \nameref{thm:2.5} inequalities.
 
 \begin{nlemma}[Petridis]\label{lem:3.4}
   Suppose $A,B \subset G$ are finite, let $U \subset A$ be non-empty, chosen to minimise the ratio $|UB|/|U|$, and write $R = |UB|/|U|$.
-  Then $\forall$ finite $C \subset G$, we have
+  Then for any finite $C \subset G$, we have
   \begin{equation*}
     |CUB| \leq R |CU|.
   \end{equation*}
@@ -347,8 +373,7 @@ We will use instead a lemma of Petridis, which he proved when proving the Pl\"un
   \begin{equation}
     |CU| = |C' U| + |U| - |W|. \label{eq:3.1}
   \end{equation}
-
-  We also have $x U B \subset C' U B$, by definition of $W$, so
+  We also have $x U B \subset C' U B$ by definition of $W$, so
   \begin{equation*}
     CUB \subset C' U B \cup (x U B \setminus x W B)
   \end{equation*}
@@ -356,23 +381,158 @@ We will use instead a lemma of Petridis, which he proved when proving the Pl\"un
   \begin{equation}
     |CUB| \leq |C' U B| + |UB| - |WB|. \label{eq:3.2}
   \end{equation}
-  We have $|C' U B| \leq R |C' U|$ by induction hypothesis, we have $|UB| = R|U|$ by definition of $R$, and $|WB| \geq R|W|$ by minimality in the definition of $U$. So
+  We have $|C' U B| \leq R |C' U|$ by the induction hypothesis, $|UB| = R|U|$ by definition of $R$, and $|WB| \geq R|W|$ by minimality in the definition of $U$. So
   \begin{align*}
-    |CUB| &\leq R (|C' U| + |U| - |W|) \quad \text{by \eqref{eq:3.2}} \\
-          &= R|CU| \quad \text{by \eqref{eq:3.1}}.
+    |CUB| &\leq R (|C' U| + |U| - |W|) \quad \text{by }\eqref{eq:3.2} \\
+          &= R |CU| \quad \text{by }\eqref{eq:3.1} \qedhere.
   \end{align*}
 \end{proof}
 \begin{proof}[Proof of \cref{thm:3.3}]
   Set $U \subset A$ to be non-empty minimising $|UA| / |U|$, and write $R$ for this ratio, noting that $R \leq K$ by minimality.
-  Also, $U$ non-empty $\Rightarrow |UA| \geq |A|$, so $|U| \geq \frac{|A|}{K}$, as required.
-  Lemma \cref{lem:2.4} also implies that $|U^m A| \leq K|U^m|$ $\forall m$ (taking $C = U^{m-1}$) and since $U \subset A$, this gives $|U^{m+1}| \leq K |U^m| \forall m$, so $|U^m| \leq K^{m-1} |U|$.
+  Also, $U$ non-empty, so $|UA| \geq |A|$, so $|U| \geq \frac{|A|}{K}$, as required.
+  \cref{lem:2.4} also implies that $|U^m A| \leq K|U^m|$ $\forall m$ (taking $C = U^{m-1}$) and since $U \subset A$, this gives $|U^{m+1}| \leq K |U^m|$ $\forall m$, so $|U^m| \leq K^{m-1} |U|$.
 \end{proof}
 
-% start of non-examinable
-The reason $A$ in \cref{eg:2.6} failed to have small tripling was the existence of $x \in A$ with $A x A$ large. It turns out that this is the only obstruction to small doubling having small tripling:
+\color{gray}
+\subsection*{*Bonus content}
+The reason $A$ in \cref{eg:2.6} failed to have \hyperlink{def:tripling}{small tripling} was the existence of $x \in A$ with $A x A$ large.
+It turns out that this is the only obstruction to \hyperlink{def:doubling}{small doubling} having \hyperlink{def:tripling}{small tripling}:
 \begin{thm}[Tao; Petridis]\label{thm:3.5}
-  If $|A^2| \leq K|A|$ and $|AxA| \leq K|A|$ $\forall x \in A$ then $|A^m| \leq K^{O(m)} |A| \; \forall m \geq 3$.
+  If $|A^2| \leq K|A|$ and $|AxA| \leq K|A|$ $\forall x \in A$ then
+  \begin{equation*}|A^m| \leq K^{\mathcal{O}(m)} |A| \; \forall m \geq 3.\end{equation*}
 \end{thm}
-% end of non-examinable
+\color{black}
+
+\clearpage
+\section{Stability of approximate closure under basic operations}
+Two familiar properties of genuine subgroups are that they behave well under quotients and intersections:
+if $H < G$ and $\pi: G \to \Gamma$ is a homomorphism, then $\pi(H) < \Gamma$, and if $H_1, H_2 < G$ then $H_1 \cap H_2 < G$.
+In this lecture, we'll see versions of these properties for \hyperlink{def:appGroup}{approximate groups} and sets of \hyperlink{def:tripling}{small tripling}.
+
+It's trivial that if $A \subset G$ is a $K$-approximate group then $\pi(A)$ is also a $K$-approximate group.
+The following is the corresponding result for sets of small tripling.
+\begin{nlemma}[Stability of \hyperlink{def:tripling}{small tripling} under homomorphisms]\label{lem:4.1}
+  Let $A \subset G$ be finite, symmetric containing the identity. Suppose $\pi: G \to H$ is a homomorphism. Then
+  \begin{equation*}
+    \ratio{\pi(A)^m}{\pi(A)} \leq \ratio{A^{m+2}}{A} \quad \forall m \in \mathbb{N}.
+  \end{equation*}
+\end{nlemma}
+
+In particular, if $|A^3| \leq K|A|$ then $|\pi(A)^3| \leq K^9 |\pi(A)|$ by \cref{prop:2.7}.
+We can prove this using an argument of Helfgott.
+We'll start with a simple observation that we'll use repeatedly in the course.
+\begin{nlemma} \label{lem:4.2}
+  Let $H < G$, let $A \subset G$ be finite, and let $x \in G$.
+  Then
+  \begin{equation*}|A^{-1} A \cap H| \geq |A \cap xH|.\end{equation*}
+\end{nlemma}
+\begin{proof}
+  We have $(A \cap xH)^{-1} (A \cap xH) \subset A^{-1} A \cap H$.
+\end{proof}
+\begin{remark}
+  Most of the lemmas and propositions in this section will have familiar/trivial analogues for genuine subgroups.
+  It is a useful exercise to think about what they are.
+\end{remark}
+\begin{nlemma}\label{lem:4.3}
+  Let $H < G$, write $\pi: G \to G/H$ for the quotient map, let $A \subset G$ be finite.
+  Then
+  \begin{equation*}|A^{-1} A \cap H| \geq \ratio{A}{\pi(A)}.\end{equation*}
+\end{nlemma}
+Note that $H$ is not assumed normal, so $G/H$ is just the space of left cosets $xH$, not necessarily a group.
+\begin{proof}
+  The pigeonhole principle gives $\exists x \in G$ such that $|A \cap xH| \geq |A|/|\pi(A)|$. Then apply \cref{lem:4.2}.
+\end{proof}
+\begin{nlemma}\label{lem:4.4}
+  Let $H < G$, write $\pi:G \to G/H$ for the quotient map, and let $A \subset G$ be finite.
+  Then
+  \begin{equation*}|\pi(A^m)| |A^n \cap H| \leq |A^{m+n}| \ \forall m,n \geq 0.\end{equation*}
+\end{nlemma}
+\begin{proof}
+  Define $\varphi: \pi(A^m) \to A^m$ by picking arbitrarily for each $x \in \pi(A^m)$ some $\varphi(x)$ such that $\pi(\varphi(x))= x$.
+  Then the cosets $\varphi(x)H$ for $x \in \pi(A^m)$ are all distinct by definition, so
+  \begin{equation*}
+    \abs{\varphi(\pi(A^m))}\abs{(A^n \cap H)} = \abs{\pi(A^m)}\abs{A^n \cap H}.
+  \end{equation*}
+  But also, $\varphi(\pi(A^m))(A^n \cap H) \subset A^{m+n}$.
+\end{proof}
+\begin{proof}[Proof of \cref{lem:4.1}]
+  Take $H = \ker \pi$.
+  \cref{lem:4.4} gives
+  \begin{equation*}|\pi(A^m)| \leq \frac{\abs{A^{m+2}}}{\abs{A^2 \cap H}}.\end{equation*}
+  \cref{lem:4.3} gives
+  \begin{equation*}|A^2 \cap H| \geq \ratio{A}{\pi(A)}.\end{equation*}
+  The proposition follows by combining these inequalities.
+\end{proof}
+
+Now we'll look at intersections.
+\begin{nprop}[Stability of \hyperlink{def:tripling}{small tripling} under intersections with subgroups]\label{prop:4.5}
+  Let $A \subset G$ be finite, symmetric, contain $1$. Let $H < G$. Then
+  \begin{equation*}
+    \ratio{A^m \cap H}{A^2 \cap H} \leq \ratio{A^{m+1}}{A}.
+  \end{equation*}
+\end{nprop}
+In particular, by \cref{prop:2.7}, if $|A^3| \leq K|A|$ then $\abs{(A^m \cap H)^3} \leq K^9 \abs{A^m \cap H}$ for any $m \geq 2$.
+\begin{remark}
+  We'll see in Example Sheet 1 that even if $A$ has \hyperlink{def:tripling}{small tripling}, $A \cap H$ need not.
+  So $m \geq 2$ really is important for this last conclusion.
+\end{remark}
+\begin{proof}
+  Take $\pi: G \to G/H$ as before. \cref{lem:4.4} gives
+  \begin{equation*}|A^m \cap H|  \leq \frac{|A^{m+1}|}{|\pi(A)|}.\end{equation*}
+  \cref{lem:4.3} gives
+  \begin{equation*}|A^2 \cap H| \geq \frac{|A|}{|\pi(A)|}.\end{equation*}
+  Combine these two inequalities.
+\end{proof}
+\begin{nprop}[Stability of \hyperlink{def:appGroup}{approximate groups} under intersections with subgroups]\label{prop:4.6}
+  Let $H < G$, let $A \subset G$ be a \hyperlink{def:appGroup}{$K$-approximate group}. Then $A^m \cap H$ is covered by $\leq K^{m-1}$ left-translates of $A^2 \cap H$.
+  In particular, $A^m \cap H$ is a $K^{2m-1}$-approximate group (since $A^2 \cap H \subset A^m \cap H$ and $(A^m \cap H)^2 \subset A^{2m} \cap H$).
+\end{nprop}
+\begin{proof}
+  By definition, $\exists X \subset G$ with $|X| = K^{m-1}$ such that $A^m \subset XA$. In particular,
+  \begin{equation*}
+    A^m \cap H \subset \bigcup_{x \in X} (xA \cap H).
+  \end{equation*}
+  For each $xA \cap H$ that is not empty, $\exists h = xa \in H$ for some $a \in A$.
+  This means that
+  \begin{equation*}xA \cap H \subset h(a^{-1} A \cap H) \subset h(A^2 \cap H).\end{equation*}
+  Hence each set $xA \cap H$ in this union is contained in a single left translate of $A^2 \cap H$.
+\end{proof}
+In Introduction to Discrete Analysis, we saw that when studying \hyperlink{def:doubling}{small doubling} or \hyperlink{def:tripling}{tripling} there is a more general notion of homomorphism that comes into play: the Freiman homomorphism. To motivate this, consider two sets $A = \{-n, \dotsc, n\} \subset \mathbb{Z}/p\mathbb{Z}$, and $B = \{-n, \dotsc, n\} \subset \mathbb{Z}/q\mathbb{Z}$ for $p,q$ two primes $\geq 10n$, say.
+These two sets are intuitively `isomorphic' from the perspective of $A + A$ or $B+B$, but there is no way of encoding this with a group homomorphism $\mathbb{Z}/q\mathbb{Z} \to \mathbb{Z}/p\mathbb{Z}$.
+Freiman homomorphisms give us a way to encode this.
+\begin{defi}\hypertarget{def:fhom}
+  Let $m \in \mathbb{N}$, let $A,B$ be subsets of groups.
+  \begin{itemize}[label=--]
+    \item A map $\varphi: A \to B$ is a \textbf{Freiman $m$-homomorphism}\index{Freiman homomorphism} if
+      $\forall x_1, \dotsc, x_m, y_1, \dotsc, y_m \in A$,
+      \begin{equation*}x_1 \dotsm x_m = y_1 \dotsm y_m \implies \varphi(x_1) \dotsm \varphi(x_m) = \varphi(y_1) \dotsm \varphi(y_m).\end{equation*}
+    \item If $1 \in A$ and $\varphi(1) = 1$ then we say that $\varphi$ is \textbf{centered}\index{Freiman homomorphism!centered}.
+    \item If $\varphi$ is injective and its inverse $\varphi(A) \to A$ is also a Freiman $m$-homomorphism then we say $\varphi:A \to \varphi(A)$ is a \textbf{Freiman $m$-isomorphism}.
+    \item We often simply write that $\varphi$ is a `Freiman homomorphism' when it is a Freiman $2$-homomorphism.
+  \end{itemize}
+\end{defi}
+\begin{remark}\leavevmode
+  \begin{enumerate}[label=(\arabic*)]
+    \item Every map is trivially a \hyperlink{def:fhom}{$1$-homomorphism}, so we only care about the cases $m \geq 2$.
+    \item This definition gets stronger as $m$ increases: we may assume $A \neq \emptyset$, and then, picking $a \in A$ arbitrarily, if $x_1 \dotsm x_k = y_1 \dotsm y_k$ for $k \leq m$ then
+      \begin{equation*}
+        x_1 \dotsm x_k \underbrace{a \dotsm a}_{m-k} =
+        y_1 \dotsm y_k \underbrace{a \dotsm a}_{m-k}.
+      \end{equation*}
+    \item If $\varphi$ is a centered $m$-homomorphism and $a, a^{-1} \in A$ then exercise to check that $\varphi(a^{-1}) = \varphi(a)^{-1}$ (for $m \geq 2$).
+  \end{enumerate}
+\end{remark}
+\begin{nlemma}\label{lem:4.7}
+  Suppose $\varphi: A \to \Gamma$ is a \hyperlink{def:fhom}{Freiman $m$-homomorphism}.
+  Then
+  \begin{equation*}|\varphi(A)^m| \leq |A^m|.\end{equation*}
+  In particular, if $\varphi$ is injective then
+  \begin{equation*}\ratio{\varphi(A)^m}{\varphi(A)} \leq \ratio{A^m}{A},\end{equation*}
+  and if $\varphi$ is a Freiman $m$-isomorphism then
+  \begin{equation*}\ratio{\varphi(A)^m}{\varphi(A)} = \ratio{A^m}{A}.\end{equation*}
+\end{nlemma}
+\begin{proof}
+  Exercise.
+\end{proof}
 \printindex
 \end{document}
