@@ -4,7 +4,7 @@
 \def\npart{III}
 \def\nyear{2019}
 \def\nterm{Lent}
-\def\draft{Unfinished course}
+\def\draft{Ongoing course}
 \def\nlecturer{Dr T.\ Bloom}
 \def\ncourse{Analytic Number Theory}
 
@@ -14,6 +14,7 @@
 \usepackage[intoc, refpage]{nomencl}
 
 \input{header}
+\usetikzlibrary{patterns, fadings, shapes}
 
 \reversemarginpar
 
@@ -33,7 +34,7 @@
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \setcounter{section}{-1}
-\counterwithout{nthm}{section}
+% \counterwithout{nthm}{section}
 
 % and here we go!
 \begin{document}
@@ -43,23 +44,26 @@
 
 \clearpage
 \section{Introduction}
-Analytic \marginnote{\emph{Lecture 1}}[0cm]Number Theory is the study of numbers using analysis. It is a fascinating field because because a number - in particular in this course an integer - is discrete, whilst analysis involves the real/complex numbers which are continuous.
+\lecnum{1} Analytic Number Theory is the study of numbers using analysis. It is a fascinating field because because a number - in particular in this course an integer - is discrete, whilst analysis involves the real/complex numbers which are continuous.
 
-In this course, we will ask quantitative questions.
+In this course, we will ask quantitative questions things like `how many' or `how large', in reference to simple number-theoretic objects.
 
 \begin{eg}\leavevmode
   \begin{enumerate}
-    \item How many primes? We can define the function $\pi(x) = |\{n \mid n \leq x \text{ and } n \text{ is prime} \}|$. Then the prime number theorem, which we will prove in this course states $$\pi(x) \sim \frac{x}{\log x}. $$
+    \item How many primes? We can define the \index{prime-counting function}prime-counting function\nomenclature{$\pi(x)$}{prime-counting function}
+      \begin{equation*}\hypertarget{def:pi}\pi(x) = |\{n : n \leq x \text{ and } n \text{ is prime} \}|.\end{equation*}
+      Then the \hypertarget{def:pntold}prime number theorem\index{prime number theorem}, which we will prove in this course, states
+      \begin{equation*}\pi(x) \sim \frac{x}{\log x}.\end{equation*}
       (We will always take `numbers' to mean natural numbers, not including zero).
-    \item  How many twin primes are there? That is, where $p,\,p+2$ are both prime.
+    \item How many twin primes ($p$ such that $p+2$ is also prime) are there?
       It is not known whether there are infinitely many but since 2014, there has been immense progress by Zhang, Maynard and a Polymath project which has determined there are infinitely many primes at most 246 apart.
-      Guess: there are $\approx \frac{x}{(\log x)^2}$ many $\leq x$.
-    \item How many primes are there $\equiv a \bmod q $ where $(a,q) = 1$. We know, by Dirichlet's theorem proven in the 20th century, that there are infinitely many such.
-      The guess for how many is
+      Guess: there are $\approx \frac{x}{(\log x)^2}$ many twin primes $\leq x$.
+    \item How many primes are there congruent to $a \bmod q$ where $(a,q) = 1$. We know, by Dirichlet's theorem proven in the 20th century, that there are infinitely many such.
+      The guess for how many there are in the interval $[1,x]$ is
       \begin{equation*}
         \frac{1}{\varphi(q)} \frac{x}{\log x}.
       \end{equation*}
-      This is known for small $q$. Recall $\varphi(n) = |\{1\leq m \leq n \ | \ (m,n) =1 \}|$
+      This is known for small $q$. Recall that $\varphi(n) \coloneqq |\{1\leq m \leq n : (m,n) =1 \}|$, Euler's totient function.\index{totient function}\nomenclature{$\varphi(x)$}{Euler's totient function}
   \end{enumerate}
 \end{eg}
 The course will be split up into 4 (roughly equal) parts
@@ -550,7 +554,142 @@ This gives an error term of
 \begin{equation*}
   -2 \gamma \sum_{a \leq x} \mu(a) \frac{x}{a} = \bigO(x \sum_{a \leq x} \frac{\mu(a)}{a})
 \end{equation*}
-so still need to show that $\sum_{a \leq x} \frac{\mu(a)}{a} = o(1)$.
+Let
+\begin{equation*}
+  \hypertarget{def:selb}\Lambda_2(n)\nomenclature{$\Lambda_2(n)$}{Selberg's function} \coloneqq \hyperlink{def:mu}{\mu} \hyperlink{def:conv}{\star} \log^2 (n) = \sum_{ab=n} \mu(a) (\log b)^2.
+\end{equation*}
+called \named{Selberg's function}. (To see why this is denoted $\Lambda_2$, recall that $\Lambda = \mu \star \log$).
+The idea is to prove a `Prime Number Theorem for $\Lambda_2$' with elementary methods.
+In particular, we will try the same method as just before, but the leading order term will be larger, so the error term can safely be ignored.
+
+\begin{nlemma}\label{lem:12}
+  \leavevmode
+  \begin{enumerate}[label=(\arabic*)]
+    \item $\hyperlink{def:selb}{\Lambda_2(n)} = \hyperlink{def:vonMang}{\Lambda(n)} \log n + \Lambda \hyperlink{def:conv}{\star} \Lambda(n)$
+    \item $0 \leq \Lambda_2(n) \leq (\log n)^2$
+    \item If $\Lambda_2(n) \neq 0$ then $n$ has at most $2$ distinct prime divisors.
+  \end{enumerate}
+\end{nlemma}
+\begin{proof}
+  For (1), we use \hyperlink{def:mobinv}{M\"obius inversion}, so it is enough to show that
+  \begin{align*}
+    \sum_{d \mid n} (\hyperlink{def:vonMang}{\Lambda(d)} \log d + \Lambda \hyperlink{def:conv}{\star} \Lambda(d)) = (\log n)^2.
+  \end{align*}
+  Recall that $1 \star \Lambda = \log$, so
+  \begin{align*}
+    \sum_{d \mid n} (\hyperlink{def:vonMang}{\Lambda(d)} \log d + \Lambda \star \Lambda(d)) &= \sum_{d \mid n} \Lambda(d) \log d + \sum_{ab \mid n} \Lambda(a) \Lambda(b) \\
+                                                                                            &= \sum_{d \mid n} \Lambda(d) \log d + \sum_{a \mid n} \Lambda(a) \left(\sum_{b \mid \frac{n}{a}} \Lambda(b)\right) \\
+                                                                                            &= \sum_{d \mid n} \Lambda(d) \log d + \sum_{d \mid n} \Lambda(d) \log\left(\frac{n}{d}\right) \\
+                                                                                            &= \log n \sum_{d \mid n} \Lambda(d) = (\log n)^2.
+  \end{align*}
+
+  For (2), $\Lambda_2(n) \geq 0$ since both terms on the RHS in (1) are $\geq 0$ and since $\sum_{d \mid n} \Lambda_2(d) = (\log n)^2$ we get $\Lambda_2(n) \leq (\log n)^2$.
+
+  For (3), note that if $n$ is divisible by $3$ distinct primes, then $\Lambda(n) = 0$, and $\Lambda \star \Lambda(n) = \sum_{ab = n} \Lambda(a) \Lambda(b) = 0$ since at least one of $a$ or $b$ has $\geq 2$ distinct prime divisors.
+\end{proof}
+\begin{nthm}[Selberg's identity]\label{thm:13}
+  \begin{equation*}
+    \sum_{n \leq x} \hyperlink{def:selb}{\Lambda_2(n)} = 2x \log x + \hyperlink{def:asymp}{\bigO}(x).
+  \end{equation*}
+\end{nthm}
+\begin{proof}
+  \begin{align*}
+    \sum_{n \leq x} \hyperlink{def:selb}{\Lambda_2(n)} &= \sum_{n \leq x} \mu \hyperlink{def:conv}{\star}(\log)^2(n) \\
+                                 &= \sum_{ab \leq x} \mu(a) (\log b)^2 \\
+                                 &= \sum_{a \leq x} \mu(a) \left(\sum_{(b \leq \frac x a)} (\log b)^2\right).
+  \end{align*}
+  By \nameref{lem:1},
+  \begin{equation*}
+    \sum_{m \leq x} (\log m)^2 = x (\log x)^2 - 2 x \log x + 2 x + \hyperlink{def:asymp}{\bigO}((\log x)^2).
+  \end{equation*}
+  By \nameref*{lem:1} again, (with $A(t) = \sum_{n \leq t} \hyperlink{def:tau}{\tau(n)} = t \log t + Ct + \bigO(t^{\frac 12})$)
+  \begin{align*}
+    \sum_{m \leq x} \frac{\tau(m)}{m} &= \frac{A(x)}{x} + \int_1^x \frac{A(t)}{t^2} \, dt \\
+                                      &= \log x + C + \bigO(x^{-\frac 12}) + \int_1^x \frac{\log t}{t} \, dt + c \int_1^x \frac 1t \, dt + \bigO\left(\int_1^x \frac{1}{t^{\frac{3}{2}}} \, dt\right) \\
+                                      &= \frac{(\log x)^2}{2} + c_1 \log x + c_2 + \bigO(x^{-\frac{1}{2}}).
+  \end{align*}
+  So
+  \begin{equation*}
+    \frac{x (\log x)^2}{2} = \sum_{m \leq x} \tau(m) \frac{x}{m} + c_1' \sum_{m \leq x} \tau(m) + c_2'x + \bigO(x^{\frac{1}{2}})
+  \end{equation*}
+  so
+  \begin{equation*}
+    \sum_{m \leq x} (\log m)^2 = 2 \sum_{m \leq x} \tau(m) \frac{x}{m} + c_3 \sum_{m \leq x} \tau(m) + c_4 + \bigO(x^{\frac{1}{2}})
+  \end{equation*}
+  so
+  \begin{equation*}
+    \sum_{n \leq x} \Lambda_2(n) = 2 \sum_{a \leq x} \mu(a) \sum_{b \leq \frac xa} \frac{\tau(b) x}{ab} + c_5 \sum_{a \leq x} \mu(a) \sum_{b \leq \frac xa} \tau(b) + c_6 \sum_{a \leq x} \mu(a) \frac xa + \bigO\left(\sum_{a \leq x} \frac{x^{\frac 12}}{a^{\frac 12}}\right).
+  \end{equation*}
+
+  Now, we show that the last three terms here are $\bigO(x)$:
+  First, note that
+  \begin{equation*}
+    x^{\frac 12} \sum_{a \leq x} \frac{1}{a^{\frac 12}} = \bigO(x).
+  \end{equation*}
+  Secondly,
+  \begin{align*}
+    x \sum_{a \leq x} \frac{\mu(a)}{a} &= \sum_{a \leq x} \floor*{\frac xa} + \bigO(x) \\
+                                      &= \sum_{a \leq x} \sum_{b \leq \frac xa} 1 + \bigO(x) \\
+                                      &= \sum_{d \leq x }\mu \star 1(d) + \bigO(x) \\
+                                      &= 1 + \bigO(x) = \bigO(x).
+  \end{align*}
+  Thirdly,
+  \begin{align*}
+    \sum_{a \leq x} \mu(a) \sum_{b \leq \frac xa} \tau(b) &= \sum_{a \leq x} \mu(a) \sum_{b \leq \frac xa} \sum_{cd = b} 1 \\
+                                                          &= \sum_{a \leq x} \mu(a) \sum_{cd \leq \frac xa} 1 \\
+                                                          &= \sum_{acd \leq x} \mu(a) \\
+                                                          &= \sum_{d \leq x} \sum_{ac \leq \frac xd} \mu(a) \\
+                                                          &= \sum_{d \leq x} \sum_{e \leq \frac xd} \mu \star 1(e) \\
+                                                          &= \sum_{d \leq x} 1 = \bigO(x).
+  \end{align*}
+
+  So
+  \begin{align*}
+    \sum_{n \leq x} \Lambda_2(n) &= 2 \sum_{a \leq x} \mu(a) \sum_{b \leq \frac xa} \frac{\tau(b) x}{ab} + \bigO(x) \\
+                                 &= 2x \sum_{d \leq x} \frac{1}{d} \mu \star \tau(d) + \bigO(x)
+                                 \shortintertext{Recall $\tau = 1 \star 1$ so $\mu \star \tau = \mu \star 1 \star 1 = 1$}
+                                 &= 2x \sum_{d \leq x} \frac{1}{d} + \bigO(x) \\
+                                 &= 2x \log x + \bigO(x). \qedhere
+  \end{align*}
+\end{proof}
+% start of non-examinable
+\subsection*{*A 14-point plan to prove PNT from Selberg's identity}
+Let $r(x) = \frac{\hyperlink{def:psi}{\psi(x)}}{x} - 1$, so \hyperlink{def:pnt}{PNT} is equivalent to $\lim_{x \to \infty} |r(x)| = 0$.
+\begin{enumerate}[label=(\arabic*)]
+  \item Show that \nameref{thm:13} gives
+    \begin{equation*}
+      r(x) \log x = - \sum_{n \leq x} \frac{\hyperlink{def:vonMang}{\Lambda(n)}}{n} r(\tfrac{x}{n}) + \hyperlink{def:asymp}{\bigO}(1).
+    \end{equation*}
+  \item Considering (1) with $x$ replaced by $\frac xm$, summing over $m$, show
+    \begin{equation*}
+      |r(x)| (\log x)^2 \leq \sum_{n \leq x} \frac{\Lambda_2(n)}{n} \abs{r\left(\tfrac xn\right)} + \bigO(\log x).
+    \end{equation*}
+  \item Show
+    \begin{equation*}
+      \sum_{n \leq x} \Lambda_2(n) = 2 \int_1^{\floor{x}} \log t \, dt + \bigO(x).
+    \end{equation*}
+  \item Show
+    \begin{equation*}
+      \sum_{n \leq x} \frac{\Lambda_2(n)}{n} \abs{r(\tfrac{x}{n})} = 2 \sum_{\mathclap{2 \leq n \leq x}} \frac{r(\frac{x}{n})}{n} \int_{n-1}^n \log t \, dt + \bigO(x \log x).
+    \end{equation*}
+  \item Show
+    \begin{equation*}
+      \sum_{\mathclap{2 \leq n \leq x}} \frac{r(\frac{x}{n})}{n} \int_{n-1}^n \log t \, dt + \bigO(x \log x) = \int_1^x \frac{ \abs{r(\frac{x}{t})}}{t \log t} \, dt + \bigO(x \log x).
+    \end{equation*}
+  \item Deduce
+    \begin{equation*}
+      \sum_{n \leq x} \frac{\Lambda_2(n)}{n} \abs{r(\tfrac{x}{n})} = 2 \int_1^x \frac{ \abs{r(\frac{x}{t})}}{t \log t} \, dt + \bigO(x \log x).
+    \end{equation*}
+  \item Let $V(u) = r(e^u)$. Show that
+    \begin{equation*}
+      u^2 |V(u)| \leq 2\int_0^u \int_0^v \abs{V(t)}\,dt\,dv + \bigO(u)
+    \end{equation*}
+  \item Show that
+    \begin{equation*}
+      \alpha \coloneqq \limsup \abs{V(u)} \leq \limsup \frac{1}{u} \int_0^u |V(t)| \, dt \eqqcolon \beta
+    \end{equation*}
+  \item[(9)-(14)] If $\alpha > 0$, then can show from (7) that $\beta < \alpha$, contradiction, so $\alpha = 0$ and PNT.
+\end{enumerate}
 \clearpage
 \printnomenclature
 \printindex
