@@ -85,18 +85,18 @@ We begin with a review of asymptotic notations:
 \end{itemize}
 
 \subsection{Arithmetic Functions}
-\begin{defi}[Arithmetic function]\hypertarget{def:arith}
-  An \named{arithmetic function} is just a function $f : \mathbb{N} \to \mathbb{C}$.
+\begin{defi}\hypertarget{def:arith}
+  An \named{arithmetic function} is a function $f : \mathbb{N} \to \mathbb{C}$.
 \end{defi}
-\begin{defi}[Convolution]\hypertarget{def:conv}
+\begin{defi}\hypertarget{def:conv}
   An important operation for multiplicative number theory is the \textbf{multiplicative convolution\index{convolution}}
-  \nomenclature{$*$}{convolution}
-  \begin{equation*}f*g(n) \coloneqq \sum_{ab = n} f(a)g(b).\end{equation*}
+  \nomenclature{$\star$}{convolution}
+  \begin{equation*}f\star g(n) \coloneqq \sum_{ab = n} f(a)g(b).\end{equation*}
 \end{defi}
 \begin{eg}\leavevmode
   \begin{itemize}
-    \item \hypertarget{def:1}{$1(n) \coloneqq 1 \; \; \forall n$}. Caution: $1*f \neq f$.
-    \item \hypertarget{def:mu}M\"obius function:\index{M\"obius function}\nomenclature{$\mu$}{M\"obius function}
+    \item \hypertarget{def:1}{$1(n) \coloneqq 1 \; \; \forall n$}\nomenclature{$1(n)$}{constant 1 function}. Caution: $1\hyperlink{def:conv}{\star} f \neq f$.
+    \item \hypertarget{def:mu}M\"obius function:\index{M\"obius function}\nomenclature{$\mu(n)$}{M\"obius function}
       \begin{equation*}
         \mu(n) =
         \begin{cases*}
@@ -104,14 +104,14 @@ We begin with a review of asymptotic notations:
           0 & if $n$ not squarefree
         \end{cases*}
       \end{equation*}
-    \item \hypertarget{def:lamb}Liouville function:\index{Liouville function}\nomenclature{$\lambda$}{Liouville function}
+    \item \hypertarget{def:lamb}Liouville function:\index{Liouville function}\nomenclature{$\lambda(n)$}{Liouville function}
       \begin{equation*}
         \lambda(n) = (-1)^k \text{ if } n = p_1\dotsm p_k, \text{ not necessarily distinct}
       \end{equation*}
     \item \hypertarget{def:tau}Divisor function:\index{divisor function}\nomenclature{$\tau$}{divisor function}
       \begin{align*}
         \tau(n) &= | \{ d \mid d\text{ a factor of }n \} | \\
-        \tau &= 1 \hyperlink{def:conv}{*}1
+        \tau &= \hyperlink{def:1}{1} \hyperlink{def:conv}{\star}1
       \end{align*}
   \end{itemize}
 \end{eg}
@@ -119,60 +119,66 @@ We begin with a review of asymptotic notations:
   An \hyperlink{def:arith}{arithmetic function} is a \named{multiplicative function} if $f(nm) = f(n)f(m)$ for $(n,m) =1$.
   In particular, a multiplicative function is determined by its values on prime powers $f(p^k)$.
 \end{defi}
-\begin{fact}
-  If $f,g$ are \hyperlink{def:multi}{multiplicative}, then so is $\hyperlink{def:conv}{f*g}$.
-  $\log n $ is not \hyperlink{def:multi}{multiplicative}.
-  Note, almost all \hyperlink{def:arith}{arithmetic functions} are not multiplicative.
+\begin{fact}\leavevmode
+  \begin{itemize}
+    \item If $f,g$ are \hyperlink{def:multi}{multiplicative}, then so is $\hyperlink{def:conv}{f\star g}$.
+    \item $\log n $ is not multiplicative.
+      $1,\mu,\lambda,\tau$ are multiplicative.
+  \end{itemize}
+  Note almost all \hyperlink{def:arith}{arithmetic functions} are not multiplicative.
 \end{fact}
 \begin{fact}[\hypertarget{def:mobinv}M\"obius inversion]\index{M\"obius function}
   \begin{equation*}
-    \hyperlink{def:1}{1} \hyperlink{def:conv}{*} f = g \iff \hyperlink{def:mu}{\mu} * g = f.
+    \hyperlink{def:1}{1} \hyperlink{def:conv}{\star} f = g \iff \hyperlink{def:mu}{\mu} \star g = f.
   \end{equation*}
 \end{fact}
 
 \begin{proof}
+  First show
   \begin{equation*}
+    1 \hyperlink{def:star}{\star} \hyperlink{def:mu}{\mu}(n) \coloneqq
     \sum_{d \mid n} \hyperlink{def:mu}{\mu(d)} =
     \begin{cases*}
       1 & if $n=1$ \\
-      0 & otherwise
+      0 & otherwise.
     \end{cases*}
   \end{equation*}
-  Note the left hand side is $1\hyperlink{def:conv}{*}\mu$.
-  Since $1,\mu$ are \hyperlink{def:multi}{multiplicative}, $1*\mu$ is multiplicative.
+  We have $1,\mu$ are \hyperlink{def:multi}{multiplicative}, so $1\star\mu$ is multiplicative.
   Hence it is enough to check the identity for prime powers:
-  If $n= p^k$, then $\{d \mid d\text{ divides }n\} = \{1,p,\ldots,p^k\}$ so the left hand side is $1-1 + 0 + \ldots + 0 = 0$, unless $k=0$ when the left hand side is $\mu(1) =1$.
+  If $n= p^k$, then $\{d : d\text{ divides }n\} = \{1,p,\ldots,p^k\}$ so the left hand side is $1-1 + 0 + \ldots + 0 = 0$, unless $k=0$ when the left hand side is $\mu(1) =1$.
 
-  The right hand side is the identity of \hyperlink{def:conv}{convolution}, and convolution is associative, giving the required result.
+  The right hand side here is the identity of \hyperlink{def:conv}{convolution}, and convolution is associative, giving the required result.
 \end{proof}
 
-Our ultimate goal is to study the primes. This would suggest that we should work with
+Our ultimate goal is to study the primes. This would suggest that we should work with the indicator function of the primes:
 \begin{equation*}
   1_p(n) = \begin{cases*}
     1 &if $n$ prime \\
-    0 & otherwise
+    0 & otherwise.
   \end{cases*}
 \end{equation*}
-For example $\pi(x) = \displaystyle \sum_{1\leq n\leq x} 1_p(n)$.
+For example $\pi(x) = \displaystyle \sum_{\mathclap{1\leq n\leq x}} 1_p(n)$.
 This is an awkward function to work with.
-Instead, we work with the \nomenclature{$\Lambda$}{von Mangoldt function}\named{von Mangoldt function}
+Instead, define the \nomenclature{$\Lambda(n)$}{von Mangoldt function}\named{von Mangoldt function}
 \begin{equation*}
   \hypertarget{def:vonMang}\Lambda(n) =
   \begin{cases*}
     \log p & if $n$ is a prime power\\
-    0 & otherwise.
+    0 & otherwise
   \end{cases*}
 \end{equation*}
-This function is easier to understand. Why?
+i.e.\ weight the prime powers.
+This function is easier to use. Why?
 \begin{lemma}
   \begin{equation*}
-    \hyperlink{def:1}{1} \hyperlink{def:conv}{*} \hyperlink{def:vonMang}{\Lambda} = \log \quad \text{and} \quad \hyperlink{def:mu}{\mu} * \log = \Lambda
+    \hyperlink{def:1}{1} \hyperlink{def:conv}{\star} \hyperlink{def:vonMang}{\Lambda} = \log \quad \text{and} \quad \hyperlink{def:mu}{\mu} \star \log = \Lambda
   \end{equation*}
 \end{lemma}
 \begin{proof}
-  The second part follows immediately by \hyperlink{def:mobinv}{M\"obius inversion}.
+  The second part follows immediately by \hyperlink{def:mobinv}{M\"obius inversion} from the first.
   \begin{align*}
-    1*\hyperlink{def:vonMang}{\Lambda}(n) & = \sum_{d \mid n}\Lambda(d) \quad \text{so if } n = p_1^{k_1}\ldots p_k^{n_k} \\
+    1\star \hyperlink{def:vonMang}{\Lambda(n)} & = \sum_{d \mid n}\Lambda(d)\\
+    \shortintertext{so write $n = p_1^{k_1}\ldots p_k^{n_k}$,}
                  &= \sum_{i=1}^r \sum_{j=1}^{k_i} \Lambda(p_i^j) \\
                  &= \sum_{i=1}^r \sum_{j=1}^{k_i} \log p_i \\
                  &= \sum_{i=1}^{r}k_i\log p_i
@@ -180,42 +186,42 @@ This function is easier to understand. Why?
                  = \log n. \qedhere
   \end{align*}
 \end{proof}
-We can write
-\begin{align*}
-  \Lambda(n) &= \sum_{d|n}\mu(d)\log\left(\frac{n}{d}\right) \\
-             &= \log n \sum_{d|n}\mu(d) - \sum_{d|n}\mu(d)\log d \\
-             &= - \sum_{d|n}\mu(d)\log d.
-\end{align*}
-
 \begin{eg}
+  We can write
   \begin{align*}
-    \sum_{\mathclap{1\leq n \leq x}}\Lambda(n) &= -\sum_{1\leq n\leq x}\sum_{d|n}\mu(d)\log d \\
-                                    &= - \sum_{d\leq x}\mu(d)\log(d)\left(\sum_{\substack{1\leq n\leq x \\ d|n}}1\right) \\
-                                    &= - x \sum_{d\leq x}\mu(d) \frac{\log d}{d} + \hyperlink{def:asymp}{O}\left(\sum_{d\leq x}\mu(d)\log d \right)
+    \hyperlink{def:vonMang}{\Lambda(n)} &= \sum_{d|n}\hyperlink{def:mu}{\mu(d)}\log\left(\frac{n}{d}\right) \\
+                                        &= \log n \sum_{d|n}\mu(d) - \sum_{d|n}\mu(d)\log d \\
+                                        &= - \sum_{d|n}\mu(d)\log d.
   \end{align*}
-  since
-  \begin{equation*}
-    \sum_{\mathclap{\substack{1\leq n\leq x \\ d|n}}}1 = \floor*{\frac{x}{d}}= \frac{x}{d} + O(1).
-  \end{equation*}
+
+  \begin{align*}
+    \sum_{\mathclap{1\leq n \leq x}}{\Lambda(n)} &= -\sum_{1\leq n\leq x}\sum_{d|n}{\mu(d)}\log d \\
+                                    &= - \sum_{d\leq x}\mu(d)\log(d)\Big(\sum_{\substack{1\leq n\leq x \\ d|n}}1\Big)
+                                    \shortintertext{but $\sum_{\substack{1\leq n\leq x \\ d|n}}1 = \floor*{\frac{x}{d}}= \frac{x}{d} + \bigO(1)$, so}
+                                    &= - x \sum_{d\leq x}\mu(d) \frac{\log d}{d} + \hyperlink{def:asymp}{\bigO}\bigg(\sum_{d\leq x}\mu(d)\log d \bigg). \qedhere
+  \end{align*}
 \end{eg}
 \clearpage
 
-% lecture 2
-\subsection{Summation}
-Given an arithmetic function, we can ask for estimates of $\sum_{n \leq x} f(n)$.
-We say that $f$ has average order $g$ if $\sum_{1 \leq n \leq x} f(n) \sim x g(x)$ (average size of $f$ is $g$).
-
-For example, if $f \equiv 1$,
-\begin{equation*}
-  \sum_{1 \leq n \leq x} f(n) = \floor{x} = x + O(1) \sim x
-\end{equation*}
-So average order of $f$ is $1$.
-
-Now take $f(n) = n$,
-\begin{equation*}
-  \sum_{1 \leq n \leq x} n \sim \frac{x^2}{2}
-\end{equation*}
-so order of $n$ is $\frac{n}{2}$.
+\subsection{Partial summation}
+\lecnum{2}Given an \hyperlink{def:arith}{arithmetic function}, we can ask for estimates of $\sum_{n \leq x} f(n)$, which gives a rough idea of how large $f(n)$ is on average.
+\begin{defi}\hypertarget{def:averageOrder}
+We say that $f$ has \named{average order} $g$ if
+\begin{equation*}\sum_{1 \leq n \leq x} f(n) \hyperlink{def:asymp}{\sim} x g(x).\end{equation*}
+\end{defi}
+\begin{eg}
+  For example, if $f \equiv 1$,
+  \begin{equation*}
+    \sum_{1 \leq n \leq x} f(n) = \floor{x} = x + \hyperlink{def:asymp}{\bigO}(1) \sim x
+  \end{equation*}
+  so \hyperlink{def:averageOrder}{average order} of $f$ is $1$.
+  Now take $f(n) = n$,
+  \begin{equation*}
+    \sum_{1 \leq n \leq x} n \sim \frac{x^2}{2}
+  \end{equation*}
+  so the average order of $n$ is $\frac{n}{2}$.
+  The \hyperlink{def:pntold}{Prime Number Theorem} is the statement that $1_p$ has average order $\frac{1}{\log x}$.
+\end{eg}
 
 \begin{nlemma}[Partial summation]\label{lem:1}
   If $(a_n)$ is a sequence of complex numbers and $f$ is such that $f'$ is continuous, then
@@ -229,18 +235,18 @@ so order of $n$ is $\frac{n}{2}$.
   Suppose $x = N$ is an integer. Note that $a_n = A(n) - A(n-1)$.
   So
   \begin{align*}
-    \sum_{1 \leq n \leq N} a_n f(n) &= \sum_{1 \leq n \leq N} f(n) (A(n) - A(n-1)) \\
+    \sum_{1 \leq n \leq N} a_n f(n) &= \sum_{1 \leq n \leq N} f(n) \left(A(n) - A(n-1)\right) \\
     \shortintertext{(note $A(0) = 0$)}
-    &= A(N) f(N) + \sum_{n=1}^{N-1} A(n) (f(n+1)-f(n)).
+    &= A(N) f(N) + \sum_{n=1}^{N-1} A(n) \left(f(n+1)-f(n)\right).
   \end{align*}
   Now
-  \begin{align*}f(n+1)-f(n) = \int_{n}^{n+1} f'(t) \, dt.\end{align*}
+  \begin{align*}f(n+1)-f(n) = \int_{n}^{n+1}\!\!f'(t)\,dt.\end{align*}
   So
   \begin{align*}
     \sum_{1 \leq n \leq N} a_n f(n) &= A(N) f(N) - \sum_{n=1}^{N-1} f'(t) \, dt \\
                                     &= A(N) f(N) - \int_1^N A(t) f'(t) \, dt
   \end{align*}
-  where we set $A(n) = A(t) \; \forall t \in [n, n+1)$ %]
+  where we set $A(n) = A(t) \; \forall t \in [n, n+1)$. %]
   If $N > \floor{x}$, i.e.\ $x$ not an integer,
   \begin{align*}
     A(x) f(x) &= A(N) f(x) \\
@@ -249,94 +255,115 @@ so order of $n$ is $\frac{n}{2}$.
 \end{proof}
 \begin{nlemma}\label{lem:2}
   \begin{align*}
-    \sum_{1 \leq n \leq x} \frac{1}{n} = \log x + \gamma + \bigO\left(\tfrac{1}{x}\right)
+    \sum_{1 \leq n \leq x} \frac{1}{n} = \log x + \gamma + \hyperlink{def:asymp}{\bigO}\left(\tfrac{1}{x}\right)
   \end{align*}
 \end{nlemma}
 \begin{proof}
-  Partial summation with $f(x) = \frac{1}{x}$ and $a_n = 1$ so $A(x) = \floor{x}$. So
+  \nameref{lem:1} with $f(x) = \frac{1}{x}$ and $a_n = 1$, so $A(x) = \floor{x}$:
   \begin{align*}
     \sum_{1 \leq n \leq x} \frac{1}{n} &= \frac{\floor{x}}{x} + \int_1^x \frac{\floor{t}}{t^2}\,dt \\
-                                       &= 1 + O\left(\tfrac{1}{x}\right) + \int_1^x \frac{1}{t}\,dt - \int_1^x \frac{\{t\}}{t^2}\,dt \\
-                                       &= 1 + O\left(\tfrac{1}{x}\right) + \int_1^\infty \frac{\{t\}}{t^2} \, dt + \underbrace{\int_x^\infty \frac{\{t\}}{t^2}\,dt}_{\leq \int_x^\infty \frac{1}{t^2}\,dt \leq \frac{1}{x}} \\
-                                       &=\gamma + O\left(\tfrac{1}{x}\right) + \log x + O\left(\tfrac{1}{x}\right) \\
-                                       &= \log x + \gamma + O\left(\tfrac{1}{x}\right)
+    \shortintertext{recall $\floor{t} = t - \{t\}$}
+                                       &= 1 + \hyperlink{def:asymp}{\bigO}\left(\tfrac{1}{x}\right) + \int_1^x \frac{1}{t}\,dt - \int_1^x \frac{\{t\}}{t^2}\,dt \\
+                                       &= 1 + \bigO\left(\tfrac{1}{x}\right) + \log x -\int_1^\infty \frac{\{t\}}{t^2} \, dt + \underbrace{\int_x^\infty \frac{\{t\}}{t^2}\,dt}_{\leq \int_x^\infty \frac{1}{t^2}\,dt \leq \frac{1}{x}} \\
+                                       &=\gamma + \bigO\left(\tfrac{1}{x}\right) + \log x + \bigO\left(\tfrac{1}{x}\right) \\
+                                       &= \log x + \gamma + \bigO\left(\tfrac{1}{x}\right)
   \end{align*}
   where $\gamma = 1 - \int_1^\infty \frac{\{t\}}{t^2} \, dt$.
 \end{proof}
-This $\gamma$ is called Euler's constant (Euler-Mascheroni). $\gamma \approx 0.577\dots$ but we don't know if $\gamma$ is irrational or not.
+\hypertarget{def:gamma}This $\gamma$ is called Euler's constant (Euler-Mascheroni). $\gamma \approx 0.577\dots$ but we don't know if $\gamma$ is irrational or not.
 
-\begin{nlemma}
+\begin{nlemma}\label{lem:3}
   \begin{equation*}
-    \sum_{1 \leq n \leq x} \log n = x \log x - x + O(\log x).
+    \sum_{\mathclap{1 \leq n \leq x}}\ \log n = x \log x - x + \hyperlink{def:asymp}{\bigO}(\log x).
   \end{equation*}
 \end{nlemma}
 \begin{proof}
-  Partial summation with $f(x) = \log x$, $a_n = 1$, $A(x) = \floor{x}$.
+  \nameref{lem:1} with $f(x) = \log x$, $a_n = 1$, $A(x) = \floor{x}$.
   \begin{align*}
-    \sum_{1 \leq n \leq x} \log n &= \floor{x} \log x - \int_1^x \frac{\floor{t}}{t} \, dt \\
-                                  &= x \log x + O(\log x) - \int_1^x 1 \, dt + \bigO\left(\int_1^x \tfrac{1}{t} \, dt\right) \\
-                                  &= x \log x + O(\log x) - x + O(\log x) \\
-                                  &= x \log x - x + O(\log x). \qedhere
+    \sum_{\mathclap{1 \leq n \leq x}}\ \log n &= \floor{x} \log x - \int_1^x \frac{\floor{t}}{t} \, dt \\
+                                  &= x \log x + \hyperlink{def:asymp}{\bigO}(\log x) - \int_1^x 1 \, dt + \bigO\left(\int_1^x \frac{1}{t} \, dt\right) \\
+                                  &= x \log x + \bigO(\log x) - x + \bigO(\log x) \\
+                                  &= x \log x - x + \bigO(\log x). \qedhere
   \end{align*}
 \end{proof}
 This is not really Number Theory - we haven't really used multiplication yet.
 \subsection{Divisor function}
 Recall that
-\begin{equation*}\tau(n) = 1 \star 1 (n) = \sum_{ab \mid n} 1 = \sum_{d \mid n} 1\end{equation*}
+\begin{equation*}
+\hyperlink{def:tau}{\tau(n)} = \hyperlink{def:1}{1} \hyperlink{def:conv}{\star} 1 (n) = \sum_{ab \mid n} 1 = \sum_{d \mid n} 1
+\end{equation*}
 We will analyse how many divisors an integer has.
 \begin{nthm}\label{thm:4}
   \begin{align*}
-    \sum_{1 \leq n \leq x} \tau(n) = x \log x + (2 \gamma - 1) x + O(x^{\frac{1}{2}})
+    \sum_{\mathclap{1 \leq n \leq x}} \hyperlink{def:tau}{\tau(n)} = x \log x + (2 \gamma - 1) x + \hyperlink{def:asymp}{\bigO}(x^{\frac{1}{2}})
   \end{align*}
-  So average order of $\tau$ is $\log x$.
+  So \hyperlink{def:averageOrder}{average order} of $\tau$ is $\log x$.
 \end{nthm}
 \begin{proof}
-  Partial summation involves turning a sum $\sum a_n \rightsquigarrow \sum a_n f(n)$, but what does $\tau(\frac{1}{2})$ even mean?
-  So there is no continuous function to use.
+  \nameref{lem:1} involves turning a sum $\sum a_n \rightsquigarrow \sum a_n f(n)$, but what does $\hyperlink{def:tau}{\tau(\frac{1}{2})}$ even mean?
+  There is no continuous function to use.
 
-  Instead, play around with the definition
+  Instead, play around with the definition:
   \begin{align*}
-    \sum_{1 \leq n \leq x} \tau(n) &= \sum_{1 \leq n \leq x} \sum_{d \mid x} 1 \\
+    \sum_{\mathclap{1 \leq n \leq x}} \tau(n) &= \sum_{1 \leq n \leq x} \sum_{d \mid x} 1 \\
                                    &= \sum_{1 \leq d \leq x} \sum_{\substack{1 \leq n \leq x \\ d \mid n}} 1
                                    \shortintertext{note that $\sum_{\substack{1 \leq n \leq x \\ d \mid n}} 1 = \floor{\frac{x}{d}}$}
-                                   &= \sum_{1 \leq d \leq x} \floor*{\frac{x}{d}} = \sum_{1 \leq d \leq x} \frac{x}{d} + O(x) \\
-                                   &= x \sum_{1 \leq d \leq x} \frac{1}{d} + O(x) \\
-                                   &= x \log x + \gamma x + O(x)
+                                   &= \sum_{1 \leq d \leq x} \floor*{\frac{x}{d}} \\
+                                   &= \sum_{1 \leq d \leq x} \frac{x}{d} + \hyperlink{def:asymp}{\bigO}(x) \\
+                                   &= x \sum_{1 \leq d \leq x} \frac{1}{d} + \bigO(x) \\
+                                   &= x \log x + \gamma x + \bigO(x)
   \end{align*}
   using \cref{lem:2}.
   To reduce the error term, we use (Dirichlet's) hyperbola trick.
   \begin{equation*}
     \sum \tau(n) = \sum_{1 \leq n \leq x} \sum_{a b = n} 1 = \sum_{ab \leq x} 1 = \sum_{a \leq x} \sum_{b \leq \frac xa} 1
   \end{equation*}
-  % hyperbola picture
-  When summing over $ab \leq x$, we can sum over $a \leq x^{\frac{1}{2}}$, $b \leq x^{\frac{1}{2}}$
+  \begin{tikzfadingfrompicture}[name=edge fade]
+    \fill [white] (0,0) rectangle (4,4);
+    \shade [left color=white, right color=transparent!100] (4,0) rectangle (5,4);
+    \shade [bottom color=white, top color=transparent!100] (0,4) rectangle (4,5);
+    \fill [transparent] (4,4) rectangle (5,5);
+  \end{tikzfadingfrompicture}
+  \begin{center}
+    \begin{tikzpicture}
+      \draw [<->] (5.2,0) -- (0,0) -- (0,5.2);
+      \draw [very thin] (2,0) -- (2,2) -- (0,2);
+      \begin{scope}
+        \path [scope fading=edge fade, fit fading=false, fading transform={shift={(2.5,2.5)}}] (0,0) rectangle (5,5);
+        \draw [domain=0.4:2.5,scale=2,smooth,variable=\x] plot ({\x},{1/\x});
+        \fill [opacity=0.7, pattern=north east lines, pattern color=bred!70!black] [domain=1:2.5,scale=2,smooth,variable=\x] plot ({\x},{1/\x}) -- (2.5,0) -- (0,0) -- (0,1) -- (1,1);
+        \fill [opacity=0.7, pattern=north west lines, pattern color=bblue!70!black] [domain=0.4:1,scale=2,smooth,variable=\x] plot ({\x},{1/\x}) -- (1,0) -- (0,0) -- (0,2.5) -- (0.4,2.5);
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  When summing over $ab \leq x$, we can sum over $a \leq x^{\frac{1}{2}}$, $b \leq x^{\frac{1}{2}}$ separately, and subtract the overlap.
   \begin{align*}
-    \sum_{1 \leq n \leq x} \tau(n) &= \sum_{a \leq x^{\frac{1}{2}}} \sum_{b \leq \frac{x}{a}} 1 + \sum_{b \leq x^{\frac{1}{2}}} \sum_{a \leq \frac{x}{b}} 1 - \sum_{a,b \leq x^{\frac{1}{2}}} 1 \\
-                                   &= 2 \sum_{a \leq x^{\frac{1}{2}}} \floor*{\frac{x}{a}} - \underbrace{\floor*{x^{\frac{1}{2}}}}_{\mathclap{=\left(x^{\frac{1}{2}} + o(1)\right)^2}} = 2 \sum_{a \leq x^{\frac{1}{2}}} \frac{x}{a} + O(x^{\frac{1}{2}}) - x + O(x^{\frac{1}{2}}) \\
-                                   &= 2 x \log x^{\frac{1}{2}} + 2 \gamma x - x + O(x^{\frac{1}{2}}) \\
-                                   &= x \log x + (2 \gamma - 1) x + O(x^{\frac{1}{2}}). \qedhere
+    \sum_{1 \leq n \leq x} \tau(n) &= \sum_{a \leq x^{\frac{1}{2}}} \sum_{b \leq \frac{x}{a}} 1 + \sum_{b \leq x^{\frac{1}{2}}} \sum_{a \leq \frac{x}{b}} 1 - \sum_{\mathclap{a,b \leq x^{\frac{1}{2}}}} 1 \\
+                                   &= 2 \sum_{a \leq x^{\frac{1}{2}}} \floor*{\frac{x}{a}} - \underbrace{\floor*{x^{\frac{1}{2}}}^2}_{\mathclap{=\left(x^{\frac{1}{2}} + \bigO(1)\right)^2}} \\
+                                   &= 2 \sum_{a \leq x^{\frac{1}{2}}} \frac{x}{a} + \bigO(x^{\frac{1}{2}}) - x + \bigO(x^{\frac{1}{2}}) \\
+                                   &= 2 x \log x^{\frac{1}{2}} + 2 \gamma x - x + \bigO(x^{\frac{1}{2}}) \\
+                                   &= x \log x + (2 \gamma - 1) x + \bigO(x^{\frac{1}{2}}). \qedhere
   \end{align*}
 \end{proof}
 Analytic Number Theory is mostly just controlling the error term.
 \begin{remark}
-  Improving this $O(x^{\frac{1}{2}})$ error term is a famous and hard problem! Probably, $O(x^{\frac{1}{4} + \epsilon})$. Best know is $O(x^{0.3148})$.
+  Improving this $\bigO(x^{\frac{1}{2}})$ error term is a famous and hard problem! Probably, $\bigO(x^{\frac{1}{4} + \epsilon})$. The current best known is $\bigO(x^{0.3148})$.
 
   This does not mean that $\tau(n) = \log n$: the average order does not give any information about specific values.
 \end{remark}
-% lecture 3
 \begin{nthm}\label{thm:5}
-  For any $n \geq 1$,
+  \lecnum{3}For any $n \geq 1$,
   \begin{equation*}
-    \tau(n) \leq n^{O\left(\frac{1}{\log \log n}\right)}
+    \hyperlink{def:tau}{\tau(n)} \leq n^{\hyperlink{def:asymp}{\bigO}\left(\frac{1}{\log \log n}\right)}.
   \end{equation*}
   In particular,
   \begin{equation*}
     \tau(n) \ll_\epsilon n^\epsilon \; \forall \epsilon > 0
   \end{equation*}
-  i.e.\ ($\forall e > 0$, $\exists C(\epsilon) > 0$ such that $\tau(n) \leq C n^\epsilon$).
+  i.e.\ $\forall \epsilon > 0$, $\exists C(\epsilon) > 0$ such that $\tau(n) \leq C n^\epsilon$.
 \end{nthm}
 \begin{proof}
-  $\tau$ is multiplicative, so enough to calculate at prime powers. $\tau(p^k) = k+1$, so if $n = p_1^{k_1} \dotsm p_r^{k_r}$ then
+  \hyperlink{def:tau}{$\tau$} is \hyperlink{def:multi}{multiplicative}, so enough to calculate at prime powers. $\tau(p^k) = k+1$, so if $n = p_1^{k_1} \dotsm p_r^{k_r}$ then
   \begin{equation*}
     \tau(n) = \prod_{i=1}^r (k_i + 1).
   \end{equation*}
@@ -344,7 +371,7 @@ Analytic Number Theory is mostly just controlling the error term.
   \begin{equation*}
     \frac{\tau(n)}{n^\epsilon} = \prod_{i=1}^r \frac{k_i+1}{p^{k_i \epsilon}}.
   \end{equation*}
-  Note as $p$ is large, $\frac{k+1}{p^{k\epsilon}} \to 0$. In particular, if $p \geq 2^{\frac{1}{\epsilon}}$, then $\frac{k+1}{p^{k\epsilon}} \leq \frac{k+1}{2^k} \leq 1$.
+  Note that as $p$ is large, $\frac{k+1}{p^{k\epsilon}} \to 0$. In particular, if $p \geq 2^{\frac{1}{\epsilon}}$, then $\frac{k+1}{p^{k\epsilon}} \leq \frac{k+1}{2^k} \leq 1$.
 
   What about small $p$? Can't do better than $p \geq 2$.
   In this case, $\frac{k+1}{p^{k\epsilon}} \leq \frac{k+1}{2^{k\epsilon}} \leq \frac{1}{\epsilon}$.
@@ -364,143 +391,152 @@ Analytic Number Theory is mostly just controlling the error term.
   \end{equation*}
   Choose $\epsilon$ such that $\log n \approx 2^{\frac{1}{\epsilon}}$, i.e.\ $\epsilon \approx \frac{1}{\log \log n}$.
   \begin{equation*}
-    \tau(n) \leq n^{\frac{1}{\log \log n}} (\log \log n)^{2^{\log \log n}} = n^{\frac{1}{\log \log n}} e^{(\log n)^{\log 2} \log \log \log n} \leq n^{O(\frac{1}{\log \log n})}. \qedhere
+    \tau(n) \leq n^{\frac{1}{\log \log n}} (\log \log n)^{2^{\log \log n}} = n^{\frac{1}{\log \log n}} e^{(\log n)^{\log 2} \log \log \log n} \leq n^{\bigO(\frac{1}{\log \log n})}. \qedhere
   \end{equation*}
 \end{proof}
 \subsection{Estimates for the primes}
 Recall
 \begin{align*}
-  \pi(x) &= \abs{\set{p \leq x}} = \sum_{1\leq n \leq x} 1_p(n)
+  \pi(x) &= \abs{\set{p \leq x}} = \sum_{\mathclap{1\leq n \leq x}} 1_p(n)
   \shortintertext{and}
-  \psi(x) = \sum_{1 \leq n \leq x} \Lambda(n).
+  \nomenclature{$\psi(x)$}{summatory von Mangoldt function}\hypertarget{def:psi}\psi(x) &= \sum_{1 \leq n \leq x} \hyperlink{def:vonMang}{\Lambda(n)}.
 \end{align*}
-The Prime Number Theorem is $\pi(x) \sim \frac{x}{\log x}$ or equivalently $\psi(x) \sim x$.
+\hypertarget{def:pnt}The Prime Number Theorem is $\pi(x) \hyperlink{def:asymp}{\sim} \frac{x}{\log x}$ or equivalently $\psi(x) \sim x$.
 It was 1850 before the correct magnitude of $\pi(x)$ was proved.
-Chebyshev showed $p(x) \asymp \frac{x}{\log x}$, where ($f \asymp g$ means $g \ll f \ll g$).
+Chebyshev showed $\pi(x) \asymp \frac{x}{\log x}$, (\hypertarget{def:asymp2}where $f \asymp g$ means $g \hyperlink{def:asymp}{\ll} f \ll g$).
 
 \begin{nthm}[Chebyshev]\label{thm:6}
   \begin{equation*}
-    \psi(x) \asymp x
+    \hyperlink{def:psi}{\psi(x)} \hyperlink{def:asymp2}{\asymp} x
   \end{equation*}
 \end{nthm}
 \begin{proof}
-  First we'll prove the lower bound, i.e.\ that $\psi(x) \gg x$.
+  First we'll prove the lower bound, i.e.\ that $\hyperlink{def:psi}{\psi(x)} \hyperlink{def:asymp}{\gg} x$.
   \begin{equation*}
-    \psi(x) = \sum_{n \leq x} \Lambda(n).
+    \psi(x) = \sum_{n \leq x} \hyperlink{def:vonMang}{\Lambda(n)}.
   \end{equation*}
-  $x \log x$ is a trivial upper bound for this, we'd like to remove the factor of $\log x$.
-  Recall $1 \star \Lambda = \log$, i.e.\ $\sum_{ab=n} \Lambda(a) = \log n$.
-  The trick is to find a sum $\Sigma$ such that $\Sigma \leq 1$. We'll use the identity $\floor{x} \leq 2 \floor{\frac{x}{2}} + 1$ ($\forall x \geq 0$).
-  (Say $\frac{x}{2} = n + \theta$, with $\theta \in [0,1)$, so $\floor{\frac{x}{2}} = n$ then $x = 2n + 2\theta$ so $\floor{x} = 2n$ or $2n+1$.)
+  $x \log x$ is a trivial upper bound for this, (each summand is $\leq \log x$); we'd like to remove the factor of $\log x$.
+  Recall $1 \hyperlink{def:conv}{\star} \Lambda = \log$, i.e.\
+  \begin{equation*}\sum_{ab=n} \Lambda(a) = \log n.\end{equation*}
+  The trick is to find a sum $\Sigma$ such that $\Sigma \leq 1$.
+  We'll use the identity $\floor{x} \leq 2 \floor{\frac{x}{2}} + 1$, valid for $x \geq 0$.
+  (Proof: Say $\frac{x}{2} = n + \theta$, with $\theta \in [0,1)$, so $\floor{\frac{x}{2}} = n$ then $x = 2n + 2\theta$ so $\floor{x} = 2n$ or $2n+1$.)
 
   So
   \begin{align*}
-    \psi(x) &\geq \sum_{n \leq x} \Lambda(n) \left(\floor{\tfrac{x}{n}} - 2 \floor{\tfrac{x}{2n}}\right) \\
+    \psi(x) &\geq \sum_{n \leq x} \Lambda(n) \left(\floor{\tfrac{x}{n}} - 2 \floor{\tfrac{x}{2n}}\right). \\
     \shortintertext{Note $\floor{\frac{x}{n}} = \sum_{m \leq \frac{x}{n}} 1$}.
             &= \sum_{n \leq x} \Lambda(n) \sum_{m \leq \frac xn} 1 - 2 \sum_{n \leq x} \Lambda(n) \sum_{m \leq \frac x {2n}} 1 \\
-            &= \sum_{n \leq x} \Lambda(n) - 2 \sum_{nm \leq \frac x2} \Lambda(n) \\
+            &= \sum_{mn \leq x} \Lambda(n) - 2 \sum_{\mathclap{nm \leq \frac x2}} \Lambda(n) \\
             &= \sum_{d \leq x} 1 \star \Lambda(d) - 2 \sum_{d \leq \frac x2} 1 \star \Lambda(d) \\
             &= \sum_{d \leq x} \log d - 2 \sum_{d \leq \frac{x}{2}} \log d \\
-            &= x \log x - x + O(\log x) - 2 \left(\frac{x}{2} \log \frac{x}{2} - \frac{x}{2} + O(\log x)\right) \\
-            &= (\log 2) x + O(\log x) \gg x.
+            &= x \log x - x + \hyperlink{def:asymp}{\bigO}(\log x) - 2 \left(\frac{x}{2} \log \frac{x}{2} - \frac{x}{2} + \bigO(\log x)\right) \\
+            &= (\log 2) x + \bigO(\log x) \gg x.
   \end{align*}
 
   For the upper bound, note $\floor{x} = 2 \floor{\frac{x}{2}} + 1$ for $x \in (1,2)$ so
   \begin{equation*}
-    \sum_{\frac{x}{2} < n < x} \Lambda(n) = \sum_{\frac{x}{2} < n < x} \Lambda(n) \left(\floor{\tfrac{x}{n}} - 2 \floor{\tfrac{x}{2n}}\right) \leq \sum_{1 \leq n \leq x} \Lambda(n) \left(\floor{\tfrac{x}{n}} - 2 \floor{\tfrac{x}{2n}}\right)
+    \sum_{\mathclap{\frac{x}{2} < n < x}} \Lambda(n) = \sum_{\mathclap{\frac{x}{2} < n < x}} \Lambda(n) \left(\floor{\tfrac{x}{n}} - 2 \floor{\tfrac{x}{2n}}\right) \leq \sum_{\mathclap{1 \leq n \leq x}} \Lambda(n) \left(\floor{\tfrac{x}{n}} - 2 \floor{\tfrac{x}{2n}}\right)
   \end{equation*}
   Thus
   \begin{align*}
     \psi(x) - \psi\left(\frac{x}{2}\right) &\leq (\log 2) x + \bigO(\log x). \\
-    \psi(x) &= \left(\psi(x) - \psi\left(\frac{x}{2}\right)\right) + \left(\psi(\frac{x}{2}) - \psi(\frac{x}{4})\right) + \dotsb  \\
-    &\leq \log 2\left(x + \frac{x}{2} + \frac{x}{4} + \dotsb\right) = 2 \log 2 x
+    \psi(x) &= \left(\psi(x) - \psi\left(\tfrac{x}{2}\right)\right) + \left(\psi(\tfrac{x}{2}) - \psi(\tfrac{x}{4})\right) + \dotsb  \\
+            &\leq \log 2\left(x + \tfrac{x}{2} + \tfrac{x}{4} + \dotsb\right) + \bigO((\log x)^2)\\
+    &= 2 \log 2 x + \bigO((\log x)^2). \qedhere
   \end{align*}
-  We ignored a $\bigO((\log x)^2)$ error term along the way.
 \end{proof}
 \begin{nlemma}\label{lem:7}
   \begin{equation*}
-    \sum_{p \leq x} \frac{\log p}{p} = \log x + O(1).
+    \sum_{p \leq x} \frac{\log p}{p} = \log x + \hyperlink{def:asymp}{\bigO}(1).
   \end{equation*}
 \end{nlemma}
 \begin{proof}
-  Recall $\log = 1 \star \Lambda$. So
+  Recall $\log = 1 \hyperlink{def:conv}{\star} \hyperlink{def:vonMang}{\Lambda}$. So
   \begin{align*}
-    \sum_{n \leq x} \log n &= \sum_{ab \leq x} \Lambda(a) = \sum_{a \leq x} \Lambda(a) \sum_{b \leq \frac{x}{a}} 1 = \sum_{a \leq x} \Lambda(a) \floor{\tfrac{x}{a}} = x \sum_{a \leq x} \frac{\Lambda(a)}{a} + \bigO(\psi(x)) \\
-&= x \sum_{a \leq x} \frac{\Lambda(a)}{a} + \bigO(x) \\
-&= x \log x - x + O(\log x) \\
+    \sum_{n \leq x} \log n &= \sum_{ab \leq x} \Lambda(a) = \sum_{a \leq x} \Lambda(a) \sum_{b \leq \frac{x}{a}} 1 \\
+                           &= \sum_{a \leq x} \Lambda(a) \floor{\tfrac{x}{a}} = x \sum_{a \leq x} \frac{\Lambda(a)}{a} + \hyperlink{def:asymp}{\bigO}(\hyperlink{def:psi}{\psi(x)}) \\
+                           &= x \sum_{a \leq x} \frac{\Lambda(a)}{a} + \bigO(x) \\
+  \shortintertext{But from \cref{lem:3},}
+    \sum_{n \leq x} \log n &= x \log x - x + \bigO(\log x) \\
     \text{So }\sum_{n \leq x} \frac{\Lambda(n)}{n} &= \log x - 1 + \mathcal{O}(\tfrac{\log x}{x}) + \bigO(1) = \log x + \bigO(1).
   \end{align*}
+
   Remains to note
   \begin{align*}
     \sum_{p \leq x} \sum_{n=2}^\infty \frac{\log p}{p^k} = \sum_{p \leq x} \log p \sum_{k=2}^\infty \frac{1}{p^k} = \sum_{p \leq x} \frac{\log p}{p^2 - p} \leq \sum_{p=2}^\infty \frac{1}{p^{\frac{3}{2}}} = \bigO(1).
   \end{align*}
-  So  $\sum_{n \leq x} \frac{\Lambda(n)}n = \sum_{p \leq x} \frac{\log p}{p} + \bigO(1)$.
+  So
+  \begin{equation*}\sum_{n \leq x} \frac{\Lambda(n)}n = \sum_{p \leq x} \frac{\log p}{p} + \bigO(1).\qedhere\end{equation*}
 \end{proof}
 \begin{nlemma}\label{lem:8}
-  \begin{equation*}
-    \pi(x) = \frac{\psi(x)}{\log x} + \bigO\left(\frac{x}{(\log x)^2}\right).
+  \lecnum{4}\begin{equation*}
+    \hyperlink{def:pi}{\pi(x)} = \frac{\hyperlink{def:psi}{\psi(x)}}{\log x} + \hyperlink{def:asymp}{\bigO}\left(\frac{x}{(\log x)^2}\right).
   \end{equation*}
 \end{nlemma}
-In particular, $\pi(x) \asymp \frac{x}{\log x}$ and PNT: $\pi(x) \sim \frac{x}{\log x}$ is equivaelnt to $\psi(x) \sim x$.
+In particular, $\pi(x) \hyperlink{def:asymp2}{\asymp} \frac{x}{\log x}$ and the statement of the prime number theorem ($\pi(x) \hyperlink{def:asymp}{\sim} \frac{x}{\log x}$) is equivalent to $\psi(x) \sim x$.
 \begin{proof}
-  Idea is to use partial summation:
+  Idea is to use \nameref{lem:1}:
   \begin{equation*}
-    \theta(x) = \sum_{p \leq x} \log p = \pi(x) \log x - \int_1^x \frac{\pi(t)}{t} \, dt
+    \theta(x) \coloneqq \sum_{p \leq x} \log p = \hyperlink{def:pi}{\pi(x)} \log x - \int_1^x \frac{\pi(t)}{t} \, dt
   \end{equation*}
-  whereas $\psi(x) = \sum_{n \leq x} \Lambda(n) = \sum_{p^k \leq x} \log p$.
+  whereas
+  \begin{equation*}\hyperlink{def:psi}{\psi(x)} = \sum_{n \leq x} \hyperlink{def:vonMang}{\Lambda(n)} = \sum_{p^k \leq x} \log p.\end{equation*}
   \begin{align*}
     \psi(x) - \theta(x) = \sum_{k=2}^\infty \sum_{p^k \leq x} \log p = \sum_{k=2}^\infty \theta(x^{\frac{1}{k}}) \leq \sum_{k=2}^{\log x} \psi(x^{\frac{1}{k}}) \ll \sum_{k=2}^{\log x} x^{\frac{1}{k}} \ll x^{\frac{1}{2}} \log x
   \end{align*}
   Thus,
   \begin{align*}
-    \psi(x) &= \pi(x) \log x + O(x^{\frac{1}{2}} \log x) - \int_1^x \frac{\pi(t)}{t} \, dt \\
-            &= \pi(x) \log x + O(x^{\frac{1}{2}}) + O(\int_1^x \frac{1}{\log t} \, dt) = \pi(x) \log x + O(\frac{x}{\log x})
+    \psi(x) &= \pi(x) \log x + \hyperlink{def:asymp}{\bigO}(x^{\frac{1}{2}} \log x) - \int_1^x \frac{\pi(t)}{t} \, dt \\
+            &= \pi(x) \log x + \bigO(x^{\frac{1}{2}}) + \bigO\left(\int_1^x \frac{1}{\log t} \, dt\right) \\
+            &= \pi(x) \log x + \bigO\left(\frac{x}{\log x}\right)
   \end{align*}
-  where we used the fact that $\pi(x) \ll \frac{t}{\log t}$:
-  Trivially, $\pi(x) \leq t$, so
+  where we used the fact that $\pi(t) \ll \frac{t}{\log t}$:
+  Trivially, $\pi(t) \leq t$, so
   \begin{equation*}
-    \psi(x) = \pi(x) \log x + O(x^{\frac{1}{2}} \log x) + O(x)
+    \psi(x) = \pi(x) \log x + \bigO(x^{\frac{1}{2}} \log x) + \bigO(x)
   \end{equation*}
-  so $\pi(x) \log x = O(x)$).
+  so $\pi(x) \log x = \bigO(x)$.
 \end{proof}
 \begin{nlemma}\label{lem:9}
   \begin{equation*}
-    \sum_{p \leq x} \frac{1}{p} = \log \log x + b + O(\frac{1}{\log x})
+    \sum_{p \leq x} \frac{1}{p} = \log \log x + b + \hyperlink{def:asymp}{\bigO}(\tfrac{1}{\log x})
   \end{equation*}
   where $b$ is some constant.
 \end{nlemma}
 \begin{proof}
-  We use partial summation. Let $A(x) = \sum_{p \leq x} \frac{\log p}{p} = \log x + R(x)$ so $R(x) \ll 1$).
-  \begin{equation*}.
-    \sum_{2 \leq p\leq x} \frac{1}{p} = \frac{A(x)}{\log x} + \int_2^x \frac{A(t)}{t (\log t)^2} \, dt = 1 + O(\frac{1}{\log x}) + \int_2^x \frac{1}{t \log t} \, dt + \int_2^x \frac{R(t)}{t (\log t)^2} \, dt
-  \end{equation*}
+  We use partial summation. Let $A(x) = \sum_{p \leq x} \frac{\log p}{p} = \log x + R(x)$ (and $R(x) \hyperlink{def:asymp}{\ll} 1$).
+  \begin{align*}
+    \sum_{2 \leq p\leq x} \frac{1}{p} &= \frac{A(x)}{\log x} + \int_2^x \frac{A(t)}{t (\log t)^2} \, dt \\
+    &= 1 + \hyperlink{def:asymp}{\bigO}(\tfrac{1}{\log x}) + \int_2^x \frac{1}{t \log t} \, dt + \int_2^x \frac{R(t)}{t (\log t)^2} \, dt
+  \end{align*}
   Note $\int_2^\infty \frac{R(t)}{t (\log t)^2} \, dt$ exists, say it is $c$.
   \begin{align*}
-    \sum_{2 \leq p \leq x} \frac{1}{p} &= 1 + c + O(\frac{1}{\log x}) + \log \log x - \log \log 2 + O\left(\int_x^\infty \frac{1}{t (\log t)^2}\right) \\
-                                       &= \log \log x + b + O\left(\frac{1}{\log x}\right). \qedhere
+    \sum_{2 \leq p \leq x} \frac{1}{p} &= 1 + c + \bigO(\tfrac{1}{\log x}) + \log \log x - \log \log 2 + \bigO\left(\int_x^\infty \frac{1}{t (\log t)^2}\right) \\
+                                       &= \log \log x + b + \bigO\left(\tfrac{1}{\log x}\right). \qedhere
   \end{align*}
 \end{proof}
 \begin{nthm}[Chebyshev]\label{thm:10}
   If
   \begin{equation*}
-    \pi(x) \sim c \frac{x}{\log x}
+    \hyperlink{def:pi}{\pi(x)} \sim c \frac{x}{\log x}
   \end{equation*}
   then $c = 1$.
 \end{nthm}
 Chebyshev also showed if $\pi(x) \sim \frac{x}{\log x - A(x)}$ then $A \sim 1$, which was a surprise since it was believed $A \sim 1.08\dots$
 \begin{proof}
-  Partial summation on $\sum_{p \leq x} \frac{1}{p}$.
+  \nameref{lem:1} on $\sum_{p \leq x} \frac{1}{p}$.
   \begin{align*}
-    \sum_{p \leq x} &= \frac{1}{p} \sum_{\pi(x)}{x} + \int_1^x \frac{\pi(t)}{t^2} \, dt.
+    \sum_{p \leq x} \frac{1}{p} &= \frac{\pi(x)}{x} + \int_1^x \frac{\pi(t)}{t^2} \, dt.
     \shortintertext{If $\pi(x) = (c + o(1)) \frac{x}{\log x}$ then }
                     &= \frac{c}{\log x} + o\left(\frac{1}{\log x}\right) + (c + o(1)) \int_1^x \frac{1}{t \log t} \, dt \\
                     &= \bigO\left(\frac{1}{\log x}\right) + (c+o(1)) \log \log x.
   \end{align*}
-  But $\sum_{p \leq x} \frac{1}{p} = (1 + o(1)) \log \log x$. Hence $c = 1$.
+  But $\sum_{p \leq x} \frac{1}{p} = (1 + o(1)) \log \log x$ by \cref{lem:9}. Hence $c = 1$.
 \end{proof}
 \begin{nlemma}\label{lem:11}
   \begin{equation*}
-    \prod_{p \leq x} \left(1 - \frac{1}{p}\right)^{-1} = c \log x + \bigO(1)
+    \prod_{p \leq x} \left(1 - \frac{1}{p}\right)^{-1} = c \log x + \hyperlink{def:asymp}{\bigO}(1)
   \end{equation*}
   where $c$ is some constant.
 \end{nlemma}
@@ -509,50 +545,65 @@ Chebyshev also showed if $\pi(x) \sim \frac{x}{\log x - A(x)}$ then $A \sim 1$, 
     \log \left(\prod_{p \leq x} \left(1 - \frac{1}{p}\right)^{-1}\right) &= - \sum_{p \leq x} \log \left(1 - \frac{1}{p}\right) \\
                                                                          &= \sum_{p \leq x} \sum_{k} \frac{1}{k p^k} \\
                                                                          &= \sum_{p \leq x} \frac 1p + \sum_{k \geq 2} \sum_{p \leq x} \frac{1}{k p^k} \\
-                                                                         &= \log \log x + c' + O\left(\frac{1}{\log x}\right).
+                                                                         &= \log \log x + c' + \hyperlink{def:asymp}{\bigO}\left(\frac{1}{\log x}\right).
   \end{align*}
-  Now note that $e^x = 1 + O(x)$ for $|x| \leq 1$.
+  Now note that $e^x = 1 + \bigO(x)$ for $|x| \leq 1$.
   So
   \begin{align*}
-    \prod_{p \leq x} \left(1 - \frac{1}{p}\right)^{-1} = c \log x\ e^{O(\frac{1}{\log x})} &= c \log x\ (1 + O(\frac{1}{\log x})) \\
-                                                                                            &= c \log x + O(1). \qedhere
+    \prod_{p \leq x} \left(1 - \frac{1}{p}\right)^{-1} = c \log x\ e^{\bigO(\frac{1}{\log x})} &= c \log x\ (1 + \bigO(\tfrac{1}{\log x})) \\
+                                                                                            &= c \log x + \bigO(1). \qedhere
   \end{align*}
 \end{proof}
 It turns out that $c = e^\gamma = 1.78\dots$
 
-Probabilistic heuristic: `probability' that $p \mid n$ is $\frac{1}{p}$.
+\subsubsection{Why is the Prime Number Theorem hard?}
+Let's try a probabilistic heuristic for the PNT: the `probability' that $p \mid n$ is $\frac{1}{p}$.
 What is the `probability' that $n$ is prime?
 \begin{equation*}
   n\text{ is prime} \iff n\text{ has no prime divisors } p \leq n^{\frac{1}{2}}.
 \end{equation*}
-Guess is that the events `divisible by $p$' are independent so $\mathbb{P}(p \nmid n) = 1 - \frac{1}{p}$.
+Make the guess that the events `divisible by $p$' are independent, so $\mathbb{P}(p \nmid n) = 1 - \frac{1}{p}$.
 \begin{equation*}
   \mathbb{P}(n \text{ is prime}) \approx \prod_{p \leq n^{\frac{1}{2}}} \left(1 - \frac{1}{p}\right) \approx \frac{1}{c \log n^{\frac{1}{2}}} = \frac{2}{c} \frac{1}{\log n}.
 \end{equation*}
-So $\pi(x) = \sum_{n \leq x} 1_{n \text{ prime}} \approx \frac{2}{c} \sum_{n \leq x} \frac{1}{\log n} \approx \frac{2}{c} \frac{x}{\log x} \approx 2 e^{-\gamma} \frac{x}{\log x}$.
-
-$2 e^{-\gamma} \approx 1.122\dots$, so this heuristic says there are around 12\% more primes than there are.
-
-The PNT is hard.
-Recall that $1 \star \Lambda = \log$ so $\mu \star \log = \Lambda$.
 So
 \begin{equation*}
-  \psi(x) = \sum_{n \leq x} \Lambda(n) = \sum_{ab \leq x} \mu(a) \log b = \sum_{a \leq x} \mu(a) \left(\sum_{b \leq \frac{x}{a}} \log b\right).
+\pi(x) = \sum_{n \leq x} 1_{n \text{ prime}} \approx \frac{2}{c} \sum_{n \leq x} \frac{1}{\log n} \approx \frac{2}{c} \frac{x}{\log x} \approx 2 e^{-\gamma} \frac{x}{\log x}.
+\end{equation*}
+
+But $2 e^{-\gamma} \approx 1.122\dots$, so this heuristic says there are around 12\% more primes than there are.
+This shows that heuristics might be good for order of magnitude estimates, but the constants may not be accurate.
+
+Let's try another approach:
+Recall that $1 \hyperlink{def:conv}{\star} \hyperlink{def:vonMang}{\Lambda} = \log$ so $\hyperlink{def:mu}{\mu} \star \log = \Lambda$.
+So
+\begin{equation*}
+  \hyperlink{def:psi}{\psi(x)} = \sum_{n \leq x} \Lambda(n) = \sum_{ab \leq x} \mu(a) \log b = \sum_{a \leq x} \mu(a) \left(\sum_{b \leq \frac{x}{a}} \log b\right).
 \end{equation*}
 Recall that
 \begin{align*}
-  \sum_{m \leq x} \log m &= x \log x - x + O(\log x) \\
-  \sum_{m \leq x} \tau(m) &= x \log x + (2 \gamma - 1) x + O(x^{\frac{1}{2}})
+  \sum_{m \leq x} \log m &= x \log x - x + \bigO(\log x) \\
+  \sum_{m \leq x} \hyperlink{def:tau}{\tau(m)} &= x \log x + (2 \gamma - 1) x + \bigO(x^{\frac{1}{2}})
 \end{align*}
 Thus
 \begin{align*}
-  \psi(x) &= \sum_{a \leq x} \mu(a) \left(\sum_{b \leq \frac{x}{a}} \tau(b) - 2 \gamma \frac{x}{a} + O\left(\frac{x^{\frac{1}{2}}}{a^{\frac{1}{2}}}\right)\right) \\
-          &= \sum_{ab \leq x} \mu(a) \tau(b) = \sum_{abc \leq x} \mu(a) = \sum_{b \leq x} \sum_{ac \leq \frac{x}{b}} \mu(a) = \sum_{b \leq x} \sum_{d \leq \frac{x}{b}} \mu \star 1(d) \\
-          &= \floor{x} = x + O(1).
+  \psi(x) &= \sum_{a \leq x} \mu(a) \left(\sum_{b \leq \frac{x}{a}} \tau(b) - 2 \gamma \frac{x}{a} + \bigO\left(\frac{x^{\frac{1}{2}}}{a^{\frac{1}{2}}}\right)\right) \\
 \end{align*}
-This gives an error term of
+Consider the first term, which has highest order
+\begin{align*}
+ \sum_{ab \leq x} \mu(a) \tau(b) &= \sum_{abc \leq x} \mu(a) = \sum_{b \leq x} \sum_{ac \leq \frac{x}{b}} \mu(a) = \sum_{b \leq x} \sum_{d \leq \frac{x}{b}} \mu \star 1(d) \\
+          &= \floor{x} = x + \bigO(1).
+\end{align*}
+This leaves an error term of
 \begin{equation*}
-  -2 \gamma \sum_{a \leq x} \mu(a) \frac{x}{a} = \bigO(x \sum_{a \leq x} \frac{\mu(a)}{a})
+  -2 \gamma \sum_{a \leq x} \mu(a) \frac{x}{a} = \bigO\left(x \sum_{a \leq x} \frac{\mu(a)}{a}\right)
+\end{equation*}
+so we still need to show that $\sum_{a \leq x} \frac{\mu(a)}{a} = o(1)$. But this is in fact equivalent to the \hyperlink{def:pnt}{PNT}.
+
+\subsection{Selberg's identity and an elementary proof of the PNT}
+\lecnum{5}Recall that the statement of the prime number theorem is
+\begin{equation*}
+  \psi(x) = \sum_{n \leq x} \hyperlink{def:vonMang}{\Lambda(n)} = x + \hyperlink{def:asymp}{o(x)}.
 \end{equation*}
 Let
 \begin{equation*}
@@ -690,6 +741,158 @@ Let $r(x) = \frac{\hyperlink{def:psi}{\psi(x)}}{x} - 1$, so \hyperlink{def:pnt}{
     \end{equation*}
   \item[(9)-(14)] If $\alpha > 0$, then can show from (7) that $\beta < \alpha$, contradiction, so $\alpha = 0$ and PNT.
 \end{enumerate}
+
+\clearpage
+\section{Sieve Methods}
+\lecnum{6}In the Sieve of Eratosthenes, we write out the numbers up to a given bound, then remove multiples of small primes. For example,
+\begin{center}
+  \begin{tikzpicture}
+    \foreach \x in {1,...,10} {
+      \node (\x) at (\x,0) {};
+    }
+    \foreach \x in {11,...,20} {
+      \node (\x) at (\x-10,-1) {};
+    }
+    \foreach \x in {1,2,...,20} {
+      \node at (\x) {\x};
+    }
+    \foreach \x in {2,4,...,20} {
+      \node [strike out, draw=black, inner sep=7pt] at (\x) {};
+    }
+    \foreach \x in {3,6,...,20} {
+      \node [strike out, draw=black, rotate=90, inner sep=7pt] at (\x) {};
+    }
+    \node [circle, draw=black, inner sep=7pt] at (1) {};
+    \node [circle, draw=black, inner sep=7pt] at (5) {};
+    \node [circle, draw=black, inner sep=7pt] at (7) {};
+    \node [circle, draw=black, inner sep=7pt] at (11) {};
+    \node [circle, draw=black, inner sep=7pt] at (13) {};
+    \node [circle, draw=black, inner sep=7pt] at (17) {};
+    \node [circle, draw=black, inner sep=7pt] at (19) {};
+  \end{tikzpicture}
+\end{center}
+Our interest is in using the sieve to count things: how many numbers are left?
+\begin{align*}
+  \hyperlink{def:pi}{\pi(20)} + 1 - \pi(\sqrt{20}) = 20 - \floor*{\frac{20}{2}} - \floor*{\frac{20}{3}} + \floor*{\frac{20}{6}}.
+\end{align*}
+This is the general idea: We get an expression relating some quantity we are interested in - the number of primes below a certain limit - in terms of how much we `sieved' out at each stage.
+\subsection{Setup}
+We generally use:
+\begin{itemize}
+  \item a finite set $A \subset \mathbb{N}$ (the set to be sifted)
+  \item a set of primes $P$ (the set of primes we sift out by, usually all primes).
+  \item a sifting limit $z$ (sift with all primes in $P < z$)
+  \item a sifting function
+    \begin{equation*}
+      S(A,P; z) = \sum_{n \in A} 1_{(n, P(z)) = 1}\nomenclature{$S(A,P;z)$}{sifting function}
+    \end{equation*}
+    where
+    \begin{equation*}
+      P(z) \coloneqq \prod_{\substack{p \in P \\ p < z}} p.
+    \end{equation*}
+    The goal is to estimate $S(A,P; z)$.
+  \item For $d$, let
+    \begin{equation*}
+      A_d = \{n \in A : d \mid n\}.
+    \end{equation*}
+    We write
+    \begin{equation*}
+      |A_d| = \frac{f(d)}{d} X + R_d
+    \end{equation*}
+    where $f$ is completely multiplicative ($f(mn) = f(m) f(n)$ $\forall m,n$) and $0 \leq f(d)\; \forall d$.
+    Note many textbooks write $\omega$ for $f$.
+  \item Note that
+    \begin{equation*}
+      |A| = \frac{f(1)}{1} X + R_1 = X + R_1
+    \end{equation*}
+    $R_d$ is an error term
+  \item We choose $f$ so that $f(p) = 0$ if $p \notin P$ (so $R_P = |A_P|$)
+  \item Let
+    \begin{equation*}
+      W_p(z) = \prod_{\substack{p < z \\ p \in P}} \left(1 - \frac{f(p)}{p}\right).
+    \end{equation*}
+\end{itemize}
+\begin{eg}\leavevmode
+  \begin{enumerate}[label=(\arabic*)]
+    \item Take $A = (x, %)[
+      x+y] \cap \mathbb{N}$, and $P$ the set of all primes, so
+      \begin{align*}
+        |A_d| &= \floor*{\frac{x+y}{d}} - \floor*{\frac{x}{d}} = \frac{x+y}{d} - \frac{x}{d} + \hyperlink{def:asymp}{\bigO(1)} \\
+              &= \frac{y}{d} + \bigO(1)
+      \end{align*}
+      so $f(d) \equiv 1$ and $R_d = \bigO(1)$.
+      So
+      \begin{equation*}
+        S(A,P;z) = \abs{\{x < n \leq x+y : \text{if }p \mid n\text{ then }p \geq z\}}
+      \end{equation*}
+      e.g.\ if $z \approx (x+y)^{\frac{1}{2}}$ then
+      \begin{equation*}
+        S(A,P; z) = \hyperlink{def:pi}{\pi(x+y)} - \pi(x) + \bigO((x+y)^{\frac{1}{2}})
+      \end{equation*}
+    \item Take
+      \begin{equation*}A = \{1 \leq n \leq q : n \equiv a \pmod{q}\}.\end{equation*}
+      Then
+      \begin{equation*}A_d = \left\{1 \leq m \leq \frac{x}{d} : dm \equiv a \pmod{q}\right\}.\end{equation*}
+      This congruence only has solutions if $(d,q) \mid a$, so
+      \begin{align*}
+        |A_d| &=
+        \begin{cases}
+          \frac{(d,q)}{dq} y + \bigO((d,q)) & \text{if } (d,q) \mid a \\
+          \bigO((d,q)) & \text{otherwise}
+        \end{cases} \\
+        f(d) &=
+        \begin{cases}
+          (d,q) & \text{if } (d,q) \mid a \\
+          0 & \text{otherwise}.
+        \end{cases}
+      \end{align*}
+      We will do this example in more detail later, but it shows how $f$ can be more complicated, and that we can use sieve methods to count primes congruent to $a \pmod{q}$.
+    \item What about twin primes? Take $A = \{n(n+2) : 1 \leq n \leq x\}$, and $P$ as all primes except $2$. So $p \mid n(n+2) \iff n \equiv 0 \text{ or } -2 \pmod{p}$. Now,
+      \begin{align*}
+        |A_p| = 2\frac{x}{p} + \bigO(1).
+      \end{align*}
+      So $f(p) = 2$, so $f(d) = 2^{\omega(d)}$.
+      Then
+      \begin{align*}
+        S(A,P; x^{\frac{1}{2}}) &= \abs{\{1 \leq p \leq x : p, p+2 \text{ both prime}\}} + \bigO(x^{\frac{1}{2}}) \\
+                                &= \pi_2(x) + \bigO(x^{\frac 12})
+      \end{align*}
+      We expect $\pi_2(x) \approx \frac{x}{(\log x)^2}$. We cannot prove the lower bound, but we can prove the upper bound using this sieve soon.
+  \end{enumerate}
+\end{eg}
+\begin{nthm}[Sieve of Eratosthenes-Legendre]\label{thm:2.1}
+  \begin{equation*}
+    S(A,P; z) = X W_p(z) + \bigO\left(\sum_{d \mid p(z)} R_d\right).
+  \end{equation*}
+\end{nthm}
+\begin{proof}
+  \begin{align*}
+    S(A,P;z) &= \sum_{n \in A} 1_{(n, P(z)) = 1} \\
+             &= \sum_{n \in A} \sum_{d \mid (n, P(z))}\hyperlink{def:mu}{ \mu(d)} \\
+             &= \sum_{n \in A} \sum_{\substack{d \mid n \\ d \mid P(z)}} \mu(d) \\
+             &= \sum_{d \mid P(z)} \mu(d) \sum_{n \in A} 1_{d \mid n} \\
+             &= \sum_{d \mid P(z)} \mu(d) |A_d| \\
+             &= X \sum_{d \mid P(z)} \frac{\mu(d) f(d)}{d} + \sum_{d \mid P(z)} \mu(d) R_d \\
+             &= X \prod_{\substack{p \in P \\ p < z}} \left(1 - \frac{f(p)}{p}\right) + \hyperlink{def:asymp}{\bigO}\left(\sum_{d \mid P(z)} |R_d|\right). \qedhere
+  \end{align*}
+\end{proof}
+\begin{cor}
+  \begin{equation*}
+    \hyperlink{def:pi}{\pi(x+y)} - \pi(x) \hyperlink{def:asymp}{\ll} \frac{y}{\log \log y}.
+  \end{equation*}
+\end{cor}
+\begin{proof}
+  In Example 1, recall $f \equiv 1$ and $|R_d| \hyperlink{def:asymp}{\ll} 1$, $X = y$.
+  So
+  \begin{align*}
+    W_p(z) = \prod_{p \leq z} \left(1 - \frac 1p\right) \ll (\log z)^{-1}
+  \end{align*}
+  and
+  \begin{equation*}
+    \sum_{d \mid P(z)} |R_d| \ll \sum_{d \mid P(z)} 1 \leq 2^z.
+  \end{equation*}
+  So $\hyperlink{def:pi}{\pi(x+y)} - \pi(x) \ll \frac{y}{\log z} + 2^z \ll \frac{y}{\log \log y} $ by choosing $z = \log y$.
+\end{proof}
 \clearpage
 \printnomenclature
 \printindex
