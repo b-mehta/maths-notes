@@ -3,10 +3,6 @@
 These are my notes for Part II and Part III of Mathematics at the University of Cambridge.
 There are many hyperlinks, marked in blue, to help both learning and revising a topic: I recommend using a PDF viewer with a back function (such as Skim) to make navigation more convenient.
 
-## Part IV notes
-### Lent
-- Connections between Model Theory and Combinatorics (2019, J. Wolf)
-
 ## Part III notes
 ### Michaelmas
 - [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone)
@@ -16,9 +12,9 @@ There are many hyperlinks, marked in blue, to help both learning and revising a 
 - [Topics in Ergodic Theory](iii/mich/topics_in_ergodic_theory.pdf) (2018, P. Varju) up to lecture 19, some parts in rough
 
 ### Lent
-- [Analytic Number Theory](iii/lent/analytic_number_theory.pdf) (2019, T. Bloom) up to lecture 1
-- [Introduction to Approximate Groups](iii/lent/introduction_to_approximate_groups.pdf) (2019, M. Tointon) up to lecture 1
-- [Topics in Set Theory](iii/lent/topics_in_set_theory.pdf) (2019, B. Löwe) up to lecture 1
+- [Analytic Number Theory](iii/lent/analytic_number_theory.pdf) (2019, T. Bloom) up to lecture 7
+- [Introduction to Approximate Groups](iii/lent/introduction_to_approximate_groups.pdf) (2019, M. Tointon) up to lecture 4
+- [Topics in Set Theory](iii/lent/topics_in_set_theory.pdf) (2019, B. Löwe) up to lecture 6
 
 ## Part II notes
 

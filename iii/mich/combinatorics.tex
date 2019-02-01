@@ -646,7 +646,9 @@ Use\marginnote{\emph{Lecture 4}}[0cm] the idea that `\hyperlink{def:colex}{colex
 \end{nprop}
 \begin{proof}
   Among all $\mathcal{B} \subset \hyperlink{def:superr}{X^{(r)}}$ with $|\mathcal{B}| = |\mathcal{A}|$ and $|\hyperlink{def:shadow}{\partial \mathcal{B}}| \leq |\partial \mathcal{A}|$,
-  choose one with $\sum_{A \in \mathcal{B}} \sum_{x \in A} x$ minimal.
+  choose one with
+  \begin{equation*}\sum_{A \in \mathcal{B}} \sum_{x \in A} x\end{equation*}
+  minimal.
   Then $\mathcal{B}$ \hyperlink{def:leftcomp}{left-compressed}, as if $\hyperlink{def:ijcomp}{C_{ij}}(\mathcal{B}) \neq \mathcal{B}$ we contradict minimality.
 \end{proof}
 \begin{remark}
@@ -2175,7 +2177,7 @@ For example, in $[k]^2$:
   \end{tikzpicture}
 \end{center}
 This suggests squares are best.
-But,
+But, the best set actually grows like
 \begin{center}
   \begin{tikzpicture}[scale=2]
     \def\x{1.3}
@@ -2293,7 +2295,7 @@ Could take $A = \hyperlink{def:superrange}{X^{(<k)}}$ - no $k$-set $Y$ is shatte
 \end{idea}
 
 \begin{defi}[Down compression]
-  \hypertarget{def:downcomp}For $A \subset \mathcal{P}(X)$ and $1 \leq i \leq n$, the $i$-\named{down-compression} of $A$ is defined as follows:
+  \hypertarget{def:downcomp}For $A \subset \mathcal{P}(X)$ $i$-\named{down-compression} of $A$ (for $1 \leq i \leq n$) is defined as follows:
   For $x \in \mathcal{P}(X)$, set
   \begin{equation*}
     D_i(x) =
@@ -2689,8 +2691,8 @@ Then $A$ is \hyperlink{def:hinter}{$H$-intersecting} $\Rightarrow |A| \leq \frac
 What about $H = P_2 =
 \begin{tikzpicture}[baseline=2pt, scale=0.3]
 \node [dot] (A) at (0,0) {};
-\node [dot] (B) at (2,1) {};
-\node [dot] (C) at (4,0) {};
+\node [dot] (B) at (1.5,1) {};
+\node [dot] (C) at (3,0) {};
 \draw [dot] (A) -- (B) -- (C);
 \end{tikzpicture}$?
 Obvious guess: the best is $A = \{G \mid G \text{ contains } H_0\}$, where $H_0$ is some fixed copy of $P_2$.
