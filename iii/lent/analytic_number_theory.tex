@@ -9,14 +9,11 @@
 \def\ncourse{Analytic Number Theory}
 
 \usepackage{imakeidx}
-\usepackage{marginnote}
 \usepackage{chngcntr}
 \usepackage[intoc, refpage]{nomencl}
 
 \input{header}
 \usetikzlibrary{patterns, fadings, shapes}
-
-\reversemarginpar
 
 \makeindex[intoc]
 
@@ -44,7 +41,8 @@
 
 \clearpage
 \section{Introduction}
-\lecnum{1} Analytic Number Theory is the study of numbers using analysis. It is a fascinating field because because a number - in particular in this course an integer - is discrete, whilst analysis involves the real/complex numbers which are continuous.
+\newlec
+Analytic Number Theory is the study of numbers using analysis. It is a fascinating field because because a number - in particular in this course an integer - is discrete, whilst analysis involves the real/complex numbers which are continuous.
 
 In this course, we will ask quantitative questions things like `how many' or `how large', in reference to simple number-theoretic objects.
 
@@ -204,7 +202,8 @@ This function is easier to use. Why?
 \clearpage
 
 \subsection{Partial summation}
-\lecnum{2}Given an \hyperlink{def:arith}{arithmetic function}, we can ask for estimates of $\sum_{n \leq x} f(n)$, which gives a rough idea of how large $f(n)$ is on average.
+\newlec
+Given an \hyperlink{def:arith}{arithmetic function}, we can ask for estimates of $\sum_{n \leq x} f(n)$, which gives a rough idea of how large $f(n)$ is on average.
 \begin{defi}\hypertarget{def:averageOrder}
 We say that $f$ has \named{average order} $g$ if
 \begin{equation*}\sum_{1 \leq n \leq x} f(n) \hyperlink{def:asymp}{\sim} x g(x).\end{equation*}
@@ -352,7 +351,8 @@ Analytic Number Theory is mostly just controlling the error term.
   This does not mean that $\tau(n) = \log n$: the average order does not give any information about specific values.
 \end{remark}
 \begin{nthm}\label{thm:5}
-  \lecnum{3}For any $n \geq 1$,
+  \newlec
+  For any $n \geq 1$,
   \begin{equation*}
     \hyperlink{def:tau}{\tau(n)} \leq n^{\hyperlink{def:asymp}{\bigO}\left(\frac{1}{\log \log n}\right)}.
   \end{equation*}
@@ -470,7 +470,8 @@ Chebyshev showed $\pi(x) \asymp \frac{x}{\log x}$, (\hypertarget{def:asymp2}wher
   \begin{equation*}\sum_{n \leq x} \frac{\Lambda(n)}n = \sum_{p \leq x} \frac{\log p}{p} + \bigO(1).\qedhere\end{equation*}
 \end{proof}
 \begin{nlemma}\label{lem:8}
-  \lecnum{4}\begin{equation*}
+  \newlec
+  \begin{equation*}
     \hyperlink{def:pi}{\pi(x)} = \frac{\hyperlink{def:psi}{\psi(x)}}{\log x} + \hyperlink{def:asymp}{\bigO}\left(\frac{x}{(\log x)^2}\right).
   \end{equation*}
 \end{nlemma}
@@ -601,7 +602,8 @@ This leaves an error term of
 so we still need to show that $\sum_{a \leq x} \frac{\mu(a)}{a} = o(1)$. But this is in fact equivalent to the \hyperlink{def:pnt}{PNT}.
 
 \subsection{Selberg's identity and an elementary proof of the PNT}
-\lecnum{5}Recall that the statement of the prime number theorem is
+\newlec
+Recall that the statement of the prime number theorem is
 \begin{equation*}
   \psi(x) = \sum_{n \leq x} \hyperlink{def:vonMang}{\Lambda(n)} = x + \hyperlink{def:asymp}{o(x)}.
 \end{equation*}
@@ -744,14 +746,15 @@ Let $r(x) = \frac{\hyperlink{def:psi}{\psi(x)}}{x} - 1$, so \hyperlink{def:pnt}{
 
 \clearpage
 \section{Sieve Methods}
-\lecnum{6}In the Sieve of Eratosthenes, we write out the numbers up to a given bound, then remove multiples of small primes. For example,
+\newlec
+In the Sieve of Eratosthenes, we write out the numbers up to a given bound, then remove multiples of small primes. For example,
 \begin{center}
   \begin{tikzpicture}
     \foreach \x in {1,...,10} {
-      \node (\x) at (\x,0) {};
+      \coordinate (\x) at (\x,0);
     }
     \foreach \x in {11,...,20} {
-      \node (\x) at (\x-10,-1) {};
+      \coordinate (\x) at (\x-10,-1);
     }
     \foreach \x in {1,2,...,20} {
       \node at (\x) {\x};
@@ -876,11 +879,11 @@ We generally use:
              &= X \prod_{\substack{p \in P \\ p < z}} \left(1 - \frac{f(p)}{p}\right) + \hyperlink{def:asymp}{\bigO}\left(\sum_{d \mid P(z)} |R_d|\right). \qedhere
   \end{align*}
 \end{proof}
-\begin{cor}
+\begin{ncor}\label{cor:2.2}
   \begin{equation*}
     \hyperlink{def:pi}{\pi(x+y)} - \pi(x) \hyperlink{def:asymp}{\ll} \frac{y}{\log \log y}.
   \end{equation*}
-\end{cor}
+\end{ncor}
 \begin{proof}
   In Example 1, recall $f \equiv 1$ and $|R_d| \hyperlink{def:asymp}{\ll} 1$, $X = y$.
   So
@@ -892,6 +895,124 @@ We generally use:
     \sum_{d \mid P(z)} |R_d| \ll \sum_{d \mid P(z)} 1 \leq 2^z.
   \end{equation*}
   So $\hyperlink{def:pi}{\pi(x+y)} - \pi(x) \ll \frac{y}{\log z} + 2^z \ll \frac{y}{\log \log y} $ by choosing $z = \log y$.
+\end{proof}
+
+\subsection{Selberg's sieve}
+\newlec
+From \nameref{thm:2.1}, we got
+\begin{equation*}
+  S(A,P;z) \leq XW + \bigO\left(\sum_{d \mid P(z)} |R_d|\right).
+\end{equation*}
+The problem here is that we have to consider $2^z$ many divisors of $P(z)$, so get $2^z$ many error terms.
+We can do a different sieve, and only consider those divisors of $P(z)$ which are small, say $\leq D$.
+
+The key part of \nameref{thm:2.1} was
+\begin{equation*}
+  1_{(n,P(z)) = 1} = \sum_{d \mid (n, P(z))} \mu(d).
+\end{equation*}
+For an upper bound, enough to use \emph{any} function $F$, such that
+\begin{equation*}
+  F(n) \geq
+  \begin{cases}
+    1 & n=1 \\
+    0 & \text{otherwise}
+  \end{cases}
+\end{equation*}
+(we used $\mu$ in the proof of \nameref*{thm:2.1})
+
+Selberg's observation was that if $\lambda_i$ is an sequence of reals, with $\lambda_1 = 1$ then
+\begin{equation*}
+  F(n) = \left(\sum_{d \mid n} \lambda_d\right)^2
+\end{equation*}
+works:
+\begin{equation*}
+  F(1) = (\sum_{d \mid 1} \lambda_d)^2 = \lambda_1^2 = 1.
+\end{equation*}
+
+We make the additional assumption on $f$ that $0 < f(p) < p$ if $p \in P$. Recall that $|A_p| = \frac{f(p)}{p} X + R_p$, so these are reasonable restrictions to have on a sieve.
+
+This lets us define a new multiplicative function $g$ such that
+\begin{equation*}
+  g(p) = \left(1 - \frac{f(p)}{p}\right)^{-1} -1 = \frac{f(p)}{p - f(p)}
+\end{equation*}
+\begin{nthm}\label{thm:2.3}
+  \begin{equation*}
+    \forall t \quad S(A,P;z) \leq \frac{X}{G(t,z)} + \sum_{\substack{d \mid P(z) \\ d < t^2}} 3^{\omega(d)} |R_d|
+  \end{equation*}
+  where
+  \begin{equation*}
+    G(t,z) = \sum_{\substack{d \mid P(z) \\ d < t}} g(d).
+  \end{equation*}
+\end{nthm}
+Recall
+\begin{equation*}
+  W = \prod_{\substack{p \in P \\ p \leq z}} \left(1 - \frac{f(p)}{p}\right)
+\end{equation*}
+so the expected size of $S(A,P;z)$ is $XW$. Note that as $t \to \infty$,
+\begin{align*}
+  G(t,z) &\to \sum_{d \mid P(z)} g(d) \\
+         &= \prod_{p < z} (1 + g(p)) \\
+         &= \prod_{p < z} \left(1 - \frac{f(p)}{p}\right)^{-1} = \frac{1}{W}.
+\end{align*}
+
+\begin{ncor}\label{cor:2.4}
+  \begin{equation*}
+    \hyperlink{def:pi}{\pi(x+y)} - \pi(x) \hyperlink{def:asymp}{\ll} \frac{y}{\log y}.
+  \end{equation*}
+\end{ncor}
+Compare this with \cref{cor:2.2}.
+\begin{proof}
+  Take $A = \{x < n \leq x+y\}$, $f(p) = 1$, $R_d = \bigO(1)$, $X = y$.
+  Since $g(p) = \frac{1}{p-1} = \frac{1}{\varphi(p)}$, so $g(d) = \frac{1}{\varphi(d)}$,
+  The main term from \cref{thm:2.3} gives
+  \begin{align*}
+    G(z,z) &= \sum_{\substack{d \mid P(z) \\ d < z}} \prod_{p \mid d} (p-1)^{-1} \\
+           &= \sum_{d = p_1 \dotsm p_r < z} \prod_i \sum_{k \geq 1}^\infty \frac{1}{p_i^k} \\
+           &= \sum_{p < z} \sum_{\substack{k_r \geq 1 \ p_1 \dotsm p_r < z}} \frac{1}{p_1^{k_1} \dotsm p_r^{k_r}} \\
+           &= \sum_{n; \text{sq-free part of $n$ is }\leq t} \frac{1}{n} \\
+           &\geq \sum_{d<z} \frac{1}{d} \\
+           &\gg \log z.
+  \end{align*}
+
+  So the main term is $\ll \frac{y}{\log z}$.
+  Note that $3^{\omega(d)} \leq \tau_3(d) \ll_\epsilon d^\epsilon$. So the error term is
+  \begin{equation*}
+    \ll_\epsilon t^\epsilon \sum_{d < t^2} 1 \ll t^{2 + \epsilon} = z^{2+\epsilon}
+  \end{equation*}
+  since we are taking $t = z$.
+  So
+  \begin{equation*}
+    S(A,P;z) \ll \frac{y}{\log z} + z^{2+\epsilon} \ll \frac{y}{\log y}
+  \end{equation*}
+  by taking $z = y^{\frac{1}{3}}$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:2.3}]
+  Let $(\lambda_i)$ be a sequence of reals, with $\lambda_1 = 1$ to be chosen later. Then
+  \begin{align*}
+    S(A,P;z) &= \sum_{n \in A} 1_{(n,P(z)) = 1} \\
+             &\leq \sum_{n \in A} (\sum_{d \mid (n,P(z))} \lambda_d)^2 \\
+             &= \sum_{d,e \mid P(z)} \lambda_d \lambda_e \sum_{n \in A} 1_{d \mid n, e \mid n} \\
+             &= \sum_{d, e \mid P(z)} \lambda_d \lambda_e |A_[d,e]| \\
+             &= X \sum_{d,e \mid P(z)} \lambda_d \lambda_e \frac{f([d,e])}{[d,e]} + \sum_{d,e \mid P(z)} \lambda_d \lambda_e R_{[d,e]}
+  \end{align*}
+  We will choose $\lambda_d$ such that $|\lambda_d| \leq 1$ and $\lambda_d = 0$ if $d \geq t$.
+  Then
+  \begin{align*}
+    \abs{\sum_{d,e \mid P(z)} \lambda_d \lambda_e R_{[d,e]}} &\leq \sum_{\substack{d,e < t \ d,e \mid P(z)}} |R_{[d,e]}| \\
+                                                             &\leq \sum_{\substack{n \mid P(z) \\ n < t^2}} |R_n| \sum_{d,e} 1_{[d,e] = n}
+  \end{align*}
+  and
+  \begin{equation*}
+  \sum_{d,e} 1_{[d,e]=n} = 3^{\omega(n)}
+  \end{equation*}
+  as $n$ is squarefree.
+
+  Let
+  \begin{equation*}
+    V = \sum_{d,e \mid P(z)} \lambda_d \lambda_e \frac{f([d,e])}{[d,e]}
+  \end{equation*}
+  Write $[d,e] = abc$ where $d = ab$, $e = bc$ and $(a,b) = (b,c) = (a,c) = 1$.
 \end{proof}
 \clearpage
 \printnomenclature

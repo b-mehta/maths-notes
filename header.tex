@@ -25,6 +25,7 @@
 \usepackage{centernot}
 \usepackage{float}
 \usepackage{braket}
+\usepackage{marginnote}
 \usepackage[hypcap=true]{caption}
 \usepackage{enumitem}
 \usepackage[pdftex,
@@ -37,7 +38,12 @@ pdfkeywords={Cambridge Mathematics Maths Math \npart\ \nterm\ \nyear\ \ncourse}]
 
 \usepackage[capitalise,nameinlink,noabbrev]{cleveref}
 \usepackage{nameref}
-\usepackage[margin=1.5in]{geometry}
+\usepackage[margin=1.5in,a4paper]{geometry}
+
+\reversemarginpar
+\newcommand{\lecnum}[1]{\leavevmode\marginnote{\emph{Lecture #1}}\ignorespaces}
+\newcounter{lecturenumber}
+\newcommand{\newlec}{\stepcounter{lecturenumber}\lecnum{\arabic{lecturenumber}}}
 
 % Theorems
 \theoremstyle{definition}
