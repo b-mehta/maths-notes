@@ -1399,6 +1399,210 @@ which includes many non-twin-primes.
   so $2^{500 \log \log z \log z} \leq x^{\frac{1}{10}}$ if $x$ is large enough, which is $o(\frac{x}{\log z})$.
 \end{proof}
 
+\clearpage
+\section{Riemann Zeta function}
+\newlec
+First, a trivial remark (writing $s = \sigma + it$ throughout):
+If $n \in \mathbb{N}$, $n^s = e^{s \log n} = n^\sigma e^{it \log n}$.
+
+\begin{defi}\hypertarget{def:zeta}
+  The \named{Riemann zeta function} is defined for $\sigma>1$ by
+  \begin{align*}
+    \zeta(s) = \sum_{n=1}^\infty \frac{1}{n^s}.
+  \end{align*}
+\end{defi}
+\subsection{Dirichlet series}
+For any \hyperlink{def:arith}{arithmetic function} $f: \mathbb{N} \to \mathbb{C}$, we have a \textbf{Dirichlet series}
+\begin{align*}
+  \hypertarget{def:lf}L_f(s) \coloneqq \sum_{n=1}^\infty \frac{f(n)}{n^s}.
+\end{align*}
+\begin{nlemma}
+  For any $f$, there is an abscissa of convergence $\sigma_c$ such that
+  \begin{enumerate}[label=(\arabic*)]
+    \item $\sigma < \sigma_c \Rightarrow \hyperlink{def:lf}{L_f(s)}$ diverges
+    \item $\sigma > \sigma_c \Rightarrow L_f(s)$ converges uniformly in some neighbourhood of $s$ (in particular $L_f(s)$ is holomorphic at $s$).
+  \end{enumerate}
+\end{nlemma}
+\begin{proof}
+  It is enough to show if \hyperlink{def:lf}{$L_f(s)$} converges at $s_0$ and $\sigma > \sigma_0$ then there is a neighbourhood of $s$ on which $L_f$ converges uniformly ($\sigma_c = \inf\{\sigma : L_f(s) \text{ converges}\}$).
+  Let $R(u) = \sum_{n > u} f(n) n^{-s_0}$.
+  By \nameref{lem:1},
+  \begin{align*}
+    \sum_{M < n \leq N} f(n) n^{-s} = R(M) M^{s_0 - s} - R(N) N^{s_0 - s} + (s_0 - s) \int_M^N R(u) u^{s_0 - s - 1} \, du.
+  \end{align*}
+  If $|R(u)| \leq \epsilon$ for all $u \geq M$ then
+  \begin{align*}
+    \abs{\sum_{M < n \leq N} f(n) n^{-s}} \leq 2\epsilon + \epsilon |s_0 - s| \int_M^N u^{\sigma_0 - \sigma - 1} \, du \leq \left(2 + \frac{|s_0 - s|}{|\sigma_0 - \sigma|}\right) \epsilon
+  \end{align*}
+  Note there is a neighbourhood of $s$ in which $\frac{|s-s_0|}{|\sigma-\sigma_0|} \ll_s 1$. So $\sum \frac{f(n)}{n^{s}}$ converges uniformly here.
+\end{proof}
+\begin{nlemma}
+  If
+  \begin{equation*}
+  \sum \frac{f(n)}{n^s} = \sum \frac{g(n)}{n^s}
+  \end{equation*}
+  for all $s$ in some halfplane $\sigma > \sigma_0 \in \mathbb{R}$ then $f(n) = g(n)\ \forall n$.
+\end{nlemma}
+\begin{proof}
+  Enough to consider $\sum \frac{f(n)}{n^s} \equiv 0$ for $\forall \sigma > \sigma_0$.
+  Suppose $\exists n\ f(n) = 0$. Let $N$ be the least such that $f(N) \neq 0$.
+  Since $\sum_{n \leq N} \frac{f(n)}{n^\sigma} = 0$,
+  \begin{align*}
+    f(N) = -N^\sigma \sum_{n \geq N} \frac{f(n)}{n^\sigma}
+  \end{align*}
+  So $|f(n)| \ll n^\sigma$ and so the series $\sum_{n \geq N} \frac{f(n)}{n^{\sigma+1+\epsilon}}$ is absolutely convergent.
+  So since $\frac{f(n)}{n^\sigma} \to 0$ as $\sigma \to \infty$, the RHS $\to 0$ so $f(N) = 0$.
+\end{proof}
+\begin{nlemma}
+  If \hyperlink{def:lf}{$L_f(s)$} and $L_g(s)$ are absolutely convergent at $s$, then
+  \begin{align*}
+    L_{\hyperlink{def:conv}{f \star g}}(s) = \sum_{n =1}^\infty \frac{f \star g(n)}{n^s}
+  \end{align*}
+  is also absolutely convergent at $s$ and is equal to $L_f(s) L_g(s)$.
+\end{nlemma}
+\begin{proof}
+  \begin{align*}
+    \left(\sum_{n=1}^\infty \frac{f(n)}{n^s}\right)\left(\sum_{m=1}^\infty \frac{g(m)}{m^s}\right) = \sum_{n,m=1}^\infty \frac{f(n)g(m)}{(nm)^s} = \sum_{k=1}^\infty \frac{1}{k^s} \left(\sum_{\substack{n,m\\ nm=k}} f(n) g(m)\right).
+  \end{align*}
+\end{proof}
+\begin{nlemma}[Euler product]
+  If $f$ is \hyperlink{def:multi}{multiplicative} then (if $\hyperlink{def:lf}{L_f(s)}$ is absolutely convergent at $s$)
+  \begin{align*}
+    L_f(s) = \prod_p \left(1 + \frac{f(p)}{p^s} + \frac{f(p^2)}{p^{2s}} + \dotsb\right).
+  \end{align*}
+\end{nlemma}
+\begin{proof}
+  Let $y$ be arbitrary:
+  \begin{align*}
+    \prod_{p < y} \left(1 + \frac{f(p)}{p^s} + \dotsb\right) = \sum_{\substack{n \\ p \mid n \Rightarrow p < y}} \frac{f(n)}{n^s}
+  \end{align*}
+  \begin{align*}
+    \abs{\prod_{p < y} \left(1 + \frac{f(p)}{p^s} + \dotsb\right) - \sum_{n=1}^\infty \frac{f(n)}{n^s}} \leq \sum_{\substack{n \\ \exists p \mid n, p \geq y}} \frac{|f(n)|}{n^\sigma} \leq \sum_{\substack{n \\ n \geq y}} \frac{\abs{f(n)}}{n^\sigma} \to 0
+  \end{align*}
+  as $y \to \infty$.
+\end{proof}
+\begin{defi}
+  For $\sigma > 1$,
+  \begin{equation*}
+  \hyperlink{def:zeta}{\zeta(s)} = \sum_{n = 1}^\infty \frac{1}{n^s}
+  \end{equation*}
+  defines a holomorphic function and converges absolutely for $\sigma > 1$.
+\end{defi}
+Note that
+\begin{equation*}\hyperlink{def:zeta}{\zeta'(s)} = \sum \left(\frac{1}{n^s}\right)' = - \sum \frac{\log n}{n^s}.\end{equation*}
+Since \hyperlink{def:1}{$1$} is \hyperlink{def:multi}{completely multiplicative},
+\begin{align*}
+  1 + \frac{1}{p^s} + \frac{1}{p^{2s}} + \dotsb = \left(1 - \frac{1}{p^s}\right)^{-1}
+\end{align*}
+so $\zeta(s) = \prod_p (1 - \frac{1}{p^s})^{-1}$.
+So
+\begin{align*}
+  \frac{1}{\zeta(s)} &= \prod_p \left(1 - \frac{1}{p^s}\right) = \sum_{n} \frac{\hyperlink{def:mu}{\mu(n)}}{n^s} \\
+  \log \zeta(s) &= - \sum_p \log\left(1 - \frac{1}{p^s}\right)
+  \begin{aligned}[t]
+    &=\sum_p \sum_k \frac{1}{kp^{ks}} \\
+    &= \sum \frac{\hyperlink{def:vonMang}{\Lambda(n)}}{\log n} \frac{1}{n^s}
+  \end{aligned}\\
+  \frac{\zeta'(s)}{\zeta(s)} &= - \sum \frac{\Lambda(n)}{n^s}
+\end{align*}
+so e.g. $\frac{\zeta'(s)}{\zeta(s)} \times \zeta(s) = \zeta'(s)$, thus $\Lambda \hyperlink{def:conv}{\star} 1 = \log$.
+Similarly if $f \star 1 = g$, then $\hyperlink{def:lf}{L_f} \times \zeta = L_g$ so $L_f = \frac{1}{\zeta} \times L_g$ so $f = \mu \star g$.
+
+\begin{lemma}
+  For $\sigma > 1$,
+  \begin{equation*}
+    \zeta(s) = 1 + \frac{1}{s-1} - s \int_1^\infty \frac{\{t\}}{t^{s+1}}\,dt.
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  By \nameref{lem:1},
+  \begin{align*}
+    \sum_{1 \leq n \leq x} \frac{1}{n^s} &= \frac{\floor{x}}{x^s} + s \int_1^x \frac{\floor{t}}{t^{s+1}}\,dt \\
+    &= \frac{\floor{x}}{x^s} + s \int_1^x \frac{1}{t^{s}}\,dt - s \int_1^x \frac{\{t\}}{t^{s+1}}\,dt\\
+    &= \frac{\floor{x}}{x^s} + \frac{s}{s-1} [t^{-s+1}]^x_1 - s \int_1^x \frac{\{t\}}{t^{s+1}}\,dt \\
+    \shortintertext{Now taking the limit as $x \to \infty$:}
+    &= \frac{s}{s-1} - s \int_1^x \frac{\{t\}}{t^{s+1}}\,dt. \qedhere
+  \end{align*}
+\end{proof}
+The integral converges absolutely for $\sigma > 0$, so this gives
+\begin{equation*}
+  \zeta(s) = \frac{1}{s-1} + F(s)
+\end{equation*}
+where $F(s)$ is holomorphic in $\sigma>0$.
+We define
+\begin{align*}
+  \zeta(s) = 1 + \frac{1}{s-1} - s \int_1^\infty \frac{\{t\}}{t^{s+1}}\,dt \text{ for } \sigma > 0.
+\end{align*}
+$\zeta(s)$ is meromorphic in $\sigma>0$, with only a simple pole at $s=1$.
+\begin{cor}
+  For $0 < \sigma < 1$,
+  \begin{align*}
+    \frac{1}{\sigma-1} < \zeta(\sigma) < \frac{\sigma}{\sigma-1}.
+  \end{align*}
+  In particular, $\zeta(\sigma) < 0$ for $0 < \sigma < 1$ (in particular, $\neq 0$).
+\end{cor}
+\begin{proof}
+  \begin{gather*}
+    \zeta(\sigma) = 1 + \frac{1}{\sigma-1} - \sigma \int_1^\infty \frac{\{t\}}{t^{\sigma+1}} \, dt.
+    0 < \int_1^\infty \frac{\{t\}}{t^{\sigma+1}}\,dt < \frac{1}{\sigma}. \qedhere
+  \end{gather*}
+\end{proof}
+\begin{cor}
+  For $0 < \delta \leq \sigma \leq 2$ and $|t| \leq 1$,
+  \begin{align*}
+    \zeta(s) = \frac{1}{s-1} + \bigO_\delta(1) \text{ uniformly}.
+  \end{align*}
+\end{cor}
+\begin{proof}
+  \begin{align*}
+    \zeta(s) - \frac{1}{s-1} &= 1 - s \int_1^\infty \frac{\{t\}}{t^{s+1}}\,dt \\
+                             &= \bigO(1) + \bigO\left(\int_1^\infty \frac{1}{t^{\sigma+1}}\,dt\right) \\
+                             &= \bigO(1) + \bigO_\delta(1).\qedhere
+  \end{align*}
+\end{proof}
+\begin{lemma}
+  $\zeta(s) \neq 0$ for $\sigma > 1$.
+\end{lemma}
+\begin{proof}
+  For $\sigma > 1$,
+  \begin{align*}
+    \zeta(s) = \prod_p \left(1 - \frac{1}{p^s}\right)^{-1}
+  \end{align*}
+  and the infinite product converges, and no factors are zero.
+\end{proof}
+\begin{conjecture}[Riemann Hypothesis]
+  If $\zeta(s) = 0$ and $\sigma > 0$, then $\sigma = \frac{1}{2}$.
+\end{conjecture}
+\subsection{Prime Number Theorem}
+Let $\alpha(s) = \sum \frac{a_n}{n^s}$. \nameref{lem:1} lets us write $\alpha(s)$ in terms of $A(x) = \sum_{n \leq x} a_n$.
+If $\sigma > \max(0, \sigma_c)$ then $\alpha(s) = s \int_1^\infty \frac{A(t)}{t^{s+1}}\,dt$. This is often called the Mellin transform.
+
+What about the converse? Note if $\alpha(s) = \frac{\zeta'(s)}{\zeta(s)}$ then $a_n = \hyperlink{def:vonMang}{\Lambda(n)}$ so
+\begin{align*}
+  A(x) &= \sum_{n \leq x} \Lambda(n) \\&= \psi(x).
+\end{align*}
+
+The converse is called Perron's formula:
+\begin{align*}
+  A(x) = \frac{1}{2\pi i} \int_{\sigma-i\infty}^{\sigma+i\infty} \alpha(s) \frac{x^s}{s}\,ds \quad \sigma > \max(0,\sigma_c).
+\end{align*}
+In particular, we get
+\begin{align*}
+  \psi(x) = \frac{1}{2\pi i} \int_{\sigma-i\infty}^{\sigma+i\infty} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds \quad \sigma > 1.
+\end{align*}
+`Prime Number Theorem is equivalent to no zeros on $\sigma=1$'
+\begin{lemma}[Pre-Perron's formula]
+  If $\sigma > 0$, then (for $y \neq 1$)
+  \begin{equation*}
+    \frac{1}{2\pi i} \int_{\sigma-iT}^{\sigma + iT} \frac{y^s}{s}\,ds =
+    \begin{cases}
+      1 & y > 1 \\
+      0 & y < 1
+    \end{cases}
+    + \bigO\left(\frac{y^{\sigma}}{T |\log y|}\right).
+  \end{equation*}
+\end{lemma}
+
 \end{proof}
 \clearpage
 \printnomenclature
