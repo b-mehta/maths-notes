@@ -1147,6 +1147,129 @@ We can reasonably expect $\pi_2(x) \asymp \frac{x}{(\log x)^2}$, but proving the
     \sum_{d < z^2} 6^{\omega(d)} \leq z^{2 + o(1)} = x^{\frac{1}{2} + o(1)}.
   \end{align*}
 
+  \newlec
+  It remains to show
+  \begin{equation*}
+    G(z,z) \gg (\log z)^2.
+  \end{equation*}
+  Note
+  \begin{equation*}
+  g(p) = \frac{f(p)}{p-f(p))} = \frac{2}{p-2} \geq \frac{2}{p-1}
+  \end{equation*}
+  so if $d$ is odd and squarefree,
+  \begin{equation*}
+    g(d) \geq \frac{2^{\omega(d)}}{\varphi(d)}.
+  \end{equation*}
+  Thus,
+  \begin{align*}
+    G(z,z) \geq \sum_{\substack{d \mid P(z) \\ d < z}}
+    \frac{2^{\omega(d)}}{\varphi(d)} \gg
+    \sum_{\substack{d < z \\ d \text{ squarefree}}}
+      \frac{2^{\omega(d)}}{\varphi(d)}
+  \end{align*}
+  since we added in
+  \begin{align*}
+    \sum_{\substack{d < z \\ d \text{ squarefree} \\ 2 \mid d}} \frac{2^{\omega(d)}}{\varphi(d)} = 2 \sum_{\substack{e < \frac{z}{2} \\ e \text{ squarefree} \\ e \text{ odd}}} \frac{2^{\omega(e)}}{\varphi(e)} \leq 2 \epsilon_1
+  \end{align*}
+  Now,
+  \begin{align*}
+    \sum_{\substack{d < z \\ d \text{ squarefree}}} \frac{2^{\omega(d)}}{\varphi(d)} &= \sum_{\substack{d < z \\ d \text{ squarefree} \\ d = p_1 \dotsm p_r}} 2^{\omega(d)} \prod_{i=1}^r \left(\frac{1}{p_i} + \frac{1}{p_i^2} + \dots\right) = \sum_{\substack{e < z \\ d = em^2 \\ e \text{ squarefree}}} \frac{2^{\omega(d)}}{d} \\
+                                                                                   &\geq \sum_{d < z} \frac{2^{\omega(d)}}{d}.
+  \end{align*}
+
+  By \nameref{lem:1}, it's enough to show $\sum_{d < z} 2^{\omega(d)} \gg z \log z$.
+  Recall that to show $\sum_{d < z} \tau(d) \gg z \log z$ we used $\tau = 1 \star 1$.
+  We want to write $2^{\omega(n)} = \sum_{d \mid n} f(d) g(\tfrac{n}{d})$.
+
+  If we try $f = \tau$, it turns out that
+  \begin{equation*}
+    g(n)=
+    \begin{cases*}
+      0 & if $n$ not a square \\
+      \mu(d) & if $n=d^2$
+    \end{cases*}
+  \end{equation*}
+  works, and $2^{\omega(n)} = \tau \star g(n)$.
+  So
+  \begin{align*}
+    \sum_{d < z} 2^{\omega(d)} &= \sum_{a < z} g(a) \sum_{b \leq \frac za} \tau(b) \\
+                               &= \sum_{a < z} g(a) \frac{z}{a} \log(\frac{t}{a}) + c \sum_{a < z} g(a) \frac{z}{a} = \bigO\left(\underbrace{z^{\frac{1}{2}} \sum_{a < z} \frac{1}{a^{\frac{1}{2}}}}_{\ll z}\right) \\
+                               &= \sum_{d < z^{\frac{1}{2}}} \mu(d) \frac{z}{d^2} \log z - \underbrace{2 \sum_{d < z^{\frac{1}{2}}} \mu(d) \frac{z}{d^2} \log d}_{\ll z \sum_{d < z^{\frac 12}} \frac{\log d}{d^2} \ll z.}
+  \end{align*}
+  Note
+  \begin{align*}
+    \sum_{d < z^{\frac 12}} \frac{\mu(d)}{d^2} = c + \bigO\left(\sum_{d < z^{\frac 12}} \frac{1}{d^2}\right) = c + \bigO\left(\frac{1}{z^{\frac12}}\right)
+  \end{align*}
+  so
+  \begin{align*}
+    \sum_{d < z} 2^{\omega(d)} = c z \log z + \bigO(z) \gg z \log z.
+  \end{align*}
+  Remains to show that $c > 0$: either
+  \begin{itemize}
+    \item Note LHS can't be $\bigO(z)$
+    \item Calculate the first couple of terms in the series
+    \item Note that $c = \frac{6}{\pi^2} > 0$. \qedhere
+  \end{itemize}
+\end{proof}
+
+\subsection{Combinatorial sieve}
+The sieve of Eratosthenes-Legendre gave a sieve with a large error bound, and Selberg just gave an upper bound sieve.
+
+\begin{align*}
+  S(A,P;z) = |A| - \sum_p |A_p| + \sum_{p,q} |A_{p,q}| + \dotsb
+\end{align*}
+The idea of a combinatorial sieve is to `truncate' the sieve process.
+\begin{lemma}[Buchstab Formula]
+  \begin{equation*}
+    \hypertarget{lem:buch} S(A,P;z) = |A| - \sum_{p \mid P(z)} S(A_p, P; p).
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  Aim to show
+  \begin{align*}
+    |A| = S(A,P;z) + \sum_{p \mid P(z)} S(A_p, P; p)
+  \end{align*}
+  Write
+  \begin{align*}
+    S_1 &= \{n \in A : p \mid n, p \in P \Rightarrow p \geq z\} \\
+    S_p &= \{n \in A : n = mp, q \mid n, q \in P \Rightarrow q \geq p\}
+  \end{align*}
+  and note $S(A,P;z) = \# S_1$ and $S(A_p, P; p) = \# S_p$. Every $n \in A$ is either in $S_1$, or has some prime divisors from $P(z)$. If $p$ is the least such prime divisor, then $n \in S_p$.
+\end{proof}
+Similarly,
+\begin{lemma}
+  \begin{align*}
+    W(z) = 1 - \sum_{p \mid P(z)} \frac{f(p)}{p} W(p).
+  \end{align*}
+\end{lemma}
+Recall that we defined
+\begin{align*}
+  W(z) = \prod_{p \mid P(z)} \left(1 - \frac{f(p)}{p}\right)
+\end{align*}
+\begin{cor}
+  For any $r \geq 1$,
+  \begin{align*}
+    S(A,P;z) = \sum_{\substack{d \mid P(z) \\ \omega(d) < r}} \mu(d) |A_d| + (-1)^r \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} S(A_d, P; l(d))
+  \end{align*}
+  where $l(d)$ is the least prime divisor of $d$.
+\end{cor}
+\begin{proof}
+  Induction on $r$. $r=1$ is the \hyperlink{lem:buch}{Buchstab formula}. For the inductive step, use
+  \begin{align*}
+    S(A_d, P; l(d)) = |A_d| - \sum_{\substack{p \in P \\ p < l(d)}} S(A_{dp}, P; p).
+  \end{align*}
+  and
+  \begin{align*}
+    &(-1)^r \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \left(|A_d| - \sum_{\substack{p \in P \\ p < \lambda(d)}} S(A_{pd}, P; p)\right) \\
+    = & \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \mu(d) |A_d| + (-1)^{r+1} \sum_{\substack{e \mid P(z) \\ \omega(e) = r+1}} S(A_e, P; l(e)).
+  \end{align*}
+\end{proof}
+In particular, note that if $r$ is even
+\begin{align*}
+  S(A,P;z) \geq \sum_{\substack{d \mid P(z) \\ \omega(d) < r}} \mu(d) |A_d|
+\end{align*}
+(and the inequality is reversed if $r$ odd).
+
 \end{proof}
 \clearpage
 \printnomenclature
