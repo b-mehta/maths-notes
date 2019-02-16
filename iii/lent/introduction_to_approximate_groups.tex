@@ -4,16 +4,19 @@
 \def\npart{III}
 \def\nyear{2019}
 \def\nterm{Lent}
-\def\draft{Ongoing course}
+\def\draft{Ongoing course, rough}
 \def\nlecturer{Dr M. Tointon}
 \def\ncourse{Introduction to Approximate Groups}
 
 \usepackage{imakeidx}
 \usepackage{marginnote}
+\usepackage{graphicx}
 
 \input{header}
+\usepackage{tikz-cd}
+\newcommand{\vge}{\rotatebox[origin=c]{-90}{$>$}}
+
 \newtheorem{nexample}[nthm]{Example}
-\reversemarginpar
 
 \makeindex[intoc]
 
@@ -21,9 +24,12 @@
 \newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\ratio}[2]{\frac{\abs{#1}}{\abs{#2}}}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\vol}{vol}
 
-\setcounter{section}{-1}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \numberwithin{equation}{section}
+\tikzset{dot/.style={inner sep=1pt, fill=black, circle}}
 
 % and here we go!
 \begin{document}
@@ -32,14 +38,14 @@
 \tableofcontents
 
 \clearpage
-\section{Introduction}
-A\marginnote{\emph{Lecture 1}}[0cm] subgroup $H < G$ is a non-empty set closed under products and inverses.
-Roughly, an `approximate subgroup' is a subset that is only `approximately closed' under products.  (Will make this precise soon).
+\section{Small doubling}
+\newlec
+A subgroup $H < G$ is a non-empty set closed under products and inverses.
+Roughly, an `approximate subgroup' is a subset that is only `approximately closed' under products.
+(We will make this precise soon).
 Such sets arise naturally in a number of branches of mathematics, and as such approximate groups have had a broad range of applications.
 In this course, we will look in detail, for example, at applications to \emph{polynomial growth} (fundamental in geometric group theory) and touch on construction of expander graphs (important in theoretical computer science).
 
-\clearpage
-\section{Small doubling}
 To start with, we will look at a preliminary notion of approximate closure called \emph{small doubling}.
 In this course, $G$ is always a group, arbitrary unless specified otherwise.
 \begin{notation}
@@ -153,11 +159,12 @@ When $K$ is very small, this is quite easy, as follows:
 \end{proof}
 Classifying the sets of \hyperlink{def:doubling}{small doubling} is much harder than this in general, and uses a much wider range of techniques, e.g.\ group theory, harmonic analysis, geometry of numbers...
 
-% lecture 2
+\clearpage
 \section{Covering and higher sum and product sets}
+\newlec
 We introduce two techniques we'll use repeatedly: \emph{covering} and \emph{bounding higher product sets}.
 A nice way to do this is by proving the following theorem.
-\begin{nthm}[Rusza]\label{thm:2.1}
+\begin{nthm}[Ruzsa]\label{thm:2.1}
   Suppose $A \subset \mathbb{F}_p^r$ satisfies $|A+A| \leq K|A|$. Then $\exists H \leq \mathbb{F}_p^r$ with
   \begin{equation*}
     |H| \leq p^{K^4} K^2 |A| \quad \text{ such that } A \subset H.
@@ -174,7 +181,7 @@ We'll start by proving the following weaker version:
   \begin{equation*}|H| \leq p^K |A - A| (\leq p^K K |A|) \quad \text{such that }A \subset H.\end{equation*}
 \end{nprop}
 We'll prove this using `covering', encapsulated by the following lemma
-\begin{nlemma}[Rusza's covering lemma]\label{lem:2.3}
+\begin{nlemma}[Ruzsa's covering lemma]\label{lem:2.3}
   Suppose $A,B \subset G$ and $|AB| \leq K|B|$. Then $\exists X \subset A$ with $|X| \leq K$ such that $A \subset X B B^{-1}$.
   Indeed, we may take $X \subset A$ maximal such that the sets $xB$ (for $x \in X$) are disjoint.
 \end{nlemma}
@@ -214,7 +221,7 @@ The term \index{covering}`covering' refers to the conclusion $A \subset X B B^{-
   as claimed.
 \end{proof}
 To strengthen \cref{prop:2.2} to \cref{thm:2.1}, we use the second technique of this section, bounding higher sum/product sets. The key result is the following, at least in the abelian case.
-\begin{nthm}[Pl\"unnecke-Rusza]\label{thm:2.5}
+\begin{nthm}[Pl\"unnecke-Ruzsa]\label{thm:2.5}
   Suppose $A \subset G$ for $G$ abelian, and $|A+A| \leq K|A|$.
   Then for all $m,n \geq 0$,
   \begin{equation*}|mA - nA| \leq K^{m+n} |A|.\end{equation*}
@@ -251,7 +258,7 @@ One way is to replace small doubling with \named{small tripling}\hypertarget{def
   Suppose $A \subset G$, $|A^3| \leq K|A|$. Then $|A^{\epsilon_1} \dotsm A^{\epsilon_m}| \leq K^{3(m-2)} |A|$ $\forall \epsilon_i = \pm 1$, $\forall m \geq 3$.
 \end{nprop}
 The key ingredient is the following:
-\begin{nlemma}[Rusza's triangle inequality]\label{lem:2.8}
+\begin{nlemma}[Ruzsa's triangle inequality]\label{lem:2.8}
   Given $U,V,W \subset G$, all finite, we have
   \begin{equation*}
     |U| |V^{-1} W| \leq |UV| |UW|.
@@ -291,13 +298,13 @@ The key ingredient is the following:
   For $m \geq 4$, \nameref{lem:2.8} gives
   \begin{align*}
     |A| |A^{\epsilon_1} \dotsm A^{\epsilon_m}| &\leq |A A^{-\epsilon_2} A^{-\epsilon_1}| |A A^{\epsilon_3} \dotsm  A^{\epsilon_m}| \\
-                                              & \leq K^3 |A|\ K^{3(m-2)} |A|.
+                                              & \leq K^3 |A|\ K^{3(m-3)} |A|.
   \end{align*}
-  % last line likely incorrect - check manually.
 \end{proof}
 
 \clearpage
 \section{Approximate Groups}
+\newlec
 In the last section, we saw that assuming \hyperlink{def:tripling}{small tripling} instead of \hyperlink{def:doubling}{small doubling} allowed us to control higher product sets of the form $A^{\epsilon_1} \dotsm A^{\epsilon_m}$.
 In this section, we'll see another possible strengthening of small doubling. We also saw, in the proofs of \cref{thm:2.1} and \cref{prop:2.2}, an advantage of having a `covering' condition in place of a size bound. This motivates in part the following definition.
 \begin{defi}
@@ -317,7 +324,7 @@ For \hyperlink{def:appGroup}{approximate groups}, bounding higher product sets i
   If $X$ is as in the definition of \hyperlink{def:appGroup}{approximate group}, in fact we have $A^m \subset X^{m-1} A$:
   \begin{align*}
     A^m &= A^{m-1} A \\
-        &\subset X^{m-2} A^2 \quad \text{induction}\\ % induction
+        &\subset X^{m-2} A^2 \quad \text{induction}\\
         &\subset X^{m-1} A \quad \text{definition of $X$} \qedhere
   \end{align*}
 \end{proof}
@@ -337,10 +344,10 @@ It turns out that sets of \hyperlink{def:tripling}{small tripling} and \hyperlin
   \end{equation*}
   Each set in this union has size $\leq K^3 |A|$ by \cref{prop:2.7}, so $|B| \leq 7 K^3 |A|$, as claimed. Similarly,
   \begin{equation*}
-    \hat{A}^k = \bigcup_{\mathclap{\substack{\epsilon_i = \pm 1 \\ 0 \leq m \leq 4}}} A^{\epsilon_1} \dotsm A^{\epsilon_m},
+    \hat{A}^4 = \bigcup_{\mathclap{\substack{\epsilon_i = \pm 1 \\ 0 \leq m \leq 4}}} A^{\epsilon_1} \dotsm A^{\epsilon_m},
   \end{equation*}
   and the sets in this union have size $\leq K^6 |A|$.
-  It follows that $|\hat{A}^4| \leq \mathcal{O}(K^6)|A|$.
+  It follows that $|\hat{A}^4| \leq \mathcal{O}(K^6)|\hat{A}|$.
 
   So, \cref{lem:2.4} implies $\exists X \subset G$ with $|X| \leq \mathcal{O}(K^6)$ such that $\hat{A}^n \subset X^{n-2} \hat{A}^2$ for every $n \geq 2$.
   In particular, $|X^2| \leq \mathcal{O}(K^{12})$ and $\hat{A}^4 = (\hat{A}^2)^2 \subset X^2 \hat{A}^2$, so $\hat{A}^2$ is an $\mathcal{O}(K^{12})$-approximate group, as claimed.
@@ -405,6 +412,7 @@ It turns out that this is the only obstruction to \hyperlink{def:doubling}{small
 
 \clearpage
 \section{Stability of approximate closure under basic operations}
+\newlec
 Two familiar properties of genuine subgroups are that they behave well under quotients and intersections:
 if $H < G$ and $\pi: G \to \Gamma$ is a homomorphism, then $\pi(H) < \Gamma$, and if $H_1, H_2 < G$ then $H_1 \cap H_2 < G$.
 In this lecture, we'll see versions of these properties for \hyperlink{def:appGroup}{approximate groups} and sets of \hyperlink{def:tripling}{small tripling}.
@@ -534,5 +542,579 @@ Freiman homomorphisms give us a way to encode this.
 \begin{proof}
   Exercise.
 \end{proof}
+\begin{nlemma}
+  \label{lem:4.8}
+  Let $A \subset G$ be a \hyperlink{def:appGroup}{$K$-approximate group}, and suppose $\varphi: A^3 \to \Gamma$ is a \hyperlink{def:fhom}{centred Freiman homomorphism}. Then $\varphi(A)$ is also a $K$-approximate group.
+\end{nlemma}
+\begin{proof}
+  Take $X$, $|X| \leq K$ such that $A^2 \subset XA$ as in the definition of \hyperlink{def:appGroup}{$K$-approximate group}.
+  So given $a_1, a_2 \in A$ $\exists x \in X, a_3 \in A$ such that $a_1 a_2 = x a_3$.
+  In particular, $x \in A^3$ so $\varphi(x)$ is defined, and
+  \begin{equation*}
+    \varphi(a_1) \varphi(a_2) = \varphi(x) \varphi(a_3)
+  \end{equation*}
+  Hence $\varphi(A)^2 \subset \varphi(X \cap A^3) \varphi(A)$.
+  Also $\varphi$ is \hyperlink{def:fhom}{centred} so $\varphi(A)$ is symmetric and contains $1$.
+\end{proof}
+
+\clearpage
+\section{Coset progressions, Bohr sets and the Freiman-Green-Ruzsa theorem}
+\begin{defi}
+\newlec
+  \hypertarget{def:prog}Let $G$ be abelian, $x_1, \dotsc, x_r \in G$, $L_1, \dotsc, L_r \in \mathbb{N}$.
+  Then the set
+  \begin{equation*}
+    P(x;L) = P(x_1, \dotsc, x_r; L_1, \dotsc, L_r) = \{l_1 x_1 + \dotsm l_r x_r \mid |l_i|\leq L_i \ \forall i\}
+  \end{equation*}
+  is called a \named{progression} of rank $r$.
+  If in addition $H < G$ is finite, then $H + P(x,L)$ is called a \named{coset progression}\index{progression!coset} of rank $r$.
+\end{defi}
+
+It is useful to think of \hyperlink{def:prog}{$P(x;L)$} as a homomorphic image of a `box' in $\mathbb{Z}^r$, e.g.\ if $G = \mathbb{Z}$ and $r = 2$:
+\begin{center}
+  \begin{tikzpicture}[scale=0.7]
+    \foreach \x in {-2,...,2} {
+      \foreach \y in {-1,...,1} {
+        \node [dot] at (\x,\y) {};
+      }
+    }
+    \draw (-2.5,-1.5) rectangle (2.5,1.5);
+    \draw [->] (0,2) -- (2,2) node [midway, above] {$l_1=2$};
+    \draw [->] (3,0) -- (3,1) node [midway, right] {$l_2=1$};
+
+    \draw [->] (0,-2) -- (0,-4);
+    \foreach \x in {-2,...,2} {
+      \foreach \y in {-1,...,1} {
+        \node [dot] at (2*\x+0.5*\y,-5) {};
+      }
+    }
+  \end{tikzpicture}
+\end{center}
+It is easy to see that such a box $B$ in $\mathbb{Z}^r$ is a \hyperlink{def:appGroup}{$2^r$-approximate group}, e.g.\ in $r=2$
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.4]
+    \draw (-2.5,-1.5) rectangle (2.5,1.5) node [below right] {$B$};
+    \node [dot, inner sep=0.3pt] {};
+    \draw (-5,-3) rectangle (5,3) node [below right] {$2B$};
+  \end{tikzpicture}
+\end{center}
+
+Hence \hyperlink{def:prog}{$P(x;L)$} is also a $2^r$-approximate group, as is $H + P(x;L)$.
+Remarkably, these are essentially the only examples:
+
+\begin{nthm}[Freiman ($G=\mathbb{Z}$); Green-Ruzsa (arbitrary abelian $G$)]\label{thm:5.1}
+  Suppose $A \subset G$ (abelian) satisfies $|A+A| \leq K|A|$.
+  Then there is a \hyperlink{def:prog}{coset progression} $H+P$ of rank $\leq \mathcal{O}(K^{\mathcal{O}(1)})$ such that
+  \begin{equation*}
+    A \subset H + P \subset \mathcal{O}(K^{\mathcal{O}(1)}) (A \cup \{0\} \cup -A).
+  \end{equation*}
+  In particular, \nameref{thm:2.5} gives $|H+P| \leq \exp(\mathcal{O}(K^{\mathcal{O}(1)})) |A|$.
+  So $A$ is a large proportion of $H+P$.
+\end{nthm}
+
+A substantial part of this result was proved in Introduction to Discrete Analysis, but with a slightly less explicit version of coset progressions.
+
+\begin{defi}
+  Let $G$ be a finite abelian group, let
+  \begin{equation*}
+    \Gamma = \{\gamma_1, \dotsc, \gamma_r\} \subset \hat{G}
+  \end{equation*}
+  (recall $\hat{G} = \operatorname{Hom}(G,\mathbb{R}/\mathbb{Z})$), and let $p \in [0,\frac{1}{2}]$.
+  \hypertarget{def:bohr}Then the set
+  \begin{equation*}B(\Gamma,p) = \{g \in G : \forall i\ \norm{\gamma_i(g)}_{\mathbb{R}/\mathbb{Z}} \leq p\}\end{equation*}is called a \named{Bohr set} of rank $r$.
+  Here, given $x \in \mathbb{R}/\mathbb{Z}$ with representative $\hat{x} \in (-\frac 12, \frac 12 %)[
+  ]$, we write $\|x\|_{\mathbb{R}/\mathbb{Z}} = |\hat{x}|$.
+\end{defi}
+
+We will see on Sheet 1 that $\hyperlink{def:bohr}{B(\Gamma,p)}$ is a \hyperlink{def:appGroup}{$4^r$-approximate group}.
+Whereas progressions were homomorphic images of boxes, $B(\Gamma,p)$ is the pullback of $[-p,p]^r$ under $(\gamma_1, \dotsc, \gamma_r) \in \hat{G}^r$.
+
+It turns out that the notions of coset progression and Bohr set are essentially equivalent. In Sheet 2, we will see that every coset progression is a Freiman image of a Bohr set of the same rank.
+Moreover, every Freiman image of a Bohr set is a large proportion of some coset progression.
+We will see a special case of that shortly.
+
+\begin{nprop}\label{prop:5.2}
+  Suppose $A \subset G$ (abelian) with $|A+A| \leq K|A|$. Then $\exists B \subset 2A - 2A$, a finite abelian group $Z$ with $|Z| \geq |A|$, a set $\Gamma \subset \hat{Z}$ with $|\Gamma| \leq \mathcal{O}(K^{\mathcal{O}(1)})$, some $p \geq \frac{1}{\mathcal{O}(K^{\mathcal{O}(1)})}$, and a \hyperlink{def:fhom}{centered Freiman $2$-isomorphism} $\varphi: B(\Gamma,p) \to B$.
+\end{nprop}
+
+`$2A-2A$ contains a large set isomorphic to a \hyperlink{def:bohr}{Bohr set} of bounded rank'.
+
+In Introduction to Discrete Analysis, we saw this in the special case of $G$ torsion-free.
+The general case is harder, but nonetheless conceptually very similar, so we will assume this result from now on.
+
+To pass from \cref{prop:5.2} to \cref{thm:5.1}, we use the following results.
+
+\begin{nprop}\label{prop:5.3}
+  Suppose $G$ is a finite abelian group, $\Gamma \subset \hat{G}$ is of size $r$, $p < \frac{1}{10}$.
+  Then there is a \hyperlink{def:prog}{coset progression} $H+P \subset B(\Gamma,p)$ with rank $r$ and
+  \begin{equation*}
+    |H+P| \geq \left(\frac pr\right)^r |G|.
+  \end{equation*}
+\end{nprop}
+\begin{nlemma}\label{lem:5.4}
+  Suppose $H+P$ is a \hyperlink{def:prog}{coset progression} of rank $r$, and $\varphi: H + P \to G$ (abelian) is a \hyperlink{def:fhom}{centered Freiman $2$-homomorphism}.
+  Then $\varphi(H+P)$ is also a coset progression of rank $r$.
+\end{nlemma}
+\begin{proof}
+  Exercise: If $H$ a group and $\varphi:H \to G$ is a centered Freiman 2-homomorphism, then $\varphi$ is also a group homomorphism.
+  In particular, in this lemma $\varphi(H)$ is a finite subgroup. Therefore sufficient to show that
+  \begin{equation*}
+    \varphi(H + P(x;L)) = \varphi(H) + P(\varphi(x_1), \dotsc, \varphi(x_i); L_1, \dotsc, L_r).
+  \end{equation*}
+  In fact, we will show that $\forall h \in H$, $|l_i| \leq L_i$ we have
+  \begin{equation}
+    \varphi(h+l_1 x_1 + \dotsb + l_r x_r) = \varphi(h) + l_1 \varphi(x_1) + \dotsb + l_r \varphi(x_r).\label{eq:5.1}
+  \end{equation}
+  Since $\varphi$ centered, $\varphi(-x_i) = -\varphi(x_i)$, so we may assume $l_i \geq 0 \ \forall i$.
+  Also \eqref{eq:5.1} is trivial if $l_i = 0 \ \forall i$, so may assume $\exists l_j > 0$. Then
+  \begin{align*}
+    \varphi(h + l_1 x_1 + \dotsb + l_r x_r) &= \varphi(h + l_1 x_1 + \dotsb + l_r x_r) + \varphi(0) \\
+                                            &= \varphi(h + l_1 x_r + \dotsb + (l_j-1) x_j + \dotsb + l_r x_r) + \varphi(x_j)
+  \end{align*}
+  so the result follows by induction on $\sum_i l_i$.
+\end{proof}
+\begin{proof}[Proof of \cref{thm:5.1}]
+  By \cref{prop:5.2} and \cref{prop:5.3} and \cref{lem:5.4}, $\exists H+P$ a coset progression of rank $\leq \mathcal{O}(K^{\mathcal{O}(1)})$ such that $H+P \subset 2A - 2A$ and $|H+P| \geq \exp(-\mathcal{O}(K^{\mathcal{O}(1)}))|A|$.
+  We will now apply a version of Ruzsa's covering lemma due to Chang.
+
+  Define recursively sets $S_1, S_2, \dotsc \subset A$ such that $S_i$ is a maximal subset of size $\leq 2K$ such that the translates
+  \begin{equation*}
+    x + S_{i-1} + \dotsb + S_1 + H + P \quad x \in S_i
+  \end{equation*}
+  are all disjoint. If ever $|S_i| < 2K$ we stop.
+  Now suppose we get as far as $S_1, \dotsc, S_t$. Then
+  \begin{equation*}
+    S_t + \dotsc + S_1 + H + P \subset 2A - 2A + tA,
+  \end{equation*}
+  so \cref{thm:2.5} gives
+  \begin{equation*}
+    |S_t + \dotsb + S_1 + H + P| \leq K^{4+t} |A|.
+  \end{equation*}
+
+  On the other hand, disjointness of the translates in the definition of $S_i$ means that
+  \begin{align*}
+    |S_t + \dotsb + S_1 + H + P| &\geq |S_t| \dotsm |S_1| |H+P| \\
+                                 &\geq (2K)^{t-1} \exp(-\mathcal{O}(K^{\mathcal{O}(1)}))|A|.
+  \end{align*}
+  Putting these together, we have $2^{t-1} \leq K^5 \exp(\mathcal{O}(K^{\mathcal{O}(1)}))$, hence $t \leq \mathcal{O}(K^{\mathcal{O}(1)})$. In particular, this process terminates.
+  But also, since $S_t$ is therefore maximal among all subsets of $A$ such that
+  \begin{equation*}
+    x + S_{t-1} + \dotsb + S_1 + H +P
+  \end{equation*}
+  are disjoint for $x \in S_t$, Ruzsa's covering lemma implies that
+  \begin{equation*}
+    A \subset H + 2P + S_1 - S_1 + \dotsb + S_{t-1} - S_{t-1} + S_t.
+  \end{equation*}
+  Enumerating $\bigcup_i S_i$ as $S_1, \dotsc, S_d$, we have $d \leq \mathcal{O}(K^{\mathcal{O}(1)})$ and
+  \begin{equation*}
+    A \subset H + 2P + P(s_1, \dotsc, s_d; 1, \dotsc, 1) \subset \mathcal{O}(K^{\mathcal{O}(1)})(A \cup \{0\} \cup -A)
+  \end{equation*}
+  as claimed.
+\end{proof}
+\begin{ex}
+  See what bounds are given if you apply Ruzsa's covering lemma directly, instead of Chang's argument.
+\end{ex}
+
+% new lec
+\clearpage
+\section{Geometry of Numbers}
+\newlec
+To prove \cref{prop:5.3}, we'll use a field called the \emph{geometry of numbers} which is concerned with lattices in $\mathbb{R}^d$.
+For us, a lattice $\Lambda \subset \mathbb{R}^d$ will simply be the additive subgroup (not subspace) generated by some basis $x_1, \dotsc, x_d$ for $\mathbb{R}^d$.
+So
+\begin{align*}
+  \Lambda = \{l_1 x_1 + \dotsb + \lambda_d x_d \mid l_i \in \mathbb{Z}\}
+\end{align*}
+If $\Gamma \subset \Lambda$ is another lattice ew call it a sublattice, and write $\Gamma < \Lambda$.
+On sheet two, we will see
+\begin{equation}
+  \frac{\det(y_1, \dotsc, y_d)}{\det(x_1, \dotsc, x_d)} = [\Lambda: \Gamma] \label{eq:6.1}
+\end{equation}
+where $y_1, \dotsc, y_d$ are a basis for $\Lambda$ and $x_1, \dotsc, x_d$ are a basis for $\Gamma$.
+
+In particular, if $x_1, \dotsc, x_d$ and $x_1', \dotsc, x_d'$ are bases for the same lattice $\Lambda$ then
+\begin{equation*}\det(x_1, \dotsc, x_d) = \det(x_1', \dotsc, x_d').\end{equation*}
+We define this to be $\det(\Lambda)$.
+The relevance of lattices to \cref{prop:5.3} is the following:
+\begin{nlemma}\label{lem:6.1}
+  Let $G,\Lambda$ be as in \cref{prop:5.3}, and set $\gamma: G \to \mathbb{R}^d/\mathbb{Z}^d$ by enumerating $\Gamma$ as $\{\gamma_1, \dotsc, \gamma_d\}$ and setting $\gamma = (\gamma_1, \dotsc, \gamma_d)$.
+  Then $\Lambda = \gamma(G) + \mathbb{Z}^d$ is a lattice with determinant $\ratio{\ker \gamma}{G}$.
+\end{nlemma}
+\begin{proof}
+  $\Lambda$ is finitely generated as $G$ is finite, and torsion-free as in $\mathbb{R}^d$, so isomorphic to $\mathbb{Z}^k$ for some $k$.
+  Also, $\Lambda$ has $\mathbb{Z}^d$ as a finite-index subgroup. So $k=d$ and $\spn_\mathbb{R}(\Lambda) = \mathbb{R}^d$.
+  So we may take a generating set for $\Lambda$ of size $d$, which is then a basis for $\mathbb{R}^d$. Determinant follows from \eqref{eq:6.1} because $\det(\mathbb{Z}^d) = 1$.
+\end{proof}
+We'll investigate the interaction of $[-p,p]^d$ with $\Lambda$. To do this, we introduce another definition:
+\begin{defi}
+  A set $A \subset \mathbb{R}^d$ is convex if $\forall x \in \mathbb{R}^d \setminus A^\circ$ there is a hyperplane $h_x$ with $x \in h_x$ and $h_x \cap A^\circ = \emptyset$.
+\end{defi}
+\begin{center}
+  \begin{tikzpicture}[rotate=120]
+    \draw (0,0) circle (1cm);
+    \draw (-1.5,-1) -- (1.5,-1);
+    \node at (0,-1) {$\times$};
+  \end{tikzpicture}
+\end{center}
+\begin{defi}
+  A set $B \subset \mathbb{R}^d$ is a convex body if it is bounded and convex and $B^\circ \neq \emptyset$. It is symmetric if $\forall x \in B$ we have $-x \in B$.
+  Given a symmetric convex body $B$ and a lattice $\Lambda$, define the successive minima $\lambda_1 \leq \dotsb \leq \lambda_d$ of $B$ with respect to $\Lambda$ via
+  \begin{align*}
+    \lambda_i = \inf\{\lambda > 0 \mid \dim \spn_\mathbb{R}(\lambda \cdot B \cap \Lambda) \geq i\}
+  \end{align*}
+\end{defi}
+We may then inductively define linearly independent vectors $v_1, \dotsc, v_d \in \Lambda^1$ such that $v_1, \dotsc, v_i \in \lambda_i \bar{B}$.
+We'll call such a set a directional basis for $\Lambda$ with respect to $B$. Note $i$ is not unique, and not necessarily a basis for $\Lambda$ in the earlier sense (See Ex Sheet 2).
+\begin{nthm}[Minkowski's Second Theorem]\label{thm:6.2}
+    Suppose $B$ is a symmetric convex body, $\Lambda$ a lattice in $\mathbb{R}^d$ and $\lambda_1, \dotsc, \lambda_d$ are the successive minima.
+    Then $\lambda_1 \dotsm \lambda_d \operatorname{vol}(B) \leq 2^d \det(\lambda)$.
+\end{nthm}
+\begin{nlemma}[Blichfeldt]\label{lem:6.3}
+  Suppose $A \subset \mathbb{R}^d$ is a measurable set, $\Lambda$ a lattice and $\forall a,b \in A$ distinct we have $a-b \notin \Lambda$.
+  Then $\operatorname{vol}(A) \leq \det(\Lambda)$.
+\end{nlemma}
+\begin{proof}
+  Fix a basis $x_1, \dotsc, x_d$ for $\Lambda$ and define the \named{fundamental parallelopiped} $P$ with respect to $x_1, \dotsc, x_d$ via
+  \begin{align*}
+    P = \{l_1 x_1 + \dotsb + l_d x_d \mid l_i \in [0,1)\}
+  \end{align*}
+  Since $x_1, \dotsc, x_d$ is a basis for $\mathbb{R}^d$, $\forall v \in \mathbb{R}^d$ there are unique $x_v \in \Lambda$ and $p_v \in P$ such that $v = x_v + p_v$.
+  Define a map $\varphi:\mathbb{R}^d \to P$ via $\varphi(v) = p_v$.
+  This cuts $A$ into countably many measurable pieces, and translates these pieces into $P$.
+  It is injective by hypothesis, hence volume preserving, and so
+  \begin{equation*}
+    \vol(A) = \vol(\varphi(A)) \leq \vol(P) = \det(\Lambda). \qedhere
+  \end{equation*}
+\end{proof}
+\begin{proof}[Proof of \cref{thm:6.2}]
+  Let $v_1, \dotsc, v_d$ be a directional basis for $\Lambda$ with respect to $B$. Set $V_i = \spn_\mathbb{R}(v_1, \dotsc, v_i)$ (including $V_0 = \{0\}$), and set $\Lambda_i = \Lambda \cap (V_i \setminus V_{i-1})$.
+  $\Lambda$ is a disjoint union $\bigcup_{i=0}^d \Lambda_i$.
+
+  \textbf{Claim 1}: We have $\lambda_d B^\circ \cap (\lambda_d B^\circ + \alpha x) = \emptyset$ whenever $x \in \Lambda_j$ and $\alpha \geq \frac{2\lambda_d}{\lambda_j}$.
+
+  \textbf{Proof of claim} Given $x \in \Lambda_j$, by definition $x \notin \lambda_j B^\circ$, so by convexity there is a hyperplane $h_x$ such that $x \in h_x$ and $H_x \cap \lambda_j B^\circ = \emptyset$.
+  By symmetry, we may take $h_{-x} = -h_x$.
+  \begin{center}
+    \begin{tikzpicture}[xscale=0.7, yscale=1.3]
+      \begin{scope}[rotate=-20]
+      \draw (0,0) circle (2cm);
+      \draw (-2,-2) -- (4,-2);
+      \draw (-2,2) -- (4,2);
+      \node [dot, label=below:$x$] at (0,2) {};
+      \node [dot, label=below:$-x$] at (0,-2) {};
+      \node [above] at (3,2) {$h_x$};
+      \node [below] at (3,-2) {$-h_x$};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  Note, however, that $-h_x = h_x - 2x$. That means that $x_j B^\circ$ is contained in the slice of space $S_x$ between the parallel hyperplanes $h_x$ and $h_x - 2x$. Clearly $S_x \cap (S_x + \alpha x) = \emptyset$ for all $\alpha \geq 2$, so in particular
+  \begin{equation*}
+    \lambda_jB^\circ \cap (\lambda_j B^\circ + \alpha x) = \emptyset
+  \end{equation*}
+  for all such $\alpha$ as well. Scaling by $\lambda_d/\lambda_j$, we see that $\lambda_d B^\circ \cap (\lambda_d B^\circ + \alpha x) = \emptyset$ whenever $\alpha \geq 2 \frac{\lambda_d}{\lambda_j}$, proving the claim. $\blacksquare$
+
+  \textbf{Claim 2}: There are sets $B_1 \subset B_2 \subset \dotsb \subset B_d = \lambda_d B^\circ$ such that
+  \begin{enumerate}
+    \item $\vol(B_i) = (\frac{\lambda_i}{\lambda_{i+1}})^i \vol(B_{i+1})$ $\forall i$
+    \item we have $B_i \cap (B_i + \alpha x) = \emptyset$ whenever $x \in \Lambda_j$ and $\alpha \geq 2 \max\{\frac{\lambda_i}{\lambda_j}, 1\}$. $B_i \cap (B_i + \alpha x) = \emptyset$ whenever $x \in \Lambda_j$ and $\alpha \geq 2 \max\{\frac{\lambda_i}{\lambda_j}, 1\}$. $B_i \cap (B_i + \alpha x) = \emptyset$ whenever $x \in \Lambda_j$ and $\alpha \geq 2 \max\{\frac{\lambda_i}{\lambda_j}, 1\}$. $B_i \cap (B_i + \alpha x) = \emptyset$ whenever $x \in \Lambda_j$ and $\alpha \geq 2 \max\{\frac{\lambda_i}{\lambda_j}, 1\}$.
+  \end{enumerate}
+
+  \textbf{Proof of claim 2}: Define operations $\sigma_1, \dotsc, \sigma_{d-1}$ on suitable subsets of $\mathbb{R}^d$ as follows.
+  Given $L$ bounded and open, define $\sigma_i$ separately on each affine subspace $z + V_i$ with $z \in L$.
+  For each affine subspace, fix a particular $z \in L$, and define
+  \begin{align*}
+    \varphi(z+v) = z + \frac{\lambda_i}{\lambda_{i+1}} v\quad \forall v \in V_i
+  \end{align*}
+  On each slice, $\sigma_i$ scales $L$ by a factor of $\frac{\lambda_i}{\lambda_{i+1}}$, centred at $z$ parallel to $v_i$.
+  Note the following properties
+  \begin{enumerate}[label=(\roman*)]
+    \item $\vol(\sigma_i(L)) = (\frac{\lambda_i}{\lambda_{i+1}}) \vol(L)$ (by Fubini)
+    \item If $L \cap (z + V_i)$ is open and convex for every $z$, then $\sigma_i(L) \subset L$ because $z \in L$.
+    \item If $L \cap (z + V_i)$ is open and convex then so is $\sigma_i(L) \cap (z + V_i)$, and indeed so is $\sigma_i(L) \cap \bigcap_{j < i} (z + V_j)$
+  \end{enumerate}
+  Set $B_d = \lambda_d B^\circ$, and $B_i = \sigma_i(B_{i+1})$ otherwise.
+
+  Conclusion 1 is immediate from property (i). Conclusion 2 follows from Claim 1 when $i=d$.
+  For $i < d$, it follows by induction and repeated application of (ii) and (iii).
+  Indeed, (2) for $i \geq j$ follows from (2) for $i+1$ because $\sigma_i$ scales by $\frac{\lambda_i}{\lambda_{i+1}}$ in direction $x$.
+  For $i < j$, it follows from $B_i \subset B_{i+1}$. $\blacksquare$
+
+  To prove the theorem, note that $\vol(B_i) = \lambda_i \dotsm \lambda_d \vol(B)$ and by 2, $a - b \notin 2\Lambda$ for every $a,b \in B_1$, so Blichfeldt gives $\vol(B_1) \leq 2^d \det(\Lambda)$.
+\end{proof}
+
+% possibly missing stuff
+\begin{proof}[Proof of \cref{prop:5.3}]
+\newlec
+  Write $\gamma = (\gamma_1, \dotsc, \gamma_r) \in \hat{G}^r$, define $\Lambda = \gamma(4) + \mathbb{Z}^r$, which is a lattice of determinant $\ratio{\ker \gamma}{G}$ by \cref{lem:6.1}.
+  Let $\lambda_1, \dotsc, \lambda_r$ be the successive minima of $[-1,1]^r$ with respect to $\Lambda$, and $v_1, \dotsc, v_r$ a directional basis. Set $L_i = \floor{\frac{p}{r \lambda_i}}$ for each $i$.
+  Then $P(v_1, \dotsc, v_r; L_1, \dotsc, L_r) \subset [-p,p]^r$. Pick for each $i$, pick $x_i \in G$ such that $\gamma(x_i) = v_i$, and set $H = \ker \gamma$.
+  Write $p = P(x_1, \dotsc, x_r; L_1, \dotsc, L_r)$. Then $H+P \subset $
+
+  \textbf{Claim}: If $l_1, \dotsc, l_r$ and $l_1', \dotsc, l_r'$ satisfy $|l_i|, |L_i'| \leq L_i$, and
+  \begin{equation}
+    l_1 x_1 + \dotsb + l_r x_r \in l_1' x_1 + \dotsb + l_r' x_r + H \label{eq:7star} \tag{$*$}
+  \end{equation}
+  then in fact $l_i = l_i'$ for all $i$.
+  Indeed, \eqref{eq:7star} implies that
+  \begin{align*}
+    (l_1 - l_1') v_1 + \dotsb + (l_r - l_r') v_r \in \mathbb{Z}^r \cap [-2p,2p]^r.
+  \end{align*}
+  But since $p < \frac{1}{2}$, this last intersection is just $\{0\}$, proving the claim (as $v_i$ are linearly independent in $\mathbb{R}^r$). $\blacksquare$
+
+  Then
+  \begin{align*}
+    |H+P| &\geq |H|(L_1 +1)\dotsm(L_r+1) \\
+          &\geq |H| \left(\frac{p}{r}\right)^r \frac{1}{\lambda_1 \dotsm \lambda_r} \\
+          &\geq |G| \left(\frac{p}{r}\right)^r
+  \end{align*}
+  by Minkowski's second theorem.
+\end{proof}
+
+\clearpage
+\section{Progressions in the Heisenberg group}
+Let
+\begin{align*}
+  H(\mathbb{Z}) =
+  \begin{pmatrix}
+    1 & \mathbb{Z} & \mathbb{Z} \\ 0 & 1 & \mathbb{Z} \\ 0 & 0 & 1
+  \end{pmatrix} =
+  \left\{
+    \begin{pmatrix}
+      1 & n_1 & n_2 \\ 0 & 1 & n_1 \\ 0 & 0 & 1
+    \end{pmatrix}
+    : n_i \in \mathbb{Z}
+  \right\}
+\end{align*}
+be the \named{Heisenberg group}.
+
+Set
+\begin{equation*}
+  u_1 = \begin{pmatrix}
+    1 & 0 & 0 \\ &1&1\\&&1
+  \end{pmatrix},
+  u_2 = \begin{pmatrix}
+    1 & 1 & 0 \\ &1&0\\&&1
+  \end{pmatrix},
+  u_3 = \begin{pmatrix}
+    1 & 0 & 1 \\ &1&0\\&&1
+  \end{pmatrix}
+\end{equation*}
+and note that any element of $H(\mathbb{Z})$ can be expressed in the form
+\begin{equation*}
+  \begin{pmatrix}
+    1 & n_2 & n_3 \\ &1&n_1 \\ &&1
+  \end{pmatrix}= u_1^{n_1} u_2^{n_2} u_3^{n_3}
+\end{equation*}
+and we have the following formula for multiplying elements in this form:
+
+\begin{equation}
+  (u_1^{n_1} u_2^{n_2} u_3^{n_3})(u_1^{n_1'} u_2^{n_2'} u_3^{n_3'}) = u_1^{n_1+n_1'} u_2^{n_2+n_2'} u_3^{n_3+n_3'+n_1'n_2} \label{eq:7.1}
+\end{equation}
+This is easy to verify by multiplying matrices, but there is a more abstract reason for it. To see this, given $x,y \in G$, define the commutator $[x,y] = x^{-1} y^{-1} x y$.
+In light of the identity $xy = yx [x,y]$, we can view the commutator as being the `error' or `cost' incurred when interchanging two elements.
+For example, the fact that commutators are trivial in abelian groups can be viewed as capturing the notion that elements can be interchanged freely in an abelian group.
+The $n_1' n_2$ term in \eqref{eq:7.1} arises because we swap the order of $n_1' n_2$ pairs of elements $u_1$ and $u_2$.
+
+Now let's see one possible generalisation of progression to non-abelian groups.
+\begin{defi}
+  Given $x_1, \dotsc, x_r \in G$, $L_1, \dotsc, L_r \geq 0$, we define the \named{ordered progression} of rank $r$
+  \begin{equation*}
+    P_{\text{ord}}(x,L) = P_{\text{ord}}(x_1, \dotsc, x_r; L_1, \dotsc, L_r) = \{x_1^{l_1} \dotsm x_r^{l_r} : |l_i| \leq L_i\ \forall i\}.
+  \end{equation*}
+\end{defi}
+Now consider $P=P_{\text{ord}} (u_1, u_2', L_1, L_2)$ for $u_1, u_2 \in H(\mathbb{Z})$ as before, and $L_1, L_2 \geq 0$.
+We have
+\begin{equation}
+  (u_1^{l_1} u_2^{l_2}) (u_1^{l_1'} u_2^{l_2'}) = u_1^{l_1+l_1'} u_2^{l_2+l_2'} u_3^{l_1'l_2} \label{eq:7.2}
+\end{equation}
+and it is then easy to check that $\ratio{P^2}{P} \to \infty$ as $L_1, L_2 \to \infty$, essentially because by varying $l_1, l_1', l_2, l_2'$ within their ranges one can change $l_1 l_2'$ without changing $l_1 + l_1'$ or $l_2 + l_2'$.
+This can be thought of as an extra degree of freedom in $P^2$ compared to $P$.
+Coming back to commutators and recalling that $u_3 = [u_2, u_1]$, we see that this corresponds to the freedom to interchange the order of some of the $u_1, u_2$ in $P^2$, as seen in the LHS of \eqref{eq:7.2}.
+This is a freedom that the definition of ordered progression explicitly denies us.
+
+It turns out that if we introduce this freedom to $P$ as well then this does force $P$ to have small tripling.
+
+\begin{defi}
+  Given $x_1, \dotsc, x_r \in G$, $L_1, \dotsc, L_r \geq 0$, the \named{nonabelian progression} $P(x;L)$ of rank $r$ is defined to consist of those elements of $G$  expressible as products of $x_1^{\pm 1}, \dotsc, x_r^{\pm 1}$ in which each $x_i, x_i^{-1}$ appear at most $L_i$ times between them.
+\end{defi}
+It turns out $P(u_1, u_2, L_1, L_2)$ does have small tripling (Example Sheet 2).
+
+A note of caution: nonabelian progressions don't always have small tripling; consider $P(x_1, x_2; L_1, L_2)$ for $x_1, x_2$ generators of a nonabelian free group.
+In the case of $H(\mathbb{Z})$, the formula \eqref{eq:7.1} is simplified by the fact that $u_3=[u_2, u_1]$ is central in $H(\mathbb{Z})$.
+If this were not the case, we'd end up with elements of the form $[[u_2, u_1], u_1]$, for example.
+This is in fact a specific example of a property called nilpotence.
+
+To define this, first define a normal series for a group $G$ to be a sequence
+\begin{align*}
+  G = G_1 > G_2 > \dotsb
+\end{align*}
+of normal subgroups $G_i \lhd G$, and a central series to be such a normal series in which each $G_i / G_{i+1}$ is central in $G/G_{i+1}$.
+\begin{defi}
+  A group $G$ is \named{nilpotent} if there is a finite central series
+  \begin{align*}
+    G = G_1 > \dotsb > G_{s+1} = \{1\}
+  \end{align*}
+  The smallest $s$ for which such a series exists is called the step or nilpotency class of $G$.
+\end{defi}
+\begin{ex}
+  $H(\mathbb{Z})$ is $2$-step nilpotent.
+\end{ex}
+
+\clearpage
+\section{Nilpotent Groups}
+\newlec
+The reasons we focus on nilpotent groups are twofold: there is a clean generalization of Freiman-Green-Ruzsa to nilpotent groups, and a deep theorem of Breuillard, Green and Tao essentially reduces the general case to the nilpotent case.
+
+Given $x_1, \dotsc, x_k \in G$, define the simple commutator
+$[x_1, \dotsc, x_k] = [x_1, \dotsc, x_k]_t$ recursively as follows:
+\begin{align*}
+  [x_1] &= x_1 \\
+  [x_1, \dotsc, x_k] = [[x_1, \dotsc, x_{k-1}], x_k]
+\end{align*}
+(recall $[x,y] = x^{-1} y^{-1} x y$).
+
+Given subgroups $H,N < G$, define $[H,N] = \langle [h,n] \mid h \in H, n \in N \rangle$, and then given $H_1, \dotsc, H_k < G$, set
+\begin{align*}
+  [H_1] = H_1 \\
+  [H_1, \dotsc, H_k] = [[H_1, \dotsc, H_{k-1}], H_k].
+\end{align*}
+Note that
+\begin{equation}
+  [H,N] = [N,H] \label{eq:8.1}
+\end{equation}
+since $[h,n] = [n,h]^{-1}$.
+
+\begin{nlemma}\label{lem:8.1}
+  Let $H_1, \dotsc, H_k, N \lhd G$, let $S_i$ be a generating set of $H_i$ for each $i$.
+  Suppose $[s_1, \dotsc, s_k] \in N$ whenever $s_i \in H_i$ for each $i$. Then $[H_1, \dotsc, H_k] < N$.
+\end{nlemma}
+\begin{proof}
+  Case $k=1$ is trivial, so assume $k > 1$.
+  If $[s_1, \dotsc, s_k] \in N$ for each $s_i \in S_i$ then we have $[[s_1, \dotsc, s_{k-1}], s_k] \in N$ for each $s_i \in S_i$, and hence $[s_1, \dotsc, s_{k-1}] \in C_{G/N}(H_k) = \{g \in G \mid [g,h] \in N \forall h \in H_k\}$.
+  The centraliser of a normal subgroup is itself normal, so by induction we have $[H_1, \dotsc, H_{k-1}] \subset C_{G/N}(H_k)$, and hence $[H_1, \dotsc, H_k] \subset N$, as claimed.
+\end{proof}
+\begin{defi}
+  Given a group $G$, we define the \named{lower central series} $G = G_1 > G_2 > \dotsb$ of $G$ via
+  \begin{align*}
+    G_k \coloneqq \langle [g_1, \dotsc, g_k] \mid g_i \in G\rangle.
+  \end{align*}
+\end{defi}
+Note that $G_k > G_{k+1}$, because $[g_1, \dotsc, g_{k+1}] = [[g_1, g_2], g_3, \dotsc, g_{k+1}]$.
+Also, since $[g_1, \dotsc, g_k]^h = [g_1^h, \dotsc, g_k^h]$, each $G_k$ is normal in $G$ (recall $x^y = y^{-1} x y$).
+The fact that this is a central series (i.e.\ $G_k/G_{k+1}$ is central in $G/G_{k+1}$) follows from the following result.
+
+\begin{nprop}\label{prop:8.2}
+  We have $G_{k+1} = [G_k,G]$ for every $k$. In particular, $G_k = [G, \dotsc, G]_k$.
+\end{nprop}
+\begin{proof}
+  First, $G_{k+1}  < [G_k,G]$ by definition.
+  The fact that $[G_k,G] \subset G_{k+1}$ follows from \cref{lem:8.1} since $[g_1, \dotsc, g_{k-1}]$ generate $G_k$ and $G_i, G_k, G_{k+1}$ are normal.
+\end{proof}
+\begin{nprop}\label{prop:8.3}
+  Let $G$ be a group generated by $S$, then $G_k = \langle [s_1, \dotsc, s_k] G_{k+1} \mid s_i \in S \ \forall i\rangle$
+  `$G_k$ is generated mod $G_{k+1}$ by simple commutators of generators'.
+\end{nprop}
+\begin{proof}
+  Note that $[s_1, \dotsc, s_k]^g \in [s_1, \dotsc, s_k] G_{k+1}$ by definition of $G_{k+1}$, so
+  \begin{equation*}
+  \langle[s_1, \dotsc, s_k] G_{k+1} \mid s_i \in S\rangle
+  \end{equation*}
+  is normal in $G$.
+  Moreover,
+  \begin{equation*}
+  [s_1, \dotsc, s_k] \in \langle [t_1, \dotsc, t_k] G_{k+1} \mid t_i \in S\rangle
+  \end{equation*}
+  whenever $s_i \in S$ for every $i$, so \cref{lem:8.1} implies that
+  $[G, \dotsc, G]_k \subset \langle [s_1, \dotsc, s_k] G_{k+1} \mid t_i \in S \rangle$.
+  \cref{prop:8.2} gives $[G, \dotsc, G]_k = G_k$, so we have $G_k \subseteq \langle [s_1, \dotsc, s_k] G_{k+1} \mid s_i \in S \rangle$.
+  The reverse inclusion is immediate.
+\end{proof}
+\begin{nprop}\label{prop:8.4}
+  We have $[G_i, G_j] \subset G_{i+j}$ for every $i,j$.
+\end{nprop}
+For this we'll need the following commutator identity, which you can check directly:
+\begin{equation}
+  [x, y^{-1}, z]^y [y,z^{-1},x]^z [z,x^{-1} y]^x = 1. \label{eq:8.2}
+\end{equation}
+\begin{proof}[Proof of \cref{prop:8.4}]
+  The case $j=1$ follows from \cref{prop:8.2}. So we can assume $j > 1$ and, by induction,
+  \begin{equation}
+    [G_k, G_{j-1}] \subset G_{k+j-1} \forall k. \label{eq:8.3}
+  \end{equation}
+  Now note that
+  \begin{equation}
+    [G_i, G_j] = [G_i, [G_{j-1},G]] = [[G,G_{j-1}],G_i]\label{eq:8.4}
+  \end{equation}
+  by \cref{prop:8.2} and \eqref{eq:8.1}. We also have
+  \begin{equation}
+    [[G_{j-1}, G_i], G] = [[G_i, G_{j-1}],G] \subset [G_{i+j-1},G] = G_{k+j}. \label{eq:8.5}
+  \end{equation}
+  by \eqref{eq:8.1}, \eqref{eq:8.3} and \cref{prop:8.2}, and
+  \begin{equation}
+    [[G_{i+1}, G], G_{j-1}] = [G_{i+1}, G_{j-1}] \subset G_{i+j}.\label{eq:8.6}
+  \end{equation}
+  by \cref{prop:8.2} and \eqref{eq:8.3}. Given $x \in G$, $y \in G_{j-1}$ and $z \in G_i$, we therefore have
+  \begin{align*}
+  [x,y,z] &= (([y^{-1}, z^{-1}, x]^z, [z,x^{-1},y^{-1}]^x)^{-1})^y & &\text{by }\eqref{eq:8.2} \\
+          &\subset G_{i+j} &&\text{by } \eqref{eq:8.5}\text{ and }\eqref{eq:8.6}.
+  \end{align*}
+  The proposition follows from \eqref{eq:8.4} and \cref{lem:8.1}.
+\end{proof}
+\begin{defi}
+  Given a group $G$, the upper central series
+  \begin{equation*}
+  \{1\} = Z_0(G) < Z_1(G) < Z_2(G) < \dotsb
+  \end{equation*}
+  is defined recursively by setting $Z_{i+1}(G)$ so that $Z_{i+1}(G)/Z_i(G)$ is the centre of $G/Z_i(G)$.
+  Note that each $Z_i(G)$ is normal by induction, since the centre of any group is normal.
+\end{defi}
+\begin{nthm}\label{prop:8.5}
+  Let $G = H_1 > H_2 > \dotsb > H_{i+1} = \{1\}$ be a finite central series for $G$ (so $G$ is nilpotent). Then we have $H_i > G_i$ $\forall i = 1, \dotsc, r+1$ and $H_{r+1-i} \subset Z_i(G)$ for every $0 \leq i \leq r$.
+\end{nthm}
+This justifies the names upper and lower central series:
+\begin{equation*}
+  \begin{tikzcd}[sep=tiny]
+    Z_r(G) & & Z_{r-1}(G) &&&& Z_1(G) & & Z_0(G)\\
+    \vge & & \vge  & & & & \vge && \vge\\
+    H_1 & > & H_2 & > & \dots & > & H_r & > & H_{r+1}\\
+    \vge & & \vge  & & & & \vge && \vge\\
+    G_1 & & G_2 & & & & G_r & & G_{r+1}
+  \end{tikzcd}
+\end{equation*}
+
+\begin{ncor}\label{cor:8.6}
+  If $G$ is $s$-step nilpotent, then both the upper and lower central series have length $s+1$.
+\end{ncor}
+\begin{proof}
+  $H_i > G_1$ by definition, so we may assume $i>1$, and then we have
+  \begin{align*}
+    H_i &\supset [H_{i-1},G] &&\text{central series} \\
+        &\supset [G_{i+1},G] &&\text{by induction} \\
+        &=G_i &&\text{by \cref{prop:8.2}}.
+  \end{align*}
+  We also have $Z_0(G) > H_{r+1}$ by definition, so we may assume $i > 0$ and, by inudction, that $H_{r+2-i} \subset Z_{i-1}(G)$.
+  But that
+  \begin{equation*}
+    G/Z_{i-1}(G) = \frac{G/H_{r+2-i}}{Z_i(G)/H_{r+2-i}}
+  \end{equation*}
+  because $(H_j)$ is a central series, $H_{r+1-i}/H_{r+2-i}$ is central in $G/H_{r+2-i}$, so its image in $G/Z_{i-1}(G)$ in the above quotient is central.
+  But the centre of $G/Z_{i-1}(G)$ is $Z_i(G)/Z_{i-1}(G)$, so $H_{r+1-i} \subset Z_i(G)$, as required.
+\end{proof}
+
+These results say
+\begin{itemize}
+  \item $G$ is nilpotent of step $\leq s \iff G_{s+1} = \{1\} \iff Z_s(G) = G$
+  \item If $G = \langle s \rangle$, we can verify this just by checking that $[t_1, \dotsc, t_{s+1}] = 1$ for all $t_i \in S$.
+  \item If $G$ is nilpotent of step $\leq s$, then any commutator like $[[[q_1, q_2], q_3], [q_4, q_5]]$ with more than $s$ entries is trivial.
+\end{itemize}
+
+\clearpage
+\section{Torsion-free nilpotent approximate groups}
+\begin{defi}
+  If $\langle x_1, \dotsc, x_r \rangle$ is $s$-step nilpotent then the nonabelian progression $P(x;L)$ is called a \named{nilprogression} of rank $r$ and step $s$.
+  In this case, we write $P_{\text{nil}}(x;L)$ instead of $P(x;L)$.
+\end{defi}
+
 \printindex
 \end{document}
