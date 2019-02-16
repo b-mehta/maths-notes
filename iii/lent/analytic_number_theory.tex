@@ -1270,6 +1270,135 @@ In particular, note that if $r$ is even
 \end{align*}
 (and the inequality is reversed if $r$ odd).
 
+\begin{thm}[Brun's Pure Sieve]
+  \newlec
+  For any $r \geq 6 |\log W(z)|$,
+  \begin{align*}
+    S(A,P;z) = XW(z) + \bigO\left(2^{-r} X + \sum_{\substack{d \mid P(z) \\ d \leq z^r}} |R_d|\right)
+  \end{align*}
+\end{thm}
+Compare this to Eratosthenes sieve:
+\begin{align*}
+  S(A,P;z) + X W(z) + \bigO\left(\sum_{\substack{d \mid P(z)}} |R_d|\right)
+\end{align*}
+\begin{proof}
+  Recall that from iterating Buchstab's formula, for any $r \geq 1$,
+  \begin{align*}
+    S(A,P;z) &= \sum_{\substack{d \mid P(z) \\ \omega(d) < r}} \mu(d) |A_d| + (-1)^r \sum_{\substack{d \mid P(z) \\ \omega(d)=r}} S(A_d, P; l(d)) \\
+             &= X \sum_{\substack{d \mid P(z) \\ \omega(d) < r}} \mu(d) \frac{f(d)}{d} + \sum_{\substack{d \mid P(z) \\ \omega(d) < r}} \mu(d) R_d + (-1)^r \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} S(A_d, P; l(d)).
+  \end{align*}
+  Using the trivial bounds
+  \begin{align*}
+    0 \leq S(A_d, P; l(d)) \leq |A_d| = X \frac{f(d)}{d} + R_d,
+  \end{align*}
+  this is
+  \begin{align*}
+    S(A,P;z) = X \sum_{\substack{d \mid P(z) \\ \omega(d) < r}} \mu(d) \frac{f(d)}{d} + \bigO\left(\sum_{\substack{d \mid P(z) \\ \omega(d) < r}} |R_d| + \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} |A_d|\right)
+  \end{align*}
+  By Buchstab again, applied to $W(z)$,
+  \begin{align*}
+    W(z) = \sum_{\substack{d \mid P(z) \\ \omega(d) < r}} \mu(d) \frac{f(d)}{d} + (-1)^r \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \mu(d) \frac{f(d)}{d} W(l(d))
+  \end{align*}
+  So
+  \begin{equation*}
+    S(A,P;z) = XW(z) + \bigO\left(\sum_{\substack{d \mid P(z) \\ \omega(d) < r}} |R_d| + \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} |A_d| + X \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \frac{f(d)}{d}\right).
+  \end{equation*}
+  Error term:
+  \begin{align*}
+    &\ll X \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \frac{f(d)}{d} + \sum_{\substack{d \mid P(z) \\ \omega(d) \leq r}} |R_d| \\
+    &\leq \sum_{\substack{d \mid P(z) \\ d \leq z^r}} |R_d|
+  \end{align*}
+  because $d \mid P(z) = \prod_{\substack{p \in P \\ p < z}} p$.
+
+  Remains to show
+  \begin{align*}
+    \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \frac{f(d)}{d} \ll 2^{-r}.
+  \end{align*}
+  Note that
+  \begin{align*}
+    \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \frac{f(d)}{d} = \sum_{\substack{p_1 \dotsm p_r \\ p_i \in P \\ p_i < z}} \frac{f(p_1) \dotsm f(p_r)}{p_1 \dotsm p_r} &\leq \frac{\left(\sum_{p \mid P(z)} \frac{f(p)}{p}\right)^r}{r!} \\
+                                                                                                                                                                         &\leq \left(\frac{e \sum_{p \mid P(z)} \frac{f(p)}{p}}{r}\right)^r
+  \end{align*}
+  Now
+  \begin{align*}
+    \sum_{p \mid P(z)} \frac{f(p)}{p} \leq \sum_{p \mid P(z)} - \log\left(1 - \frac{f(p)}{p}\right) = - \log W(z).
+  \end{align*}
+  So if $r \geq 2 e |\log W(z)|$ then
+  \begin{align*}
+    \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \frac{f(d)}{d}&\leq \left(\frac{e |\log W(z)|}{r}\right)^r \leq 2^r.
+  \end{align*}
+\end{proof}
+
+Recall Selberg's sieve shows $\pi_2(x) \ll \frac{x}{(\log x)^2}$.
+In the twin prime sieve setting, recall that
+\begin{align*}
+  W(z) \asymp \frac{1}{(\log z)^2}
+\end{align*}
+So in Brun's sieve, need to take $r \gg 2 \log \log z$.
+If $r = C \log \log z$ for $C$ large enough, then $2^r X \ll \frac{X}{(\log z)^{100}}$.
+The main term is $\gg \frac{x}{(\log z)^2}$.
+\begin{equation*}
+  |R_d| \ll 2^{\omega(d)} = d^{o(1)}
+\end{equation*}
+\begin{align*}
+  \sum_{\substack{d \mid P(z) \\ d \leq z^r}} |R_d| \ll z^{r + o(1)} = z^{2 \log \log z + o(1)}
+\end{align*}
+
+For this to be $o(\frac{x}{(\log z)^2})$, need to choose $z \approx \exp((\log x)^{\frac 12})$.
+We need to relate
+\begin{align*}
+  S(A,P;z) \leftrightarrow \pi_2(x)
+\end{align*}
+but $S(A,P;z) = \#\{1 \leq n \leq x : p \mid n(n+2) \text{ then } p \gg z = \exp((\log x)^{\frac 14})\}$
+which includes many non-twin-primes.
+
+\begin{cor}
+  For any $z \leq \exp(o((\frac{\log x}{\log \log x})))$,
+  \begin{align*}
+    \#\{1 \leq n \leq x : p \mid n \Rightarrow p \geq z\} \sim e^{-\gamma} \frac{x}{\log z}.
+  \end{align*}
+\end{cor}
+\begin{remark}\leavevmode
+  \begin{enumerate}[label=(\arabic*)]
+    \item In particular, $z = (\log x)^A$ is allowed for any $A$ but $z = x^c$ for any $c > 0$ is not allowed.
+    \item In particular, can't count primes like this ($z = x^{\frac 12}$).
+      Recall heuristic from before says if this asymptotic here correct for primes, then
+      \begin{align*}
+        \pi(x) \sim 2 e^{-\gamma} \frac{x}{\log x}
+      \end{align*}
+      which contradicts PNT.
+  \end{enumerate}
+\end{remark}
+\begin{proof}
+  Again, use $A = \{1 \leq n \leq x\}$ so $f(d) = 1$ and $|R_d| \ll 1$. Then
+  \begin{align*}
+    W(z) = \prod_{p < z} \left(1 - \frac 1p\right) \sim \frac{e^{-\gamma}}{\log z} + o\left(\frac{1}{\log z}\right)
+  \end{align*}
+  so
+  \begin{align*}
+    S(A,P;z) &= \#\{1 \leq n \leq x : p \mid n \Rightarrow p > z\} \\
+    &= e^{-\gamma} \frac{x}{\log z} + o\left(\frac{x}{\log z}\right)+ O\left(2^{-r} x + \sum_{\substack{d \mid P(z) \\ d < z^r}} |R_d|\right)
+  \end{align*}
+  If $r \geq 6 |\log W(z)|$, so $r \geq 100 \log \log z$ is fine.
+  \begin{align*}
+    2^{-r} x \leq (\log z)^{- (\log 2) 100} x = o\left(\frac{x}{\log z}\right)
+  \end{align*}
+  and
+  (choose $r = \ceil{100 \log \log z}$),
+  \begin{align*}
+    \sum_{\substack{d \mid P(z) \\ d \leq z^r}} |R_d| \ll \sum_{d \leq z^r} 1 \ll z^r \ll 2^{500 (\log \log z)(\log z)}
+  \end{align*}
+  Remains to note that if
+  \begin{align*}
+    \log z = o\left(\frac{\log x}{\log \log x}\right) = \frac{\log x}{\log \log x} F(x)
+  \end{align*}
+  then this is
+  \begin{equation*}
+    \log z \log \log z = o\left(\frac{\log x}{\log \log x} \cdot \log \log x\right) = o(\log x)
+  \end{equation*}
+  so $2^{500 \log \log z \log z} \leq x^{\frac{1}{10}}$ if $x$ is large enough, which is $o(\frac{x}{\log z})$.
+\end{proof}
+
 \end{proof}
 \clearpage
 \printnomenclature
