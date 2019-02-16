@@ -4,7 +4,7 @@
 \def\npart{III}
 \def\nyear{2019}
 \def\nterm{Lent}
-\def\draft{Ongoing course}
+\def\draft{Ongoing course, rough}
 \def\nlecturer{Dr T.\ Bloom}
 \def\ncourse{Analytic Number Theory}
 
@@ -29,6 +29,7 @@
 \newcommand{\bigO}{\mathcal{O}}
 
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 
 \setcounter{section}{-1}
 % \counterwithout{nthm}{section}
@@ -747,7 +748,7 @@ Let $r(x) = \frac{\hyperlink{def:psi}{\psi(x)}}{x} - 1$, so \hyperlink{def:pnt}{
 \clearpage
 \section{Sieve Methods}
 \newlec
-In the Sieve of Eratosthenes, we write out the numbers up to a given bound, then remove multiples of small primes. For example,
+In the Sieve of Eratosthenes, we write out the numbers up to a given bound, then remove multiples of small primes. For example, crossing out multiples of 2 first, then multiples of 3, we are left with:
 \begin{center}
   \begin{tikzpicture}
     \foreach \x in {1,...,10} {
@@ -774,6 +775,7 @@ In the Sieve of Eratosthenes, we write out the numbers up to a given bound, then
     \node [circle, draw=black, inner sep=7pt] at (19) {};
   \end{tikzpicture}
 \end{center}
+We are left with all the primes above 3, and 1. Alternatively, we can use the inclusion-exclusion principle to count how much is left.
 Our interest is in using the sieve to count things: how many numbers are left?
 \begin{align*}
   \hyperlink{def:pi}{\pi(20)} + 1 - \pi(\sqrt{20}) = 20 - \floor*{\frac{20}{2}} - \floor*{\frac{20}{3}} + \floor*{\frac{20}{6}}.
@@ -781,7 +783,7 @@ Our interest is in using the sieve to count things: how many numbers are left?
 This is the general idea: We get an expression relating some quantity we are interested in - the number of primes below a certain limit - in terms of how much we `sieved' out at each stage.
 \subsection{Setup}
 We generally use:
-\begin{itemize}
+\begin{itemize}\hypertarget{def:sievesetup}
   \item a finite set $A \subset \mathbb{N}$ (the set to be sifted)
   \item a set of primes $P$ (the set of primes we sift out by, usually all primes).
   \item a sifting limit $z$ (sift with all primes in $P < z$)
@@ -808,16 +810,16 @@ We generally use:
     \begin{equation*}
       |A| = \frac{f(1)}{1} X + R_1 = X + R_1
     \end{equation*}
-    $R_d$ is an error term
-  \item We choose $f$ so that $f(p) = 0$ if $p \notin P$ (so $R_P = |A_P|$)
+    so we think of $R_d$ as an error term
+  \item We choose $f$ so that $f(p) = 0$ if $p \notin P$ (so $R_p = |A_p|$)
   \item Let
     \begin{equation*}
-      W_p(z) = \prod_{\substack{p < z \\ p \in P}} \left(1 - \frac{f(p)}{p}\right).
+      W_P(z) \coloneqq \prod_{\substack{p < z \\ p \in P}} \left(1 - \frac{f(p)}{p}\right).
     \end{equation*}
 \end{itemize}
 \begin{eg}\leavevmode
   \begin{enumerate}[label=(\arabic*)]
-    \item Take $A = (x, %)[
+    \item Take $\hyperlink{def:}{A} = (x, %)[
       x+y] \cap \mathbb{N}$, and $P$ the set of all primes, so
       \begin{align*}
         |A_d| &= \floor*{\frac{x+y}{d}} - \floor*{\frac{x}{d}} = \frac{x+y}{d} - \frac{x}{d} + \hyperlink{def:asymp}{\bigO(1)} \\
@@ -865,7 +867,7 @@ We generally use:
 \end{eg}
 \begin{nthm}[Sieve of Eratosthenes-Legendre]\label{thm:2.1}
   \begin{equation*}
-    S(A,P; z) = X W_p(z) + \bigO\left(\sum_{d \mid p(z)} R_d\right).
+    \hyperlink{def:sievesetup}{S(A,P; z)} = X W_p(z) + \bigO\left(\sum_{d \mid p(z)} R_d\right).
   \end{equation*}
 \end{nthm}
 \begin{proof}
@@ -888,7 +890,7 @@ We generally use:
   In Example 1, recall $f \equiv 1$ and $|R_d| \hyperlink{def:asymp}{\ll} 1$, $X = y$.
   So
   \begin{align*}
-    W_p(z) = \prod_{p \leq z} \left(1 - \frac 1p\right) \ll (\log z)^{-1}
+    W_P(z) = \prod_{p \leq z} \left(1 - \frac 1p\right) \ll (\log z)^{-1}
   \end{align*}
   and
   \begin{equation*}
@@ -910,7 +912,7 @@ The key part of \nameref{thm:2.1} was
 \begin{equation*}
   1_{(n,P(z)) = 1} = \sum_{d \mid (n, P(z))} \mu(d).
 \end{equation*}
-For an upper bound, enough to use \emph{any} function $F$, such that
+For an upper bound, we note that it is enough to use \emph{any} function $F$ in place of $\mu$ such that
 \begin{equation*}
   F(n) \geq
   \begin{cases}
@@ -918,15 +920,15 @@ For an upper bound, enough to use \emph{any} function $F$, such that
     0 & \text{otherwise}
   \end{cases}
 \end{equation*}
-(we used $\mu$ in the proof of \nameref*{thm:2.1})
+(we used $F=\mu$ in the proof of \nameref*{thm:2.1})
 
-Selberg's observation was that if $\lambda_i$ is an sequence of reals, with $\lambda_1 = 1$ then
+Selberg's observation was that if $\lambda_i$ is an sequence of reals with $\lambda_1 = 1$ then
 \begin{equation*}
   F(n) = \left(\sum_{d \mid n} \lambda_d\right)^2
 \end{equation*}
 works:
 \begin{equation*}
-  F(1) = (\sum_{d \mid 1} \lambda_d)^2 = \lambda_1^2 = 1.
+  F(1) = \left(\sum_{d \mid 1} \lambda_d\right)^2 = \lambda_1^2 = 1.
 \end{equation*}
 
 We make the additional assumption on $f$ that $0 < f(p) < p$ if $p \in P$. Recall that $|A_p| = \frac{f(p)}{p} X + R_p$, so these are reasonable restrictions to have on a sieve.
@@ -935,7 +937,7 @@ This lets us define a new multiplicative function $g$ such that
 \begin{equation*}
   g(p) = \left(1 - \frac{f(p)}{p}\right)^{-1} -1 = \frac{f(p)}{p - f(p)}
 \end{equation*}
-\begin{nthm}\label{thm:2.3}
+\begin{nthm}[Selberg's sieve]\label{thm:2.3}
   \begin{equation*}
     \forall t \quad S(A,P;z) \leq \frac{X}{G(t,z)} + \sum_{\substack{d \mid P(z) \\ d < t^2}} 3^{\omega(d)} |R_d|
   \end{equation*}
@@ -968,8 +970,8 @@ Compare this with \cref{cor:2.2}.
   \begin{align*}
     G(z,z) &= \sum_{\substack{d \mid P(z) \\ d < z}} \prod_{p \mid d} (p-1)^{-1} \\
            &= \sum_{d = p_1 \dotsm p_r < z} \prod_i \sum_{k \geq 1}^\infty \frac{1}{p_i^k} \\
-           &= \sum_{p < z} \sum_{\substack{k_r \geq 1 \ p_1 \dotsm p_r < z}} \frac{1}{p_1^{k_1} \dotsm p_r^{k_r}} \\
-           &= \sum_{n; \text{sq-free part of $n$ is }\leq t} \frac{1}{n} \\
+           &= \sum_{p < z} \sum_{\substack{k_r \geq 1 \\ p_1 \dotsm p_r < z}} \frac{1}{p_1^{k_1} \dotsm p_r^{k_r}} \\
+           &= \sum_{n} \frac{1}{n} \text{ for $n$ where the square-free part of $n$ is $\leq t$}\\
            &\geq \sum_{d<z} \frac{1}{d} \\
            &\gg \log z.
   \end{align*}
@@ -988,18 +990,18 @@ Compare this with \cref{cor:2.2}.
 \end{proof}
 
 \begin{proof}[Proof of \cref{thm:2.3}]
-  Let $(\lambda_i)$ be a sequence of reals, with $\lambda_1 = 1$ to be chosen later. Then
+  Let $(\lambda_i)$ be a sequence of reals, with $\lambda_1 = 1$, to be chosen later. Then
   \begin{align*}
     S(A,P;z) &= \sum_{n \in A} 1_{(n,P(z)) = 1} \\
-             &\leq \sum_{n \in A} (\sum_{d \mid (n,P(z))} \lambda_d)^2 \\
-             &= \sum_{d,e \mid P(z)} \lambda_d \lambda_e \sum_{n \in A} 1_{d \mid n, e \mid n} \\
-             &= \sum_{d, e \mid P(z)} \lambda_d \lambda_e |A_[d,e]| \\
-             &= X \sum_{d,e \mid P(z)} \lambda_d \lambda_e \frac{f([d,e])}{[d,e]} + \sum_{d,e \mid P(z)} \lambda_d \lambda_e R_{[d,e]}
+             &\leq \sum_{n \in A} \left(\sum_{d \mid (n,P(z))} \lambda_d\right)^2 \\
+             &= \sum_{d,e \mid P(z)} \lambda_d \lambda_e \sum_{n \in A} 1_{d \mid n,\ e \mid n} \\
+             &= \sum_{d, e \mid P(z)} \lambda_d \lambda_e |A_{[d,e]}| \\
+             &= X \sum_{d,e \mid P(z)} \lambda_d \lambda_e \frac{f([d,e])}{[d,e]} + \sum_{d,e \mid P(z)} \lambda_d \lambda_e R_{[d,e]}.
   \end{align*}
-  We will choose $\lambda_d$ such that $|\lambda_d| \leq 1$ and $\lambda_d = 0$ if $d \geq t$.
+  $[d,e]$ denotes the least common multiple of $d$ and $e$. We will choose $\lambda_d$ such that $|\lambda_d| \leq 1$ and $\lambda_d = 0$ if $d \geq t$.
   Then
   \begin{align*}
-    \abs{\sum_{d,e \mid P(z)} \lambda_d \lambda_e R_{[d,e]}} &\leq \sum_{\substack{d,e < t \ d,e \mid P(z)}} |R_{[d,e]}| \\
+    \abs{\sum_{d,e \mid P(z)} \lambda_d \lambda_e R_{[d,e]}} &\leq \sum_{\substack{d,e < t \\ d,e \mid P(z)}} |R_{[d,e]}| \\
                                                              &\leq \sum_{\substack{n \mid P(z) \\ n < t^2}} |R_n| \sum_{d,e} 1_{[d,e] = n}
   \end{align*}
   and
@@ -1012,7 +1014,139 @@ Compare this with \cref{cor:2.2}.
   \begin{equation*}
     V = \sum_{d,e \mid P(z)} \lambda_d \lambda_e \frac{f([d,e])}{[d,e]}
   \end{equation*}
-  Write $[d,e] = abc$ where $d = ab$, $e = bc$ and $(a,b) = (b,c) = (a,c) = 1$.
+  Write $[d,e] = abc$ where $d = ab$, $e = bc$ and $(a,b) = (b,c) = (a,c) = 1$, which we can do since $\lambda_d=0$ if $d$ is not square-free.
+
+\newlec
+\begin{align*}
+  V &= \sum_{c \mid P(z)} \frac{f(c)}{c} \sum_{\substack{ab \mid P(z) \\ (a,b) = 1}} \frac{f(a)f(b)}{ab} \lambda_{ac} \lambda_{bc} \\
+    &= \sum_{c \mid P(z)} \frac{f(c)}{c} \sum_{\substack{ab \mid P(z)}} \frac{f(a)}{a} \frac{f(b)}{b} \sum_{d \mid a,\,d \mid b} \mu(d)\lambda_{ac} \lambda_{bc} \\
+  &= \sum_{c \mid P(z)} \frac{f(c)}{c} \sum_{d \mid P(z)} \mu(d) \left(\sum_{d \mid a \mid P(z)} \frac{f(a)}{a} \lambda_{ac}\right)^2 \\
+  \shortintertext{taking $ac=n$,}
+  &= \sum_{d \mid P(z)} \mu(d) \sum_{c \mid P(z)} \frac{c}{f(c)} \left(\sum_{cd \mid n \mid P(z)} \frac{f(n)}{n} \lambda_n\right)^2 \\
+  &= \sum_{d \mid P(z)} \mu(d) \sum_{c \mid P(z)} \frac{c}{f(c)} y_{cd}^2 \\
+  &= \sum_{k \mid P(z)} \left(\sum_{cd = k} \mu(d) \frac{c}{f(c)}\right) y_k^2
+\end{align*}
+For primes $p$,
+\begin{equation*}
+  \sum_{cd = p} \mu(d) \frac{c}{f(c)} = -1 + \frac{p}{f(p)} = \frac{p-f(p)}{f(p)} = \frac{1}{g(p)}.
+\end{equation*}
+Therefore $\forall h \mid P(z)$
+\begin{equation*}
+  \sum_{cd=k} \mu(d) \frac{c}{f(c)} = \frac{1}{g(k)}.
+\end{equation*}
+
+Note that if $k \geq t$ then
+\begin{equation*}
+  y_k = \sum_{\substack{k \mid n \mid P(z)\\ h \geq t}} \frac{f(n)}{n} \lambda_n = 0
+\end{equation*}
+So
+\begin{equation*}
+  V = \sum_{\substack{k \mid P(z) \\ k < t}} \frac{y_k^2}{g(k)}
+\end{equation*}
+Want to choose $V$ as small as possible.
+
+What is the relationship between $y_k$ and $\lambda_d$?
+\begin{equation*}
+  y_k = \sum_{k \mid n \mid P(z)} \frac{f(n)}{n} \lambda_n.
+\end{equation*}
+Fix $d$.
+\begin{align*}
+  \sum_{d \mid k \mid P(z)} \mu(k) y_k &= \sum_{h \mid P(z)} \mu(k) \sum_{n \mid P(z)} \frac{f(n)}{n} \lambda_n 1_{d \mid k} 1_{k \mid n} \\
+                                       &= \sum_{n \mid P(z)} \frac{f(n)}{n} \lambda_{k} 1_{d \mid n} \sum_{d\ mid k \mid n} \mu(k)
+\end{align*}
+Considering this innermost sum, write $k = de$, so we have
+\begin{equation*}
+  \mu(d) \sum_{e \mid \frac{n}{d}} \mu(e) =
+  \begin{cases}
+    \mu(d) & n = d \\
+    0 & n > d
+  \end{cases}
+\end{equation*}
+Thus
+\begin{align*}
+  \sum_{d \mid k \mid P(z)} \mu(k) y_k = \mu(d) \frac{f(d)}{d} \lambda_d.
+\end{align*}
+Recall $\lambda_1=1$, so must have
+\begin{equation*}1 = \sum_{k \mid P(z)} \mu(k) y_k\end{equation*}
+\begin{align*}
+  1 = \left(\sum_{\substack{k \mid P(z) \\ k < t}} \mu(k) y_k g(k)^{\frac 12} \times \frac{1}{g(k)^{\frac 12}}\right)^2 \leq \left(\sum_{\substack{k \mid P(z) \\ k<t} g(k)}\right) \left(\sum_{\substack{k \mid P(z) \\ k < t}} \frac{y_k^2}{g(k)}\right) = GV
+\end{align*}
+So $V \geq \frac{1}{G}$; but equality holds iff $\exists c$ such that $\forall k$,
+\begin{align*}
+  \frac{\mu(k) y_k}{g(k)^{\frac{1}{2}}} = c g(k)^{\frac 12} \\
+  \implies y_k = c \mu(k) g(k) \quad (k < t)
+\end{align*}
+
+What is $c$? We know that
+\begin{equation*}
+  1 = c \sum_{\substack{k \mid P(z)}} \mu(k)^2 g(k) = cG
+\end{equation*}
+so choose $c = \frac{1}{G}$. Check:
+\begin{enumerate}
+  \item $\lambda_1 = 1$ \checkmark
+  \item $\lambda_d = 0$ if $d \geq t$ \checkmark
+  \item $|\lambda_d| \leq 1$:
+    \begin{equation*}
+      \lambda_d = \mu(d) \frac{d}{f(d)} \sum_{d \mid k \mid P(z)} \mu(k) y_k
+    \end{equation*}
+    so
+    \begin{align*}
+      |\lambda_d| = \frac{d}{f(d)} \frac{1}{G} \sum_{d \mid k \mid P(z)} g(k).
+    \end{align*}
+
+    \begin{align*}
+      G &= \sum_{\substack{e \mid P(z) \\ e<t}} g(e) \\
+        &= \sum_{k \mid d} \sum_{\substack{e \mid P(z) \\ e < t \\ (d,e)=k}} g(e) \\
+        &= \sum_{k \mid d} \sum_{\substack{n \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{k}}} g(m) \\
+        &\geq \left(\sum_{k \mid d} g(k)\right) \left(\sum_{\substack{m \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{d}}} g(m)\right)
+    \end{align*}
+
+    Note that for primes $p$,
+    \begin{equation*}
+      \sum_{k \mid p} g(k) = 1 + \frac{f(p)}{p - f(p)} = \frac{p}{p - f(p)} = \frac{p}{f(p)} g(p).
+    \end{equation*}
+    So
+    \begin{align*}
+      G \geq \frac{d}{f(d)} g(d) \left(\sum_{\substack{m \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{d}}} g(m)\right) = \frac{d}{f(d)} \sum_{d \mid k \mid P(z)} g(k) = |\lambda_d| G
+    \end{align*}
+  so $|\lambda_d| \leq 1$. \qedhere
+\end{enumerate}
+\end{proof}
+\begin{nthm}[Brun]\label{thm:2.5}
+  Let $\pi_2(x) = \# \{1 \leq n \leq n : n \text{ and } n+2 \text{ are prime}\}$.
+  Then
+  \begin{align*}
+    \pi_2(x) \ll \frac{x}{(\log x)^2}
+  \end{align*}
+\end{nthm}
+We can reasonably expect $\pi_2(x) \asymp \frac{x}{(\log x)^2}$, but proving the lower bound would mean there are infinitely many twin primes.
+\begin{proof}
+  Take $A = \{n(n+2) : 1 \leq n \leq x\}$, and $P=$ all primes except 2.
+  Then
+  \begin{align*}
+    |A_d| = \#\{1 \leq n \leq x : d \mid n(n+2)\}
+  \end{align*}
+  if $d = p_1 \dotsm p_r$ odd and squarefree.
+  \begin{align*}
+    d \mid n(n+2) \iff p_i \mid n(n+2) \ \forall i \iff n \equiv 0 \text{ or} -2 \pmod{p_i} \ \forall i
+  \end{align*}
+  By CRT, true iff $n$ lies in one of $2^{\omega(d)}$ many residue classes mod $d$. So
+  \begin{align*}
+    |A_d| = \frac{2^{\omega(d)}}{d} x + \bigO(2^{\omega(d)})
+  \end{align*}
+  so $f(d) = 2^{\omega(d)}$ for $d$ odd, square-free, and $R_d \ll 2^{\omega(d)}$.
+
+  By Selberg's sieve, with $t = z = x^{\frac{1}{4}}$,
+  \begin{align*}
+    \pi_2(x) &\leq \# \{1 \leq n \leq x : p \mid n(n+2) \Rightarrow p = 2 \text{ or } p > x^{\frac 14}\} + \bigO(x^{\frac{1}4}) \\
+             &= S(A,P; x^{\frac{1}{4}}) + \bigO(x^{\frac 14}) \\
+             &\leq \frac{x}{G(z,z)} + \bigO(\sum_{\substack{d \mid P(z) \\ d < z^2}} 6^{\omega(d)})
+  \end{align*}
+  Focus on the error term first:
+  \begin{align*}
+    \sum_{d < z^2} 6^{\omega(d)} \leq z^{2 + o(1)} = x^{\frac{1}{2} + o(1)}.
+  \end{align*}
+
 \end{proof}
 \clearpage
 \printnomenclature
