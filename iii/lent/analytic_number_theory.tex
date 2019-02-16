@@ -1603,6 +1603,127 @@ In particular, we get
   \end{equation*}
 \end{lemma}
 
+\newlec
+\begin{proof}
+  For $y > 1$, we use the contour $C$:
+  \begin{center}
+    \begin{tikzpicture}[scale=2, xscale=1.5]
+      \draw [<->] (0,0) -- (1,0) -- (1,1) -- (0,1);
+      \node [below] at (1,0) {$\sigma$};
+      \node [right] at (1,0) {$-iT$};
+      \node [right] at (1,1) {$+iT$};
+      \node [above] at (0.5,0) {$P_1$};
+      \node [above] at (0.5,1) {$P_2$};
+    \end{tikzpicture}
+  \end{center}
+  Since $\frac{y^s}{s}$ has a single pole at $s=0$ with residue $1$, by the residue theorem,
+  \begin{equation*}
+    \frac{1}{2 \pi i} \int_C \frac{y^s}{s}\,ds=1.
+  \end{equation*}
+  Now we bound
+  \begin{align*}
+    \int_{P_1} \frac{y^s}{s} \,ds = \int_{-\infty}^\sigma \frac{y^{u+iT}}{u+iT}\,du \ll \frac{1}{T} \int_{-\infty}^\sigma y^u\,du = \frac{y^\sigma}{T \log y}.
+  \end{align*}
+  Similarly,
+  \begin{align*}
+    \int_{P_2} \frac{y^s}{s}\,ds \ll \frac{y^\sigma}{T \log y},
+  \end{align*}
+  so
+  \begin{align*}
+    \int_C \frac{y^s}{s} \,ds = \int_{\sigma-iT}^{\sigma+iT} \frac{y^s}{s}\,ds + \bigO\left(\frac{y^\sigma}{T \log y}\right).
+  \end{align*}
+
+  For $y < 1$, use the same argument with
+  \begin{center}
+    \begin{tikzpicture}[scale=2, xscale=-1.5]
+      \draw [<->] (0,0) -- (1,0) -- (1,1) -- (0,1);
+      \node [below] at (1,0) {$\sigma$};
+      \node [left] at (1,0) {$-iT$};
+      \node [left] at (1,1) {$+iT$};
+      \node [above] at (0.5,0) {$P_1$};
+      \node [above] at (0.5,1) {$P_2$};
+    \end{tikzpicture}
+  \end{center}
+\end{proof}
+
+\begin{thm}[Perron's formula]
+  Suppose $\alpha(s) = \sum \frac{a_n}{n^s}$ is absolutely convergent for $\sigma > \sigma_a$.
+  If $\sigma_0 > \max(0,\sigma_a)$ and $x$ is not an integer, then
+  \begin{align*}
+  \sum_{n < x} a_n = \frac{1}{2\pi i} \int_{\sigma_0-iT}^{\sigma_0+iT} \alpha(s) \frac{x^s}{s}\,ds + \bigO\left(\frac{2^{\sigma_0}x}{T} \sum_{\frac{x}{2} < n < 2x} \frac{a_n}{x-n} + \frac{x^{\sigma_0}}{T} \sum_{n=1}^\infty \frac{|a_n|}{n^{\sigma_0}}\right).
+  \end{align*}
+\end{thm}
+\begin{proof}
+  Since $\sigma_0 > 0$, we can write
+  \begin{align*}
+    1_{n<x} &= \frac{1}{2\pi i} \int_{\sigma_0-iT}^{\sigma_0+iT} \frac{(x/n)^s}{s}\,ds + \bigO\left(\frac{(x/n)^{\sigma_0}}{T \abs{\log(\frac{x}{n})}}\right) \\
+    \sum_{n < x} a_n &= \frac{1}{2\pi i} \sum_n a_n \int_{\sigma_0-iT}^{\sigma_0+iT} \frac{x^s}{n^s s}\,ds+\bigO\left(\frac{x^{\sigma_0}}{T} \sum_n \frac{|a_n|}{n^{\sigma_0} \abs{\log(\frac{x}{n})}}\right) \\
+            &= \frac{1}{2\pi i} \int_{\sigma_0-iT}^{\sigma_0+iT} \frac{x^s}{s} \sum_{n} \frac{a_n}{n^s} \,ds + \bigO\left(\frac{x^{\sigma_0}}{T} \sum_n \frac{|a_n|}{n^{\sigma_0} \abs{\log(\frac{x}{n})}}\right) \\
+            &= \frac{1}{2\pi i} \int_{\sigma_0-iT}^{\sigma_0+iT} \alpha(s) \frac{x^s}{s}\,ds + \bigO\left(\frac{x^{\sigma_0}}{T} \sum_n \frac{|a_n|}{n^{\sigma_0} \abs{\log(\frac{x}{n})}}\right).
+  \end{align*}
+
+  For the error term:
+  \begin{enumerate}
+    \item Contribution from $n \leq \frac{x}{2}$ or $n \geq 2x$, where $|\log(\frac{x}{n})| \gg 1$, is
+      \begin{align*}
+        \ll \frac{x^{\sigma_0}}{T} \sum \frac{|a_n|}{n^{\sigma_0}}.
+      \end{align*}
+    \item Contribution from $\frac{x}{2} < n < 2x$, we write $|\log(\frac{x}{n})| = |\log(1+\frac{n-x}{x})|$ and $|\log(1+\delta)| \asymp |\delta|$ uniformly for $-\frac{1}{2} \leq \delta \leq 1$. So
+      \begin{align*}
+        \frac{x^{\sigma_0}}{T} \sum_{\frac{x}{2} < n < 2x} \frac{|a_n|}{n^{\sigma_0} |\log(\frac{x}{n})|} \ll \frac{x^{\sigma_0}}{T} \sum_{\frac{x}{2} < n < 2x} \frac{|a_n| x}{n^{\sigma_0}|x-n|} \ll \frac{2^{\sigma_0}}{T} \sum_{\frac{x}{2} < n < 2x} \frac{|a_n| x}{|x-n|}.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+
+We will now prove a strong form of the PNT, under the assumptions
+\begin{enumerate}
+  \item $\exists c > 0$, such that if $\sigma > 1 - \frac{c}{\log(|t|+4)}$ and $|t| \geq \frac{7}{8}$ then $\zeta(s) \neq 0$ and  $\frac{\zeta'{s}}{\zeta{s}} \ll \log(|t|+4)$.
+  \item $\zeta(s) \neq 0$ for $\frac{8}{9} \leq \sigma \leq 1$, $|t| \leq \frac{7}{8}$.
+  \item $\frac{\zeta'(s)}{\zeta(s)} = -\frac{1}{s-1} + \bigO(1)$ for $1 - \frac{c}{\log(|t|+4)} < \sigma \leq 2$ for $|t| \leq \frac{7}{8}$.
+\end{enumerate}
+We will come back and prove these soon.
+
+\begin{thm}[Prime Number Theorem]
+  There exists $c > 0$ such that
+  \begin{align*}
+    \psi(x) = x + \bigO\left(\frac{x}{\exp(c \sqrt{\log x})}\right)
+  \end{align*}
+  In particular, $\psi(x) \sim x$.
+\end{thm}
+\begin{proof}
+  Assume that $x = N + \frac{1}{2}$.
+  By Perron's formula, for any $1 < \sigma_0 \leq 2$
+  \begin{align*}
+    \psi(x) = \sum_{n \leq x} \Lambda(n) = \frac{1}{2\pi i} \int_{\sigma_0-iT}^{\sigma_0+iT} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds + \bigO\left(\frac{x}{T} \sum_{\frac{x}{2}<n<2x} \frac{\Lambda(n)}{|x-n|} + \frac{x^{\sigma_0}}{T} \sum \frac{\lambda(n)}{n^{\sigma_0}}\right)
+  \end{align*}
+  In the error term,
+  \begin{align*}
+    R_1 &\ll \log x \cdot \frac{x}{T} \cdot \sum_{\frac{x}{2} < n < 2x} \frac{1}{|x-n|} \ll \log x \cdot \frac{x}{T} \sum_{1 \leq m \leq 4x} \frac{1}{m} \ll \frac{x}{T} (\log x)^2 \\
+    \shortintertext{and}
+    R_2 &\ll \frac{x^{\sigma_0}}{T} \frac{1}{|\sigma_0-1|} \ll \frac{x}{T} \log x \quad \text{if } \sigma_0 = 1 + \frac{1}{\log x}.
+  \end{align*}
+  where the bound on $R_2$ used assumption 3.
+  Let $C$ be the contour
+  \textbf{missing picture}
+  with $\sigma_1 < 1$.
+  Then
+  \begin{align*}
+    \frac{1}{2\pi i} \int_C -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds=x
+  \end{align*}
+  by the residue theorem and assumptions 1 and 2.
+
+Take $\sigma-1 = 1 - \frac{c}{\log T}$.
+  \begin{align*}
+    \int_{\sigma_0+iT}^{\sigma_1+iT} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds &\ll \log T \int_{\sigma_0}^{\sigma_1} \frac{x^u}{T}\,du \ll \frac{\log T}{T} x^{\sigma_1}(\sigma_1 - \sigma_0) \ll \frac{x}{T} \\
+    \shortintertext{and}
+    \int_{\sigma_1-iT}^{\sigma_1+iT} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds &\ll (\log T) \abs{\int_{\sigma_1\pm iT}^{\sigma_1\pm i} \frac{x^u}{u}\,du} + \left(\int_{\sigma_1-i}^{\sigma_1+i} x^{\sigma_1}\frac{1}{\sigma_1-1}\right) \\&\ll x^{\sigma_1}{\log T} + \frac{x^{\sigma_1}}{1-\sigma_1} \ll x^{\sigma_1} (\log T)
+  \end{align*}
+  Now,
+  \begin{align*}
+    \psi(x) &= x + \bigO\left(\frac{x}{T}(\log x)^2 + x^{1 - \frac{c}{\log T}}(\log T)\right) \\
+            &= x + \bigO\left(\frac{x}{\exp(c \sqrt{\log x})}\right)
+  \end{align*}
+  by choosing $T = \exp(c \sqrt{\log x})$.
 \end{proof}
 \clearpage
 \printnomenclature
