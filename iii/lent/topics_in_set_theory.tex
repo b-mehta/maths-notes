@@ -34,6 +34,8 @@
 \let\models\vDash
 \let\nModels\nvDash
 
+\tikzset{dot/.style={inner sep=1pt, fill=black, circle}}
+
 % and here we go!
 \begin{document}
 \maketitle
@@ -279,10 +281,10 @@ We define\index{bounded quantifier}
   A formula is called $\Delta_1^T$ if it is both \hyperlink{def:sig1t}{$\Sigma_1^T$} and \hyperlink{def:pi1t}{$\Pi_1^T$}.
 \end{defi}
 \begin{cor}
-  If $A$ is \hyperlink{def:trans}{transitive}, $A,M \models T$ and $\varphi$ is \hyperlink{def:delta1t}{$\Delta_1^T$}, then $\varphi$ is \hyperlink{def:abso}{absolute} between $A$ and $M$.
+  If $A$ is \hyperlink{def:transitive}{transitive}, $A,M \models T$ and $\varphi$ is \hyperlink{def:delta1t}{$\Delta_1^T$}, then $\varphi$ is \hyperlink{def:abso}{absolute} between $A$ and $M$.
 \end{cor}
 \subsection{`Set theory'}
-What do we mean by a `set theory'? The usual theories we care about are:
+\hypertarget{def:axioms}What do we mean by a `set theory'? The usual theories we care about are:
 
 \begin{center}
 \begin{tabular}{|rl|rl|}\hline
@@ -302,7 +304,7 @@ We noted earlier that there are very few \hyperlink{def:delta0}{$\Delta_0$} form
   \item $x = y$ (in fact, $\Delta_0$)
   \item $x \subseteq y$. This is an abbreviation, so we have to define what it means:
     \begin{equation*}\forall w\ (w \in x \rightarrow w \in y).\end{equation*}
-    But note this is $\forall (w \in x) \; (w \in y)$, so $\Delta_0$.
+    But note this is $\forall (w \in x) \ (w \in y)$, so $\Delta_0$.
   \item
     \begin{align*}
       \Phi_0(t) &:\Longleftrightarrow\ \forall w\ (w \notin x) \\
@@ -311,8 +313,10 @@ We noted earlier that there are very few \hyperlink{def:delta0}{$\Delta_0$} form
     \end{align*}
     so it's $\Delta_0$ in predicate logic.
 \end{enumerate}
-We say that an operation $x_1, \dotsc, x_k \mapsto F(x_1, \dotsc, x_n)$ is defined by a formula in class $\Gamma$ (where $\Gamma$ is any class of formulas) in the theory $T$ if there is a formula $\Phi \in \Gamma$ such that
-\begin{enumerate}[label=(\arabic*)]
+\begin{defi}\hypertarget{def:operation}
+  We say that an \named{operation} $x_1, \dotsc, x_k \mapsto F(x_1, \dotsc, x_n)$ is defined by a formula in class $\Gamma$ (where $\Gamma$ is any class of formulas) in the theory $T$ if there is a formula $\Phi \in \Gamma$ such that
+\end{defi}
+\begin{enumerate}[(1)]
   \item $T \vdash \forall x_1 \dotsm \forall x_n \ \exists y \ \Phi (x_1, \dotsc, x_n, y)$
   \item $T \vdash \forall x_1 \dotsm \forall x_n \ \forall y,z \ \Phi(x_1, \dotsc, x_n, y) \land \Phi(x_1, \dotsc, x_n, z) \rightarrow y = z$
   \item $\Phi(x_1, \dotsc, x_n, y)$ if and only if $y = F(x_1, \dotsc, x_n)$.
@@ -322,7 +326,7 @@ We say that an operation $x_1, \dotsc, x_k \mapsto F(x_1, \dotsc, x_n)$ is defin
     x &\mapsto \{x\} \\
     x,y &\mapsto \{x,y\}
   \end{align*}
-  These are operations in \textsf{FST}$_0$!
+  These are \hyperlink{def:operation}{operations} in \hyperlink{def:axioms}{\textsf{FST}$_0$}!
 \end{eg}
 \begin{enumerate}
   \setcounter{enumi}{4}
@@ -340,7 +344,7 @@ We say that an operation $x_1, \dotsc, x_k \mapsto F(x_1, \dotsc, x_n)$ is defin
   \item $x,y \mapsto x \setminus y$
   \item $x,y \mapsto (x,y)$, where $(x,y) = \{\{x\},\{x,y\}\}$ which is the combination of earlier formulas
 \end{enumerate}
-If two operations $f, g_1, g_2$ are defined by $\Delta_0^T$-formulas, then so is the operation
+If two \hyperlink{def:operation}{operations} $f, g_1, g_2$ are defined by $\Delta_0^T$-formulas, then so is the operation
 \begin{equation*}
   x_1, \dotsc, x_n \mapsto f(g_1(x_1, \dotsc, x_n), \dotsc, g_k(x_1, \dotsc, x_n))
 \end{equation*}
@@ -363,15 +367,18 @@ If two operations $f, g_1, g_2$ are defined by $\Delta_0^T$-formulas, then so is
 \end{enumerate}
 What is an ordinal?
 \begin{defi}\hypertarget{def:ordinal}
-$\alpha$ is an \named{ordinal} if $\alpha$ is a \hyperlink{def:transitive}{transitive} set well-ordered by $\in$, i.e.\ it is totally ordered (several axioms, all $\Delta_0^T$) and well-founded ($\forall X\; (X \subseteq \alpha \rightarrow X \text{ has a } \in\text{-least element})$).
+$\alpha$ is an \named{ordinal} if $\alpha$ is a \hyperlink{def:transitive}{transitive} set well-ordered by $\in$, i.e.\ it is totally ordered (several axioms, all $\Delta_0^T$) and well-founded:
+\begin{equation*}
+\forall X\; (X \subseteq \alpha \rightarrow X \text{ has a} \in\text{-least element}).
+\end{equation*}
 \end{defi}
 
-Observe `$(X,R)$ is a well-founded relation' is not obviously \hyperlink{def:abso}{absolute} since the bound for the $\forall Z\; (Z \subseteq X \dots)$ quantifier is the power set, so this is \hyperlink{def:pi1}{$\Pi_1$}.
-However, in models with the Axiom of Foundation, well-foundedness is automatic, so $\alpha$ is an ordinal iff $\alpha$ is transitive and totally ordered by $\in$, which is \hyperlink{def:delta0t}{$\Delta_0^T$}.
+Observe `$(X,R)$ is a well-founded relation' is not obviously \hyperlink{def:abso}{absolute} since the bound for the $\forall Z\; (Z \subseteq X \dots)$ quantifier (above, $X \subseteq \alpha$) is the power set, so this is \hyperlink{def:pi1}{$\Pi_1$}.
+However, in models with the Axiom of Foundation, well-foundedness is automatic, so we can say $\alpha$ is an ordinal iff $\alpha$ is \hyperlink{def:transitive}{transitive} and totally ordered by $\in$, which is \hyperlink{def:delta0t}{$\Delta_0^T$}.
 
 \begin{enumerate}
   \setcounter{enumi}{23}
-  \item \newlec`$x$ is an ordinal' is \hyperlink{def:delta0t}{$\Delta_0^T$} (with the right choice of $T$)
+  \item \newlec`$x$ is an \hyperlink{def:ordinal}{ordinal}' is \hyperlink{def:delta0t}{$\Delta_0^T$} (with the right choice of $T$)
   \item `$x$ is a successor ordinal' $\iff$ `$x$ is an ordinal' +
       \begin{equation*}\exists (y \in x) \; (y\text{ is the}\in\text{-largest element of }x )\end{equation*}
     \item `$x$ is a limit ordinal' (is an ordinal, not $0$ and not a successor)
@@ -386,17 +393,16 @@ If $(X,R)$ is well-founded, we can define a rank function
 where $\alpha$ is some ordinal such that $\rk$ is order-preserving between $(X,R)$ and $(\alpha,\in)$.
 
 This theorem is proved using the right instances of Replacement.
-In particular, ZF proves:
-\begin{align*}
-  &(X,R) \text{ is well founded} \\
-  \iff &\exists\alpha\,\exists f \;\alpha \text{ is an ordinal and } f \text{ is an order-preserving function from }(X,R) \text{ to }(\alpha,\in)
-\end{align*}
-But note that the left hand side is $\Pi_1^{\text{ZF}}$, while the right hand side is $\Sigma_1^{\text{ZF}}$.
-Thus, for sufficiently strong $T$, `$(X,R)$ is wellfounded' is $\Delta_1^T$ and hence absolute for transitive models of $T$.
-Generalise this to concepts defined by transfinite recursion.
+In particular, \hyperlink{def:axioms}{\textsf{ZF}} proves:
+\begin{equation*}
+  \underbrace{(X,R)\text{ is well founded}}_{\hyperlink{def:pi1t}{\Pi_1^\textsf{ZF}}}  \iff \underbrace{\parbox{15em}{\centering$\exists \alpha\, \exists f: \alpha$ is an ordinal and\\ $f$ is an order-preserving function\\ from $(X,R)$  to $(\alpha,\in)$}}_{\hyperlink{def:sig1t}{\Sigma_1^\textsf{ZF}}}
+\end{equation*}
+But note that the left hand side is \hyperlink{def:pi1t}{$\Pi_1^{\textsf{ZF}}$}, while the right hand side is \hyperlink{def:sig1t}{$\Sigma_1^{\textsf{ZF}}$}.
+Thus, for sufficiently strong $T$, `$(X,R)$ is wellfounded' is \hyperlink{def:delta1t}{$\Delta_1^T$} and hence \hyperlink{def:abso}{absolute} for \hyperlink{def:transitive}{transitive} models of $T$.
+We can generalise this to concepts defined by transfinite recursion.
 
-Recall the method of transfinite recursion:
-Let $(X,R)$ be well-founded. Let $F$ be `functional', so for every $x$ there is unique $y$ such that $x = F(y)$.
+\hypertarget{def:transrec}Recall the method of \named{transfinite recursion}:
+Let $(X,R)$ be well-founded. Let $F$ be `functional', so for every $x$ there is unique $y$ such that $y = F(x)$.
 Then there is a unique $f$ with domain $X$ and for all $x \in X$,
 \begin{equation*}
   f(x) = F(f \upharpoonright \text{IS}_R(x))
@@ -404,27 +410,29 @@ Then there is a unique $f$ with domain $X$ and for all $x \in X$,
 where IS$_R(x) \coloneqq \{z \in X \mid zRx\}$
 
 \begin{prop}
-  Let $T$ be a set theory that is strong enough to prove the transfinite recursion theorem for $F$.
-  Let $F$ be absolute for transitive models of $T$.
+  Let $T$ be a set theory that is strong enough to prove the \hyperlink{def:transrec}{transfinite recursion} theorem for $F$.
+  Let $F$ be \hyperlink{def:abso}{absolute} for \hyperlink{def:transitive}{transitive} models of $T$.
   Let $(X,R)$ be in $A$.
-  Then $f$ defined by transfinite recursion is absolute between $A$ and $M$.
+
+  Then $f$ defined by \hyperlink{def:transrec}{transfinite recursion} is absolute between $A$ and $M$.
 \end{prop}
 \begin{eg}
   Let $\mathscr{L}$ be any first-order language whose symbols are all in $A$.
   Then the set of $\mathscr{L}$-formulas and the set of $\mathscr{L}$-sentences are in $A$.
-  (Assumptions on $A$ are suppressed, it needs to be transitive and strong enough to prove transfinite recursion and have natural numbers, e.g.\ ZF).
+  (Assumptions on $A$ are suppressed, it needs to be transitive and strong enough to prove the relevant cases of transfinite recursion and have natural numbers, e.g.\ \textsf{ZF}).
 
-  The relation $S \models \varphi$ is defined by recursion and thus is absolute between $A$ and $M$.
-  So: If $S$ is an $\mathscr{L}$-structure, $S \in A$ then
+  The relation $S \models \varphi$ is defined by recursion and thus is \hyperlink{def:abso}{absolute} between $A$ and $M$.
+  So: If $S$ is an $\mathscr{L}$-structure with $S \in A$ then
   \begin{equation*}
     (A,\in) \models \text{``$S \models \varphi$''} \iff (M,\in) \models \text{``$S \models \varphi$''}
   \end{equation*}
+  Furthermore, this shows that consistency is absolute, and can be formulated by saying `there is no proof of $\bot$'.
 \end{eg}
 
 \subsubsection{G\"odel's Incompleteness Theorem}
-For a theory $T$, if $T$ is consistent, then $T \nvdash \text{Cons}(T)$.
-Of course, this requires some restrictions on $T$. Examples for strong enough $T$ include \textsf{PA}, \textsf{Z}, \textsf{ZF}, \textsf{ZFC}, \textsf{ZFC} + $\varphi$.
-In particular,
+G\"odel's Incompleteness Theorem says: For a theory $T$, if $T$ is consistent, then $T \nvdash \text{Cons}(T)$.
+Of course, this requires some restrictions on $T$. Examples for strong enough $T$ include \textsf{PA}, \hyperlink{def:axioms}{\textsf{Z}}, \hyperlink{def:axioms}{\textsf{ZF}}, \hyperlink{def:axioms}{\textsf{ZFC}}, \textsf{ZFC} + $\varphi$.
+\hypertarget{def:zfcstar}In particular,
 \begin{equation*}
   \textsf{ZFC*} \coloneqq \textsf{ZFC} + \cons(\textsf{ZFC})
 \end{equation*}
@@ -434,20 +442,20 @@ By G\"odel's Completeness Theorem,
 \begin{equation*}
   \cons(T) \iff \exists M\ (M \models T).
 \end{equation*}
-Now write $\beta$ for `there is a transitive set $A$ such that $(A,\in) \models$ \textsf{ZFC}'.
-Clearly, $\beta \Rightarrow \cons(\text{\textsf{ZFC}})$.
+Now write $\beta$ for `there is a transitive set $A$ such that $(A,\in) \models$ \hyperlink{def:axioms}{\textsf{ZFC}}'.
+Clearly, $\beta \Rightarrow \cons(\textsf{ZFC})$.
 \begin{thm}
-  If \textsf{ZFC*} is consistent, then \textsf{ZFC*} $\nvdash \beta$.
+  If \hyperlink{def:zfcstar}{\textsf{ZFC*}} is consistent, then \textsf{ZFC*} $\nvdash \beta$.
 \end{thm}
 \begin{proof}
-  Let $(M,\in) \models$ \textsf{ZFC}*. Suppose \textsf{ZFC} $\vdash \beta$. So $(M,\in) \vDash \beta$.
-  Thus in $M$, find $A$ transitive such that $(A,\in) \models$ \textsf{ZFC}.
-  By assumption, $(M,\in) \models \cons(\text{\textsf{ZFC}})$. By absoluteness, $(A,\in) \vDash \cons(\text{\textsf{ZFC}})$.
-  Thus, $(A,\in) \vDash$ \textsf{ZFC}*.
-  So we proved $\cons(\text{\textsf{ZFC}*})$, contradiction.
+  Let $(M,\in) \models$ \textsf{ZFC*}. Suppose \textsf{ZFC} $\vdash \beta$. So $(M,\in) \vDash \beta$.
+  Thus in $M$, find $A$ \hyperlink{def:transitive}{transitive} such that $(A,\in) \models$ \textsf{ZFC}.
+  By assumption, $(M,\in) \models \cons(\textsf{ZFC})$. By \hyperlink{def:abso}{absoluteness} of consistency, $(A,\in) \vDash \cons(\textsf{ZFC})$.
+  Thus, $(A,\in) \vDash$ \textsf{ZFC*}.
+  So we proved $\cons(\textsf{ZFC*})$, contradiction.
 \end{proof}
 
-In particular, it is stronger to say that there are transitive models of \textsf{ZFC} than that \textsf{ZFC} is consistent.
+In particular, it is stronger to say that there are \hyperlink{def:transitive}{transitive} models of \hyperlink{def:axioms}{\textsf{ZFC}} than that \textsf{ZFC} is consistent.
 Assuming $\beta$ is not an obvious assumption, so we need to study under which (natural) assumptions $\beta$ is true.
 
 So, let us investigate transitive models $A$ inside $M$.
@@ -459,21 +467,23 @@ The two most basic constructions:
   \item hereditarily small sets
 \end{enumerate}
 
-\newlec Start with the von Neumann hierarchy.
+\subsubsection{von Neumann hierarchy}
+We define
+  \newlec
 \begin{align*}
-  V_0 &\coloneqq \emptyset \\
+  \hypertarget{def:vk}V_0 &\coloneqq \emptyset \\
   V_{\alpha+1} &\coloneqq \mathcal{P}(V_\alpha) \\
-  V_\lambda &\coloneqq \bigcup_{\alpha < \lambda} V_\alpha \smash{\quad \text{for } \lambda \text{ a limit ordinal}}
+  V_\lambda &\coloneqq \bigcup_{\alpha < \lambda} V_\alpha \smash{\quad \text{for } \lambda \text{ a limit ordinal.}}
 \end{align*}
 \begin{prop}
-  $V_\alpha$ is transitive for all $\alpha$.
+  \hyperlink{def:vk}{$V_\alpha$} is \hyperlink{def:transitive}{transitive} for all $\alpha$.
 \end{prop}
 \begin{proof}[Proof sketch]
-  Induction, the key lemma is: If $X$ is transitive, then $\mathcal{P}(X)$ is transitive.
+  Induction, the key lemma is: If $X$ is \hyperlink{def:transitive}{transitive}, then $\mathcal{P}(X)$ is transitive.
 \end{proof}
-Start with $V_\alpha$. We know:
+Does \hyperlink{def:vk}{$V_\alpha$} give a model of \hyperlink{def:axioms}{\textsf{ZFC}}? We know:
 \begin{enumerate}
-  \item If $\lambda$ is a limit ordinal, then $V_\lambda \models$ \textsf{FST}.
+  \item If $\lambda$ is a limit ordinal, then $V_\lambda \models$ \hyperlink{def:axioms}{\textsf{FST}}.
   \item If $\lambda > \omega$ and $\lambda$ a limit ordinal, $V_\lambda \vDash$ \textsf{Z} (on example sheet 1).
 \end{enumerate}
 The critical axiom here is Replacement.
@@ -490,19 +500,34 @@ Replacement says: if $F: V_{\omega + \omega} \to V_{\omega+\omega}$ is a functio
     \draw [very thin] (0,0) -- (0,2);
     \node at (1.5,2) {$\omega+\omega$};
     \node at (1.5,1.2) {$\omega$};
+    \node [dot] (x1) at (-0.3,0.8) {};
+    \node [dot] (x2) at (-0.05,0.6) {};
+    \node [dot] (x3) at (0.1,0.75) {};
+    \node [dot] (x4) at (-0.1,0.9) {};
+    \draw plot [smooth cycle, tension=1] coordinates {(-0.35,0.8) (-0.05,0.5) (0.2,0.75) (-0.1,1)};
+    \node [dot] (y1) at (-0.25,1.7) {};
+    \node [dot] (y2) at (0.2,1.4) {};
+    \node [dot] (y3) at (0.3,1.1) {};
+    \node [dot] (y4) at (0.05,1.6) {};
+    \draw [->, very thin] (x1) to[bend left=20] (y1);
+    \draw [->, very thin] (x2) to[bend left=20] (y2);
+    \draw [->, very thin] (x3) to[bend left=20] (y3);
+    \draw [->, very thin] (x4) to[bend left=20] (y4);
+    \draw plot [smooth cycle, tension=1] coordinates {(-0.35,1.7) (0.05,1.8) (0.35,1.45) (0.32,1.0) (0,1.4)};
   \end{tikzpicture}
 \end{center}
-
-Idea: Take $x = \omega$, and
-\begin{equation*}
-  F:
-  \begin{cases}
-    n \mapsto \omega + n \\
-    y \mapsto 0 & \text{if } y \not\in \omega
-  \end{cases}
-\end{equation*}
-$\omega+n$ is definable (in \textsf{Z}): the unique ordinal which contains $\omega$ and $n-1$ elements above $\omega$.
-Let $Y \coloneqq \{F(n) \mid n \in \omega\}$. Then $Y \subseteq V_{\omega+\omega}$, but $Y \notin V_{\omega+\omega}$: it is not bounded in $V_{\omega+\omega}$.
+\begin{idea}
+  Take $x = \omega$, and
+  \begin{equation*}
+    F:
+    \begin{cases}
+      n \mapsto \omega + n \\
+      y \mapsto 0 & \text{if } y \not\in \omega
+    \end{cases}
+  \end{equation*}
+  Note $\omega+n$ is definable (in \hyperlink{def:axioms}{\textsf{Z}}): it is the unique \hyperlink{def:ordinal}{ordinal} which contains $\omega$ and $n-1$ elements above $\omega$.
+\end{idea}
+Let $Y \coloneqq \{F(n) \mid n \in \omega\}$. Then $\hyperlink{def:vk}{Y \subseteq V_{\omega+\omega}}$, but $Y \notin V_{\omega+\omega}$: it is not bounded in $V_{\omega+\omega}$.
 \begin{center}
   \begin{tikzpicture}[scale=2]
     \draw (1,2) -- (0,0) -- (-1,2);
@@ -514,7 +539,7 @@ Let $Y \coloneqq \{F(n) \mid n \in \omega\}$. Then $Y \subseteq V_{\omega+\omega
     \draw [opacity=0.5, line width=3pt, line cap=round, bred] (0,0.75pt) -- (0, 1cm-0.75pt);
     \draw [opacity=0.5, line width=3pt, line cap=round, bblue] (0, 1cm+0.75pt) -- (0, 2cm-0.75pt);
     \foreach \x in {1,3,...,9}{
-      \draw [->, bblue] (0,\x*0.1) to[bend right=60] (0,1+\x*0.1);
+      \draw [->, bblue, thick] (0.5pt,\x*0.1) to[bend right=60] (0.5pt,1+\x*0.1);
     }
   \end{tikzpicture}
 \end{center}
@@ -523,7 +548,7 @@ This example shows concretely that
   V_{\omega + \omega} \models \neg \textsf{Repl.}
 \end{equation*}
 
-Similarly, if $\alpha$ is any ordinal such that there is a definable function $f: \omega \to \alpha$ such that the range of $f$ is unbounded in $\alpha$, then $V_\alpha \models \neg\textsf{Repl}$.
+Similarly, if $\alpha$ is any \hyperlink{def:ordinal}{ordinal} such that there is a definable function $f: \omega \to \alpha$ such that the range of $f$ is unbounded in $\alpha$, then $V_\alpha \models \neg\textsf{Repl}$.
 Even more generally, if $\beta < \alpha$ and a definable function $f: \beta \to \alpha$ with unbounded image, then $V_\alpha \models \neg\textsf{Repl}$.
 
 \begin{defi}\hypertarget{def:reg}
@@ -535,8 +560,9 @@ Even more generally, if $\beta < \alpha$ and a definable function $f: \beta \to 
   Equivalently, for every $\alpha < \kappa$, there is no unbounded function $f: \alpha \to \kappa$.
 \end{defi}
 
-We know, e.g.\ that $\aleph_1$ is regular. Moreover, for any $\alpha$, $\aleph_{\alpha+1}$ is regular.
-So our next candidate is $\alpha = \aleph_1$. $\mathcal{P}(\omega) \in V_{\omega+2} \subseteq V_{\omega+1}$.
+We know, e.g.\ that $\aleph_1$ is \hyperlink{def:reg}{regular}. Moreover, for any $\alpha$, $\aleph_{\alpha+1}$ is \hyperlink{def:reg}{regular}.
+So our next candidate is $\alpha = \aleph_1$.
+
 \begin{center}
   \begin{tikzpicture}[scale=2]
     \draw (1,2) -- (0,0) -- (-1,2);
@@ -548,6 +574,7 @@ So our next candidate is $\alpha = \aleph_1$. $\mathcal{P}(\omega) \in V_{\omega
     \node [circle, fill=black, inner sep=1pt] at (-0.2, 0.6) {};
   \end{tikzpicture}
 \end{center}
+Note $\mathcal{P}(\omega) \in \hyperlink{def:vk}{V_{\omega+2}} \subseteq V_{\omega+1}$.
 Clearly, there is a surjection
 \begin{equation*}
   s: \mathcal{P}(\omega) \to \omega_1.
@@ -557,49 +584,47 @@ Thus: $V_{\omega_1} \models \neg\textsf{Repl}$.
 
 \begin{defi}\hypertarget{def:inacc}
   A cardinal $\alpha$ is called \named{inaccessible} if
-  \begin{enumerate}[label=(\alph*)]
-    \item $\kappa$ is regular
-    \item $\forall \lambda < \kappa$, $|\mathcal{P}(\lambda)| < \kappa$.
+  \begin{enumerate}[(a)]
+    \item $\kappa$ is \hyperlink{def:reg}{regular}
+    \item $\forall \lambda < \kappa$, $|\mathcal{P}(\lambda)| < \kappa$ (\named{strong limit}).
   \end{enumerate}
 \end{defi}
 That is, just take the two problems we had, negate them and make a definition.
 
 \begin{remark}
-  We know every successor cardinal is regular, and our simple examples of limit cardinals are all not regular: they were defined as unions.
+  We know every successor cardinal is \hyperlink{def:reg}{regular}, and our simple examples of limit cardinals are all not regular: they were defined as unions.
   So, we can ask: `Are there regular limit cardinals?'
-  (Such cardinals are sometimes called weakly inaccessible).
-  Under GCH ($\forall \kappa\ 2^\kappa = k^+$), we have:
+  (Such cardinals are sometimes called \named{weakly inaccessible}\index{inaccessible!weakly}).
+  A partial answer: Under the Generalized Continuum Hypothesis ($\forall \kappa\ 2^\kappa = k^+$), we have:
   \begin{equation*}
     \kappa \text{ is inaccessible } \iff \kappa \text{ is a regular limit cardinal}.
   \end{equation*}
 \end{remark}
 
-Let's assume that $\kappa > \alpha$ is inaccessible.
+Now, let's assume that $\kappa > \aleph_0$ is inaccessible.
 \begin{lemma}
   \begin{equation*}
-  \forall \lambda < \kappa \quad |V_\lambda| < \kappa.
+    \forall \lambda < \kappa \quad |\hyperlink{def:vk}{V_\lambda}| < \kappa.
   \end{equation*}
 \end{lemma}
 \begin{proof}
-  Clearly $|V_\omega| = \aleph_0$, so $|V_\omega| < \kappa$.
-
-  By induction, suppose $|V_\lambda| < \kappa$. Then $V_{\lambda+1} = \mathcal{P}(V_\lambda)$.
+  Clearly $|\hyperlink{def:vk}{V_\omega}| = \aleph_0$, so $|V_\omega| < \kappa$.
+  Proceed by induction. Suppose $|V_\lambda| < \kappa$. Then $V_{\lambda+1} = \mathcal{P}(V_\lambda)$.
   \begin{equation*}
   |V_{\lambda+1}| = |\mathcal{P}(V_\lambda)| < \kappa
   \end{equation*}
   by (b).
-
   Now let $\lambda < \kappa$ be a limit ordinal.
   Then
   \begin{equation*}
     V_\lambda = \bigcup_{\alpha < \lambda} V_\alpha.
   \end{equation*}
   Suppose for contradiction that $|V_\lambda| = \kappa$. But $|V_\alpha| < \kappa$ for all $\alpha < \kappa$, so you can write $\kappa$ as a union of $\lambda$ many things of smaller cardinality.
-  This contradicts regularity.
+  This contradicts \hyperlink{def:reg}{regularity}.
 \end{proof}
 
 \begin{thm}
-  If $\kappa$ is inaccessible, then $V_\kappa \models \textsf{Repl}.$
+  If $\kappa$ is \hyperlink{def:inacc}{inaccessible}, then $\hyperlink{def:vk}{V_\kappa} \models \textsf{Repl}.$
 \end{thm}
 \begin{proof}
   Take any $F: V_\kappa \to V_\kappa$ and any $x \in V_\kappa = \bigcup_{\alpha < \kappa} V_\alpha$.
