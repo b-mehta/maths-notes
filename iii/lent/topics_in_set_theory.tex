@@ -1468,6 +1468,96 @@ Our only preservation theorem so far: $\mathbb{R}^M = \mathbb{R}^N \Rightarrow \
 
 General problem: If $x$ codes a well order on $\mathbb{N}$ of order type $\aleph_1^M$ and $i(\gamma) = x$ then $M(i) \models \aleph_1$ is countable.
 
+\newlec
+So, in the meta-universe, we have $i : \aleph_2^M \to \mathbb{R}$, and we would like
+\begin{enumerate}
+  \item $M[i] \models \hyperlink{def:axioms}{\textsf{ZFC}}$ \hyperlink{def:transitive}{transitive}, with $M \subseteq M[i]$ and $i \in M[i]$.
+  \item $\aleph_2^{M[i]} = \aleph_2^M$. This is stronger than $\aleph_1^{M[i]} = \aleph_1^M$.
+\end{enumerate}
+We had the issue that if $x$ is in the range of $i$, then $x \in M[i]$.
+If $x$ is a code for the countability of $\aleph_1^M$, then $M[i] \nModels \aleph_2^{M[i]} = \aleph_2^M$.
+
+Even worse: if such an $x$ can be constructed in \textsf{ZFC} from $i$, then it will be in $M[i]$.
+So, we need to guarantee that no such objects can be constructed.
+
+With this goal, Paul Cohen described \named{Forcing} in 1963.
+
+\begin{defi}\leavevmode
+  \begin{itemize}
+    \item \hypertarget{def:poset}As usual, we call $(\mathbb{P}, \leq, \mathbbm{1})$ a \named{partial order}/forcing/forcing partial order if $\mathbb{P}$ is a set, $\leq$ is a reflexive, transitive, antisymmetric relation, and $\mathbbm{1}$ is the largest element.
+    \item Elements of $\mathbb{P}$ are called \named{conditions}
+      \begin{center}
+        $p \leq q$ is read as `$p$ is stronger than $q$'
+      \end{center}
+    \item \hypertarget{def:chain}As usual, $C \subseteq \mathbb{P}$ is called a \named{chain} if $(C, \leq)$ is a total order.
+    \item \hypertarget{def:incompat}If $p,q \in \mathbb{P}$, say that $p$ and $q$ are \named{incompatible}, written $p \perp q$ if there is no $r \leq p,\ r \leq q$.
+    \item \hypertarget{def:antichain}$A \subseteq \mathbb{P}$ is called an \named{antichain} if
+      \begin{align*}
+        \forall p,q \in A \text{ if } p \neq q \rightarrow p \perp q.
+      \end{align*}
+    \item \hypertarget{def:ccc} We say that $\mathbb{P}$ has the \named{countable chain condition} (ccc) if every antichain $\mathbb{P}$ is countable.
+    \item \hypertarget{def:dense}If $D \subseteq \mathbb{P}$, we say $D$ is \named{dense} if
+      \begin{align*}
+        \forall p \in \mathbb{P}\ \exists q \in D\ q \leq p
+      \end{align*}
+    \item \hypertarget{def:filter}If $F \subseteq \mathbb{P}$, we say $F$ is a \named{filter} if
+      \begin{enumerate}[(a)]
+        \item $\forall p \in F \ \forall q\ (q \geq p \rightarrow q \in F)$
+        \item $\forall p,q \in F \ \exists r \in F \ r \leq p,q$.
+      \end{enumerate}
+    \item \hypertarget{def:splitting}We say that $\mathbb{P}$ is \named{splitting} if for all $p \in \mathbb{P}$
+      \begin{align*}
+        \exists q_1,q_2 \in \mathbb{P} \ q_1,q_2 \leq p \text{ and } q_1 \perp q_2.
+      \end{align*}
+    \item \hypertarget{def:dgeneric}If $\mathcal{D}$ is a set of dense sets and $G \subseteq \mathbb{P}$, we say that $G$ is $\mathcal{D}$-\named{generic} if $\forall D \in \mathcal{D}$, $D \cap G \neq \emptyset$.
+  \end{itemize}
+\end{defi}
+
+\begin{eg}[Cohen forcing]
+  \begin{align*}
+    \mathbb{P} &\coloneqq \{p \mid p\text{ is a partial function from }\mathbb{N}\text{ to }2\text{ with finite domain}\} \\
+    p \leq q &:\Leftrightarrow p \supseteq q \\
+    \mathbbm{1} &\coloneqq \emptyset
+  \end{align*}
+  Note that if $p \hyperlink{def:incompat}{\perp} q$, then there is $n \in \dom(p) \cap \dom(q)$ such that $p(n) \neq q(n)$.
+  If $F$ is a \hyperlink{def:filter}{filter} in $\mathbb{P}$, then $\bigcup F$ is a partial function from $\mathbb{N}$ into $2$.
+  Consider $D_n \coloneqq \{p : n \in \dom(p)\}$.
+  This is \hyperlink{def:dense}{dense} in $\mathbb{P}$.
+  Set $\mathcal{D} \coloneqq \{D_n : n \in \mathbb{N}\}$.
+  If $F$ is \hyperlink{def:dgeneric}{$\mathcal{D}$-generic}, then $\bigcup F: \mathbb{N} \to 2$.
+\end{eg}
+\begin{eg}
+  Take now
+  \begin{align*}
+    \mathbb{P}_X &\coloneqq \{p \mid p\text{ is a partial function from }\mathbb{N}\text{ to }X\text{ with finite domain}\}
+  \end{align*}
+  for $X$ any set.
+  As before, if $F$ is a \hyperlink{def:filter}{filter}, $\bigcup F$ is a partial function.
+  If $F$ is \hyperlink{def:dgeneric}{$\mathcal{D}$-generic}, $\bigcup F: \mathbb{N} \to X$.
+
+  Consider $E_x \coloneqq \{p : x \in \ran(p)\}$ for every $x \in X$.
+  \begin{align*}
+    \mathcal{D}^* \coloneqq \mathcal{D} \cup \{E_x \mid x \in X\}.
+  \end{align*}
+  Suppose $G$ is a $\mathcal{D}^*$-generic filter. By the above, $\bigcup G: \mathbb{N} \to X$.
+  For every $x \in X$, $E_x \cap G \neq \emptyset$, so there is $p \in G$ with $x \in \ran(p)$.
+  So $X = \ran(\bigcup G)$.
+  Thus $\bigcup G$ is a surjection from $\mathbb{N}$ to $X$. (In particular, if $X$ is uncountable in $M$, there is no such generic filter).
+\end{eg}
+\begin{defi}\hypertarget{def:genericO}
+  If $M$ is a \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{\textsf{ZFC}} and $\mathbb{P} \in M$ a \hyperlink{def:poset}{partial order}.
+  We say that a \hyperlink{def:filter}{filter} $G$ (not necessarily an element of $M$) is \named{generic over $M$} if it is \hyperlink{def:dgeneric}{$\mathcal{D}$-generic} for $\mathcal{D} \coloneqq \{D \in M \mid D \text{ is dense in } \mathbb{P}\}$.
+\end{defi}
+\begin{lemma}
+  Suppose $\mathbb{P}$ is \hyperlink{def:splitting}{splitting}, $\mathbb{P} \in M$ and $M$ is a \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{\textsf{ZFC}}.
+  Suppose $G$ is a $\mathbb{P}$-\hyperlink{def:genericO}{generic filter over $M$}. Then $G \notin M$.
+\end{lemma}
+\begin{proof}
+  Suppose $G \in M$. Then $D \coloneqq \mathbb{P} \setminus G \in M$. We claim that $D$ is \hyperlink{def:dense}{dense}.
+  Take $p \in \mathbb{P}$ arbitrary. $\mathbb{P}$ is \hyperlink{def:splitting}{splitting}, so we find $q_1,q_2 \leq p$ with $q_1 \perp q_2$.
+  Since $G$ is a \hyperlink{def:filter}{filter}, not both $q_1, q_2 \in G$, so at least one is in $D$.
+  So by definition $G \cap D = G \cap \mathbb{P} \setminus G \neq \emptyset$, a contradiction.
+\end{proof}
 
 \printindex
 \end{document}
