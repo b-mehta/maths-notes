@@ -14,8 +14,11 @@
 \usepackage{pbox}
 
 \input{header}
+\newtheorem*{observation}{Observation}
+
 \usepackage{amssymb}% http://ctan.org/pkg/amssymb
 \usepackage{pifont}% http://ctan.org/pkg/pifont
+\usepackage{bbm}
 \usetikzlibrary{cd}
 \swapnumbers
 
@@ -25,8 +28,10 @@
 
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 \newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
+\newcommand{\p}{\mathbb{P}}
 \newcommand{\hf}{\textit{HF}}
 \newcommand{\hc}{\textit{HC}}
+\newcommand{\1}{\mathbbm{1}}
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
 \DeclareMathOperator{\dom}{dom}
@@ -37,12 +42,17 @@
 \DeclareMathOperator{\Diag}{Diag}
 \DeclareMathOperator{\Proj}{Proj}
 \DeclareMathOperator{\Def}{Def}
+\DeclareMathOperator{\name}{Name}
+\DeclareMathOperator{\Fn}{Fn}
+\DeclareMathOperator{\val}{val}
+\newcommand{\zfc}{\textsf{ZFC}}
 
 \setcounter{section}{-1}
 
 \let\oldmodels\models
 \let\models\vDash
 \let\nModels\nvDash
+\let\forces\Vdash
 
 \tikzset{dot/.style={inner sep=1pt, fill=black, circle}}
 
@@ -1369,7 +1379,7 @@ Clearly \textsf{ZFC}+GCH gives that every limit is a strong limit. So, \textsf{Z
     \item $N$ is \hyperlink{def:transitive}{transitive} in $M$.
   \end{enumerate}
 \end{defi}
-\begin{thm}[Minimality Theorem]
+\begin{thm}[Minimality Theorem]\hypertarget{thm:min}
   If $M \models \textsf{ZFC} + \textsf{V=L}$ and $N$ is an \hyperlink{def:innerModel}{inner model} then $N = M$.
 \end{thm}
 \begin{proof}
@@ -1419,6 +1429,44 @@ $N \models \textsf{ZFC}+\varphi$.
   This is an inner model of $L^M$, thus by minimality $N^* = L^M$. So, $N^* \models \neg\text{CH} \land \text{CH}$.
   Contradiction.
 \end{proof}
+
+\clearpage
+\section{Outer models}
+So, try outer models.
+As an illustration, take $\mathcal{L}$ the language of arithmetic $+,\cdot,0,1$.
+Take $\text{FLD}$, the axioms of fields, and $\Phi_0$ the axiom (schema) for characteristic zero, and $\text{FLD}_0 \coloneqq \text{FLD}+\Phi_0$, fields of characteristic $0$.
+
+Each characteristic has a prime field $\mathbb{Q}$. $\mathbb{Q}$ is minimal in the sense that it has no proper subfields.
+
+\begin{equation*}
+  \text{NSRT} \coloneqq \forall x\ (x \cdot x \neq 1 + 1)
+\end{equation*}
+We know $Q \models \text{NSRT}$ (there is No Square Root of Two).
+In analogy to the discussion of \hyperlink{def:innerModel}{inner models}, the technique of submodels cannot show $\cons(\text{FLD}_0 + \neg\text{NSRT})$
+So, we use outer models. Find $X \notin \mathbb{Q}$ (from the surrounding meta-universe), with $X^2 = 2$.
+We can't just take $\mathbb{Q} \cup \{X\}$, since it may not be a model of $\text{FLD}_0$, so we close under the field axioms: we need $X+X$, $X+X+X$, $q \cdot X$, $X^3$ and so on.
+Algebra has various techniques that allow us to do constructions and obtain $\mathbb{Q}(X) \models \text{FLD}_0+\neg\text{NSRT}$.
+\medskip
+
+Back to set theory: Suppose we have a countable \hyperlink{def:transitive}{transitive} $M \models \hyperlink{def:axioms}{\textsf{ZFC}}+\hyperlink{def:ch}{\textsf{CH}}$.
+Then all of its elements are countable: $\mathbb{R}^M, \aleph_1^M, \aleph_2^M, \aleph_3^M$ and so on.
+Since $\mathbb{R}^M$ is countable, there are lots of reals not in $M$.
+
+In particular, there is an injection $i: \aleph_2^M \to \mathbb{R}$ such that the range of $i$ is disjoint from $M$.
+Now form $M(i)$, the smallest $\textsf{ZFC}$-model containing $M$ as a subset and $i$ as an element (we have not yet formally defined this, but pretend for now that we have a technique to do so).
+Now $M(i) \models \textsf{ZFC} + (|\mathbb{R}| \geq |\aleph_2^M|)$.
+
+Unfortunately, $\neg$\textsf{CH} would need $|\mathbb{R}| \geq |\aleph_2^{M(i)}|$.
+So, we additionally need $\aleph_1^M = \aleph_1^{M(i)}$ and $\aleph_2^M = \aleph_2^{M(i)}$ in order to get this.
+
+Thus our proof components are:
+\begin{enumerate}
+  \item Find a construction of $M(i) \models \textsf{ZFC}$
+  \item Preservation theorems for cardinals
+\end{enumerate}
+Our only preservation theorem so far: $\mathbb{R}^M = \mathbb{R}^N \Rightarrow \aleph_1^M = \aleph_1^N$ (Example Sheet question 10).
+
+General problem: If $x$ codes a well order on $\mathbb{N}$ of order type $\aleph_1^M$ and $i(\gamma) = x$ then $M(i) \models \aleph_1$ is countable.
 
 
 \printindex
