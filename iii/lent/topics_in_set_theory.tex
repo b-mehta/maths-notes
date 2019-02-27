@@ -14,6 +14,9 @@
 \usepackage{pbox}
 
 \input{header}
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\usetikzlibrary{cd}
 \swapnumbers
 
 \makeindex[intoc]
@@ -22,11 +25,18 @@
 
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 \newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
+\newcommand{\hf}{\textit{HF}}
+\newcommand{\hc}{\textit{HC}}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\ran}{ran}
 \DeclareMathOperator{\rk}{rk}
 \DeclareMathOperator{\cons}{Cons}
 \DeclareMathOperator{\tcl}{tcl}
+\DeclareMathOperator{\Diag}{Diag}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\Def}{Def}
 
 \setcounter{section}{-1}
 
@@ -286,6 +296,10 @@ We define\index{bounded quantifier}
 \subsection{`Set theory'}
 \hypertarget{def:axioms}What do we mean by a `set theory'? The usual theories we care about are:
 
+\index{FST@\textsf{FST}}
+\index{Z@\textsf{Z}}
+\index{ZF@\textsf{ZF}}
+\index{ZFC@\textsf{ZFC}}
 \begin{center}
 \begin{tabular}{|rl|rl|}\hline
   \color{mred}{\textsf{FST}$_0$} & \begin{tabular}{@{}l@{}} Extensionality \\ Pairing \\ Union \\ \vspace{1mm} PowerSet \\ \vspace{1mm}\pbox{5cm}{Separation\\ (Aussonderung)} \end{tabular} & \color{mred}{\textsf{FST}} & \textsf{FST}$_0$ + \pbox{5cm}{Foundation\\ (Regularity)} \\ \hline
@@ -442,13 +456,13 @@ By G\"odel's Completeness Theorem,
 \begin{equation*}
   \cons(T) \iff \exists M\ (M \models T).
 \end{equation*}
-Now write $\beta$ for `there is a transitive set $A$ such that $(A,\in) \models$ \hyperlink{def:axioms}{\textsf{ZFC}}'.
+\hypertarget{def:beta}Now write $\beta$ for `there is a transitive set $A$ such that $(A,\in) \models$ \hyperlink{def:axioms}{\textsf{ZFC}}'.
 Clearly, $\beta \Rightarrow \cons(\textsf{ZFC})$.
 \begin{thm}
-  If \hyperlink{def:zfcstar}{\textsf{ZFC*}} is consistent, then \textsf{ZFC*} $\nvdash \beta$.
+  If \hyperlink{def:zfcstar}{\textsf{ZFC*}} is consistent, then \textsf{ZFC*} $\nvdash \hyperlink{def:beta}{\beta}$.
 \end{thm}
 \begin{proof}
-  Let $(M,\in) \models$ \textsf{ZFC*}. Suppose \textsf{ZFC} $\vdash \beta$. So $(M,\in) \vDash \beta$.
+  Let $(M,\in) \models$ \textsf{ZFC*}. Suppose \textsf{ZFC} $\vdash \hyperlink{def:beta}{\beta}$. So $(M,\in) \vDash \beta$.
   Thus in $M$, find $A$ \hyperlink{def:transitive}{transitive} such that $(A,\in) \models$ \textsf{ZFC}.
   By assumption, $(M,\in) \models \cons(\textsf{ZFC})$. By \hyperlink{def:abso}{absoluteness} of consistency, $(A,\in) \vDash \cons(\textsf{ZFC})$.
   Thus, $(A,\in) \vDash$ \textsf{ZFC*}.
@@ -456,7 +470,7 @@ Clearly, $\beta \Rightarrow \cons(\textsf{ZFC})$.
 \end{proof}
 
 In particular, it is stronger to say that there are \hyperlink{def:transitive}{transitive} models of \hyperlink{def:axioms}{\textsf{ZFC}} than that \textsf{ZFC} is consistent.
-Assuming $\beta$ is not an obvious assumption, so we need to study under which (natural) assumptions $\beta$ is true.
+Assuming $\hyperlink{def:beta}{\beta}$ is not an obvious assumption, so we need to study under which (natural) assumptions $\beta$ is true.
 
 So, let us investigate transitive models $A$ inside $M$.
 
@@ -586,7 +600,7 @@ Thus: $V_{\omega_1} \models \neg\textsf{Repl}$.
   A cardinal $\alpha$ is called \named{inaccessible} if
   \begin{enumerate}[(a)]
     \item $\kappa$ is \hyperlink{def:reg}{regular}
-    \item $\forall \lambda < \kappa$, $|\mathcal{P}(\lambda)| < \kappa$ (\named{strong limit}).
+    \item $\forall \lambda < \kappa$, $|\mathcal{P}(\lambda)| < \kappa$ \hypertarget{def:slim}(\named{strong limit}).
   \end{enumerate}
 \end{defi}
 That is, just take the two problems we had, negate them and make a definition.
@@ -597,11 +611,11 @@ That is, just take the two problems we had, negate them and make a definition.
   (Such cardinals are sometimes called \named{weakly inaccessible}\index{inaccessible!weakly}).
   A partial answer: Under the Generalized Continuum Hypothesis ($\forall \kappa\ 2^\kappa = k^+$), we have:
   \begin{equation*}
-    \kappa \text{ is inaccessible } \iff \kappa \text{ is a regular limit cardinal}.
+    \kappa \text{ is \hyperlink{def:inacc}{inaccessible} } \iff \kappa \text{ is a regular limit cardinal}.
   \end{equation*}
 \end{remark}
 
-Now, let's assume that $\kappa > \aleph_0$ is inaccessible.
+Now, let's assume that $\kappa > \aleph_0$ is \hyperlink{def:inacc}{inaccessible}.
 \begin{lemma}
   \begin{equation*}
     \forall \lambda < \kappa \quad |\hyperlink{def:vk}{V_\lambda}| < \kappa.
@@ -623,113 +637,789 @@ Now, let's assume that $\kappa > \aleph_0$ is inaccessible.
   This contradicts \hyperlink{def:reg}{regularity}.
 \end{proof}
 
+\begin{defi}[Mirimanoff rank]\hypertarget{def:rank}
+  Define
+  \begin{align*}
+    \varrho(x) \coloneqq \text{least }\alpha\text{ such that }x \in V_{\alpha+1} \setminus V_\alpha.
+  \end{align*}
+\end{defi}
+We prove useful properties about the \hyperlink{def:rank}{Mirimanoff rank} on question 4 on Example Sheet 1.
+
 \begin{thm}
   If $\kappa$ is \hyperlink{def:inacc}{inaccessible}, then $\hyperlink{def:vk}{V_\kappa} \models \textsf{Repl}.$
 \end{thm}
 \begin{proof}
-  Take any $F: V_\kappa \to V_\kappa$ and any $x \in V_\kappa = \bigcup_{\alpha < \kappa} V_\alpha$.
-  Thus, find $\alpha \in \kappa$ such that $x \in V_\alpha$.
+  Take any $F: \hyperlink{def:vk}{V_\kappa} \to V_\kappa$ and any $x \in V_\kappa = \bigcup_{\alpha < \kappa} V_\alpha$.
+  Thus, find $\alpha < \kappa$ such that $x \in V_\alpha$.
   Since $V_\alpha$ is transitive, $x \subseteq V_\alpha$.
   So $|x| \leq |V_\alpha| < \kappa$ (by the lemma).
 
   Now consider $X \coloneqq \{F(y) \mid y \in x\}$.
-  For each $y \in x$, consider $\rho(F(y)) \coloneqq$ least $\alpha$ such that $F(y) \in V_{\alpha+1}\setminus V_\alpha$.
-  By assumption, $\rho(F(y)) < \kappa$.
-  Consider $\{\rho(F(y)) | y \in x\} \eqqcolon R$, then $|R| \leq |x| < \kappa$.
-  By regularity, $\alpha \coloneqq \bigcup R < \kappa$.
-  But $\forall y \in x \ F(y) \in V_{\alpha+1}$.
+  For each $y \in x$, we have $\hyperlink{def:rank}{\varrho(F(y))} < \kappa$ by assumption.
+  Consider
+  \begin{equation*}
+  R \coloneqq \{\varrho(F(y)) \mid y \in x\},
+  \end{equation*}
+  then $|R| \leq |x| < \kappa$.
+  By \hyperlink{def:reg}{regularity}, $\alpha \coloneqq \bigcup R < \kappa$.
+  But then, $\forall y \in x \ F(y) \in V_{\alpha+1}$.
   So $X \subseteq V_{\alpha+1}$, $X \in V_{\alpha+2}$. This proves Replacement.
 \end{proof}
 
 Note we didn't even use that $F$ was definable: we showed a statement stronger than Replacement.
-As a consequence, we get that the existence of inaccessible cardinals cannot be proved in \textsf{ZFC}.
+As a consequence, we get that the existence of \hyperlink{def:inacc}{inaccessible} cardinals cannot be proved in \hyperlink{def:axioms}{\textsf{ZFC}}:
 
-\newlec Write \textsf{IC} for the axiom `there is an \hyperlink{def:inacc}{inaccessible} cardinal'.
+\newlec \hypertarget{def:ic}Write \textsf{IC} for the axiom `there is an \hyperlink{def:inacc}{inaccessible} cardinal'.
 If $\kappa$ is inaccessible, then $V_\kappa \models \textsf{ZFC}$.
 $V_\kappa$ is a transitive model of \textsf{ZFC}, so,
 \begin{equation*}
-  \textsf{ZFC} + \textsf{IC} \vdash \underbrace{\text{`there is a transitive set that is a model of }\textsf{ZFC}\text{'}}_{\beta}
+  \textsf{ZFC} + \textsf{IC} \vdash \underbrace{\text{`there is a transitive set that is a model of }\textsf{ZFC}\text{'}}_{\hyperlink{def:beta}{\beta}}
 \end{equation*}
-Recall that $\textsf{ZFC} + \cons{\textsf{ZFC}} \nvdash \beta$, so $\textsf{ZFC} + \cons{\textsf{ZFC}} \nvdash \textsf{IC}$.
+Recall that $\textsf{ZFC} + \cons{\textsf{ZFC}} \nvdash \beta$ from earlier, so $\textsf{ZFC} + \cons{\textsf{ZFC}} \nvdash \textsf{IC}$.
 
-\subsubsection{Model-theoretic reminders}
+Now, recall from model theory:
 \begin{enumerate}
-  \item L\"owenheim-Skolem theorem:
-    If $S$ is any structure in some countable first-order language $\mathcal{L}$ and $X \subseteq S$ is any subset, then there is a \textbf{Skolem hull} of $X$ in $S$,
-    $X \subseteq \mathcal{H}^S(X) \subseteq S$ such that
+  \item \named{L\"owenheim-Skolem Theorem}\hypertarget{thm:ls}:
+    If $S$ is any structure in some countable first-order language $\mathcal{L}$ and $X \subseteq S$ is any subset, then there is a \named{Skolem hull} of $X$ in $S$,
+    with $X \subseteq \mathcal{H}^S(X) \subseteq S$ such that
     \begin{enumerate}
-      \item $\mathcal{H}^S(X) \preccurlyeq S$ Recall $\preccurlyeq$ means elementary substructure, meaning that
-        \begin{equation*}\forall \varphi \; \forall h_1, \dotsc, h_n \in \mathcal{H}^S(X), \quad \mathcal{H}^S(X) \models \varphi(h_1, \dotsc, h_n) \iff S \models \varphi(h_1, \dotsc, h_n)\end{equation*}
+      \item $\mathcal{H}^S(X) \preccurlyeq S$. \hypertarget{def:elsub}Recall $\preccurlyeq$ means \named{elementary substructure}, meaning that
+        \begin{gather*}\forall \varphi \; \forall h_1, \dotsc, h_n \in \mathcal{H}^S(X), \\ \mathcal{H}^S(X) \models \varphi(h_1, \dotsc, h_n) \iff S \models \varphi(h_1, \dotsc, h_n)\end{gather*}
         \item
           $|\mathcal{H}^S(X)| \leq \max(\aleph_0, |X|)$
     \end{enumerate}
+    \begin{proof}[Proof sketch]
+      The key ingredient for this theorem is the \named{Tarski-Vaught criterion}, which says that for $Z \subseteq S$, we have $\hyperlink{def:elsub}{Z \preccurlyeq S}$ if and only if for every $\varphi$ and all $z_1, \dotsc, z_n$,
+      \begin{equation*}
+        S \models \exists x\; \varphi(x, z_1, \dotsc, z_n) \implies Z \models \exists x\; \varphi(x, z_1, \dotsc, z_n).
+      \end{equation*}
+      Observe there are $\max(\aleph_0, |X|)$ many possible $\varphi(x, z_1, \dotsc, z_n)$, so for each formula which we need to satisfy, take a witness in $S$ and add it into $X$.
+      But this introduces new $z_i$, so we need to add more witnesses, so repeat this process and take a union. Specifically,
+      \begin{align*}
+        Z_0 &\coloneqq X \\
+        Z_1 &\coloneqq Z_0 \cup \text{the witnesses for all tuples $\varphi, z_1, \dotsc, z_m$ where $z_1, \dotsc, z_m \in Z_0$} \\
+        Z_{n+1} &\coloneqq Z_n \cup \text{the witnesses for all tuples $\varphi, z_1, \dotsc, z_m$ where $z_1, \dotsc, z_m \in Z_n$} \\
+        Z &\coloneqq \bigcup_{n \in \mathbb{N}} Z_n.
+      \end{align*}
+      $Z$ is the required model. \qedhere
+    \end{proof}
 
-    \emph{Proof sketch}. The key ingredient for this theorem is the Tarski-Vaught criterion, which says that for $Z \subseteq S$, we have $Z \preccurlyeq S$ iff for every $\varphi$ and all $z_1, \dotsc, z_n$,
-    \begin{equation*}
-      S \models \exists x\; \varphi(x, z_1, \dotsc, z_n) \implies Z \models \exists x\; \varphi(x, z_1, \dotsc, z_n).
-    \end{equation*}
-    Observe there are $\max(\aleph_0, |X|)$ many possible $\varphi(x, z_1, \dotsc, z_n)$, so for each formula which we need to satisfy, take a witness in $S$ and add it into $X$.
-    But this introduces new $z_i$, so we need to add more witnesses, so repeat this process and take a union. Specifically,
-    \begin{align*}
-      Z_0 &\coloneqq X \\
-      Z_1 &\coloneqq Z_0 \cup \text{the witnesses for all tuples $\varphi, z_1, \dotsc, z_n$ where $z_1, \dotsc, z_n \in Z_0$} \\
-      Z_{n+1} &\coloneqq Z_n \cup \text{the witnesses for all tuples $\varphi, z_1, \dotsc, z_n$ where $z_1, \dotsc, z_n \in Z_n$} \\
-      Z &\coloneqq \bigcup_{n \in \mathbb{N}} Z_n.
-    \end{align*}
-    $Z$ is the required model. \qedhere
-
-    Now, work in \textsf{ZFC} + \textsf{IC}. Suppose $(M, \in) \models \textsf{ZFC} + \textsf{IC}$, which contains $V_\kappa \models \textsf{ZFC}$ ($V_\kappa \subseteq M$).
-    Apply L\"owenheim-Skolem to $V_\kappa$ with $X \coloneqq \emptyset$. Then
+    Now, work in \hyperlink{def:axioms}{\textsf{ZFC}} + \hyperlink{def:ic}{\textsf{IC}}.
+    Suppose $(M, \in) \models \textsf{ZFC} + \textsf{IC}$, which contains $\hyperlink{def:vk}{V_\kappa} \models \textsf{ZFC}$ ($V_\kappa \subseteq M$).
+    Apply \hyperlink{thm:ls}{L\"owenheim-Skolem} to $V_\kappa$ with $X \coloneqq \emptyset$. Then
     \begin{equation*}
       H \coloneqq \mathcal{H}^{V_\kappa}(\emptyset) \preccurlyeq V_\kappa
     \end{equation*}
     and $\mathcal{H}^{V_\kappa}(\emptyset)$ has cardinality $\leq \aleph_0$, and $H \models \textsf{ZFC}$.
 
     There is a formula $\varphi$ such that $\varphi(x)$ iff $x$ is the least uncountable cardinal.
-    We have $V_\kappa \models \exists x \varphi(x)$, but the only element that satisfies $\varphi$ in $V_\kappa$ is $\aleph_1$.
-    So in the Skolem hull construction,
+    We have $V_\kappa \models \exists x \ \varphi(x)$, since this is a theorem of \textsf{ZFC}, but the only element that satisfies $\varphi$ in $V_\kappa$ is $\aleph_1$.
+    So in the notation of Skolem hull construction,
     \begin{equation*}
       \aleph_1 \in Z_1 \subseteq H
     \end{equation*}
-    This implies $H$ can't be transitive, since $\aleph_1$ has uncountably many elements, but $H$ has only countably many.
-  \item Mostowki Collapse Theorem:
-    If $X$ is any set and $R \subseteq X \times X$ such that $R$ is well-founded and extensional, then there is a transitive set $T$ such that $(T, \in) \cong (X,R)$.
+    This implies $H$ can't be \hyperlink{def:transitive}{transitive}, since $\aleph_1$ has uncountably many elements, but $H$ has only countably many.
+    So, try to collapse to a transitive model.
+  \item \named{Mostowski Collapse Theorem}\hypertarget{thm:mct}:
+    If $X$ is any set and $R \subseteq X \times X$ such that $R$ is well-founded and extensional, then there is a \hyperlink{def:transitive}{transitive} set $T$ such that $(T, \in) \cong (X,R)$.
 
-    Consider $(H,\in) \models \textsf{ZFC}$. Since $(H,\in) \models \textsf{ZFC}$, $\in$ is extensional on $H$.
+    Consider $(H,\in) \models \hyperlink{def:axioms}{\textsf{ZFC}}$. Since $(H,\in) \models \textsf{ZFC}$, we must have that $\in$ is extensional on $H$.
     Since $\in$ (in $M$) is well-founded, $\in$ is well-founded on $H$.
-    So, let $T$ be the Mostowski collapse of $H$: $T$ is transitive and
+    So, let $T$ be the \hyperlink{thm:mct}{Mostowski collapse} of $H$: $T$ is \hyperlink{def:transitive}{transitive} and
     \begin{equation*}
       (T,\in) \cong (H,\in).
     \end{equation*}
     But this is an isomorphism, so $(T,\in) \models \textsf{ZFC}$. It is a bijection also, so $|T| = |H| \leq \aleph_0$.
 
-    Together: there is a countable transitive model of \textsf{ZFC}.
 \end{enumerate}
+Together: there is a countable \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{\textsf{ZFC}}.
 
 Notice that
 \begin{align*}
   \varphi(x) &\coloneqq \text{`}x \text{ is countable'} \\
-             &= \exists f \; (f: x \to \mathbb{N}, f \text{ is injective})
+             &= \exists f \; (\underbrace{f: x \to \mathbb{N}}_{\hyperlink{def:delta0t}{\Delta_0^{\textsf{ZFC}}}}, \underbrace{f \text{ is injective}}_{\Delta_0^\textsf{ZFC}})
 \end{align*}
-is $\Sigma_1^{\textsf{ZFC}}$, so is upwards absolute.
-But this formula is not downwards absolute: If $\alpha \in \textrm{Ord}$, $\alpha \in T$ then $V_\kappa \models \alpha$ is countable. But since $(T,\in) \models \textsf{ZFC}$, there is some $\alpha \in T$ such that $(T,\in) \models \alpha$ is uncountable, so $V_\kappa$ and $T$ disagree about the truth value of $\varphi(\alpha)$.
+is \hyperlink{def:sig1t}{$\Sigma_1^{\textsf{ZFC}}$}, so is \hyperlink{def:abso}{upwards absolute}.
+But this formula is not \hyperlink{def:abso}{downwards absolute}: If $\alpha \in \textrm{Ord}$, $\alpha \in T$ then $\hyperlink{def:vk}{V_\kappa} \models \alpha$ is countable.
+But since $(T,\in) \models \hyperlink{def:axioms}{\textsf{ZFC}}$, there is some $\alpha \in T$ such that $(T,\in) \models \alpha$ is uncountable, so $V_\kappa$ and $T$ disagree about the truth value of $\varphi(\alpha)$.
 
 Consider now
 \begin{align*}
   \psi(x) &\coloneqq  \text{`}x \text{ is a cardinal'} \\
   &= \forall \alpha \ (\alpha < x \rightarrow \text{there is no injection from $x$ to $\alpha$}).
 \end{align*}
-This is $\Pi_1^{\textsf{ZFC}}$. In $(T,\in)$, take $\alpha$ least such that $(T,\in) \models \neq\varphi(\alpha)$.
-Then $(T,\in) \models \alpha$ is a cardinal. Clearly, $V_\kappa \models \alpha$ is not a cardinal.
+This is $\hyperlink{def:pi1t}{\Pi_1^{\textsf{ZFC}}}$.
+In $(T,\in)$, take $\alpha$ least such that $(T,\in) \models \neg\varphi(\alpha)$.
+Then $(T,\in) \models \text{`}\alpha$ is a cardinal'. Clearly, $\hyperlink{def:vk}{V_\kappa} \models \text{`}\alpha$ is not a cardinal'.
 
 Note that if  $\lambda$ is an uncountable cardinal in $V_\kappa$, then $\lambda \notin T$, so the downwards absoluteness of $\psi$ is not very interesting.
 
-Instead of building $\mathcal{H}^{V_\kappa}(\emptyset)$, build $H^* \coloneqq \mathcal{H}^{V_\kappa}(\omega_1 + 1)$.
-Clearly $\omega_1 \in H$ and $\omega_1 \subseteq H$, so $\omega_1 \subseteq T^*$ and $\omega_1 \in T^*$. We have $|H^*| = \aleph_1$.
-Now we have $V_\kappa \models \omega_1 \text{ is a cardinal}$, so by downwards absoluteness of $\psi$, so $T^* \models \omega_1$ is a cardinal.
+So, try to ensure the cardinal is in $T$: Instead of building $\mathcal{H}^{V_\kappa}(\emptyset)$, build $H^* \coloneqq \mathcal{H}^{V_\kappa}(\omega_1 + 1)$.
+Clearly $\omega_1 \in H^*$ and $\omega_1 \subseteq H^*$, so $\omega_1 \subseteq T^*$ and $\omega_1 \in T^*$. We have $|H^*| = \aleph_1$.
 
-% Let $\kappa$ be a cardinal. We say $X$ is hereditarily smaller than $\kappa$ if $\abs{\tcl(X)} < \kappa$.
-% Let $H_\kappa \coloneqq \{X \mid X \text{ is hereditarily smaller than } \kappa\}$.
-% Obviously transitive.
+Now we have $V_\kappa \models \omega_1 \text{ is a cardinal}$, so by downwards absoluteness of $\psi$, so $T^* \models \omega_1$ is a cardinal.
+But there may be other cardinals below $\omega_1$ in $T^*$, so it may not be the case that $T^* \models \omega_1 = \aleph_1$.
+
+\newlec
+In our goal to prove the \hyperlink{def:ch}{Continuum Hypothesis}, we have
+\begin{enumerate}
+  \item Decided to go for \hyperlink{def:transitive}{transitive models}
+  \item Looked at `inner models'
+  \item In particular, models of type \hyperlink{def:vk}{$V_\alpha$}
+  \item Seen if $\alpha$ is \hyperlink{def:inacc}{inaccessible} then $V_\alpha \models \hyperlink{def:axioms}{\textsf{ZFC}}$
+  \item Found countable transitive submodels $T \subseteq V$ such that $T \models \textsf{ZFC}$.
+\end{enumerate}
+But this isn't particularly helpful, since it is not going to change the truth value of CH.
+If CH is true in our original model $(M,\in)$, then there is a bijection between $\mathbb{R}$ (or $\mathcal{P}(\mathbb{N})$) and $\omega_1$.
+Certainly, $\mathbb{R} \in \hyperlink{def:vk}{V_{\omega+20}}$, and also $\omega_1 \in V_{\omega_1+1}$, and both of these are in $V_\kappa$.
+So, the bijection is in $V_{\omega_1+20}$, certainly in $V_\kappa$.
+This means
+\begin{align*}
+  (M,\in) \models \text{CH} \iff (V_\kappa, \in) \models \text{CH}
+\end{align*}
+By \hyperlink{thm:ls}{L\"owenheim-Skolem}, we found countable $H \preccurlyeq V_\kappa$, so
+\begin{equation*}
+  (H,\in) \models \text{CH} \iff (V_\kappa, \in) \models \text{CH}.
+\end{equation*}
+And \hyperlink{thm:mct}{Mostowski} had $(T,\in) \cong (H,\in)$ so
+\begin{equation*}
+  (T,\in) \models \text{CH} \iff (H, \in) \models \text{CH}.
+\end{equation*}
+In summary, the method of finding countable transitive elementary submodels of \hyperlink{def:vk}{$V_\kappa$} is not going to change the value of CH.
+
+\subsubsection{Models of hereditarily small sets}
+\begin{defi}\hypertarget{def:hered}
+  Let $\kappa$ be a \hyperlink{def:reg}{regular} cardinal, e.g.\ $\kappa=\omega, \kappa=\omega_1$.
+  Then $x$ is called \index{hereditary size}\textbf{hereditarily of size} $<\kappa$ if $|\tcl(x)| < \kappa$.
+  Recall the \named{transitive closure}
+  \begin{equation*}
+    \hypertarget{def:tcl}\tcl(x) \coloneqq \bigcup_{m \in \mathbb{N}} t_n(x)
+  \end{equation*}
+  where
+  \begin{align*}
+    t_0(x) &\coloneqq x \\
+    t_{n+1}(x) &\coloneqq \bigcup t_n(x).
+  \end{align*}
+\end{defi}
+The definition of $|\hyperlink{def:tcl}{\tcl(x)}| < \kappa$ captures the intuition of
+`$x$ has size $<\kappa$, all elements of $x$ have size $<\kappa$, all elements of elements of $x$ have size $<\kappa$, etc.'
+
+Side remark: If $\kappa$ is not \hyperlink{def:reg}{regular}, this intuition might not work: Let $\kappa = \aleph_\omega$. Then define
+\begin{align*}
+  x_n^0 &\coloneqq \aleph_n \\
+  x_n^{k+1} &\coloneqq \{x_n^k\} \\
+  X &\coloneqq \{x_0^0, x_1^1, x_2^2, \dotsc\} \\
+    &= \{\aleph_0, \{\aleph_1\}, \{\{\aleph_2\}\}, \{\{\{\aleph_3\}\}\},\dotsc\}
+\end{align*}
+$X$ is countable. In the notation from above,
+\begin{equation*}
+  |t_{n+1}(X)| = \aleph_n
+\end{equation*}
+But $|\tcl(X)| = \aleph_\omega$.
+
+\begin{defi}
+  \hypertarget{def:hk}Take $H_\kappa$ to be the sets which are \hyperlink{def:hered}{hereditarily of size $<\kappa$}.
+\end{defi}
+
+Observe
+\begin{enumerate}
+  \item \hyperlink{def:hk}{$H_\kappa$} is \hyperlink{def:transitive}{transitive}
+  \item If $X \subseteq H_\kappa$ and $|X| < \kappa$, then $X \in H_\kappa$. (Follows directly from \hyperlink{def:reg}{regularity} of $\kappa$ and the definition).
+\end{enumerate}
+
+Take as our first example $\hyperlink{def:hk}{H_{\aleph_0}} \eqqcolon \hypertarget{def:hf}\hf$ (hereditarily finite)\index{hereditarily finite}.
+
+\begin{prop}
+$\hyperlink{def:hf}{\hf} = \hyperlink{def:vk}{V_\omega}$.
+\end{prop}
+\begin{proof}
+  First show $\hyperlink{def:vk}{V_\omega} \subseteq \hyperlink{def:hf}{\hf}$.
+  Need to show $V_n \subseteq \hf$ for all natural $n$.
+  \begin{itemize}
+    \item Clearly $V_0 = \emptyset \subseteq \hf$.
+    \item If $V_n \subseteq \hf$ and $Z \subseteq V_n$, then by Observation 2, $Z \in \hf$ so $\mathcal{P}(V_n) = V_{n+1} \subseteq \hf$.
+  \end{itemize}
+
+  Next, we show $\hf \subseteq V_\omega$.
+  Suppose not, then there are $x \in \hf \setminus V_\omega$.
+  Take such an $x$ with minimal rank $\alpha$.
+  Minimality says: If $y \in \hf$ with $\varrho(y) < \alpha$, then there is $k \in \mathbb{N}$ such that $\varrho(y) = k$.
+
+  We have $x \in V_{\alpha+1} \setminus V_\alpha$, so $x \in \mathcal{P}(V_\alpha)$, $x \subseteq V_\alpha$.
+  Also, $x \in \hf$, so $x$ is finite, say $x = \{x_1, \dotsc, x_n\}$.
+  Using minimality, each $x_i$ is in $V_{k_i}$ for some natural $k_i$. So
+  \begin{equation*}
+    x \in V_{\max(k_1, \dotsc, k_n) + 1} \subseteq V_\omega
+  \end{equation*}
+  a contradiction.
+\end{proof}
+So we know $\hf \models \hyperlink{def:axioms}{\textsf{FST}}$.
+
+Our next example of a regular cardinal was $\aleph_1$, so now try $H_{\aleph_1} \eqqcolon \hypertarget{def:hc}\hc$ (hereditarily countable\index{hereditarily countable}).
+\begin{center}
+  \begin{tikzpicture}[scale=2]
+    \draw (1,2) -- (0,0) -- (-1,2);
+    \draw [very thin] (-1.4,1.7) -- (1.4,1.7);
+    \draw [very thin] (-1.1,1.1) -- (1.1,1.1);
+    \draw [very thin] (-1.0,0.9) -- (1.0,0.9);
+    \draw [very thin] (-0.9,0.7) -- (0.9,0.7);
+    \draw [very thin] (0,0) -- (0,2);
+    \node [right] at (1.4,1.7) {$\omega_1$};
+    \node [right] at (1.1,1.1) {$\omega+2$};
+    \node [right] at (1.0,0.9) {$\omega+1$};
+    \node [right] at (0.9,0.7) {$\omega$};
+    \draw plot [smooth] coordinates {(-0.45,0.9) (-0.2,1.1) (0,1.7) (0.2,1.1) (0.45,0.9)};
+  \end{tikzpicture}
+\end{center}
+\begin{itemize}
+  \item The ordinals in \hyperlink{def:hc}{\textit{HC}} are exactly $\omega_1$
+  \item $\hyperlink{def:vk}{V_{\omega+2}} \setminus \hc \neq \emptyset$ (take, say, $\mathcal{P}(\mathbb{N})$)
+  \item $V_{\omega+1} \subseteq \hc$
+\end{itemize}
+Which axioms are true in \hyperlink{def:hc}{\hc}?
+\begin{description}
+  \item[Pair] Take $x,y \in \hyperlink{def:hc}{\hc}$. $\{x,y\} \subseteq \hc$, $|\{x,y\}| < \aleph_1$, so $\{x,y\} \in \hc$.
+
+    Separation and Union are similarly easy. Foundation follows trivially from foundation of the universe, and Extensionality follows by \hyperlink{def:transitive}{transitivity}.
+    Replacement is harder:
+  \item [Replacement] Let $F: \hyperlink{def:hc}{\hc} \to \hc$ and $x \in \hc$. Consider
+    \begin{equation*}
+      R \coloneqq \{F(y) \mid y \in x\} \subseteq \hc
+    \end{equation*}
+    then $|R| \leq |x| < \aleph_1$, and $R \subseteq \hc$ so by observation 2, $R \in \hc$.
+  \item[Power Set] We know that $\mathbb{N} \in \hc$ and that $\mathcal{P}(\mathbb{N}) \notin \hc$. But this is not enough to show $\hc \models \neg \textsf{Pow}$.
+
+    Instead, we need to show that for all $A \in \hc$,
+    \begin{equation*}
+      \hc \models `A \text{ is not the power set of } \mathbb{N}\text{'}
+    \end{equation*}
+    i.e.\
+    \begin{equation*}
+      \hc \models \exists X \ (X \subseteq \mathbb{N} \land X \notin A).
+    \end{equation*}
+    Fix $A \in \hc$ and presume that this might be the \hc-powerset of $\mathbb{N}$.
+    Thus, if $X \subseteq \mathbb{N}$ and $X \in \hc$ then $X \in A$.
+
+    But if $X \subseteq \mathbb{N}$, then $X \subseteq \hc$ and $|X| < \aleph_1$, so $X \in \hc$.
+    So if $A$ is any set such that $\forall X\ (X \subseteq \mathbb{N} \text{ and } X \in \hc \rightarrow X \in A)$,
+    then $A$ is uncountable, so $A \notin \hc$.
+    Thus $\hc \models \neg \textsf{Pow}$.
+\end{description}
+
+\newlec
+Using a similar result, we now have that \hyperlink{def:hk}{$H_\kappa$} is a model of all of \hyperlink{def:axioms}{\textsf{ZFC}} without Power Set if $\kappa$ is \hyperlink{def:reg}{regular}.
+\begin{prop}
+  If $\kappa$ is a \hyperlink{def:slim}{strong limit} cardinal, then $H_\kappa \models \textsf{Pow}$.
+\end{prop}
+\begin{proof}
+  We'll show: if $x \in \hyperlink{def:vk}{H_\kappa}$, then $\mathcal{P}(x) \in H_\kappa$.
+  This is much stronger than the Power Set axiom.
+  \begin{equation*}
+    \tcl(\mathcal{P}(x)) = \underbrace{\mathcal{P}(x)}_{\text{size } 2^{|x|} < \kappa} \cup \underbrace{\tcl(x)}_{\text{size} < \kappa}
+  \end{equation*}
+  Together, $|\tcl(\mathcal{P}(x))| < \kappa$, so $\mathcal{P}(x) \in H_\kappa$.
+\end{proof}
+
+\subsection{The Constructible Universe}
+So far, all of our proofs were fairly crude: instead of forming the `internal' power set, we just used the external power set and showed it works.
+Similarly for Replacement, we showed a much stronger statement.
+
+So a more general idea would be to build inner models using `definability' properties, using the internal logic of a model.
+The problem with this is that definability is not definable.
+\begin{thm}[Tarski, Undefinability of truth]\hypertarget{thm:tarski}
+  Let $(M,\in) \models \hyperlink{def:axioms}{\textsf{ZFC}}$. We assume that the language of set theory $\mathscr{L}_{\in} \subseteq M$.
+  Consider the set $S$ of sentences in $\mathscr{L}_\in$ and the set $U$ of unary predicates ($\mathscr{L}_\in$-formulas in one free variable).
+  \hypertarget{def:truthpred}A \named{truth predicate} would be a formula $T(x)$ in $\mathscr{L}_\in$ (i.e.\ $T \in U$) such that
+  \begin{align*}
+    (M,\in) \models \varphi \iff (M,\in) \models T(\varphi).
+  \end{align*}
+  There can be no such truth predicate.
+\end{thm}
+Contrast this with our previous result:
+  If $M$ is a set, then `$(M,\in) \models \varphi$' is \hyperlink{def:delta0}{$\Delta_0$}.
+\begin{proof}
+  The key idea is diagonalisation.
+  If $\varphi(x) \in U$, then we can ask whether
+  \begin{equation*}
+    \underbrace{\varphi(\varphi)}_{\in S}\text{ is true.}
+  \end{equation*}
+  Let's assume that $T$ is a \hyperlink{def:truthpred}{truth predicate}, and define
+  \begin{equation*}\delta(x) \coloneqq \neg T(x(x))\end{equation*}
+  where $x(x)$ is $x$ applied to $x$ if $x \in U$ and $\emptyset$ otherwise.
+  Now apply $\delta$ to $\delta$, and note $ \delta(\delta) \in S $.
+  \begin{equation*}
+    M \models \delta(\delta) \iff M \models T(\delta(\delta))
+  \end{equation*}
+  since $T$ was a truth predicate, but also
+  \begin{equation*}
+    M \models \delta(\delta) \iff M \models \neg T(\delta(\delta)),
+  \end{equation*}
+  a contradiction.
+\end{proof}
+
+\begin{defi}
+  \hypertarget{def:def}Again, let $M \models \textsf{ZFC}$. We say $x \in M$ is \named{definable} if there is a formula $\varphi$ such that
+  \begin{equation*}
+    \forall y \in M \quad x = y \iff M \models \varphi(y).
+  \end{equation*}
+  \hypertarget{def:dd}We say that a formula $D$ is called a \named{definition of definability} if
+  \begin{equation*}
+    \forall x \in M \quad x \text{ is definable} \iff M \models D(x).
+  \end{equation*}
+\end{defi}
+\begin{thm}[Undefinability of definability]
+  There is no formula $D$ that is a \hyperlink{def:dd}{definition of definability}.
+\end{thm}
+\begin{proof}
+  Assume that $D$ is a \hyperlink{def:dd}{definition of definability}. Consider
+  \begin{align*}
+  \alpha \coloneqq \min\{\beta \mid \beta \text{ is not }\hyperlink{def:def}{\text{definable}}\text{ but } \forall \gamma < \beta \ \exists \gamma'\ \gamma < \gamma' < \beta \text{ and } \gamma' \text{ is definable} \},
+  \end{align*}
+  the supremum of the definable ordinals. This defined by the formula:
+  \begin{equation*}
+    y = \alpha \longleftrightarrow
+    \begin{gathered}
+    y \text{ is an ordinal and } \neg D(y) \text{ and }  \\
+    \forall \gamma\ (\gamma < y \rightarrow \exists \gamma'\ (\gamma < \gamma' < y \land D(\gamma')))
+    \end{gathered}
+  \end{equation*}
+  This proves that $\alpha$ is definable, so
+  \begin{equation*}
+    (M,\in) \models D(\alpha).
+  \end{equation*}
+  But one of the conjuncts in the definition implies $M \models \neg D(\alpha)$. Contradiction.
+\end{proof}
+
+We now learned that `definability' is not going to work without keeping track of parameters. So, we need to define `definability' with direct reference to what parameters are allowed.
+
+\begin{defi}\hypertarget{def:defsubs}
+  Fix $A$ and $m \in \mathbb{N}$. We're going to define by recursion what it means to be a \named{definable subset} of $A^n$:
+  \begin{align*}
+    \Diag_\in (A,n,i,j) &\coloneqq \{s \in A^n \mid s_i \in s_j\} \\
+    \Diag_= (A,n,i,j) &\coloneqq \{s \in A^n \mid s_i = s_j\} \\
+    \Proj(A,R,n) &\coloneqq \{s \in A^n \mid \exists t \in R\ (t \upharpoonright n = s)\} \\
+    \Def(0,A,n) &\coloneqq \{\Diag_\in(A,n,i,j) \mid i,j < n\} \cup \{\Diag_=(A,n,i,j) \mid i,j < n\} \\
+    \Def(k+1,A,n) &\coloneqq \Def(k,A,n)
+    \begin{aligned}[t]
+    &\cup \{R \cap S \mid R,S \in \Def(k,A,n)\} \\
+    &\cup \{A^n \setminus S \mid S \in \Def(k,A,n)\} \\
+    &\cup \{\Proj(A,R,n) \mid R \in \Def(k,A,n+1)\} \\
+    \end{aligned} \\
+    \Def(A,n) &\coloneqq \bigcup_{k \in \mathbb{N}} \Def(k,A,n).
+  \end{align*}
+\end{defi}
+
+Observe the definitions of $\Def(k+1,A,n)$ and $\Def(0,A,n)$ are $\Delta_0$, so the definition of $\Def(A,n)$ is a recursive definition based on absolute notions and thus absolute for transitive models (containing $A$).
+
+Next, use $\Def(A,n)$ to define the `definable power set'.
+Note that $\Def(A,1)$ will be countable, so isn't a reasonable definition of the power set.
+After that, define a `definable von Neumann hierarchy'.
+
+\newlec
+Our goal is to construct an inner model $L \subseteq M$ that is based on definability.
+As we saw, this had problems, connected to \hyperlink{thm:tarski}{Tarski's Undefinability of Truth}.
+The `definable' fragment of truth is that where we fix the scope of existential quantifiers in advance.
+
+We recursively defined $\hyperlink{def:defsubs}{\Def(A,n)}$, the definable subsets of $A^n$ where definable is interpreted in $A$.
+
+\begin{lemma}
+  If $X \subseteq A^n$ such that there is a formula $\varphi$ such that
+  \begin{align*}
+    (x_1, \dotsc, x_n) \in X \iff (A,\in) \models \varphi(x_1, \dotsc, x_n)
+  \end{align*}
+  then $X \in \hyperlink{def:defsubs}{\Def(A,n)}$.
+\end{lemma}
+\begin{proof}
+  Simple induction over complexity of $\varphi$.
+\end{proof}
+\begin{lemma}
+  In $M$, we have that $\hyperlink{def:defsubs}{\Def(A,n)}$ is countable. (We even have a concrete surjection $\mathbb{N} \twoheadrightarrow \Def(A,n)$)
+\end{lemma}
+\begin{remark}
+  In the definition of $\hyperlink{def:defsubs}{\Def(k,A,n)}$, we only used notions \hyperlink{def:abso}{absolute} for \hyperlink{def:transitive}{transitive} models of \hyperlink{def:axioms}{\textsf{ZF}}.
+  So, since $\Def(A,n)$ was defined by recursion over $\Def(k,A,n)$, also $\Def(A,n)$ is absolute.
+\end{remark}
+\begin{aim}
+  Our goal is to find a definable power set.
+\end{aim}
+\hyperlink{def:defsubs}{$\Def(A,1)$} is not a good candidate, since if $A$ is uncountable, then there is $a \in A$ such that $\{a\} \notin \Def(A,1)$ by the second lemma.
+\begin{defi}\hypertarget{def:d}
+  We define
+  \begin{align*}
+    \mathcal{D}(A) \coloneqq \left\{X \subseteq A\ \middle\vert\ \parbox{175pt}{\centering$\exists n\ \exists s \in A^n\ \exists R \in \hyperlink{def:defsubs}{\Def(A,n+1)}$ \\ s.t.\ $X = \{a \in A \mid (a,s_0, \dotsc, s_{n-1}) \in R\}$}\right\}
+  \end{align*}
+  We call this the \named{definable power set}.
+\end{defi}
+\begin{remark}\leavevmode
+  \begin{enumerate}
+    \item If $X$ is informally definable with parameters from $A$, i.e.\
+      \begin{align*}
+        X = \{a \in A \mid (A,\in) \models \varphi(a,\bar{p})\}
+      \end{align*}
+        with $\bar{p} \in A$, then $X \in \hyperlink{def:d}{\mathcal{D}(A)}$.
+    \item As $\hyperlink{def:def}{\Def(A,n)}$ was \hyperlink{def:abso}{absolute} and the quantifiers in the definition of $\mathcal{D}(A)$ are all bounded, $\mathcal{D}(A)$ is absolute for \hyperlink{def:transitive}{transitive} models.
+  \end{enumerate}
+\end{remark}
+\begin{prop}
+  If $A$ is \hyperlink{def:transitive}{transitive}, then $\hyperlink{def:d}{\mathcal{D}(A)}$ is transitive.
+\end{prop}
+\begin{proof}
+  Suppose $x \in X \in \hyperlink{def:d}{\mathcal{D}(A)}$. Then $x \in X \subseteq A$, so by \hyperlink{def:transitive}{transitivity} of $A$, $x \in A$.
+  But since $x \in A$, we can define $x$ as a subset by the formula $v \in x = \varphi(v)$,
+  \begin{equation*}
+    x = \{z \in A \mid (A,\in) \models \varphi(z)\}. \qedhere
+  \end{equation*}
+\end{proof}
+\begin{defi}
+  \hypertarget{def:l}We can now define the \named{constructible hierarchy}.
+  \begin{align*}
+    L_0 &\coloneqq \emptyset \\
+    L_{\alpha+1} &\coloneqq \mathcal{D}(L_\alpha) \\
+    L_{\lambda} &\coloneqq \bigcup_{\alpha < \lambda} L_\alpha
+  \end{align*}
+  and we refer to the class $\bigcup_{\alpha \in \text{Ord}} L_\alpha$ as `$L$' or the `\named{constructible universe}'.
+\end{defi}
+\begin{enumerate}
+  \item If $\alpha \leq \omega$, $\hyperlink{def:vk}{V_\alpha} = \hyperlink{def:l}{L_\alpha}$.
+  \item For every $\alpha$, $L_\alpha$ is \hyperlink{def:transitive}{transitive} (follows from the proposition by induction).
+  \item If $\alpha \leq \beta$ then $L_\alpha \subseteq L_\beta$.
+  \item $\text{Ord} \cap L_\alpha = \alpha$.
+  \item If $\alpha \geq \omega$ then $|L_\alpha| = |\alpha|$:
+    \begin{proof}
+      Induction. $\alpha=\omega$: $|L_\omega| = |V_\omega| = \aleph_0 = |\omega|$.
+      Suppose for all $\beta < \alpha$ we have $|L_\beta| \leq |\beta|$.
+      Show that $|L_\alpha| < |\alpha|^+$.
+      \begin{itemize}
+        \item If $\alpha=\beta+1$ is a successor, $L_\alpha = L_{\beta+1} = \mathcal{D}(L_\beta)$.
+          Then there is a surjection from $\aleph_0 \times \bigcup_{n \in \mathbb{N}} L_\beta^n$ onto $\mathcal{D}(L_\beta)$, but $\aleph_0 \times \bigcup_{n \in \mathbb{N}} L_\beta^n$ has size $|L_\beta|$.
+        \item If $\alpha$ is a limit, let $\pi_\beta: \alpha \to L_\beta$ be a surjection. Then we find surjection from $\alpha \times \alpha \twoheadrightarrow L_\alpha$, with $(\gamma,\gamma') \mapsto \pi_\gamma \gamma'$.
+      \end{itemize}
+      $|L_\alpha| \geq |\alpha|$ follows from 4.
+    \end{proof}
+  \item What about $V_{\omega+1}$ and $L_{\omega+1}$? $V_{\omega+1}$ is uncountable and $L_{\omega+1}$ is countable. $L_{\omega+1} \subseteq V_{\omega+1}$, and $V_{\omega+1} \setminus L_{\omega+1} \neq \emptyset$.
+\end{enumerate}
+\begin{defi}
+  \hypertarget{def:lrank}If $x$ is constructible, $x \in L$, then
+  \begin{equation*}
+    \varrho_L(x) \coloneqq \min\{\alpha \mid x \in L_{\alpha+1}\}.
+  \end{equation*}
+\end{defi}
+\begin{defi}
+  \hypertarget{def:vl}$\textsf{V=L}$ is the \named{axiom of constructibility}, and refers to
+  \begin{align*}
+    \forall x\ \exists \alpha\ (x \in L_\alpha).
+  \end{align*}
+\end{defi}
+This is a sentence in $\mathcal{L}_\in$.
+
+Note that the formula describing `$x \in L_\alpha$' and `$x = L_\alpha$' are both \hyperlink{def:abso}{absolute} for \hyperlink{def:transitive}{transitive} models of set theory.
+
+\begin{prop}
+  If $A$ is a \hyperlink{def:transitive}{transitive} set model of \textsf{ZFC} + \hyperlink{def:vl}{\textsf{V=L}}, then there is a limit ordinal $\lambda$ such that $A = L_\lambda$.
+\end{prop}
+\begin{proof}
+  \newlec
+  Consider $\lambda \coloneqq \text{Ord} \cap A$. Clearly $\lambda$ is a limit ordinal (if not, $A$ thinks there is a largest ordinal, but $A \models \hyperlink{def:axioms}{\textsf{ZFC}}$).
+  Claim that $A = \hyperlink{def:l}{L_\lambda}$.
+
+  %Suppose that $x \in A$, by $V=L$ find $\alpha \in M$ such that $(M,\in) \models x \in L_\alpha$.
+  %$L_\alpha$ was defined by recursion from absolute notions, so $x \in L_\alpha$ is absolute, so $x \in L_\alpha \subseteq L_\lambda$.
+  %Suppose $x \in L_\lambda$, so there is $\alpha < \lambda$ such that $x \in L_\alpha$. By choice of $\lambda$, $\alpha \in M$, so by absoluteness, $(M,\in) \models x \in L_\alpha$.
+
+  First show that $A \subseteq L_\lambda$. If $x \in A$, then by $(A,\in) \models \hyperlink{def:vl}{\textsf{V=L}}$, find $\beta$ such that $(A,\in) \models x \in L_\beta$. By \hyperlink{def:abso}{absoluteness}, $x \in L_\beta \subseteq L_\lambda$.
+
+  Next show $L_\lambda \subseteq A$: If $x \in L_\lambda$, since $\lambda$ is a limit, $L_\lambda = \bigcup_{\beta < \lambda} L_\beta$ so find $\beta < \lambda$ and $x\in L_\beta$.
+  Since $(A,\in) \models \textsf{ZFC}$, we know that there is $X$ such that $(A,\in) \models X = L_\beta$. By absoluteness, $X = L_\beta$.
+  Therefore $L_\beta \in A$. $x \in L_\beta$, so by \hyperlink{def:transitive}{transitivity}, $x \in A$.
+\end{proof}
+
+Our next major goal is to show
+\begin{thm}[G\"odel 1938]
+If $\kappa$ is \hyperlink{def:inacc}{inaccessible}, then $\hyperlink{def:l}{L_\kappa} \models$ \hyperlink{def:axioms}{\textsf{ZFC}} + \hyperlink{def:vl}{\textsf{V=L}}.
+\end{thm}
+\begin{cor}
+  If $\kappa$ is \hyperlink{def:inacc}{inaccessible}, then there is a countable $\alpha$ such that
+  \begin{equation*}
+    \hyperlink{def:l}{L_\alpha} \models \hyperlink{def:axioms}{\textsf{ZFC}} + \hyperlink{def:vl}{\textsf{V=L}}.
+  \end{equation*}
+\end{cor}
+\begin{proof}
+  Take $H \models \hyperlink{thm:ls}{\mathcal{H}}^{\hyperlink{def:l}{L_\kappa}}(\emptyset) \preccurlyeq \hyperlink{def:l}{L_\kappa}$. $H$ is countable.
+  Take $T \cong H$ the \hyperlink{thm:mct}{Mostowski collapse}, $(T,\in) \equiv (L_\kappa, \in)$, so we have
+  \begin{equation*}
+    (T,\in) \models \hyperlink{def:axioms}{\textsf{ZFC}}+\hyperlink{def:vl}{\textsf{V=L}}
+  \end{equation*}
+  where $T$ is countable transitive.
+
+  By the Proposition, $T=L_\alpha$ for some ordinal $\alpha$.
+  By one of the earlier properties of $L$, we have $|L_\alpha| = |\alpha|$, so $\alpha$ is countable.
+\end{proof}
+
+Contrast this with: If $\hyperlink{def:vk}{V_\alpha} \models \hyperlink{def:axioms}{\textsf{ZFC}}$, then $\alpha$ cannot be countable:
+If $\alpha$ is countable, there is a code for a surjection $f: \mathbb{N} \twoheadrightarrow \alpha$ in $V_{\omega+1} \subseteq V_\alpha$, so $V_\alpha \models $ `$\alpha$ is countable', contradicting $V_\alpha \models \textsf{ZFC}$.
+
+\begin{proof}[Proof of G\"odel's Theorem]\leavevmode
+  \begin{description}
+    \item [Extensionality] Follows from \hyperlink{def:transitive}{transitivity}.
+    \item[Pair] $x,y \in \hyperlink{def:l}{L_\kappa}$, find $\alpha$ such that $x,y \in L_\alpha$. $\{x,y\} \subseteq L_\alpha$.
+      Clearly the formula $\varphi(z,x,y) \coloneqq z=x \land x=y$ defines the pair $\{x,y\}$, so by our Lemma earlier, the pair lies in $\hyperlink{def:d}{\mathcal{D}(L_\alpha)} = L_{\alpha+1} \subseteq L_\kappa$.
+
+      The same proof takes care of, say, Union.
+    \item [Power Set] Consider $x \in L_\kappa$.
+      As before, $\alpha < \kappa$ with $x \in L_\alpha$.
+      Since $L_\alpha$ is \hyperlink{def:transitive}{transitive}, $x \subseteq L_\alpha$. Then $|x| \leq |L_\alpha| < \kappa$, because $\kappa$ was \hyperlink{def:inacc}{inaccessible}.
+
+      Consider $\mathcal{P}(x)$ in $M$,
+      $|\mathcal{P}(x)| = 2^{|x|} < \kappa.$
+      Now $|L_\kappa \cap \mathcal{P}(x)| \leq |\mathcal{P}(x)| < \kappa$.
+
+        Since $L_\kappa$, $\mathcal{P}(x)$ are sets in $M$, $L_\kappa \cap \mathcal{P}(x)$ is a set in $V_\kappa$ and it is \hyperlink{def:defsubs}{definable} in $V_\kappa$ by the formula
+        \begin{equation*}
+          z \in L_\kappa \cap \mathcal{P}(x) \iff z \in L_\kappa \land z \subseteq x.
+        \end{equation*}
+        But that's not good enough to prove that $L_\kappa \cap \mathcal{P}(x) \in L_\kappa$.
+
+      For each $z \in L_\kappa \cap \mathcal{P}(x)$ find $\alpha_z \coloneqq \hyperlink{def:lrank}{\varrho_L(z)} < \kappa$.
+      Consider
+      \begin{equation*}
+      \{\alpha_z \mid z \in L_\kappa \cap \mathcal{P}(x)\} \subseteq \kappa,
+      \end{equation*}
+      of size $<\kappa$.
+      By the regularity of $\kappa$, find a bound $\beta < \kappa$ such that
+      \begin{equation*}
+        \{\alpha_z \mid z \in L_\kappa \cap \mathcal{P}(x) \} \subseteq \beta
+      \end{equation*}
+      so $L_\kappa \cap \mathcal{P}(x) \subseteq L_\beta$.
+
+      Define $\mathcal{P} \coloneqq \{z \mid (L_\beta, \in) \models z \subseteq x\}$. By our lemma, $\mathcal{P} \subseteq \mathcal{D}(L_\beta) = L_{\beta+1} \subseteq L_\kappa$.
+      But $L_\kappa \models \forall z\ (z \in \mathcal{P} \iff z \subseteq x)$ so $L_\kappa \models \textsf{Pow}$.
+
+    \item[Separation] \newlec Let $x \in \hyperlink{def:l}{L_\kappa}$, $\varphi$ a formula and take $a_1, \dotsc, a_n \in L_\kappa$.
+      Separation says that (informally) $\{z \in x \mid \varphi(z,a_1, \dotsc, a_n)\}$ exists.
+      More formally, we need to make the set
+      \begin{equation*}
+      \{z \in x \mid L_k \models \varphi(z, a_1, \dotsc, a_n)\}.
+      \end{equation*}
+
+      For each $1 \leq i \leq n$, find $\alpha_i < \kappa$ such that $a_i \in L_{\alpha_i}$ and find $\alpha < \kappa$ such that $x \in L_\alpha$.
+      Define $\beta \coloneqq \max\{\alpha,\alpha_1, \dotsc, \alpha_n\}$.
+      So for any $z \in x$, we have $z,a_1,\dotsc,a_n \in L_\beta$ by \hyperlink{def:transitive}{transitivity} of $L_\beta$.
+      So
+      \begin{align*}
+        \{z \in x \mid L_\beta \models \varphi(z,a_1,\dotsc,a_n)\} \in \hyperlink{def:d}{\mathcal{D}(L_\beta)} = L_{\beta+1}.
+      \end{align*}
+
+      However, in general,
+      \begin{align*}
+        \{z \in x \mid L_\beta \models \varphi(z,a_1,\dotsc,a_n)\} \neq \{z \in x \mid L_\kappa \models \varphi(z,a_1,\dotsc,a_n)\}
+      \end{align*}
+
+    Consider $\hyperlink{thm:ls}{\mathcal{H}^{L_\kappa}(L_\beta)} \preccurlyeq L_\kappa$ with $|\mathcal{H}^{L_\kappa}(L_\beta)| = |L_\beta| = |\beta| < \kappa$.
+    Now consider its \hyperlink{thm:mct}{Mostowski collapse}: $T \cong \mathcal{H}^{L_\kappa}(L_\beta)$ with Mostowski isomorphism $\pi: T \to \mathcal{H}^{L_\kappa}(L_\beta)$.
+    $T$ is \hyperlink{def:transitive}{transitive}, $|T| = |\mathcal{H}^{L_\kappa}(L_\beta)| < \kappa$.
+
+    \begin{equation*}
+    \begin{tikzcd}
+      T \rar{\pi}& \mathcal{H}^{L_\kappa}(L_\beta) \rar{\text{id}}& L_\kappa   \\
+      \varphi(z,a_1, \dotsc, a_n) & \varphi(\pi(z),\pi(a_1),\dotsc,\pi(a_n)) & \varphi(\pi(z),\pi(a_1),\dotsc,\pi(a_n))
+    \end{tikzcd}
+    \end{equation*}
+
+    We know that the Mostowski collapse is the identity on transitive sets. So if $X \subseteq L_\kappa$ is transitive, then $\pi \upharpoonright X = \text{id} \upharpoonright X$.
+
+    Since $L_\beta$ is transitive and all $z, a_1, \dotsc, a_n$ are in $L_\beta$,
+    \begin{align*}
+      T \models \varphi(z,a_1, \dotsc, a_n) \iff L_\kappa \models \varphi(z,a_1, \dotsc, a_n).
+    \end{align*}
+
+    Run the `modified Skolem hull construction' from Example Sheet 1, Question 12.
+    Set $\alpha_0 \coloneqq \text{Ord} \cap T$, and $\alpha_{n+1}$ as the least $\gamma$ such that $L_\gamma$ contains $L_{\alpha_n}$ and a witness for each existential statement true with parameters in $L_{\alpha_n}$.
+    Then
+    \begin{align*}
+      \bar{\alpha} &\coloneqq \bigcup_{n \in \mathbb{N}} \alpha_{n} \\
+      T &\preccurlyeq L_{\bar{\alpha}} \quad \text{with } \bar{\alpha} < \kappa.
+    \end{align*}
+    Define the set via $\varphi$ over $L_{\bar{\alpha}}$:
+    \begin{align*}
+      &\phantom{=}\,\ \ \!\!\{z \in x \mid L_{\bar{\alpha}} \models \varphi(z,a_1,\dotsc,a_n)\} \\
+      &=\{z \in x \mid T \models \varphi(z,a_1,\dotsc,a_n)\} \\
+      &=\{z \in x \mid \mathcal{H}^{L_\kappa}(L_\beta) \models \varphi(\pi(z),\pi(a_1),\dotsc,\pi(a_n))\} \\
+      &=\{z \in x \mid \mathcal{H}^{L_\kappa}(L_\beta) \models \varphi(z,a_1,\dotsc,a_n)\} \\
+      &=\{z \in x \mid L_\kappa \models \varphi(z,a_1,\dotsc,a_n)\}.
+    \end{align*}
+  \end{description}
+  The rest of the axioms are similar.
+\end{proof}
+\begin{thm}[Condensation Lemma]\hypertarget{lem:con}
+  If $\kappa$ is \hyperlink{def:inacc}{inaccessible} and $x,y \in \hyperlink{def:l}{L_\kappa}$, $y \subseteq x$ then there is an $\alpha< \kappa$ with
+  \begin{align*}
+    |\alpha| \leq |\hyperlink{def:tcl}{\tcl(x)}|
+  \end{align*}
+  such that $y \in L_\alpha$.
+\end{thm}
+\begin{proof}
+  Let $t \coloneqq \hyperlink{def:tcl}{\tcl(x \cup \{y\})}$.
+  Clearly $|t| = |\tcl(x)|$. Form $\hyperlink{thm:ls}{\mathcal{H}^{L_\kappa}(t)} \preccurlyeq \hyperlink{def:l}{L_\kappa}$.
+  \hyperlink{thm:mct}{Mostowski collapse} the Skolem hull to
+  \begin{equation*}
+    T \xrightarrow{\pi} \mathcal{H}^{L_\kappa}(t) \preccurlyeq L_\kappa.
+  \end{equation*}
+  Now $|T| = |\mathcal{H}^{L_\kappa}(t)| = |t| = |\tcl(x)|$.
+  $\pi$ is the identity on $t$, so $\pi(y) = y$ and $\forall z \in x$, $\pi(z) = z$ and $\pi(x) = x$.
+  % The formula
+  % \begin{align*}
+  %   \forall z\ (z \in y \rightarrow z \in x).
+  % \end{align*}
+
+  By our lemma, find $\beta$ such that $T = L_\beta$, which we can do since $L_\kappa \models \textsf{ZFC}+\textsf{V=L}$, and $L_\beta \equiv L_\kappa$.
+  Now $y$ can be defined over $L_\beta$ with parameters in $L_\beta$ (viz.\ $y$) and $|T| = |L_\beta| = |\beta|$.
+\end{proof}
+
+\begin{cor}
+  \newlec
+  If $x = \mathbb{N}$ and $y \subseteq \mathbb{N}$, then there is $\alpha < \omega_1$ such that $y \in \hyperlink{def:l}{L_\alpha}$.
+\end{cor}
+\begin{cor}\leavevmode
+  \begin{enumerate}[(a)]
+    \item $\mathcal{P}(\mathbb{N}) \cap \hyperlink{def:l}{L_\kappa} \subseteq L_{\omega_1}$.
+      Observe that $\mathcal{P}(\mathbb{N}) \cap L_\kappa = \mathcal{P}^{L_\kappa}(\mathbb{N})$ where $\mathcal{P}^{L_\kappa}(\mathbb{N})$ refers to the unique $p \in L_\kappa$ such that $L_\kappa \models p = \mathcal{P}(\mathbb{N})$.
+    \item $\mathcal{P}^{L_\kappa}(\mathbb{N}) \subseteq L_{\omega_1}$
+    \item $|\mathcal{P}^{L_\kappa}(\mathbb{N})| \leq |L_{\omega_1}| = |\omega_1| = \aleph_1.$
+  \end{enumerate}
+\end{cor}
+[A one-line proof of the \hyperlink{lem:con}{Condensation Lemma}:
+\begin{align*}
+  y \in \hyperlink{def:l}{L_\alpha} = \hyperlink{thm:mct}{T} \cong \hyperlink{thm:ls}{\mathcal{H}^{L_\kappa}}(\hyperlink{def:tcl}{\tcl(x)} \cup \{y\}) \preccurlyeq L_\kappa.
+\end{align*}
+]
+Let's improve this to show $L_\kappa \models \hyperlink{def:ch}{\text{CH}}$.
+The key idea is that $L_\kappa \models \hyperlink{def:axioms}{\textsf{ZFC}}$, then the \hyperlink{lem:con}{Condensation Lemma} is a theorem of \textsf{ZFC}, so apply Condensation Lemma inside $L_\kappa$.
+But this is a lie! Our Condensation Lemma is a theorem of \textsf{ZFC}+\hyperlink{def:ic}{\textsf{IC}}.
+\begin{remark}
+  So if you assume \textsf{ZFC} + \textsf{2IC}, then this argument gets you that $L_\kappa \models \text{CH}$ for $\kappa$ the second inaccessible cardinal.
+  This feels a bit odd. Let's try to do this without the second inaccessible.
+\end{remark}
+Work in $L_\kappa$. We know that $\mathcal{P}^{L_\kappa}(\mathbb{N}) \subseteq L_{\omega_1}$ where $\omega_1$ refers to the $\omega_1$ in $M$.
+Note that $\omega_1 < \kappa$, $L_{\omega_1} \subseteq L_\kappa$.
+\begin{align*}
+  \mathcal{P}^{L_\kappa}(\mathbb{N}) \subseteq L_\beta = T \cong \mathcal{H}^{L_\kappa}(L_{\omega_1}) \preccurlyeq L_\kappa.
+\end{align*}
+By the standard argument, get
+\begin{align*}
+  \beta < \aleph_2 < \kappa.
+\end{align*}
+But now $L_\beta \models \textsf{ZFC}+\textsf{V=L}$.
+Run the Condensation Lemma proof for $V_\kappa$ as $M$ and $L_\beta$ as $L_\kappa$:
+\begin{equation*}
+  y \in L_\alpha = T \cong \mathcal{H}^{L_\beta}(\mathbb{N} \cup \{y\}) \preccurlyeq L_\beta.
+\end{equation*}
+Now $L_\kappa \models$ `$a$ is countable'. So if $L_\kappa \models 2^{\aleph_0} \leq \aleph_1$ then $L_\kappa \models \hyperlink{def:ch}{\text{CH}}$.
+\begin{thm}
+  $\cons(\hyperlink{def:axioms}{\textsf{ZFC}}+\hyperlink{def:ic}{\textsf{IC}}) \implies \cons(\textsf{ZFC}+\hyperlink{def:ch}{\text{CH}})$.
+\end{thm}
+\begin{remark}\leavevmode
+  \begin{enumerate}[(1)]
+    \item The same argument with $x=\lambda$ for some $L_\kappa$-cardinal $\lambda$ gives us $L_\kappa \models 2^\lambda \leq \lambda^+$. So GCH holds: $\forall \lambda, 2^\lambda = \lambda^+$.
+    \item What about the inaccessible?
+      \begin{enumerate}[(a)]
+        \item If we have a \hyperlink{def:transitive}{transitive} set model of \hyperlink{def:axioms}{\textsf{ZFC}} then we can mimic this proof.
+        \item There is a way of getting around that assumption as well:
+          Use the L\'evy Reflection Theorem (Example sheet 2):
+          Fix in advance some finite list $\Phi$ of sentenes you wish to preserve and find sufficiently large $\alpha$ such that $\Phi$ is absolute for $V_\alpha$.
+
+          Go through all needed absoluteness results and lemmas and collect for each of them $\varphi$ the finite set $\Phi_\phi$ of axioms of \textsf{ZFC} needed to prove them. Form $\Phi = \bigcup_{\phi} \Phi_\phi$, a finite union over all the relevant $\phi$.
+          Apply L\'evy to $\Phi$ and run the previous proof to get a model of $\Phi + \text{CH}$.
+          Now consider all finite subsets $\Psi$ such that $\Phi \subseteq \Psi \subseteq \textsf{ZFC}$ and get models of $\psi$+CH.
+          Compactness gives a model of \textsf{ZFC}+\text{CH}.
+      \end{enumerate}
+    \item Consider
+      \begin{equation*}
+        L = \bigcup_{\alpha \in \text{Ord}} L_\alpha \subseteq M.
+      \end{equation*}
+      Our proof does not say what axioms hold in $L$, but using the L\'evy Reflection Theorem, you can prove that $V \models \textsf{ZFC}$, then $L \models \textsf{ZFC}+\textsf{V=L}$.
+  \end{enumerate}
+\end{remark}
+Recall our question about regular limit cardinals:
+We have two notions: regular/singular and successor/limit.
+
+\begin{center}
+\begin{tabular}{c|cc}
+  & Reg & Sing \\ \hline
+  succ & \cmark & \xmark \\
+  limit & ? & \cmark
+\end{tabular}
+\end{center}
+If we strengthen `limit' ($\forall \lambda < \kappa\  (\lambda^+ < \kappa)$) to `\hyperlink{def:slim}{strong limit}' ($\forall \lambda < \kappa\ (2^\lambda < \kappa)$), then we showed that \hyperlink{def:axioms}{\textsf{ZFC}} cannot prove the existence of \hyperlink{def:reg}{regular} strong limits = \hyperlink{def:inacc}{inaccessible} cardinals.
+Clearly \textsf{ZFC}+GCH gives that every limit is a strong limit. So, \textsf{ZFC}+GCH gives that every regular limit is an inaccessible cardinal.
+\begin{proof}
+  Assume that $M \models \hyperlink{def:axioms}{\textsf{ZFC}}$ and that $\textsf{ZFC} \vdash$ there are \hyperlink{def:reg}{regular} limits.
+  Towards a contradiction with G\"odel's Incompleteness Theorem, prove $M \models \cons(\textsf{ZFC})$.
+  Consider $L \subseteq M$. Then by remark (3), $L \models \textsf{ZFC}$+GCH.
+  By $\textsf{ZFC}\vdash \exists$ regular limit, we get $L \models \textsf{ZFC}+\text{GCH}+\exists \kappa$ regular limit. Thus, $L \models \textsf{ZFC}+\hyperlink{def:ic}{\textsf{IC}}$.
+  Then $L \models \exists \kappa (L_\kappa \models \textsf{ZFC})$, so $L \models \cons(\textsf{ZFC)})$ thus $M \models \cons(\textsf{ZFC})$ by absoluteness, a contradiction.
+\end{proof}
+
+\subsection{The limitations of the method of inner models}
+\begin{defi}\hypertarget{def:innerModel}
+  \newlec
+  If $(M,\in) \models \hyperlink{def:axioms}{\textsf{ZFC}}$ and $N \subseteq M$, we say that $N$ is an \named{inner model} of $M$ if
+  \begin{enumerate}[(a)]
+    \item $(N,\in) \models \textsf{ZFC}$
+    \item $\text{Ord} \cap N = \text{Ord} \cap M$
+    \item $N$ is \hyperlink{def:transitive}{transitive} in $M$.
+  \end{enumerate}
+\end{defi}
+\begin{thm}[Minimality Theorem]
+  If $M \models \textsf{ZFC} + \textsf{V=L}$ and $N$ is an \hyperlink{def:innerModel}{inner model} then $N = M$.
+\end{thm}
+\begin{proof}
+  We know that $M = \bigcup_{\alpha \in \text{Ord} \cap M} L_\alpha^{M}$ where $L_\alpha^M$ is the set $L_\alpha$ (interpreted in $M$).
+  This follows directly from $\textsf{V=L}$ in $M$.
+  So in order to show $N=M$, it's enough to show $L_\alpha^M \subseteq N$ for all $\alpha \in \text{Ord} \cap M$.
+  An easy induction shows $L_\alpha^N \subseteq N$ for $\alpha \in \text{Ord} \cap N$. By absoluteness $L_\alpha^N = L_\alpha^M$
+\end{proof}
+\begin{remark}\leavevmode
+  \begin{enumerate}
+    \item If you drop (b), you still get $N = L_\Omega^M$ where $\Omega = \text{Ord} \cap N$.
+    \item Of course, we don't even need full \hyperlink{def:axioms}{\textsf{ZFC}} for this.
+  \end{enumerate}
+\end{remark}
+The `technique of inner models' is then:
+\begin{itemize}
+  \item Want to show $\cons(\hyperlink{def:axioms}{\textsf{ZFC}}+\varphi)$
+  \item Start with $M \models \textsf{ZFC} + \neg \varphi$
+  \item Go to an inner model $N \subseteq M$, where $N \models \textsf{ZFC} +\varphi$.
+\end{itemize}
+\begin{defi}
+  A \named{definable inner model}\index{inner model!definable} is an $L_\in$-formula $\Phi$ with one free variable with the property: if $(M,\in) \models \hyperlink{def:axioms}{\textsf{ZFC}}$, then define
+  \begin{align*}
+    N \coloneqq \{x \in M \mid M \models \Phi(x)\}.
+  \end{align*}
+  Then $N$ is an \hyperlink{def:innerModel}{inner model} of $M$.
+\end{defi}
+\begin{eg}
+  $L$ `is' such an inner model. We mean $\Phi(x) \vcentcolon\leftrightarrow \exists \alpha\ (x \in L_\alpha)$.
+\end{eg}
+Now we can define what we mean by
+`the consistency of $\varphi$ can be shown by inner models'
+This means: We find an inner model $\Phi$ such that for all $M \models \hyperlink{def:axioms}{\textsf{ZFC}}$ and
+\begin{align*}
+N \coloneqq \{x \in M \mid M \models \Phi(x)\},
+\end{align*}
+$N \models \textsf{ZFC}+\varphi$.
+\begin{cor}
+  There is no \hyperlink{def:innerModel}{inner models} proof of the consistency of $\neg$\hyperlink{def:ch}{CH}.
+\end{cor}
+\begin{proof}
+  Suppose otherwise, so let $\Phi$ be an inner model that proves consistency of $\neg$\hyperlink{def:ch}{CH}.
+  Take an arbitrary $M \models \hyperlink{def:axioms}{\textsf{ZFC}}$. Build $L^M$ and form
+  \begin{align*}
+  N^* \coloneqq \{x \in L^M \mid L^M \models \varphi(x)\}.
+  \end{align*}
+  This is an inner model of $L^M$, thus by minimality $N^* = L^M$. So, $N^* \models \neg\text{CH} \land \text{CH}$.
+  Contradiction.
+\end{proof}
+
+
 \printindex
 \end{document}
