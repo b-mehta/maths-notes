@@ -1794,6 +1794,87 @@ We will eventually prove:
     \forall p, \varphi \quad p \Vdash \varphi \iff p \Vdash^* \varphi.
   \end{equation*}
 \end{thm}
+\newlec
+Technically, the meaning of $\hyperlink{def:mg}{M[G]} \models \varphi$ does not just depend on $M[G]$, but on $G$ itself, from the definition above.
+Better notation would look like $M[G],G \models \varphi$.
+
+Similarly, we should more precisely write $\Vdash_M$ for the forcing relation.
+A priori, $\Vdash$ is not definable in $M$, but we'll show that it is.
+We shall give a different definition of a relation $p \Vdash^* \varphi$ which is definable in $M$ and show $p \Vdash ^* \varphi$ iff $p \Vdash \varphi$.
+We call $\Vdash^*$ the \named{syntactic forcing relation}\index{forcing relation!syntactic} and $\Vdash$ the \named{semantic forcing relation}\index{forcing relation!semantic}.
+
+Let's restate the forcing theorem more formally.
+\begin{thm}[Forcing theorem]\hypertarget{thm:forcing}
+  Let $M$ be a countable \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{set theory} and $\mathbb{P} \in M$.
+  Let $\varphi$ be a sentence in the \hyperlink{def:lmp}{forcing language}.
+  Then the following are equivalent.
+  \begin{enumerate}[(i)]
+    \item $\hyperlink{def:mg}{M[G]} \models \varphi$
+    \item there is a $p \in G$ such that $M \models p \Vdash^* \varphi$
+  \end{enumerate}
+\end{thm}
+(Note that we haven't defined $\Vdash^*$ yet).
+Let's prove the equivalence of $\Vdash^*$ and $\Vdash$ from the \hyperlink{thm:forcing}{Forcing theorem}.
+\begin{prop}
+  Let $M$ be countable \hyperlink{def:transitive}{transitive} model, $\mathbb{P} \in M$, $p \in \p$, $\varphi$ a sentence of \hyperlink{def:lmp}{$\mathcal{L}(M^{\p})$}.
+\end{prop}
+\begin{proof}
+  Suppose $p \Vdash_M \varphi$. For every $G$ which is \hyperlink{def:genericO}{$\mathbb{P}$-generic over $M$} with $p \in G$, $M[G] \models \varphi$.
+  By the \hyperlink{thm:forcing}{Forcing theorem}, find $q \in G$ such that $M \models q \Vdash^* \varphi$.
+
+  Closure properties of \hyperlink{def:forcingrelation}{$\Vdash$}:
+  \begin{enumerate}
+    \item If $p \Vdash \varphi$ and $q \leq p$ then $q \Vdash \varphi$.
+    \item If $p \Vdash \varphi$ and $p \Vdash \psi$, then $p \Vdash \varphi \land \psi$.
+  \end{enumerate}
+  We know that $p,q \in G$, so there is some $r \in G$ such that $r \leq p,q$. By 1, we get that $r \Vdash \varphi$.
+  Stuck...
+\end{proof}
+Let's postpone this until we have actually defined $\Vdash^*$.
+\begin{defi}\hypertarget{def:densebelow}
+  We say that $D$ is \textbf{dense below} $p$ if
+  \begin{equation*}
+    \forall q \leq p \ \exists r \leq q \ r \in D.
+  \end{equation*}
+\end{defi}
+\begin{defi}
+  \hypertarget{def:syn}Now we define $\Vdash^*$ by recursion on the rank of the names involved and the complexity of $\varphi$.
+  It suffices to:
+  \begin{enumerate}
+    \item define for $\tau_1 \in \tau_2$ where $\tau_1,\tau_2$ are names.
+    \item define for $\tau_1 = \tau_2$ where $\tau_1,\tau_2$ are names.
+    \item conjunctions: from $\varphi,\psi$ define for $\varphi \land \psi$.
+    \item negation: from $\varphi$ define for $\neg\varphi$.
+    \item existential: from $\varphi$ define for $\exists x\ \varphi$.
+  \end{enumerate}
+  In particular, we set
+  \begin{enumerate}
+    \setcounter{enumi}{2}
+    \item $p \Vdash^* \varphi \land \psi$ iff $p \Vdash^* \varphi$ and $p \Vdash^* \psi$. (Remark: We have no choice here due to property 2 in the failed proof).
+    \item $p \Vdash^* \neg \varphi$ iff $\forall q \leq p$, $p \not\Vdash^* \varphi$.
+    \item $p \Vdash^* \exists x\ \varphi(x, \tau_1, \dotsc, \tau_n)$ iff
+      \begin{align*}
+      \{r \mid \text{there is a }\p\text{-}\hyperlink{def:name}{\text{name }}\sigma\text{ such that } r \Vdash^* \varphi(\sigma,\tau_1, \dotsc, \tau_n)\}
+      \end{align*}
+      is \hyperlink{def:densebelow}{dense below} $p$.
+    \setcounter{enumi}{0}
+    \item $p \Vdash^* \tau_1 \in \tau_2$ iff
+      \begin{align*}
+        \{q \mid \text{there is $(\pi,s) \in \tau_2$ such that $q \leq s$ and } q \Vdash^* \pi = \tau_1\}
+      \end{align*}
+      is dense below $p$.
+    \item $p \Vdash^* \tau_1 = \tau_2$ iff for all $(\pi_1, s_1) \in \tau_1$,
+      \begin{align*}
+        \{q \mid q \leq s_1 \rightarrow \exists (\pi_2,s_2) \in \tau_2\text{ such that }q \leq s_2\text { and }q \Vdash^* \pi_1 = \pi_2\}
+      \end{align*}
+      is dense below $p$ and for all $(\pi_2, s_2) \in \tau_2$,
+      \begin{align*}
+        \{q \mid q \leq s_2 \rightarrow \exists (\pi_1,s_1) \in \tau_1\text{ such that }q \leq s_1\text{ and }q \Vdash^* \pi_1 = \pi_2\}
+      \end{align*}
+      is dense below $p$.
+  \end{enumerate}
+\end{defi}
+Note that only 5 is not absolute.
 
 \printindex
 \end{document}
