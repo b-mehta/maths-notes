@@ -1682,6 +1682,118 @@ Then
 \begin{cor}
   $M \subseteq \hyperlink{def:mg}{M[G]}$.
 \end{cor}
+\newlec
+We now try to embed $G$ in $M[G]$. We might try
+\begin{align*}
+  \check{G} \coloneqq \{(\hyperlink{def:check}{\check{p}},\1) \mid p \in G\}
+\end{align*}
+but this only works if $G \in M$ already, which is not helpful.
+\begin{defi}
+  \begin{align*}
+    \hypertarget{def:gamma}\Gamma \coloneqq \{(\check{p},p) \mid p \in \mathbb{P}\}.
+  \end{align*}
+\end{defi}
+\begin{lemma}
+  $\hyperlink{def:val}{\val}(\hyperlink{def:gamma}{\Gamma},G) = G$.
+\end{lemma}
+\begin{proof}
+  Suppose $x \in \hyperlink{def:val}{\val}(\hyperlink{def:gamma}{\Gamma},G)$.
+  By definition, $x = \val(\check{p},G)=p$ for some $p \in \mathbb{P}$ with $p \in G$.
+  So $x \in G$.
+
+  Suppose $x \in G$. Then $(\check{x},x) \in \Gamma$, but then since $x \in G$, $x = \val(\check{x},G) \in \val(\Gamma,G)$.
+  So $x \in \val(\Gamma,G)$.
+\end{proof}
+\begin{cor}
+  If $M$ is \hyperlink{def:transitive}{transitive}, $G \in M[G]$.
+\end{cor}
+
+The important question remaining is: Does $\hyperlink{def:mg}{M[G]} \models \hyperlink{def:axioms}{\textsf{ZFC}}$?
+\begin{lemma}
+  $\hyperlink{def:mg}{M[G]}$ is \hyperlink{def:transitive}{transitive}.
+\end{lemma}
+\begin{proof}
+  We need to show $x \in y \in M[G] \implies x \in M[G]$.
+  $y \in M[G]$ means there is $\tau$ with $y = \val(\tau,G)$.
+  $x \in y$ means $\exists \sigma,p$ with $p \in G$, $(\sigma,p) \in \tau$ and $x = \val(\sigma,G)$.
+  Thus $x \in M[G]$.
+\end{proof}
+\begin{cor}
+  $\hyperlink{def:mg}{M[G] }\models \textsf{Ext}$ and $M[G] \models \textsf{Found}$ (by foundation of the universe).
+\end{cor}
+Let's now look at Pairing. Take $x,y \in \hyperlink{def:mg}{M[G]}$.
+Suppose that $x = \hyperlink{def:val}{\val}(\tau,G)$ and $y = \val(\sigma,G)$.
+Write down the name
+\begin{align*}
+  \mu_{\sigma,\tau} = \{(\sigma,\mathbbm{1}), (\tau,\mathbbm{1})\}.
+\end{align*}
+Now,
+\begin{align*}
+  \hyperlink{def:val}{\val}(\mu_{\sigma,\tau},G) &= \{\val(\sigma,G),\val(\tau,G)\} \quad \text{because } \mathbbm{1} \in G \\
+                            &= \{x,y\}.
+\end{align*}
+\begin{prop}
+  $\hyperlink{def:mg}{M[G]} \models \textsf{Pair}$.
+\end{prop}
+Note this name is not unique.
+On Example Sheet 3, we will show $\hyperlink{def:mg}{M[G]} \models \textsf{Union}$.
+\begin{cor}
+  $\hyperlink{def:check}{\check{\omega}} \in M^{\mathbb{P}}$, and $\hyperlink{def:val}{\val}(\check{\omega},G) = \omega$ so $\hyperlink{def:mg}{M[G]} \models \textsf{Inf}$.
+\end{cor}
+\begin{lemma}
+  If $\tau \in M^{\mathbb{P}}$, then
+  \begin{align*}
+    \hyperlink{def:rank}{\varrho}(\hyperlink{def:val}{\val}(\tau,G)) \leq \varrho(\tau).
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Simple induction.
+\end{proof}
+\begin{cor}
+  $\text{Ord} \cap M = \text{Ord} \cap \hyperlink{def:mg}{M[G]}$.
+\end{cor}
+
+\begin{center}
+  \begin{tikzpicture}[scale=3]
+    \draw (0,0) -- (0.6,1) -- (-0.6,1) -- cycle;
+    \draw (0,0) -- (1,1) -- (-1,1) -- cycle;
+    \draw (0,0) -- (0,1);
+    \node [dot] (dot) at (0.4,0.5) {};
+    \node at (0.6,1.1) {$M$};
+    \node at (1,1.1) {$M[G]$};
+    \node (G) at (1.2,0.6) {$G$};
+    \draw [->] (G) to[bend right] (dot);
+  \end{tikzpicture}
+\end{center}
+% powerset discussion
+It would be nice to be able to talk about whether a name $\sigma$ is a name for a subset of $\val(\tau,G)$ without referring to the precise set-theoretic make-up of $\tau$ and $\sigma$.
+
+\begin{defi}
+  \hypertarget{def:lmp}The \named{forcing language}, written $\mathcal{L}(M^\mathbb{P})$, is just $\mathcal{L}_\in$ augmented with one constant symbol for each $\tau \in M^{\mathbb{P}}$.
+  If $G$ is $\mathbb{P}$-generic over $M$, there is a canonical interpretation of $\mathcal{L}(M^\mathbb{P})$ in $M[G]$.
+  \begin{align*}
+    M[G] \models \varphi(\tau_1, \dotsc, \tau_n) :\Longleftrightarrow M[G] \models \varphi(\val(\tau_1,G),\dotsc,\val(\tau_n,G)).
+  \end{align*}
+  \hypertarget{def:forcingrelation}If $\varphi$ is a sentence of $\mathcal{L}(M^{\mathbb{P}})$ and $p \in \mathbb{P}$, the \named{forcing relation} is
+  \begin{align*}
+    p \Vdash_M \varphi :\Longleftrightarrow \text{for every } \mathbb{P}\text{-generic filter $G$ over $M$ such that $p \in G$, we have $M[G] \models \varphi$}
+  \end{align*}
+\end{defi}
+We will eventually prove:
+\begin{thm}[Forcing theorem]
+  The following are equivalent:
+  \begin{enumerate}
+  \item $M[G] \models \varphi$
+  \item $\exists p \in G \ (M \models p \Vdash \varphi)$.
+  \end{enumerate}
+\end{thm}
+\begin{thm}
+  The \hyperlink{def:forcingrelation}{forcing relation} is definable in $M$:
+  there is a definable relation $p \Vdash^* \varphi$ such that
+  \begin{equation*}
+    \forall p, \varphi \quad p \Vdash \varphi \iff p \Vdash^* \varphi.
+  \end{equation*}
+\end{thm}
 
 \printindex
 \end{document}
