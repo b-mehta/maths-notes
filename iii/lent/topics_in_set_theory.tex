@@ -1558,6 +1558,130 @@ With this goal, Paul Cohen described \named{Forcing} in 1963.
   Since $G$ is a \hyperlink{def:filter}{filter}, not both $q_1, q_2 \in G$, so at least one is in $D$.
   So by definition $G \cap D = G \cap \mathbb{P} \setminus G \neq \emptyset$, a contradiction.
 \end{proof}
+\begin{lemma}
+  \newlec
+  If $\mathcal{D}$ is a countable set of \hyperlink{def:dense}{dense} sets and $p \in \mathbb{P}$, then there is a \hyperlink{def:dgeneric}{$\mathcal{D}$-generic} \hyperlink{def:filter}{filter} $G$ in $\mathbb{P}$ such that $p \in G$.
+\end{lemma}
+\begin{proof}
+  Let $\mathcal{D} = \{D_n \mid n \in \mathbb{N}\}$.
+  Define $p_0 \coloneqq p$. Suppose $p_0 \geq \dotsb \geq p_n$ are already defined.
+  By definition, $D_n$ has an element $q$ such that $q \in D_n$, $q \leq p_n$. Then $p_{n+1} \coloneqq q$.
+
+  Consider $X \coloneqq \{p_n \mid n \in \mathbb{N}\} \subseteq \mathbb{P}$.
+  Note that if $p_n, p_k \in X$ then $p_{\max(n,k)} \leq p_n,p_k$.
+  So $G \coloneqq \{p \mid \exists n \ p_n \leq p\}$ is a \hyperlink{def:filter}{filter} on $\mathbb{P}$.
+  Clearly, for every $n$, $G \cap D_n \neq \emptyset$, as required.
+\end{proof}
+\begin{cor}
+  If $M$ is a countable \hyperlink{def:transitive}{transitive} model of set theory, $p \in \mathbb{P} \in M$.
+  Then there is a \hyperlink{def:dgeneric}{$\mathbb{P}$-generic} \hyperlink{def:filter}{filter} $G$ \hyperlink{def:genericO}{over $M$} with $p \in G$.
+\end{cor}
+\begin{proof}
+  $\mathbb{P} \in M$, then $\mathbb{P}$ is countable.
+  \begin{align*}
+    \{D \subseteq \mathbb{P} \mid D \text{ is dense, } D \in M\} \subseteq \mathcal{P}^M(\mathbb{P})
+  \end{align*}
+  so this is countable as well.
+\end{proof}
+
+\subsection{Forcing language}
+\begin{defi}
+Fix $M$ a \hyperlink{def:transitive}{transitive} model of set theory, $\mathbb{P} \in M$.
+\begin{align*}
+  \hypertarget{def:name}\name_0(M, \mathbb{P}) &\coloneqq \emptyset \\
+  \lambda> 0 \quad \name_\lambda(M, \mathbb{P}) &\coloneqq \left\{\tau\ \middle\vert \parbox{23em}{\centering each element of $\tau$ is an ordered pair $(\sigma,p)$ \\ where $\sigma \in \name_\alpha(M,\mathbb{P})$ for some $\alpha < \lambda$ and $p \in \mathbb{P}$}\right\}
+\end{align*}
+The elements of
+\begin{align*}
+  M^{\mathbb{P}} \coloneqq\ \bigcup_{\mathclap{\lambda \in \text{Ord} \cap M}}\ \name_\lambda(M,\mathbb{P})
+\end{align*}
+are called $\mathbb{P}$-\named{names}.
+\end{defi}
+
+\begin{eg}[Silliest example]
+  Take $\mathbb{P} = \{1\}$.
+  Then $\emptyset$ is a \hyperlink{def:name}{name}, so $\{(\emptyset,\mathbbm{1})\}$ is a name.
+  This results in (an isomorphic copy) of the \hyperlink{def:vk}{von Neumann hierarchy} inside $M$.
+\end{eg}
+\begin{eg}[Silly example]
+  Take the following \hyperlink{def:poset}{partial order}:
+  \begin{center}
+    \begin{tikzpicture}[every node/.style={inner sep=1pt, fill=black, circle}, scale=0.7]
+      \node [label=left:$L$] (L) at (-1,0) {};
+      \node [label=right:$R$] (R) at (1,0) {};
+      \node [label=above:$\mathbbm{1}$] (1) at (0,1) {};
+      \draw (L) -- (1) -- (R);
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemize}
+    \item What are the \hyperlink{def:dense}{dense sets}? $\{\mathbbm{1},L,R\}, \{L,R\}$.
+    \item What is a \hyperlink{def:filter}{filter}? $\{\mathbbm{1}\}, \{\mathbbm{1},L\}$ and $\{\mathbbm{1},R\}$.
+    \item What does \hyperlink{def:genericO}{generic} mean? Meets every dense set, so contains $L$ or $R$. Hence $\{\mathbbm{1},L\}$, $\{\mathbbm{1},R\}$ are the generic filters.
+  \end{itemize}
+  Now, $\emptyset$ is a \hyperlink{def:name}{name}.
+  On the next level, the relevant ordered pairs are $(\emptyset, \mathbbm{1})$, $(\emptyset, L)$, $(\emptyset,R)$.
+  So, the new names at level 1 are
+  \begin{gather*}
+    \{(\emptyset,\1)\}, \{(\emptyset,L)\}, \{(\emptyset,R)\} \\
+    \{(\emptyset,\1), (\emptyset,L)\}, \{(\emptyset,\1), (\emptyset,R)\}, \{(\emptyset,L), (\emptyset,R)\} \\
+    \{(\emptyset,\1), (\emptyset,L), (\emptyset,R)\}
+  \end{gather*}
+\end{eg}
+
+Now that we have these names, we would like to interpret them.
+\begin{defi}
+  Let $\mathbb{P}, M$ be as before and let $G$ be \hyperlink{def:genericO}{$\mathbb{P}$-generic over $M$}, $G \subseteq \mathbb{P}$.
+  If $\tau \in \name(M,\mathbb{P})$, I define the $G$-\named{value} of $\tau$:
+  \begin{align*}
+    \hypertarget{def:val}\val(\tau,G) \coloneqq \{\val(\sigma,G) \mid \exists p \in G, (\sigma,p) \in \tau\}.
+  \end{align*}
+  Define also
+  \begin{align*}
+    \hypertarget{def:mg}M[G] \coloneqq \{\val(\tau,G) \mid \tau \in \name(M,\mathbb{P})\}.
+  \end{align*}
+\end{defi}
+
+\begin{observation}
+  If $N$ is a \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{\textsf{ZFC}} such that $M \subseteq N$ and $G \in N$, then $\hyperlink{def:mg}{M[G]} \subseteq N$.
+\end{observation}
+
+(Preview: If we knew $\hyperlink{def:mg}{M[G]} \models \hyperlink{def:axioms}{\textsf{ZFC}}$, this would be a minimality theorem.)
+
+Returning to our silly example:
+\begin{align*}
+  \val(\emptyset,G) = \emptyset
+\end{align*}
+independent of what $G$ is.
+If $\tau$ is any of the other seven names and $(\sigma,p) \in \tau$, then $\sigma = \emptyset$.
+So
+\begin{align*}
+  \val(\tau,G) =
+  \begin{cases}
+    \emptyset \\ \{\emptyset\}
+  \end{cases}
+\end{align*}
+Consider $\tau_L = \{(\emptyset,L)\}$, $\tau_R = \{\emptyset,R\}$.
+Consider $G_L = \{\1, L\}$ and $G_R = \{\1,R\}$.
+Then
+\begin{gather*}
+  \val(\tau_L, G_L) = \{\emptyset\} = \val(\tau_R,G_R) \\
+  \val(\tau_L, G_R) = \emptyset = \val(\tau_R,G_L).
+\end{gather*}
+\begin{defi}
+  \hypertarget{def:check}Let $x \in M$. We define the \named{canonical name} for $x$ by recursion:
+  \begin{align*}
+    \check{x} \coloneqq \{(\check{y}, \1) \mid y \in x\}.
+  \end{align*}
+\end{defi}
+\begin{prop}
+  For any $G$ such that $\1 \in G$, we have $\hyperlink{def:val}{\val}(\hyperlink{def:check}{\check{x}},G) = x$.
+\end{prop}
+\begin{proof}[Proof sketch]
+  By $\in$-induction. (Note we only need $\mathbbm{1} \in G$, not full $\mathbb{P}$-\hyperlink{def:dgeneric}{genericity}).
+\end{proof}
+\begin{cor}
+  $M \subseteq \hyperlink{def:mg}{M[G]}$.
+\end{cor}
 
 \printindex
 \end{document}
