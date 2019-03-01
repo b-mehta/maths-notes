@@ -1876,5 +1876,145 @@ Let's postpone this until we have actually defined $\Vdash^*$.
 \end{defi}
 Note that only 5 is not absolute.
 
+\newlec
+From Example Sheet 3, exercise 23, we have:
+\begin{enumerate}[(1)]
+  \item If $D$ is \hyperlink{def:densebelow}{dense below} $p$ and $r \leq p$, then $D$ is dense below $r$.
+  \item If $\{r \mid D \text{ is dense below }r\}$ is dense below $p$, then $D$ is dense below $p$.
+\end{enumerate}
+\begin{lemma}\hypertarget{lem:forc}
+  The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $p \hyperlink{def:syn}{\Vdash^*} \varphi$
+    \item $\forall r \leq p \ (r \Vdash^* \varphi)$
+    \item $\{r \mid r \Vdash^* \varphi\}$ is \hyperlink{def:densebelow}{dense below} $p$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  Clearly (ii) $\Rightarrow$ (i), (iii).
+  Let's show (i) $\Rightarrow$ (ii). Proof by induction on the \hyperlink{def:syn}{definition of $\Vdash^*$}.
+  Of the five parts of the recursion, 1,2,5 are formulated in terms of `\hyperlink{def:densebelow}{dense below $p$}':
+  \begin{equation*}
+    p \Vdash^* \varphi \iff X_\varphi \text{ is dense below } p
+  \end{equation*}
+  By Exercise 23 as quoted above, if $r \leq p$ and $X_\varphi$ is dense below $p$, $X_\varphi$ is dense below $r$. Observe that cases 3 and 4 of (i) $\Rightarrow$ (ii) follow directly from definition.
+
+  Similarly, (iii) $\Rightarrow$ (i) goes by recursion via 1.-5.\ using item (2) of the exercise rather than item (1).
+\end{proof}
+\begin{cor}
+  \begin{equation*}
+  p \hyperlink{def:forcingrelation}{\forces_M} \varphi \iff M \models p \hyperlink{def:syn}{\forces^*} \varphi.
+  \end{equation*}
+  (assuming the \hyperlink{thm:forcing}{forcing theorem} and the \hyperlink{lem:forc}{lemma}).
+\end{cor}
+\begin{proof}
+  Assume $p \hyperlink{def:forcingrelation}{\forces_M} \varphi$.
+  So for any $G$ such that $p \in G$, $\hyperlink{def:mg}{M[G] \models} \varphi$.
+  The \hyperlink{thm:forcing}{Forcing Theorem} says $\exists q \in G$ such that $M \models q \hyperlink{def:syn}{\forces^*} \varphi$.
+  We want to show $p \Vdash^* \varphi$.
+  By the \hyperlink{lem:forc}{lemma}, it's enough to show
+  \begin{align*}
+    D \coloneqq \{r \mid r \forces^* \varphi\} \text{ is \hyperlink{def:densebelow}{dense below} } p
+  \end{align*}
+
+  Fix any $q' \leq p$.
+  Since $M$ is a countable \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{\textsf{ZFC}}, there is some $H$ with $q' \in H$ and $H$ is $\mathbb{P}$-\hyperlink{def:genericO}{generic over $M$}.
+  Since $q' \leq p$, we know $p \in H$.
+  So by $p \forces_M \varphi$, we get $M[H] \models \varphi$.
+  Apply the Forcing Theorem here and get $q'' \in H$ such that $M \models q'' \forces^* \varphi$.
+  But then $q'' \in D \cap H$. Since $H$ is a filter, we find $r \leq q', q''$ with $r \in H$.
+  $r$ witnesses that $D$ is dense below $p$.
+
+  Now assume $M \models p \forces^* \varphi$.
+  Want to show $p \forces_M \varphi$.
+  Let $G$ be $\mathbb{P}$-generic over $M$ with $p \in G$. By the Forcing Theorem, $M[G] \models \varphi$, as required.
+\end{proof}
+
+It remains to prove the \hyperlink{thm:forcing}{Forcing Theorem}.
+\begin{proof}[Proof of \hyperlink{thm:forcing}{Forcing Theorem}]
+  We'll prove this by induction
+  \begin{enumerate}[(a)]
+    \item rank of names
+    \item assume that $=$ is done
+    \item[(c)-(e)] complexity of formulas.
+  \end{enumerate}
+  We'll do this in the order 3,4,5,1,2 (increasing difficulty).
+  Induction statement:
+  \begin{equation*}
+    \hyperlink{def:mg}{M[G] \models} \varphi \iff \exists p \in G, \ M \models p \hyperlink{def:syn}{\Vdash^*} \varphi.
+  \end{equation*}
+  \begin{enumerate}\setcounter{enumi}{2}
+    \item
+      Assume the induction hypothesis holds for $\varphi$ and $\psi$.
+
+      ($\Rightarrow$)
+      \begin{align*}
+        M[G] \models \varphi \land \psi &\Rightarrow M[G]  \models \varphi \text{ and } M[G] \models \psi \\
+                                        &\Rightarrow \exists p \in G \ p \Vdash^* \varphi \text{ and } \exists q \in G \ q \Vdash^* \psi \\
+                                        &\Rightarrow \exists r \leq p,q,\ r \in G \text{ so by Lemma } r \Vdash^* \varphi \text{ and } r \Vdash^* \psi \\
+                                        &\Rightarrow \exists r \in G\ r \Vdash^* \varphi \land \psi.
+      \end{align*}
+      by definition.
+
+      ($\Leftarrow$) Assume $p \in G$
+      \begin{align*}
+        p \forces^* \varphi \land \psi &\Rightarrow p \forces^* \varphi \text{ and } p \Vdash^* \psi \\
+                                       &\Rightarrow M[G] \forces \varphi \text{ and } M[G] \forces \psi \\
+                                       &\Rightarrow M[G] \forces \varphi \land \psi.
+      \end{align*}
+    \item ($\Rightarrow$) We are now considering $M[G] \models \neg\varphi$, using the induction hypothesis for $\varphi$. Consider
+      \begin{align*}
+        \mathcal{D} \coloneqq \{p \mid p \forces^* \varphi \text{ or } p \forces^* \neg \varphi \}.
+      \end{align*}
+      Claim: $\mathcal{D}$ is \hyperlink{def:dense}{dense}. Proof: Obvious from definition of \hyperlink{def:syn}{syntactic forcing} of negation 4.
+
+      Thus find $p \in \mathcal{D} \cap G$. If $p \forces^* \neg \varphi$, done.
+      Suppose $p \Vdash^* \varphi$. Then by induction hypothesis, $M[G] \models \varphi$. Contradiction!
+
+      ($\Leftarrow$) Now assume $p \in G$ and $p \forces^* \neg \varphi$. Suppose $M[G] \models \varphi$ for contradiction.
+      By the induction hypothesis, find $q \in G$ with $q \forces^* \varphi$. Find $r \leq p,q$ with $r \in G$.
+      By the \hyperlink{lem:forc}{Lemma}, $r \forces^* \varphi$ but by definition of $p \forces^* \neg \varphi$, $r \not\forces^* \varphi$. Contradiction.
+
+    \item[5.] ($\Rightarrow$) We have $M[G] \models \exists x \ \varphi(x)$. But $\varphi(x)$ is not a sentence, so isn't part of the induction hypothesis. Instead, the induction hypothesis works for $\varphi(\sigma / x)$ for any $\sigma \in M^{\mathbb{P}}$.
+      \begin{align*}
+        &\Rightarrow \text{there is } a \in M[G] \ M[G] \models \varphi(a / x) \\
+        &\Rightarrow \text{there is } \sigma \in M^\mathbb{P} \ M[G] \models \varphi(\sigma / x) \\
+        &\Rightarrow \text{there is } p \in G \text{ such that } M \models p \forces^* \varphi(\sigma / x)
+        \intertext{Thus $\{r \mid \text{there is } \sigma \text{ with } \sigma \forces^* \varphi(\sigma/x)\}$ is not only \hyperlink{def:densebelow}{dense below} $P$, but is everything below $p$.}
+        &\Rightarrow p \forces^* \exists x\ \varphi.
+      \end{align*}
+
+      ($\Leftarrow$) Conversely, assume $p \in G$ with $p \forces^* \exists x \; \varphi$.
+      By definition,
+      \begin{align*}
+        \mathcal{D} \coloneqq \{r \mid \text{there is } \sigma \text{ with } r \forces^* \varphi(\sigma/x)\}
+      \end{align*}
+      is dense below $p$. Find $r \in \mathcal{D}  \cap G$.
+      Fix a witness $\sigma$ to the fact that $r \in \mathcal{D}$,
+      so $r \forces^* \varphi(\sigma/x)$.
+      By the induction hypothesis,
+      \begin{align*}
+        M[G] &\models \varphi(\sigma/x) \\
+        M[G] &\models \varphi(\val(\sigma,G)/x) \text{ so } M[G] \models \varphi(a/x) \text{ where } a = \val(\sigma,G)
+      \end{align*}
+      So: $M[G] \models \exists x \ \varphi$.
+
+    \item[1.] $(\Leftarrow)$ Let $p \in G$ such that $p \forces^* \tau_1 \in \tau_2$.
+      Induction hypothesis only applies for $=$ now.
+      By definition
+      \begin{align*}
+        \mathcal{D} \coloneqq \{q \mid \exists (\pi,s) \in \tau_2 \ (q \leq s \land q\forces^* \pi = \tau_1)\}
+      \end{align*}
+      is dense below $p$, so
+      find $q \in \mathcal{D} \cap G$.
+      Fix $(\pi,s) \in \tau_2$ such that
+      \begin{align*}
+        q \leq s \quad \text{and} \quad q \forces^* \pi = \tau_1.
+      \end{align*}
+      This gives $s \in G$, so $\val(\pi,G) \in \val(\tau_2,G)$.
+      By the induction hypothesis, we also get $M[G] \models \pi = \tau_1$, i.e.\ $\val(\pi,G) = \val(\tau_1, G)$.
+      This gives $\val(\tau_1,G) \in \val(\tau_2,G)$, so $M[G] \models \tau_1 \in \tau_2$.
+      \end{enumerate}
+    \end{proof}
 \printindex
 \end{document}
