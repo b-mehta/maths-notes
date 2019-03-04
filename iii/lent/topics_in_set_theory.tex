@@ -2014,6 +2014,73 @@ It remains to prove the \hyperlink{thm:forcing}{Forcing Theorem}.
       This gives $s \in G$, so $\val(\pi,G) \in \val(\tau_2,G)$.
       By the induction hypothesis, we also get $M[G] \models \pi = \tau_1$, i.e.\ $\val(\pi,G) = \val(\tau_1, G)$.
       This gives $\val(\tau_1,G) \in \val(\tau_2,G)$, so $M[G] \models \tau_1 \in \tau_2$.
+
+      \newlec
+      ($\Rightarrow$) We have $M[G] \models \tau_1 \in \tau_2$, thus $\val(\tau_1, G) \in \val(\tau_2,G)$.
+      Note this doesn't give $\tau_1 \in \tau_2$ as names, only that there is some $(\pi,s) \in \tau_2$ with $s \in G$ and $\val(\pi,G) = \val(\tau_1,G)$.
+      This means $M[G] \models \pi = \tau_1$, so by the induction hypothesis find $r \in G$ with $r \forces^* \pi = \tau_1$.
+      Find $p \leq s,r$ with $p \in G$. Then
+      \begin{align*}
+        \{q \leq p \mid \exists(\bar{\pi}, \bar{s}) \in \tau_2 \ (q \leq \bar{s} \land q \forces^* \bar{\pi} = r_1)\}
+      \end{align*}
+      This set, or even the smaller set
+      \begin{align*}
+        \{q \leq p \mid q \leq s \land q \forces^* \pi = r_1\}
+      \end{align*}
+      is everything below $p$, thus \hyperlink{def:dense}{dense}.
+
+    \item[2.] $(\Leftarrow)$ Fix $p \in G$ such that $p \forces^* \tau_1 = \tau_2$. Our induction hypothesis now only applies $=$ with names of lower rank.
+      The form of the definition of $p \forces^* \tau_1 = \tau_2$ is symmetric in the sense that if we're using the first half to show that $\val(\tau_1, G) \subseteq \val(\tau_2,G)$, then the other half shows $\val(\tau_2,G) \subseteq \val(\tau_1,G)$.
+
+      So, we'll show $\val(\tau_1,G) \subseteq \val(\tau_2,G)$.
+      Fix $x \in \val(\tau_1,G)$.
+      Fix a $(\pi_1,s_1) \in \tau_1$ such that $s_1 \in G$ and $\val(\pi_1,G) = x$.
+      Since $G$ is a filter, find $r \leq p,s_1$ with $r \in G$.
+      \begin{align*}
+        \mathcal{D} \coloneqq \{ q \leq r \mid q \leq s_1 \Rightarrow \exists(\pi_2, s_2) \in \tau_2 \ (q \leq s_1 \land q \forces^* \pi_1=\pi_2)\}
+      \end{align*}
+      is dense below $r$.
+      Find $q \in \mathcal{D} \cap G$. Since $r \leq s_1$, we know that $q \leq r \leq s_1$, so the antecedent in the definition of $\mathcal{D}$ is true, so there is $(\pi_2,s_2) \in \tau_2$ with $q \leq s_2 \land q \forces^* \pi_1 = \pi_2$.
+
+      As earlier, we get $s_2 \in G$, thus $\val(\tau_2,G) \in \val(\tau_2,G)$. $\pi_1 \in \tau_1$ and $\pi_2 \in \tau_2$, so both have lower rank, thus by the induction hypothesis, $M[G] \models \pi_1 = \pi_2$, i.e.\ $\val(\pi_1,G) = \val(\pi_2,G)$.
+      Hence, $x=\val(\pi_1,G) \in \val(\tau_2,G)$.
+
+      $(\Rightarrow)$ Assume $M[G] \models \tau_1 = \tau_2$, that is $\val(\tau_1,G) = \val(\tau_2,G)$,
+      Consider
+      \begin{align*}
+        \mathcal{D}_1 &\coloneqq \{r \mid r \forces^* \tau_1 = \tau_2\}\\
+        \mathcal{D}_2 &\coloneqq \left\{r\ \middle\vert\
+          \begin{gathered}
+            \text{there is } (\pi_1,s_1) \in \tau_1 \ \big(r \leq s_1 \text{ and for all }(\pi_2,s_2) \in \tau_2\\ \text{and all } q \ ((q \leq s_2 \land q \forces^* \pi_1 = \pi_2) \rightarrow q \hyperlink{def:incompat}{\perp} r)\big)
+          \end{gathered}
+        \right\}\\
+          \mathcal{D}_3 &\coloneqq \left\{r\ \middle\vert\
+            \begin{gathered}
+              \text{there is } (\pi_2,s_2) \in \tau_2 \ \big(r \leq s_2 \text{ and for all }(\pi_1,s_1) \in \tau_1\\ \text{and all } q \ ((q \leq s_1 \land q \forces^* \pi_1 = \pi_2) \rightarrow q \perp r)\big)
+            \end{gathered}
+          \right\}\\
+            \mathcal{D} &\coloneqq \mathcal{D}_1 \cup \mathcal{D}_2 \cup \mathcal{D}_3
+          \end{align*}
+
+          \begin{observation}
+            If $r \in G$, then neither $r \in \mathcal{D}_2$ nor $r \in \mathcal{D}_3$ can hold. By symmetry, it's enough to deal with case 2.
+            Towards a contradiction, assume $r \in G$ and $r \in \mathcal{D}_2$.
+
+            Find $(\pi,s_1) \in \tau_1$ with desired properties.
+            Since $r \leq s_1 \Rightarrow s_1 \in G$ so
+            \begin{align*}
+              \val(\pi_1, G) \in \val(\tau_1,G) = \val(\tau_2,G).
+            \end{align*}
+            So there is $(\pi_2,s_2) \in \tau_2$ with $s_2 \in G$ and $\val(\pi_2,G) = \val(\pi_1, G)$.
+            By induction hypothesis, find $q' \in G$ with $q' \forces^* \pi_1 = \pi_2$.
+            Find $q \leq r,s_1,s_2, q'$ so $q$ contradicts $r \in \mathcal{D}_2$, as required.
+          \end{observation}
+
+          So, we're done if we show that $\mathcal{D}$ is dense.
+          Fix $p \in \p$. If $p \forces^* \tau_1 = \tau_2$, then $p \in \mathcal{D}$ done.
+          If it doesn't, we'll find $r \leq p$ for $p \in \mathcal{D}_2$ or $\mathcal{D}_3$.
+          Again by symmetry, we'll show: If the first half of the definition of $p \not\forces^* \tau_1 = \tau_2$ fails, then find $r$ in case 2 of definition of $\mathcal{D}$.
+
       \end{enumerate}
     \end{proof}
 \printindex
