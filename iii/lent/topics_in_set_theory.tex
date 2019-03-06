@@ -2081,7 +2081,111 @@ It remains to prove the \hyperlink{thm:forcing}{Forcing Theorem}.
           If it doesn't, we'll find $r \leq p$ for $p \in \mathcal{D}_2$ or $\mathcal{D}_3$.
           Again by symmetry, we'll show: If the first half of the definition of $p \not\forces^* \tau_1 = \tau_2$ fails, then find $r$ in case 2 of definition of $\mathcal{D}$.
 
+          \newlec
+          We show if $p \in G$ then neither $p \in \mathcal{D}_2$ or $p \in \mathcal{D}_3$ can hold. Thus if $p \in G \cap \mathcal{D} $ then $p \forces^* \tau_1 = \tau_2$.
+          So: need to show that $ \mathcal{D} $ is dense.
+          Let $p \in \p$ be arbitrary. If $p \forces^* \tau_1 = \tau_2$, done. So assume $p \not\forces^* \tau_1 = \tau_2$.
+
+          We will show that if the first half of the definition of $ p\forces^* \tau_1 = \tau_2$ is violated, then we find $r \leq p$ such that $r \in D_2$. (Similarly, if the second half is violated, then for some $r \leq p$, we have $r \in D_3$)
+          The first half fails means:
+          there is $(\pi_1,s_1) \in \tau_1$ such that
+          \begin{equation*}
+            \mathcal{D}' \coloneqq \{p \leq p \mid q \leq s_1 \rightarrow \exists (\pi_2,s_2) \in \tau_2 \ (q \leq s_2 \land q \forces^* \pi_1 = \pi_2)\}
+          \end{equation*}
+          is not dense below $p$.
+          Fix this $(\pi_1, s_1) \in \tau_1$ and fix $r \leq p$ such that $\mathcal{D}'$ has no element below $r$.
+          That is,
+          \begin{equation*}
+            \forall q \leq r \ (q \leq s_1 \land \forall (\pi_2,s_2) \in \tau_2 \ (q \nleq s_2 \lor q \not\forces^* \pi_1 = \pi_2)) \tag{$*$}\label{eq:1}
+          \end{equation*}
+
+          Fix arbitrary $(\pi_2,s_2) \in \tau_2$ and $q$ such that
+          \begin{equation*}
+            q \leq s_2 \land q \forces^* \pi_1 = \pi_2 \tag{$**$} \label{eq:2}
+          \end{equation*}
+          If $q$ is compatible with $r$, find $q' \leq r,q$ satisfying \eqref{eq:1}.
+          But now $q' \not\forces^* \pi_1 = \pi_2$ by \eqref{eq:1} and $q' \forces^* \pi_1 = \pi_2$ by \eqref{eq:2} and $q' \leq q$.
+          Contradiction.
+          So $q \perp r$, as required. \qedhere
       \end{enumerate}
     \end{proof}
+
+\begin{thm}[Generic Model Theorem]
+  Take $M$ a countable \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{\textsf{ZFC}}, $\mathbb{P} \in M$, and say $G$ is $\mathbb{P}$-\hyperlink{def:genericO}{generic over} $M$,
+  \begin{equation*}
+    \hyperlink{def:mg}{M[G]} \models \textsf{ZFC}.
+  \end{equation*}
+\end{thm}
+\begin{cor}
+  \hyperlink{def:mg}{$M[G]$} is the minimal \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{\textsf{ZFC}} with $M \subseteq M[G]$, $G \in M[G]$.
+\end{cor}
+Observe that if $M = \hyperlink{def:l}{L_\alpha}$ for some countable $\alpha$ and $L_\alpha(G)$ is the relativised $L$-construction as on Example Sheet 2, then by \hyperlink{thm:min}{minimality} of $L$ (or $L(G)$ for models containing $G$), $M[G] = L_\alpha(G)$.
+
+\begin{proof}[Proof of Generic Model Theorem]\leavevmode
+  \begin{description}
+    \item[\textsf{Ext}] Follows by transitivity of $M[G]$
+    \item[\textsf{Found}] Follows by transitivity of $M[G]$
+    \item[\textsf{Pair}] Was proved earlier by hand
+    \item[\textsf{Union}] On Example Sheet 3, by hand
+    \item[\textsf{Inf}] By absoluteness of `$x = \mathbb{N}$', we only need $\mathbb{N} \in M[G]$.
+      But $\mathbb{N} = \val(\check{\mathbb{N}},G)$
+    \item[\textsf{Choice}] On Example Sheet 4
+    \item[\textsf{Repl}] On Example Sheet 4
+    \item[\textsf{Sep}] Fix a formula $\varphi$, parameters $x_1, \dotsc, x_n \in \hyperlink{def:mg}{M[G]}$ and $x \in M[G]$. We would like to construct
+      \begin{align*}
+        \{z \in x \mid M[G] \models \varphi(z, x_1, \dotsc, x_n)\}.
+      \end{align*}
+      Fix names $\tau_1, \dotsc, \tau_n$ for $x_1, \dotsc, x_n$, and $\sigma$ for $x$.
+      Set
+      \begin{align*}
+        A &\coloneqq \{z \in \val(\sigma,G) \mid M[G] \models \varphi(z, \tau_1, \dotsc, \tau_n)\} \\
+        \rho &\coloneqq \{(\pi,p) \mid p \hyperlink{def:syn}{\forces^*} \pi \in \sigma \land \varphi(\pi, \tau_1, \dotsc, \tau_n)\}
+      \end{align*}
+      Claim: $A = \hyperlink{def:val}{\val(\rho,G)}$.
+
+      ($\supseteq$) Suppose $z \in \val(\rho,G)$. There is $(\pi,p) \in \rho$ with $p \in G$ and $\val(\pi,G) = z$.
+      $(\pi,p) \in \rho$ means that
+      \begin{align*}
+        p \forces^* \pi \in \sigma \land \varphi(\pi, \tau_1, \dotsc, \tau_n)
+      \end{align*}
+      By the \hyperlink{thm:forcing}{Forcing Theorem}, $M[G] \models \pi \in \sigma \land \varphi(\pi, \tau_1, \dotsc, \tau_n)$.
+      Thus $M[G] \models z \in x \land \varphi(z, x_1, \dotsc, x_n)$
+      so $z \in A$.
+
+      ($\subseteq$) Let $z \in A$, so $z \in x$ and $M[G] \models \varphi(z, x_1, \dotsc, x_n)$. Fix $\pi$ name for $z$: $z=\val(\pi,G)$.
+      The Forcing Theorem together with $z \in x$ says there is $p \in G$  with $p \forces^* \pi \in \sigma$.
+      Similarly, the Forcing Theorem together with $M[G] \models \varphi(z, x_1, \dotsc, x_n)$ gives that there is $q \in G$ with $q \forces^* \varphi(\pi, \tau_1, \dotsc, \tau_n)$.
+      Find $r \leq p,q$ with $r \in G$.
+      Then $r \models^* \pi \in \sigma \land \varphi(\pi, \tau_1, \dotsc, \tau_n)$. So by definition, $(\pi,r) \in \rho$.
+      $z = \val(\pi,G) \in \val(\rho,G)$.
+    \item[\textsf{Pow}] Since we have Separation, it's enough to show
+      \begin{equation*}
+        \forall x\ \exists y\ \forall z\ (z \subseteq x \rightarrow z \in y).
+      \end{equation*}
+      Fix a name $\sigma$ for $x$. Let's write for any name $\tau$:
+      \begin{align*}
+        \dom(\tau) \coloneqq \{\tau' \mid \exists (\tau',p) \in \tau\}
+      \end{align*}
+      We think of names for subsets of $x$ as names whose domain is a subset of the domain of $\sigma$.
+      \begin{align*}
+        \rho_\sigma \coloneqq \{(\tau,\1) \mid \dom(\tau) \subseteq \dom(\sigma)\}
+      \end{align*}
+      Let's prove that $\val(\rho_\sigma,G)$ satisfies $\forall z \ (z \subseteq x \rightarrow z \in \val(\rho_\sigma,G))$.
+      Assume that $z \subseteq x$. Fix a name $\mu$ for $z$: $\val(\mu,G) = z$.
+      Define
+      \begin{equation*}
+        \mu^* \coloneqq \{(\pi,p) \mid \pi \in \dom(\sigma) \text{ and } p \forces^* \pi \in \mu\}.
+      \end{equation*}
+      By def, $\dom(\mu^*) \subseteq \dom(\sigma)$. So $(\mu^*,\1) \in \rho_\sigma$. Hence $\val(\mu,G) \in \val(\rho_\sigma,G)$.
+      Remains to show $\val(\mu,G) = \val(\mu^*,G)$.
+
+      If $w \in \val(\mu,G)$: Since $\val(\mu,G) \subseteq \val(\sigma,G)$, we find $(\pi,p) \in \sigma$ with $p \in G$ such that $\val(\pi,G) = w$.
+      $M[G] \models \pi \in \mu$. By the Forcing Theorem, there is $q \in G$ with $q \forces^* \pi \in \mu$.
+      So $(\pi,q) \in \mu^*$. Since $q \in G$, this means $\val(\pi,G) \in \val(\mu^*,G)$.
+
+      If $w \in \val(\mu^*,G)$, find $(\pi,p) \in \mu^*$, $p \in G$. $w = \val(\pi,G)$. By definition, $p \forces^* \pi \in \mu$.
+      The Forcing Theorem says $M[G] \models \pi \in \mu$, thus $w = \val(\pi,G) \in \val(\mu,G)$.
+  \end{description}
+\end{proof}
 \printindex
 \end{document}
