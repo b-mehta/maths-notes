@@ -2187,5 +2187,128 @@ Observe that if $M = \hyperlink{def:l}{L_\alpha}$ for some countable $\alpha$ an
       The Forcing Theorem says $M[G] \models \pi \in \mu$, thus $w = \val(\pi,G) \in \val(\mu,G)$.
   \end{description}
 \end{proof}
+
+\newlec
+We will show that \textsf{V$\neq$L} is consistent.
+Suppose $M$ is a countable transitive model of \textsf{ZFC} + \textsf{V=L}.
+By our work on $L$, we know that there is $\alpha < \omega_1$ such that $M = L_\alpha$.
+Let $\mathbb{P} \in L_\alpha$ be any partial order that is splitting.
+By countability, we get a $G$ which is $\p$-generic over $M$, and $G \notin M$ by splitting.
+So $M[G] \neq M$.
+
+Claim: $M[G] \models \textsf{V$\neq$L}$. Suppose not, then $M[G] = L_\beta$ for some $\beta$. Then $\text{Ord} \cap M[G] = \text{Ord} \cap M = \alpha$.
+So $\beta = \alpha$. So $M[G] = L_\beta = L_\alpha = M$. Contradiction.
+
+Note this didn't use any property of $\p$, other than that it is splitting.
+We might be able to do more if we use specific $\p$s.
+So, let's remind ourselves of the specific $\p$s we have:
+\begin{align*}
+  \p &= \operatorname{Fn}(X,Y) \quad \text{where } X,Y \in M \\
+     &= \{ p \mid p \text{ is a partial function from } X \text{ to } Y \text{ with finite domain}\}.
+\end{align*}
+If $G$ is $\mathbb{P}$-generic over $M$, then $\bigcup G \eqqcolon f_G: X \to Y$ surjective.
+So if $X = \mathbb{N}$, then $M[G] \models Y$ is countable.
+In particular, if $Y = \aleph_1^M$, then forcing with $\operatorname{Fn}(\mathbb{N},\aleph_1^M)$ will `collapse' $\aleph_1^M$:
+\begin{align*}
+  M[G] \models \aleph_1^M \text{ is a countable ordinal.}
+\end{align*}
+
+\textbf{Excursion.} Suppose $M \models 2^{\aleph_0} = \aleph_2$ and $\mathbb{P} = \operatorname{Fn}(\mathbb{N},\aleph_1^M)$.
+If $\aleph_1^M$ is no longer a cardinal in $M[G]$, then the original bijection $f: \mathbb{R}^M \to \aleph_2^M$ will be a bijection between $\mathbb{R}^m$ and an ordinal which can be at best $\aleph_1^{M[G]}$.
+In order to make this into a proof of $M[G] \models \textsf{CH}$, we need:
+\begin{enumerate}
+  \item $M[G] \models \aleph_2^M$ is a cardinal, thus $M[G] \models \aleph_2^M = \aleph_1$.
+  \item $M[G] \models |\mathbb{R}| = |\mathbb{R}^M|$
+\end{enumerate}
+Since $\aleph_1^M < \aleph_1^{M[G]}$, we know $\mathbb{R}^{M[G]} \supsetneqq \mathbb{R}^M$.
+If we had 1 and 2, we get a consistency proof of \textsf{ZFC} + \textsf{CH} + \textsf{V$\neq$L}
+
+Back to forcing $\neg$\textsf{CH}.
+Instead, take $\p \coloneqq \text{Fn}(\mathbb{N} \times \aleph_2^M, \mathbb{N})$.
+This generates $f_G = \bigcup G: \mathbb{N} \times \aleph_2^M \to \mathbb{N}$.
+Define in $M[G]$ for $\alpha < \aleph_2^M$.
+\begin{align*}
+  f_\alpha(n) &\coloneqq f(n,\alpha) \\
+  f_\alpha: \mathbb{N} \to \mathbb{N}.
+\end{align*}
+We'll show that if $\alpha \neq \beta$ then $f_\alpha \neq f_\beta$.
+In particular, the map
+\begin{align*}
+  \alpha \mapsto f_\alpha
+\end{align*}
+gives an injection from $\aleph_2^M$ into $\mathbb{N}^\mathbb{N}$.
+Then $M[G] \models |\aleph_2^M| \leq 2^{\aleph_0}$.
+
+\begin{proof}[Proof of injectivity]
+  Fix $\alpha \neq \beta$ and define
+  \begin{align*}
+    D_{\alpha,\beta} \coloneqq \{p \mid \exists n \ p(n,\alpha) \neq p(n,\beta)\}.
+  \end{align*}
+  I claim $D_{\alpha,\beta}$ is dense. Fix $p \in \p$ arbitrarily. Then $\dom(p)$ is finite, so find $m \in \mathbb{N}$ such that both $(n,\alpha), (n,\beta) \notin \dom(p)$
+  \begin{align*}
+    q \coloneqq p \cup \{((n,\alpha), 0), ((n,\beta),1)\}
+  \end{align*}
+  So $q(n,\alpha) \neq q(n,\beta)$, so $q \leq p$, $q \in D_{\alpha,\beta}$.
+
+  Find $p \in G \cap D_{\alpha,\beta}$. Then $f_G = \bigcup G$ with $p \in G$, so there is $n$ such that
+  \begin{align*}
+    &\phantom{\Rightarrow} f_G(n,\alpha) \neg f_G(n,\beta) \\
+    &\Rightarrow f_\alpha(n) \neg f_\beta(n) \\
+    &\Rightarrow f_\alpha \neg f_\beta. \qedhere
+  \end{align*}
+\end{proof}
+So to summarise, if $G$ is $\operatorname{Fn}(\mathbb{N} \times \aleph_2^M, \mathbb{N})$-generic over $M$, then
+\begin{align*}
+  M[G] \models 2^{\aleph_0} \geq |\aleph_2^M|
+\end{align*}
+We need therefore:
+\begin{align*}
+  \aleph_1^M = \aleph_1^{M[G]}
+  \aleph_2^M = \aleph_2^{M[G]}
+\end{align*}
+in order to get $M[G] \models 2^{\aleph_0} \geq \aleph_2$.
+\begin{defi}
+  Let $M$ a countable transitive model, and $\p \in M$.
+  We say that $\p$ \named{preserves cardinals} if for all $\alpha$ an ordinal and all $G$ which is $\p$-generic over $M$, we have
+  \begin{align*}
+    M \models \alpha \text{ is a cardinal} \iff M[G] \models \alpha \text{ is a cardinal}
+  \end{align*}
+  Note $\Leftarrow$ follows from the fact that `is a cardinal' is $\Pi_1$.
+\end{defi}
+
+\begin{thm}
+  If $M \models \p$ has the countable chain condition, then $\p$ preserves cardinals.
+\end{thm}
+
+Putting this all together, from sheet 3, we know that if $Y$ is countable, the $\operatorname{Fn}(X,Y)$ has the countable chain condition (in \textsf{ZFC}), so $\text{Fn}(\mathbb{N} \times \aleph_2^M, \mathbb{N})$ certainly has the countable chain condition in every model $M$ of \textsf{ZFC}.
+
+So we derive that $\aleph_1^M$ and $\aleph_2^M$ are cardinals in $M[G]$.
+Thus by the fact that being a cardinal is $\Pi_1$, $\aleph_1^{M[G]} = \aleph_1^M$ and $\aleph_2^{M[G]} = \aleph_2^M$
+
+\begin{cor}
+  With $\p ,G,M$ as above, $M[G] \models \neg \textsf{CH}$.
+\end{cor}
+\begin{cor}
+  If $M \models \textsf{ZFC}$ countable transitive, then there is $M[G] \models \textsf{ZFC} + \neg \textsf{CH}$ countable transitive.
+\end{cor}
+\begin{lemma}
+  Suppose $M \models \p$ has the countable chain condition,
+  \begin{align*}
+    A,B \in M,\ f: A \to B, \ f \in M[G]
+  \end{align*}
+  Then there is $F \in M$ with
+  \begin{enumerate}[(a)]
+    \item $\dom(F) = A$
+    \item $\forall a \in A \ F(a) \subseteq B$
+    \item $\forall a \in A \ M \models F(a)$ is countable
+    \item $\forall a \in A \ f(a) \in F(a)$
+  \end{enumerate}
+\end{lemma}
+\begin{proof}[Proof of Theorem from Lemma]
+  Suppose $M \models \lambda$ is a cardinal, $M[G] \models \lambda$ is not a cardinal.
+  $M[G] \models \exists \gamma < \lambda \ \exists f$ bijective with $f: \gamma \to \lambda$.
+  Apply Lemma to $A = \gamma$, $B = \lambda$, $f = f$. Get $F \in M$. Since $f$ is surjective, $\lambda = \bigcup_{\alpha < \gamma} F(\alpha)$.
+  So $M \models |\lambda| \leq |\omega \times \gamma| < \lambda$.
+\end{proof}
 \printindex
 \end{document}
