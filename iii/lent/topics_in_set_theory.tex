@@ -2310,5 +2310,107 @@ Thus by the fact that being a cardinal is $\Pi_1$, $\aleph_1^{M[G]} = \aleph_1^M
   Apply Lemma to $A = \gamma$, $B = \lambda$, $f = f$. Get $F \in M$. Since $f$ is surjective, $\lambda = \bigcup_{\alpha < \gamma} F(\alpha)$.
   So $M \models |\lambda| \leq |\omega \times \gamma| < \lambda$.
 \end{proof}
+
+\newlec
+Reviewing where we are: Our goal is to show \textsf{CH} is independent of \textsf{ZFC}.
+Take
+\begin{align*}
+  \mathbb{P} \coloneqq \{p \mid p \text{ a partial function from } \aleph_2^M \times \mathbb{N} \text{ into } \mathbb{N} \text{ such that } p \text{ is finite.}\}.
+\end{align*}
+If $G$ is $\p$-generic over $M$, then in $M[G]$ there is an injection from $\aleph_2^M$ into $\mathbb{R}$.
+If $\aleph_1^M = \aleph_1^{M[G]}$ and $\aleph_2^M = \aleph_2^{M[G]}$ then $M[G] \models 2^{\aleph_0} \geq \aleph_2$.
+
+\begin{thm}
+  If $M \models \p$ has the \hyperlink{def:ccc}{countable chain condition}, then $\p$ preserves cardinals.
+\end{thm}
+From Example Sheet 3, $M \models \p$ has the \hyperlink{def:ccc}{countable chain condition}.
+We reduced the Theorem to the Lemma above, which we will now prove.
+\begin{proof}
+  Fix a name $\tau$ for $f$.
+  Let $\tau: \check{A} \to \check{B}$ be the sentence in the forcing language that expresses `$\tau$ is a function from $\check{A}$ to $\check{B}$'.
+
+  By the \hyperlink{thm:forcing}{Forcing Theorem}, find $p \in G$ with $p \forces \tau: \check{A} \to \check{B}$.
+  \begin{align*}
+    F(a) \coloneqq \{b \in B \mid \exists q \leq p \ q \forces \tau(\check{a}) = \check{b}\}
+  \end{align*}
+  (this makes sense because below $p$, $\tau$ is a function). Formally, $\tau(\check{a}) = \check{b}$ is the sentence in the forcing language expressing `the value of $\tau$ at $\check{a}$ is $\check{b}$'.
+
+  Certainly $\forall a \in A$, $F(a) \subseteq B$ giving property (b). Next, let $\bar{b} \coloneqq f(a) \in B$. Then $M[G] \models \bar{b} = f(a)$. That is, $\tau(\check{a}) = \check{\bar{b}}$.
+  By the \hyperlink{thm:forcing}{Forcing Theorem}, find $q \in G$ such that
+  \begin{align*}
+    q \forces \tau(\check{a}) = \check{\bar{b}}.
+  \end{align*}
+  Since $G$ is a filter, find $q' \leq q,p$ with $q' \in G$.
+  But now $q'$ witnesses that $f(a) = \bar{b} \in F(a)$, showing (d).
+
+  Finally, need to check that each $F(a)$ is countable in $M$, to give (c).
+  If I pick for each $b \in F(a)$ a $q_b$ witnessing that $b \in F(a)$, i.e.\ $q_b \forces \tau(\check{a}) = \check{b}$, then if $b \neq b'$, $q_b \perp q_{b'}$
+  Thus $\{q_b \mid b \in F(a)\}$ is an antichain in $\p$.
+  So, it's countable in $M$.
+  So $F(a)$ is countable in $M$.
+\end{proof}
+\begin{cor}
+  If there is a transitive set model of \textsf{ZFC} then there is
+  \begin{enumerate}[(a)]
+    \item a transitive set model of \textsf{ZFC+CH}
+    \item a transitive set model of \textsf{ZFC+$\neg$CH}
+  \end{enumerate}
+\end{cor}
+\begin{question}
+  What is the size of $2^{\aleph_0}$ in our models?
+\end{question}
+So far, the only thing we know is
+\begin{align*}
+  \geq \aleph_2
+\end{align*}
+
+We will show that if $M \models \textsf{CH}$, then $M[G]$ for $G$ $\p$-generic over $M$ for $\p = \operatorname{Fn}(\aleph_2^M \times \mathbb{N}, \mathbb{N})$ is a model of $2^{\aleph_0} = \aleph_2$.
+
+For this, we need to `count' the names for subsets of $\mathbb{N}$.
+\begin{defi}
+  A name $\tau$ for a subset of $\mathbb{N}$ is called \textbf{nice}\index{name!nice}\index{nice name} if for every $n \in \mathbb{N}$, there is an antichain $A_n \subseteq \p$ such that
+  \begin{align*}
+    \tau = \{(\check{n},p) \mid n \in \mathbb{N} \ p \in A_n\}.
+  \end{align*}
+\end{defi}
+How many nice names are there?
+How many antichains are there? $\abs{\p^{\aleph_0}}$ is an upper bound. So, what's the size of $\p$?
+$|\p| = \aleph_2$, so there are $\aleph_2^{\aleph_0}$ antichains.
+But what is $\aleph_2^{\aleph_0}$? By Hausdorff's Formula: $\aleph_{a+1}^{\aleph_\beta} = \aleph_{\alpha+1} \cdot \aleph_\alpha^{\aleph_\beta}$
+\begin{align*}
+  \aleph_{1+1}^{\aleph_0} &= \aleph_2 \cdot \aleph_1^{\aleph_0} \\
+                        &= \aleph_2 \cdot \aleph_{0+1}^{\aleph_0} \\
+                        &= \aleph_2 \cdot \aleph_1 \cdot \aleph_0^{\aleph_0} \\
+                        &= \aleph_2 \cdot 2^{\aleph_0}
+\end{align*}
+In $M$, this is $\aleph_2 \cdot \aleph_1 = \aleph_2$.
+
+This shows that there are at most $\aleph_2$ many antichains.
+A nice name is a countable collection of antichains, so at most $\aleph_2^{\aleph_0} = \aleph_2$ many.
+
+\begin{thm}
+  If $x \subseteq \mathbb{N}$ in $M[G]$, then there is a nice name $\tau$ such that $x = \val(\tau,G)$.
+\end{thm}
+\begin{proof}
+  Fix a name $\mu$ for $x$.
+  For every $n \in \mathbb{N}$ construct an antichain $A_n$ with the properties
+  \begin{enumerate}[(a)]
+    \item $\forall p \in A_n$ $p \forces \check{n} \in \mu$
+    \item $A_n$ is antichain
+    \item $A_n$ is maximal with respect to (a) and (b).
+  \end{enumerate}
+  Now set $\tau \coloneqq \{(\check{n},p) \mid p \in A_n\}$. This is a nice name.
+  We claim that $M[G] \models \tau = \mu.$
+
+  ($\subseteq$). Let $y \in \val(\tau,G)$. There is some $n \in \mathbb{N}$ such that $y = n$ and find $p \in A_n \cap G$ that witnesses $y \in \val(\tau,G)$.
+  Since $p \in A_n$, $p \forces \check{n} = \mu$.
+  So $n \in \val(\mu,G)$.
+
+  ($\supseteq$). Let $y \in \val(\mu,G)$. Since $y =n \in \mathbb{N}$, $y = \val(\check{n},G)$
+  We know that $(\check{n},p) \in \tau$ for every $p \in A_n$. If there is $p \in A_n \cap G$ then $n \in \val(\tau,G)$ and we're done.
+
+  If $A_n \cap G = \emptyset$ (remember example 24), there is $q \in G$ such that $\forall p \in A_n$, $p \perp q$.
+  This is a contradiction to maximality (in the sense of (c)) of $A_n$.
+\end{proof}
 \printindex
 \end{document}
