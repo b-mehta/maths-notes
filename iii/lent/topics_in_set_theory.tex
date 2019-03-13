@@ -2412,5 +2412,94 @@ A nice name is a countable collection of antichains, so at most $\aleph_2^{\alep
   If $A_n \cap G = \emptyset$ (remember example 24), there is $q \in G$ such that $\forall p \in A_n$, $p \perp q$.
   This is a contradiction to maximality (in the sense of (c)) of $A_n$.
 \end{proof}
+\newlec
+Remaining things to possibly say:
+\begin{enumerate}
+  \item Possible size of $2^{\aleph_0}$
+  \item $\textsf{V=L}$ and $\textsf{CH}$
+  \item Forcing \textsf{CH}
+  \item What about $2^\kappa$ for $\kappa > \aleph_0$?
+\end{enumerate}
+\begin{enumerate}
+  \item We've seen that if $M \models \textsf{CH}$, $G = \operatorname{Fn}(\aleph_2^M \times \mathbb{N}, \mathbb{N})$-generic over $M$, then
+    \begin{align*}
+      M[G] \models 2^{\aleph_0} = \aleph_2.
+    \end{align*}
+    Proof via nice names: there are $\aleph_2^{\aleph_0}$ many nice names for $\operatorname{Fn}(\aleph_2^M \times \mathbb{N}, \mathbb{N})$.
+    With \textsf{CH}, we can calculate $\aleph_2^{\aleph_0} = \aleph_2 \cdot \aleph_1^{\aleph_0} = \aleph_2 \cdot \aleph_1 \cdot \aleph_0^{\aleph_0} = \aleph_2$ using Hausdorff's Formula.
+
+    If you replace $\aleph_2^M$ by $\aleph_n^M$ ($n > 0$) in the forcing, we get $\aleph_n^{\aleph_0}$ many nice names: By Hausdorff, this is $\aleph_n$.
+    So the same proof with $\p = \operatorname{Fn}(\aleph_n^M \times \mathbb{N}, \mathbb{N})$ gives
+    \begin{equation*}
+      \text{if } M \models \textsf{CH}, \text{ then } M[G] \models 2^{\aleph_0} = \aleph_1.
+    \end{equation*}
+    What about $\aleph_\omega$?
+    There is a \textsf{ZFC}-theorem called K\"onig's Lemma: $\kappa^{\text{cf} \kappa} > \kappa$.
+    Let's see how K\"onig's Lemma implies $2^{\aleph_0} \neq \aleph_\omega$.
+    Suppose it is:
+    \begin{gather*}
+      \text{cf}(2^{\aleph_0}) = \text{cf}(\aleph_\omega) = \aleph_0.
+      2^{\aleph_0} = 2^{\aleph_0 \cdot \aleph_0} = (2^{\aleph_0})^{\aleph_0} = (2^{\aleph_0})^{\text{cf}(2^{\aleph_0})} > 2^{\aleph_0}
+    \end{gather*}
+    The proof of K\"onig's Lemma in this particular case: $\aleph_\omega^{\aleph_0} > \aleph_\omega$.
+    Suppose $F: \aleph_\omega \to \aleph_\omega^{\aleph_0}$. We'll show (by diagonalisation) that this is not a surjection.
+    If $\alpha < \aleph_\omega = \bigcup_{n \in \mathbb{N}} \aleph_n$, then I find a unique $n$ such that $\aleph_n \leq \alpha < \aleph_{n+1}$.
+    Consider $F_n: \aleph_\omega \to \aleph_\omega$ given by $\alpha \mapsto F(\alpha,n)$.
+    Then $R_n = \{F_n(\alpha) \mid \aleph_n \leq a < \aleph_{n+1}\} \neq \aleph_\omega$.
+    So, pick $b_n$ such that $b_n \notin R_n$.
+
+    Claim that $b:n \mapsto b_n$, $b \in \aleph_\omega^{\aleph_0}$.
+    Suppose it is: find $\alpha < \aleph_\omega$ such that $b = F(\alpha)$.
+    Find $n$ such that $\aleph_n \leq \alpha < \aleph_{n+1}$.
+    \begin{align*}
+      b_n = b(n) \notin R_n.
+    \end{align*}
+    so $b \neq F(\alpha,n)$. \qed
+
+    How many nice names does $\operatorname{Fn}(\aleph_\omega^M \times \mathbb{N}, \mathbb{N})$ have? $\aleph_\omega^{\aleph_0}$ many.
+
+    What if we in addition assume $2^{\aleph_\omega} = \aleph_{\omega+1}$ (true in $L$).
+    \begin{align*}
+      \aleph_\omega < \aleph_\omega^{\aleph_0} \leq (2^{\aleph_\omega})^{\aleph_0} = 2^{\aleph_\omega \cdot \aleph_0} = 2^{\aleph_\omega} = \aleph_{\omega+1}
+    \end{align*}
+    so $\aleph_\omega^{\aleph_0} = \aleph_{\omega+1}$.
+    \begin{cor}
+      If $M \models 2^{\aleph_0} = \aleph_1 \land 2^{\aleph_\omega} = \aleph_{\omega+1}$ and $G$ is $\operatorname{Fn}(\aleph_\omega^M \times \mathbb{N}, \mathbb{N})$-generic over $M$, then
+      \begin{align*}
+        M[G] \models 2^{\aleph_0} = \aleph_{\omega+1}.
+      \end{align*}
+    \end{cor}
+    In general, if $\kappa > \aleph_0$ is regular and $M \models \textsf{GCH}$ then $\kappa^{\aleph_0} = \kappa$ and thus forcing with $\Fn(\kappa \times \mathbb{N}, \mathbb{N})$ gives a model of $2^{\aleph_0} = \kappa$.
+
+  \item We've seen that $\textsf{V=L} \Rightarrow \textsf{CH}$. What about the converse?
+    We've seen that forcing with any splitting poset forces \textsf{V$\neq$ L}.
+    Consider $\Fn(\mathbb{N},2)$. This has $\aleph_0^{\aleph_0}$ many nice names.
+
+    So forcing with $\p$ over $M \models \textsf{CH}$, we preserve \textsf{CH}.
+    So, taking everything together, we get that $M[G] \models \textsf{CH} + \textsf{V$\neq$L}$.
+  \item Remember the excursion where we looked at
+    \begin{align*}
+      \Fn(\aleph_0, \aleph_1).
+    \end{align*}
+    This does not preserve cardinals: it adds a surjection $\aleph_0 \to \aleph_1$. ($p_\alpha \coloneqq \{(0,\alpha)\}$ is an antichain of size $\aleph_1$)
+    \paragraph{Excursion} Assume $M \models 2^{\aleph_0} = \aleph_2$, $G$ is $\p$-generic over $M$.
+    We try to prove $M[G] \models \textsf{CH}$. For this, we need:
+    \begin{enumerate}[(a)]
+      \item $\aleph_2$ stays a cardinal
+      \item $|\mathbb{R}^{M[G]}| = |\mathbb{R}^M|$
+    \end{enumerate}
+    \begin{enumerate}[(a)]
+      \item Show that $\Fn(\aleph_0, \aleph_1)$ has the $\aleph_2$-cc; thus by Sheet 4, it preserves cardinals $\geq \aleph_2$.
+        This gives us (a).
+      \item Count nice names: how many nice names are there? $2^{\aleph_1} = \aleph_1^{\aleph_1}$ many.
+        If $M \models 2^{\aleph_0} = \aleph_2 \land 2^{\aleph_1} = \aleph_3$, this does not help, since we'd only get
+        \begin{align*}
+          M[G] \models 2^{\aleph_0} \leq \aleph_3^M
+        \end{align*}
+        If we knew that $M \models 2^{\aleph_0} = 2^{\aleph_1} = \aleph_2$, then we'd be done.
+    \end{enumerate}
+  \item What about $2^\kappa$ in general for $\kappa > \aleph_0$?
+    Take $\Fn( \kappa \times \aleph_1, 2)$, the canonical poset for adding $\kappa$ many subsets of $\aleph_1$. This has the countable chain condition; analysis of nice names (assuming that $M \models \textsf{GCH}$) still gives $M[G] \models 2^{\aleph_1} = \kappa$.
+\end{enumerate}
 \printindex
 \end{document}
