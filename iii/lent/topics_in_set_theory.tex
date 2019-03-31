@@ -1281,7 +1281,7 @@ If $\alpha$ is countable, there is a code for a surjection $f: \mathbb{N} \twohe
   %   \forall z\ (z \in y \rightarrow z \in x).
   % \end{align*}
 
-  By our lemma, find $\beta$ such that $T = L_\beta$, which we can do since $L_\kappa \models \textsf{ZFC}+\textsf{V=L}$, and $L_\beta \equiv L_\kappa$.
+  By our lemma, find $\beta$ such that $T = L_\beta$, which we can do since $L_\kappa \models \textsf{ZFC}+\hyperlink{def:vl}{\textsf{V=L}}$, and $L_\beta \equiv L_\kappa$.
   Now $y$ can be defined over $L_\beta$ with parameters in $L_\beta$ (viz.\ $y$) and $|T| = |L_\beta| = |\beta|$.
 \end{proof}
 
@@ -1318,7 +1318,7 @@ By the standard argument, get
 \begin{align*}
   \beta < \aleph_2 < \kappa.
 \end{align*}
-But now $L_\beta \models \textsf{ZFC}+\textsf{V=L}$.
+But now $L_\beta \models \textsf{ZFC}+\hyperlink{def:vl}{\textsf{V=L}}$.
 Run the Condensation Lemma proof for $V_\kappa$ as $M$ and $L_\beta$ as $L_\kappa$:
 \begin{equation*}
   y \in L_\alpha = T \cong \mathcal{H}^{L_\beta}(\mathbb{N} \cup \{y\}) \preccurlyeq L_\beta.
@@ -1346,7 +1346,7 @@ Now $L_\kappa \models$ `$a$ is countable'. So if $L_\kappa \models 2^{\aleph_0} 
       \begin{equation*}
         L = \bigcup_{\alpha \in \text{Ord}} L_\alpha \subseteq M.
       \end{equation*}
-      Our proof does not say what axioms hold in $L$, but using the L\'evy Reflection Theorem, you can prove that $V \models \textsf{ZFC}$, then $L \models \textsf{ZFC}+\textsf{V=L}$.
+      Our proof does not say what axioms hold in $L$, but using the L\'evy Reflection Theorem, you can prove that $V \models \textsf{ZFC}$, then $L \models \textsf{ZFC}+\hyperlink{def:vl}{\textsf{V=L}}$.
   \end{enumerate}
 \end{remark}
 Recall our question about regular limit cardinals:
@@ -1380,11 +1380,11 @@ Clearly \textsf{ZFC}+GCH gives that every limit is a strong limit. So, \textsf{Z
   \end{enumerate}
 \end{defi}
 \begin{thm}[Minimality Theorem]\hypertarget{thm:min}
-  If $M \models \textsf{ZFC} + \textsf{V=L}$ and $N$ is an \hyperlink{def:innerModel}{inner model} then $N = M$.
+  If $M \models \textsf{ZFC} + \hyperlink{def:vl}{\textsf{V=L}}$ and $N$ is an \hyperlink{def:innerModel}{inner model} then $N = M$.
 \end{thm}
 \begin{proof}
   We know that $M = \bigcup_{\alpha \in \text{Ord} \cap M} L_\alpha^{M}$ where $L_\alpha^M$ is the set $L_\alpha$ (interpreted in $M$).
-  This follows directly from $\textsf{V=L}$ in $M$.
+  This follows directly from $\hyperlink{def:vl}{\textsf{V=L}}$ in $M$.
   So in order to show $N=M$, it's enough to show $L_\alpha^M \subseteq N$ for all $\alpha \in \text{Ord} \cap M$.
   An easy induction shows $L_\alpha^N \subseteq N$ for $\alpha \in \text{Ord} \cap N$. By absoluteness $L_\alpha^N = L_\alpha^M$
 \end{proof}
@@ -1535,14 +1535,14 @@ With this goal, Paul Cohen described \named{Forcing} in 1963.
   As before, if $F$ is a \hyperlink{def:filter}{filter}, $\bigcup F$ is a partial function.
   If $F$ is \hyperlink{def:dgeneric}{$\mathcal{D}$-generic}, $\bigcup F: \mathbb{N} \to X$.
 
-  Consider $E_x \coloneqq \{p : x \in \ran(p)\}$ for every $x \in X$.
+  Consider $E_x \coloneqq \{p \mid x \in \ran(p)\}$ for every $x \in X$.
   \begin{align*}
     \mathcal{D}^* \coloneqq \mathcal{D} \cup \{E_x \mid x \in X\}.
   \end{align*}
   Suppose $G$ is a $\mathcal{D}^*$-generic filter. By the above, $\bigcup G: \mathbb{N} \to X$.
   For every $x \in X$, $E_x \cap G \neq \emptyset$, so there is $p \in G$ with $x \in \ran(p)$.
   So $X = \ran(\bigcup G)$.
-  Thus $\bigcup G$ is a surjection from $\mathbb{N}$ to $X$. (In particular, if $X$ is uncountable in $M$, there is no such generic filter).
+  Thus $\bigcup G$ is a surjection from $\mathbb{N}$ to $X$. % (In particular, if $X$ is uncountable in $M$, there is no such generic filter).
 \end{eg}
 \begin{defi}\hypertarget{def:genericO}
   If $M$ is a \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{\textsf{ZFC}} and $\mathbb{P} \in M$ a \hyperlink{def:poset}{partial order}.
@@ -1732,7 +1732,7 @@ Now,
   \hyperlink{def:val}{\val}(\mu_{\sigma,\tau},G) &= \{\val(\sigma,G),\val(\tau,G)\} \quad \text{because } \mathbbm{1} \in G \\
                             &= \{x,y\}.
 \end{align*}
-\begin{prop}
+\begin{prop}\hypertarget{prop:mgpair}
   $\hyperlink{def:mg}{M[G]} \models \textsf{Pair}$.
 \end{prop}
 Note this name is not unique.
@@ -1776,9 +1776,10 @@ It would be nice to be able to talk about whether a name $\sigma$ is a name for 
   \end{align*}
   \hypertarget{def:forcingrelation}If $\varphi$ is a sentence of $\mathcal{L}(M^{\mathbb{P}})$ and $p \in \mathbb{P}$, the \named{forcing relation} is
   \begin{align*}
-    p \Vdash_M \varphi :\Longleftrightarrow \text{for every } \mathbb{P}\text{-generic filter $G$ over $M$ such that $p \in G$, we have $M[G] \models \varphi$}
+    p \Vdash_M \varphi :\Longleftrightarrow \text{for every } \mathbb{P}\text{-generic filter $G$ over $M$ such that $p \in G$, we have $M[G] \models \varphi$}.
   \end{align*}
 \end{defi}
+\subsection{Forcing relations}
 We will eventually prove:
 \begin{thm}[Forcing theorem]
   The following are equivalent:
@@ -1930,7 +1931,8 @@ From Example Sheet 3, exercise 23, we have:
   Let $G$ be $\mathbb{P}$-generic over $M$ with $p \in G$. By the Forcing Theorem, $M[G] \models \varphi$, as required.
 \end{proof}
 
-It remains to prove the \hyperlink{thm:forcing}{Forcing Theorem}.
+\subsection{Proving the Forcing Theorem}
+It still remains to prove the \hyperlink{thm:forcing}{Forcing Theorem}.
 \begin{proof}[Proof of \hyperlink{thm:forcing}{Forcing Theorem}]
   We'll prove this by induction
   \begin{enumerate}[(a)]
@@ -2029,7 +2031,7 @@ It remains to prove the \hyperlink{thm:forcing}{Forcing Theorem}.
       \end{align*}
       is everything below $p$, thus \hyperlink{def:dense}{dense}.
 
-    \item[2.] $(\Leftarrow)$ Fix $p \in G$ such that $p \forces^* \tau_1 = \tau_2$. Our induction hypothesis now only applies $=$ with names of lower rank.
+    \item[2.] $(\Leftarrow)$ Fix $p \in G$ such that $p \forces^* \tau_1 = \tau_2$. Our induction hypothesis now only applies to $=$ with names of lower rank.
       The form of the definition of $p \forces^* \tau_1 = \tau_2$ is symmetric in the sense that if we're using the first half to show that $\val(\tau_1, G) \subseteq \val(\tau_2,G)$, then the other half shows $\val(\tau_2,G) \subseteq \val(\tau_1,G)$.
 
       So, we'll show $\val(\tau_1,G) \subseteq \val(\tau_2,G)$.
@@ -2054,63 +2056,63 @@ It remains to prove the \hyperlink{thm:forcing}{Forcing Theorem}.
             \text{there is } (\pi_1,s_1) \in \tau_1 \ \big(r \leq s_1 \text{ and for all }(\pi_2,s_2) \in \tau_2\\ \text{and all } q \ ((q \leq s_2 \land q \forces^* \pi_1 = \pi_2) \rightarrow q \hyperlink{def:incompat}{\perp} r)\big)
           \end{gathered}
         \right\}\\
-          \mathcal{D}_3 &\coloneqq \left\{r\ \middle\vert\
+        \mathcal{D}_3 &\coloneqq \left\{r\ \middle\vert\
             \begin{gathered}
               \text{there is } (\pi_2,s_2) \in \tau_2 \ \big(r \leq s_2 \text{ and for all }(\pi_1,s_1) \in \tau_1\\ \text{and all } q \ ((q \leq s_1 \land q \forces^* \pi_1 = \pi_2) \rightarrow q \perp r)\big)
             \end{gathered}
           \right\}\\
-            \mathcal{D} &\coloneqq \mathcal{D}_1 \cup \mathcal{D}_2 \cup \mathcal{D}_3
-          \end{align*}
+        \mathcal{D} &\coloneqq \mathcal{D}_1 \cup \mathcal{D}_2 \cup \mathcal{D}_3
+      \end{align*}
 
-          \begin{observation}
-            If $r \in G$, then neither $r \in \mathcal{D}_2$ nor $r \in \mathcal{D}_3$ can hold. By symmetry, it's enough to deal with case 2.
-            Towards a contradiction, assume $r \in G$ and $r \in \mathcal{D}_2$.
+      \begin{observation}
+        If $r \in G$, then neither $r \in \mathcal{D}_2$ nor $r \in \mathcal{D}_3$ can hold. By symmetry, it's enough to deal with $ \mathcal{D}_2$ .
+        Towards a contradiction, assume $r \in G$ and $r \in \mathcal{D}_2$.
 
-            Find $(\pi,s_1) \in \tau_1$ with desired properties.
-            Since $r \leq s_1 \Rightarrow s_1 \in G$ so
-            \begin{align*}
-              \val(\pi_1, G) \in \val(\tau_1,G) = \val(\tau_2,G).
-            \end{align*}
-            So there is $(\pi_2,s_2) \in \tau_2$ with $s_2 \in G$ and $\val(\pi_2,G) = \val(\pi_1, G)$.
-            By induction hypothesis, find $q' \in G$ with $q' \forces^* \pi_1 = \pi_2$.
-            Find $q \leq r,s_1,s_2, q'$ so $q$ contradicts $r \in \mathcal{D}_2$, as required.
-          \end{observation}
+        Find $(\pi,s_1) \in \tau_1$ with desired properties.
+        Since $r \leq s_1 \Rightarrow s_1 \in G$ so
+        \begin{align*}
+          \val(\pi_1, G) \in \val(\tau_1,G) = \val(\tau_2,G).
+        \end{align*}
+        So there is $(\pi_2,s_2) \in \tau_2$ with $s_2 \in G$ and $\val(\pi_2,G) = \val(\pi_1, G)$.
+        By induction hypothesis, find $q' \in G$ with $q' \forces^* \pi_1 = \pi_2$.
+        Find $q \leq r,s_1,s_2, q'$ so $q$ contradicts $r \in \mathcal{D}_2$, as required.
+      \end{observation}
 
-          So, we're done if we show that $\mathcal{D}$ is dense.
-          Fix $p \in \p$. If $p \forces^* \tau_1 = \tau_2$, then $p \in \mathcal{D}$ done.
-          If it doesn't, we'll find $r \leq p$ for $p \in \mathcal{D}_2$ or $\mathcal{D}_3$.
-          Again by symmetry, we'll show: If the first half of the definition of $p \not\forces^* \tau_1 = \tau_2$ fails, then find $r$ in case 2 of definition of $\mathcal{D}$.
+      So, we're done if we show that $\mathcal{D}$ is dense.
+      Fix $p \in \p$. If $p \forces^* \tau_1 = \tau_2$, then $p \in \mathcal{D}$ done.
+      If it doesn't, we'll find $r \leq p$ for $p \in \mathcal{D}_2$ or $\mathcal{D}_3$.
+      Again by symmetry, we'll show: If the first half of the definition of $p \not\forces^* \tau_1 = \tau_2$ fails, then find $r \in \mathcal{D}_2 $.
 
-          \newlec
-          We show if $p \in G$ then neither $p \in \mathcal{D}_2$ or $p \in \mathcal{D}_3$ can hold. Thus if $p \in G \cap \mathcal{D} $ then $p \forces^* \tau_1 = \tau_2$.
-          So: need to show that $ \mathcal{D} $ is dense.
-          Let $p \in \p$ be arbitrary. If $p \forces^* \tau_1 = \tau_2$, done. So assume $p \not\forces^* \tau_1 = \tau_2$.
+      \newlec
+      We showed if $p \in G$ then neither $p \in \mathcal{D}_2$ or $p \in \mathcal{D}_3$ can hold. Thus if $p \in G \cap \mathcal{D} $ then $p \forces^* \tau_1 = \tau_2$.
+      So: need to show that $ \mathcal{D} $ is dense.
+      Let $p \in \p$ be arbitrary. If $p \forces^* \tau_1 = \tau_2$, done. So assume $p \not\forces^* \tau_1 = \tau_2$.
 
-          We will show that if the first half of the definition of $ p\forces^* \tau_1 = \tau_2$ is violated, then we find $r \leq p$ such that $r \in D_2$. (Similarly, if the second half is violated, then for some $r \leq p$, we have $r \in D_3$)
-          The first half fails means:
-          there is $(\pi_1,s_1) \in \tau_1$ such that
-          \begin{equation*}
-            \mathcal{D}' \coloneqq \{p \leq p \mid q \leq s_1 \rightarrow \exists (\pi_2,s_2) \in \tau_2 \ (q \leq s_2 \land q \forces^* \pi_1 = \pi_2)\}
-          \end{equation*}
-          is not dense below $p$.
-          Fix this $(\pi_1, s_1) \in \tau_1$ and fix $r \leq p$ such that $\mathcal{D}'$ has no element below $r$.
-          That is,
-          \begin{equation*}
-            \forall q \leq r \ (q \leq s_1 \land \forall (\pi_2,s_2) \in \tau_2 \ (q \nleq s_2 \lor q \not\forces^* \pi_1 = \pi_2)) \tag{$*$}\label{eq:1}
-          \end{equation*}
+      We will show that if the first half of the definition of $ p\forces^* \tau_1 = \tau_2$ is violated, then we find $r \leq p$ such that $r \in \mathcal{D} _2$. (Similarly, if the second half is violated, then for some $r \leq p$, we have $r \in \mathcal{D} _3$)
+      The first half fails means:
+      there is $(\pi_1,s_1) \in \tau_1$ such that
+      \begin{equation*}
+        \mathcal{D}' \coloneqq \{p \leq p \mid q \leq s_1 \rightarrow \exists (\pi_2,s_2) \in \tau_2 \ (q \leq s_2 \land q \forces^* \pi_1 = \pi_2)\}
+      \end{equation*}
+      is not dense below $p$.
+      Fix this $(\pi_1, s_1) \in \tau_1$ and fix $r \leq p$ such that $\mathcal{D}'$ has no element below $r$.
+      That is,
+      \begin{equation*}
+        \forall q \leq r \ (q \leq s_1 \land \forall (\pi_2,s_2) \in \tau_2 \ (q \nleq s_2 \lor q \not\forces^* \pi_1 = \pi_2)) \tag{$*$}\label{eq:1}
+      \end{equation*}
 
-          Fix arbitrary $(\pi_2,s_2) \in \tau_2$ and $q$ such that
-          \begin{equation*}
-            q \leq s_2 \land q \forces^* \pi_1 = \pi_2 \tag{$**$} \label{eq:2}
-          \end{equation*}
-          If $q$ is compatible with $r$, find $q' \leq r,q$ satisfying \eqref{eq:1}.
-          But now $q' \not\forces^* \pi_1 = \pi_2$ by \eqref{eq:1} and $q' \forces^* \pi_1 = \pi_2$ by \eqref{eq:2} and $q' \leq q$.
-          Contradiction.
-          So $q \perp r$, as required. \qedhere
-      \end{enumerate}
-    \end{proof}
+      Fix arbitrary $(\pi_2,s_2) \in \tau_2$ and $q$ such that
+      \begin{equation*}
+        q \leq s_2 \land q \forces^* \pi_1 = \pi_2 \tag{$**$} \label{eq:2}
+      \end{equation*}
+      If $q$ is compatible with $r$, find $q' \leq r,q$ satisfying \eqref{eq:1}.
+      But now $q' \not\forces^* \pi_1 = \pi_2$ by \eqref{eq:1} and $q' \forces^* \pi_1 = \pi_2$ by \eqref{eq:2} and $q' \leq q$.
+      Contradiction.
+      So $q \perp r$, as required. \qedhere
+  \end{enumerate}
+\end{proof}
 
-\begin{thm}[Generic Model Theorem]
+\begin{thm}[Generic Model Theorem]\hypertarget{thm:genericmodel}
   Take $M$ a countable \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{\textsf{ZFC}}, $\mathbb{P} \in M$, and say $G$ is $\mathbb{P}$-\hyperlink{def:genericO}{generic over} $M$,
   \begin{equation*}
     \hyperlink{def:mg}{M[G]} \models \textsf{ZFC}.
@@ -2121,14 +2123,14 @@ It remains to prove the \hyperlink{thm:forcing}{Forcing Theorem}.
 \end{cor}
 Observe that if $M = \hyperlink{def:l}{L_\alpha}$ for some countable $\alpha$ and $L_\alpha(G)$ is the relativised $L$-construction as on Example Sheet 2, then by \hyperlink{thm:min}{minimality} of $L$ (or $L(G)$ for models containing $G$), $M[G] = L_\alpha(G)$.
 
-\begin{proof}[Proof of Generic Model Theorem]\leavevmode
+\begin{proof}[Proof of \hyperlink{thm:genericmodel}{Generic Model Theorem}]\leavevmode
   \begin{description}
-    \item[\textsf{Ext}] Follows by transitivity of $M[G]$
+    \item[\textsf{Ext}] Follows by \hyperlink{def:transitive}{transitivity} of \hyperlink{def:mg}{$M[G]$}
     \item[\textsf{Found}] Follows by transitivity of $M[G]$
-    \item[\textsf{Pair}] Was proved earlier by hand
+    \item[\textsf{Pair}] Was proved \hyperlink{prop:mgpair}{earlier} by hand
     \item[\textsf{Union}] On Example Sheet 3, by hand
     \item[\textsf{Inf}] By absoluteness of `$x = \mathbb{N}$', we only need $\mathbb{N} \in M[G]$.
-      But $\mathbb{N} = \val(\check{\mathbb{N}},G)$
+      But $\mathbb{N} = \hyperlink{def:val}{\val}(\check{\mathbb{N}},G)$
     \item[\textsf{Choice}] On Example Sheet 4
     \item[\textsf{Repl}] On Example Sheet 4
     \item[\textsf{Sep}] Fix a formula $\varphi$, parameters $x_1, \dotsc, x_n \in \hyperlink{def:mg}{M[G]}$ and $x \in M[G]$. We would like to construct
@@ -2138,7 +2140,7 @@ Observe that if $M = \hyperlink{def:l}{L_\alpha}$ for some countable $\alpha$ an
       Fix names $\tau_1, \dotsc, \tau_n$ for $x_1, \dotsc, x_n$, and $\sigma$ for $x$.
       Set
       \begin{align*}
-        A &\coloneqq \{z \in \val(\sigma,G) \mid M[G] \models \varphi(z, \tau_1, \dotsc, \tau_n)\} \\
+        A &\coloneqq \{z \in \hyperlink{def:val}{\val}(\sigma,G) \mid M[G] \models \varphi(z, \tau_1, \dotsc, \tau_n)\} \\
         \rho &\coloneqq \{(\pi,p) \mid p \hyperlink{def:syn}{\forces^*} \pi \in \sigma \land \varphi(\pi, \tau_1, \dotsc, \tau_n)\}
       \end{align*}
       Claim: $A = \hyperlink{def:val}{\val(\rho,G)}$.
@@ -2183,21 +2185,22 @@ Observe that if $M = \hyperlink{def:l}{L_\alpha}$ for some countable $\alpha$ an
       $M[G] \models \pi \in \mu$. By the Forcing Theorem, there is $q \in G$ with $q \forces^* \pi \in \mu$.
       So $(\pi,q) \in \mu^*$. Since $q \in G$, this means $\val(\pi,G) \in \val(\mu^*,G)$.
 
-      If $w \in \val(\mu^*,G)$, find $(\pi,p) \in \mu^*$, $p \in G$. $w = \val(\pi,G)$. By definition, $p \forces^* \pi \in \mu$.
-      The Forcing Theorem says $M[G] \models \pi \in \mu$, thus $w = \val(\pi,G) \in \val(\mu,G)$.
+      If $w \in \val(\mu^*,G)$, find $(\pi,p) \in \mu^*$, $p \in G$ with $w = \val(\pi,G)$. By definition, $p \forces^* \pi \in \mu$.
+      The Forcing Theorem says $M[G] \models \pi \in \mu$, thus $w = \val(\pi,G) \in \val(\mu,G)$. \qedhere
   \end{description}
 \end{proof}
 
+\subsection{Consistency proofs}
 \newlec
-We will show that \textsf{V$\neq$L} is consistent.
-Suppose $M$ is a countable transitive model of \textsf{ZFC} + \textsf{V=L}.
-By our work on $L$, we know that there is $\alpha < \omega_1$ such that $M = L_\alpha$.
-Let $\mathbb{P} \in L_\alpha$ be any partial order that is splitting.
-By countability, we get a $G$ which is $\p$-generic over $M$, and $G \notin M$ by splitting.
-So $M[G] \neq M$.
+We will show that \hyperlink{def:vl}{\textsf{V$\neq$L}} is consistent.
+Suppose $M$ is a countable \hyperlink{def:transitive}{transitive} model of \hyperlink{def:axioms}{\textsf{ZFC}} + \textsf{V=L}.
+By our work on $L$, we know that there is $\alpha < \omega_1$ such that $M = \hyperlink{def:l}{L_\alpha}$.
+Let $\mathbb{P} \in L_\alpha$ be any partial order that is \hyperlink{def:splitting}{splitting}.
+By countability, we get a $G$ which is \hyperlink{def:genericO}{$\p$-generic over $M$}, and $G \notin M$ by splitting.
+So $\hyperlink{def:mg}{M[G]} \neq M$.
 
 Claim: $M[G] \models \textsf{V$\neq$L}$. Suppose not, then $M[G] = L_\beta$ for some $\beta$. Then $\text{Ord} \cap M[G] = \text{Ord} \cap M = \alpha$.
-So $\beta = \alpha$. So $M[G] = L_\beta = L_\alpha = M$. Contradiction.
+So $\beta = \alpha$. So $M[G] = L_\beta = L_\alpha = M$, a contradiction.
 
 Note this didn't use any property of $\p$, other than that it is splitting.
 We might be able to do more if we use specific $\p$s.
@@ -2214,22 +2217,24 @@ In particular, if $Y = \aleph_1^M$, then forcing with $\operatorname{Fn}(\mathbb
 \end{align*}
 
 \textbf{Excursion.} Suppose $M \models 2^{\aleph_0} = \aleph_2$ and $\mathbb{P} = \operatorname{Fn}(\mathbb{N},\aleph_1^M)$.
-If $\aleph_1^M$ is no longer a cardinal in $M[G]$, then the original bijection $f: \mathbb{R}^M \to \aleph_2^M$ will be a bijection between $\mathbb{R}^m$ and an ordinal which can be at best $\aleph_1^{M[G]}$.
+If $\aleph_1^M$ is no longer a cardinal in $\hyperlink{def:mg}{M[G]}$, then the original bijection $f: \mathbb{R}^M \to \aleph_2^M$ will be a bijection between $\mathbb{R}^M$ and an ordinal which can be at best $\aleph_1^{M[G]}$.
 In order to make this into a proof of $M[G] \models \textsf{CH}$, we need:
 \begin{enumerate}
   \item $M[G] \models \aleph_2^M$ is a cardinal, thus $M[G] \models \aleph_2^M = \aleph_1$.
   \item $M[G] \models |\mathbb{R}| = |\mathbb{R}^M|$
 \end{enumerate}
 Since $\aleph_1^M < \aleph_1^{M[G]}$, we know $\mathbb{R}^{M[G]} \supsetneqq \mathbb{R}^M$.
-If we had 1 and 2, we get a consistency proof of \textsf{ZFC} + \textsf{CH} + \textsf{V$\neq$L}
+If we had 1 and 2, we get a consistency proof of \textsf{ZFC} + \textsf{CH} + \textsf{V$\neq$L}.
 
+\medskip
 Back to forcing $\neg$\textsf{CH}.
 Instead, take $\p \coloneqq \text{Fn}(\mathbb{N} \times \aleph_2^M, \mathbb{N})$.
-This generates $f_G = \bigcup G: \mathbb{N} \times \aleph_2^M \to \mathbb{N}$.
-Define in $M[G]$ for $\alpha < \aleph_2^M$.
+This generates
+\begin{equation*}f_G = \bigcup G: \mathbb{N} \times \aleph_2^M \to \mathbb{N}.\end{equation*}
+Define in $M[G]$ for $\alpha < \aleph_2^M$:
 \begin{align*}
   f_\alpha(n) &\coloneqq f(n,\alpha) \\
-  f_\alpha: \mathbb{N} \to \mathbb{N}.
+  f_\alpha&: \mathbb{N} \to \mathbb{N}.
 \end{align*}
 We'll show that if $\alpha \neq \beta$ then $f_\alpha \neq f_\beta$.
 In particular, the map
@@ -2237,7 +2242,7 @@ In particular, the map
   \alpha \mapsto f_\alpha
 \end{align*}
 gives an injection from $\aleph_2^M$ into $\mathbb{N}^\mathbb{N}$.
-Then $M[G] \models |\aleph_2^M| \leq 2^{\aleph_0}$.
+Then $\hyperlink{def:mg}{M[G]} \models |\aleph_2^M| \leq 2^{\aleph_0}$.
 
 \begin{proof}[Proof of injectivity]
   Fix $\alpha \neq \beta$ and define
@@ -2249,52 +2254,51 @@ Then $M[G] \models |\aleph_2^M| \leq 2^{\aleph_0}$.
     q \coloneqq p \cup \{((n,\alpha), 0), ((n,\beta),1)\}
   \end{align*}
   So $q(n,\alpha) \neq q(n,\beta)$, so $q \leq p$, $q \in D_{\alpha,\beta}$.
-
   Find $p \in G \cap D_{\alpha,\beta}$. Then $f_G = \bigcup G$ with $p \in G$, so there is $n$ such that
   \begin{align*}
-    &\phantom{\Rightarrow} f_G(n,\alpha) \neg f_G(n,\beta) \\
-    &\Rightarrow f_\alpha(n) \neg f_\beta(n) \\
-    &\Rightarrow f_\alpha \neg f_\beta. \qedhere
+    f_G(n,\alpha) &\neq f_G(n,\beta) \\
+    \Rightarrow f_\alpha(n) &\neq f_\beta(n) \\
+    \Rightarrow f_\alpha &\neq f_\beta. \qedhere
   \end{align*}
 \end{proof}
-So to summarise, if $G$ is $\operatorname{Fn}(\mathbb{N} \times \aleph_2^M, \mathbb{N})$-generic over $M$, then
+So to summarise, if $G$ is $\operatorname{Fn}(\mathbb{N} \times \aleph_2^M, \mathbb{N})$-\hyperlink{def:genericO}{generic} over $M$, then
 \begin{align*}
-  M[G] \models 2^{\aleph_0} \geq |\aleph_2^M|
+  \hyperlink{def:mg}{M[G]} \models 2^{\aleph_0} \geq |\aleph_2^M|
 \end{align*}
 We need therefore:
 \begin{align*}
-  \aleph_1^M = \aleph_1^{M[G]}
-  \aleph_2^M = \aleph_2^{M[G]}
+  \aleph_1^M &= \aleph_1^{M[G]} \\
+  \aleph_2^M &= \aleph_2^{M[G]}
 \end{align*}
 in order to get $M[G] \models 2^{\aleph_0} \geq \aleph_2$.
-\begin{defi}
-  Let $M$ a countable transitive model, and $\p \in M$.
+\begin{defi}\hypertarget{def:pcard}
+  Let $M$ a countable \hyperlink{def:transitive}{transitive} model, and $\p \in M$.
   We say that $\p$ \named{preserves cardinals} if for all $\alpha$ an ordinal and all $G$ which is $\p$-generic over $M$, we have
   \begin{align*}
-    M \models \alpha \text{ is a cardinal} \iff M[G] \models \alpha \text{ is a cardinal}
+    M \models \alpha \text{ is a cardinal} \iff M[G] \models \alpha \text{ is a cardinal}.
   \end{align*}
-  Note $\Leftarrow$ follows from the fact that `is a cardinal' is $\Pi_1$.
+  Note $\Leftarrow$ follows from the fact that `is a cardinal' is \hyperlink{def:pi1}{$\Pi_1$}.
 \end{defi}
 
 \begin{thm}
-  If $M \models \p$ has the countable chain condition, then $\p$ preserves cardinals.
+  If $M \models \p$ has the \hyperlink{def:ccc}{countable chain condition}, then $\p$ \hyperlink{def:pcard}{preserves cardinals}.
 \end{thm}
 
-Putting this all together, from sheet 3, we know that if $Y$ is countable, the $\operatorname{Fn}(X,Y)$ has the countable chain condition (in \textsf{ZFC}), so $\text{Fn}(\mathbb{N} \times \aleph_2^M, \mathbb{N})$ certainly has the countable chain condition in every model $M$ of \textsf{ZFC}.
+Putting this all together, from sheet 3 we know that if $Y$ is countable, then $\operatorname{Fn}(X,Y)$ has the \hyperlink{def:ccc}{countable chain condition} (in \textsf{ZFC}), so $\text{Fn}(\mathbb{N} \times \aleph_2^M, \mathbb{N})$ certainly has the countable chain condition in every model $M$ of \textsf{ZFC}.
 
 So we derive that $\aleph_1^M$ and $\aleph_2^M$ are cardinals in $M[G]$.
-Thus by the fact that being a cardinal is $\Pi_1$, $\aleph_1^{M[G]} = \aleph_1^M$ and $\aleph_2^{M[G]} = \aleph_2^M$
+Thus by the fact that being a cardinal is $\Pi_1$, $\aleph_1^{M[G]} = \aleph_1^M$ and $\aleph_2^{M[G]} = \aleph_2^M$.
 
 \begin{cor}
-  With $\p ,G,M$ as above, $M[G] \models \neg \textsf{CH}$.
+  With $\p ,G,M$ as above, $\hyperlink{def:mg}{M[G]} \models \neg \textsf{CH}$.
 \end{cor}
 \begin{cor}
-  If $M \models \textsf{ZFC}$ countable transitive, then there is $M[G] \models \textsf{ZFC} + \neg \textsf{CH}$ countable transitive.
+  If $M \models \textsf{ZFC}$ countable transitive, then there is a countable transitive $\hyperlink{def:mg}{M[G]} \models \textsf{ZFC} + \neg \textsf{CH}$.
 \end{cor}
 \begin{lemma}
-  Suppose $M \models \p$ has the countable chain condition,
+  Suppose $M \models \p$ has the \hyperlink{def:ccc}{countable chain condition},
   \begin{align*}
-    A,B \in M,\ f: A \to B, \ f \in M[G]
+    A,B \in M,\ f: A \to B, \ f \in M[G].
   \end{align*}
   Then there is $F \in M$ with
   \begin{enumerate}[(a)]
@@ -2305,9 +2309,13 @@ Thus by the fact that being a cardinal is $\Pi_1$, $\aleph_1^{M[G]} = \aleph_1^M
   \end{enumerate}
 \end{lemma}
 \begin{proof}[Proof of Theorem from Lemma]
-  Suppose $M \models \lambda$ is a cardinal, $M[G] \models \lambda$ is not a cardinal.
-  $M[G] \models \exists \gamma < \lambda \ \exists f$ bijective with $f: \gamma \to \lambda$.
-  Apply Lemma to $A = \gamma$, $B = \lambda$, $f = f$. Get $F \in M$. Since $f$ is surjective, $\lambda = \bigcup_{\alpha < \gamma} F(\alpha)$.
+  Suppose
+  \begin{align*}
+    M &\models \lambda \text{ is a cardinal} \\
+    \hyperlink{def:mg}{M[G]} &\models \lambda \text{ is not a cardinal.} \\
+  \text{Thus }M[G] &\models \exists \gamma < \lambda \ \exists f: \gamma \to \lambda \text{ bijective }.
+  \end{align*}
+  Apply the Lemma to $A = \gamma$, $B = \lambda$, $f = f$ to get $F \in M$. Since $f$ is surjective, $\lambda = \bigcup_{\alpha < \gamma} F(\alpha)$.
   So $M \models |\lambda| \leq |\omega \times \gamma| < \lambda$.
 \end{proof}
 
@@ -2315,7 +2323,7 @@ Thus by the fact that being a cardinal is $\Pi_1$, $\aleph_1^{M[G]} = \aleph_1^M
 Reviewing where we are: Our goal is to show \textsf{CH} is independent of \textsf{ZFC}.
 Take
 \begin{align*}
-  \mathbb{P} \coloneqq \{p \mid p \text{ a partial function from } \aleph_2^M \times \mathbb{N} \text{ into } \mathbb{N} \text{ such that } p \text{ is finite.}\}.
+  \mathbb{P} \coloneqq \{p \mid p \text{ a partial function from } \aleph_2^M \times \mathbb{N} \text{ into } \mathbb{N} \text{ such that } p \text{ is finite}\}.
 \end{align*}
 If $G$ is $\p$-generic over $M$, then in $M[G]$ there is an injection from $\aleph_2^M$ into $\mathbb{R}$.
 If $\aleph_1^M = \aleph_1^{M[G]}$ and $\aleph_2^M = \aleph_2^{M[G]}$ then $M[G] \models 2^{\aleph_0} \geq \aleph_2$.
@@ -2327,15 +2335,15 @@ From Example Sheet 3, $M \models \p$ has the \hyperlink{def:ccc}{countable chain
 We reduced the Theorem to the Lemma above, which we will now prove.
 \begin{proof}
   Fix a name $\tau$ for $f$.
-  Let $\tau: \check{A} \to \check{B}$ be the sentence in the forcing language that expresses `$\tau$ is a function from $\check{A}$ to $\check{B}$'.
+  Let `$\tau: \check{A} \to \check{B}$' be the sentence in the forcing language that expresses `$\tau$ is a function from $\check{A}$ to $\check{B}$'.
 
   By the \hyperlink{thm:forcing}{Forcing Theorem}, find $p \in G$ with $p \forces \tau: \check{A} \to \check{B}$.
   \begin{align*}
     F(a) \coloneqq \{b \in B \mid \exists q \leq p \ q \forces \tau(\check{a}) = \check{b}\}
   \end{align*}
-  (this makes sense because below $p$, $\tau$ is a function). Formally, $\tau(\check{a}) = \check{b}$ is the sentence in the forcing language expressing `the value of $\tau$ at $\check{a}$ is $\check{b}$'.
+  (this makes sense because below $p$, $\tau$ is a function, so we have (a)). Formally, $\tau(\check{a}) = \check{b}$ is the sentence in the forcing language expressing `the value of $\tau$ at $\check{a}$ is $\check{b}$'.
 
-  Certainly $\forall a \in A$, $F(a) \subseteq B$ giving property (b). Next, let $\bar{b} \coloneqq f(a) \in B$. Then $M[G] \models \bar{b} = f(a)$. That is, $\tau(\check{a}) = \check{\bar{b}}$.
+  Certainly $\forall a \in A$, $F(a) \subseteq B$ giving property (b). Next, let $\bar{b} \coloneqq f(a) \in B$. Then $\hyperlink{def:mg}{M[G]} \models \bar{b} = f(a)$. That is, $\tau(\check{a}) = \check{\bar{b}}$.
   By the \hyperlink{thm:forcing}{Forcing Theorem}, find $q \in G$ such that
   \begin{align*}
     q \forces \tau(\check{a}) = \check{\bar{b}}.
@@ -2359,24 +2367,21 @@ We reduced the Theorem to the Lemma above, which we will now prove.
 \begin{question}
   What is the size of $2^{\aleph_0}$ in our models?
 \end{question}
-So far, the only thing we know is
-\begin{align*}
-  \geq \aleph_2
-\end{align*}
+So far, the only thing we know is that it is $ \geq \aleph_2 $.
 
-We will show that if $M \models \textsf{CH}$, then $M[G]$ for $G$ $\p$-generic over $M$ for $\p = \operatorname{Fn}(\aleph_2^M \times \mathbb{N}, \mathbb{N})$ is a model of $2^{\aleph_0} = \aleph_2$.
+We will show that if $M \models \textsf{CH}$, then \hyperlink{def:mg}{$M[G]$} for $G$ $\p$-generic over $M$ with $\p = \Fn(\aleph_2^M \times \mathbb{N}, \mathbb{N})$ is a model of $2^{\aleph_0} = \aleph_2$.
 
 For this, we need to `count' the names for subsets of $\mathbb{N}$.
-\begin{defi}
-  A name $\tau$ for a subset of $\mathbb{N}$ is called \textbf{nice}\index{name!nice}\index{nice name} if for every $n \in \mathbb{N}$, there is an antichain $A_n \subseteq \p$ such that
+\begin{defi}\hypertarget{def:nicename}
+  A name $\tau$ for a subset of $\mathbb{N}$ is called \textbf{nice}\index{name!nice}\index{nice name} if for every $n \in \mathbb{N}$, there is an antichain $A_n \subseteq \p$ and
   \begin{align*}
     \tau = \{(\check{n},p) \mid n \in \mathbb{N} \ p \in A_n\}.
   \end{align*}
 \end{defi}
-How many nice names are there?
-How many antichains are there? $\abs{\p^{\aleph_0}}$ is an upper bound. So, what's the size of $\p$?
+How many \hyperlink{def:nicename}{nice names} are there?
+Well, how many \hyperlink{def:antichain}{antichains} are there? $\abs{\p^{\aleph_0}}$ is an upper bound. So, what's the size of $\p$?
 $|\p| = \aleph_2$, so there are $\aleph_2^{\aleph_0}$ antichains.
-But what is $\aleph_2^{\aleph_0}$? By Hausdorff's Formula: $\aleph_{a+1}^{\aleph_\beta} = \aleph_{\alpha+1} \cdot \aleph_\alpha^{\aleph_\beta}$
+But what is $\aleph_2^{\aleph_0}$? Hausdorff's Formula says: $\aleph_{a+1}^{\aleph_\beta} = \aleph_{\alpha+1} \cdot \aleph_\alpha^{\aleph_\beta}$, so
 \begin{align*}
   \aleph_{1+1}^{\aleph_0} &= \aleph_2 \cdot \aleph_1^{\aleph_0} \\
                         &= \aleph_2 \cdot \aleph_{0+1}^{\aleph_0} \\
@@ -2384,25 +2389,24 @@ But what is $\aleph_2^{\aleph_0}$? By Hausdorff's Formula: $\aleph_{a+1}^{\aleph
                         &= \aleph_2 \cdot 2^{\aleph_0}
 \end{align*}
 In $M$, this is $\aleph_2 \cdot \aleph_1 = \aleph_2$.
-
 This shows that there are at most $\aleph_2$ many antichains.
 A nice name is a countable collection of antichains, so at most $\aleph_2^{\aleph_0} = \aleph_2$ many.
 
 \begin{thm}
-  If $x \subseteq \mathbb{N}$ in $M[G]$, then there is a nice name $\tau$ such that $x = \val(\tau,G)$.
+  If $x \subseteq \mathbb{N}$ in $\hyperlink{def:mg}{M[G]}$, then there is a \hyperlink{def:nicename}{nice name} $\tau$ such that $x = \hyperlink{def:val}{\val}(\tau,G)$.
 \end{thm}
 \begin{proof}
   Fix a name $\mu$ for $x$.
-  For every $n \in \mathbb{N}$ construct an antichain $A_n$ with the properties
+  For every $n \in \mathbb{N}$ construct an \hyperlink{def:antichain}{antichain} $A_n$ with the properties
   \begin{enumerate}[(a)]
-    \item $\forall p \in A_n$ $p \forces \check{n} \in \mu$
+    \item $\forall p \in A_n$ $p \hyperlink{def:forcingrelation}{\forces} \check{n} \in \mu$
     \item $A_n$ is antichain
     \item $A_n$ is maximal with respect to (a) and (b).
   \end{enumerate}
   Now set $\tau \coloneqq \{(\check{n},p) \mid p \in A_n\}$. This is a nice name.
   We claim that $M[G] \models \tau = \mu.$
 
-  ($\subseteq$). Let $y \in \val(\tau,G)$. There is some $n \in \mathbb{N}$ such that $y = n$ and find $p \in A_n \cap G$ that witnesses $y \in \val(\tau,G)$.
+  ($\subseteq$). Let $y \in \hyperlink{def:val}{\val}(\tau,G)$. There is some $n \in \mathbb{N}$ such that $y = n$ and find $p \in A_n \cap G$ that witnesses $y \in \val(\tau,G)$.
   Since $p \in A_n$, $p \forces \check{n} = \mu$.
   So $n \in \val(\mu,G)$.
 
@@ -2412,8 +2416,8 @@ A nice name is a countable collection of antichains, so at most $\aleph_2^{\alep
   If $A_n \cap G = \emptyset$ (remember example 24), there is $q \in G$ such that $\forall p \in A_n$, $p \perp q$.
   This is a contradiction to maximality (in the sense of (c)) of $A_n$.
 \end{proof}
+\subsection{Remaining questions}
 \newlec
-Remaining things to possibly say:
 \begin{enumerate}
   \item Possible size of $2^{\aleph_0}$
   \item $\textsf{V=L}$ and $\textsf{CH}$
@@ -2438,8 +2442,8 @@ Remaining things to possibly say:
     Let's see how K\"onig's Lemma implies $2^{\aleph_0} \neq \aleph_\omega$.
     Suppose it is:
     \begin{gather*}
-      \text{cf}(2^{\aleph_0}) = \text{cf}(\aleph_\omega) = \aleph_0.
-      2^{\aleph_0} = 2^{\aleph_0 \cdot \aleph_0} = (2^{\aleph_0})^{\aleph_0} = (2^{\aleph_0})^{\text{cf}(2^{\aleph_0})} > 2^{\aleph_0}
+      \text{cf}(2^{\aleph_0}) = \text{cf}(\aleph_\omega) = \aleph_0. \\
+      2^{\aleph_0} = 2^{\aleph_0 \cdot \aleph_0} = (2^{\aleph_0})^{\aleph_0} = (2^{\aleph_0})^{\text{cf}(2^{\aleph_0})} > 2^{\aleph_0}.
     \end{gather*}
     The proof of K\"onig's Lemma in this particular case: $\aleph_\omega^{\aleph_0} > \aleph_\omega$.
     Suppose $F: \aleph_\omega \to \aleph_\omega^{\aleph_0}$. We'll show (by diagonalisation) that this is not a surjection.
