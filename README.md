@@ -14,7 +14,7 @@ There are many hyperlinks, marked in blue, to help both learning and revising a 
 ### Lent
 - [Analytic Number Theory](iii/lent/analytic_number_theory.pdf) (2019, T. Bloom) up to lecture 7
 - [Introduction to Approximate Groups](iii/lent/introduction_to_approximate_groups.pdf) (2019, M. Tointon) up to lecture 4
-- [Topics in Set Theory](iii/lent/topics_in_set_theory.pdf) (2019, B. Löwe) up to lecture 6
+- [Topics in Set Theory](iii/lent/topics_in_set_theory.pdf) (2019, B. Löwe)
 
 ## Part II notes
 
