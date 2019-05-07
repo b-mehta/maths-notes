@@ -1959,6 +1959,129 @@ Actually, we will show that $\psi(x) = x+\Omega_{\pm}(x^{\frac{1}{2}})$, i.e.\
   \liminf_{x \to \infty} \left(\frac{\psi(x)-x}{x^{\frac 12}}\right) &< 0.
 \end{align*}
 
+\newlec
+Our goal is to show that $\psi(x) = x + \Omega_\pm(x^{\frac{1}{2}})$
+i.e.\
+\begin{align*}
+  \limsup_{x \to \infty} \left(\frac{\psi(x)-x}{x^{\frac 12}}\right) &\geq c > 0 \\
+  \liminf_{x \to \infty} \left(\frac{\psi(x)-x}{x^{\frac 12}}\right) &\leq -c < 0
+\end{align*}
+For contradiction, suppose that $\psi(x) - x \leq c x^{\frac 12}$ for all large $x$.
+So
+\begin{align*}
+  c x^{\frac 12} - \psi(x) + x \geq 0,
+\end{align*}
+take Mellin transform of this.
+\begin{lemma}[Landau]
+  Let $A(x)$ be integrable and bounded on any finite interval and $A(x) \geq 0$ for all $x \geq X$.
+  Let
+  \begin{align*}
+    \sigma_c = \inf\left\{\sigma : \int_X^\infty A(x) x^{-\sigma}\,dx < \infty\right\}
+  \end{align*}
+  Then if
+  \begin{align*}
+    F(s) = \int_1^\infty A(x) x^{-s}\,dx
+  \end{align*}
+  then $F$ is analytic for $\Re s > \sigma_c$ and not at $s=\sigma_c$.
+\end{lemma}
+\begin{proof}
+  Divide integral into $[1,X]$ and $(X,\infty)$, and write the corresponding partition of $F = F_1 + F_2$.
+  $F_1$ is entire. If $\Re s > \sigma_c$, the integral converges absolutely, so $F_2$ is analytic for $\Re s > \sigma_c$.
+  By contradiction, suppose $F_2$ is analytic at $s =\sigma_c$.
+  Write $F_2$ as a Taylor series around $\sigma_c + 1$,
+  \begin{align*}
+    F_2(s) = \sum_{k=0}^\infty c_k (s-\sigma_c-1)^k
+  \end{align*}
+  where
+  \begin{align*}
+    c_k = \frac{F_2^{(k)}(\sigma_c+1)}{k!} = \frac{1}{k!} \int_X^\infty A(x) (-\log x)^k x^{-\sigma_c-1}\,dx.
+  \end{align*}
+  This power series has a radius of convergence, which must be $1+\delta$ for some $\delta>0$ (since any poles are isolated).
+  Evaluate the series at $s = \sigma_c - \frac{\delta}{2}$.
+  \begin{align*}
+    F_2(s) = \sum_{k=0}^\infty \frac{(1-\sigma_c-s)^k}{k!} \int_X^\infty A(x) (\log x)^k x^{-1-\sigma_c}\,dx
+  \end{align*}
+
+  At $s=\sigma_c - \frac{\delta}{2}$, can interchange integral and summation, so
+  \begin{align*}
+    F_2(\sigma_c-\frac{\delta}{2}) &= \int_X^\infty A(x) x^{-1-\sigma_c} \exp((1+\sigma_c-s) \log x)\,dx \\
+                                   &= \int_X^\infty A(x) x^{-s} \,dx
+  \end{align*}
+  so the integral converges at $\sigma_c - \frac{\delta}{2}$ contradicts the definition of $\sigma_c$.
+\end{proof}
+\begin{thm}[Landau]
+  If $\sigma_0$ is the supremum of the real parts of $\{\rho : \zeta(\rho) = 0\}$, then
+  \begin{enumerate}
+    \item for any $\sigma < \sigma_0$, $\psi(x) - x = \Omega_\pm(x^\sigma)$
+    \item if there is a zero $\rho$ with $\sigma = \sigma_0$, then
+      \begin{align*}
+        \psi(x) - x = \Omega_\pm (x^{\sigma_0})
+      \end{align*}
+  \end{enumerate}
+\end{thm}
+\begin{cor}
+  Assuming there is a zero with $\sigma = \frac{1}{2}$ (there is: $\rho = \frac{1}{2} + 14.13472\dots i$)
+  \begin{align*}
+    \psi(x) - x = \Omega_{\pm}(x^{\frac 12}).
+  \end{align*}
+\end{cor}
+\begin{proof}[Sketch proof]
+  Use cases of RH true or false.
+\end{proof}
+\begin{cor}
+  The Riemann hypothesis is equivalent to $\psi(x) = x + \bigO(x^{\frac 12 + o(1)})$.
+\end{cor}
+\begin{proof}[Proof of theorem]
+  Let $c > 0$ be chosen later, and suppose that
+  \begin{align*}
+    \psi(x) - x \leq c x^\sigma \text{ for all } x \geq X.
+  \end{align*}
+  Consider
+  \begin{align*}
+    F(s) = \int_1^\infty (c x^\sigma - \psi(x) + x) x^{-s-1} \,dx.
+  \end{align*}
+  Recall that by partial summation,
+  \begin{align*}
+    \frac{\zeta'}{\zeta}(s) = -s \int_1^\infty \psi(x) x^{-s-1}\,dx \text{ and } \int_1^\infty x^{-s}\,dx = \frac1 {s-1}
+  \end{align*}
+  both for $\Re s > 1$.
+  So,
+  \begin{align*}
+    F(s) = \frac{c}{s-\sigma} + \frac{\zeta'(s)}{s \zeta(s)} + \frac{1}{s-1}
+  \end{align*}
+  for $\Re s > 1$.
+  This has a pole at $s=\sigma$ and is analytic for $\Re s > \sigma$.
+  So by Landau's lemma, in fact this integral converges for all $s$ with $\Re s > \sigma$.
+  This proves 1., because if $\sigma < \sigma_0$, then there is a zero of $\zeta$ with $\sigma < \Re \rho \leq \sigma_0$, and at $\rho$, $F$ has a singularity ($\rho \notin \mathbb{R}$).
+
+  Suppose there is $\rho = \sigma_0 + it_0$. Repeat the above with $\sigma = \sigma_0$.
+  Consider instead
+  \begin{align*}
+    G(s) = F(s) + \frac{e^{i\theta} F(s+it_0) + e^{-i\theta}F(s-it_0)}2
+  \end{align*}
+  for $\theta \in \mathbb{R}$.
+  $G(s)$ still is analytic for $\Re s > \sigma_0$, and has a pole at $s=\sigma_0$. From $F(s)$, have residue $c$.
+  From $F(s+it_0)$, have residue $\frac{m}{\rho}$ where $m$ is the order of $\rho$.
+  From $F(s-it_0)$, have residue $\frac{m}{\bar{\rho}}$
+  so $G(s)$ has a pole at $s=\sigma_0$ with residue
+  \begin{align*}
+    c + \frac{e^{i \theta} m}{2\rho} + \frac{e^{-i\theta}m}{2\bar{\rho}} = c - \frac{m}{|\rho|}
+  \end{align*}
+  if I choose $\theta$ such that $\frac{e^{i\theta}}{\rho} = -\frac{1}{|\rho|}$.
+  If I choose $c < \frac{m}{|\rho|}$, then this residue is $< 0$.
+  So as $s \to \sigma_0$ from the right, along $\mathbb{R}$, $G(s) \to -\infty$.
+  But for $\Re s > \sigma_0$,
+  \begin{align*}
+    G(s) = \int_1^\infty (c x^{\sigma_0} - \psi(x) + x)x^{-s-1}\left(\underbrace{1 + \frac{e^{i\theta} x^{-it_0}}{2} + \frac{e^{-i\theta} x^{it_0}}{2}}_{=1 + \cos(\theta - t_0 \log x) \geq 0}\right) \,dx
+  \end{align*}
+  so
+  \begin{align*}
+    G(s) = G_1(s) + G_2(s)
+  \end{align*}
+  where $G_1(s)$ is an integral over $[1,X]$, which is entire, and $G_2(s)$ is a non-negative integral, a contradiction.
+  This proves $\psi(x) - x = \Omega_+(x^\sigma)$.
+  $\Omega_-$ is the same, just $x-1$.
+\end{proof}
 \clearpage
 \printnomenclature
 \printindex
