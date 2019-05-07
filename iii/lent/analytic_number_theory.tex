@@ -2202,6 +2202,128 @@ Since $\zeta(\bar{s}) = \bar{\zeta(s)}$, these zeros come in fours (except if $\
 \end{proof}
 
 \clearpage
+\section{Primes in Progressions}
+% labelled subsection 13?
+\subsection{Dirichlet characters and \texorpdfstring{$L$}{L}-functions}
+\begin{defi}\hypertarget{def:dirchar}
+  \newlec
+  Fix $q \in \mathbb{N}$. A \named{Dirichlet character} of modulus $q$ is a homomorphism $\chi: (\mathbb{Z}/q\mathbb{Z})^\times \to \mathbb{C}^\times$.
+\end{defi}
+$(\mathbb{Z}/q\mathbb{Z})^\times$ is a finite abelian group of order $\varphi(q)$, so the set of Dirichlet characters of modulus $q$ forms a finite abelian group of order $\varphi(q)$.
+
+We can also think of $\chi$ as defining a function $\chi: \mathbb{Z}\to\mathbb{C}$, given by
+\begin{align*}
+  \begin{cases}
+    \chi(a \bmod{q}), &\text{ if } (a,q) = 1 \\
+    0 & \text{otherwise}
+  \end{cases}
+\end{align*}
+Note this $\chi$ is periodic with period $q$, and totally multiplicative.
+If $\chi$ is the trivial homomorphism on $(\mathbb{Z}/q\mathbb{Z})^\times$, we call it the principal Dirichlet character of modulus $q$ and normally denote it as $\chi_0$.
+
+\begin{nlemma}\label{lem:4.1}\leavevmode
+  \begin{enumerate}[(1)]
+    \item Let $\chi$ be a Dirichlet character of modulus $q$. Then
+      \begin{align*}
+        \sum_{a \in (\mathbb{Z}/q\mathbb{Z})^\times} \chi(a) = \sum_{1 \leq a \leq q} \chi(a) =
+        \begin{cases}
+          \varphi(q) & \chi = \chi_0 \\
+          0 & \chi \neq \chi_0.
+        \end{cases}
+      \end{align*}
+    \item Let $a \in (\mathbb{Z}/q\mathbb{Z})^\times$. Then
+      \begin{align*}
+        \sum_\chi \chi(a) =
+        \begin{cases}
+          \varphi(q) &a \equiv 1 \pmod{q} \\
+          0 & a \not\equiv 1 \pmod{q}.
+        \end{cases}
+      \end{align*}
+  \end{enumerate}
+\end{nlemma}
+\begin{proof}
+  We treat (2). If $a \equiv 1 \pmod{q}$ then $\chi(a)=1$ for all $\chi$. So
+  \begin{align*}
+    \sum_\chi \chi(a) = \sum_\chi 1 = \varphi(q).
+  \end{align*}
+  If $a \not\equiv 1 \pmod{q}$ then there exists $\psi:(\mathbb{Z}/q\mathbb{Z})^\times \to \mathbb{C}^\times$ such that $\psi(a)\neq 1$.
+  The map $\chi \mapsto \chi \psi$ is a permutation of the set of Dirichlet characters mod $q$.
+  Hence
+  \begin{equation*}
+    \sum_\chi \chi(a) = \sum_\chi (\chi \psi)(a) = \psi(A) \sum_\chi \chi(a) \Rightarrow \sum_\chi \chi(a) = 0. \qedhere
+  \end{equation*}
+\end{proof}
+\begin{defi}
+  Let $\1_{x \equiv a \bmod{q}}:\mathbb{Z}\to\mathbb{C}$ be defined by
+  \begin{equation*}
+    \1(x) =
+    \begin{cases}
+      1 & \text{if } (x,q)=1, x \equiv a \bmod{q} \\
+      0 & \text{otherwise}
+    \end{cases}
+  \end{equation*}
+  for $a \in \mathbb{Z}$, $(a,q) = 1$.
+\end{defi}
+Then \cref{lem:4.1} says
+\begin{align*}
+  \1_{x \equiv a \bmod{q}}(x) = \frac{1}{\varphi(q)} \sum_\chi \chi(a)^{-1} \chi(x).
+\end{align*}
+It follows that
+\begin{align*}
+  \sum_{\substack{p \leq x \\ p \equiv a \bmod{q}}} 1 = \sum_{p \leq x} \1_{x \equiv a \bmod{q}}(p) = \frac{1}{\varphi(q)} \sum_{p \leq x} \sum_{\chi} \chi(a)^{-1} \chi(p).
+\end{align*}
+Estimating this is closely related to estimating
+\begin{align*}
+  &\frac{1}{\varphi(q)} \sum_{n \leq x} \sum_\chi \chi(a)^{-1} \chi(n) \hyperlink{def:vonMang}{\Lambda(n)} \\
+  =&\sum_\chi \frac{\chi(a)^{-1}}{\varphi(q)} \sum_{n \leq x} \chi(n) \Lambda(n).
+\end{align*}
+Our strategy to prove Dirichlet's theorem is to consider the contribution of each character $\chi$ separately.
+
+We will do this using Dirichlet $L$-functions
+\begin{align*}
+  L(s,\chi) = \sum_{n \geq 1} \frac{\chi(n)}{n^s}.
+\end{align*}
+This series converges absolutely in the region $\sigma > 1$, and defines an analytic function there.
+\begin{nlemma}
+  If $\chi \neq \chi_0$, then $ \sum_{n \geq 1} \chi(n){n^{-s}} $ converges in $\sigma > 0$.
+\end{nlemma}
+\begin{proof}
+  Use \nameref{lem:1} with $a_n = \chi(n)$, $f(t) = t^{-s}$.
+  This gives
+  \begin{align*}
+    \sum_{n \leq x} \chi(n) n^{-s} = A(x) x^{-s} - \int_{1}^x A(t) f'(t)\,dt
+  \end{align*}
+  where $A(x) = \sum_{n \leq x} \chi(n)$.
+  Note \cref{lem:4.1} says $\sum_{1 \leq n \leq q} \chi(n) = 0$, as $\chi \neq \chi_0$. Hence $A(n)$ is periodic, and $|A(x)| \leq \varphi(q)$ for all $x$.
+  Hence
+  \begin{align*}
+    \sum_{n \leq x} \chi(n) n^{-s} = \frac{A(x)}{x^s} - \int_{1}^x A(t)f'(t)\,dt.
+  \end{align*}
+  Note $\abs{\frac{A(x)}{x^s}} \leq \varphi(q) x^{-\sigma}$ and the integral is absolutely convergent.
+\end{proof}
+Consequence: $L(s,\chi)$ is analytic in the region $\sigma>0$, and in particular does not have a pole at $s=1$.
+Since $\chi(n)$ is multiplicative, we have an Euler product identity
+\begin{align*}
+  L(s,\chi) = \prod_p \left(1-\frac{\chi(p)}{p^s}\right)^{-1}
+\end{align*}
+valid in the region $\sigma > 1$.
+
+\begin{remark}
+  When $\chi = \chi_0$,
+  \begin{align*}
+    L(s,\chi_0) = \zeta(s) \prod_{p \mid q} \left(1 - \frac{1}{p^s}\right).
+  \end{align*}
+  Hence $L(s,\chi_0)$ has a meromorphic continuation to all $s \in \mathbb{C}$ and a simple pole at $s=1$.
+\end{remark}
+\begin{remark}
+  In the region $\sigma>1$, and for any $\chi$, we have a formula for the logarithmic derivative of $L(s,\chi)$ in the same way as for $\zeta(s)$.
+  This gives an identity
+  \begin{align*}
+    -\frac{L'}{L}(s,\chi) = \sum_{n \geq 1} \frac{\chi(n) \Lambda(n)}{n^{s}}.
+  \end{align*}
+\end{remark}
+
+\clearpage
 \printnomenclature
 \printindex
 \end{document}
