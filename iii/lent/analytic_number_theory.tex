@@ -2439,6 +2439,133 @@ This is equivalent to showing that if $\chi \neq \chi_0$, then $L(1,\chi) \neq 0
   This is a contradiction, so we must have $L(1,\psi) \neq 0$.
 \end{proof}
 
+\subsection{Zero-free region}
+\newlec
+We have proved there are $\infty$-many primes $\equiv a \bmod{q}$ for fixed $a,q$ with $(a,q) = 1$ (Dirichlet's theorem), using
+\begin{align*}
+  -\frac{L'}{L}(s,\chi) = \sum_{n=1}^\infty \frac{\Lambda(n) \chi(n)}{n^s}.
+\end{align*}
+We want to prove a PNT for such primes. To do this, we'll use Perron's formula.
+We need information about the zeros of $L(s,\chi)$: we've already seen $L(1,\chi) \neq 0$.
+
+Similarities to zero-free region for $\zeta(s)$, but important difference: $\zeta(s)$ has a pole at $s=1$, $L(s,\chi)$ has no poles for $\sigma > 0$ (for $\chi \neq \chi_0$).
+The pole helps us to get zero-free regions for $\zeta$, so it is harder for $L(s,\chi)$.
+
+Let $\tau = |t| + 4$.
+Recall
+\begin{lemma}
+  If $f(z)$ is analytic on a region containing $|z| \leq 1$ and $f(0) \neq 0$ and $|f(z)| \leq M$ for $|z| \leq 1$.
+  Then for $0 < r < R < 1$, for $|z| \leq r$,
+  \begin{align*}
+  \frac{f'}{f}(z) = \sum \frac{1}{z-z_k} + \bigO \log \frac{M}{|f(0)|}
+  \end{align*}
+  where the sum is over zeros of $f$ in $|z_k| \leq R$.
+\end{lemma}
+
+\begin{lemma}
+  If $\chi \neq \chi_0$ and $\frac{5}{6} \leq \sigma \leq 2$ then
+  \begin{align*}
+    \frac{L'}{L}(s,\chi) = \sum_\rho \frac{1}{s-\rho} + \bigO(\log q \tau)
+  \end{align*}
+  over $\rho$ with $|\rho - (\frac{3}{2}+it)| \leq \frac 56$
+  (where $q$ came from the Dirichlet character).
+\end{lemma}
+\begin{proof}
+  Follows from the lemma with $f(z) = L(z + \frac{3}{2} + it, \chi)$ with $R = \frac{5}{6}$ and $r = \frac{2}{3}$.
+  Note
+  \begin{align*}
+    |f(0)| = \abs{L(\frac{3}{2} +it,\chi)} = \prod_p \abs{1 - \frac{\chi(p)}{p^{\frac 32 + it}}} \geq \prod_p (1 + \frac{1}{p^{\frac 32}}) \gg 1.
+  \end{align*}
+
+  By Partial Summation, if $F(t) = \sum_{1 \leq n \leq t} \chi(n)$, for $\sigma > 0$,
+  \begin{align*}
+    L(s,\chi) = s \int_1^\infty \frac{F(t)}{t^{s+1}}\,dt
+  \end{align*}
+  so
+  \begin{equation*}
+    \abs{L(s,\chi)} \ll |s| q \int_1^\infty \frac{1}{t^{\sigma+1}}\,dt \ll q\tau.\qedhere
+  \end{equation*}
+\end{proof}
+\begin{thm}
+  Let $\chi$ be a non-quadratic character.
+  There is an absolute constant $c > 0$ such that
+  \begin{align*}
+    L(s,\chi) \neq 0 \quad \text{if} \quad \sigma > 1 - \frac{c}{\log(q \tau)}.
+  \end{align*}
+\end{thm}
+\begin{proof}
+  Since
+  \begin{align*}
+    L(s,\chi_0) = \zeta(s) \prod_{p \mid q} (1 - p^{-s})
+  \end{align*}
+  in this region $\sigma > 0$, zeros of $L(s,\chi_0)$ are the same as $\zeta(s)$, so done.
+  Let $\rho = \sigma + it$ such that $L(\rho,\chi) = 0$. Idea is to compare (as $\delta \to 0$),
+  \begin{align*}
+    \frac{L'}{L}(1+\delta+it, \chi), \frac{L'}{L}(1+\delta+2it, \chi^2) \text{ and } \frac{L'}{L}(1+\delta,\chi_0)
+  \end{align*}
+  Note that
+  \begin{align*}
+    &\phantom{=}\Re(-3\frac{L'}{L}(1+\delta, \chi_0) - 4 \frac{L'}{L}(1+\delta+it,\chi) - \frac{L'}{L}(1+\delta+2it,\chi^2)) \\
+    &= \sum_{ \substack{n=1\\(n,q)=1}} \frac{\Lambda(n)}{n^{1+\delta}} \Re(3 + 4 \chi(n) n^{-it} + n^{-2it})
+  \end{align*}
+  and $\forall \theta$, $3 + 4 \cos \theta + \cos(2 \theta) \geq 0$. But the left hand side is $\Re(3 + 4 e^{i\theta} + e^{2 i \theta})$, i.e.\ $\forall z$, $|z| =1$, $\Re(3 +4z+z^2) \geq 0$.
+  % it is a dir series with nn coeffs, so \geq 0
+
+  By lemma,
+  \begin{align*}
+    -\Re \frac{L'}{L}(1+\delta,\chi_0) &= \frac{1}{\delta} + \bigO(\log q) \\
+  -\Re \frac{L'}{L}(1+\delta+it,\chi) &\leq -\frac{1}{1+\delta-\sigma} + \bigO(\log q \tau) \\
+  \text{and } \Re \frac{L'}{L} (1 + \delta + 2it, \chi^2) &\ll \log(q \tau)
+  \end{align*}
+  since $\chi^2 \neq \chi_0$ so
+  \begin{align*}
+    \frac{3}{\delta} - \frac{4}{1+\delta-\sigma} + \bigO(\log q \tau) \geq 0,
+  \end{align*}
+  contradiction if $\delta \approx \frac{c'}{\log q \tau}$ and $\sigma \geq 1 - \frac{c}{\log q \tau}$.
+\end{proof}
+\begin{thm}
+  If $\chi$ is a quadratic character, $\exists c > 0$ such that
+  \begin{align*}
+    L(s,\chi) \neq 0\quad\text{if}\quad \sigma > 1 - \frac{c}{\log q \tau} \quad\text{and } t \neq 0.
+  \end{align*}
+\end{thm}
+We cannot rule out a zero $\rho$ of $L(s,\chi)$ with $\rho \in \mathbb{R}$ close to $1$.
+
+\begin{thm}
+  Let $\chi$ be a quadratic character. There is an absolute constant $c > 0$ such that $L(s,\chi)$ has at most one zero $\rho \in (0,1)$ such that $\rho \geq 1 - \frac{c}{\log q}$.
+\end{thm}
+Such zeros are called `exceptional zeros' or `Siegel zeros'.
+
+First, we need a lemma for $L(s,\chi_0)$.
+\begin{lemma}
+  If $\frac 56 \leq \sigma \leq 2$ then
+  \begin{align*}
+    -\frac{L'}{L}(s,\chi_0) = \frac{1}{s-1} - \sum_\rho \frac{1}{s-\rho} + \bigO(\log q \tau)
+  \end{align*}
+  over zeros $\rho$ with $|\rho - (\frac 32 + it)| \leq \frac 56$.
+\end{lemma}
+\begin{proof}
+  Follows from
+  \begin{align*}
+    -\frac{\zeta'}{\zeta}(s) = -\sum_\rho \frac{1}{s-\rho} + \bigO(\log \tau) + \frac{1}{s-1}
+  \end{align*}
+  since
+  \begin{enumerate}[(a)]
+    \item for $\sigma > 0$, zeros of $\zeta$ are exactly the zeros of $L(s,\chi_0)$
+    \item by the Euler product,
+      \begin{align*}
+        \frac{L'}{L}(s,\chi_0) = \frac{\zeta'}{\zeta} +\sum_{p \mid q} \frac{\log p}{p^s-1} \ll \omega(q) \ll \log q.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+\begin{proof}[Thm 1 proof sketch]
+  For $t$ large, same as previous proof ($\chi^2 = \chi_0$, but no pole).
+  For $t$ small, $0 < |t| \ll \frac{1}{\log q \tau}$, instead of comparing $\chi_0$,$\chi$, $\chi^2$, compare $\rho, \bar{\rho}$.
+\end{proof}
+\begin{proof}[Thm 2 proof sketch]
+  Compare two such real zeros.
+\end{proof}
+
 \clearpage
 \printnomenclature
 \printindex
