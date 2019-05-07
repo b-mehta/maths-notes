@@ -2082,6 +2082,125 @@ take Mellin transform of this.
   This proves $\psi(x) - x = \Omega_+(x^\sigma)$.
   $\Omega_-$ is the same, just $x-1$.
 \end{proof}
+\subsection{Functional equation}
+\newlec
+Recall that $\sigma > 0$,
+\begin{align*}
+  \zeta(s) = 1 + \frac{1}{s-1} - s \int_1^\infty \frac{\{t\}}{t^{s+1}}\,dt
+\end{align*}
+Let $f(t) = \frac 12 - \{t\}$, so
+\begin{align*}
+  \zeta(s) = \frac{1}{s-1} + \frac 12 + s \int_1^\infty \frac{f(t)}{t^{s+1}}\,dt.
+\end{align*}
+This integral actually converges when $\sigma > -1$: let
+\begin{align*}
+  F(x) &= \int_0^x f(t)\,dt \\
+  \text{so } \int_X^Y \frac{f(t)}{t^{s+1}}\,dt &= \left[\frac{F(t)}{t^{s+1}}\right]_X^Y + (s+1) \int_X^Y \frac{F(t)}{t^{s+2}}\,dt
+\end{align*}
+and note that $F(t)$ is bounded
+% sketch graph from 0 to 3 of f(t)
+
+Therefore,
+\begin{align*}
+  \int_1^\infty \frac{f(t)}{t^{s+1}}\,dt
+\end{align*}
+converges when $\sigma > -1$.
+For instance, $\zeta(0) = -\frac{1}{2} = 1 + 1 + 1 + \dotsb$.
+Note that for $-1 < \sigma < 0$,
+\begin{align*}
+  s \int_0^1 \frac{f(t)}{t^{s+1}}\,dt = \frac{s}{2}\int_0^1\frac{1}{t^{s+1}}\,dt - s \int_0^1 \frac{1}{t^s}\,dt = \frac{1}{2} + \frac{1}{s-1}.
+\end{align*}
+So for $-1 < \sigma < 0$,
+\begin{align*}
+  \zeta(s) = s \int_0^\infty \frac{f(t)}{t^{s+1}}\,dt.
+\end{align*}
+By Fourier analysis, $f(t)$ has a Fourier series,
+\begin{align*}
+  f(t) = \sum_{n=1}^\infty \frac{\sin(2n\pi t)}{n\pi} \quad \text{converges for $t \notin \mathbb Z$}
+\end{align*}
+so where $-1 < \sigma < 0$,
+\begin{align*}
+  \zeta(s) &= s \int_0^\infty \frac{1}{t^{s+1}} \sum_{n=1}^\infty \frac{\sin(2n\pi t)}{n\pi}\,dt \\
+           &= s \sum_{n=1}^\infty \frac{1}{n\pi} \int_0^\infty \frac{\sin(2n\pi t)}{t^{s+1}}\,dt \quad \text{take $y=2n\pi t$} \\
+           &= s \sum_{n=1}^\infty \frac{(2n\pi)^s}{n\pi} (\int_0^\infty \frac{\sin(y)}{y^{s+1}}\,dy)
+\end{align*}
+Here,
+\begin{align*}
+  \sum_{n=1}^\infty \frac{(2n\pi)^s}{n\pi} = 2^s \pi^{s-1}\zeta(1-s)
+\end{align*}
+and
+\begin{align*}
+  \int_0^\infty \frac{\sin(y)}{y^{s+1}}\,dy &= \frac{1}{2i}\left(\int_0^\infty \frac{e^{iy}}{y^{s+1}}\,dy - \int_0^\infty \frac{e^{-iy}}{y^{s+1}}\,dy\right) \\
+                                            &= -\sin(\tfrac{s\pi}{2}) \Gamma(-s).
+\end{align*}
+by setting $u=iy$ and $u=-iy$ in the two integrals respectively, where
+\begin{align*}
+  \Gamma(s) \coloneqq \int_0^\infty t^{s-1}e^{-t}\,dt \quad \text{for } \sigma > 0.\nomenclature{$\Gamma(s)$}{Gamma function}
+\end{align*}
+Take a moment to derive some important properties of the $\Gamma$ function:
+\begin{align*}
+  \Gamma(s+1)&= \int_0^\infty t^s e^{-t}\,dt \\
+             &= [-t^s e^{-t}]_0^\infty + s \int_0^\infty t^{s-1}e^{-t}\,dt \\
+             &= s \Gamma(s).
+\end{align*}
+In particular, since $\Gamma(1) = \int_0^\infty e^{-t}\,dt = 1$, we have $\Gamma(n) = (n-1)!$.
+Also note $\Gamma(s+1)=s\Gamma(s)$ allows us to extend $\Gamma(s)$ to $\mathbb{C}$, with poles at $s=0,-1,-2,\dotsc$.
+For the zeta function, this means for $-1 < \sigma < 0$,
+\begin{align*}
+  \zeta(s) &= s 2^s \pi^{s-1} \zeta(1-s) (-\sin(\tfrac{s\pi}{2}) \Gamma(-s)) \\
+           &= 2^s \pi^{s-1} \sin(\tfrac{\pi s}{2})\Gamma(1-s)\zeta(1-s).
+\end{align*}
+The right hand side is defined for all $\sigma < 0$.
+Thus, define
+\begin{align*}
+  \zeta(s) &= 2^s \pi^{s-1} \sin(\tfrac{\pi s}{2})\Gamma(1-s)\zeta(1-s).
+\end{align*}
+This gives an analytic continuation of $\zeta(s)$ to $\mathbb{C}$.
+\begin{thm}[Functional Equation]
+  For all $s \in \mathbb{C}$,
+  \begin{align*}
+    \zeta(s) = 2^s \pi^{s-1} \sin(\tfrac{\pi s}{2}) \Gamma(1-s)\zeta(1-s).
+  \end{align*}
+\end{thm}
+What about $s=1$?
+\begin{align*}
+  \zeta(1) = 2\times 1 \times 1 \times \Gamma(0) \times \zeta(0).
+\end{align*}
+$\Gamma$ has a pole at $0$, and $\zeta$ has a pole at 1, so this makes sense.
+Are there any other poles? The first three factors are entire, so cannot give poles. So, we only need to worry about $\Gamma(1-s) \zeta(1-s)$.
+These are both entire for $\sigma<0$.
+So $\zeta(s)$ is analytic everywhere in $\mathbb{C}$ except for a simple pole at $s=1$.
+
+What about zeros of $\zeta$?
+\begin{align*}
+  0 = \zeta(s) = (\text{non-zero factors}) \sin(\frac{\pi s}{2}) \Gamma(1-s) \zeta(1-s).
+\end{align*}
+If $\sigma < 0$, $\zeta(1-s) \neq 0$ and $\Gamma(1-s) \neq 0$. So, $\sin(\frac{\pi s}{2}) = 0$, so $s = -2n$ for $n \in \mathbb{N}$.
+In $\sigma < 0$, $\zeta(s)$ has zeros at $-2, -4, -6, \dotsc$
+
+If $\sigma > 1$, $\zeta(s)$ has no zeros. Similarly for $\sigma=1$, so by the functional equation, similarly for $\sigma=0$.
+
+Thus, except for the trivial zeros, $\zeta(s)$ only has zeros in $0 < \sigma < 1$. If $0 < \sigma < 1$,
+\begin{align*}
+  0 = \zeta(s) = (\text{non-zero factors}) \Gamma(1-s) \zeta(1-s)
+\end{align*}
+but $\Gamma(1-s)$ is nonzero in this region, so $\zeta(1-s) = 0$.
+Since $\zeta(\bar{s}) = \bar{\zeta(s)}$, these zeros come in fours (except if $\sigma = \frac{1}{2}$, where they come in pairs).
+% picture
+\begin{thm}
+  Riemann Hypothesis is equivalent to $\psi(x) = x + \bigO(x^{\frac 12 + o(1)})$
+\end{thm}
+\begin{proof}\leavevmode
+  \begin{description}
+    \item[$\Rightarrow$] Contour integration: exercise.
+    \item [$\Leftarrow$] If $\sigma_0 = \sup\{\Re \rho : \zeta(\rho)=0\}$ then
+      \begin{align*}
+        \psi(x) = x + \Omega_{\pm}(x^\sigma) \quad \forall \sigma < \sigma_0.
+      \end{align*}
+      If the Riemann Hypothesis fails, there is a zero $\rho$ with $0 < \sigma < 1$ such that $\sigma \neq \frac 12$. Therefore by symmetry, $\sigma_0 \geq \max(\sigma,1-\sigma) > \frac{1}{2}$, so $\psi(x) = x + \Omega_{\pm}(x^{\sigma'})$ where $\frac{1}{2} < \sigma' < \sigma$.
+  \end{description}
+\end{proof}
+
 \clearpage
 \printnomenclature
 \printindex
