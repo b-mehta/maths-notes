@@ -2323,6 +2323,122 @@ valid in the region $\sigma > 1$.
   \end{align*}
 \end{remark}
 
+\newlec
+The Euler product we saw earlier gives
+\begin{align*}
+  \log L(s,\chi) = \sum_p \sum_k \frac{\chi(p)^k p^{-ks}}{k},
+\end{align*}
+hence
+\begin{align*}
+  \frac{L'(s,\chi)}{L(s,\chi)} = \sum_p \sum_{k \geq 1} \chi(p)^k (-\log p) p^{-ks} = -\sum_{n \geq 1} \chi(n) \Lambda(n) n^{-s},
+\end{align*}
+valid in $\sigma > 1$.
+Fix $a \in \mathbb{N}$ with $(a,q) = 1$. We combine this with the identity valid for any $n \in \mathbb{N}$:
+\begin{align*}
+  \1_{n \equiv a \bmod{q}}(n) = \frac{1}{\varphi(q)}\sum_\chi \chi(a)^{-1} \chi(n).
+\end{align*}
+We get
+\begin{align*}
+  \sum_{n \geq 1} \1_{n \equiv a \bmod{q}} \Lambda(n) n^{-s} = -\frac{1}{\varphi(q)} \sum_\chi \chi(a)^{-1} \frac{L'(s,\chi)}{L(s,\chi)}
+\end{align*}
+valid in $\sigma>1$.
+
+\subsection{Dirichlet's theorem}
+\begin{thm}[Dirichlet]
+  Take $(a,q)=1$. There are infinitely many primes $p$ such that $p \equiv a \pmod{q}$.
+\end{thm}
+We have
+\begin{align*}
+  L(s,\chi_0) = \zeta(s) \prod_{p \mid q}(1 - p^{-s})
+\end{align*}
+so $L(s,\chi_0)$ has a simple pole at $s=1$.
+Hence
+\begin{align*}
+  \sum_{n \geq 1} \1_{n \equiv a \bmod{q}}(n) \Lambda(n) n^{-s} = \frac{1}{\varphi(q)} \frac{1}{s-1} + \bigO(1) - \sum_{\chi \neq \chi_0} \frac{\chi(a)^{-1}}{\varphi(q)} \frac{L'(s,\chi)}{L(s,\chi)}.
+\end{align*}
+If there are finitely many primes $p \equiv a \pmod{q}$, the LHS would be bounded as $s \to 1$.
+To show Dirichlet's theorem, it's enough to show $\forall \chi \neq \chi_0$, $\frac{L'(s,\chi)}{L(s,\chi)}$ is analytic at $s=1$.
+
+This is equivalent to showing that if $\chi \neq \chi_0$, then $L(1,\chi) \neq 0$.
+\begin{thm}
+  If $\chi \neq \chi_0$, then $L(1,\chi)\neq0$.
+\end{thm}
+\begin{proof}
+  \begin{align*}
+    \prod_\chi L(s,\chi) &= \exp(\sum_\chi \log L(s,\chi)) \\
+                         &= \exp\left(\sum_\chi \sum_p \sum_{k \geq 1} \chi(p)^k \frac{p^{-ks}}{k}\right) \\
+                         &= \exp(\sum_\chi \sum_{n \geq 1} \frac{\chi(n) n^{-s} \Lambda(n)}{\log n}) \\
+                         &= \exp\left(\sum_{n \geq 1} \frac{n^{-s} \Lambda(n)}{\log n} \sum_\chi \chi(n)\right)
+  \end{align*}
+  We know
+  \begin{align*}
+    \sum_\chi \chi(n) =
+    \begin{cases*}
+      0 & if $(q,n) > 1$ or $(q,n) = 1$ and $n \not\equiv 1 \pmod{q}$ \\
+      \varphi(q) & if $n \equiv 1 \pmod{q}$.
+    \end{cases*}
+  \end{align*}
+  Hence
+  \begin{align*}
+    \prod_\chi L(s,\chi) = \exp\Bigg(\underbrace{\sum_{\substack{n \geq 1 \\  n \equiv 1 \bmod{q}}} \frac{n^{-s} \Lambda(n)}{\log n} \varphi(q)}_{\mathclap{\text{for $s$ real, $s>1$, this is a non-negative real number}}}\Bigg)
+  \end{align*}
+  valid in $\sigma > 1$.
+  So for $s \in (1,\infty)$, $\prod_\chi L(s,\chi) \in [1,\infty)$. %]
+
+  Note: $L(s,\chi_0)$ has a simple pole at $s=1$. If there are at least two distinct characters $\psi,\psi'$ of modulus $q$ such that $L(1,\psi) = L(1,\psi') = 0$ then
+  $\prod_\chi L(s,\chi)$ would be analytic in a neighbourhood of $s=1$ and vanish at $s=1$.
+
+  This can't happen, so there's at most one character $\psi$ such that $L(1,\psi) = 0$.
+
+  Note: for any $\chi$, $L(1,\overline{\chi}) = \overline{L(1,\chi)}$.
+  If $L(1,\chi) = 0$, then $L(1,\overline{\chi}) = 0$.
+  Hence if $L(1,\chi) = 0$, then $\chi = \overline{\chi}$.
+  In other words, $\chi$ takes values in $\{\pm 1\}$ (we call such characters \textbf{quadratic}\index{quadratic character} as then $\chi^2 = 1$.)
+
+  Suppose for contradiction there exists a non-principal quadratic character
+  \begin{align*}
+    \psi: (\mathbb{Z}/q\mathbb{Z})^\times \to \{\pm 1\}
+  \end{align*}
+  such that $L(1,\psi) = 0$.
+
+  We consider the product $L(s,\phi) \zeta(s)$. This function is analytic in $\sigma > 0$.
+  In $\sigma > 1$, we have the expression
+  \begin{equation}
+    L(s,\psi) \zeta(s) = \left( \sum_{n \geq1} \psi(n) n^{-s} \right) (\sum_{n \geq 1} n^{-s}) = \sum_{n \geq 1} r(n) n^{-s}
+  \end{equation}
+  where $r(n) = \sum_{d \mid n} \psi(d)$. Note $r(n)$ is multiplicative.
+  Note also that $r(n) \geq 0$. It suffices to check this for prime powers $p^k$:
+  \begin{align*}
+    r(p^k) = \psi(1) + \psi(p) + \dotsb + \psi(p^k) =
+    \begin{cases}
+      k+1 & \psi(p) = 1 \\
+      1 & \psi(p) = 0 \text{ or } \psi(p) = -1, \text{ $k$ is even} \\
+      0 & \psi(p) = -1, k\text{ is odd.}
+    \end{cases}
+  \end{align*}
+  Note also that $r(n^2) \geq 1$, by the same argument.
+  We now use Landau's lemma:
+  \begin{lemma}
+    Let $f(s) = \sum_{n \geq 1} a_n n^{-s}$, where $a_n$ are non-negative real numbers.
+    Suppose given $\sigma_0 \in \mathbb{R}$ such that $f(s)$ is convergent in $\sigma > \sigma_0$.
+    Suppose that $f(s)$ admits an analytic continuation to the disk $\{|s-\sigma_0| < \epsilon\}$.
+    Then $f(s)$ is convergent in $\sigma > \sigma_0 -\epsilon$.
+  \end{lemma}
+  \begin{center}
+  \begin{tikzpicture}
+
+  \end{tikzpicture}
+  \end{center}
+  Let $f(s) = L(\psi,s) \zeta(s) = \sum_{n \geq 1} r(n) n^{-s}$, valid in $\sigma > 1$.
+  Then we can use Landau's lemma, together with the fact that $f(s)$ is analytic in $\sigma > 0$ to conclude that $f(s)$ is convergent in $\sigma > 0$.
+  But
+  \begin{align*}
+    f(\frac 12) = \sum_{n \geq 1} r(n) n^{-\frac 12} \geq \sum_{n \geq 1} \frac{r(n^2)}{n} \geq \sum_{n \geq 1} \frac{1}{n},
+  \end{align*}
+  and this series is divergent.
+  This is a contradiction, so we must have $L(1,\psi) \neq 0$.
+\end{proof}
+
 \clearpage
 \printnomenclature
 \printindex
