@@ -124,7 +124,7 @@ We begin with a review of asymptotic notations:
     \item $\log n $ is not multiplicative.
       $1,\mu,\lambda,\tau$ are multiplicative.
   \end{itemize}
-  Note almost all \hyperlink{def:arith}{arithmetic functions} are not multiplicative.
+  % Note almost all \hyperlink{def:arith}{arithmetic functions} are not multiplicative.
 \end{fact}
 \begin{fact}[\hypertarget{def:mobinv}M\"obius inversion]\index{M\"obius function}
   \begin{equation*}
@@ -135,7 +135,7 @@ We begin with a review of asymptotic notations:
 \begin{proof}
   First show
   \begin{equation*}
-    1 \hyperlink{def:star}{\star} \hyperlink{def:mu}{\mu}(n) \coloneqq
+    1 \hyperlink{def:conv}{\star} \hyperlink{def:mu}{\mu}(n) \coloneqq
     \sum_{d \mid n} \hyperlink{def:mu}{\mu(d)} =
     \begin{cases*}
       1 & if $n=1$ \\
@@ -514,7 +514,7 @@ In particular, $\pi(x) \hyperlink{def:asymp2}{\asymp} \frac{x}{\log x}$ and the 
   \end{align*}
   Note $\int_2^\infty \frac{R(t)}{t (\log t)^2} \, dt$ exists, say it is $c$.
   \begin{align*}
-    \sum_{2 \leq p \leq x} \frac{1}{p} &= 1 + c + \bigO(\tfrac{1}{\log x}) + \log \log x - \log \log 2 + \bigO\left(\int_x^\infty \frac{1}{t (\log t)^2}\right) \\
+    \sum_{2 \leq p \leq x} \frac{1}{p} &= 1 + c + \bigO(\tfrac{1}{\log x}) + \log \log x - \log \log 2 + \bigO\left(\int_x^\infty \frac{1}{t (\log t)^2} \,dt \right) \\
                                        &= \log \log x + b + \bigO\left(\tfrac{1}{\log x}\right). \qedhere
   \end{align*}
 \end{proof}
@@ -650,7 +650,7 @@ In particular, we will try the same method as just before, but the leading order
   \begin{align*}
     \sum_{n \leq x} \hyperlink{def:selb}{\Lambda_2(n)} &= \sum_{n \leq x} \mu \hyperlink{def:conv}{\star}(\log)^2(n) \\
                                  &= \sum_{ab \leq x} \mu(a) (\log b)^2 \\
-                                 &= \sum_{a \leq x} \mu(a) \left(\sum_{(b \leq \frac x a)} (\log b)^2\right).
+                                 &= \sum_{a \leq x} \mu(a) \left(\sum_{b \leq \frac x a} (\log b)^2\right).
   \end{align*}
   By \nameref{lem:1},
   \begin{equation*}
@@ -819,7 +819,7 @@ We generally use:
 \end{itemize}
 \begin{eg}\leavevmode
   \begin{enumerate}[label=(\arabic*)]
-    \item Take $\hyperlink{def:}{A} = (x, %)[
+    \item Take $A = (x, %)[
       x+y] \cap \mathbb{N}$, and $P$ the set of all primes, so
       \begin{align*}
         |A_d| &= \floor*{\frac{x+y}{d}} - \floor*{\frac{x}{d}} = \frac{x+y}{d} - \frac{x}{d} + \hyperlink{def:asymp}{\bigO(1)} \\
@@ -835,9 +835,9 @@ We generally use:
         S(A,P; z) = \hyperlink{def:pi}{\pi(x+y)} - \pi(x) + \bigO((x+y)^{\frac{1}{2}})
       \end{equation*}
     \item Take
-      \begin{equation*}A = \{1 \leq n \leq q : n \equiv a \pmod{q}\}.\end{equation*}
+      \begin{equation*}A = \{1 \leq n \leq y : n \equiv a \pmod{q}\}.\end{equation*}
       Then
-      \begin{equation*}A_d = \left\{1 \leq m \leq \frac{x}{d} : dm \equiv a \pmod{q}\right\}.\end{equation*}
+      \begin{equation*}A_d = \left\{1 \leq m \leq \frac{y}{d} : dm \equiv a \pmod{q}\right\}.\end{equation*}
       This congruence only has solutions if $(d,q) \mid a$, so
       \begin{align*}
         |A_d| &=
@@ -848,9 +848,10 @@ We generally use:
         f(d) &=
         \begin{cases}
           (d,q) & \text{if } (d,q) \mid a \\
-          0 & \text{otherwise}.
+          0 & \text{otherwise},
         \end{cases}
       \end{align*}
+      taking $X = \frac{y}{q}$.
       We will do this example in more detail later, but it shows how $f$ can be more complicated, and that we can use sieve methods to count primes congruent to $a \pmod{q}$.
     \item What about twin primes? Take $A = \{n(n+2) : 1 \leq n \leq x\}$, and $P$ as all primes except $2$. So $p \mid n(n+2) \iff n \equiv 0 \text{ or } -2 \pmod{p}$. Now,
       \begin{align*}
@@ -867,7 +868,7 @@ We generally use:
 \end{eg}
 \begin{nthm}[Sieve of Eratosthenes-Legendre]\label{thm:2.1}
   \begin{equation*}
-    \hyperlink{def:sievesetup}{S(A,P; z)} = X W_p(z) + \bigO\left(\sum_{d \mid p(z)} R_d\right).
+    \hyperlink{def:sievesetup}{S(A,P; z)} = X W_P(z) + \bigO\left(\sum_{d \mid P(z)} R_d\right).
   \end{equation*}
 \end{nthm}
 \begin{proof}
@@ -950,7 +951,7 @@ Recall
 \begin{equation*}
   W = \prod_{\substack{p \in P \\ p \leq z}} \left(1 - \frac{f(p)}{p}\right)
 \end{equation*}
-so the expected size of $S(A,P;z)$ is $XW$. Note that as $t \to \infty$,
+and the expected size of $S(A,P;z)$ is $XW$. Note that as $t \to \infty$,
 \begin{align*}
   G(t,z) &\to \sum_{d \mid P(z)} g(d) \\
          &= \prod_{p < z} (1 + g(p)) \\
@@ -1509,6 +1510,7 @@ so e.g. $\frac{\zeta'(s)}{\zeta(s)} \times \zeta(s) = \zeta'(s)$, thus $\Lambda 
 Similarly if $f \star 1 = g$, then $\hyperlink{def:lf}{L_f} \times \zeta = L_g$ so $L_f = \frac{1}{\zeta} \times L_g$ so $f = \mu \star g$.
 
 \begin{lemma}
+\newlec
   For $\sigma > 1$,
   \begin{equation*}
     \zeta(s) = 1 + \frac{1}{s-1} - s \int_1^\infty \frac{\{t\}}{t^{s+1}}\,dt.
@@ -1519,9 +1521,9 @@ Similarly if $f \star 1 = g$, then $\hyperlink{def:lf}{L_f} \times \zeta = L_g$ 
   \begin{align*}
     \sum_{1 \leq n \leq x} \frac{1}{n^s} &= \frac{\floor{x}}{x^s} + s \int_1^x \frac{\floor{t}}{t^{s+1}}\,dt \\
     &= \frac{\floor{x}}{x^s} + s \int_1^x \frac{1}{t^{s}}\,dt - s \int_1^x \frac{\{t\}}{t^{s+1}}\,dt\\
-    &= \frac{\floor{x}}{x^s} + \frac{s}{s-1} [t^{-s+1}]^x_1 - s \int_1^x \frac{\{t\}}{t^{s+1}}\,dt \\
+    &= \frac{\floor{x}}{x^s} + \frac{s}{s-1} \left[t^{-s+1}\right]^x_1 - s \int_1^x \frac{\{t\}}{t^{s+1}}\,dt \\
     \shortintertext{Now taking the limit as $x \to \infty$:}
-    &= \frac{s}{s-1} - s \int_1^x \frac{\{t\}}{t^{s+1}}\,dt. \qedhere
+    &= \frac{s}{s-1} - s \int_1^\infty \frac{\{t\}}{t^{s+1}}\,dt. \qedhere
   \end{align*}
 \end{proof}
 The integral converges absolutely for $\sigma > 0$, so this gives
@@ -1543,7 +1545,7 @@ $\zeta(s)$ is meromorphic in $\sigma>0$, with only a simple pole at $s=1$.
 \end{cor}
 \begin{proof}
   \begin{gather*}
-    \zeta(\sigma) = 1 + \frac{1}{\sigma-1} - \sigma \int_1^\infty \frac{\{t\}}{t^{\sigma+1}} \, dt.
+    \zeta(\sigma) = 1 + \frac{1}{\sigma-1} - \sigma \int_1^\infty \frac{\{t\}}{t^{\sigma+1}} \, dt. \\
     0 < \int_1^\infty \frac{\{t\}}{t^{\sigma+1}}\,dt < \frac{1}{\sigma}. \qedhere
   \end{gather*}
 \end{proof}
@@ -1555,8 +1557,8 @@ $\zeta(s)$ is meromorphic in $\sigma>0$, with only a simple pole at $s=1$.
 \end{cor}
 \begin{proof}
   \begin{align*}
-    \zeta(s) - \frac{1}{s-1} &= 1 - s \int_1^\infty \frac{\{t\}}{t^{s+1}}\,dt \\
-                             &= \bigO(1) + \bigO\left(\int_1^\infty \frac{1}{t^{\sigma+1}}\,dt\right) \\
+    \zeta(s) - \frac{1}{s-1} &= 1 - s \int_1^\infty \frac{\{u\}}{u^{s+1}}\,du \\
+                             &= \bigO(1) + \bigO\left(|s|\int_1^\infty \frac{1}{u^{\sigma+1}}\,du\right) \\
                              &= \bigO(1) + \bigO_\delta(1).\qedhere
   \end{align*}
 \end{proof}
@@ -1574,18 +1576,20 @@ $\zeta(s)$ is meromorphic in $\sigma>0$, with only a simple pole at $s=1$.
   If $\zeta(s) = 0$ and $\sigma > 0$, then $\sigma = \frac{1}{2}$.
 \end{conjecture}
 \subsection{Prime Number Theorem}
-Let $\alpha(s) = \sum \frac{a_n}{n^s}$. \nameref{lem:1} lets us write $\alpha(s)$ in terms of $A(x) = \sum_{n \leq x} a_n$.
-If $\sigma > \max(0, \sigma_c)$ then $\alpha(s) = s \int_1^\infty \frac{A(t)}{t^{s+1}}\,dt$. This is often called the Mellin transform.
-
+Let $\alpha(s) = \sum \frac{a_n}{n^s}$. \nameref{lem:1} lets us write $\alpha(s)$ in terms of $A(x) = \sum_{n \leq x} a_n$:
+If $\sigma > \max(0, \sigma_c)$ then
+\begin{align*}
+  \alpha(s) = s \int_1^\infty \frac{A(t)}{t^{s+1}}\,dt.
+\end{align*}
 What about the converse? Note if $\alpha(s) = \frac{\zeta'(s)}{\zeta(s)}$ then $a_n = \hyperlink{def:vonMang}{\Lambda(n)}$ so
 \begin{align*}
   A(x) &= \sum_{n \leq x} \Lambda(n) \\&= \psi(x).
 \end{align*}
-
 The converse is called Perron's formula:
 \begin{align*}
   A(x) = \frac{1}{2\pi i} \int_{\sigma-i\infty}^{\sigma+i\infty} \alpha(s) \frac{x^s}{s}\,ds \quad \sigma > \max(0,\sigma_c).
 \end{align*}
+Then, we can hope to understand $\psi(x)$ using analysis on $\frac{\zeta'}{\zeta}$.
 In particular, we get
 \begin{align*}
   \psi(x) = \frac{1}{2\pi i} \int_{\sigma-i\infty}^{\sigma+i\infty} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds \quad \sigma > 1.
@@ -1599,12 +1603,12 @@ In particular, we get
       1 & y > 1 \\
       0 & y < 1
     \end{cases}
-    + \bigO\left(\frac{y^{\sigma}}{T |\log y|}\right).
+    + \bigO\left(\frac{y^\sigma}{T |\log y|}\right).
   \end{equation*}
 \end{lemma}
 
-\newlec
 \begin{proof}
+\newlec
   For $y > 1$, we use the contour $C$:
   \begin{center}
     \begin{tikzpicture}[scale=2, xscale=1.5]
@@ -1677,7 +1681,7 @@ In particular, we get
 
 We will now prove a strong form of the PNT, under the assumptions
 \begin{enumerate}
-  \item $\exists c > 0$, such that if $\sigma > 1 - \frac{c}{\log(|t|+4)}$ and $|t| \geq \frac{7}{8}$ then $\zeta(s) \neq 0$ and  $\frac{\zeta'{s}}{\zeta{s}} \ll \log(|t|+4)$.
+  \item $\exists c > 0$, such that if $\sigma > 1 - \frac{c}{\log(|t|+4)}$ and $|t| \geq \frac{7}{8}$ then $\zeta(s) \neq 0$ and  $\frac{\zeta'(s)}{\zeta(s)} \ll \log(|t|+4)$.
   \item $\zeta(s) \neq 0$ for $\frac{8}{9} \leq \sigma \leq 1$, $|t| \leq \frac{7}{8}$.
   \item $\frac{\zeta'(s)}{\zeta(s)} = -\frac{1}{s-1} + \bigO(1)$ for $1 - \frac{c}{\log(|t|+4)} < \sigma \leq 2$ for $|t| \leq \frac{7}{8}$.
 \end{enumerate}
@@ -1694,7 +1698,7 @@ We will come back and prove these soon.
   Assume that $x = N + \frac{1}{2}$.
   By Perron's formula, for any $1 < \sigma_0 \leq 2$
   \begin{align*}
-    \psi(x) = \sum_{n \leq x} \Lambda(n) = \frac{1}{2\pi i} \int_{\sigma_0-iT}^{\sigma_0+iT} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds + \bigO\left(\frac{x}{T} \sum_{\frac{x}{2}<n<2x} \frac{\Lambda(n)}{|x-n|} + \frac{x^{\sigma_0}}{T} \sum \frac{\lambda(n)}{n^{\sigma_0}}\right)
+    \psi(x) = \sum_{n \leq x} \Lambda(n) = \frac{1}{2\pi i} \int_{\sigma_0-iT}^{\sigma_0+iT} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds + \bigO\left(\frac{x}{T} \sum_{\frac{x}{2}<n<2x} \frac{\Lambda(n)}{|x-n|} + \frac{x^{\sigma_0}}{T} \sum \frac{\Lambda(n)}{n^{\sigma_0}}\right)
   \end{align*}
   In the error term,
   \begin{align*}
@@ -1712,7 +1716,7 @@ We will come back and prove these soon.
   \end{align*}
   by the residue theorem and assumptions 1 and 2.
 
-Take $\sigma-1 = 1 - \frac{c}{\log T}$.
+  Take $\sigma_1 = 1 - \frac{c}{\log T}$.
   \begin{align*}
     \int_{\sigma_0+iT}^{\sigma_1+iT} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds &\ll \log T \int_{\sigma_0}^{\sigma_1} \frac{x^u}{T}\,du \ll \frac{\log T}{T} x^{\sigma_1}(\sigma_1 - \sigma_0) \ll \frac{x}{T} \\
     \shortintertext{and}
@@ -1725,6 +1729,137 @@ Take $\sigma-1 = 1 - \frac{c}{\log T}$.
   \end{align*}
   by choosing $T = \exp(c \sqrt{\log x})$.
 \end{proof}
+
+\subsection{Zero-free region}
+\newlec
+Firstly, near $s=1$, things are easy because of the pole.
+\begin{thm}
+  If $\sigma > (1+t^2)/2$, then $\zeta(s) \neq 0$. In particular, $\zeta(s) \neq 0$ if $\frac{8}{9} \leq \sigma \leq 1$, $|t| \leq \frac{7}{8}$.
+  Also,
+  \begin{align*}
+    \zeta(s) = \frac{1}{s-1} + \bigO(1) \quad -\frac{\zeta'}{\zeta}(s) = \frac{1}{s-1} + \bigO(1)
+  \end{align*}
+  uniformly in $\frac{8}{9} \leq \sigma \leq 2$ and $|t| \leq \frac{7}{8}$.
+\end{thm}
+\begin{center}
+  \begin{tikzpicture}[scale=1.4]
+    \draw[domain=-2:2,smooth,variable=\y,bred, fill=bred!10]  plot ({(1+\y*\y)/2},{\y});
+    \draw[->] (-1,0) -- (3,0) node[right] {$x$};
+    \draw[->] (0,-2) node[below] {$\sigma=0$} -- (0,2) node[above] {$y$};
+    \draw (1,-2) node[below] {$\sigma=1$} -- (1,2);
+  \end{tikzpicture}
+\end{center}
+\begin{proof}
+  Recall that
+  \begin{align*}
+    \zeta(s) = \frac{s}{s-1} + s \int_1^\infty \frac{\{u\}}{u^{s+1}}\,du,
+  \end{align*}
+  so
+  \begin{align*}
+    \abs{\zeta(s) - \frac{s}{s-1}} \leq |s| \int_1^\infty \frac{1}{u^{\sigma+1}}\,du\leq \frac{|s|}\sigma
+  \end{align*}
+  so if $\sigma > |s-1|$, $\zeta(s)\neq0$, i.e. if $\sigma > \frac{1+t^2}{2}$ and $\frac{1+(\frac{7}{8})^2}{2} < \frac 89$.
+  Also,
+  \begin{equation*}
+    \abs{\zeta(s) - \frac{1}{s-1}} \leq 1 + |s| \int_1^\infty \frac{1}{u^{\sigma+1}} = \bigO(1).
+  \end{equation*}
+  By general theory of holomorphic functions, the result holds for $-\frac{\zeta'}{\zeta}$ also.
+\end{proof}
+For $|t|$ large, need a different idea.
+How do we show that there aren't zeros on $\sigma=1$?
+Suppose there is a zero, of order $m$, at $1+it$.
+Then
+\begin{align*}
+  -\frac{\zeta'}{\zeta}(1 + \delta + it) &\sim \frac{m}{\delta} \\
+  -\sum \frac{\Lambda(n)}{n^{1+\delta+it}} &\sim \frac{m}{\delta} \\
+  |\text{LHS}| \leq \sum {\Lambda(n)}{n^{1+\delta}} &= -\frac{\zeta'}{\zeta}(1+\delta) \sim \frac{1}{\delta}.
+\end{align*}
+Then,
+\begin{align*}
+  \sum_p \frac{\log p}{p^{1+\delta}} \cdot e^{it \log p} &\sim - \sum \frac{\log p}{p^{1+\delta}} \\
+  \cos(t \log p) &\approx -1 \text{ for almost all } p
+\end{align*}
+so $p^{it} \approx -1$ for almost all $p$, i.e.\ $p^{2it} \approx 1$. Then there is a pole at $1 + 2it$.
+
+\begin{lemma}[Borel-Carath\'eodory Lemma]
+  If $f$ is holomorphic on $|z| \leq R$ and $f(0) = 0$.
+  If $\Re f(z) \leq M$ for all $|z| \leq R$, for any $r < R$,
+  \begin{equation*}
+    \sup_{|z| \leq r} (|f(z)|, |f'(z)|) \ll_{r,R} M
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  Let $g(z) = \frac{f(z)}{z(2M-f(z))}$. This is holomorphic in $|z| \leq R$.
+  If $|z| = R$ then $|2M-f(z)| \geq |f(z)|$ and so
+  \begin{align*}
+    |g(z)| \leq \frac{|f(z)|}{R |f(z)|} \leq \frac{1}{R}.
+  \end{align*}
+  So for all $|z| \leq r < R$, by maximum modulus,
+  \begin{align*}
+    |g(z)| = \frac{|f(z)|}{|z| |2M-f(z)|} \leq \frac{1}{R}
+  \end{align*}
+  so
+  \begin{align*}
+    R |f(z)| \leq r |2M-f(z)| \leq 2Mr + r |f(z)|.
+  \end{align*}
+  So $|f(z)| \leq \frac{2Mr}{R-r} \ll M$.
+  And for $f'(z)$, we use Cauchy's formula,
+  \begin{align*}
+    f'(z) = \frac{1}{2 \pi i} \int_{|w|=r'} \frac{f(w)}{(z-w)^2}\,dw \quad r < r' < R
+  \end{align*}
+  so $f'(z) \ll M$ also.
+\end{proof}
+\begin{lemma}
+  If $f$ is holomorphic on a domain including $|z| \leq 1$, $|f(z)| \leq M$ in this disc, and $f(0) \neq 0$. If $0 < r < R < 1$, then for $|z| \leq r$
+  \begin{align*}
+    \frac{f'}{f}(z) = \sum_{k=1}^K \frac{1}{z-z_k} + \bigO_{r,R}\left(\log \frac{M}{|f(0)|}\right)
+  \end{align*}
+  where $z_k$ ranges over all zeros of $f$ in $|z| \leq R$.
+\end{lemma}
+\begin{proof}
+  Suppose that $f(0) = 1$ without loss of generality.
+  Say first there are no zeros; consider $h(z) = \log f(z)$ and $\Re h(z) = \log |f(z)| \leq \log M$, so by B-C lemma,
+  \begin{align*}
+    \abs{h'(z)} = \abs{\frac{f'}{f}(z)} \ll \log M
+  \end{align*}
+  as required.
+
+  In general, we define an auxiliary function $g$ with no zeros:
+  \begin{align*}
+    g(z) \coloneqq f(z) \prod_{k=1}^K \frac{R^2 - z \bar{z_k}}{(z-z_k) R}.
+  \end{align*}
+  The $k$th factor has a pole at $z=z_k$ and on $|z| = R$ has modulus $1$.
+  So on $|z| \leq R$, $|g(z)| \leq M$, in particular
+  \begin{align*}
+    |g(0)| = \prod_{k=1}^K \frac{R}{|z_k|} \leq M.
+  \end{align*}
+  Note also that $|g(0)| \geq 1$.
+  Now, let
+  \begin{align*}
+    h(z) = \log \frac{g(z)}{g(0)}
+  \end{align*}
+  and $\Re h(z) = \log |g(z)| - \log|g(0)| \leq M$ for $|z| \leq R$.
+  By Borel-Carath\'eodory,
+  \begin{align*}
+    |h'(z)| = \abs{\frac{f'}{f}(z) - \sum_{k=1}^K \frac{1}{z-z_k} + \sum_{k=1}^K \frac{1}{z-\frac{R^2}{\bar{z_k}}}} \ll \log M
+  \end{align*}
+  so
+  \begin{align*}
+    \frac{f'}{f}(z) = \sum_{k=1}^K \frac{1}{z-z_k} - \sum_{k=1}^K \frac{1}{z-\frac{R^2}{\bar{z_k}}} + \bigO(\log M)
+  \end{align*}
+  and if $|z| \leq r$,
+  \begin{align*}
+    \abs{z-\frac{R^2}{\bar{z_k}}} \geq \frac{|R^2|}{|z_k|} - |z| \geq R - r \gg 1.
+  \end{align*}
+  and $K \ll \log M$.
+\end{proof}
+\begin{cor}
+  If $|t| \geq \frac{7}{8}$ and $\frac{5}{6} \leq \sigma \leq 2$ then
+  \begin{align*}
+    \frac{\zeta'}{\zeta}(s) = \sum_\rho \frac{1}{s-\rho} + \bigO(\log |t|)
+  \end{align*}
+  where $\rho$ is over all zeros in $|\rho - (\frac{3}{2} + it)| \leq \frac{5}{6}$.
+\end{cor}
 \clearpage
 \printnomenclature
 \printindex
