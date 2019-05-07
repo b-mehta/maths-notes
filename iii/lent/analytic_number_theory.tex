@@ -12,6 +12,7 @@
 \usepackage{chngcntr}
 \usepackage[intoc, refpage]{nomencl}
 
+\usepackage{bbm}
 \input{header}
 \usetikzlibrary{patterns, fadings, shapes}
 
@@ -24,12 +25,15 @@
 \renewcommand{\nompreamble}{\begin{multicols}{2}}
 \renewcommand{\nompostamble}{\end{multicols}}
 
+\newcommand{\1}{\mathbbm{1}}
 \newcommand{\named}[1]{\textbf{#1}\index{#1}}
 \newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
 \newcommand{\bigO}{\mathcal{O}}
 
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclareMathOperator\li{li}
+\DeclareMathOperator\Li{Li}
 
 \setcounter{section}{-1}
 % \counterwithout{nthm}{section}
@@ -1860,6 +1864,101 @@ so $p^{it} \approx -1$ for almost all $p$, i.e.\ $p^{2it} \approx 1$. Then there
   \end{align*}
   where $\rho$ is over all zeros in $|\rho - (\frac{3}{2} + it)| \leq \frac{5}{6}$.
 \end{cor}
+\begin{thm}
+  \newlec
+  There is $c > 0$ such that $\zeta(s) \neq 0$ if $\sigma \geq 1 - \frac{c}{\log t}$.
+\end{thm}
+\begin{proof}
+  Assume $\zeta(\rho) = 0$, for $\rho = \sigma + it$. Let $\delta > 0$ be chosen later.
+  Then
+  \begin{align*}
+    \frac{\zeta'}{\zeta}(1 + \delta + it) = \frac{1}{1+\delta+it-\rho} + \sum_{\rho' \neq \rho} \frac{1}{1+\delta+it-\rho'} + \bigO(\log t),
+  \end{align*}
+  (assume $\sigma \geq \frac{99}{100}$, say).
+  \begin{align*}
+    \Re \frac{\zeta'}{\zeta}(1+\delta+it) &= \Re \frac{1}{1+\delta+it-\rho} + \Re \sum_{\rho\neq\rho} \frac{1}{1+\delta+it-\rho'} + \bigO(\log t) \\
+                                          &> \frac{1}{1+\delta-\sigma} + \bigO(\log t)
+  \end{align*}
+  since $\Re \rho' \leq 1$ so $\Re \frac{1}{1+\delta+it-\rho'} >0$.
+  Similarly,
+  \begin{align*}
+    \Re \frac{\zeta'}{\zeta} (1+\delta+2it) > \bigO(\log t).
+  \end{align*}
+  Also,
+  \begin{align*}
+    \frac{\zeta'}{\zeta}(1+\delta) = - \frac{1}{\delta} + \bigO(1).
+  \end{align*}
+  Hence we can write
+  \begin{align*}
+    \frac{3}{\delta} - \frac{4}{1+\delta-\sigma} + \bigO(\log t) &> \Re \left(-3 \frac{\zeta'}{\zeta}(1 + \delta) - 4 \frac{\zeta'}{\zeta}(1 + \delta + it) - \frac{\zeta'}{\zeta} (1 + \delta + 2it)\right) \\
+                                                                 &= \re \left(3 \sum_n \frac{\Lambda(n)}{n^{1+\delta}} + 4 \sum_n \frac{\Lambda(n)}{n^{1+\delta+it}} - \sum_n \frac{\Lambda(n)}{n^{1+\delta+2it}}\right) \\
+                                                                 &= \sum_n \frac{\Lambda(n)}{n^{1+\delta}} (3 + 4 \cos(t \log n) + \cos(2t \log n)).
+  \end{align*}
+  But $3 + 4 \cos \theta + \cos 2\theta = 2(1 + \cos \theta)^2 \geq 0$, so
+  \begin{align*}
+    \frac{3}{\delta} \geq \frac{4}{1+\delta-\sigma} + \bigO(\log t).
+  \end{align*}
+  Choose $\delta = \frac{C}{\log t}$ for large enough $C$, so for contradiction, need
+  \begin{equation*}\frac{4}{1+\delta-\sigma} < \frac{10}{\delta}\implies\sigma\geq 1-\frac{c}{\log t}\end{equation*}
+  for some $c > 0$.
+\end{proof}
+
+\begin{lemma}
+  If $\sigma > 1 - \frac{c}{2 \log t}$ and $|t| \geq \frac{7}{8}$ then
+  \begin{align*}
+    \abs{\frac{\zeta'}{\zeta}(s)} \ll \log t
+  \end{align*}
+  (with the same $c$ as in the above theorem).
+\end{lemma}
+\begin{proof}
+  Let $s_1 = 1 + \frac{1}{\log t} + it = \sigma_1 + it$.
+  Here
+  \begin{align*}
+    \abs{\frac{\zeta'}{\zeta}(s_1)} \ll \sum_{n=1}^{\infty} \frac{\Lambda(n)}{n^{\sigma_1}} \ll \frac{1}{\sigma_1-1} \ll \log t.
+  \end{align*}
+  From the corollary, we have
+  \begin{equation*}
+    \frac{\zeta'}{\zeta}(s_1) = \sum_\rho \frac{1}{s_1-\rho} + \bigO(\log t)
+  \end{equation*}
+  so therefore
+  \begin{align*}
+    \re \sum_\rho \frac{1}{s_1-\rho} \ll \log t.
+  \end{align*}
+  Now if $s = \sigma+it$ where $\sigma \geq 1 - \frac{c}{2\log t}$, then
+  \begin{equation*}
+    \frac{\zeta'}{\zeta}(s) - \frac{\zeta'}{\zeta}(s_1) = \sum_\rho \left(\frac{1}{s-\rho} - \frac{1}{s_1-\rho}\right) + \bigO(\log t).
+  .\end{equation*}
+  Also $\abs{s-\rho} \asymp \abs{s_1-\rho}$, so
+  \begin{equation*}
+    \abs{\frac{1}{s-\rho}-\frac{1}{s_1-\rho}} \ll \frac{1}{\abs{s_1-\rho}^2 \log t} \ll \re \frac{1}{s_1-\rho}
+  \end{equation*}
+  (since $\re \frac{1}{z}= \frac{\re z}{|z|^2}$).
+  So
+  \begin{equation*}
+    \sum_\rho \abs{\frac{1}{s-\rho}-\frac{1}{s_1-\rho}} \ll \re \sum_\rho \frac{1}{s_1-\rho} \ll \log t. \qedhere
+  \end{equation*}
+\end{proof}
+Assuming the Riemann Hypothesis, we can show
+\begin{equation*}
+  \psi(x) = x + \bigO(x^{\frac{1}{2}}(\log x)^2)
+\end{equation*}
+(sheet 3).
+Using partial summation, we can deduce that
+\begin{align*}
+  \pi(x) &= \Li(x) + \bigO_\epsilon(x^{\frac{1}{2}+\epsilon}) \\
+  \text{where } \Li(x) &= \int_2^x \frac{1}{\log t}\,dt \\
+                       &= \frac{x}{\log x} + \bigO\left(\frac{x}{(\log x)^2}\right)
+\end{align*}
+So if $\pi(x) = \frac{x}{\log x}+E(x)$, then $E(x) \gg \frac{x}{(\log x)^2}$.
+
+\subsection{Error terms}
+In this section, we will show that $|\psi(x) - x| \gg x^{\frac{1}{2}}$ `often'.
+Actually, we will show that $\psi(x) = x+\Omega_{\pm}(x^{\frac{1}{2}})$, i.e.\
+\begin{align*}
+  \limsup_{x \to \infty} \left(\frac{\psi(x)-x}{x^{\frac 12}}\right) &> 0 \\
+  \liminf_{x \to \infty} \left(\frac{\psi(x)-x}{x^{\frac 12}}\right) &< 0.
+\end{align*}
+
 \clearpage
 \printnomenclature
 \printindex
