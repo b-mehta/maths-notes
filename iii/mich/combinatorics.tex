@@ -10,6 +10,7 @@
 \usepackage{marginnote}
 \input{header}
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.14}
 \makeindex[intoc]
 \usetikzlibrary{fadings, decorations.pathmorphing, shadings}
 
@@ -41,6 +42,8 @@
 
 \let\oldsubset\subset
 \let\subset\subseteq
+\let\oldepsilon\epsilon
+\let\epsilon\varepsilon
 
 \begin{document}
 \maketitle
@@ -449,15 +452,15 @@ We can use \nameref{thm:locallym2} to prove:
   We have $\frac{|\mathcal{A}_n|}{\binom{n}{n}} \leq 1$.
   Also, $\hyperlink{def:shadow}{\partial \mathcal{A}_n}$ and $\mathcal{A}_{n-1}$ are distinct since $\mathcal{A}$ was an \hyperlink{def:antichain}{antichain}, so
   \begin{align*}
-    \frac{|\partial A_n|}{\binom{n}{n-1}} + \frac{|A_{n-1}|}{\binom{n}{n-1}} &= \frac{|\partial A_n \cup A_{n-1}|}{\binom{n}{n-1}} \\
-    \implies \frac{|A_n|}{\binom{n}{n}} + \frac{|\mathcal{A}_{n-1}|}{\binom{n}{n-1}} &\leq 1
+    \frac{|\partial \A_n|}{\binom{n}{n-1}} + \frac{|\A_{n-1}|}{\binom{n}{n-1}} &= \frac{|\partial \A_n \cup \A_{n-1}|}{\binom{n}{n-1}} \\
+    \implies \frac{|\A_n|}{\binom{n}{n}} + \frac{|\A_{n-1}|}{\binom{n}{n-1}} &\leq 1
   \end{align*}
   by \nameref{thm:locallym2}.
 
   Also, $\partial(\partial \mathcal{A}_n \cup \mathcal{A}_{n-1})$ is disjoint from $\mathcal{A}_{n-2}$, again since $\mathcal{A}$ is an antichain so
   \begin{align*}
-    \frac{|\partial(\partial \mathcal{A}_n \cup \mathcal{A}_{n-1})|}{\binom{n}{n-2}} + \frac{\mathcal{A}_{n-2}}{{n \choose n-2}} &\leq 1, \\
-    \implies \frac{|(\partial \mathcal{A}_n \cup \mathcal{A}_{n-1})|}{\binom{n}{n-1}} + \frac{\mathcal{A}_{n-2}}{{n \choose n-2}} &\leq 1, \\
+    \frac{|\partial(\partial \A_n \cup \A_{n-1})|}{\binom{n}{n-2}} + \frac{\A_{n-2}}{\binom{n}{n-2}} &\leq 1, \\
+    \implies \frac{|(\partial \mathcal{A}_n \cup \mathcal{A}_{n-1})|}{\binom{n}{n-1}} + \frac{\mathcal{A}_{n-2}}{\binom{n}{n-2}} &\leq 1, \\
     \implies \frac{\mathcal{A}_n}{\binom{n}{n}} + \frac{\mathcal{A}_{n-1}}{\binom{n}{n-1}} + \frac{\mathcal{A}_{n-2}}{\binom{n}{n-2}} &\leq 1.
   \end{align*}
   \begin{center}
@@ -474,7 +477,7 @@ We can use \nameref{thm:locallym2} to prove:
       \node [bred] at (-0.3,-0.3) {$\partial \mathcal{A}_n$};
       \node [bred] at (0.3,-0.3) {$\mathcal{A}_{n-1}$};
       \node [bred] at (-0.7,-1.9) {$\mathcal{A}_{n-2}$};
-      \node [bred] at (0.3,-2.1) {$\partial(\partial A_n \cup A_{n-1})$};
+      \node [bred] at (0.3,-2.1) {$\partial(\partial \A_n \cup \A_{n-1})$};
 
       \begin{scope}[every path/.style={decorate, decoration={random steps, segment length=1.5pt, amplitude=0.7pt}, bred, fill=bred!20}]
         \draw [thick] (-0.1, 1) circle [x radius=0.2 cm, y radius=1.5 mm];
@@ -516,7 +519,7 @@ Given $|\mathcal{A}|$, how should we choose $\mathcal{A} \subset X^{(r)}$ to min
 If $|\mathcal{A}| = \binom{k}{r}$, it is believable that we'd take $\mathcal{A} = [k]^{(r)}$ - giving $\partial \mathcal{A} = [k]^{(r-1)}$.
 What if $\binom{k}{r} < |\mathcal{A}| < \binom{k+1}{r}$? Believable that we'd take $[k]^{(r)}$ and some other $r$-sets from $[k+1]^{(r)}$.
 For instance, if $\mathcal{A} \subset X^{(3)}$ with $|\mathcal{A}| = \binom{7}{3} + \binom{4}{2}$, we'd take
-\begin{equation*}\mathcal{A} = [7]^{(3)} \cup \{A \cup \{8\} \| A\in [4]^{(2)}\}.\end{equation*}
+\begin{equation*}\mathcal{A} = [7]^{(3)} \cup \{A \cup \{8\} \mid A\in [4]^{(2)}\}.\end{equation*}
 
 \subsubsection{Two total orderings on \texorpdfstring{$X^{(r)}$}{X(r)}}
 Given $A,B \in \hyperlink{def:superr}{X^{(r)}}$, say $A = a_1 \dotsb a_r$, $B = b_1 \dotsb b_r$.
@@ -622,13 +625,12 @@ Use\marginnote{\emph{Lecture 4}}[0cm] the idea that `\hyperlink{def:colex}{colex
   We cannot have $y = i$, else $B \cup \{j\} \in \mathcal{A}'$, whence $B \cup \{j\} \in \mathcal{A}$ as $j \in B \cup\{j\}$, a contradiction.
 
   Thus
-  \begin{align*}
-    j \in (B \cup \{j\} - \{i\}) \cup \{y\} \\
-    i \notin (B \cup \{j\} - \{i\}) \cup \{y\}
+  \begin{gather*}
+    j \in (B \cup \{j\} - \{i\}) \cup \{y\},\quad i \notin (B \cup \{j\} - \{i\}) \cup \{y\}
     \shortintertext{so}
-    (B \cup \{j\} - \{i\}) \cup \{y\} \in \mathcal{A}
-  \end{align*}
-  and $B \cup \{y\} \in \mathcal{A}$ (definition of $C_{ij}$), contradicting the assumption that $B \in \partial \mathcal{A}' - \partial \mathcal{A}$.
+    (B \cup \{j\} - \{i\}) \cup \{y\} \in \mathcal{A},\quad B \cup \{y\} \in \mathcal{A}
+  \end{gather*}
+  (definition of $C_{ij}$), contradicting the assumption that $B \in \partial \mathcal{A}' - \partial \mathcal{A}$.
 \end{proof}
 
 \begin{remark}
@@ -712,9 +714,9 @@ However:
         \item If $w \notin U$: Then $V \subset (B \cup V - U) \cup \{w\}$ and $U \cap ((B \cup V - U) \cup \{w\}) = \emptyset$, so from $(B \cup V - U) \cup \{w\} \in \mathcal{A}'$ we can conclude that both $(B \cup V - U) \cup \{w\} \in \mathcal{A}$ and $B \cup \{w\} \in \mathcal{A}$, contradicting $B \notin \partial A.$
 
         \item If $w \in U$: We know $\mathcal{A}$ is $(U-w,V-z)$-compressed for some $z \in V$.
-          So from $(B \cup V - U) \cup \{w\} \in \mathcal{A}$ (as it is in $\mathcal{A}'$ and contains $V$, so could not have moved).
+          So from $(B \cup V - U) \cup \{w\} \in \mathcal{A}$ (as it is in $\mathcal{A}'$ and contains $V$, so could not have moved),
+          we deduce $B \cup \{z\} \in \mathcal{A}$, contradicting $B \notin \partial \mathcal{A}$. \qedhere
       \end{itemize}
-      We deduce $B \cup \{z\} \in \mathcal{A}$, contradicting $B \notin \partial \mathcal{A}$. \qedhere
   \end{itemize}
 \end{proof}
 \begin{remark}
@@ -1382,7 +1384,7 @@ Roughly we are going around $\epsilon \sqrt{n}$ standard deviations from the mea
   Similarly, replacing $\epsilon$ with $\frac \epsilon 2$,
   \begin{align*}
     \binom{n}{\floor{(\frac{1}{2} - \epsilon)n}} &\leq (1-\epsilon)^{\epsilon \frac{n}{2} - 1} \binom{n}{\floor{(\frac{1}{2} - \frac{\epsilon}{2}) n}} \\
-                                                 &\leq 2(1-\epsilon)^{\frac \epsilon 2} 2^n \\
+                                                 &\leq 2(1-\epsilon)^{\epsilon\frac{n}2} 2^n \\
                                                  &\leq 2 e^{-\epsilon \cdot \epsilon \frac n2} 2^n,
   \end{align*}
   using $e^{-x} \geq 1-x$ in the final step.
@@ -1963,7 +1965,7 @@ For given $|x|$, we'd `keep $x_1$ big'
 \begin{defi}[Sections]\index{$i$-section}
   \hypertarget{def:sections}For $A \subset \hyperlink{def:grid}{[k]^n}$ and $1 \leq i \leq n$, the \textbf{$i$-sections} of $A$ are the sets $A_1, \dotsc, A_k$ (or $A_1^{(i)}, \dotsc, A_k^{(i)}$) in $[k]^{n-1}$ given by
   \begin{equation*}
-    A_t = \{(x_1, \dotsc, x_{n-1}) \in [k]^{n-1} \mid (x_1, x_2, \dotsc, x_{i-1}, t, x_i, x_{i+1}, \dotsc, x_{n-1}) \in A\} \quad \forall 1 \leq t \leq k
+    A_t = \{(x_1, \dotsc, x_{n-1}) \in [k]^{n-1} \mid (x_1, x_2, \dotsc, x_{i-1}, t, x_i, x_{i+1}, \dotsc, x_{n-1}) \in A\}
   \end{equation*}
 \end{defi}
 \begin{center}

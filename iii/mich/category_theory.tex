@@ -75,10 +75,10 @@
 
 \newenvironment{tikzcdi}{\begin{tikzcd}[cramped, sep=scriptsize]}{\end{tikzcd}}
 
-\let\oldto\to
-\let\to\longrightarrow
-\let\oldmapsto\mapsto
-\let\mapsto\longmapsto
+% \let\oldto\to
+% \let\to\longrightarrow
+% \let\oldmapsto\mapsto
+% \let\mapsto\longmapsto
 
 \setcounter{section}{-1}
 
@@ -228,7 +228,7 @@ As long as some examples make sense, it is not a point of concern that some exam
   A \textbf{natural transformation} $\alpha: F \to G$ consists of an assignment $A \mapsto \alpha_A$ from $\ob \mathscr{C}$ to $\mor \mathscr{D}$, such that $\dom \alpha_A = FA$ and $\cod \alpha_A = GA$ for all $A$, and for all $\begin{tikzcdi} A \rar{f}& B \end{tikzcdi}$ in $\mathscr{C}$ the square
   \begin{equation*}
     \begin{tikzcd}
-      FA \rar{Ff} \dar{\alpha_a} & FB \dar{\alpha_B} \\
+      FA \rar{Ff} \dar{\alpha_A} & FB \dar{\alpha_B} \\
       GA \rar{Gf} & GB
     \end{tikzcd}
   \end{equation*}
@@ -298,7 +298,7 @@ As long as some examples make sense, it is not a point of concern that some exam
 
 \begin{nexample}\label{eg:1.10}\leavevmode
   \begin{enumerate}[label=(\alph*)]
-    \item The category \hyperlink{def:categ}{$\mathbf{Part}$} is equivalent to the category $\mathbf{Set}_*$ of pointed sets (and basepoint-preserving functions).
+    \item The category \hyperlink{def:categ}{$\mathbf{Part}$} is equivalent to the category $\mathbf{Set}_*$ of pointed sets (and basepoint preserving functions).
       We define $F: \mathbf{Set}_* \to \mathbf{Part}$ by $F(A,a) = A \setminus \{a\}$ and if $f: (A,a) \to (B,b)$
       \begin{equation*}
         Ff(x) =
@@ -326,7 +326,7 @@ As long as some examples make sense, it is not a point of concern that some exam
     \item The category $\mathbf{FdMod}_K$ of finite-dimensional vector spaces over $K$ is equivalent to $\mathbf{FdMod}_K^\text{op}$: the functors in both directions are $(-)^*$ and both isomorphisms are the natural transformations of \cref{eg:1.7}(a).
     \item $\mathbf{FdMod}_K$ is also equivalent to $\hyperlink{def:categ}{\mathbf{Mat}_K}$: We define $F: \mathbf{Mat}_K \to \mathbf{FdMod}_K$ by $F(n) = K^n$, and $F(A)$ is the linear map represented by $A$ with respect to the standard bases of $K^n$ and $K^p$.
 
-      To define $G: \mathbf{FdMod}_K \to \mathbf{Mat}_K$, choose a basis for each finite dimensional vector space,and define $G(V) = \dim V$, $G(V \overset{f}{\to} W)$ as the matrix representing $f$ with respect to the chosen bases.
+      To define $G: \mathbf{FdMod}_K \to \mathbf{Mat}_K$, choose a basis for each finite dimensional vector space,and define $G(V) = \dim V$, $G(V \xrightarrow{f} W)$ as the matrix representing $f$ with respect to the chosen bases.
       $GF$ is the identity, provided we choose the standard bases for the spaces $K^n$; $FG \neq 1$, but the chosen basis gives isomorphisms $FG(V) = K^{\dim V} \to V$ for each $V$, which form a natural isomorphism.
   \end{enumerate}
 \end{nexample}
@@ -464,7 +464,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
     \Phi(\alpha) = \alpha_A(1_A) \in FA.
   \end{equation*}
   Given $x \in FA$, we define $\Psi(x) : \mathscr{C}(A,-) \to F$ by
-  \begin{equation*}\Psi(x)_B(A \overset{f}{\to} B) = (Ff)(x) \in FB.\end{equation*}
+  \begin{equation*}\Psi(x)_B(A \xrightarrow{f} B) = (Ff)(x) \in FB.\end{equation*}
   $\Psi(x)$ is natural: given $g: B \to C$, we have
   \begin{align*}
     \Psi(x)_C \mathscr{C}(A,g)(f) = \Psi(x)_C(gf) &= F(gf)(x) \\
@@ -511,7 +511,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
   \end{equation*}
   \nameref{lem:2.2}(ii) says that these are naturally isomorphic.
 
-  We can translate this into an elementary statement, making sense even when $\mathscr{C}$ isn't small, given $A \overset{f}{\to} B$ and $F \overset{\alpha}{\to} G$, the two ways of producing an element of $GB$ from a natural transformation $\beta: \mathscr{C}(A, -) \to F$ give the same result, namely
+  We can translate this into an elementary statement, making sense even when $\mathscr{C}$ isn't small, given $A \xrightarrow{f} B$ and $F \xrightarrow{\alpha} G$, the two ways of producing an element of $GB$ from a natural transformation $\beta: \mathscr{C}(A, -) \to F$ give the same result, namely
   \begin{equation*}
     \alpha_B(Ff) \beta_A(1_A) = (GF)\alpha_A \beta_A(1_A)
   \end{equation*}
@@ -549,21 +549,21 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
     \item The \hyperlink{def:forgFunc}{forgetful functor} $\mathbf{Gp} \to \mathbf{Set}$ is \hyperlink{def:repr}{representable} by $(\mathbb{Z}, 1)$.
       Similarly, the forgetful functor $\mathbf{Rng} \to \mathbf{Set}$ is representable by $(\mathbb{Z}[x], x)$ and
       the forgetful functor $\mathbf{Top} \to \mathbf{Set}$ is representable by $(\{*\}, *)$.
-    \item The functor $\mathcal{P}^*: \mathbf{Set}^\text{op} \to \mathbf{Set}$ (see \cref{eg:1.5}(c)) is representable by $(\{0,1\}, \{1\})$: this is the bijection between subsets and characteristic functions.
+    \item The functor $\mathcal{P}^*: \mathbf{Set}^\text{op} \to \mathbf{Set}$ (defined in \cref{eg:1.5}(c)) is representable by $(\{0,1\}, \{1\})$: this is the bijection between subsets and characteristic functions.
     \item Let $G$ be a group.
       The unique (up to \hyperlink{def:iso}{isomorphism}) representable functor $G(*, -): G \to \mathbf{Set}$ is the \emph{Cayley representation} of $G$, i.e.\ the set $UG$ with $G$ acting by left multiplication.
     \item Let $A,B$ be two objects of a \hyperlink{def:lsmall}{locally small} \hyperlink{def:cat}{category} $\mathscr{C}$.
       We have a functor $\mathscr{C}^\text{op} \to \mathbf{Set}$ sending $C$ to $\mathscr{C}(C,A) \times \mathscr{C}(C,B)$.
       \hypertarget{def:prod}A \hyperlink{def:repr}{representation} of this, if it exists, is called a (categorical) \index{product}\textbf{product} of $A$ and $B$, and denoted
       \begin{equation*}
-        (A\times B, (A \times B \overset{\pi_1}{\to} A, A \times B \overset{\pi_2}{\to} B)).
+        (A\times B, (A \times B \xrightarrow{\pi_1} A, A \times B \xrightarrow{\pi_2} B)).
       \end{equation*}
 
-      This pair has the property that, for any pair $(C \overset{f}\to A, C \overset{g}{\to} B)$ there's a unique $C \overset{h}{\to} A \times B$ with $\pi_1 h = f$ and $\pi_2 h = g$.
+      This pair has the property that, for any pair $(C \xrightarrow{f} A, C \xrightarrow{g} B)$ there's a unique $C \xrightarrow{h} A \times B$ with $\pi_1 h = f$ and $\pi_2 h = g$.
 
       Products exist in many categories of interest: in $\mathbf{Set}, \mathbf{Gp}, \mathbf{Rng}, \mathbf{Top}$ they are `just' cartesian products, in posets they are binary meets.
 
-      \hypertarget{def:coprod}Dually we have the notion of \index{coproduct}\textbf{coproduct} $(A + B, (A \overset{\nu_1}\to A + B, B \overset{\nu_2}\to A + B))$.
+      \hypertarget{def:coprod}Dually we have the notion of \index{coproduct}\textbf{coproduct} $(A + B, (A \xrightarrow{\nu_1} A + B, B \xrightarrow{\nu_2} A + B))$.
       These also exist in many categories of interest.
     \item \marginnote{\emph{Lecture 6}}[0cm] The dual-vector-space functor $\mathbf{Mod}_K^\text{op} \to \mathbf{Mod}_K$, when composed with the forgetful functor $\mathbf{Mod}_K \to \mathbf{Set}$, is representable by $(K, 1_K$).
     \item Let \begin{tikzcd}[cramped] A \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & B \end{tikzcd} be morphisms in a locally small category $\mathscr{C}$.
@@ -572,7 +572,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
         F(C) = \set{h \in \mathscr{C}(C, A) | fh = gh}.
       \end{equation*}
       \hypertarget{def:equalizer}A representation of $F$, if it exists, is called an \textbf{equalizer} of $(f,g)$.
-      It consists of an objects $E$ and a morphism $E \overset{e}{\to} A$ such $fe = ge$, and every $h$ with $fh = gh$ factors uniquely through $e$.
+      It consists of an objects $E$ and a morphism $E \xrightarrow{e} A$ such $fe = ge$, and every $h$ with $fh = gh$ factors uniquely through $e$.
       In $\mathbf{Set}$, we can take $E = \set{x \in A | f(x) = g(x)}$ and $e = $ inclusion.
       Similar constructions work in $\mathbf{Gp}, \mathbf{Rng}, \mathbf{Top}, \dotsc$.
 
@@ -592,8 +592,8 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
 \begin{ndef}[Separating, detecting families]\label{def:2.8}
   Let $\mathscr{C}$ be a category, and $\mathscr{G}$ a class of objects of $\mathscr{C}$.
   \begin{enumerate}[label=(\alph*)]
-    \item \index{separating family}\hypertarget{def:separating}We say $\mathscr{G}$ is a \textbf{separating family} for $\mathscr{C}$ if, given \begin{tikzcd}[cramped] A \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & B \end{tikzcd} such that $fh=gh$ for all $G \overset{h}{\to} A$ with $G \in \mathscr{G}$, then $f = g$ (i.e.\ the functors $\mathscr{C}(G,-)$, $G \in \mathscr{G}$ are collectively faithful).
-    \item \index{detecting family}\hypertarget{def:detecting}We say $\mathscr{G}$ is a \textbf{detecting family} for $\mathscr{C}$ if, given $A \overset{f}\to B$ such that every $G \overset{h}{\to} B$ with $G \in \mathscr{G}$ factors uniquely through $f$, then $f$ is an isomorphism.
+    \item \index{separating family}\hypertarget{def:separating}We say $\mathscr{G}$ is a \textbf{separating family} for $\mathscr{C}$ if, given \begin{tikzcd}[cramped] A \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & B \end{tikzcd} such that $fh=gh$ for all $G \xrightarrow{h} A$ with $G \in \mathscr{G}$, then $f = g$ (i.e.\ the functors $\mathscr{C}(G,-)$, $G \in \mathscr{G}$ are collectively faithful).
+    \item \index{detecting family}\hypertarget{def:detecting}We say $\mathscr{G}$ is a \textbf{detecting family} for $\mathscr{C}$ if, given $A \xrightarrow{f} B$ such that every $G \xrightarrow{h} B$ with $G \in \mathscr{G}$ factors uniquely through $f$, then $f$ is an isomorphism.
   \end{enumerate}
   If $\mathscr{G} = \{G\}$, we call $G$ a \textbf{separator}/\textbf{detector}.
 \end{ndef}
@@ -606,13 +606,13 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
 \end{nlemma}
 \begin{proof}\leavevmode
   \begin{enumerate}[label=(\roman*)]
-    \item Suppose $\mathscr{G}$ is \hyperlink{def:separating}{separating} and $A \overset{f}\to B$ satisfies the condition of \cref{def:2.8}(b).
-      If \begin{tikzcd}[cramped] B \arrow[r, shift left, "g"] \arrow[r, shift right,"h"'] & C \end{tikzcd} satisfy $gf = hf$, then $gx = hx$ for every $G \overset{x}\to B$, so $g = h$, i.e.\ $f$ is \hyperlink{def:epic}{epic}.
+    \item Suppose $\mathscr{G}$ is \hyperlink{def:separating}{separating} and $A \xrightarrow{f} B$ satisfies the condition of \cref{def:2.8}(b).
+      If \begin{tikzcd}[cramped] B \arrow[r, shift left, "g"] \arrow[r, shift right,"h"'] & C \end{tikzcd} satisfy $gf = hf$, then $gx = hx$ for every $G \xrightarrow{x} B$, so $g = h$, i.e.\ $f$ is \hyperlink{def:epic}{epic}.
       Similarly if
       \begin{tikzcd}[cramped] D \arrow[r, shift left, "k"] \arrow[r, shift right,"l"'] & A \end{tikzcd}
-      satisfy $fk = fl$, then $ky = ly$ for any $G \overset{y}\to D$, since both are factorisations of $fky$ through $f$. So $k=l$, i.e.\ $f$ is \hyperlink{def:monic}{monic}.
+      satisfy $fk = fl$, then $ky = ly$ for any $G \xrightarrow{y} D$, since both are factorisations of $fky$ through $f$. So $k=l$, i.e.\ $f$ is \hyperlink{def:monic}{monic}.
     \item Suppose $\mathscr{G}$ is \hyperlink{def:detecting}{detecting} and \begin{tikzcd}[cramped] A \arrow[r, shift left, "f"] \arrow[r, shift right,"g"'] & B \end{tikzcd} satisfies the condition of 2.8(a) .
-      Then the \hyperlink{def:equalizer}{equalizer} $E \overset{e}\to A$ is an \hyperlink{def:iso}{isomorphism}, so $f = g$.
+      Then the \hyperlink{def:equalizer}{equalizer} $E \xrightarrow{e} A$ is an \hyperlink{def:iso}{isomorphism}, so $f = g$.
   \end{enumerate}
 \end{proof}
 \begin{nexample}\label{eg:2.10}\leavevmode
@@ -635,7 +635,7 @@ Similarly, $A \mapsto \mathscr{C}(A,B)$ defines a functor $\mathscr{C}(-, B): \m
 
       So if $\set{G_i | i \in I}$ is any set of spaces, taking $\kappa > \operatorname{card} G_i$ for all $i$ yields an example to show that the set is not detecting.
     \item Let $\mathscr{C}$ be the category of pointed connected CW-complexes and homotopy classes of (basepoint-preserving) continuous maps.
-      JHC Whitehead proved that if $X \overset{f}\to Y$ in this category induces isomorphisms $\pi_n(X) \to \pi_n(Y)$ for all $n$, then it's an isomorphism in $\mathscr{C}$.
+      JHC Whitehead proved that if $X \xrightarrow{f} Y$ in this category induces isomorphisms $\pi_n(X) \to \pi_n(Y)$ for all $n$, then it's an isomorphism in $\mathscr{C}$.
       This says that $\set{S^n | n \geq 1}$ is a detecting set for $\mathscr{C}$.
 
       But PJ Freyd showed there is no \hyperlink{def:full}{faithful} functor $\mathscr{C} \to \mathbf{Set}$, so no separating \emph{set}: if $\set{G_i | i \in I}$ were separating, then
@@ -655,7 +655,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
       A \arrow[r, "e", two heads] & B
     \end{tikzcd}
   \end{equation*}
-  there exists $P \overset{g}\to A$ with $eg = f$.
+  there exists $P \xrightarrow{g} A$ with $eg = f$.
   (If $\mathscr{C}$ is \hyperlink{def:lsmall}{locally small}, this says $\hyperlink{def:lsmall}{\mathscr{C}(P, -)}$ preserves \hyperlink{def:epic}{epimorphisms}).
 
   Dually, an \textbf{injective} object of $\mathscr{C}$ is a projective object of $\hyperlink{def:duality}{\mathscr{C}^\text{op}}$.
@@ -681,16 +681,16 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
 \section{Adjunctions}
 \begin{ndef}\label{def:3.1}\index{adjunction}\index{adjoint}\hypertarget{def:adj}
   Let \marginnote{\emph{Lecture 7}}[0cm]
-  $\mathscr{C}$ and $\mathscr{D}$ be two \hyperlink{def:cat}{categories} and $\mathscr{C} \overset{F}\to \mathscr{D}$, $\mathscr{D} \overset{G}\to \mathscr{C}$ two \hyperlink{def:funct}{functors}.
-  By an \textbf{adjunction} between $F$ and $G$ we mean a bijection between \hyperlink{def:cat}{morphisms} $FA \overset{\hat{f}}\to B$ in $\mathscr{D}$ and morphisms $A \overset{f}\to GB$ in $\mathscr{C}$ which is \hyperlink{def:nattrans}{natural} in $A$ and $B$, i.e.\ given $A' \overset{g}\to A$ and $B \overset{h}\to B'$, we have $h \hat{f}(Fg) = \reallywidehat{(Gh)fg}: FA' \to B'$.
+  $\mathscr{C}$ and $\mathscr{D}$ be two \hyperlink{def:cat}{categories} and $\mathscr{C} \xrightarrow{F} \mathscr{D}$, $\mathscr{D} \xrightarrow{G} \mathscr{C}$ two \hyperlink{def:funct}{functors}.
+  By an \textbf{adjunction} between $F$ and $G$ we mean a bijection between \hyperlink{def:cat}{morphisms} $FA \xrightarrow{\hat{f}} B$ in $\mathscr{D}$ and morphisms $A \xrightarrow{f} GB$ in $\mathscr{C}$ which is \hyperlink{def:nattrans}{natural} in $A$ and $B$, i.e.\ given $A' \xrightarrow{g} A$ and $B \xrightarrow{h} B'$, we have $h \hat{f}(Fg) = \reallywidehat{(Gh)fg}: FA' \to B'$.
 
   We say $F$ is \textbf{left adjoint} to $G$ and write $F \dashv G$.
 \end{ndef}
 \begin{nexample}\label{eg:3.2}\leavevmode
   \begin{enumerate}[label=(\alph*)]
-    \item The \hyperlink{def:freeFunct}{free functor} $\hyperlink{def:categ}{\mathbf{Set}} \overset{F}\to \hyperlink{def:categ}{\mathbf{Gp}}$ is \hyperlink{def:adj}{left adjoint} to the \hyperlink{def:forgFunc}{forgetful functor} $\mathbf{Gp} \overset{U}\to \mathbf{Set}$, since any function $f: A \to UB$ extends uniquely to a homomorphism $\hat{f}:FA \to B$.
+    \item The \hyperlink{def:freeFunct}{free functor} $\hyperlink{def:categ}{\mathbf{Set}} \xrightarrow{F} \hyperlink{def:categ}{\mathbf{Gp}}$ is \hyperlink{def:adj}{left adjoint} to the \hyperlink{def:forgFunc}{forgetful functor} $\mathbf{Gp} \xrightarrow{U} \mathbf{Set}$, since any function $f: A \to UB$ extends uniquely to a homomorphism $\hat{f}:FA \to B$.
       Naturality in $B$ is easy, naturality in $A$ follows from the definition of $F$ as a functor.
-    \item The \hyperlink{def:forgFunc}{forgetful functor} $\hyperlink{def:categ}{\mathbf{Top}} \overset{U}\to \mathbf{Set}$ has a left adjoint $D$ which equips any set with the discrete topology and a right adjoint $I$ which equips a set $A$ with the indiscrete topology $\{\emptyset, A\}$.
+    \item The \hyperlink{def:forgFunc}{forgetful functor} $\hyperlink{def:categ}{\mathbf{Top}} \xrightarrow{U} \mathbf{Set}$ has a left adjoint $D$ which equips any set with the discrete topology and a right adjoint $I$ which equips a set $A$ with the indiscrete topology $\{\emptyset, A\}$.
     \item \index{category!discrete}\hypertarget{def:discreteCat}The functor $\hyperlink{def:cat}{\ob}: \hyperlink{def:catc}{\mathbf{Cat}} \to \mathbf{Set}$ has a left adjoint $D$ sending $A$ to the \textbf{discrete} category with $\ob(DA) = A$ and only identity morphisms.
       \index{category!indiscrete}\hypertarget{def:indiscreteCat}It also has a right adjoint $I$ sending $A$ to the (\textbf{indiscrete}) category with $\ob(IA) = A$ and one morphism $x \to y$ for each $(x,y) \in A \times A$.
       In this case $D$ in turn has a left adjoint $\pi_0$ sending a small category $\mathscr{C}$ to its set of \emph{connected components}, i.e.\ the quotient of $\ob \mathscr{C}$ by the smallest equivalent relation identifying $\dom f$ with $\cod f$ for all $f \in \mor \mathscr{C}$.
@@ -707,7 +707,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
     \item Let $\mathbf{1}$ be the \hyperlink{def:discreteCat}{discrete} category with one object $*$.
       \index{initial object}\hypertarget{def:initial}For any $\mathscr{C}$, there's a unique functor $\mathscr{C} \to \mathbf{1}$: a \hyperlink{def:adj}{left adjoint} for this picks out an \textbf{initial object} of $\mathscr{C}$, i.e.\ an object $I$ such that there exists a unique $I \to A$ for each $A \in \ob \mathscr{C}$.
       \index{terminal object}\hypertarget{def:terminal}Dually, a right adjoint for $\mathscr{C} \to \mathbf{1}$ corresponds to a \textbf{terminal object} of $\mathscr{C}$.
-    \item Let $A \overset{f}\to B$ be a morphism in $\mathbf{Set}$.
+    \item Let $A \xrightarrow{f} B$ be a morphism in $\mathbf{Set}$.
       We can regard $\mathcal{P}A$ and $\mathcal{P}B$ as posets, and we have functors
       \begin{equation*}
         \begin{tikzcd}
@@ -730,7 +730,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   \end{enumerate}
 \end{nexample}
 \begin{defi}[Comma category]\index{comma category}
-  \hypertarget{def:comma}$(A \downarrow G)$ is the \textbf{comma category} with objects pairs $(B,f)$ with $A \overset{f}\to GB$, and morphisms $(B,f) \to (B',f')$ are morphisms $B \overset{g}\to B'$ such that
+  \hypertarget{def:comma}$(A \downarrow G)$ is the \textbf{comma category} with objects pairs $(B,f)$ with $A \xrightarrow{f} GB$, and morphisms $(B,f) \to (B',f')$ are morphisms $B \xrightarrow{g} B'$ such that
   \begin{equation*}
     \begin{tikzcd}[column sep=small]
       & A \arrow[ld, "f"'] \arrow[rd, "f'"] &  \\
@@ -745,7 +745,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
 \end{nthm}
 \begin{proof}
   Suppose we are given $F \hyperlink{def:adj}{\dashv} G$.
-  Consider the morphism $\eta_A: A \to GFA$ corresponding to $FA \overset{1}\to FA$.
+  Consider the morphism $\eta_A: A \to GFA$ corresponding to $FA \xrightarrow{1} FA$.
   Then $(FA, \eta_A)$ is an object of $\hyperlink{def:comma}{(A \downarrow G)}$.
   Moreover, given $g: FA \to B$ and $f: A \to GB$, the diagram
   \begin{equation*}
@@ -765,7 +765,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   So $(FA, \eta_A)$ is \hyperlink{def:initial}{initial} in $\hyperlink{def:comma}{(A \downarrow G)}$.
 
   Conversely, suppose we are given an initial object $(FA, \eta_A)$ for each $(A \downarrow G)$.
-  Given $A \overset{f}\to A'$, we define $Ff: FA \to FA'$ to be the unique morphism making
+  Given $A \xrightarrow{f} A'$, we define $Ff: FA \to FA'$ to be the unique morphism making
   \begin{equation*}
     \begin{tikzcd}
       A \arrow[d, "f"] \arrow[r, "\eta_A"] & GFA \arrow[d, "GFf"] \\
@@ -775,10 +775,10 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   commute.
   Functoriality follows from uniqueness: given $f': A' \to A''$, both $F(f'f)$ and $(Ff')(Ff)$ are morphisms $(FA, \eta_A) \to (FA'', \eta_{A''}f'f)$ in $(A \downarrow G)$.
 
-  \marginnote{\emph{Lecture 8}}[0cm]To show $F \dashv G$: given $A \overset{f}\to GB$, we define $\hat{f}: FA \to B$ to be the unique morphism $(FA, \eta_A) \to (B, f)$ in $\hyperlink{def:comma}{(A \downarrow G)}$.
+  \marginnote{\emph{Lecture 8}}[0cm]To show $F \dashv G$: given $A \xrightarrow{f} GB$, we define $\hat{f}: FA \to B$ to be the unique morphism $(FA, \eta_A) \to (B, f)$ in $\hyperlink{def:comma}{(A \downarrow G)}$.
   This is a bijection with inverse
   \begin{equation*}
-    (FA \overset{f}\to B) \mapsto (A \overset{\eta_A}\to GFA \overset{Gg}\to GB)
+    (FA \xrightarrow{g} B) \mapsto (A \xrightarrow{\eta_A} GFA \xrightarrow{Gg} GB)
   \end{equation*}
   The latter mapping is natural in $B$ since $G$ is a functor, and in $A$ since, by construction, $\eta$ is a natural transformation $1_\mathscr{C} \to GF$.
 \end{proof}
@@ -815,7 +815,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   By \cref{lem:3.5}, both ways round the diagram of left adjoints are left adjoint to the composite $\mathscr{C} \to \mathscr{F}$, so by \cref{cor:3.4} they are isomorphic.
 \end{proof}
 \index{unit}\hypertarget{def:unit}Given an \hyperlink{def:adj}{adjunction} $(F \dashv G)$, the \hyperlink{def:nattrans}{natural transformation} $\eta: 1_{\mathscr{C}} \to GF$ emerging in the proof of \cref{thm:3.3} is called the \textbf{unit} of the adjunction.
-\index{counit}\hypertarget{def:counit}Dually, we have a natural transformation $\epsilon: FG \to 1_{\mathscr{D}}$ such that $\epsilon_B: FGB \to B$ corresponds to $GB \overset{1_{GB}}\to GB$ is called the \textbf{counit}.
+\index{counit}\hypertarget{def:counit}Dually, we have a natural transformation $\epsilon: FG \to 1_{\mathscr{D}}$ such that $\epsilon_B: FGB \to B$ corresponds to $GB \xrightarrow{1_{GB}} GB$, called the \textbf{counit}.
 \begin{nthm}\label{thm:3.7}
   Given functors
   $\begin{tikzcd}
@@ -851,13 +851,13 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
   The other identity is \hyperlink{def:duality}{dual}.
 
   Conversely, suppose given $\eta$ and $\epsilon$ satisfying the \hyperlink{def:triId}{triangular identities}.
-  Given $A \overset{f}\to GB$, let $\Phi(f)$ be the composite
+  Given $A \xrightarrow{f} GB$, let $\Phi(f)$ be the composite
   \begin{equation*}
     \begin{tikzcd}
       FA \rar{Ff} & FGB \rar{\epsilon B} & B,
     \end{tikzcd}
   \end{equation*}
-  and given $FA \overset{g}\to B$, let $\Psi(g)$ be
+  and given $FA \xrightarrow{g} B$, let $\Psi(g)$ be
   \begin{equation*}
     \begin{tikzcd}
       A \rar{\eta_A} & GFA \rar{Gg} & GB.
@@ -948,7 +948,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
 \end{nlemma}
 \begin{proof}\leavevmode
   \begin{enumerate}[label=(\roman*)]
-    \item Given $B \overset{g}\to B'$, $Gg$ corresponds under the \hyperlink{def:adj}{adjunction} to the composite
+    \item Given $B \xrightarrow{g} B'$, $Gg$ corresponds under the \hyperlink{def:adj}{adjunction} to the composite
       \begin{equation*}
         \begin{tikzcd}
           FGB \rar{\epsilon_B} & B \rar{g} & B'.
@@ -1010,14 +1010,14 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
         \end{tikzcd}
       \end{equation*}
       a diagram of shape $J$ is a not-necessarily commutative square.
-    \item \index{cone}\index{apex}\hypertarget{def:cone}Given $D: J \to \mathscr{C}$, a \textbf{cone} over $D$ consists of an object $A$ of $\mathscr{C}$ (the \textbf{apex} of the cone) together with morphisms $A \overset{\lambda_j}\to D(j)$ for each $j \in \ob J$, such that
+    \item \index{cone}\index{apex}\hypertarget{def:cone}Given $D: J \to \mathscr{C}$, a \textbf{cone} over $D$ consists of an object $A$ of $\mathscr{C}$ (the \textbf{apex} of the cone) together with morphisms $A \xrightarrow{\lambda_j} D(j)$ for each $j \in \ob J$, such that
       \begin{equation*}
         \begin{tikzcd}[column sep=small]
           & A \arrow[dl, "\lambda_j"'] \arrow[dr, "\lambda_j'"] \\
           D(j) \arrow[rr, "D(\alpha)"'] && D(j')
         \end{tikzcd}
       \end{equation*}
-      commutes for all $j \overset{\alpha}\to j'$ in $\mor J$ (the $\lambda_j$ are called the \textbf{legs} of the cone).
+      commutes for all $j \xrightarrow{\alpha} j'$ in $\mor J$ (the $\lambda_j$ are called the \textbf{legs} of the cone).
       \begin{center}
         \begin{tikzpicture}[scale=3]
           \node (A) at (0,0.4) {$A$};
@@ -1044,7 +1044,7 @@ Note that any \hyperlink{def:funct}{functor} of the form $\hyperlink{def:lsmall}
           \end{scope}
         \end{tikzpicture}
       \end{center}
-      Given cones $(A, (\lambda_j)_{j \in \ob J})$ and $(B, (\mu_j)_{j \in \ob J})$, a morphism of cones between them is a morphism $A \overset{f}\to B$ such that
+      Given cones $(A, (\lambda_j)_{j \in \ob J})$ and $(B, (\mu_j)_{j \in \ob J})$, a morphism of cones between them is a morphism $A \xrightarrow{f} B$ such that
       \begin{equation*}
         \begin{tikzcd}[column sep=small]
           A \arrow[rr, "f"] \arrow[dr, "\lambda_j"'] && B \arrow[dl, "\mu_j"] \\
@@ -1102,11 +1102,11 @@ Dually, $\mathscr{C}$ \textbf{has colimits} of shape $J$ iff $\Delta: \mathscr{C
       \end{equation*}
     \item \hypertarget{def:lprod}More generally, if $J$ is a \hyperlink{def:small}{small} discrete category, a diagram of shape $J$ is a $J$-indexed family $\set{A_j | j \in J}$, and a limit for it is a product
       \begin{equation*}
-        \Set{\prod_{j \in J} A_j \overset{\pi_j}\to A_j | j \in J}.
+        \Set{\prod_{j \in J} A_j \xrightarrow{\pi_j} A_j | j \in J}.
       \end{equation*}
       \hypertarget{def:lcoprod}Dually, a colimit for it is a coproduct
       \begin{equation*}
-        \Set{A_j \overset{\nu_j}\to \sum_{j \in J} A_j | j \in J},
+        \Set{A_j \xrightarrow{\nu_j} \sum_{j \in J} A_j | j \in J},
       \end{equation*}
       also written $\coprod_{j \in J} A_j$.
     \item Let $J$ be the category
@@ -1127,7 +1127,7 @@ Dually, $\mathscr{C}$ \textbf{has colimits} of shape $J$ iff $\Delta: \mathscr{C
           A && B
         \end{tikzcd}
       \end{equation*}
-      satisfying $fh = k = gh$, or equivalently a morphism $C \overset{h}\to A$ satisfying $fh = gh$.
+      satisfying $fh = k = gh$, or equivalently a morphism $C \xrightarrow{h} A$ satisfying $fh = gh$.
       A (co)limit for the diagram is a \hyperlink{def:equalizer}{(co)equalizer}.
     \item Let $J$ be the category
       \begin{equation*}
@@ -1171,7 +1171,7 @@ Dually, $\mathscr{C}$ \textbf{has colimits} of shape $J$ iff $\Delta: \mathscr{C
             A_0 \rar{f_0} & A_1 \rar{f_1} & A_2 \rar{f_2} & A_3 \rar{f_3} & \dots
           \end{tikzcd}
         \end{equation*}
-        A colimit for this is called a \textbf{direct limit}: it consists of $A_\infty$ equipped with morphisms $A_n \overset{g_n} \to A_\infty$ satisfying $g_n = g_{n+1} f_n$ for all $n$, and universal among such.
+        A colimit for this is called a \textbf{direct limit}: it consists of $A_\infty$ equipped with morphisms $A_n \xrightarrow{g_n} A_\infty$ satisfying $g_n = g_{n+1} f_n$ for all $n$, and universal among such.
         Dually, we have \textbf{inverse system} and \textbf{inverse limit}.
   \end{enumerate}
 \end{nexample}
@@ -1193,7 +1193,7 @@ Dually, $\mathscr{C}$ \textbf{has colimits} of shape $J$ iff $\Delta: \mathscr{C
       \end{equation*}
     We have morphisms $\begin{tikzcd}P \rar[shift left]{f} \rar[shift right,']{g} & Q\end{tikzcd}$ defined by $\pi_\alpha f = \pi_{\cod \alpha}$, $\pi_\alpha g = D(\alpha) \pi_{\dom \alpha}$ for all $\alpha$.
 
-    Let $E \overset{e}\to P$ be an \hyperlink{def:equalizer}{equalizer} of $(f,g)$.
+    Let $E \xrightarrow{e} P$ be an \hyperlink{def:equalizer}{equalizer} of $(f,g)$.
     The composites $\lambda_j = \pi_j e: E \to D(j)$ form a \hyperlink{def:cone}{cone} over $D$:
     given $\alpha: j \to j'$ in $J$,
     \begin{equation*}
@@ -1229,7 +1229,7 @@ Dually, $\mathscr{C}$ \textbf{has colimits} of shape $J$ iff $\Delta: \mathscr{C
       P \rar{h} \dar{k} & A \\ A
       \end{tikzcd}
     \end{equation*}
-    satisfying $(1_A, f) h = (1_A, g) k$ or equivalently, $1_A h = 1_A k$ and $fh = gk$, or equivalently a morphism $P \overset{h}\to A$ satisfying $fh = gh$.
+    satisfying $(1_A, f) h = (1_A, g) k$ or equivalently, $1_A h = 1_A k$ and $fh = gk$, or equivalently a morphism $P \xrightarrow{h} A$ satisfying $fh = gh$.
     So a pullback for $(1_A,f)$ and $(1_A, g)$ is an equalizer of $(f,g)$. \qedhere
    \end{enumerate}
 \end{proof}
@@ -1274,9 +1274,9 @@ $\mathbf{Top}$ is also complete and cocomplete.
 \begin{proof}
   Suppose we are given a \hyperlink{def:diagram}{diagram of shape $J$} in $\hyperlink{def:functcat}{[\mathscr{C}, \mathscr{D}]}$; think of it as a \hyperlink{def:funct}{functor} $D: J \times \mathscr{C} \to \mathscr{D}$.
   For each $A \in \ob \mathscr{C}$, let $(LA, \set{\lambda_{j,A} | j \in \ob J})$ be a \hyperlink{def:limit}{limit} \hyperlink{def:cone}{cone} for the diagram $D(-, A): J \to \mathscr{D}$.
-  Given $A \overset{f}\to B$ in $\mathscr{C}$, the composites
+  Given $A \xrightarrow{f} B$ in $\mathscr{C}$, the composites
   \begin{equation*}
-    A \overset{\lambda_{j,A}}\to D(j,A)\overset{D(j,f)}\to D(j,B)
+    A \xrightarrow{\lambda_{j,A}} D(j,A)\xrightarrow{D(j,f)} D(j,B)
   \end{equation*}
   form a cone over $D(-,B)$, since the squares
   \begin{equation*}
@@ -1303,7 +1303,7 @@ $\mathbf{Top}$ is also complete and cocomplete.
   So $(M, (\mu_j))$ factors uniquely through $(L, (\lambda_j))$.
 \end{proof}
 \begin{nremark}\label{rem:4.8}
-  In any \hyperlink{def:cat}{category}, a morphism $A \overset f\to B$ is \hyperlink{def:monic}{monic} iff
+  In any \hyperlink{def:cat}{category}, a morphism $A \xrightarrow f B$ is \hyperlink{def:monic}{monic} iff
   \begin{equation*}
     \begin{tikzcd}
       A \rar{1_A} \dar{1_A} & A \dar{f}\\ A \rar{f} & B
@@ -1337,9 +1337,9 @@ $\mathbf{Top}$ is also complete and cocomplete.
   commutes up to \hyperlink{def:iso}{isomorphism}, i.e.\ $G$ \hyperlink{def:plim}{preserves limits} of shape $J$.
 \end{proof}
 \begin{proof}[Proof 2]
-  Suppose given $D: J \to \mathscr{D}$ and a \hyperlink{def:limit}{limit} \hyperlink{def:cone}{cone} $(L, \set{L \overset{\lambda_j}\to D(j) | j \in \ob J})$.
-  Given a cone $(A, \set{A \overset{\alpha_j} \to GD(j) | j \in \ob J})$ over $GD$ the morphisms $FA \overset{\hat{\alpha_j}}\to D(j)$ form a cone over $D$, so they induce a unique $FA \overset{\hat{\beta}}\to L$ such that $\lambda_j \hat{\beta} = \hat{\alpha_j}$ for all $j$.
-  Then $A \overset{\beta}\to GL$ is the unique morphism satisfying $(G\lambda_j) \beta = \alpha_j$ for all $j$.
+  Suppose given $D: J \to \mathscr{D}$ and a \hyperlink{def:limit}{limit} \hyperlink{def:cone}{cone} $(L, \set{L \xrightarrow{\lambda_j} D(j) | j \in \ob J})$.
+  Given a cone $(A, \set{A \xrightarrow{\alpha_j} GD(j) | j \in \ob J})$ over $GD$ the morphisms $FA \xrightarrow{\hat{\alpha_j}} D(j)$ form a cone over $D$, so they induce a unique $FA \xrightarrow{\hat{\beta}} L$ such that $\lambda_j \hat{\beta} = \hat{\alpha_j}$ for all $j$.
+  Then $A \xrightarrow{\beta} GL$ is the unique morphism satisfying $(G\lambda_j) \beta = \alpha_j$ for all $j$.
   So $(GL, \set{G\lambda_j | j \in \ob J})$ is a limit cone in $\mathscr{C}$.
 \end{proof}
 \leavevmode\marginnote{\emph{Lecture 12}}[0cm]
@@ -1368,17 +1368,17 @@ $\mathbf{Top}$ is also complete and cocomplete.
 \begin{proof}
   Suppose $\mathscr{C}$ has an \hyperlink{def:initial}{initial object} $I$.
   Then the unique morphisms
-  $\set{I \to A \mid A \in \ob \mathscr{C}}$
-  form a \hyperlink{def:cone}{cone} over $1_\mathscr{C}$; and given any cone $\Set{C \overset{\lambda_A}\to A | A \in \ob \mathscr{C}}$, then for any $A$ the triangle
+  \begin{equation*}\{I \to A \mid A \in \ob \mathscr{C}\}\end{equation*}
+  form a \hyperlink{def:cone}{cone} over $1_\mathscr{C}$; and given any cone $\{C \xrightarrow{\lambda_A} A \mid A \in \ob \mathscr{C}\}$, then for any $A$ the triangle
   \begin{equation*}
-    \begin{tikzcd}[sep=large]
+    \begin{tikzcd}
       C \rar{\lambda_I} \drar[']{\lambda_A} & I \dar \\& A
     \end{tikzcd}
   \end{equation*}
   commutes, so $\lambda_I$ is the unique factorization of $\set{\lambda_A | A \in \ob \mathscr{C}}$ through the cone \begin{equation*}\set{I \to A \mid A \in \ob \mathscr{C}}.\end{equation*}
 
   Conversely, suppose $(I, \set{\lambda_A: I \to A| A \in \ob \mathscr{C}})$ is a \hyperlink{def:limit}{limit}.
-  Then, for any $I \overset{f}\to A$, the diagram
+  Then, for any $I \xrightarrow{f} A$, the diagram
   \begin{equation*}
     \begin{tikzcd}
       I \rar{\lambda_I} \drar[']{\lambda_A} & I \dar{f} \\ & A
@@ -1394,10 +1394,10 @@ However, it only applies to \hyperlink{def:funct}{functors} between preorders (c
 
 \begin{nthm}[General Adjoint Functor Theorem]\label{thm:4.12gaft}
   Suppose that $\mathscr{D}$ is \hyperlink{def:lsmall}{locally small} and \hyperlink{def:complete}{complete}.
-  \hypertarget{def:ssc}Then $G: \mathscr{D} \to \mathscr{C}$ has a \hyperlink{def:adj}{left adjoint} if and only if $G$ satisfies the \named{solution set condition}: the solution set condition says that $G$ preserves all small limits and, for each $A \in \ob \mathscr{C}$ there exists a set of morphisms $\set{A \overset{f_i}\to GB_i | i \in I}$ such that every $A \overset{h}\to GC$ factors as $A \overset{f_i}\to GB_i \overset{Gg}\to GC$ for some $i$ and some $g: B_i \to C$.
+  \hypertarget{def:ssc}Then $G: \mathscr{D} \to \mathscr{C}$ has a \hyperlink{def:adj}{left adjoint} if and only if $G$ satisfies the \named{solution set condition}: the solution set condition says that $G$ preserves all small limits and, for each $A \in \ob \mathscr{C}$ there exists a set of morphisms $\set{A \xrightarrow{f_i} GB_i | i \in I}$ such that every $A \xrightarrow{h} GC$ factors as $A \xrightarrow{f_i} GB_i \xrightarrow{Gg} GC$ for some $i$ and some $g: B_i \to C$.
 \end{nthm}
 \begin{proof}
-  $(\Rightarrow)$. If \hyperlink{def:adj}{$F \dashv G$}, $G$ \hyperlink{def:plim}{preserves limits} by \cref{thm:4.9}, and $\{A \overset{\eta_A}\to GFA\}$ is a singleton \hyperlink{def:ssc}{solution set}, by \cref{thm:3.3}.
+  $(\Rightarrow)$. If \hyperlink{def:adj}{$F \dashv G$}, $G$ \hyperlink{def:plim}{preserves limits} by \cref{thm:4.9}, and $\{A \xrightarrow{\eta_A} GFA\}$ is a singleton \hyperlink{def:ssc}{solution set}, by \cref{thm:3.3}.
 
   $(\Leftarrow)$. By \cref{lem:4.10}, $\hyperlink{def:comma}{(A \downarrow G)}$ is \hyperlink{def:complete}{complete}, and it inherits \hyperlink{def:lsmall}{local smallness} from $\mathscr{D}$.
   \hypertarget{def:winitial}So we need to show: if $\mathscr{A} \coloneqq (A \downarrow G)$ is complete and locally small, and has a weakly initial set of objects $\set{B_i | i \in I}$, then $\mathscr{A}$ has an initial object. (An object is \named{weakly initial} if it has a (not necessarily unique) morphism to any other object.)
@@ -1409,9 +1409,9 @@ However, it only applies to \hyperlink{def:funct}{functors} between preorders (c
     P \rar[shift left=0.5] \rar[shift left=2] \rar[shift left=3.5] \rar[shift right=3.5] \arrow[r, shift right=0.75, phantom, "\scriptscriptstyle\vdots"] & P
     \end{tikzcd} \tag{$*$}\label{eq:12star}
   \end{equation*}
-  where edges are all the endomorphisms of $P$: denote the limit $I \overset{i}\to P$.
+  where edges are all the endomorphisms of $P$: denote the limit $I \xrightarrow{i} P$.
   $I$ is also \hyperlink{def:winitial}{weakly initial} in $\mathscr{A}$: suppose given $\begin{tikzcd}I \rar[shift left]{f} \rar[shift right,']{g} & C\end{tikzcd}$.
-  Form the equalizer $E \overset{e}\to I$ of $(f,g)$, then there exists $P \overset{h}\to E$ since $P$ is weakly initial.
+  Form the equalizer $E \xrightarrow{e} I$ of $(f,g)$, then there exists $P \xrightarrow{h} E$ since $P$ is weakly initial.
   $ieh:P \to P$, and $1_P$ are edges of the diagram \eqref{eq:12star} so $i = iehi$. But $i$ is monic, so $ehi = 1_I$, so $e$ is split epic, so $f = g$.
   Hence $I$ is initial.
 \end{proof}
@@ -1440,7 +1440,7 @@ However, it only applies to \hyperlink{def:funct}{functors} between preorders (c
     \end{tikzcd}
   \end{equation*}
 
-  \hypertarget{def:wp}We say $\mathscr{C}$ is \named{well-powered} if each $A \in \ob \mathscr{C}$ has a set of subobjects $\set{A_i \rightarrowtail  A | i \in I}$ such that every subobject of $A$ is isomorphic to some $A_i$ (e.g.\ in $\mathbf{Set}$ we can take the inclusions $\set{A' \hookrightarrow A | A' \in \mathcal{P}A}$).
+  \hypertarget{def:wp}We say $\mathscr{C}$ is \named{well-powered} if each $A \in \ob \mathscr{C}$ has a set of subobjects $\{A_i \rightarrowtail  A \mid i \in I\}$ such that every subobject of $A$ is isomorphic to some $A_i$ (e.g.\ in $\mathbf{Set}$ we can take the inclusions $\{A' \hookrightarrow A \mid A' \in \mathcal{P}A\}$).
 
   If $C^{op}$ is well-powered, we say $\mathscr{C}$ is \textbf{well-copowered} (not cowell-powered).
 \end{ndef}
@@ -1511,7 +1511,7 @@ However, it only applies to \hyperlink{def:funct}{functors} between preorders (c
 
   Now let $A$ be any object of $\mathscr{A}$; form the \hyperlink{def:lprod}{product}
   \begin{equation*}
-    Q = \prod_{\substack{i \in I \\ f \in \mathscr{A}(A,S_i)}} S_i.
+    Q = \prod_{\mathclap{\substack{i \in I \\ f \in \mathscr{A}(A,S_i)}}} S_i.
   \end{equation*}
   There's an obvious $h: A \to Q$ defined by $\pi_{i,f} h = f$; and $h$ is monic, since the $S_i$ are a coseparating set.
   We also have a morphism $k : P \to Q$ defined by $\pi_{i,f} k = \pi_i$.
@@ -1533,7 +1533,7 @@ However, it only applies to \hyperlink{def:funct}{functors} between preorders (c
   and hence a morphism $I \to B \to A$.
 \end{proof}
 \begin{nexample}\label{eg:4.17}
-  Consider the inclusion $\mathbf{KHaus} \overset{I}\to \mathbf{Top}$, where $\mathbf{KHaus}$ is the \hyperlink{def:fulls}{full subcategory} of compact Hausdorff spaces.
+  Consider the inclusion $\mathbf{KHaus} \xrightarrow{I} \mathbf{Top}$, where $\mathbf{KHaus}$ is the \hyperlink{def:fulls}{full subcategory} of compact Hausdorff spaces.
   $\mathbf{KHaus}$ \hyperlink{def:haslimits}{has} and $I$ \hyperlink{def:plim}{preserves} \hyperlink{def:small}{small} \hyperlink{def:lprod}{products} (by Tychonoff's Theorem) and \hyperlink{def:equalizer}{equalizers} (since equalizers of pairs $\begin{tikzcdi}X \rar[shift left]{f} \rar[shift right,']{g} & Y\end{tikzcdi}$ with $Y$ Hausdorff are closed subspaces).
   Both categories are \hyperlink{def:lsmall}{locally small} and $\mathbf{KHaus}$ is \hyperlink{def:wp}{well-powered} (subobjects of $X$ are all isomorphic to closed subspaces).
   The closed interval $[0,1]$ is a \hyperlink{def:separating}{coseparator} in $\mathbf{KHaus}$ by Urysohn's Lemma.
@@ -1545,7 +1545,7 @@ However, it only applies to \hyperlink{def:funct}{functors} between preorders (c
       Define $\beta X$ to be the closure of the image of $h$.
 
       \v{C}ech's proof that this works is essentially the same as \cref{thm:4.16saft}.
-    \item We could have used \nameref{thm:4.12gaft} to construct $\beta$: we get a solution set at $X$ by considering all continuous $X \overset{f}\to Y$ with $Y$ compact Hausdorff, and $\operatorname{im} f$ dense in $Y$ and such $Y$ have cardinality $\leq 2^{2^{\operatorname{card} X}}$.
+    \item We could have used \nameref{thm:4.12gaft} to construct $\beta$: we get a solution set at $X$ by considering all continuous $X \xrightarrow{f} Y$ with $Y$ compact Hausdorff, and $\operatorname{im} f$ dense in $Y$ and such $Y$ have cardinality $\leq 2^{2^{\operatorname{card} X}}$.
   \end{enumerate}
 \end{nremark}
 \clearpage
@@ -1603,7 +1603,7 @@ This adjunction gives rise to the \hyperlink{def:monad}{monad} of \cref{eg:5.2}(
 
 \begin{ndef}[Eilenberg-Moore category]\label{def:5.3}
   \hypertarget{def:em}Let $\mathbb{T}$ be a \hyperlink{def:monad}{monad} on $\mathscr{C}$.
-  A $\mathbb{T}$-\textbf{algebra}\index{Talgebra@$\mathbb{T}$-algebra} is a pair $(A, \alpha)$ with $A \in \ob \mathscr{C}$ and $TA \overset{\alpha}\to A$ satisfying the commutative diagrams
+  A $\mathbb{T}$-\textbf{algebra}\index{Talgebra@$\mathbb{T}$-algebra} is a pair $(A, \alpha)$ with $A \in \ob \mathscr{C}$ and $TA \xrightarrow{\alpha} A$ satisfying the commutative diagrams
   \begin{equation*}
     \begin{tikzcd}[sep=large]
       A \rar{\eta_A} \drar[']{1_A} & TA \arrow[d, "\alpha"{name=here}] \\ & A
@@ -1615,7 +1615,7 @@ This adjunction gives rise to the \hyperlink{def:monad}{monad} of \cref{eg:5.2}(
       TTA \rar{T\alpha} \dar{\mu_A} \arrow[dr, phantom, "\hypertarget{eq:em5}\scriptstyle(5)" description] & TA \dar{\alpha} \\ TA \rar{\alpha} & A.
     \end{tikzcd}
   \end{equation*}
-  A \textbf{homomorphism}\index{algebra!homomorphism} $f: (A, \alpha) \to (B, \beta)$ is a morphism $A \overset{f}\to B$ such that
+  A \textbf{homomorphism}\index{algebra!homomorphism} $f: (A, \alpha) \to (B, \beta)$ is a morphism $A \xrightarrow{f} B$ such that
   \begin{equation*}
     \begin{tikzcd}[sep=large]
       TA \rar{Tf} \dar{\alpha} \arrow[dr, phantom, "\hypertarget{eq:em6}\scriptstyle(6)" description] & TB \dar{\beta} \\ A \rar{f} & B
@@ -1628,7 +1628,7 @@ This adjunction gives rise to the \hyperlink{def:monad}{monad} of \cref{eg:5.2}(
   The \hyperlink{def:forgFunc}{forgetful functor} $G^\mathbb{T}: \hyperlink{def:em}{\mathscr{C}^\mathbb{T}} \to \mathscr{C}$ has a \hyperlink{def:adj}{left adjoint} $F^\mathbb{T}$ and the adjunction induces $\mathbb{T}$.
 \end{nlemma}
 \begin{proof}
-  We define $F^\mathbb{T} A = (TA, \mu_A)$ (an \hyperlink{def:em}{algebra} by \hyperlink{eq:monad2}{(2)} and \hyperlink{eq:monad3}{(3)}) and $F^\mathbb{T}(A \overset{f}\to B) = Tf$ (a \hyperlink{def:em}{homomorphism} by \hyperlink{def:nattrans}{naturality} of $\mu$).
+  We define $F^\mathbb{T} A = (TA, \mu_A)$ (an \hyperlink{def:em}{algebra} by \hyperlink{eq:monad2}{(2)} and \hyperlink{eq:monad3}{(3)}) and $F^\mathbb{T}(A \xrightarrow{f} B) = Tf$ (a \hyperlink{def:em}{homomorphism} by \hyperlink{def:nattrans}{naturality} of $\mu$).
 
   Clearly $G^\mathbb{T} F^\mathbb{T} = T$, the \hyperlink{def:unit}{unit} of the \hyperlink{def:adj}{adjunction} is $\eta$.
   We define the \hyperlink{def:counit}{counit}
@@ -1658,15 +1658,15 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
 
 \begin{ndef}[Kleisli category]\label{def:5.5}
   Given \hypertarget{def:kleisli}a \hyperlink{def:monad}{monad} $\mathbb{T}$ on $\mathscr{C}$, the \named{Kleisli category} $\mathscr{C}_\mathbb{T}$ has $\ob \mathscr{C}_{\mathbb{T}} = \ob \mathscr{C}$, and morphisms $A \green{\to} B$ are morphisms $A \to TB$ in $\mathscr{C}$.
-  The composite $A \green{\overset{f}\to} B \green{\overset{g}\to} C$ is
+  The composite $A \green{\xrightarrow{f}} B \green{\xrightarrow{g}} C$ is
   \begin{equation*}
     \begin{tikzcd}
       A \rar{f} & TB \rar{Tg} & TTC \rar{\mu_C} & TC
     \end{tikzcd}
   \end{equation*}
-  and the identity $A \green{\to} A$ is $A \overset{\eta_A}\to TA$.
+  and the identity $A \green{\to} A$ is $A \xrightarrow{\eta_A} TA$.
 
-  To verify associativity, suppose given $A \green{\overset{f}\to} B \green{\overset{g}\to} C \green{\overset{h}\to} D$.
+  To verify associativity, suppose given $A \green{\xrightarrow{f}} B \green{\xrightarrow{g}} C \green{\xrightarrow{h}} D$.
   Then
   \begin{equation*}
     \begin{tikzcd}[row sep=large]
@@ -1702,8 +1702,8 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
 \end{nlemma}
 \begin{proof}
   We define $F_\mathbb{T} A = A$,
-  \begin{equation*}F_\mathbb{T}(A \overset{f}\to B) = A \overset{f}\to B \overset{\eta_B}\to TB.\end{equation*}
-  $F_\mathbb{T}$ preserves identities by definition; for composites, consider $A \overset{f}\to B \overset{g}\to C$.
+  \begin{equation*}F_\mathbb{T}(A \xrightarrow{f} B) = A \xrightarrow{f} B \xrightarrow{\eta_B} TB.\end{equation*}
+  $F_\mathbb{T}$ preserves identities by definition; for composites, consider $A \xrightarrow{f} B \xrightarrow{g} C$.
   We get
   \begin{equation*}
     \begin{tikzcd}[sep=large]
@@ -1714,9 +1714,9 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
   \end{equation*}
   We define $G_\mathbb{T}A = TA$,
   \begin{equation*}
-    G_\mathbb{T}(A \green{\overset{f}\to} B) = TA \overset{Tf}\to TTB \overset{\mu_B}\to TB.
+    G_\mathbb{T}(A \green{\xrightarrow{f}} B) = TA \xrightarrow{Tf} TTB \xrightarrow{\mu_B} TB.
   \end{equation*}
-  $G_\mathbb{T}$ preserves identities by \hyperlink{eq:monad1}{(1)}; for composites, consider $A \green{\overset{f}\to} B \green{\overset{g}\to} C$.
+  $G_\mathbb{T}$ preserves identities by \hyperlink{eq:monad1}{(1)}; for composites, consider $A \green{\xrightarrow{f}} B \green{\xrightarrow{g}} C$.
   We get
   \begin{equation*}
     \begin{tikzcd}[row sep=large]
@@ -1727,7 +1727,7 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
   We have
   \begin{gather*}G_\mathbb{T} F_\mathbb{T} A = TA \\ G_\mathbb{T} F_\mathbb{T} f = \mu_B (T\eta_B) Tf = Tf\end{gather*}
   so we take $\eta: 1_\mathbb{C} \to T$ as the \hyperlink{def:unit}{unit} of $\hyperlink{def:adj}{(F_\mathbb{T} \dashv G_\mathbb{T})}$.
-  The counit $TA \green{\overset{\epsilon_A}\to} A$ is $1_{TA}$. To verify \hyperlink{def:nattrans}{naturality}, consider the square
+  The counit $TA \green{\xrightarrow{\epsilon_A}} A$ is $1_{TA}$. To verify \hyperlink{def:nattrans}{naturality}, consider the square
   \begin{equation*}
     \begin{tikzcd}[sep=large]
       TA \rar[red]{F_\mathbb{T}G_\mathbb{T}f} \dar[red]{\epsilon_A} & TB \dar[red]{\epsilon_B} \\
@@ -1743,7 +1743,7 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
   \end{equation*}
   so $\epsilon$ is natural.
   \begin{equation*}
-    G_\mathbb{T}(TA \green{\overset{\epsilon_A}\to} A) = \mu_A, \text{ so } G_\mathbb{T}(\green{\epsilon_A}) \eta_{G_\mathbb{T}A} = \mu_A \cdot \eta_{TA} = 1_{TA}
+    G_\mathbb{T}(TA \green{\xrightarrow{\epsilon_A}} A) = \mu_A, \text{ so } G_\mathbb{T}(\green{\epsilon_A}) \eta_{G_\mathbb{T}A} = \mu_A \cdot \eta_{TA} = 1_{TA}
   \end{equation*}
   and $\green{(\epsilon_{F_\mathbb{T}A})(F_\mathbb{T}\eta_A)}$ is
   \begin{equation*}
@@ -1764,10 +1764,10 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
 \end{nthm}
 \begin{proof}
   \hypertarget{def:emcomp}Let $\left(\begin{tikzcdi}\mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G}\end{tikzcdi}\right)$ be an object of $\mathbf{Adj}(\mathbb{T})$.
-  We define $K: \mathscr{D} \to \hyperlink{def:em}{\mathscr{C}^\mathbb{T}}$ (the \textbf{Eilenberg-Moore comparison functor}) by $KB = (GB, G\epsilon_B)$ where $\epsilon$ is the \hyperlink{def:counit}{counit} of $(F \dashv G)$; note this is an \hyperlink{def:em}{algebra} by one of the \hyperlink{def:triId}{triangular identities} for $(F \dashv G)$ and \hyperlink{def:nattrans}{naturality} of $\epsilon$ and $K(B \overset{g}\to B') = Gg$ (a homomorphism by naturality of $\epsilon$).
+  We define $K: \mathscr{D} \to \hyperlink{def:em}{\mathscr{C}^\mathbb{T}}$ (the \textbf{Eilenberg-Moore comparison functor}) by $KB = (GB, G\epsilon_B)$ where $\epsilon$ is the \hyperlink{def:counit}{counit} of $(F \dashv G)$; note this is an \hyperlink{def:em}{algebra} by one of the \hyperlink{def:triId}{triangular identities} for $(F \dashv G)$ and \hyperlink{def:nattrans}{naturality} of $\epsilon$ and $K(B \xrightarrow{g} B') = Gg$ (a homomorphism by naturality of $\epsilon$).
   Clearly $\hyperlink{def:fsupt}{G^\mathbb{T}}K = G$ and
   \begin{gather*}KFA = (GFA, G\epsilon_{FA}) = (TA, \mu_A) = \hyperlink{def:fsupt}{F^\mathbb{T}}A,\\
-  KF(A\overset{f}\to A') = Tf = F^\mathbb{T} f.\end{gather*}
+  KF(A\xrightarrow{f} A') = Tf = F^\mathbb{T} f.\end{gather*}
   So $K$ is a morphism of $\mathbf{Adj}(\mathbb{T})$.
 
   Suppose $K': \mathscr{D} \to \mathscr{C}^\mathbb{T}$ is another such; then since $G^\mathbb{T} K' = G$, we know $K' B = (GB, \beta_B)$ where $\beta$ is a natural transformation $GFG \to G$.
@@ -1785,24 +1785,24 @@ But then morphisms $FA \to FB$ correspond bijectively to morphisms $A \to GFB = 
 
   \hypertarget{def:klcomp}We now define the \textbf{Kleisli comparison functor} $L: \hyperlink{def:kleisli}{\mathscr{C}_\mathbb{T}} \to \mathscr{D}$ by $LA = FA$,
   \begin{equation*}
-  L(A \green{\overset{f}\to} B) =
+  L(A \green{\xrightarrow{f}} B) =
   \begin{tikzcd}
     FA \rar{Ff} & FGFB \rar{\epsilon_{FB}} & FB.
   \end{tikzcd}
   \end{equation*}
-  $L$ preserves identities by one of the \hyperlink{def:triId}{triangular identities} for $(F \dashv G)$; given $A \green{\overset{f}\to} B \green{\overset{g}\to} C$, we have
+  $L$ preserves identities by one of the \hyperlink{def:triId}{triangular identities} for $(F \dashv G)$; given $A \green{\xrightarrow{f}} B \green{\xrightarrow{g}} C$, we have
   \begin{equation*}
     \begin{tikzcd}[column sep=large, row sep=large]
     FA \rar{Ff} & FGFB \rar{FGFg} \dar{\epsilon_{FB}}& FGFGFC \dar{\epsilon_{FGFC}}\rar{FG\epsilon_{FC}}& FGFC \dar{\epsilon_{FC}} \\
                 & FB \rar{Fg}& FGFC \rar{\epsilon_{FC}} & FC
   \end{tikzcd}
   \end{equation*}
-  $GLA = TA = \hyperlink{def:fsubt}{G_\mathbb{T}}A$, \begin{equation*}GL(A \green{\overset{f}\to} B) = (G \epsilon_{FB}) (GFf) = \mu_B(Tf).\end{equation*}
-  $L\hyperlink{def:fsubt}{F_\mathbb{T}}A = FA$, \begin{equation*}LF_\mathbb{T}(A \overset{f}\to B) = (\epsilon_{FB})(F\eta_B) (Ff) = Ff = G_{\mathbb{T}} f.\end{equation*}
-  Note that $L$ is full and faithful; its effect on morphisms (with given domain and codomain) is that of transposition across $(F \dashv G)$.
+  $GLA = TA = \hyperlink{def:fsubt}{G_\mathbb{T}}A$, \begin{equation*}GL(A \green{\xrightarrow{f}} B) = (G \epsilon_{FB}) (GFf) = \mu_B(Tf).\end{equation*}
+  $L\hyperlink{def:fsubt}{F_\mathbb{T}}A = FA$, \begin{equation*}LF_\mathbb{T}(A \xrightarrow{f} B) = (\epsilon_{FB})(F\eta_B) (Ff) = Ff = G_{\mathbb{T}} f.\end{equation*}
+  Note that $L$ is \hyperlink{def:full}{full} and \hyperlink{def:full}{faithful} since its effect on morphisms (with given domain and codomain) is that of transposition across $(F \dashv G)$.
   Suppose $L': \mathscr{C}_\mathbb{T} \to \mathscr{D}$ is a morphism of $\mathbf{Adj}(\mathbb{T})$.
-  We must have $L'A = FA$, and $L'$ maps the counit $TA \green{\to} A$ to the counit $FGFA \overset{\epsilon_{FA}} \to FA$.
-  For any $A \green{\overset{f}\to} B$, we have $\green{f}=\green{1_{TA} (F_\mathbb{T} f)}$ so $L'(\green{f}) = \epsilon_{FA} \cdot (Ff) = L\green{f}$.
+  We must have $L'A = FA$, and $L'$ maps the counit $TA \green{\to} A$ to the counit $FGFA \xrightarrow{\epsilon_{FA}} FA$.
+  For any $A \green{\xrightarrow{f}} B$, we have $\green{f}=\green{1_{TA} (F_\mathbb{T} f)}$ so $L'(\green{f}) = \epsilon_{FA} \cdot (Ff) = L\green{f}$.
 \end{proof}
 If \marginnote{\emph{Lecture 16}}$\mathscr{C}$ has \hyperlink{def:lcoprod}{coproducts}, then so does $\hyperlink{def:kleisli}{\mathscr{C}_\mathbb{T}}$, since $\hyperlink{def:fsubt}{F_\mathbb{T}}$ preserves them.
 But in general, it has few other \hyperlink{def:limit}{limits} or colimits. In contrast, we have
@@ -1827,13 +1827,13 @@ But in general, it has few other \hyperlink{def:limit}{limits} or colimits. In c
       form a cone over $GD$, since the edges of $GD$ are \hyperlink{def:em}{homomorphisms}, so they induce a unique $\lambda: TL \to L$ such that $\mu_j \lambda = \delta_j(T\mu)$ for all $j$.
       The fact that $\lambda$ is a \hyperlink{def:em}{$\mathbb{T}$-algebra} structure on $L$ follows from the fact that the $\delta_j$ are algebra structures and uniqueness of factorisations through limits.
 
-      So $((L,\lambda), \set{\mu_j | j \in \ob J})$ is the unique lifting of the limit cone over $GD$ to a cone over $D$; and it's a limit, since given a cone over $D$ with apex $(A, \alpha)$, we get a unique factorisation $A \overset{f}\to L$ in $\mathscr{C}$ and $F$ is an algebra homomorphism by uniqueness of factorisations through $L$.
+      So $((L,\lambda), \set{\mu_j | j \in \ob J})$ is the unique lifting of the limit cone over $GD$ to a cone over $D$; and it's a limit, since given a cone over $D$ with apex $(A, \alpha)$, we get a unique factorisation $A \xrightarrow{f} L$ in $\mathscr{C}$ and $F$ is an algebra homomorphism by uniqueness of factorisations through $L$.
 
     \item $(\Rightarrow)$ $F: \mathscr{C} \to \mathscr{C}^\mathbb{T}$ \hyperlink{def:plim}{preserves colimits} since it's a \hyperlink{def:adj}{left adjoint}, so $T = GF$ preserves colimits of shape $J$.
 
       $(\Leftarrow)$ Suppose given $D: J \to \mathscr{C}^\mathbb{T}$ as in (i), and a colimit cone
       \begin{equation*}
-        \set{GD(j) \overset{\mu_j}\to L | j \in \ob J}
+        \set{GD(j) \xrightarrow{\mu_j} L | j \in \ob J}
       \end{equation*}
       in $\mathscr{C}$.
       Then
@@ -1866,7 +1866,7 @@ But in general, it has few other \hyperlink{def:limit}{limits} or colimits. In c
 
 \begin{ndef}[Reflexive coequalizers]\leavevmode
   \begin{enumerate}[label=(\alph*)]
-    \item \hypertarget{def:reflexive}We say a parallel pair $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is \named{reflexive} if there exists $B \overset{r}\to A$ such that $fr = gr = 1_B$.
+    \item \hypertarget{def:reflexive}We say a parallel pair $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is \named{reflexive} if there exists $B \xrightarrow{r} A$ such that $fr = gr = 1_B$.
     (Note that $\begin{tikzcd}[cramped, column sep=large]FGFGB \rar[shift left]{FG\epsilon_B} \rar[shift right,']{\epsilon_{FGB}} & FGB\end{tikzcd}$ is reflexive, with $r = F\eta_{GB}$).
     We say $\mathscr{C}$ has \textbf{reflexive coequalizers} if it has \hyperlink{def:equalizer}{coequalizers} of all reflexive pairs (equivalently, colimits of shape $J$ where $J = \begin{tikzcd}[cramped, column sep=large] \bullet \arrow[out=110, in=160, loop] \arrow[out=200, in=250, loop] \rar[shift left=2] \rar[shift right=2]& \bullet \lar \end{tikzcd}$)
   \item \hypertarget{def:splitcoeq}By a \named{split coequalizer} diagram, we mean a diagram
@@ -1879,7 +1879,7 @@ But in general, it has few other \hyperlink{def:limit}{limits} or colimits. In c
     \begin{equation*}
       hf = hg \quad hs = 1_C \quad gt = 1_B \quad ft = sh.
     \end{equation*}
-    These equations imply that $h$ is a coequalizer of $(f,g)$; if $B \overset{x}\to D$ satisfies $xf = xg$ then $x = xgt = xft = xsh$, so $x$ factors through $h$, and the factorisation is unique since $h$ is \hyperlink{def:split}{split} \hyperlink{def:epic}{epic}.
+    These equations imply that $h$ is a coequalizer of $(f,g)$; if $B \xrightarrow{x} D$ satisfies $xf = xg$ then $x = xgt = xft = xsh$, so $x$ factors through $h$, and the factorisation is unique since $h$ is \hyperlink{def:split}{split} \hyperlink{def:epic}{epic}.
     Note that split coequalizers are preserved by all \hyperlink{def:funct}{functors}.
 \item \hypertarget{def:gsplit}Given a functor $G: \mathscr{D} \to \mathscr{C}$, a parallel pair $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is called $G$-\textbf{split} if there exists a split coequalizer diagram
     \begin{equation*}
@@ -1912,8 +1912,8 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
   Note that this is a functor $\mathscr{C}^\mathbb{T} \to \mathscr{D}$.
 
   Recall that \hyperlink{def:emcomp}{$K$} is defined by $KB = (GB, G\varepsilon_B)$.
-  For any $B$, morphisms $LA \to B$ correspond bijectively to morphisms $FA \overset{f}\to B$ satisfying $f(F\alpha) = f(\epsilon_{FA})$.
-  These correspond to morphisms $A \overset{\check f}\to GB$ satisfying
+  For any $B$, morphisms $LA \to B$ correspond bijectively to morphisms $FA \xrightarrow{f} B$ satisfying $f(F\alpha) = f(\epsilon_{FA})$.
+  These correspond to morphisms $A \xrightarrow{\check f} GB$ satisfying
   \begin{equation*}
     \check f \alpha = Gf = G(\epsilon_B(F \check f)) = (G\epsilon_B)(T \check f)
   \end{equation*}
@@ -1926,7 +1926,7 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
   Suppose $\mathscr{D}$ has and $G: \mathscr{D} \to \mathscr{C}$ preserves \hyperlink{def:reflexive}{reflexive coequalizers} and that $G$ reflects isomorphisms and has a \hyperlink{def:adj}{left adjoint}. Then $G$ is \hyperlink{def:monadic}{monadic}.
 \end{nthm}
 \begin{proof}[Proof of \cref{thm:5.12} $\Rightarrow$]
-  It is sufficient to show that $\hyperlink{def:fsupt}{G^\mathbb{T}}: \hyperlink{def:em}{\mathscr{C}^\mathbb{T}}\to\mathscr{C}$ \hyperlink{def:clim}{creates} \hyperlink{def:equalizer}{coequalizers} of \hyperlink{def:gsplit}{$G^\mathbb{T}$ split}-pairs.
+  It is sufficient to show that $\hyperlink{def:fsupt}{G^\mathbb{T}}: \hyperlink{def:em}{\mathscr{C}^\mathbb{T}}\to\mathscr{C}$ \hyperlink{def:clim}{creates} \hyperlink{def:equalizer}{coequalizers} of \hyperlink{def:gsplit}{$G^\mathbb{T}$-split} pairs.
    But this follows from the argument of \cref{thm:5.8}(ii), since if $\begin{tikzcdi}(A,\alpha) \rar[shift left]{f} \rar[shift right,']{g} & (B, \beta)\end{tikzcdi}$ is a $G^\mathbb{T}$-split pair, the coequalizer of $\begin{tikzcdi}A \rar[shift left]{f} \rar[shift right,']{g} & B\end{tikzcdi}$ is preserved by $T$ and $TT$.
 \end{proof}
 \begin{proof}[Proof of \cref{thm:5.12} $\Leftarrow$ and \cref{thm:5.13}]
@@ -1994,7 +1994,7 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
       \end{tikzcd}
       \end{equation*}
       The two factors are monadic by (a) and (b) respectively, but the composite isn't, since the monad it induces on $\mathbf{Set}$ is isomorphic to that induced by $(F \dashv U)$.
-    \item Consider the forgetful functor $\mathbf{Top} \overset{U}\to \mathbf{Set}$.
+    \item Consider the forgetful functor $\mathbf{Top} \xrightarrow{U} \mathbf{Set}$.
       This is \hyperlink{def:full}{faithful} and has both \hyperlink{def:adj}{left and right adjoints} (so preserves all \hyperlink{def:equalizer}{coequalizers}), but the monad induced on $\mathbf{Set}$ is $(1,1,1)$ and the category of algebras is $\mathbf{Set}$.
     \item Consider the composite adjunction
       \begin{equation*}
@@ -2031,6 +2031,7 @@ is a \hyperlink{def:splitcoeq}{split coequalizer}.
 \begin{ndef}[Monadic tower]\label{def:5.15}
   \hypertarget{def:mtower}Let\marginnote{\emph{Lecture 18}} $\begin{tikzcdi}\mathscr{C} \rar[shift left]{F} & \mathscr{D} \lar[shift left]{G} \end{tikzcdi}$ be an \hyperlink{def:adj}{adjunction}, and suppose $\mathscr{D}$ has \hyperlink{def:reflexive}{reflexive coequalizers}.
   The \named{monadic tower} of $F \dashv G$ is the diagram
+
   \begin{equation*}
     \begin{tikzcd}[column sep={between origins, 3em},row sep=large]
       \mathscr{D} \arrow[rrrddd, shift left=0.7, shorten <=2mm,"G"] \arrow[rrrrdd, shift left=0.7, shorten <=1.5mm, "K", pos=0.6] \arrow[rrrrrd, shift left=0.7, shorten <=2mm, "K'"]
@@ -2070,9 +2071,9 @@ For example, the \hyperlink{def:adj}{adjunction} of \cref{eg:5.14}(c) has \hyper
   To construct the second morphism, note first that we can assume wlog $G^\mathbb{T} \bar{R} = R G^\mathbb{S}$, by transporting \hyperlink{def:em}{$\mathbb{T}$-algebra} structures along the isomorphism $G^\mathbb{T} R(B, \beta) \to RB$.
   We obtain $\theta: TR \to RS$ by
   \begin{align*}
-    R &\overset{R_\iota}\to RS = RG^\mathbb{S} F^\mathbb{S} = G^\mathbb{T} \bar{R} F^\mathbb{S} \\
+    R &\xrightarrow{R_\iota} RS = RG^\mathbb{S} F^\mathbb{S} = G^\mathbb{T} \bar{R} F^\mathbb{S} \\
     F^\mathbb{T} R &\to \bar{R} F^\mathbb{S} \\
-    TR = G^\mathbb{T} F^\mathbb{T} R &\overset{\theta}\to G^\mathbb{T} \bar{R} F^\mathbb{S} = R G^\mathbb{S} F^\mathbb{S} = RS
+    TR = G^\mathbb{T} F^\mathbb{T} R &\xrightarrow{\theta} G^\mathbb{T} \bar{R} F^\mathbb{S} = R G^\mathbb{S} F^\mathbb{S} = RS
   \end{align*}
   % see pic
 
@@ -2083,7 +2084,7 @@ For example, the \hyperlink{def:adj}{adjunction} of \cref{eg:5.14}(c) has \hyper
     \end{tikzcd}
   \end{equation*}
   where $\gamma$ and $\delta$ are the unit and counit of $(L \dashv R)$.
-  Transposing across $(F^\mathbb{S} \dashv G^\mathbb{S})$, we get $F^\mathbb{S} LT \overset{\bar{\varphi}}\to F^\mathbb{S} L$.
+  Transposing across $(F^\mathbb{S} \dashv G^\mathbb{S})$, we get $F^\mathbb{S} LT \xrightarrow{\bar{\varphi}} F^\mathbb{S} L$.
   The pair $(F^\mathbb{S} L \alpha, \bar{\varphi}_A)$ is \hyperlink{def:reflexive}{reflexive}, with common splitting $F^\mathbb{S} L \eta$.
 
   It can be verified that the coequalizer of this pair has the universal property we require for $\bar{L}(A,\alpha)$.
@@ -2134,7 +2135,7 @@ in $\mathscr{C}$ and morphisms are commutative triangles
     C \arrow[rr, "{(f,g)}"] \arrow[dr,"g"']&& A \times B \dlar{\pi_2} \\ & B
   \end{tikzcd}
 \end{equation*}
-correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
+correspond to morphisms $C = \Sigma_B g \xrightarrow{f} A$.
 
 \begin{nlemma}\label{lem:6.3}
   \hypertarget{def:prodb}If $\mathscr{C}$ has all \hyperlink{def:limit}{finite limits}, then an object $B$ is \hyperlink{def:exp}{exponentiable} iff $\hyperlink{def:bstar}{B^*}: \mathscr{C} \to \hyperlink{def:slice}{\mathscr{C}/B}$ has a \hyperlink{def:adj}{right adjoint} $\Pi_B$.
@@ -2143,7 +2144,7 @@ correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
   \begin{itemize}
     \item [$\Leftarrow$] The composite $\hyperlink{def:sumb}{\Sigma_B} B^*$ is equal to $(-) \times B$, so we take $(-)^B$ to be $\Pi_B B^*$.
 
-    \item [$\Rightarrow$] If $B$ is \hyperlink{def:exp}{exponentiable}, for any $A \overset{f}\to B$ we define $\Pi_B(f)$ to be the \hyperlink{def:pullback}{pullback}
+    \item [$\Rightarrow$] If $B$ is \hyperlink{def:exp}{exponentiable}, for any $A \xrightarrow{f} B$ we define $\Pi_B(f)$ to be the \hyperlink{def:pullback}{pullback}
   \begin{equation*}
   \begin{tikzcd}
     \Pi_B(f) \rar \dar & A^B \dar{f^B} \\
@@ -2181,13 +2182,13 @@ correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
       B \rar[']{\overline{\pi_1}} & B^A.
     \end{tikzcd}
   \end{equation*}
-  Then, for any $\begin{tikzcd}D \dar{g} \\ B\end{tikzcd}$, morphisms $g \to f^{B^*A}$ in $\mathscr{C}/B$ correspond to morphisms $D \overset{\bar{h}}\to C^A$ making
+  Then, for any $\begin{tikzcd}D \dar{g} \\ B\end{tikzcd}$, morphisms $g \to f^{B^*A}$ in $\mathscr{C}/B$ correspond to morphisms $D \xrightarrow{\bar{h}} C^A$ making
   \begin{equation*}
   \begin{tikzcd}
     D \rar{\bar{h}} \dar[']{g} & C^A \dar{f^A} \\ B \rar[']{\overline{\pi_1}} & B^A
   \end{tikzcd}
   \end{equation*}
-  commute, and hence to morphisms $D \times A \overset{h}\to C$ making
+  commute, and hence to morphisms $D \times A \xrightarrow{h} C$ making
   \begin{equation*}
   \begin{tikzcd}
     D\times A \rar{h} \drar[']{g \pi_1} & C \dar{f} \\
@@ -2226,7 +2227,7 @@ correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
       \begin{align*}
         G^F(A) &\cong [\mathscr{C},\mathbf{Set}] (\mathscr{C}(A,-), G^F) \\&\cong [\mathscr{C}, \mathbf{Set}](\mathscr{C}(A,-) \times F, G),
       \end{align*}
-      so we take the right hand side as a definiition of $G^F(A)$ and define $G^F$ on morphisms $A \overset{f}\to B$ by composition with $\mathscr{C}(f,-) \times 1_F$.
+      so we take the right hand side as a definiition of $G^F(A)$ and define $G^F$ on morphisms $A \xrightarrow{f} B$ by composition with $\mathscr{C}(f,-) \times 1_F$.
       Note that the class of functors $H$ for which we have
       \begin{equation*}
         [\mathscr{C}, \mathbf{Set}](H, G^F)  \cong [\mathscr{C}, \mathbf{Set}] (H \times F, G)
@@ -2241,11 +2242,11 @@ correspond to morphisms $C = \Sigma_B g \overset{f}\to A$.
 Note that, given $\begin{tikzcdi}A \dar{f} \\ B\end{tikzcdi}$ in $\mathscr{C}/B$, the iterated slice $(\mathscr{C}/B)/f$ is isomorphic to $\mathscr{C}/A$, and this identifies
 \begin{equation*}\hyperlink{def:bstar}{f^*}: \mathscr{C}/B \to (\mathscr{C}/B)/f\end{equation*}
 with the operation of pulling back morphisms along $f$.
-So by \cref{lem:6.3}, $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed} iff it has \hyperlink{def:limit}{finite limits} and $f^*: \mathscr{C}/B \to \mathscr{C}/A$ has a \hyperlink{def:adj}{right adjoint} $\Pi_f$ for every $A \overset{f}\to B$ in $\mathscr{C}$.
+So by \cref{lem:6.3}, $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed} iff it has \hyperlink{def:limit}{finite limits} and $f^*: \mathscr{C}/B \to \mathscr{C}/A$ has a \hyperlink{def:adj}{right adjoint} $\Pi_f$ for every $A \xrightarrow{f} B$ in $\mathscr{C}$.
 
 \begin{nthm}\label{thm:6.7}
   Suppose $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed} and has \hyperlink{def:reflexive}{reflexive coequalizers}.
-  Then every morphism $A \overset{f}\to B$ factors as
+  Then every morphism $A \xrightarrow{f} B$ factors as
   \begin{equation*}
     \begin{tikzcd}
       & I\arrow[rd, tail, "m"] \\
@@ -2268,7 +2269,7 @@ So by \cref{lem:6.3}, $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian clo
       R \rar[shift left]{a} \rar[shift right,']{b} & A \rar{q} &I.
     \end{tikzcd}
   \end{equation*}
-  Since $fa = fb$, $f$ factors as $A \overset{q}\to I \overset{m}\to B$.
+  Since $fa = fb$, $f$ factors as $A \xrightarrow{q} I \xrightarrow{m} B$.
 
   Suppose given $\begin{tikzcdi}D \rar[shift left]{g} \rar[shift right, ']{h} & I\end{tikzcdi}$ with $mg = mh$.
   Form the pullback
@@ -2279,11 +2280,11 @@ So by \cref{lem:6.3}, $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian clo
   \end{tikzcd}
   \end{equation*}
   Since $q \times q$ factors as $(q \times 1_I)(1_A \times q)$ and both factors are pullbacks of $q$, it's an \hyperlink{def:epic}{epimorphism}, and hence so is $n$.
-  Now $fk=mqk=mgn=mhn=mql=fl$, so $\exists E \overset{p}\to R$ with $ap = k$, $bp=l$.
+  Now $fk=mqk=mgn=mhn=mql=fl$, so $\exists E \xrightarrow{p} R$ with $ap = k$, $bp=l$.
   Now $qk=qap=qbp=ql$, i.e.\ $gn=hn$. But $n$ is epic, so $g=h$.
   Hence $m$ is monic.
 \end{proof}
-Note that this implies any strong epimorphism $A \overset{f}\to B$ is \hyperlink{def:regular}{regular}, since the \hyperlink{def:monic}{monic} part of its image factorization is an \hyperlink{def:iso}{isomorphism}.
+Note that this implies any strong epimorphism $A \xrightarrow{f} B$ is \hyperlink{def:regular}{regular}, since the \hyperlink{def:monic}{monic} part of its image factorization is an \hyperlink{def:iso}{isomorphism}.
 In particular, regular epimorphisms are stable under composition.
 \begin{ndef}[Cartesian closed functor]\label{def:6.8}\hypertarget{def:ccfunct}
   If $\mathscr{C}$ and $\mathscr{D}$ are \hyperlink{def:cc}{cartesian closed categories} and $F: \mathscr{C} \to \mathscr{D}$ \hyperlink{def:plim}{preserves} \hyperlink{def:lprod}{finite products}, then for each pair of objects $A,B$ of $\mathscr{C}$ we get a natural morphism
@@ -2293,7 +2294,7 @@ In particular, regular epimorphisms are stable under composition.
   \hypertarget{def:ev}where $\text{ev}$ is the \hyperlink{def:counit}{counit} of $((-) \times A \hyperlink{def:adj}{\dashv} \hyperlink{def:exp}{(-)^A})$.
   We say $F$ is a \index{cartesian closed!functor}\textbf{cartesian closed functor} if $\theta$ is an \hyperlink{def:iso}{isomorphism} for every pair $(A,B)$.
 \end{ndef}
-Note that the second part of \cref{lem:6.4} says that if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed} then $\hyperlink{def:bstar}{f^*}: \mathscr{C}/B \to \mathscr{C}/A$ is a \hyperlink{def:ccfunct}{cartesian closed functor} for any $A \overset{f}\to B$.
+Note that the second part of \cref{lem:6.4} says that if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed} then $\hyperlink{def:bstar}{f^*}: \mathscr{C}/B \to \mathscr{C}/A$ is a \hyperlink{def:ccfunct}{cartesian closed functor} for any $A \xrightarrow{f} B$.
 \begin{nthm}\label{thm:6.9}
   Let $\mathscr{C}$ and $\mathscr{D}$ be \hyperlink{def:cc}{cartesian closed categories} and $F: \mathscr{C} \to \mathscr{D}$ a \hyperlink{def:funct}{functor} having a \hyperlink{def:adj}{left adjoint} $L$.
   Then $F$ is \hyperlink{def:cc}{cartesian closed} iff the canonical morphism
@@ -2310,8 +2311,8 @@ Note that if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed}, the
   \begin{itemize}
     \item[($\Rightarrow$)] \marginnote{\emph{Lecture 20}} Given an inverse for $\theta: F(C^A) \to FC^{FA}$, we define $\varphi_{A,B}^{-1}$ to be the composite
       \begin{equation*}
-        \begin{tikzcd}[sep=huge]
-        LB \times A \arrow[r, "L\lambda \times 1"] & L((B \times FA)^{FA}) \arrow[r, "L(\eta^{FA}) \times 1"] & L(FL(B \times FA)^{FA}) \times A \arrow[d, "L\theta^{-1} \times 1"] \\
+        \begin{tikzcd}[sep=large]
+        LB \times A \arrow[r, "L\lambda \times 1"] & L((B \times FA)^{FA}) \times A \arrow[r, "L(\eta^{FA}) \times 1"] & L(FL(B \times FA)^{FA}) \times A \arrow[d, "L\theta^{-1} \times 1"] \\
         L(B \times FA) & \arrow[l, "\text{ev}"] L(B \times FA)^A \times A & LF(L(B \times FA)^A) \times A\arrow[l, "\epsilon \times 1"]
         \end{tikzcd}
       \end{equation*}
@@ -2332,7 +2333,7 @@ Note that if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed}, the
 \begin{proof}\leavevmode
   \begin{itemize}
     \item[($\Rightarrow$)] $L$ \hyperlink{def:plim}{preserves} \hyperlink{def:terminal}{$1$}, so if we substitute $B=1$ in the definition of $\varphi$, we get
-      \begin{equation*}LFA \overset{\epsilon_A} \to A.\end{equation*}
+      \begin{equation*}LFA \xrightarrow{\epsilon_A} A.\end{equation*}
     But $\epsilon$ an \hyperlink{def:iso}{isomorphism} $\iff F$ is \hyperlink{def:full}{full} and \hyperlink{def:full}{faithful} by \cref{lem:3.9}.
     \item[($\Leftarrow$)] If $L$ preserves \hyperlink{def:lprod}{binary products} and \hyperlink{def:counit}{$\epsilon$} is isomorphic, then both factors in the definition of $\varphi$ are isomorphisms. \qedhere
   \end{itemize}
@@ -2355,7 +2356,7 @@ Note that if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed}, the
       More generally, if $\mathscr{C}$ is \hyperlink{def:lcc}{locally cartesian closed}, then $\operatorname{Sub}_\mathscr{C}(A)$ is an exponential ideal in $\hyperlink{def:slice}{\mathscr{C}/A}$, for any $A$.
       If $\mathscr{C}$ also satisfies the hypotheses of \cref{thm:6.7}, then $\operatorname{Sub}_\mathscr{C}(A)$ is \hyperlink{def:refl}{reflective} in $\mathscr{C}/A$.
     \item \hypertarget{def:presheaf}Let $X$ be a topological space. By a \named{presheaf} on $X$, we mean a \hyperlink{def:funct}{functor}
-      \begin{equation*}\mathcal{O}(X)^{\text{op}} \overset{F}\to \mathbf{Set},\end{equation*}
+      \begin{equation*}\mathcal{O}(X)^{\text{op}} \xrightarrow{F} \mathbf{Set},\end{equation*}
       where $\mathcal{O}(X)$ is the poset of open subsets of $X$.
       So $F$ has sets $F(U)$ for each open $U$, and \index{restriction maps}{restriction maps} $x \mapsto x|_V: F(U) \to F(V)$ whenever $V \subseteq U$.
       We say $F$ is a \named{sheaf} if, whenever $U = \bigcup_{i \in I} U_i$ and we're given $x_i \in F(U_i)$ for each $i$ such that
@@ -2465,7 +2466,7 @@ In fact a Grothendieck topos is exactly a Lawvere-Tierney topos which is \hyperl
       \end{equation*}
       \hypertarget{def:sieve}So we define $\Omega(A)$ to be the set of \textbf{sieves} on $A$, i.e.\ sets of morphisms with $\cod = A$, such that $f \in R \implies fg \in R$ for any $g$.
 
-      Given $B \overset{f}\to A$ and a sieve $R$ on $A$, we define $f^* R$ to be the set of $g$ with codomain $B$ such that $fg \in R$.
+      Given $B \xrightarrow{f} A$ and a sieve $R$ on $A$, we define $f^* R$ to be the set of $g$ with codomain $B$ such that $fg \in R$.
       This makes $\Omega$ into a \hyperlink{def:funct}{functor} $\mathscr{C}^{\text{op}} \to \mathbf{Set}$, as follows.
       $\top: 1 \to \Omega$ is defined by $\top_A(*) = \{\text{all morphisms with codomain }A\}$.
       Given a subfunctor $F' \overset{m}\rightarrowtail F$, we define $\chi_m:F \to \Omega$ by
@@ -2488,7 +2489,7 @@ In fact a Grothendieck topos is exactly a Lawvere-Tierney topos which is \hyperl
 
       If $F' \overset{m}\rightarrowtail F$ is a subsheaf, then for any $x \in F(U)$, the sieve $\set{V \subseteq U | x|_V \in F'(V)}$ has a greatest element since $F'$ is a sheaf, so we define $\chi_m: F \to \Omega$ to send $x$ to this element.
     \item Let $\mathscr{C}$ be a group $G$.
-      The topos structure on $[G, \mathbf{Set}]$ is particularly simple: $B^A$ is the set of all $G$-equivariant maps $A \times G \overset{f}\to B$, but such an $f$ is determined by its values at elements of the form $(a,1)$ since $f(a,g) = g \cdot f(g^{-1} \cdot a, 1)$, and this restriction can be any mapping $A \times \{1\} \to B$.
+      The topos structure on $[G, \mathbf{Set}]$ is particularly simple: $B^A$ is the set of all $G$-equivariant maps $A \times G \xrightarrow{f} B$, but such an $f$ is determined by its values at elements of the form $(a,1)$ since $f(a,g) = g \cdot f(g^{-1} \cdot a, 1)$, and this restriction can be any mapping $A \times \{1\} \to B$.
       So we can take $B^A$ to be the set of functions $A \to B$, with $G$ acting by $(g \cdot f) (a) = g (f (g^{-1} \cdot a))$, and $\Omega = \{0,1\}$ with trivial $G$-action.
 
       So the \hyperlink{def:forgFunc}{forgetful functor} $[G, \mathbf{Set}]\to \mathbf{Set}$ is \hyperlink{def:lFunct}{logical}, as is the functor which equips a set $A$ with trivial $G$-action.
@@ -2528,18 +2529,18 @@ is a \hyperlink{def:pullback}{pullback}.
   $P$ is a \hyperlink{def:funct}{functor} $\mathscr{E}^{\text{\hyperlink{def:duality}op}} \to \mathscr{E}$. Moreover, it is \hyperlink{def:adjointr}{self-adjoint on the right}.
 \end{nlemma}
 \begin{proof}
-  Given $A \overset{f}\to B$, we define $PB \overset{Pf}\to PA$ to correspond to the \hyperlink{def:pullback}{pullback}
+  Given $A \xrightarrow{f} B$, we define $PB \xrightarrow{Pf} PA$ to correspond to the \hyperlink{def:pullback}{pullback}
   \begin{equation*}
   \begin{tikzcd}
     E_f \rar \dar[tail] & \ni_B \dar[tail]\\ PB\times A \rar{1 \times f} & PB \times B.
   \end{tikzcd}
   \end{equation*}
-  For any $C \overset{\hyperlink{def:power}{\ceil{m}}}\to PB$, it's easy to see that $(Pf) \ceil{m}$ corresponds to $(1_C \times f)^* (m)$; hence $f \mapsto Pf$ is \hyperlink{def:funct}{functorial}.
+  For any $C \xrightarrow{\hyperlink{def:power}{\ceil{m}}} PB$, it's easy to see that $(Pf) \ceil{m}$ corresponds to $(1_C \times f)^* (m)$; hence $f \mapsto Pf$ is \hyperlink{def:funct}{functorial}.
   For any $A,B$, we have a bijection between \hyperlink{def:subobj}{subobjects} of $A \times B$ and of $B \times A$, given by composition with $(\pi_2, \pi_1) : A \times B \to B \times A$; this yields a (natural) bijection between morphisms $A \to PB$ and $B \to PA$.
 \end{proof}
 \hypertarget{def:brace}We write $\{\}_A: A \to PA$ for the morphism corresponding to $\begin{tikzcd}[cramped, sep=large]A \rar[tail]{(1_A, 1_A)} & A \times A\end{tikzcd}$.
 \begin{nlemma}\label{lem:7.6}
-  Given $A \overset{f}\to B$, $\hyperlink{def:brace}{\{\}_B} f$ corresponds to $\begin{tikzcd}[cramped]A \rar[tail]{(1_A, f)} & A \times B\end{tikzcd}$ and $(\hyperlink{def:power}{Pf})\{\}_B$ corresponds to $\begin{tikzcd}[cramped]A \rar[tail]{(f, 1_A)} & B \times A\end{tikzcd}$.
+  Given $A \xrightarrow{f} B$, $\hyperlink{def:brace}{\{\}_B} f$ corresponds to $\begin{tikzcd}[cramped]A \rar[tail]{(1_A, f)} & A \times B\end{tikzcd}$ and $(\hyperlink{def:power}{Pf})\{\}_B$ corresponds to $\begin{tikzcd}[cramped]A \rar[tail]{(f, 1_A)} & B \times A\end{tikzcd}$.
 \end{nlemma}
 \begin{proof}
   The square
@@ -2563,13 +2564,13 @@ is a \hyperlink{def:pullback}{pullback}.
     \item Similarly, if $\hyperlink{def:power}{Pf} = Pg$ then $(Pf)\{\} = (Pg)\{\}$, so we again deduce $f=g$.\qedhere
   \end{enumerate}
 \end{proof}
-\hypertarget{def:exists}Given a \hyperlink{def:monic}{monomorphism} $A \overset{f}\to B$ in $\mathscr{E}$, we define $\exists f: \hyperlink{def:power}{PA} \to PB$ to correspond to the composite
+\hypertarget{def:exists}Given a \hyperlink{def:monic}{monomorphism} $A \xrightarrow{f} B$ in $\mathscr{E}$, we define $\exists f: \hyperlink{def:power}{PA} \to PB$ to correspond to the composite
 \begin{equation*}
 \begin{tikzcd}
   \ni_A \rar[tail] & PA \times A \rar[tail]{1 \times f} &PA \times B
 \end{tikzcd}
 \end{equation*}
-Then, for any $C \overset{\hyperlink{def:power}{\ceil{m}}} \to PA$, $(\exists f) \ceil{m}$ corresponds to
+Then, for any $C \xrightarrow{\hyperlink{def:power}{\ceil{m}}} PA$, $(\exists f) \ceil{m}$ corresponds to
 \begin{equation*}
 \begin{tikzcd}
   R \rar[tail]{m} & C \times A \rar[tail]{1 \times f} & C \times B.
@@ -2616,7 +2617,7 @@ So $f \mapsto \exists f$ is a functor $\textbf{Mono}(\mathscr{E}) \to \mathscr{E
     A \rar[shift left=3]{f} \rar[shift right=3,']{g} & B \lar{r}
     \end{tikzcd}
   \end{equation*}
-  is a \hyperlink{def:reflexive}{coreflexive pair} in $\mathscr{E}$; then $f$ and $g$ are (split) \hyperlink{def:monic}{monic}, and the equalizer $E \overset{e}\to A$ makes
+  is a \hyperlink{def:reflexive}{coreflexive pair} in $\mathscr{E}$; then $f$ and $g$ are (split) \hyperlink{def:monic}{monic}, and the equalizer $E \xrightarrow{e} A$ makes
   \begin{equation*}
   \begin{tikzcd}
     E \rar{e} \dar[tail]{e} & A \dar[tail]{g} \\ A \rar{f} & B
@@ -2681,7 +2682,7 @@ So $f \mapsto \exists f$ is a functor $\textbf{Mono}(\mathscr{E}) \to \mathscr{E
     \end{tikzcd}
   \end{equation*}
   So $\Sigma_B(g \times B^* A) \cong C \times A$.
-  Hence $\hyperlink{def:sub}{\Sub_{\mathscr{E}/B}} (g \times \hyperlink{def:bstar}{B^*} A) \cong \Sub_{\mathscr{E}} (C \times A)$, but if $C \overset{h}\to PA$ corresponds to $\begin{tikzcdi} R \dar[tail] \\ C \times A \end{tikzcdi}$, then the upper square of the diagram
+  Hence $\hyperlink{def:sub}{\Sub_{\mathscr{E}/B}} (g \times \hyperlink{def:bstar}{B^*} A) \cong \Sub_{\mathscr{E}} (C \times A)$, but if $C \xrightarrow{h} PA$ corresponds to $\begin{tikzcdi} R \dar[tail] \\ C \times A \end{tikzcdi}$, then the upper square of the diagram
   \begin{equation*}
     \begin{tikzcd}[row sep=large]
       R \ar[d, tail] \arrow[rr]  && B \times \ni_A \ar[d, tail] \\
@@ -2725,8 +2726,8 @@ So $f \mapsto \exists f$ is a functor $\textbf{Mono}(\mathscr{E}) \to \mathscr{E
       PA \times B \rar{1 \times \hyperlink{def:brace}{\{\}}} & PA \times PB \rar{1 \times Pf} & PA \times PA.
     \end{tikzcd}
   \end{equation*}
-  Given any $\begin{tikzcd}C \dar{g} \\ B\end{tikzcd}$, morphisms $g \overset{l}\to k$ in $\mathscr{E}/B$ correspond to morphisms
-  $C \overset{hl}\to PA$ such that the subobject named by $hl$ is contained in that named by $(Pf)(\{\})g$.
+  Given any $\begin{tikzcd}C \dar{g} \\ B\end{tikzcd}$, morphisms $g \xrightarrow{l} k$ in $\mathscr{E}/B$ correspond to morphisms
+  $C \xrightarrow{hl} PA$ such that the subobject named by $hl$ is contained in that named by $(Pf)(\{\})g$.
   But the latter is indeed $\Sigma_B (g \times f) \rightarrowtail C \times A$.
   So $k$ is a power-object for $f$ in $\mathscr{E}/B$.
 \end{proof}
@@ -2747,7 +2748,7 @@ So $f \mapsto \exists f$ is a functor $\textbf{Mono}(\mathscr{E}) \to \mathscr{E
 \begin{ncor}\leavevmode\label{cor:7.14}
   \begin{enumerate}[label=(\roman*)]
     \item Any \hyperlink{def:epic}{epimorphism} in a \hyperlink{def:topos}{topos} is \hyperlink{def:regular}{regular}.
-    \item Any $A \overset{f}\to B$ in a topos factors uniquely up to isomorphism as
+    \item Any $A \xrightarrow{f} B$ in a topos factors uniquely up to isomorphism as
       \begin{equation*}
         \begin{tikzcd}
         A \rar[two heads]{q} & I \rar[tail]{m} & B.
@@ -2838,12 +2839,12 @@ Given a \hyperlink{def:closure}{closure} operator on \hyperlink{def:subobj}{subo
   \end{tikzcd}
   \end{equation*}
   with $n$ \hyperlink{def:denseclosed}{dense} and $m$ \hyperlink{def:denseclosed}{closed}.
-  Then there is a unique $B \overset{g}\to A'$ with $mg = f$ (and $gn=f'$).
+  Then there is a unique $B \xrightarrow{g} A'$ with $mg = f$ (and $gn=f'$).
 \end{nlemma}
 \begin{proof}
   We have $n \leq f^*(m)$ in $\hyperlink{def:sub}{\Sub}(B)$, so
   \begin{equation*}1_B \cong c(n) \leq f^*(c(m)) \cong f^*(m).\end{equation*}
-  So we define $g$ as $B \overset{\cong}\to f^*(A') \to A'$.
+  So we define $g$ as $B \xrightarrow{\cong} f^*(A') \to A'$.
 \end{proof}
 
 Note that $c(A')$ may be characterised as the unique (up to isomorphism) subobject $A''$ such that $A' \rightarrowtail A''$ is dense and $A'' \rightarrowtail A'$ is closed.
@@ -2858,7 +2859,7 @@ Note that $c(A')$ may be characterised as the unique (up to isomorphism) subobje
     B
   \end{tikzcd}
   \end{equation*}
-  with $m$ \hyperlink{def:denseclosed}{dense}, there exists a unique $B \overset{f}\to A$ such that $fm=f'$.
+  with $m$ \hyperlink{def:denseclosed}{dense}, there exists a unique $B \xrightarrow{f} A$ such that $fm=f'$.
 \end{nlemma}
 \begin{proof}
   Note first that $m$ is \hyperlink{def:denseclosed}{dense} $\iff Lm$ is an \hyperlink{def:iso}{isomorphism}:
@@ -2878,7 +2879,7 @@ Note that $c(A')$ may be characterised as the unique (up to isomorphism) subobje
       R \rar[shift left]{a} \rar[shift right,']{b} & A
     \end{tikzcd}
   \end{equation*}
-  be the kernel-pair of $A \overset{\eta_A}{\to} LA$ and $d: \begin{tikzcdi}A \rar[tail]& R\end{tikzcdi}$ the factorisation of $(1_A,1_A)$ through $(a,b)$.
+  be the kernel-pair of $A \xrightarrow{\eta_A} LA$ and $d: \begin{tikzcdi}A \rar[tail]& R\end{tikzcdi}$ the factorisation of $(1_A,1_A)$ through $(a,b)$.
   Since $L \eta_A$ is an isomorphism and $L$ preserves pullbacks, $Ld$ is an isomorphism, so $d$ is dense.
   This forces $a=b$, so $\eta_A$ is \hyperlink{def:monic}{monic}.
   And $\eta_A$ is dense, so we get a unique $r: LA \to A$ with $r \eta_A = 1_A$.
@@ -2980,7 +2981,7 @@ Then, for any $A$, morphisms $A \to \Omega_j$ correspond to \hyperlink{def:dense
 \end{nthm}
 \begin{proof}
   (ii) $\Rightarrow$ (i): since $\sh_j([\mathscr{C}^{\text{op}}, \mathbf{Set}])$ has given properties.
-  (i) $\Rightarrow$ (ii): take $\mathscr{C}$ the \hyperlink{def:fulls}{full subcategory} of $\mathscr{E}$ on the separating set and consider $\mathscr{E} \overset{Y}\to [\mathscr{E}^{\text{op}}, \mathbf{Set}] \to [\mathscr{C}^{\text{op}}, \mathbf{Set}]$.
+  (i) $\Rightarrow$ (ii): take $\mathscr{C}$ the \hyperlink{def:fulls}{full subcategory} of $\mathscr{E}$ on the separating set and consider $\mathscr{E} \xrightarrow{Y} [\mathscr{E}^{\text{op}}, \mathbf{Set}] \to [\mathscr{C}^{\text{op}}, \mathbf{Set}]$.
   %SAFT given left adjoint.
   %May prove left adjoint preserves finite limits.
   %Done by proven results.
