@@ -12,8 +12,8 @@ There are many hyperlinks, marked in blue, to help both learning and revising a 
 - [Topics in Ergodic Theory](iii/mich/topics_in_ergodic_theory.pdf) (2018, P. Varju) up to lecture 19, some parts in rough
 
 ### Lent
-- [Analytic Number Theory](iii/lent/analytic_number_theory.pdf) (2019, T. Bloom) up to lecture 7
-- [Introduction to Approximate Groups](iii/lent/introduction_to_approximate_groups.pdf) (2019, M. Tointon) up to lecture 4
+- [Analytic Number Theory](iii/lent/analytic_number_theory.pdf) (2019, T. Bloom), some links missing
+- ~~[Introduction to Approximate Groups](iii/lent/introduction_to_approximate_groups.pdf) (2019, M. Tointon)~~ very incomplete
 - [Topics in Set Theory](iii/lent/topics_in_set_theory.pdf) (2019, B. Löwe)
 
 ## Part II notes

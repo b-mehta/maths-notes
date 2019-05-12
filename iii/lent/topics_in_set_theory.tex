@@ -231,11 +231,11 @@ So
 \end{equation*}
 Consider the formula $x = \mathcal{P}(y)$, which we can informally define as $x = \{z \mid z \subseteq y\}$, but this is not good enough. More properly, we try
 \begin{equation*}
-  \mathcal{P}(x) = \forall w \; (w \in x \leftrightarrow w \subseteq y).
+  x = \mathcal{P}(y) \iff \forall w \; (w \in x \leftrightarrow w \subseteq y).
 \end{equation*}
 This still includes the symbol $\subseteq$, so still needs improving.
 \begin{equation*}
-  \mathcal{P}(x) = \forall w \; (w \in x \leftrightarrow (\forall v \; (v \in w \rightarrow v \in y)))
+  x = \mathcal{P}(y) \iff \forall w \; (w \in x \leftrightarrow (\forall v \; (v \in w \rightarrow v \in y)))
 \end{equation*}
 In $A$, what is $\mathcal{P}(0)$?
 \begin{equation*}
@@ -381,8 +381,8 @@ If two \hyperlink{def:operation}{operations} $f, g_1, g_2$ are defined by $\Delt
   \item the formula describing `$x$ is an ordered pair' (the quantifiers for the two components of $x$ are bounded by $\bigcup x$)
   \item $x,y \mapsto x \times y$
   \item the formula `$x$ is a binary relation' (again, the quantifiers can be made bounded)
-  \item $x \mapsto \dom(x) \coloneqq \{y | \exists p \in x; (p\text{ is an ordered pair},\ p = (v,w),\ y=v)\}$
-  \item $x \mapsto \ran(x) \coloneqq \{y | \exists p \in x; (p\text{ is an ordered pair},\ p = (v,y))\}$
+  \item $x \mapsto \dom(x) \coloneqq \{y \mid \exists p \in x; (p\text{ is an ordered pair},\ p = (v,w),\ y=v)\}$
+  \item $x \mapsto \ran(x) \coloneqq \{y \mid \exists p \in x; (p\text{ is an ordered pair},\ p = (v,y))\}$
   \item the formula `$x$ is a function'
   \item the formula `$x$ is injective'
   \item the formula `$x$ is function from $A$ to $B$'
