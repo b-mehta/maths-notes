@@ -2809,6 +2809,113 @@ The constant $c_\epsilon$ is ineffective: the proof gives no way to calculate $c
   Since $q \leq (\log x)^A$, this is $\bigO(\exp(-c_\epsilon' \sqrt{\log x}))$ choosing $\epsilon = \frac{1}{3A}$, say.
 \end{proof}
 
+\begin{cor}
+\newlec
+  If $(a, q) = 1$ then
+  \begin{equation*}
+    \pi(x; q, a) = \frac{\Li(x)}{\varphi(q)} + \bigO\left(x \exp (-c \sqrt{\log x})\right)
+  \end{equation*}
+  if \(q \leq (\log x)^A\) (unconditionally) or if \(q \leq \exp\left(\bigO(\sqrt{\log x})\right)\) and \(q\) has no exceptional zero.
+\end{cor}
+Note that assuming GRH, the bound on \(q\) when \(q\) has no exceptional zero can be improved to \(q \leq x^{\frac{1}{2} - o(1)}\).
+
+\begin{proof}
+  Let
+  \begin{equation*}
+    F(x) = \sum_{\substack{p \leq x \\ p = a \bmod q}} \log p = \psi(x; q, a) + \bigO(x^{1/2})
+  \end{equation*}
+  and so
+  \begin{align*}
+    \pi(x; q, a)
+    &= \sum_{\substack{p \leq x \\ p = a \bmod q}} 1 \\
+    &= \frac{F(x)}{\log x} + \int_x^x \frac{F(t)}{t (\log t)^2} dt \\
+    &= \frac{1}{\varphi(q)} \left(\frac{x}{\log x} + \underbrace{\int_2^x \frac{1}{(\log t)^2} dt}_{= \Li(x)}\right) + \bigO(x \exp(-c \sqrt{\log x})). \qedhere
+  \end{align*}
+\end{proof}
+
+Two applications of Siegel-Walfisz:
+\begin{enumerate}
+  \item For fixed $(a,q) = 1$, how large is the smallest prime $\equiv a \pmod{q}$?
+    Call this prime $p_{a,q}$.
+    \begin{cor}
+      $\forall \epsilon > 0$, $p_{a,q} \ll_\epsilon \exp(q^\epsilon)$.
+    \end{cor}
+    \begin{proof}
+      Let $x < p_{a,q}$, so $\psi(x;q,a) = 0$, so if $q \leq (\log x)^A$ then
+      \begin{align*}
+        \frac{x}{\varphi(q)} \bigO_A(x \exp(-c \sqrt{\log x} )),
+      \end{align*}
+      so $\exp(c \sqrt{\log x}) = \bigO_A(q)$, so $\log x \leq (\log q)^2 + \bigO_A(1)$, contradiction to $q \leq (\log x)^A$ i.e.\ for any $A$, if $q$ is large enough, $q \leq (\log p_{a,q})^A$.
+    \end{proof}
+
+    Similarly,
+    \begin{cor}
+      If $q$ has no exceptional zeros, then $p_{a,q} \leq q^{\bigO(\log q)}$.
+    \end{cor}
+    \begin{conjecture}
+      $p_{a,q} \leq q^{1 + o(1)}$
+      where the exponent $\to 1$ as $q \to \infty$.
+    \end{conjecture}
+    On GRH, $p_{a,q} \leq q^{2 + o(1)}$.
+
+    \begin{thm}[Linnik]
+      There is a constant $L$ such that $p_{a,q} \ll q^l$.
+    \end{thm}
+    (Xylouris 2011 gave $L=5$).
+    \begin{proof}
+      Non-examinable. See Iwaniec-Kowalski.
+    \end{proof}
+  \item
+    \begin{thm}[Walfisz]
+      For any $n$,
+      \begin{equation*}
+        r(n) = \#\text{ways of writing } n = p + (\square\text{-free}) \sim c_n \li(n)
+      \end{equation*}
+      where
+      \begin{align*}
+        c_n = \left(\prod_{p \mid n} \left(1 + \frac{1}{p^2-p-1}\right)\right)\left(\prod_p \left(1 - \frac{1}{p(p-1)}\right)\right)
+      \end{align*}
+    \end{thm}
+    \begin{proof}
+      Note that $1_{\square\text{-free}}(n) = \sum_{d^2 \mid n} \mu(d)$, easily checked since both sides are multiplicative, enough to check for prime powers.
+      So
+      \begin{align*}
+        r(n) &= \sum_{p < n} 1_{\square\text{-free}}(n-p) \\
+             &= \sum_{p < n} \sum_{d^2 \mid (n-p)} \mu(d) \\
+             &= \sum_{d < \sqrt{n}} \mu(d) \sum_{\substack{p < n \\ p \equiv n \bmod{d^2}}} 1 \\
+             &= \sum_{d < \sqrt{n}} \mu(d) \pi(n-1; d^2,n)
+      \end{align*}
+      If $(n,d) > 1$, then $\pi (n-1;d^2,n) = \bigO(1)$, so in total this contributes $\bigO(n^{\frac12})$ to $r(n)$.
+      When $(d,n)  = 1$ and $d \leq (\log n)^A$,
+      \begin{align*}
+        \pi(n-1; d^2, n) = \frac{\li(n)}{\varphi(d^2)} + \bigO(n \exp(-c \sqrt{\log n}))
+      \end{align*}
+      So
+      \begin{align*}
+        \sum_{d < (\log n)^A} \mu(d) \pi(n-1; d^2, n) = \li(n) \sum_{\substack{d < (\log n)^A \\ (d,n)=1}} \frac{\mu(d)}{\varphi(d^2)} + \bigO(n \exp(-c \sqrt{\log n}))
+      \end{align*}
+      Note that $\varphi(d^2) = d \varphi(d)$, and so
+      \begin{align*}
+        \sum_{(d,n) = 1} \frac{\mu(d)}{d \varphi(d)} = \prod_{p \nmid n} \left(1 - \frac{1}{p(p-1)}\right) = c_n.
+      \end{align*}
+      Since
+      \begin{align*}
+        \sum_{\substack{d > (\log n)^A \\ (d,n)}} \frac{\mu(d)}{d \varphi(d)} \leq \sum_{d > (\log n)^A} \frac{1}{d^{\frac 32}} \ll \frac{1}{(\log n)^{\frac A2}} = o(1)
+      \end{align*}
+      as $n \to \infty$.
+      For $d > (\log n)^A$, use (the cheap trick that) $\pi(x;q,a) \ll 1 + \frac{x}{q}$.
+      So
+      \begin{align*}
+        \sum_{\substack{n^{\frac 12} > d > (\log n)^A \\ (d,n)=1}} \mu(d) \pi(n-1;d^2,n) &\ll \sum_{(\log n)^A < d < n^{\frac 12}} (1 + \frac{n}{d^2}) \\
+                                                                                         &\ll n^{\frac 12} + n \sum_{d > (\log n)^A} \frac{1}{d^2} \ll \frac{n}{(\log n)^A}.
+      \end{align*}
+      That is,
+      \begin{align*}
+        r(n) &= c_n \li(n) + \bigO\left(n^{\frac 12} + \frac{\li(n)}{(\log n)^{\frac A2}} + \frac{n}{(\log n)^A} + n \exp(-c \sqrt{\log n})\right) \\&= (1 + o(1)) c_n \li(n). \qedhere
+      \end{align*}
+    \end{proof}
+\end{enumerate}
+
 \clearpage
 \printnomenclature
 \printindex
