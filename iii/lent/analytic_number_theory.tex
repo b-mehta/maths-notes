@@ -711,7 +711,7 @@ In particular, we will try the same method as just before, but the leading order
   \end{align*}
 \end{proof}
 % start of non-examinable
-\subsection*{*A 14-point plan to prove PNT from Selberg's identity}
+\subsection{*A 14-point plan to prove PNT from Selberg's identity}
 Let $r(x) = \frac{\hyperlink{def:psi}{\psi(x)}}{x} - 1$, so \hyperlink{def:pnt}{PNT} is equivalent to $\lim_{x \to \infty} |r(x)| = 0$.
 \begin{enumerate}[label=(\arabic*)]
   \item Show that \nameref{thm:13} gives
@@ -2916,6 +2916,99 @@ Two applications of Siegel-Walfisz:
     \end{proof}
 \end{enumerate}
 
+\clearpage
+\section{*Some highlights of analytic number theory}
+\subsection{Gaps between primes}
+\newlec
+Note that the prime number theorem gives $p_n \sim n \log n$, so
+\begin{align*}
+  p_{n+1} - p_n \sim (n+1) \log (n+1) - n \log n \sim n \log n.
+\end{align*}
+\subsubsection{Small gaps}
+The twin prime conjecture says $p_{n+1} - p_n$ infinitely often.
+
+Goldston-Pintz-Yildimm (2005) showed
+\begin{align*}
+  \liminf_{n \to \infty} \frac{p_{n+1} - p_n}{\log n} = 0.
+\end{align*}
+Zhang (2013) showed that $p_{n+1} - p_n = \bigO(1)$ infinitely often, in particular that $p_{n+1} - p_n \leq 70,000,000$ infinitely often.
+The Polymath project aimed to improve this, and Maynard reduced the constant to $\leq 600$, and further progress by the polymath project reduced it to $246$.
+
+\subsubsection{Large gaps}
+We have that
+\begin{align*}
+  n! + 2, \dotsc, n! + n
+\end{align*}
+are all composite, so at scale $\approx n^n$, the gap is $\approx n$, so that $p_{N+1} - p_N \gg \frac{\log N}{\log \log N}$.
+1931 Westzynthius showed
+\begin{align*}
+  \limsup_{n \to \infty} \frac{p_{n+1} - p_n}{\log n} = \infty.
+\end{align*}
+and Rankin (1938) showed
+\begin{align*}
+  p_{n+1} - p_n \gg \log n \left(\frac{\log \log n \log \log \log \log n}{(\log \log \log n)^2}\right)
+\end{align*}
+infinitely often.
+Erd\H{o}s offered a \$10,000 prize to improve this, which was claimed in 2014 by Ford-Green-Konyagin-Maynard-Tao to
+\begin{align*}
+  p_{n+1} - p_n \gg \log n \left(\frac{\log \log n \log \log \log \log n}{\log \log \log n}\right)
+\end{align*}
+infinitely often.
+The conjecture is $\gg (\log n)^2$, but current bounds are far off.
+
+The best upper bound is $\forall n \ p_{n+1} - p_n \ll n^{0.525}$, and assuming GRH $\ll n^{\frac 12 + o(1)}$.
+
+\subsection{Digits of primes}
+Manduit-Rivat looked at the sum of binary digits of primes, and showed it was even $\frac 12$ the time, and odd $\frac 12$ the time.
+
+Maynard (2016) shows there are infinitely many primes without, say, a 1 in base 10, and the method works for larger bases too, but not for smaller bases.
+For base 2? It is open to ask if there are infinitely many primes without any 0s (these are primes of the form $2^n - 1$)
+
+% Swaenpol
+
+\subsection{Arithmetic progressions}
+Vinogradov, Estermann in the 1930s showed there are infinitely many arithmetic progressions of primes of length 3.
+
+\begin{thm}[Green-Tao, 2004]
+  For any $k$, there are infinitely many $k$APs of primes.
+\end{thm}
+These methods were inspired by additive combinatorics,
+\begin{thm}[Szemer\'edi, 1975]
+  If $\liminf_{N \to \infty} \frac{|A \cap \{1, \dotsc, N\}|}{N} > 0$, then $A$ has infinitely many 4APs.
+\end{thm}
+
+\subsection{Sieve theory success}
+\begin{thm}[Chen 1973]
+  There are infinitely many primes $p$ such that $p+2$ is prime or the product of $2$ primes.
+\end{thm}
+While sieve theory can show strong results, it typically fails to distinguish between numbers with one prime factor and two prime factors, so improving this using sieve methods seems unlikely. Similarly,
+\begin{thm}[Iwaniec 1978]
+  There are infinitely many $n$ such that $n^2 +1$ is prime or the product of two primes.
+\end{thm}
+
+\subsection{Number theory without zeta zeroes}
+Granville-Soundararajan attempted analytic number theory without focus on the zeta function, in contrast to the methods of the last 150 years.
+Instead of using Perron's formula, they use a theorem of Halasz (1960s): `if $\sum_{n \leq x} a_n$ behaves non-randomly' then $a_n$ behaves like $\chi(n)$ or $n^{it}$.
+This is called pretentious number theory, and studies functions `pretending' to be $\chi(n)$.
+
+\subsection{Circle method}
+1920s: Hardy-Littlewood
+This involves the study of additive number theory, such as:
+\begin{enumerate}
+  \item Goldbach: every even number is the sum of two primes
+  \item the study partition function $p(n)$
+  \item Waring's problem: We know all integers are the sum of 4 squares. Conjecture that all large integers are the sum of 4 cubes, but the best bound is 7.
+    Let $G(k) = $ minimum $s$ such that every large $n$ is the sum of $x_1^k + \dotsb + x_s^k = n$.
+    We know $G(2) = 4$, and that $4 \leq G(3) \leq 7$, and $G(4) = 16$.
+\end{enumerate}
+\begin{thm}[Wooley, 1990]
+  \begin{align*}
+    G(k) \leq (1 + o(1)) k \log k.
+  \end{align*}
+\end{thm}
+The conjecture is that $G(k) \ll k$.
+
+The method uses generating functions, writing the answer as a contour integral around a circle, and using analysis.
 \clearpage
 \printnomenclature
 \printindex
