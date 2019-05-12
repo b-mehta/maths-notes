@@ -2697,6 +2697,118 @@ Recall that
   \end{enumerate}
 \end{thm}
 
+\begin{thm}
+  \newlec
+  If $\chi_1,\chi_2$ are distinct quadratic characters modulo $q$, then
+  $L(s,\chi_1) L(s,\chi_2)$ has at most one real zero $\beta$ with $1 - \frac{c}{\log q} < \beta < 1$.
+\end{thm}
+\begin{proof}
+  Say $\beta_i$ is a real zero of $L(s_i, \chi_i)$ for $i=1,2$. Without loss of generality $\frac{5}{6} \beta_1 \leq \beta_2 < 1$. Fix $\delta \geq 0$.
+  \begin{enumerate}
+    \item
+      \begin{equation*}
+        -\Re \frac{L'}{L}(1+\delta,\chi_i) \leq -\frac{1}{1+\delta-\beta_i} + \bigO(\log q) \quad (i=1,2)
+      \end{equation*}
+    \item
+      \begin{equation*}
+        -\Re \frac{L'}{L}(1+\delta,\chi_1\chi_2) \leq \bigO(\log q) \quad (\chi_1 \chi_2 \neq \chi_0)
+      \end{equation*}
+    \item
+      \begin{equation*}
+        -\frac{\zeta'}{\zeta}(1+\delta) \leq \frac{1}{\delta} + \bigO(1) \quad \left(-\frac{\zeta'}{\zeta}(s) = \frac{1}{s-1}+ \bigO(1)\right)
+      \end{equation*}
+      (could use $-\Re \frac{L'}{L}(1+\delta,\chi_0)$)
+  \end{enumerate}
+  Therefore
+  \begin{align*}
+    -\frac{\zeta'}{\zeta}(1+\delta) - \frac{L'}{L}&(1+\delta,\chi_1) - \frac{L'}{L}(1+\delta,\chi_2) - \frac{L'}{L}(1+\delta,\chi_1\chi_2) \\&\leq \frac{1}{\delta} - \frac{2}{1+\delta-\beta_1} + \bigO(\log q)
+  \end{align*}
+  (since the LHS is real anyway).
+  But the LHS is
+  \begin{equation*}
+    \sum \frac{\Lambda(n)}{n^{1+\delta}} \Re(1 + \chi_1(n) + \chi_2(n) + \chi_1\chi_2(n)) \geq 0
+  \end{equation*}
+  since $(1+\chi_1(n))(1+\chi_2(n)) \geq 0$.
+  Choose $\delta = c(1-\beta_1)$ and therefore $\beta_1 \leq 1- \frac{c}{\log q}$.
+\end{proof}
+Recall that
+\begin{gather*}
+  1_{n \equiv a \bmod{q}} = \frac{1}{\varphi(q)} \sum_\chi \overline{\chi(a)} \chi(n). \\
+  \psi(x;q,a) = \sum_{\substack{n \leq x \\ n \equiv a \bmod{q}}} \Lambda(n) = \frac{1}{\varphi(q)} \sum_\chi \overline{\chi(a)} \psi(x,\chi).
+\end{gather*}
+\begin{cor}[to Theorem before this one]
+  If $(a,q) = 1$ then (for $q \leq \exp(\bigO(\sqrt{\log x}))$),
+  \begin{align*}
+    \psi(x,q,a) = \frac{x}{\varphi(q)} + \bigO(x \exp(-c \sqrt{\log x}))
+  \end{align*}
+  assuming there is no exceptional zero.
+  If $q$ has an exceptional zero at $\beta$ and $\chi_1$, then
+  \begin{align*}
+    \psi(x;q,a) = \frac{x}{\varphi(q)} - \frac{\chi_1(a)}{\varphi(q)} \frac{x^\beta}{\beta} + \bigO(x \exp(-c \sqrt{\log x}))
+  \end{align*}
+\end{cor}
+\begin{proof}[Proof of Theorem before this one]
+  By Perron's formula, ($\sigma_0 > 1$, $T \geq 1$)
+  \begin{align*}
+    \psi(x,\chi) = -\frac{1}{2\pi i} \int_{\sigma_0 - iT}^{\sigma_0 + iT} \frac{L'}{L}(s,\chi) \frac{x^s}{s} \,ds + \bigO\left(\frac{x}{T} \sum_{\frac{x}{2} < n < 2x} \frac{\Lambda(n)}{|x-n|} + \frac{x^{\sigma_0}}{T} \sum_{n=1}^\infty \frac{\Lambda(n)}{n^{\sigma_0}}\right)
+  \end{align*}
+  By the same argument as for $\zeta(s)$, error term is $\ll \frac{x (\log x)^2}{T}$ (using $\sigma_0 = 1 + \frac{1}{\log x}$).
+  Take $C$ to be a rectangular contour with corners at $\sigma_0 \pm iT$, $\sigma_1 \pm iT$.
+  So
+  \begin{align*}
+    \psi(x,\chi) = \frac{1}{2\pi i} \int_C + \bigO\left(\int_{\sigma_1 \pm iT} + \int_{\sigma_0+iT}^{\sigma_1 + iT} + \int_{\sigma_0 - iT}^{\sigma_1-iT} + \frac{x(\log x)^2}{T}\right)
+  \end{align*}
+  Error terms we bound as for $\zeta(s)$, so in total,
+  \begin{align*}
+    \psi(x,\chi) = -\frac{1}{2 \pi i} \int_C \frac{L'}{L} (s,\chi) \frac{x^s}{s} \,ds + \bigO\underbrace{\left(\frac{x (\log x)^2 }{T} + x^{1-q \sigma_1}\right)}_{\mathclap{\ll \exp(- c \sqrt{\log x}),\ T = \exp(\bigO(\sqrt{\log x}))}}
+  \end{align*}
+  We have $\sigma_1 = 1 - \frac{c}{\log q T}$ so $x^{\sigma_1} \ll x \exp(-c \sqrt{\log x})$ if $q \ll T \approx \exp(\bigO(\sqrt{\log x}))$.
+
+  Main term?
+  \begin{enumerate}
+    \item If $\chi = \chi_0$, then take $\sigma_1$ as above, so no zeros of $L(s,\chi_0)$. So $\frac{L'}{L}$ has just a simple pole at $s=1$, and $\frac{1}{2\pi i}\int_C = x$.
+    \item If $\chi \neq \chi_0$, and no exceptional zero, then there are no zeros of $L(s,\chi)$ with $\sigma \geq \sigma_1$, so no poles of $\frac{L'}{L}(s,\chi)$, so $\int_C = 0$.
+    \item If $\chi$ has an exceptional zero at $\beta$, then inside $C$, $\frac{L'}{L}$ has a pole at $\beta$.
+  So $\frac{L'}{L}(s,\chi) \frac{x^s}{s}$ has residue $\frac{x^\beta}{\beta}$ at this pole, so
+  \begin{equation*}
+    \frac{1}{2\pi i} \int_C \frac{L'}{L}(s,\chi) \frac{x^s}{s} \,ds = \frac{x^\beta}{\beta}. \qedhere
+  \end{equation*}
+  \end{enumerate}
+\end{proof}
+\subsection{Siegel-Walfisz Theorem}
+\begin{thm}[Siegel-Walfisz]
+  $\forall A \geq 0$, if $q \leq (\log x)^A$ and $(a,q) = 1$, then
+  \begin{align*}
+    \psi(x;q,a) = \frac{x}{\varphi(q)} + \bigO_A(x \exp(-c \sqrt{\log x}))
+  \end{align*}
+\end{thm}
+This follows from
+\begin{thm}
+  If $q \leq (\log x)^A$ and $x$ is large enough (depending on $A$) then
+  \begin{align*}
+    \psi(x,\chi) = \bigO_A(\exp(-c \sqrt{\log x})) \quad \forall \chi \neq \chi_0
+  \end{align*}
+\end{thm}
+This in turn follows from:
+\begin{thm}[Siegel]
+  $\forall \epsilon > 0$, $\exists c_\epsilon$ such that if $\chi$ is a quadratic character modulo $q$, and $\beta$ is a real zero, then
+  \begin{align*}
+    \beta < 1 - c_\epsilon q^{-\epsilon}.
+  \end{align*}
+\end{thm}
+\begin{proof}
+  Omitted.
+\end{proof}
+The constant $c_\epsilon$ is ineffective: the proof gives no way to calculate $c_\epsilon$.
+\begin{proof}[Thm 3 $\Rightarrow$ Thm 2]
+  If an exceptional zero exists, $\beta < 1 - c_\epsilon q^\epsilon$ for every $\epsilon > 0$, then
+  \begin{align*}
+    \psi(x,\chi) &= \bigO\left(\frac{x^\beta}{\beta} + x \exp(-c \sqrt{\log x})\right) \\
+                 &= x\ o\!\left(\exp(-c_\epsilon q^\epsilon \log x) + \exp(-c \sqrt{\log x})\right).
+  \end{align*}
+  Since $q \leq (\log x)^A$, this is $\bigO(\exp(-c_\epsilon' \sqrt{\log x}))$ choosing $\epsilon = \frac{1}{3A}$, say.
+\end{proof}
+
 \clearpage
 \printnomenclature
 \printindex
