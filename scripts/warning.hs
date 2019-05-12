@@ -12,7 +12,7 @@ run log = case go log of
 
 main :: IO ()
 main = do
-  [file] <- getArgs
+  (file:_) <- lines <$> readFile "state"
   log <- readFile (file ++ ".log")
   case log of
     [] -> putStrLn "compiling tex file..."

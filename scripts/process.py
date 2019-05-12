@@ -1,12 +1,18 @@
 import sys
 import re
 
+with open("state","r") as data:
+    data = data.readlines()
+
+input_file = data[0].strip() + ".tex"
+
+with open("state_num","r") as data:
+    data = data.readlines()
+
+first = int(data[0].strip())
+
 lines = []
-input_file = sys.argv[1]
-try:
-    first = int(sys.argv[2])
-except:
-    first = 0
+
 with open(input_file, 'r') as filename:
     for line in filename:
         lines.append(line)

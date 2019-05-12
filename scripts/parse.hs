@@ -32,8 +32,10 @@ modify envs = texmap test change
 clearLinks :: LaTeX -> LaTeX
 clearLinks = texmap test change
   where test (TeXComm "hyperlink" _) = True
+        test (TeXCommS "newlec") = True
         test _ = False
         change (TeXComm "hyperlink" [_,FixArg t]) = t
+        change (TeXCommS "newlec") = TeXEmpty
         change _ = error "clear links failed"
 
 fix :: [String] -> LaTeX -> LaTeX
