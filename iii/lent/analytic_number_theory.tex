@@ -227,7 +227,7 @@ We say that $f$ has \named{average order} $g$ if
   The \hyperlink{def:pntold}{Prime Number Theorem} is the statement that $1_p$ has average order $\frac{1}{\log x}$.
 \end{eg}
 
-\begin{nlemma}[Partial summation]\label{lem:1}
+\begin{nlemma}[Partial summation]\label{lem:ps}
   If $(a_n)$ is a sequence of complex numbers and $f$ is such that $f'$ is continuous, then
   \begin{equation*}
     \sum_{1 \leq n \leq x} a_n f(n) = A(x) f(x) - \int_1^x A(t) f'(t) \, dt
@@ -257,13 +257,13 @@ We say that $f$ has \named{average order} $g$ if
               &= A(N) \left(f(N) + \int_N^x f'(t) \, dt\right). \qedhere
   \end{align*}
 \end{proof}
-\begin{nlemma}\label{lem:2}
+\begin{nlemma}\label{lem:1.2}
   \begin{align*}
     \sum_{1 \leq n \leq x} \frac{1}{n} = \log x + \gamma + \hyperlink{def:asymp}{\bigO}\left(\tfrac{1}{x}\right)
   \end{align*}
 \end{nlemma}
 \begin{proof}
-  \nameref{lem:1} with $f(x) = \frac{1}{x}$ and $a_n = 1$, so $A(x) = \floor{x}$:
+  \nameref{lem:ps} with $f(x) = \frac{1}{x}$ and $a_n = 1$, so $A(x) = \floor{x}$:
   \begin{align*}
     \sum_{1 \leq n \leq x} \frac{1}{n} &= \frac{\floor{x}}{x} + \int_1^x \frac{\floor{t}}{t^2}\,dt \\
     \shortintertext{recall $\floor{t} = t - \{t\}$}
@@ -282,7 +282,7 @@ We say that $f$ has \named{average order} $g$ if
   \end{equation*}
 \end{nlemma}
 \begin{proof}
-  \nameref{lem:1} with $f(x) = \log x$, $a_n = 1$, $A(x) = \floor{x}$.
+  \nameref{lem:ps} with $f(x) = \log x$, $a_n = 1$, $A(x) = \floor{x}$.
   \begin{align*}
     \sum_{\mathclap{1 \leq n \leq x}}\ \log n &= \floor{x} \log x - \int_1^x \frac{\floor{t}}{t} \, dt \\
                                   &= x \log x + \hyperlink{def:asymp}{\bigO}(\log x) - \int_1^x 1 \, dt + \bigO\left(\int_1^x \frac{1}{t} \, dt\right) \\
@@ -304,7 +304,7 @@ We will analyse how many divisors an integer has.
   So \hyperlink{def:averageOrder}{average order} of $\tau$ is $\log x$.
 \end{nthm}
 \begin{proof}
-  \nameref{lem:1} involves turning a sum $\sum a_n \rightsquigarrow \sum a_n f(n)$, but what does $\hyperlink{def:tau}{\tau(\frac{1}{2})}$ even mean?
+  \nameref{lem:ps} involves turning a sum $\sum a_n \rightsquigarrow \sum a_n f(n)$, but what does $\hyperlink{def:tau}{\tau(\frac{1}{2})}$ even mean?
   There is no continuous function to use.
 
   Instead, play around with the definition:
@@ -317,7 +317,7 @@ We will analyse how many divisors an integer has.
                                    &= x \sum_{1 \leq d \leq x} \frac{1}{d} + \bigO(x) \\
                                    &= x \log x + \gamma x + \bigO(x)
   \end{align*}
-  using \cref{lem:2}.
+  using \cref{lem:1.2}.
   To reduce the error term, we use (Dirichlet's) hyperbola trick.
   \begin{equation*}
     \sum \tau(n) = \sum_{1 \leq n \leq x} \sum_{a b = n} 1 = \sum_{ab \leq x} 1 = \sum_{a \leq x} \sum_{b \leq \frac xa} 1
@@ -482,7 +482,7 @@ Chebyshev showed $\pi(x) \asymp \frac{x}{\log x}$, (\hypertarget{def:asymp2}wher
 \end{nlemma}
 In particular, $\pi(x) \hyperlink{def:asymp2}{\asymp} \frac{x}{\log x}$ and the statement of the prime number theorem ($\pi(x) \hyperlink{def:asymp}{\sim} \frac{x}{\log x}$) is equivalent to $\psi(x) \sim x$.
 \begin{proof}
-  Idea is to use \nameref{lem:1}:
+  Idea is to use \nameref{lem:ps}:
   \begin{equation*}
     \theta(x) \coloneqq \sum_{p \leq x} \log p = \hyperlink{def:pi}{\pi(x)} \log x - \int_1^x \frac{\pi(t)}{t} \, dt
   \end{equation*}
@@ -531,7 +531,7 @@ In particular, $\pi(x) \hyperlink{def:asymp2}{\asymp} \frac{x}{\log x}$ and the 
 \end{nthm}
 Chebyshev also showed if $\pi(x) \sim \frac{x}{\log x - A(x)}$ then $A \sim 1$, which was a surprise since it was believed $A \sim 1.08\dots$
 \begin{proof}
-  \nameref{lem:1} on $\sum_{p \leq x} \frac{1}{p}$.
+  \nameref{lem:ps} on $\sum_{p \leq x} \frac{1}{p}$.
   \begin{align*}
     \sum_{p \leq x} \frac{1}{p} &= \frac{\pi(x)}{x} + \int_1^x \frac{\pi(t)}{t^2} \, dt.
     \shortintertext{If $\pi(x) = (c + o(1)) \frac{x}{\log x}$ then }
@@ -540,7 +540,7 @@ Chebyshev also showed if $\pi(x) \sim \frac{x}{\log x - A(x)}$ then $A \sim 1$, 
   \end{align*}
   But $\sum_{p \leq x} \frac{1}{p} = (1 + o(1)) \log \log x$ by \cref{lem:9}. Hence $c = 1$.
 \end{proof}
-\begin{nlemma}\label{lem:11}
+\begin{nlemma}\label{lem:ps1}
   \begin{equation*}
     \prod_{p \leq x} \left(1 - \frac{1}{p}\right)^{-1} = c \log x + \hyperlink{def:asymp}{\bigO}(1)
   \end{equation*}
@@ -620,7 +620,7 @@ called \named{Selberg's function}. (To see why this is denoted $\Lambda_2$, reca
 The idea is to prove a `Prime Number Theorem for $\Lambda_2$' with elementary methods.
 In particular, we will try the same method as just before, but the leading order term will be larger, so the error term can safely be ignored.
 
-\begin{nlemma}\label{lem:12}
+\begin{nlemma}\label{lem:ps2}
   \leavevmode
   \begin{enumerate}[label=(\arabic*)]
     \item $\hyperlink{def:selb}{\Lambda_2(n)} = \hyperlink{def:vonMang}{\Lambda(n)} \log n + \Lambda \hyperlink{def:conv}{\star} \Lambda(n)$
@@ -656,11 +656,11 @@ In particular, we will try the same method as just before, but the leading order
                                  &= \sum_{ab \leq x} \mu(a) (\log b)^2 \\
                                  &= \sum_{a \leq x} \mu(a) \left(\sum_{b \leq \frac x a} (\log b)^2\right).
   \end{align*}
-  By \nameref{lem:1},
+  By \nameref{lem:ps},
   \begin{equation*}
     \sum_{m \leq x} (\log m)^2 = x (\log x)^2 - 2 x \log x + 2 x + \hyperlink{def:asymp}{\bigO}((\log x)^2).
   \end{equation*}
-  By \nameref*{lem:1} again, (with $A(t) = \sum_{n \leq t} \hyperlink{def:tau}{\tau(n)} = t \log t + Ct + \bigO(t^{\frac 12})$)
+  By \nameref*{lem:ps} again, (with $A(t) = \sum_{n \leq t} \hyperlink{def:tau}{\tau(n)} = t \log t + Ct + \bigO(t^{\frac 12})$)
   \begin{align*}
     \sum_{m \leq x} \frac{\tau(m)}{m} &= \frac{A(x)}{x} + \int_1^x \frac{A(t)}{t^2} \, dt \\
                                       &= \log x + C + \bigO(x^{-\frac 12}) + \int_1^x \frac{\log t}{t} \, dt + c \int_1^x \frac 1t \, dt + \bigO\left(\int_1^x \frac{1}{t^{\frac{3}{2}}} \, dt\right) \\
@@ -1182,7 +1182,7 @@ We can reasonably expect $\pi_2(x) \asymp \frac{x}{(\log x)^2}$, but proving the
                                                                                    &\geq \sum_{d < z} \frac{2^{\omega(d)}}{d}.
   \end{align*}
 
-  By \nameref{lem:1}, it's enough to show $\sum_{d < z} 2^{\omega(d)} \gg z \log z$.
+  By \nameref{lem:ps}, it's enough to show $\sum_{d < z} 2^{\omega(d)} \gg z \log z$.
   Recall that to show $\sum_{d < z} \tau(d) \gg z \log z$ we used $\tau = 1 \star 1$.
   We want to write $2^{\omega(n)} = \sum_{d \mid n} f(d) g(\tfrac{n}{d})$.
 
@@ -1431,7 +1431,7 @@ For any \hyperlink{def:arith}{arithmetic function} $f: \mathbb{N} \to \mathbb{C}
 \begin{proof}
   It is enough to show if \hyperlink{def:lf}{$L_f(s)$} converges at $s_0$ and $\sigma > \sigma_0$ then there is a neighbourhood of $s$ on which $L_f$ converges uniformly ($\sigma_c = \inf\{\sigma : L_f(s) \text{ converges}\}$).
   Let $R(u) = \sum_{n > u} f(n) n^{-s_0}$.
-  By \nameref{lem:1},
+  By \nameref{lem:ps},
   \begin{align*}
     \sum_{M < n \leq N} f(n) n^{-s} = R(M) M^{s_0 - s} - R(N) N^{s_0 - s} + (s_0 - s) \int_M^N R(u) u^{s_0 - s - 1} \, du.
   \end{align*}
@@ -1521,7 +1521,7 @@ Similarly if $f \star 1 = g$, then $\hyperlink{def:lf}{L_f} \times \zeta = L_g$ 
   \end{equation*}
 \end{lemma}
 \begin{proof}
-  By \nameref{lem:1},
+  By \nameref{lem:ps},
   \begin{align*}
     \sum_{1 \leq n \leq x} \frac{1}{n^s} &= \frac{\floor{x}}{x^s} + s \int_1^x \frac{\floor{t}}{t^{s+1}}\,dt \\
     &= \frac{\floor{x}}{x^s} + s \int_1^x \frac{1}{t^{s}}\,dt - s \int_1^x \frac{\{t\}}{t^{s+1}}\,dt\\
@@ -1580,7 +1580,7 @@ $\zeta(s)$ is meromorphic in $\sigma>0$, with only a simple pole at $s=1$.
   If $\zeta(s) = 0$ and $\sigma > 0$, then $\sigma = \frac{1}{2}$.
 \end{conjecture}
 \subsection{Prime Number Theorem}
-Let $\alpha(s) = \sum \frac{a_n}{n^s}$. \nameref{lem:1} lets us write $\alpha(s)$ in terms of $A(x) = \sum_{n \leq x} a_n$:
+Let $\alpha(s) = \sum \frac{a_n}{n^s}$. \nameref{lem:ps} lets us write $\alpha(s)$ in terms of $A(x) = \sum_{n \leq x} a_n$:
 If $\sigma > \max(0, \sigma_c)$ then
 \begin{align*}
   \alpha(s) = s \int_1^\infty \frac{A(t)}{t^{s+1}}\,dt.
@@ -1722,9 +1722,10 @@ We will come back and prove these soon.
 
   Take $\sigma_1 = 1 - \frac{c}{\log T}$.
   \begin{align*}
-    \int_{\sigma_0+iT}^{\sigma_1+iT} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds &\ll \log T \int_{\sigma_0}^{\sigma_1} \frac{x^u}{T}\,du \ll \frac{\log T}{T} x^{\sigma_1}(\sigma_1 - \sigma_0) \ll \frac{x}{T} \\
+    \int_{\sigma_0+iT}^{\sigma_1+iT} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds &\ll \log T \int_{\sigma_0}^{\sigma_1} \frac{x^u}{T}\,du \ll \frac{\log T}{T} x^{\sigma_0}(\sigma_1 - \sigma_0) \ll \frac{x}{T} \\
     \shortintertext{and}
-    \int_{\sigma_1-iT}^{\sigma_1+iT} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds &\ll (\log T) \abs{\int_{\sigma_1\pm iT}^{\sigma_1\pm i} \frac{x^u}{u}\,du} + \left(\int_{\sigma_1-i}^{\sigma_1+i} x^{\sigma_1}\frac{1}{\sigma_1-1}\right) \\&\ll x^{\sigma_1}{\log T} + \frac{x^{\sigma_1}}{1-\sigma_1} \ll x^{\sigma_1} (\log T)
+    \int_{\sigma_1-iT}^{\sigma_1+iT} -\frac{\zeta'(s)}{\zeta(s)} \frac{x^s}{s}\,ds &\ll (\log T) \abs{\int_{\sigma_1\pm iT}^{\sigma_1\pm i} \frac{x^u}{u}\,du} + \abs{\int_{\sigma_1-i}^{\sigma_1+i} x^{\sigma_1}\frac{1}{\abs{\sigma_1-1}}\,du} \\
+                                                                                   &\ll x^{\sigma_1}{\log T} + \frac{x^{\sigma_1}}{1-\sigma_1} \ll x^{\sigma_1} (\log T)
   \end{align*}
   Now,
   \begin{align*}
@@ -2122,7 +2123,7 @@ so where $-1 < \sigma < 0$,
 \begin{align*}
   \zeta(s) &= s \int_0^\infty \frac{1}{t^{s+1}} \sum_{n=1}^\infty \frac{\sin(2n\pi t)}{n\pi}\,dt \\
            &= s \sum_{n=1}^\infty \frac{1}{n\pi} \int_0^\infty \frac{\sin(2n\pi t)}{t^{s+1}}\,dt \quad \text{take $y=2n\pi t$} \\
-           &= s \sum_{n=1}^\infty \frac{(2n\pi)^s}{n\pi} (\int_0^\infty \frac{\sin(y)}{y^{s+1}}\,dy)
+           &= s \sum_{n=1}^\infty \frac{(2n\pi)^s}{n\pi} \left(\int_0^\infty \frac{\sin(y)}{y^{s+1}}\,dy\right)
 \end{align*}
 Here,
 \begin{align*}
@@ -2185,7 +2186,7 @@ Thus, except for the trivial zeros, $\zeta(s)$ only has zeros in $0 < \sigma < 1
   0 = \zeta(s) = (\text{non-zero factors}) \Gamma(1-s) \zeta(1-s)
 \end{align*}
 but $\Gamma(1-s)$ is nonzero in this region, so $\zeta(1-s) = 0$.
-Since $\zeta(\bar{s}) = \bar{\zeta(s)}$, these zeros come in fours (except if $\sigma = \frac{1}{2}$, where they come in pairs).
+Since $\zeta(\bar{s}) = \overline{\zeta(s)}$, these zeros come in fours (except if $\sigma = \frac{1}{2}$, where they come in pairs).
 % picture
 \begin{thm}
   Riemann Hypothesis is equivalent to $\psi(x) = x + \bigO(x^{\frac 12 + o(1)})$
@@ -2250,7 +2251,7 @@ If $\chi$ is the trivial homomorphism on $(\mathbb{Z}/q\mathbb{Z})^\times$, we c
   The map $\chi \mapsto \chi \psi$ is a permutation of the set of Dirichlet characters mod $q$.
   Hence
   \begin{equation*}
-    \sum_\chi \chi(a) = \sum_\chi (\chi \psi)(a) = \psi(A) \sum_\chi \chi(a) \Rightarrow \sum_\chi \chi(a) = 0. \qedhere
+    \sum_\chi \chi(a) = \sum_\chi (\chi \psi)(a) = \psi(a) \sum_\chi \chi(a) \Rightarrow \sum_\chi \chi(a) = 0. \qedhere
   \end{equation*}
 \end{proof}
 \begin{defi}
@@ -2288,7 +2289,7 @@ This series converges absolutely in the region $\sigma > 1$, and defines an anal
   If $\chi \neq \chi_0$, then $ \sum_{n \geq 1} \chi(n){n^{-s}} $ converges in $\sigma > 0$.
 \end{nlemma}
 \begin{proof}
-  Use \nameref{lem:1} with $a_n = \chi(n)$, $f(t) = t^{-s}$.
+  Use \nameref{lem:ps} with $a_n = \chi(n)$, $f(t) = t^{-s}$.
   This gives
   \begin{align*}
     \sum_{n \leq x} \chi(n) n^{-s} = A(x) x^{-s} - \int_{1}^x A(t) f'(t)\,dt
@@ -2462,14 +2463,14 @@ Recall
   where the sum is over zeros of $f$ in $|z_k| \leq R$.
 \end{lemma}
 
-\begin{lemma}
+\begin{nlemma}\label{lem:1}
   If $\chi \neq \chi_0$ and $\frac{5}{6} \leq \sigma \leq 2$ then
   \begin{align*}
     \frac{L'}{L}(s,\chi) = \sum_\rho \frac{1}{s-\rho} + \bigO(\log q \tau)
   \end{align*}
   over $\rho$ with $|\rho - (\frac{3}{2}+it)| \leq \frac 56$
   (where $q$ came from the Dirichlet character).
-\end{lemma}
+\end{nlemma}
 \begin{proof}
   Follows from the lemma with $f(z) = L(z + \frac{3}{2} + it, \chi)$ with $R = \frac{5}{6}$ and $r = \frac{2}{3}$.
   Note
@@ -2523,27 +2524,27 @@ Recall
   \end{align*}
   contradiction if $\delta \approx \frac{c'}{\log q \tau}$ and $\sigma \geq 1 - \frac{c}{\log q \tau}$.
 \end{proof}
-\begin{thm}
+\begin{nthm}\label{thm:1}
   If $\chi$ is a quadratic character, $\exists c > 0$ such that
   \begin{align*}
     L(s,\chi) \neq 0\quad\text{if}\quad \sigma > 1 - \frac{c}{\log q \tau} \quad\text{and } t \neq 0.
   \end{align*}
-\end{thm}
+\end{nthm}
 We cannot rule out a zero $\rho$ of $L(s,\chi)$ with $\rho \in \mathbb{R}$ close to $1$.
 
-\begin{thm}
+\begin{nthm}\label{thm:2}
   Let $\chi$ be a quadratic character. There is an absolute constant $c > 0$ such that $L(s,\chi)$ has at most one zero $\rho \in (0,1)$ such that $\rho \geq 1 - \frac{c}{\log q}$.
-\end{thm}
+\end{nthm}
 Such zeros are called `exceptional zeros' or `Siegel zeros'.
 
 First, we need a lemma for $L(s,\chi_0)$.
-\begin{lemma}
+\begin{nlemma}\label{lem:2}
   If $\frac 56 \leq \sigma \leq 2$ then
   \begin{align*}
     -\frac{L'}{L}(s,\chi_0) = \frac{1}{s-1} - \sum_\rho \frac{1}{s-\rho} + \bigO(\log q \tau)
   \end{align*}
   over zeros $\rho$ with $|\rho - (\frac 32 + it)| \leq \frac 56$.
-\end{lemma}
+\end{nlemma}
 \begin{proof}
   Follows from
   \begin{align*}
@@ -2558,13 +2559,143 @@ First, we need a lemma for $L(s,\chi_0)$.
       \end{align*}
   \end{enumerate}
 \end{proof}
-\begin{proof}[Thm 1 proof sketch]
+\begin{proof}[\cref{thm:1} proof sketch]
   For $t$ large, same as previous proof ($\chi^2 = \chi_0$, but no pole).
   For $t$ small, $0 < |t| \ll \frac{1}{\log q \tau}$, instead of comparing $\chi_0$,$\chi$, $\chi^2$, compare $\rho, \bar{\rho}$.
 \end{proof}
-\begin{proof}[Thm 2 proof sketch]
+\begin{proof}[\cref{thm:2} proof sketch]
   Compare two such real zeros.
 \end{proof}
+
+\begin{proof}[Proof of \cref{thm:1}]
+  \newlec
+  As before, let $\rho = \sigma + it$ be a zero of $L(s,\chi)$. Let $\delta  > 0$.
+  By \cref{lem:1},
+  \begin{align*}
+    -\frac{L'}{L}(1+\delta+it, \chi) &= - \sum_{\rho'} \frac{1}{1+\delta+it-\rho} + \bigO(\log q \tau) \\
+    -\Re\frac{L'}{L}(1+\delta+it, \chi) &\leq - \frac{1}{1+\delta+it-\rho} + \bigO(\log q \tau) \\
+                                        &= -\frac{1}{1+\delta-\sigma} + \bigO(\log q \tau).
+  \end{align*}
+  By \cref{lem:2},
+  \begin{equation*}
+    -\Re \frac{L'}{L}(1+\delta,\chi_0) \leq \frac{1}{\delta} + \bigO(\log q\tau).
+  \end{equation*}
+  First suppose $\tau \geq C(1-\sigma)$. Here,
+  \begin{align*}
+    -\Re\frac{L'}{L}(1+\delta+2it,\chi^2) &= -\Re\frac{L'}{L}(1+\delta+2it,\chi_0) \\
+                                          &\leq \Re \frac{1}{\delta+2it} + \bigO(\log q\tau) \\
+                                          &\leq \frac{\delta}{\delta^2 + 4t^2} + \bigO(\log q\tau).
+  \end{align*}
+  As before,
+  \begin{equation*}
+    \Re\left(-3\frac{L'}{L}(1+\delta,\chi_0) - 4\frac{L'}{L}(1+\delta+it,\chi) - \frac{L'}{L}(1+\delta+2it, \chi^2)\right) \geq 0
+  \end{equation*}
+  but also
+  \begin{equation*}
+    \leq \frac{3}{\delta} - \frac{4}{1+\delta-\sigma} + \frac{\delta}{\delta^2+4t^2} + \bigO(\log q\tau).
+  \end{equation*}
+
+  If $\sigma = 1$, contradiction as $\delta \to 0$.
+  For $\sigma \neq 1$, if we choose $\delta = c(1-\sigma)$, then this is
+  \begin{equation*}
+    0 \leq \frac{3}{c(1-\delta)} - \frac{4}{(c+1)(1-\sigma)} + \frac{c'}{1-\sigma} + \bigO(\log q \tau)
+  \end{equation*}
+  ($\tau \gg 1-\sigma \gg \delta$).
+  Can choose $c,C$, hence $c'$ such that this is $\leq \frac{c''}{1-\sigma} + \bigO(\log q \tau)$ and so $\sigma \leq 1- \frac{c'''}{\log q\tau}.$
+
+  For small $\tau$ we need a different argument.
+  Since $L(\rho,\chi) = 0$, also $L(\overline{\rho},\chi) =0$ (and $\rho \neq \overline{\rho}$), since
+  \begin{equation*}
+  L(s,\chi) = s \int_1^\infty \frac{\sum_{1 \leq n \leq t} \chi(n)}{t ^{s+1}}\,dt
+  .\end{equation*}
+  It follows that
+  \begin{equation*}
+    -\Re\frac{L'}{L}(1+\delta+it,\chi) \leq - \Re \frac{1}{1+\delta-\rho} - \Re \frac{1}{1+\delta-\overline{\rho}} + \bigO(\log q\tau)
+  \end{equation*}
+  (assuming that $|t| \leq c(1-\sigma)$, in particular $|t| \leq c'$ small constant).
+  The RHS is
+  \begin{equation*}
+    \frac{-2(1+\delta-\sigma)}{(1+\delta-\sigma)^2+t^2} + \bigO(\log q\tau)
+  .\end{equation*}
+  As before,
+  \begin{equation*}
+    -\Re \frac{L'}{L}(1+\delta,\chi_0) \leq \frac{1}{\delta} + \bigO(\log q\tau).
+  .\end{equation*}
+  Now,
+  \begin{equation*}
+    - \Re \frac{L'}{L}(1+\delta,\chi_0) - \Re \frac{L'}{L}(1+\delta+it,\chi) = \sum_{\substack{n=1 \\ (n,q)=1}} \frac{\Lambda(n)}{n^{1+\delta}}(1+\Re(\chi(n) n^{it})) \geq 0
+  \end{equation*}
+  since the absolute value of $\chi(n) n^{it}$ is $1$.
+  So
+  \begin{equation*}
+    \frac{1}{\delta}-\frac{2(1+\delta-\sigma)}{(1+\delta-\sigma)^2+t^2}+\bigO(\log\tau) \geq 0.
+  .\end{equation*}
+  If we choose $\delta = c(1-\sigma)$, the HHS is $\leq \frac{c'}{1-\sigma} + \bigO(\log q\tau)$.
+  So $\sigma \leq 1-\frac{c'}{\log q \tau}$.
+\end{proof}
+\begin{proof}
+  Suppose $\rho_0 < \rho_1 \leq 1$ are zeros of $L(s,\chi)$. Then for $\sigma \in (0,1)$,
+  \begin{align*}
+    -\Re \frac{L'}{L}(\sigma,\chi) &\leq - \Re \frac{1}{\sigma-\rho_0} - \Re \frac{1}{\sigma-\rho_1} + \bigO(\log q)
+    \shortintertext{for $\sigma \geq 1 - \frac{1}{1000000}$, say}
+    &\leq -\frac{2}{\sigma-\rho_0} + \bigO(\log q).
+  \end{align*}
+  So
+  \begin{equation*}
+    \frac{1}{\sigma-1} - \frac{2}{\sigma-\rho_0} + \bigO(\log q) \geq (-\Re \frac{L'}{L}(\sigma,\chi_0) - \Re \frac{L'}{L}(\sigma,\chi)) \geq 0.
+  \end{equation*}
+  Hence
+  \begin{equation*}
+    \rho_0 \leq 1- \frac{c}{\log q}.
+  \end{equation*}
+\end{proof}
+\begin{lemma}
+  If $\chi \neq \chi_0$ and $\sigma \geq 1 - \frac{c}{\log q \tau}$ for some absolute $c > 0$, then if either $\chi$ has no exceptional zero, or $\chi$ has an exceptional zero at $\beta$, but $|s - \beta| \geq \frac{1}{\log q}$,
+  then
+  \begin{align*}
+    \frac{L'}{L}(s,\chi) \ll \log q \tau.
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  If $\sigma > 1$, note
+  \begin{align*}
+    \abs{\frac{L'}{L}(s,\chi)} \leq \sum_{\substack{n=1 \\ (n,q) = 1}}^\infty \frac{\Lambda(n)}{n^\sigma} \ll \frac{1}{\sigma-1}.
+  \end{align*}
+  In particular, if $s = \sigma + it$ and $s_1 = 1 + \frac{1}{\log q \tau} + it$, then
+  \begin{align*}
+    \abs{\frac{L'}{L}(s,\chi)} \ll \log q \tau.
+  \end{align*}
+  By \cref{lem:1},
+  \begin{equation*}
+    \frac{L'}{L} (s,\chi) = \sum_\rho \frac{1}{s-\rho} + \bigO(\log q \tau)
+  \end{equation*}
+  for all zeros $\rho$, $|s-\rho| \asymp |s_1 - \rho|$. So
+  \begin{align*}
+    \abs{\frac{L'}{L}(s,\chi) - \frac{L'}{L}(s,\chi)} &\ll \abs{\sum_\rho \frac{1}{s-\rho} - \frac{1}{s_1 - \rho}} + \bigO(\log q \tau) \\
+                                                      &\ll \Re \sum_\rho \frac{1}{s - \rho} + \bigO(\log q \tau) \\
+                                                      &\ll \bigO(\log q \tau). \qedhere
+  \end{align*}
+\end{proof}
+\subsection{Prime Number Theorem for Arithmetic Progressions}
+Recall that
+\begin{align*}
+  \sum_{\substack{1 \leq n \leq x \\ n \equiv a \bmod{q}}} &= \frac{1}{\varphi(q)} \sum_\chi \overline{\chi(a)} \sum_{1 \leq n \leq x} \Lambda(n) \chi(n) \\
+                                                           &= \frac{1}{\varphi(q)} \sum_\chi \overline{\chi(a)} \psi(x,\chi).
+\end{align*}
+\begin{thm}
+  If $q \leq \exp(\bigO(\sqrt{\log x}))$, then
+  \begin{enumerate}
+    \item $\psi(x,\chi_0) = x + \bigO(x \exp(-c \sqrt{\log x}))$
+    \item If $\chi \neq \chi_0$ and $\chi$ has no exceptional zero, then
+      \begin{equation*}
+        \psi(x,\chi) = \bigO(x \exp(-c \sqrt{\log x} ))
+      .\end{equation*}
+    \item If $\chi \neq \chi_0$ and $\chi$ has an exceptional zero at $\beta$ then
+      \begin{equation*}
+        \psi(x,\chi) = -\frac{x^\beta}{\beta} + \bigO(x \exp(-c\sqrt{\log x} ))
+      .\end{equation*}
+  \end{enumerate}
+\end{thm}
 
 \clearpage
 \printnomenclature
