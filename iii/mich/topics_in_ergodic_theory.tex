@@ -5,7 +5,7 @@
 \def\nterm{Michaelmas}
 \def\nlecturer{Dr. P. Varj\'{u}}
 \def\ncourse{Topics in Ergodic Theory}
-\def\draft{Ongoing course, rough}
+\def\draft{Rough}
 
 % preamble
 \usepackage{imakeidx}
@@ -23,6 +23,7 @@
 \DeclareMathOperator*{\dlim}{D-lim}
 \DeclareMathOperator*{\clim}{C-lim}
 \DeclareMathOperator*{\limw}{lim-w}
+\DeclareMathOperator{\ord}{ord}
 
 \newcommand{\B}{\mathcal{B}}
 \newcommand{\sym}{\bigtriangleup}
@@ -176,7 +177,7 @@ However, we can now prove \hyperlink{thm:sze}{Szemer\'edi} assuming \hyperlink{t
   The equivalence $n \in S \iff \sigma^n x^S \in A$ allows us to relate the set $S$ to the dynamics of $\sigma$.
 
   Now, we begin to construct the invariant measure $\mu$.
-  Let $\{M_m\}$ and $\{N_m\}$ be sequences s.t. $ M_n-N_m\to\infty $ and
+  Let $\{M_m\}$ and $\{N_m\}$ be sequences s.t.\ $ M_m-N_m\to\infty $ and
   \begin{equation*} \bar{d}(S) = \lim_{m\to\infty}\frac{1}{M_m-N_m}\left|S\cap[N_m,M_m-1]\right|. \end{equation*}
   Let
   \begin{equation*}
@@ -1037,7 +1038,7 @@ This result holds with any compact metrizable topological group in place of $\ma
 % up to here
 
 \begin{thm}[Weyl]\hypertarget{thm:weyl}
-  Let \marginnote{\emph{Lecture 9}}$P(x) = a_d x^d + \dotsb + a_1 x + a_0$ be polynomials such that $a_j$ is irrational for at least one $j \neq 0$.
+  Let \marginnote{\emph{Lecture 9}}$P(x) = a_d x^d + \dotsb + a_1 x + a_0$ be a polynomial such that $a_j$ is irrational for at least one $j \neq 0$.
   Then the sequence $(\{P(n)\})_{n \geq \mathbb{Z}_{> 0}}$ is \hyperlink{def:equid}{equidistributed} in $[0,1)$.%}(
 \end{thm}
 \begin{proof}
@@ -1374,7 +1375,7 @@ Both these lemmas are proved on the example sheet.
 \end{proof}
 
 \subsection{Cutting and stacking}
-For each $n \in \mathbb{N}$, let $I_1^{(n)}, \dotsc, I_{N(n)}^{(n)}$ be a collection of subintervals $I_j^{(n)} = [a_j^{n}, b_j^{n}) \subset [0,1)$. %] %]
+For each $n \in \mathbb{N}$, let $I_1^{(n)}, \dotsc, I_{N(n)}^{(n)}$ be a collection of subintervals $I_j^{(n)} = [a_j^{n}, b_j^{n}) \subset [0,1)$. %]]
 Suppose they satisfy the following properties.
 \begin{enumerate}[label=(\arabic*)]
   \item For each fixed $n$, $I_j^{(n)}$ are pairwise disjoint and they have the same length.
@@ -1701,7 +1702,6 @@ Roughly, the entropy measures how difficult it is to predict the next element of
     H_\mu(\xi \vee \eta) = H_\mu(\xi) + H_\mu(\eta \mid \xi). \qedhere
   \end{equation*}
 \end{proof}
-% new lec 16
 \begin{lemma}
   Let \marginnote{\emph{Lecture 16}}$(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
   Let $\xi, \eta$ be \hyperlink{def:partition}{countable measurable partitions}.
@@ -1812,7 +1812,7 @@ for all $n \in \mathbb{Z}_{\geq 0}$.
     H_\mu(\xi \mid \xi_1^n)(x) &= \sum_{j=1}^k p_j \cdot (-\log p_j) = H(p_1, \dotsc, p_k).
   \end{align*}
   \begin{align*}
-    H_\mu(\xi_0^{n-1}) &= H_\mu(\xi_{n-1}^{n-1}) + H(\xi_{n-2}^{n-2} \mid \xi_{n-2}^{n-1}) + H(\xi_{n-3}^{n-3} \mid \xi_{n-2}^{n-1}) + \dotsb + H_\mu(\xi \mid \xi_1^{n-1}) \\
+    H_\mu(\xi_0^{n-1}) &= H_\mu(\xi_{n-1}^{n-1}) + H(\xi_{n-2}^{n-2} \mid \xi_{n-1}^{n-1}) + H(\xi_{n-3}^{n-3} \mid \xi_{n-2}^{n-1}) + \dotsb + H_\mu(\xi \mid \xi_1^{n-1}) \\
                        &= H_\mu(\xi) + H_\mu(\xi \mid \xi_1^1) + H_\mu(\xi \mid \xi_1^2) + \dotsb + H_\mu(\xi \mid \xi_1^{n-1}) \\
                        &= n H(p_1, \dotsc, p_k).
   \end{align*}
@@ -1845,7 +1845,6 @@ Thus, the \hyperlink{def:h}{entropy} of $(\frac{1}{2},\frac{1}{2})$ \hyperlink{d
   Then $\hyperlink{def:ent}{H_\mu}(\eta \mid \xi) \leq \epsilon$.
 \end{nlemma}
 \begin{proof}[Proof of \hyperlink{thm:ks}{Kolmogorov-Sinai theorem}]
-  \color{gray}
   We first show $\hyperlink{def:h}{h_\mu}(T, \xi) = \sup_{\eta\text{ finite}} h_\mu(T,\eta)$.
   We need to show that for all finite \hyperlink{def:partition}{partitions} $\eta \subset \mathcal{B}$, we have $h_\mu(T, \eta) \leq h_\mu(T, \xi)$.
   Fix $\epsilon > 0$. By \cref{lem:3}, and definition of \hyperlink{def:gen}{2-sided generator}, $\exists n$ such that $H_\mu(\eta \mid \xi^n_{-n}) \leq \epsilon$.
@@ -1853,7 +1852,8 @@ Thus, the \hyperlink{def:h}{entropy} of $(\frac{1}{2},\frac{1}{2})$ \hyperlink{d
   \begin{equation*}
     h_\mu(T, \eta) \leq h_\mu(T, \xi^{n}_{-n}) + \epsilon % maybe more things?
   \end{equation*}
-  We are done if % something small
+  by \cref{lem:2}.
+  e are done if $\epsilon$ sufficiently small, by \cref{lem:1}.
 
   Now it is left to show that $\forall \epsilon > 0$, for every countable partition $\eta \subset \mathcal{B}$, $\exists \tilde{\eta} \subset \mathcal{B}$ finite such that $h_\mu(T,\eta) \leq h_\mu(T, \tilde{\eta}) + \epsilon$.
   By Lemma 2, enough to show $H_\mu(\eta \mid \tilde{\eta}) \leq \epsilon$.
@@ -1869,7 +1869,6 @@ Thus, the \hyperlink{def:h}{entropy} of $(\frac{1}{2},\frac{1}{2})$ \hyperlink{d
   \end{align*}
   if $n$ is sufficiently large.
 \end{proof}
-\color{black}
 \begin{proof}[Proof of \cref{lem:1}]
   \begin{align*}
     \hyperlink{def:h}{h_\mu}(T, \xi) &= \lim_{n \to \infty} \frac{1}{n} \hyperlink{def:ent}{H_\mu}(\xi_0^{n-1}) \\
@@ -1886,18 +1885,15 @@ Thus, the \hyperlink{def:h}{entropy} of $(\frac{1}{2},\frac{1}{2})$ \hyperlink{d
                    &\leq h_\mu(T,\xi) + \lim \frac{1}{n} \left(\sum_{j=0}^{n-1} \underbrace{H_\mu(\eta_j^j \mid \xi_j^j)}_{H_\mu(\eta \mid \xi)}\right) = h_\mu(T,\xi) + H_\mu(\eta \mid \xi). \qedhere
   \end{align*}
 \end{proof}
-\color{gray}
 \begin{proof}[Proof of \cref{lem:3}]
   Write $A_1, \dotsc, A_k$ for the atoms of $\eta$.
-  And for each $i \in \{1, \dotsc, k\}$, let $B_i \in \mathcal{B}(\xi)$ such that $\mu(A_i \sym B_i) < \infty$.
+  And for each $i \in \{1, \dotsc, k\}$, let $B_i \in \mathcal{B}(\xi)$ such that $\mu(A_i \sym B_i) < \delta$.
   We consider the partition $\lambda$ which has the following $k+1$ atoms.
-
   \begin{align*}
-    C_0 &= \bigcup_{i=1}^k (A_i \cap (B_i \setminus \bigcup_{j\neq i} B_j)) \\
+    C_0 &= \bigcup_{i=1}^k \left(A_i \cap \left(B_i \setminus \bigcup_{j\neq i} B_j\right)\right) \\
     C_i &= A_i \setminus C_0 \text{ for } i = 1, \dotsc, k.
   \end{align*}
-
-  Crucial properties:
+  $C_0$ has two crucial properties we note here:
   \begin{itemize}[label=--]
     \item $C_0$ is big:
       \begin{align*}
@@ -1909,18 +1905,17 @@ Thus, the \hyperlink{def:h}{entropy} of $(\frac{1}{2},\frac{1}{2})$ \hyperlink{d
   Note
   \begin{align*}
     H_\mu(\lambda) &= -\mu(C_0) \log \mu(C_0) - \sum_{i=1}^k \mu(C_i) \log \mu(C_i) \\
-                   &\leq -\mu(C_0) \log \mu(C_0) - (\sum_{i=1}^k\mu(C_i) ) \log(\frac{\sum_{i=1}^k \mu(C_i)}{k})
+                   &\leq -\mu(C_0) \log \mu(C_0) - \left(\sum_{i=1}^k\mu(C_i) \right) \log\left(\frac{\sum_{i=1}^k \mu(C_i)}{k}\right).
   \end{align*}
-  If $\delta$ is sufficiently small, then $\mu(C_0)$ as close to 1 as we want.
+  If $\delta$ is sufficiently small, then $\mu(C_0)$ is as close to 1 as we want, and $\sum_{i=1}^k \mu(C_i)$ is as close to 0 as we want.
   Then $H_\mu(\lambda) < \epsilon$ if $\delta$ is sufficiently small.
   Now it is enough to show that $H_\mu(\eta \mid \xi \vee \lambda) = 0$.
-  Indeed,
+  Then,
   \begin{align*}
     H_\mu(\eta \mid \xi) &\leq H_\mu(\eta \vee \lambda \mid \xi) \\
                          &\leq \underbrace{H_\mu(\lambda \mid \xi)}_{\leq H_\mu(\lambda) < \epsilon} + \underbrace{H_\mu(\eta \mid \xi \vee \lambda)}_{=0}
   \end{align*}
-
-  Then it is enough to show
+  It is now enough to show
   \begin{equation*}
     I_\mu(\eta \mid \xi \vee \lambda)(x) = 0 \quad \forall x.
   \end{equation*}
@@ -1928,10 +1923,9 @@ Thus, the \hyperlink{def:h}{entropy} of $(\frac{1}{2},\frac{1}{2})$ \hyperlink{d
   \begin{equation*}
     [x]_{\xi \vee \lambda} \subset [x]_\eta \quad \forall x.
   \end{equation*}
-
   We consider two cases.
   \begin{enumerate}
-    \item $x \in C_0$. Let $A_i \in [x]_\eta$.
+    \item $x \in C_0$. Let $A_i = [x]_\eta$.
       This means that $x \in A_i$. Because $x \in C_0$, we must have $x \in B_i$.
       Now $C_0, B_i \in \mathcal{B}(\xi \vee \lambda)$.
       Then $[x]_{\xi \vee \lambda} \subset C_0 \cap B_i \subset A_i$.
@@ -1942,7 +1936,6 @@ Thus, the \hyperlink{def:h}{entropy} of $(\frac{1}{2},\frac{1}{2})$ \hyperlink{d
     \end{align*} \qedhere
   \end{enumerate}
 \end{proof}
-\color{black}
 
 \begin{thm}[Shannon-McMillan-Brieman]
   \hypertarget{def:smb}Let \marginnote{\emph{Lecture 18}}$(X,\mathcal{B},\mu,T)$ be an \hyperlink{def:ergodic}{ergodic} \hyperlink{def:mps}{measure preserving system}.
@@ -2024,13 +2017,13 @@ We now aim to define conditional information and entropy relative to $\sigma$-al
   Let $(X, \mathcal{B},\mu)$ be a probability space, let $\eta \subset \mathcal{B}$ be a countable partition, let $\mathcal{A} \subset \mathcal{B}$ be a sub-$\sigma$-algebra.
   Then the \textbf{conditional information function} of $\eta$ relative to $\mathcal{A}$ is
   \begin{equation*}
-    I_\mu(\eta \mid \mathcal{A}) = \sum_{A \in \eta} -\xi_A \cdot \log \mathbb{E}[\chi_A \mid \mathcal{A}].
+    I_\mu(\eta \mid \mathcal{A}) = \sum_{A \in \eta} -\chi_A \cdot \log \mathbb{E}[\chi_A \mid \mathcal{A}].
   \end{equation*}
 \end{defi}
 \begin{eg}
   Suppose that $\mathcal{A}$ is generated by a \hyperlink{def:partition}{countable partition} $\xi \subset \mathcal{B}$. Then:
   \begin{align*}
-    \hyperlink{def:i2}{I_\mu(\eta \mid \mathcal{A})} &= \sum_{A \in \eta} -\chi \log \mathbb{E}[\chi_A \mid \mathcal{A}] \\
+    \hyperlink{def:i2}{I_\mu(\eta \mid \mathcal{A})} &= \sum_{A \in \eta} -\chi_A(x) \log \mathbb{E}[\chi_A \mid \mathcal{A}] \\
                                  &= -\log \mathbb{E}[\chi_{[x]_\eta} \mid \mathcal{A}](x) \\
                                  &= -\log \frac{1}{\mu([x]_\xi)} \int_{[x]_\xi} \chi_{[x]_\eta} \, d\mu \\
                                  &= -\log \frac{\mu([x]_\eta \cap [x]_\xi)}{\mu([x]_\xi)} = - \log \frac{\mu([x]_{\eta \vee \xi})}{\mu([x]_\xi)}.
@@ -2156,6 +2149,420 @@ We now aim to define conditional information and entropy relative to $\sigma$-al
   $K$ is arbitrary, and
   \begin{equation*}\int I_K^* \, d\mu \xrightarrow{K \to\infty}0,\end{equation*}
   so $\limsup_{N \to \infty} |(**)| = 0$.
+\end{proof}
+%missing
+\marginnote{\emph{Lecture 20}}
+Missing content
+% lecture 21
+\marginnote{\emph{Lecture 21}}
+Left to prove: If $h_\mu(T,\xi) > 0$ $\forall \xi \in \mathcal{B}$ finite with $H_\mu(\xi) > 0$ then $\mathcal{T}(\xi)$ is trivial $\forall \xi \subseteq \mathcal{B}$ finite.
+\begin{prop}
+  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}. Let $\xi,\eta \subset \mathcal{B}$ be two finite partitions.
+  Then
+  \begin{equation*}
+    h_\mu(T, \xi) = H_\mu(\xi \mid \mathcal{B}(\xi_1^\infty) \lor \mathcal{T}(\eta)).
+  \end{equation*}
+\end{prop}
+\begin{lemma}
+  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}. Let $\xi \subset \mathcal{B}$ be a finite partition.
+  Then
+  \begin{equation*}
+    h_\mu(T, \xi) = \frac{1}{n} H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty))
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  By chain rule and invariance:
+  \begin{align*}
+    H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty)) &= \sum_{j=0}^{n-1} H_\mu(\xi_j^j \mid \mathcal{B}(\xi_{j+1}^\infty)) \\
+                                                      &= n H_\mu(\xi \mid \mathcal{B}(\xi_1^\infty)) \\
+                                                      &= n h_\mu(T, \xi). \qedhere
+  \end{align*}
+\end{proof}
+\begin{lemma}
+  Let $(X, \mathcal{B}, \mu, T)$ be a \hyperlink{def:mps}{measure preserving system}.
+  Let $\eta, \xi \subset \mathcal{B}$ be finite measurable partitions.
+  Then
+  \begin{equation*}
+    h_\mu(T, \xi) = \lim_{n \to \infty} \frac{1}{n} H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty) \vee \mathcal{B}(\eta_n^\infty))
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  Observe that $\forall n \in \mathbb{Z}_{>0}$,
+  \begin{align*}
+    H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty) \lor \mathcal{B}(\eta_n^\infty)) &\leq H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty)) \\
+                                                                                      &= n h_\mu(T,\xi).
+  \end{align*}
+  We do the following. We choose two sequences $a_n$ and $b_n$ such that $a_n \leq b_n$ $\forall n$ and
+  \begin{equation}
+    \lim \frac{1}{n} [H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty) \vee \mathcal{B}(\eta_n^\infty)) + a_n] = \lim \frac{1}{n} [H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty)) + b_n]. \label{eq:21star}
+  \end{equation}
+  Suppose to the contrary that
+  \begin{align*}
+    \liminf \frac{1}{n} [H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty) \vee \mathcal{B}(\eta_n^\infty))] < h_\mu(T,\xi) = H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty)).
+  \end{align*}
+  Then $a_n \leq b_n$ and this contradicts \eqref{eq:21star}.
+  This means that
+  \begin{align*}
+    h_\mu(T,\xi) &\leq \liminf \frac{1}{n} [H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty) \vee \mathcal{B}(\eta_n^\infty))] \\
+                 &\leq \limsup\frac{1}{n} [H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty) \vee \mathcal{B}(\eta_n^\infty))] \\
+                 &\leq h_\mu(T,\xi).
+  \end{align*}
+  This proves the lemma.
+
+  We take
+  \begin{align*}
+    a_n &= H_\mu(\eta_0^{n-1} \mid \mathcal{B}(\xi_0^\infty) \vee \mathcal{B}(\eta_n^\infty)) \\
+    b_n &= H_\mu(\eta_0^{n-1} \mid \mathcal{B}(\xi_0^\infty)).
+  \end{align*}
+  Clearly $a_n \leq b_n$ indeed.
+  \begin{align*}
+    H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty) \vee \mathcal{B}(\eta_n^\infty)) + a_n &= H_\mu(\xi_0^{n-1} \vee \eta_0^{n-1} \mid \mathcal{B}(\xi_n^\infty) \vee \mathcal{B}(\eta_n^\infty)) \\
+    H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty)) + b_n &= H_\mu(\xi_0^{n-1} \vee \eta_0^{n-1} \mid \mathcal{B}(\xi_n^\infty))
+  \end{align*}
+  By the earlier lemma,
+  \begin{equation*}
+    \frac{H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty) \vee \mathcal{B}(\eta_n^\infty)) + a_n}{n} = h_\mu(T, \xi \vee \eta)
+  \end{equation*}
+  so we have
+  \begin{equation*}
+    h_\mu(T, \xi \vee \eta) = \frac{H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty) \vee \mathcal{B}(\eta_n^\infty)) + a_n}{n} = \frac{H_\mu(\xi_0^{n-1} \mid \mathcal{B}(\xi_n^\infty)) + b_n}{n} \leq \frac{H_\mu(\xi_0^{n-1} \vee \eta_0^{n-1})}{n} \to h_\mu(T, \xi \vee \eta).
+  \end{equation*}
+\end{proof}
+Suppose that $h_\mu(T, \xi) > 0$ $\forall \xi \subset \mathcal{B}$ finite with $H_\mu(\xi) > 0$.
+Suppose to the contrary that $\mathcal{T}(\xi)$ is non-trivial for some $\xi \subset \mathcal{B}$ finite.
+Then $\exists A \subset \mathcal{T}(\xi)$ such that $0 < \mu(A) < 1$.
+Define $\eta = \{A, X \setminus A\}$.
+Apply the proposition with $\xi \leftrightarrow \eta$:
+\begin{equation*}
+  h_\mu(T,\eta) = H_\mu(\eta \mid \mathcal{B}(\eta_1^\infty) \vee \mathcal{T}(\xi)).
+\end{equation*}
+We prove that $h_\mu(T, \eta) = 0$, which is contradiction, as $H_\mu(\eta) > 0$.
+
+In fact we will show
+\begin{equation*}
+  I_\mu(\eta \mid \mathcal{B}(\eta_1^\infty) \vee \mathcal{T}(\xi))(x) = 0
+\end{equation*}
+for a.e.\ $x$.
+\begin{align*}
+  I_\mu(\eta \mid \mathcal{B}(\eta_1^\infty) \vee \mathcal{T}(\xi)) &= - \log \mathbb{E}[\xi_{[x]_\eta} \mid \mathcal{B}(\eta_1^\infty) \vee \mathcal{T}(\xi)] \\
+                                                                    &= -\log \xi_{[x]_\eta} = 0.
+\end{align*}
+
+\section{Rudolph's Theorem}
+\begin{thm}
+  Let $\mu$ be a probability measure on $\mathbb{R}/\mathbb{Z}$ that is invariant and ergodic with respect to the joint action of $T_2: x \mapsto 2x$ and $T_3: x \mapsto 3x$.
+  That is to say, if $A \subset \mathcal{B}$ such that $T_2^{-1} A = A$ and $T_3^{-1} A = A$, then $\mu(A) = 0$ or $1$.
+  Suppose that $h_\mu(T_2)$ or $h_\mu(T_3) > 0$.
+  Then $\mu$ is the Lebesgue measure on $\mathbb{R}/\mathbb{Z}$.
+\end{thm}
+\begin{thm}[Host]
+  Let $\mu$ be an ergodic $T_3$-invariant measure on $\mathbb{R}/\mathbb{Z}$ with $h_\mu(T_3) > 0$.
+  Then $\mu$-a.e.\ $x \in \mathbb{R}/\mathbb{Z}$ is normal in base 2, i.e.\ the sequence $T_2^n x$ is \hyperlink{def:equid}{equidistributed} in $\mathbb{R}/\mathbb{Z}$.
+  Moreover, if $\mu$ is not necessarily ergodic, but the other assumptions hold, then
+  \begin{equation*}
+    \mu(x \in \mathbb{R}/\mathbb{Z} : x \text{ is normal in base } 2) \geq \frac{h_\mu(T_3)}{\log 3}.
+  \end{equation*}
+\end{thm}
+\marginnote{\emph{Lecture 22}}
+\begin{lemma}
+  We have $\ord_{3^k}(2) = 2 \cdot 3^{k-1}$, where $\ord_{3^k}(2)$ is the order of $2 \bmod{3^k}$, that is, the smallest integer $n$ such that $3^k \mid 2^n - 1$.
+\end{lemma}
+\begin{proof}
+  By induction on $k$, we prove that $\ord_{3^k}(2) = 2 \cdot 3^{k-1}$ and $3^{k+1} \nmid 2^{2 \cdot 3^{k-1}} - 1$
+  Easy to check for $k=0,1$. Assume that $k \geq 2$ and the claim holds for $k-1$.
+  $3^k \mid 2^{\ord_{3^k}(2)} - 1$, so $3^{k-1} \mid 2^{\ord_{3^k}(2)} - 1$, hence $\ord_{3^k}(2) = a \cdot 2 \cdot 3^{k-2}$ for some $a \in \mathbb{Z}_{>0}$.
+  We also know
+  \begin{equation*}
+    2^{2 \cdot 3^{k-1}} = b \cdot 3^{k-1} + 1
+  \end{equation*}
+  for some $b \in \mathbb{Z}_{>0}$ and $3 \nmid b$.
+  Then by the binomial theorem, we have:
+  \begin{align*}
+    2^{2 \cdot 2 \cdot 3^{k-2}} &= b^2 \cdot 3^{2(k-1)} + 2b \cdot 3^{k-1} + 1 \\
+    2^{3 \cdot 2 \cdot 3^{k-2}} &= b^3 \cdot 3^{(k-1)} + 3b^2 \cdot 3^{2(k-1)}+ 3b \cdot 3^{k-1} + 1 \\
+  \end{align*}
+  From this we see that $3^k \nmid 2^{2 \cdot 2 \cdot 3^{k-2}} -1$ but $3^k \mid 2^{3 \cdot 2 \cdot 3^{k-2}}-1$ and $3^{k+1} \nmid 2^{3\cdot 2\cdot 3^{k-2}} -1$.
+\end{proof}
+\begin{remark}
+  Look at the $T_2$ orbit of $\frac{a}{3^k}$ where $a \in \mathbb{Z}$ and $3 \nmid a$. This orbit is
+  \begin{equation*}
+    \set{\frac{b}{3^k} | b \in [0, \dotsc, 3^k-1], 3 \nmid b}.
+  \end{equation*}
+  Also $T_2^n(x+\frac{a}{3^k}) = T_2^n(x) + T_2^n(\frac{a}{3^k})$.
+
+  Another idea: If $h_\mu(T_3) > 0$, the $\mu$ `will not concentrate' on a few elements of the set
+  \begin{equation*}
+    \set{x + \frac{a}{3^k} : a \in [0, \dotsc, 3^k-1], 3 \nmid a}
+  \end{equation*}
+\end{remark}
+
+We need to show that for $\mu$-a.e. $x$ and for all $f \in C(\mathbb{R}/\mathbb{Z})$, we have
+\begin{equation*}
+  \frac{1}{N} \sum_{n=0}^{N-1} f(T_2^n x) \to \int f(x) \, dx.
+\end{equation*}
+In fact, it is enough to prove this for functions of the form: $f(x) = \exp(2\pi i m x)$ for $m \in \mathbb{Z}$ (by density and linearity).
+\begin{notation}
+  For $N \in \mathbb{Z}_{>0}$, $m \in \mathbb{Z}$, let
+  \begin{equation*}
+    P_{N,m}(x) = \frac{1}{N} \sum_{n=0}^{N-1} \exp(2 \pi i m 2^n x).
+  \end{equation*}
+\end{notation}
+Now it is enough to show: for all fixed $m \neq 0$, and for $\mu$-a.e.\ $x$, we have $P_{N,m}(x) \to 0$.
+\begin{lemma}
+  Fix $m \neq 0$ and $x \in \mathbb{R}/\mathbb{Z}$.
+  Let $\alpha$ be the largest exponent such that $3^\alpha \mid m$.
+  Let $N < 2 \cdot 3^{k-\alpha-1}$ for some $k \in \mathbb{Z}_{>0}$.
+  Then
+  \begin{align*}
+    \sum_{a=0}^{3^k-1} \left|P_{N,m}(x+\frac{a}{3^k})\right|^2 = \frac{3^k}{N}.
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  \begin{align*}
+    |P_{N,m}(x)|^2 &= \abs{\frac{1}{N} \sum_{n=0}^{N-1} \exp{2 \pi i m 2^n x}}^2 \\
+                   &= \frac{1}{N^2} \sum_{n_1=0}^{N-1} \sum_{n_2=0}^{N-1} \exp(2 \pi i m 2^{n_1} x) \cdot \overline{\exp(2 \pi i m 2^{n_2} x)} \\
+                   &= \frac{1}{N^2} \sum_{n_1=0}^{N-1} \sum_{n_2=0}^{N-1} \exp(2 \pi i m (2^{n_1} - 2^{n_2}) x).
+  \end{align*}
+  Note that for some $b \in \mathbb{Z}$:
+  \begin{align*}
+    \sum_{a=0}^{3^k-1} \exp(2 \pi i b(x + \frac{a}{3^k})) &= \exp(2\pi i b x) \cdot \sum_{a=0}^{3^k - 1} \exp(2\pi i b \frac{a}{3^k}) \tag{$*$} \label{eq:22star}
+  \end{align*}
+  If $3^k \nmid b$, then \eqref{eq:22star} is 0. If $3^k \mid b$, then \eqref{eq:22star} $=3^k \exp(2 \pi i b x).$
+  When does it happen that $3^k \mid m \cdot (2^{n_1} - 2^{n_2})$.
+  Suppose $n_1 > n_2$. Then $m \cdot (2^{n_1} - 2^{n_2}) = m \cdot 2^{n_2} (2^{n_1 - n_2} - 1)$.
+  Since $n_1 - n_2 \leq N < 2 \cdot 3^{k - \alpha - 1}$, we have $3^{k-\alpha} \nmid 2^{n_1 - n_2} - 1$ so $3^k \nmid m \cdot (2^{n_1} - 2^{n_2})$.
+  Same applies if $n_2 > n_1$.
+  We get that $3^k \mid m (2^{n_1} - 2^{n_2}) \iff n_1 = n_2$.
+  Therefore,
+  \begin{equation*}
+    |P_{N,m}(x)|^2 = \frac{1}{N^2} \sum_{n=0}^{N-1} 3^k = \frac{3^k}{N}.
+  \end{equation*}
+\end{proof}
+% lecture 23
+\marginnote{\emph{Lecture 23}}
+\begin{prop}
+  Let $\mu$ be an ergodic $T_3$-invariant probability measure on $\mathbb{R}/\mathbb{Z}$.
+  Let $k \in \mathbb{Z}_{>0}$.
+  Write
+  \begin{equation*}
+    \mu_k(A) = \sum_{a=0}^{3^k-1} \mu(A + \frac{a}{3^k}) \quad \forall A \in \B.
+  \end{equation*}
+  Let $\xi = \{[0, \frac{1}{3}), [\frac{1}{3},\frac 23), [\frac 23, 1)\}$.
+  Let $\epsilon > 0$. Then
+  \begin{equation*}
+    \mu_k([x]_{\xi_0^K}) \geq \exp((h_\mu(T_3) - \epsilon) k) \mu([x]_{\xi_0^K})
+  \end{equation*}
+  holds for $\mu$-almost every $x$ provided $k$ is sufficiently large depending on $\epsilon,x$ and $K$ is sufficiently large depending on $\epsilon,x,k$.
+\end{prop}
+\begin{remark}
+  \begin{equation*}
+    [x]_{\xi_0^K} = \set{y \in \mathbb{R}/\mathbb{Z} = [0,1) | y = 0.y_1y_2y_3\dotsc_{(3)}, y_1=x_1 ,\dotsc, y_{K+1} = x_{K+1}}
+  \end{equation*}
+  where $x = 0.x_1 x_2 x_3 \dotsc_{(3)}$.
+  This is an interval of length $3^{-(K+1)}$ containing $x$.
+  \begin{equation*}
+    \mu_k([x]_{\xi_0^K}) = \mu(\bigcup_{a=0}^{3^k-1} [x]_{\xi_0^K} + \frac{a}{3^k}).
+  \end{equation*}
+\end{remark}
+\begin{lemma}
+  In the above setting, we have
+  \begin{equation*}
+    \frac{1}{k} I_\mu(\xi_0^{k-1} | \B(\xi_k^\infty)) (x) \to h_\mu(T_3)
+  \end{equation*}
+  $\mu$-almost everywhere.
+\end{lemma}
+\begin{proof}
+  Using chain rule and invariance,
+  \begin{align*}
+    \frac{1}{k} I_\mu(\xi_0^{k-1} \mid \B(\xi_k^\infty))(x) &= \frac{1}{k} \sum_{j=0}^{k-1} I_\mu (\xi_j^j \mid \B(\xi_{j+1}^\infty))(x) \\
+                                                            &= \frac{1}{k} \sum_{j=0}^{k-1} I_\mu(\xi \mid \B(\xi_1^\infty))(T^j x) \\
+    \text{by pointwise ergodic theorem} \quad &\to \int I_\mu(\xi \mid \B(\xi_1^\infty))\,d\mu \\
+                                                            &= H_\mu(\xi \mid \B(\xi_1^\infty)) = h_\mu(T_3,\xi).
+  \end{align*}
+  \renewcommand{\qedsymbol}{}
+\end{proof}
+The proof will be complete with the following.
+\begin{lemma}
+  The partition $\xi$ is a $1$-sided generator for $(\mathbb{R}/\mathbb{Z}, \B,\mu,T_3)$. That is, $\forall A \in \B$ and $\epsilon > 0$, $\exists n \in \mathbb{Z}_{>0}$ and $B \in \B(\xi_0^k)$ such that $\mu(A \sym B) < \epsilon$.
+\end{lemma}
+\begin{proof}
+  Consider:
+  \begin{equation*}
+    \mathcal{C} = \set{A \in \B | \forall \epsilon > 0, \exists n \in \mathbb{Z}_{>0}, B \in \B(\xi_0^n) \text{ such that } \mu(A \sym B) < \epsilon}.
+  \end{equation*}
+  This is a $\sigma$-algebra, so it is enough to show that it contains all open sets.
+  Let $U \subseteq \mathbb{R}/\mathbb{Z}$ be open.
+  Claim that
+  \begin{equation*}
+    U = \bigcup_{x \in U, n \in \mathbb{Z}_{>0} | [x]_{\xi_0^n} \subset U} [x]_{\xi_0^n}.
+  \end{equation*}
+  Note that this is a countable union and $[x]_{\xi_0^n} \in \mathcal{C}$ $\forall x \forall n$.
+  % something missing...
+\end{proof}
+\begin{cor}
+  Let $\mu$ be a $T_3$-invariant ergodic probability measure on $\mathbb{R}/\mathbb{Z}$. Then for all $k \in \mathbb{Z}_{>0}$,
+  \begin{equation*}
+    \exists A_k \in \B
+  \end{equation*}
+  such that
+  \begin{enumerate}[label=(\arabic*)]
+    \item $\mu$-almost every $x$ is contained in $A_k$ for $k$ sufficiently large.
+    \item
+      \begin{equation*}
+        \mu_k(U) \geq \exp(k h_\mu(T_3)/2) \mu(A_k \cap U)
+      \end{equation*}
+      holds for all open sets $U \subset \mathbb{R}/\mathbb{Z}$.
+  \end{enumerate}
+\end{cor}
+\begin{proof}[Proof of proposition]
+  By the lemma, if $k$ is sufficiently large depending on $x,\epsilon$, then
+  \begin{equation*}
+    I_\mu(\xi_0^{k-1} \mid \B(\xi_k^\infty))(x) \geq k(h_\mu(T_3) - \epsilon/2).
+  \end{equation*}
+  If $K$ sufficiently large, then
+  \begin{equation*}
+    I_\mu(\xi_0^{k-1} \mid \xi_k^K)(x) \geq k(h_\mu(T_3) - \epsilon)
+  \end{equation*}
+  by SMB, and the LHS is
+  \begin{equation*}
+    \log\frac{\mu([x]_{\xi_k^K})}{\mu([x]_{\xi_0^K})}.
+  \end{equation*}
+  Observe
+  \begin{equation*}
+    [x]_{\xi_k^K} = \bigcup_{a=0,\dotsc,3^k-1} ([x]_{\xi_0^K} + \frac{a}{3^k})
+  \end{equation*}
+  Thus $\mu_k([x]_{\xi_0^K}) = \mu([x]_{\xi_k^K})$, and so we have
+  \begin{equation*}
+    \log \frac{\mu_k([x]_{\xi_0^K})}{\mu([x]_{\xi_0^K})} \geq k(h_\mu(T_3) - \epsilon).
+  \end{equation*}
+\end{proof}
+\begin{proof}[Proof of corollary]
+  Let $A_k$ be the set of points $x$ such that
+  \begin{equation*}
+    \mu_k([x]_{\xi_0^K}) \geq \exp(k \cdot \mu_k(T_3)/2) \mu([x]_{\xi_0^K}) \tag*{$(*)$} \label{eq:23star}
+  \end{equation*}
+  for all sufficiently large $K$.
+  Claim (1) follows from the proposition.
+
+  To prove (2), fix $k \in \mathbb{Z}_{>0}$ and fix $U \subseteq \mathbb{R}/\mathbb{Z}$ open.
+  For $K \in \mathbb{Z}_{>k}$, write $\mathcal{A}_K$ for the collection of atoms $[x]_{\xi_0^K}$ such that $[x]_{\xi_0^K} \subset U$ and \eqref{eq:23star} holds for this atom.
+  Since $U$ is open and by the definition of $A_k$, if $x \in A_k \cap U$ and $K$ is sufficiently large, then $[x]_{\xi_0^K} \in \mathcal{A}_K$.
+  Let $B_K = \bigcup_{A \in \mathcal{A}_K} A$.
+  \begin{align*}
+    \mu_K(B_K) \geq \exp(k \cdot h_\mu(T_3)/2)\mu(B_K)
+  \end{align*}
+  follows by summing \eqref{eq:23star}.
+  Also, $\mu_k(B_K) \leq \mu_k(U)$.
+  Now consider $\bigcup_{K \geq L} B_K$ for $L \in \mathbb{Z}_{>k}$.
+  These sets increase as $L$ grows, and their union is $A_k \cap U$:
+  Recall that $\forall x \in A_k \cap U$, we have $[x]_{\xi_0^K} \in \mathcal{A}_K$ for $K$ sufficiently large. Therefore $x \in B_K$ if $K$ is sufficiently large.
+  So $x \in \bigcap_{K \geq L} B_K$ if $L$ is sufficiently large.
+
+  Since $\bigcap_{K \geq L} B_K \subset B_L$, we have
+  \begin{equation*}
+    \mu_k(U) \geq \dotsb \geq \mu(\bigcap_{K \geq L} B_K).
+  \end{equation*}
+\end{proof}
+
+% new lecture
+\marginnote{\emph{Lecture 24}}
+We have reduced Host's theorem (in the ergodic case) to showing $P_{N,m}(x) \to 0$ for $\mu$-a.e. $x$ for all $m \neq 0$.
+
+Recall
+\begin{lemma}[Borel-Cantelli]
+  Let $(X,\B,\mu)$ be a probability space. Let $B_1, B_2, \dotsc, \in \B$. Suppose
+  \begin{equation*}
+    \sum_{n =1}^\infty \mu(B_n) < \infty.
+  \end{equation*}
+  Then for $\mu$-almost every $x$, $x \in B_n$ holds for at most finitely many $n$.
+\end{lemma}
+\begin{lemma}
+  For all $m \neq 0$ and $c \in \mathbb{Z}_{>0}$,
+  \begin{equation*}
+    P_{N,m}(x) \xrightarrow{N \to \infty} 0 \iff P_{L^c,m}(x) \xrightarrow{L \to \infty} 0.
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  It is enough to show that $P_{L^c,m}(x) \to 0$ as $L \to \infty$, for some $C$ (to be chosen later) and all $m \neq 0$.
+  Fix $m \neq 0$ and $\epsilon > 0$. For $N \in \mathbb{Z}_{>0}$, we set $k = k(N)$ to be an integer such that $2 \cdot 3^{k-2-\alpha} \leq N < 2 \cdot 3^{k-1-\alpha}$.
+  By Lemma 1, we have:
+  \begin{equation*}
+    \sum_{a=0}^{3^k-1} |P_{N,m}(x + \frac{a}{3^k})|^2 = \frac{3^k}{N} \leq \frac{N}{2} \cdot 3^{\alpha+2}/N = \frac{3^{\alpha+2}}{2}.
+  \end{equation*}
+  By the definition of $\mu_k$, we have
+  \begin{equation*}
+    \int |P_{N,m}(x)|^2 \, d\mu_k(x) = \int \sum_{a=0}^{3^k-1} |P_{N,m}(x + \frac{a}{3^k})|^2 \, d\mu \leq \frac{3^{\alpha+2}}{2}.
+  \end{equation*}
+  By Markov's inequality:
+  \begin{equation*}
+    \mu_k(x : P_{N,m}(x) > \epsilon) \leq \frac{3^{\alpha+2}}{2 \epsilon^2}.
+  \end{equation*}
+
+  By the corollary,
+  \begin{equation*}
+    \mu(x : |P_{N,m}(x)| > \epsilon, x \in A_{k}) \leq \exp(-k h_\mu(T_3)/2) \cdot \frac{3^{\alpha+2}}{2 \epsilon^2}
+  \end{equation*}
+  where $k = k(N)$ defined earlier.
+  Let
+  \begin{equation*}
+    B_\epsilon = \set{x | \abs{P_{L^c, m}(x)} > \epsilon \text{ for infinitely many } L}.
+  \end{equation*}
+  Our goal is to show that $\mu(B_\epsilon) = 0$, and this completes the proof.
+  Write
+  \begin{equation*}
+    D_{L,\epsilon} = \set{x | x \in A_{k(L)}, |P_{L^c, m}(x)| > \epsilon}.
+  \end{equation*}
+  Note that $x \in B_\epsilon$ implies $x \in D_{L,\epsilon}$ for infinitely many $L$s.
+  So by B-C lemma, it is enough to show $\sum_{L=1}^\infty \mu(D_{L,\epsilon}) < \infty$.
+
+  Recall we have:
+  \begin{equation*}
+    \mu(D_{L,\epsilon}) \leq \exp(-k(L^c) h_\mu(T_3)/2) \cdot \frac{3^{\alpha+2}}{2 \epsilon^2}.
+  \end{equation*}
+  If we choose $c$ sufficiently large, then
+  \begin{equation*}
+    k(L^c) > 4 \log L/h_\mu(T_3).
+  \end{equation*}
+  So
+  \begin{equation*}
+    \sum \mu(D_{L,\epsilon}) \leq \sum L^{-2} \cdot \frac{3^{\alpha+2}}{2 \cdot \epsilon^2} < \infty.
+  \end{equation*}
+\end{proof}
+\begin{thm}[Rudolph's Theorem]
+  Let $\mu$ be a probability measure on $\mathbb{R}/\mathbb{Z}$ that is invariant and ergodic under the joint action of $T_2$ and $T_3$.
+  If $h_\mu(T_3) > 0$ then $\mu$ is the Lebesgue measure.
+\end{thm}
+\begin{proof}
+  Write
+  \begin{equation*}
+    A = \set{x | \text{normal in base } 2}.
+  \end{equation*}
+  By Host's theorem, $\mu(A) > 0$.
+
+  First observe that $x \in A \iff T_2 x \in A$, so $A = T_2^{-1} A$.
+  Claim: if $x \in A$, then $T_3 x \in A$.
+  Proof. If $x \in A$, then $\forall f \in C(X)$, we have
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N-1} f(T_2^n x) \to \int f(x) \, dx.
+  \end{equation*}
+  Now we can write
+  \begin{align*}
+    \frac{1}{N} \sum_{n=0}^{N-1} f(T_2^n T_3 x) &= \frac{1}{N} \sum_{n=0}^{N-1} f(T_3 T_2^n x) \\
+                                                &\to \int f \circ T_3(x) \, dx = \int f(x) \, dx.
+  \end{align*}
+  using $f \circ T_3$ in the role of $f$
+  This proves that $T_3 x \in A$.
+
+  The claim gives $A \subset T_3^{-1} A$.
+  Since $\mu(A) = \mu(T_3^{-1} A)$, we have that $\mu(T_3^{-1} A \setminus A) = 0$.
+
+  Using these, it is possible to show that for $B = \bigcup_{n=0}^\infty T_3^{-n} A$, we have $T_2^{-1}(B) = B$ and $T_3^{-1} B$ and $\mu(B \setminus A) = 0$.
+  By ergodicity $\mu(B) = 1$, hence $\mu(A) = 1$.
+  Then
+  \begin{equation*}
+    \frac{1}{N} \sum_{n=0}^{N_1} f(T_2^n x) \to \int f(x) \, dx
+  \end{equation*}
+  $\forall f \in C(X)$ and for $\mu$-almost every $x$.
 \end{proof}
 \printindex
 \end{document}
