@@ -471,7 +471,7 @@ Clearly, $\beta \Rightarrow \cons(\textsf{ZFC})$.
   If \hyperlink{def:zfcstar}{\textsf{ZFC*}} is consistent, then \textsf{ZFC*} $\nvdash \hyperlink{def:beta}{\beta}$.
 \end{thm}
 \begin{proof}
-  Let $(M,\in) \models$ \textsf{ZFC*}. Suppose \textsf{ZFC} $\vdash \hyperlink{def:beta}{\beta}$. So $(M,\in) \vDash \beta$.
+  Let $(M,\in) \models$ \textsf{ZFC*}. Suppose \textsf{ZFC*} $\vdash \hyperlink{def:beta}{\beta}$. So $(M,\in) \vDash \beta$.
   Thus in $M$, find $A$ \hyperlink{def:transitive}{transitive} such that $(A,\in) \models$ \textsf{ZFC}.
   By assumption, $(M,\in) \models \cons(\textsf{ZFC})$. By \hyperlink{def:abso}{absoluteness} of consistency, $(A,\in) \vDash \cons(\textsf{ZFC})$.
   Thus, $(A,\in) \vDash$ \textsf{ZFC*}.
@@ -597,7 +597,7 @@ So our next candidate is $\alpha = \aleph_1$.
     \node [circle, fill=black, inner sep=1pt] at (-0.2, 0.6) {};
   \end{tikzpicture}
 \end{center}
-Note $\mathcal{P}(\omega) \in \hyperlink{def:vk}{V_{\omega+2}} \subseteq V_{\omega+1}$.
+Note $\mathcal{P}(\omega) \in \hyperlink{def:vk}{V_{\omega+2}}$, $\mathcal{P}(\omega) \subseteq V_{\omega+1}$.
 Clearly, there is a surjection
 \begin{equation*}
   s: \mathcal{P}(\omega) \to \omega_1.
@@ -606,7 +606,7 @@ so the range of $s$ is unbounded in $\omega_1$.
 Thus: $V_{\omega_1} \models \neg\textsf{Repl}$.
 
 \begin{defi}\hypertarget{def:inacc}
-  A cardinal $\alpha$ is called \named{inaccessible} if
+  A cardinal $\kappa$ is called \named{inaccessible} if
   \begin{enumerate}[(a)]
     \item $\kappa$ is \hyperlink{def:reg}{regular}
     \item $\forall \lambda < \kappa$, $|\mathcal{P}(\lambda)| < \kappa$ \hypertarget{def:slim}(\named{strong limit}).
@@ -1171,7 +1171,7 @@ If $\alpha$ is countable, there is a code for a surjection $f: \mathbb{N} \twohe
   \begin{description}
     \item [Extensionality] Follows from \hyperlink{def:transitive}{transitivity}.
     \item[Pair] $x,y \in \hyperlink{def:l}{L_\kappa}$, find $\alpha$ such that $x,y \in L_\alpha$. $\{x,y\} \subseteq L_\alpha$.
-      Clearly the formula $\varphi(z,x,y) \coloneqq z=x \land x=y$ defines the pair $\{x,y\}$, so by our Lemma earlier, the pair lies in $\hyperlink{def:d}{\mathcal{D}(L_\alpha)} = L_{\alpha+1} \subseteq L_\kappa$.
+      Clearly the formula $\varphi(z,x,y) \coloneqq z=x \land z=y$ defines the pair $\{x,y\}$, so by our Lemma earlier, the pair lies in $\hyperlink{def:d}{\mathcal{D}(L_\alpha)} = L_{\alpha+1} \subseteq L_\kappa$.
 
       The same proof takes care of, say, Union.
     \item [Power Set] Consider $x \in L_\kappa$.
@@ -1223,37 +1223,34 @@ If $\alpha$ is countable, there is a code for a surjection $f: \mathbb{N} \twohe
         \{z \in x \mid L_\beta \models \varphi(z,a_1,\dotsc,a_n)\} \neq \{z \in x \mid L_\kappa \models \varphi(z,a_1,\dotsc,a_n)\}
       \end{align*}
 
-    Consider $\hyperlink{thm:ls}{\mathcal{H}^{L_\kappa}(L_\beta)} \preccurlyeq L_\kappa$ with $|\mathcal{H}^{L_\kappa}(L_\beta)| = |L_\beta| = |\beta| < \kappa$.
-    Now consider its \hyperlink{thm:mct}{Mostowski collapse}: $T \cong \mathcal{H}^{L_\kappa}(L_\beta)$ with Mostowski isomorphism $\pi: T \to \mathcal{H}^{L_\kappa}(L_\beta)$.
-    $T$ is \hyperlink{def:transitive}{transitive}, $|T| = |\mathcal{H}^{L_\kappa}(L_\beta)| < \kappa$.
+    % Consider $\hyperlink{thm:ls}{\mathcal{H}^{L_\kappa}(L_\beta)} \preccurlyeq L_\kappa$ with $|\mathcal{H}^{L_\kappa}(L_\beta)| = |L_\beta| = |\beta| < \kappa$.
+    % Now consider its \hyperlink{thm:mct}{Mostowski collapse}: $T \cong \mathcal{H}^{L_\kappa}(L_\beta)$ with Mostowski isomorphism $\pi: T \to \mathcal{H}^{L_\kappa}(L_\beta)$.
+    % $T$ is \hyperlink{def:transitive}{transitive}, $|T| = |\mathcal{H}^{L_\kappa}(L_\beta)| < \kappa$.
 
-    \begin{equation*}
-    \begin{tikzcd}
-      T \rar{\pi}& \mathcal{H}^{L_\kappa}(L_\beta) \rar{\text{id}}& L_\kappa   \\
-      \varphi(z,a_1, \dotsc, a_n) & \varphi(\pi(z),\pi(a_1),\dotsc,\pi(a_n)) & \varphi(\pi(z),\pi(a_1),\dotsc,\pi(a_n))
-    \end{tikzcd}
-    \end{equation*}
+    % \begin{equation*}
+    % \begin{tikzcd}
+    %   T \rar{\pi}& \mathcal{H}^{L_\kappa}(L_\beta) \rar{\text{id}}& L_\kappa   \\
+    %   \varphi(z,a_1, \dotsc, a_n) & \varphi(\pi(z),\pi(a_1),\dotsc,\pi(a_n)) & \varphi(\pi(z),\pi(a_1),\dotsc,\pi(a_n))
+    % \end{tikzcd}
+    % \end{equation*}
 
-    We know that the Mostowski collapse is the identity on transitive sets. So if $X \subseteq L_\kappa$ is transitive, then $\pi \upharpoonright X = \text{id} \upharpoonright X$.
+    % We know that the Mostowski collapse is the identity on transitive sets. So if $X \subseteq L_\kappa$ is transitive, then $\pi \upharpoonright X = \text{id} \upharpoonright X$.
 
-    Since $L_\beta$ is transitive and all $z, a_1, \dotsc, a_n$ are in $L_\beta$,
-    \begin{align*}
-      T \models \varphi(z,a_1, \dotsc, a_n) \iff L_\kappa \models \varphi(z,a_1, \dotsc, a_n).
-    \end{align*}
+    % Since $L_\beta$ is transitive and all $z, a_1, \dotsc, a_n$ are in $L_\beta$,
+    % \begin{align*}
+    %   T \models \varphi(z,a_1, \dotsc, a_n) \iff L_\kappa \models \varphi(z,a_1, \dotsc, a_n).
+    % \end{align*}
 
     Run the `modified Skolem hull construction' from Example Sheet 1, Question 12.
-    Set $\alpha_0 \coloneqq \text{Ord} \cap T$, and $\alpha_{n+1}$ as the least $\gamma$ such that $L_\gamma$ contains $L_{\alpha_n}$ and a witness for each existential statement true with parameters in $L_{\alpha_n}$.
+    Set $\alpha_0 \coloneqq \text{Ord} \cap L_\beta$, and $\alpha_{n+1}$ as the least $\gamma$ such that $L_\gamma$ contains $L_{\alpha_n}$ and a witness for each existential statement true in $L_\kappa$ with parameters in $L_{\alpha_n}$.
     Then
     \begin{align*}
       \bar{\alpha} &\coloneqq \bigcup_{n \in \mathbb{N}} \alpha_{n} \\
-      T &\preccurlyeq L_{\bar{\alpha}} \quad \text{with } \bar{\alpha} < \kappa.
+      L_{\overline{\alpha}} &\preccurlyeq L_{\kappa} \quad \text{with } \bar{\alpha} < \kappa.
     \end{align*}
     Define the set via $\varphi$ over $L_{\bar{\alpha}}$:
     \begin{align*}
-      &\phantom{=}\,\ \ \!\!\{z \in x \mid L_{\bar{\alpha}} \models \varphi(z,a_1,\dotsc,a_n)\} \\
-      &=\{z \in x \mid T \models \varphi(z,a_1,\dotsc,a_n)\} \\
-      &=\{z \in x \mid \mathcal{H}^{L_\kappa}(L_\beta) \models \varphi(\pi(z),\pi(a_1),\dotsc,\pi(a_n))\} \\
-      &=\{z \in x \mid \mathcal{H}^{L_\kappa}(L_\beta) \models \varphi(z,a_1,\dotsc,a_n)\} \\
+      &\mathrel{\phantom{=}}\{z \in x \mid L_{\bar{\alpha}} \models \varphi(z,a_1,\dotsc,a_n)\} \\
       &=\{z \in x \mid L_\kappa \models \varphi(z,a_1,\dotsc,a_n)\}.
     \end{align*}
   \end{description}
@@ -1817,6 +1814,7 @@ Let's restate the forcing theorem more formally.
 Let's prove the equivalence of $\Vdash^*$ and $\Vdash$ from the \hyperlink{thm:forcing}{Forcing theorem}.
 \begin{prop}
   Let $M$ be countable \hyperlink{def:transitive}{transitive} model, $\mathbb{P} \in M$, $p \in \p$, $\varphi$ a sentence of \hyperlink{def:lmp}{$\mathcal{L}(M^{\p})$}.
+  Then $p \forces \varphi \iff p \forces^* \varphi$.
 \end{prop}
 \begin{proof}
   Suppose $p \Vdash_M \varphi$. For every $G$ which is \hyperlink{def:genericO}{$\mathbb{P}$-generic over $M$} with $p \in G$, $M[G] \models \varphi$.
@@ -1851,7 +1849,7 @@ Let's postpone this until we have actually defined $\Vdash^*$.
   \begin{enumerate}
     \setcounter{enumi}{2}
     \item $p \Vdash^* \varphi \land \psi$ iff $p \Vdash^* \varphi$ and $p \Vdash^* \psi$. (Remark: We have no choice here due to property 2 in the failed proof).
-    \item $p \Vdash^* \neg \varphi$ iff $\forall q \leq p$, $p \not\Vdash^* \varphi$.
+    \item $p \Vdash^* \neg \varphi$ iff $\forall q \leq p$, $q \not\Vdash^* \varphi$.
     \item $p \Vdash^* \exists x\ \varphi(x, \tau_1, \dotsc, \tau_n)$ iff
       \begin{align*}
       \{r \mid \text{there is a }\p\text{-}\hyperlink{def:name}{\text{name }}\sigma\text{ such that } r \Vdash^* \varphi(\sigma,\tau_1, \dotsc, \tau_n)\}
@@ -2022,11 +2020,11 @@ It still remains to prove the \hyperlink{thm:forcing}{Forcing Theorem}.
       This means $M[G] \models \pi = \tau_1$, so by the induction hypothesis find $r \in G$ with $r \forces^* \pi = \tau_1$.
       Find $p \leq s,r$ with $p \in G$. Then
       \begin{align*}
-        \{q \leq p \mid \exists(\bar{\pi}, \bar{s}) \in \tau_2 \ (q \leq \bar{s} \land q \forces^* \bar{\pi} = r_1)\}
+        \{q \leq p \mid \exists(\bar{\pi}, \bar{s}) \in \tau_2 \ (q \leq \bar{s} \land q \forces^* \bar{\pi} = \tau_1)\}
       \end{align*}
       This set, or even the smaller set
       \begin{align*}
-        \{q \leq p \mid q \leq s \land q \forces^* \pi = r_1\}
+        \{q \leq p \mid q \leq s \land q \forces^* \pi = \tau_1\}
       \end{align*}
       is everything below $p$, thus \hyperlink{def:dense}{dense}.
 

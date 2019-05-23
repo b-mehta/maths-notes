@@ -2703,7 +2703,7 @@ So $f \mapsto \exists f$ is a functor $\textbf{Mono}(\mathscr{E}) \to \mathscr{E
   Then the \hyperlink{def:pullback}{pullback}
   \begin{equation*}
     \begin{tikzcd}
-      \hyperlink{def:sumb}{\Sigma_B}(g \times f) \rar \dar & f \dar{f}  \\
+      \hyperlink{def:sumb}{\Sigma_B}(g \times f) \rar \dar & A \dar{f}  \\
       C \rar{g} & B
     \end{tikzcd}
   \end{equation*}
@@ -2738,7 +2738,6 @@ So $f \mapsto \exists f$ is a functor $\textbf{Mono}(\mathscr{E}) \to \mathscr{E
 \begin{proof}
   For any $f: A \to B$ in $\mathscr{E}$, we can identify $(\hyperlink{def:slice}{\mathscr{E}/B})/f$ with $\mathscr{E}/A$, and $\hyperlink{def:bstar}{f^*}: \mathscr{E}/B \to \mathscr{E}/A$ with \hyperlink{def:pullback}{pullback} along $f$.
   Hence all such \hyperlink{def:funct}{functors} are \hyperlink{def:wtopos}{weakly logical}.
-
   But $f^*$ has a \hyperlink{def:adj}{left adjoint} $\Sigma_f$, so by \cref{lem:7.10}(ii) it has a right adjoint $\Pi_f$.
   Hence by \cref{lem:6.3}, $\mathscr{E}/B$ is \hyperlink{def:cc}{cartesian closed} for any $B$.
 \end{proof}

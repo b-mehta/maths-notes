@@ -469,7 +469,7 @@ Chebyshev showed $\pi(x) \asymp \frac{x}{\log x}$, (\hypertarget{def:asymp2}wher
 
   Remains to note
   \begin{align*}
-    \sum_{p \leq x} \sum_{n=2}^\infty \frac{\log p}{p^k} = \sum_{p \leq x} \log p \sum_{k=2}^\infty \frac{1}{p^k} = \sum_{p \leq x} \frac{\log p}{p^2 - p} \leq \sum_{p=2}^\infty \frac{1}{p^{\frac{3}{2}}} = \bigO(1).
+    \sum_{p \leq x} \sum_{k=2}^\infty \frac{\log p}{p^k} = \sum_{p \leq x} \log p \sum_{k=2}^\infty \frac{1}{p^k} = \sum_{p \leq x} \frac{\log p}{p^2 - p} \leq \sum_{p=2}^\infty \frac{1}{p^{\frac{3}{2}}} = \bigO(1).
   \end{align*}
   So
   \begin{equation*}\sum_{n \leq x} \frac{\Lambda(n)}n = \sum_{p \leq x} \frac{\log p}{p} + \bigO(1).\qedhere\end{equation*}
@@ -679,17 +679,17 @@ In particular, we will try the same method as just before, but the leading order
     \sum_{n \leq x} \Lambda_2(n) = 2 \sum_{a \leq x} \mu(a) \sum_{b \leq \frac xa} \frac{\tau(b) x}{ab} + c_5 \sum_{a \leq x} \mu(a) \sum_{b \leq \frac xa} \tau(b) + c_6 \sum_{a \leq x} \mu(a) \frac xa + \bigO\left(\sum_{a \leq x} \frac{x^{\frac 12}}{a^{\frac 12}}\right).
   \end{equation*}
 
-  Now, we show that the last three terms here are $\bigO(x)$:
+  Now, we show that the last three terms here are $\bigO(x)$ in reverse order:
   First, note that
   \begin{equation*}
     x^{\frac 12} \sum_{a \leq x} \frac{1}{a^{\frac 12}} = \bigO(x).
   \end{equation*}
   Secondly,
   \begin{align*}
-    x \sum_{a \leq x} \frac{\mu(a)}{a} &= \sum_{a \leq x} \floor*{\frac xa} + \bigO(x) \\
-                                      &= \sum_{a \leq x} \sum_{b \leq \frac xa} 1 + \bigO(x) \\
-                                      &= \sum_{d \leq x }\mu \star 1(d) + \bigO(x) \\
-                                      &= 1 + \bigO(x) = \bigO(x).
+    x \sum_{a \leq x} \frac{\mu(a)}{a} &= \sum_{a \leq x} \mu(a) \floor*{\frac xa} + \bigO(x) \\
+                                       &= \sum_{a \leq x} \mu(a) \sum_{b \leq \frac xa} 1 + \bigO(x) \\
+                                       &= \sum_{d \leq x }\mu \star 1(d) + \bigO(x) \\
+                                       &= 1 + \bigO(x) = \bigO(x).
   \end{align*}
   Thirdly,
   \begin{align*}
@@ -1011,7 +1011,7 @@ Compare this with \cref{cor:2.2}.
   \end{align*}
   and
   \begin{equation*}
-  \sum_{d,e} 1_{[d,e]=n} = 3^{\omega(n)}
+    \sum_{d,e} 1_{[d,e]=n} = 3^{\omega(n)}
   \end{equation*}
   as $n$ is squarefree.
 
@@ -1021,101 +1021,101 @@ Compare this with \cref{cor:2.2}.
   \end{equation*}
   Write $[d,e] = abc$ where $d = ab$, $e = bc$ and $(a,b) = (b,c) = (a,c) = 1$, which we can do since $\lambda_d=0$ if $d$ is not square-free.
 
-\newlec
-\begin{align*}
-  V &= \sum_{c \mid P(z)} \frac{f(c)}{c} \sum_{\substack{ab \mid P(z) \\ (a,b) = 1}} \frac{f(a)f(b)}{ab} \lambda_{ac} \lambda_{bc} \\
-    &= \sum_{c \mid P(z)} \frac{f(c)}{c} \sum_{\substack{ab \mid P(z)}} \frac{f(a)}{a} \frac{f(b)}{b} \sum_{d \mid a,\,d \mid b} \mu(d)\lambda_{ac} \lambda_{bc} \\
-  &= \sum_{c \mid P(z)} \frac{f(c)}{c} \sum_{d \mid P(z)} \mu(d) \left(\sum_{d \mid a \mid P(z)} \frac{f(a)}{a} \lambda_{ac}\right)^2 \\
-  \shortintertext{taking $ac=n$,}
-  &= \sum_{d \mid P(z)} \mu(d) \sum_{c \mid P(z)} \frac{c}{f(c)} \left(\sum_{cd \mid n \mid P(z)} \frac{f(n)}{n} \lambda_n\right)^2 \\
-  &= \sum_{d \mid P(z)} \mu(d) \sum_{c \mid P(z)} \frac{c}{f(c)} y_{cd}^2 \\
-  &= \sum_{k \mid P(z)} \left(\sum_{cd = k} \mu(d) \frac{c}{f(c)}\right) y_k^2
-\end{align*}
-For primes $p$,
-\begin{equation*}
-  \sum_{cd = p} \mu(d) \frac{c}{f(c)} = -1 + \frac{p}{f(p)} = \frac{p-f(p)}{f(p)} = \frac{1}{g(p)}.
-\end{equation*}
-Therefore $\forall h \mid P(z)$
-\begin{equation*}
-  \sum_{cd=k} \mu(d) \frac{c}{f(c)} = \frac{1}{g(k)}.
-\end{equation*}
+  \newlec
+  \begin{align*}
+    V &= \sum_{c \mid P(z)} \frac{f(c)}{c} \sum_{\substack{ab \mid P(z) \\ (a,b) = 1}} \frac{f(a)f(b)}{ab} \lambda_{ac} \lambda_{bc} \\
+      &= \sum_{c \mid P(z)} \frac{f(c)}{c} \sum_{\substack{ab \mid P(z)}} \frac{f(a)}{a} \frac{f(b)}{b} \sum_{d \mid a,\,d \mid b} \mu(d)\lambda_{ac} \lambda_{bc} \\
+      &= \sum_{c \mid P(z)} \frac{f(c)}{c} \sum_{d \mid P(z)} \mu(d) \left(\sum_{d \mid a \mid P(z)} \frac{f(a)}{a} \lambda_{ac}\right)^2 \\
+      \shortintertext{taking $ac=n$,}
+      &= \sum_{d \mid P(z)} \mu(d) \sum_{c \mid P(z)} \frac{c}{f(c)} \left(\sum_{cd \mid n \mid P(z)} \frac{f(n)}{n} \lambda_n\right)^2 \\
+      &= \sum_{d \mid P(z)} \mu(d) \sum_{c \mid P(z)} \frac{c}{f(c)} y_{cd}^2 \\
+      &= \sum_{k \mid P(z)} \left(\sum_{cd = k} \mu(d) \frac{c}{f(c)}\right) y_k^2
+  \end{align*}
+  For primes $p$,
+  \begin{equation*}
+    \sum_{cd = p} \mu(d) \frac{c}{f(c)} = -1 + \frac{p}{f(p)} = \frac{p-f(p)}{f(p)} = \frac{1}{g(p)}.
+  \end{equation*}
+  Therefore $\forall h \mid P(z)$
+  \begin{equation*}
+    \sum_{cd=k} \mu(d) \frac{c}{f(c)} = \frac{1}{g(k)}.
+  \end{equation*}
 
-Note that if $k \geq t$ then
-\begin{equation*}
-  y_k = \sum_{\substack{k \mid n \mid P(z)\\ h \geq t}} \frac{f(n)}{n} \lambda_n = 0
-\end{equation*}
-So
-\begin{equation*}
-  V = \sum_{\substack{k \mid P(z) \\ k < t}} \frac{y_k^2}{g(k)}
-\end{equation*}
-Want to choose $V$ as small as possible.
+  Note that if $k \geq t$ then
+  \begin{equation*}
+    y_k = \sum_{\substack{k \mid n \mid P(z)\\ h \geq t}} \frac{f(n)}{n} \lambda_n = 0
+  \end{equation*}
+  So
+  \begin{equation*}
+    V = \sum_{\substack{k \mid P(z) \\ k < t}} \frac{y_k^2}{g(k)}
+  \end{equation*}
+  Want to choose $V$ as small as possible.
 
-What is the relationship between $y_k$ and $\lambda_d$?
-\begin{equation*}
-  y_k = \sum_{k \mid n \mid P(z)} \frac{f(n)}{n} \lambda_n.
-\end{equation*}
-Fix $d$.
-\begin{align*}
-  \sum_{d \mid k \mid P(z)} \mu(k) y_k &= \sum_{h \mid P(z)} \mu(k) \sum_{n \mid P(z)} \frac{f(n)}{n} \lambda_n 1_{d \mid k} 1_{k \mid n} \\
-                                       &= \sum_{n \mid P(z)} \frac{f(n)}{n} \lambda_{k} 1_{d \mid n} \sum_{d\ mid k \mid n} \mu(k)
-\end{align*}
-Considering this innermost sum, write $k = de$, so we have
-\begin{equation*}
-  \mu(d) \sum_{e \mid \frac{n}{d}} \mu(e) =
-  \begin{cases}
-    \mu(d) & n = d \\
-    0 & n > d
-  \end{cases}
-\end{equation*}
-Thus
-\begin{align*}
-  \sum_{d \mid k \mid P(z)} \mu(k) y_k = \mu(d) \frac{f(d)}{d} \lambda_d.
-\end{align*}
-Recall $\lambda_1=1$, so must have
-\begin{equation*}1 = \sum_{k \mid P(z)} \mu(k) y_k\end{equation*}
-\begin{align*}
-  1 = \left(\sum_{\substack{k \mid P(z) \\ k < t}} \mu(k) y_k g(k)^{\frac 12} \times \frac{1}{g(k)^{\frac 12}}\right)^2 \leq \left(\sum_{\substack{k \mid P(z) \\ k<t} g(k)}\right) \left(\sum_{\substack{k \mid P(z) \\ k < t}} \frac{y_k^2}{g(k)}\right) = GV
-\end{align*}
-So $V \geq \frac{1}{G}$; but equality holds iff $\exists c$ such that $\forall k$,
-\begin{align*}
-  \frac{\mu(k) y_k}{g(k)^{\frac{1}{2}}} = c g(k)^{\frac 12} \\
-  \implies y_k = c \mu(k) g(k) \quad (k < t)
-\end{align*}
+  What is the relationship between $y_k$ and $\lambda_d$?
+  \begin{equation*}
+    y_k = \sum_{k \mid n \mid P(z)} \frac{f(n)}{n} \lambda_n.
+  \end{equation*}
+  Fix $d$.
+  \begin{align*}
+    \sum_{d \mid k \mid P(z)} \mu(k) y_k &= \sum_{h \mid P(z)} \mu(k) \sum_{n \mid P(z)} \frac{f(n)}{n} \lambda_n 1_{d \mid k} 1_{k \mid n} \\
+                                         &= \sum_{n \mid P(z)} \frac{f(n)}{n} \lambda_{k} 1_{d \mid n} \sum_{d \mid k \mid n} \mu(k)
+  \end{align*}
+  Considering this innermost sum, write $k = de$, so we have
+  \begin{equation*}
+    \mu(d) \sum_{e \mid \frac{n}{d}} \mu(e) =
+    \begin{cases}
+      \mu(d) & n = d \\
+      0 & n > d
+    \end{cases}
+  \end{equation*}
+  Thus
+  \begin{align*}
+    \sum_{d \mid k \mid P(z)} \mu(k) y_k = \mu(d) \frac{f(d)}{d} \lambda_d.
+  \end{align*}
+  Recall $\lambda_1=1$, so must have
+  \begin{equation*}1 = \sum_{k \mid P(z)} \mu(k) y_k\end{equation*}
+  \begin{align*}
+    1 = \left(\sum_{\substack{k \mid P(z) \\ k < t}} \mu(k) y_k g(k)^{\frac 12} \times \frac{1}{g(k)^{\frac 12}}\right)^2 \leq \left(\sum_{\substack{k \mid P(z) \\ k<t}} g(k)\right) \left(\sum_{\substack{k \mid P(z) \\ k < t}} \frac{y_k^2}{g(k)}\right) = GV
+  \end{align*}
+  So $V \geq \frac{1}{G}$; but equality holds iff $\exists c$ such that $\forall k$,
+  \begin{align*}
+    \frac{\mu(k) y_k}{g(k)^{\frac{1}{2}}} = c g(k)^{\frac 12} \\
+    \implies y_k = c \mu(k) g(k) \quad (k < t)
+  \end{align*}
 
-What is $c$? We know that
-\begin{equation*}
-  1 = c \sum_{\substack{k \mid P(z)}} \mu(k)^2 g(k) = cG
-\end{equation*}
-so choose $c = \frac{1}{G}$. Check:
-\begin{enumerate}
-  \item $\lambda_1 = 1$ \checkmark
-  \item $\lambda_d = 0$ if $d \geq t$ \checkmark
-  \item $|\lambda_d| \leq 1$:
-    \begin{equation*}
-      \lambda_d = \mu(d) \frac{d}{f(d)} \sum_{d \mid k \mid P(z)} \mu(k) y_k
-    \end{equation*}
-    so
-    \begin{align*}
-      |\lambda_d| = \frac{d}{f(d)} \frac{1}{G} \sum_{d \mid k \mid P(z)} g(k).
-    \end{align*}
+  What is $c$? We know that
+  \begin{equation*}
+    1 = c \sum_{\substack{k \mid P(z) \\ k < t}} \mu(k)^2 g(k) = cG
+  \end{equation*}
+  so choose $c = \frac{1}{G}$. Check:
+  \begin{enumerate}
+    \item $\lambda_1 = 1$ \checkmark
+    \item $\lambda_d = 0$ if $d \geq t$ \checkmark
+    \item $|\lambda_d| \leq 1$:
+      \begin{equation*}
+        \lambda_d = \mu(d) \frac{d}{f(d)} \sum_{d \mid k \mid P(z)} \mu(k) y_k
+      \end{equation*}
+      so
+      \begin{align*}
+        |\lambda_d| = \frac{d}{f(d)} \frac{1}{G} \sum_{d \mid k \mid P(z)} g(k).
+      \end{align*}
 
-    \begin{align*}
-      G &= \sum_{\substack{e \mid P(z) \\ e<t}} g(e) \\
-        &= \sum_{k \mid d} \sum_{\substack{e \mid P(z) \\ e < t \\ (d,e)=k}} g(e) \\
-        &= \sum_{k \mid d} \sum_{\substack{n \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{k}}} g(m) \\
-        &\geq \left(\sum_{k \mid d} g(k)\right) \left(\sum_{\substack{m \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{d}}} g(m)\right)
-    \end{align*}
+      \begin{align*}
+        G &= \sum_{\substack{e \mid P(z) \\ e<t}} g(e) \\
+          &= \sum_{k \mid d} \sum_{\substack{e \mid P(z) \\ e < t \\ (d,e)=k}} g(e) \\
+          &= \sum_{k \mid d} \sum_{\substack{n \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{k}}} g(m) \\
+          &\geq \left(\sum_{k \mid d} g(k)\right) \left(\sum_{\substack{m \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{d}}} g(m)\right)
+      \end{align*}
 
-    Note that for primes $p$,
-    \begin{equation*}
-      \sum_{k \mid p} g(k) = 1 + \frac{f(p)}{p - f(p)} = \frac{p}{p - f(p)} = \frac{p}{f(p)} g(p).
-    \end{equation*}
-    So
-    \begin{align*}
-      G \geq \frac{d}{f(d)} g(d) \left(\sum_{\substack{m \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{d}}} g(m)\right) = \frac{d}{f(d)} \sum_{d \mid k \mid P(z)} g(k) = |\lambda_d| G
-    \end{align*}
-  so $|\lambda_d| \leq 1$. \qedhere
-\end{enumerate}
+      Note that for primes $p$,
+      \begin{equation*}
+        \sum_{k \mid p} g(k) = 1 + \frac{f(p)}{p - f(p)} = \frac{p}{p - f(p)} = \frac{p}{f(p)} g(p).
+      \end{equation*}
+      So
+      \begin{align*}
+        G \geq \frac{d}{f(d)} g(d) \left(\sum_{\substack{m \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{d}}} g(m)\right) = \frac{d}{f(d)} \sum_{d \mid k \mid P(z)} g(k) = |\lambda_d| G
+      \end{align*}
+      so $|\lambda_d| \leq 1$. \qedhere
+  \end{enumerate}
 \end{proof}
 \begin{nthm}[Brun]\label{thm:2.5}
   Let $\pi_2(x) = \# \{1 \leq n \leq n : n \text{ and } n+2 \text{ are prime}\}$.
@@ -2458,7 +2458,7 @@ Recall
   If $f(z)$ is analytic on a region containing $|z| \leq 1$ and $f(0) \neq 0$ and $|f(z)| \leq M$ for $|z| \leq 1$.
   Then for $0 < r < R < 1$, for $|z| \leq r$,
   \begin{align*}
-  \frac{f'}{f}(z) = \sum \frac{1}{z-z_k} + \bigO \log \frac{M}{|f(0)|}
+    \frac{f'}{f}(z) = \sum \frac{1}{z-z_k} + \bigO\left(\log \frac{M}{|f(0)|}\right)
   \end{align*}
   where the sum is over zeros of $f$ in $|z_k| \leq R$.
 \end{lemma}
@@ -2475,10 +2475,9 @@ Recall
   Follows from the lemma with $f(z) = L(z + \frac{3}{2} + it, \chi)$ with $R = \frac{5}{6}$ and $r = \frac{2}{3}$.
   Note
   \begin{align*}
-    |f(0)| = \abs{L(\frac{3}{2} +it,\chi)} = \prod_p \abs{1 - \frac{\chi(p)}{p^{\frac 32 + it}}} \geq \prod_p (1 + \frac{1}{p^{\frac 32}}) \gg 1.
+    |f(0)| = \abs{L\left(\frac{3}{2} +it,\chi\right)} = \prod_p \abs{1 - \frac{\chi(p)}{p^{\frac 32 + it}}} \geq \prod_p (1 + \frac{1}{p^{\frac 32}}) \gg 1.
   \end{align*}
-
-  By Partial Summation, if $F(t) = \sum_{1 \leq n \leq t} \chi(n)$, for $\sigma > 0$,
+  By \nameref{lem:ps}, if $F(t) = \sum_{1 \leq n \leq t} \chi(n)$, for $\sigma > 0$,
   \begin{align*}
     L(s,\chi) = s \int_1^\infty \frac{F(t)}{t^{s+1}}\,dt
   \end{align*}
@@ -2642,7 +2641,7 @@ First, we need a lemma for $L(s,\chi_0)$.
   \end{align*}
   So
   \begin{equation*}
-    \frac{1}{\sigma-1} - \frac{2}{\sigma-\rho_0} + \bigO(\log q) \geq (-\Re \frac{L'}{L}(\sigma,\chi_0) - \Re \frac{L'}{L}(\sigma,\chi)) \geq 0.
+    \frac{1}{\sigma-1} - \frac{2}{\sigma-\rho_0} + \bigO(\log q) \geq \left(-\Re \frac{L'}{L}(\sigma,\chi_0) - \Re \frac{L'}{L}(\sigma,\chi)\right) \geq 0.
   \end{equation*}
   Hence
   \begin{equation*}
@@ -2679,7 +2678,7 @@ First, we need a lemma for $L(s,\chi_0)$.
 \subsection{Prime Number Theorem for Arithmetic Progressions}
 Recall that
 \begin{align*}
-  \sum_{\substack{1 \leq n \leq x \\ n \equiv a \bmod{q}}} &= \frac{1}{\varphi(q)} \sum_\chi \overline{\chi(a)} \sum_{1 \leq n \leq x} \Lambda(n) \chi(n) \\
+  \sum_{\substack{1 \leq n \leq x \\ n \equiv a \bmod{q}}} \Lambda(n) &= \frac{1}{\varphi(q)} \sum_\chi \overline{\chi(a)} \sum_{1 \leq n \leq x} \Lambda(n) \chi(n) \\
                                                            &= \frac{1}{\varphi(q)} \sum_\chi \overline{\chi(a)} \psi(x,\chi).
 \end{align*}
 \begin{thm}

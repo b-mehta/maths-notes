@@ -5,7 +5,6 @@
 \def\nterm{Michaelmas}
 \def\nlecturer{Dr. S. Barbina}
 \def\ncourse{Model Theory}
-\def\draft{Ongoing course, rough}
 \usepackage{mathrsfs}
 \usepackage{imakeidx}
 \usepackage{marginnote}
@@ -1407,7 +1406,7 @@ This gives \hyperlink{def:qe}{quantifier elimination} for $T_{\text{rg}}$ and $T
 \begin{ndef}
   \hypertarget{def:def}An element $a \in \mathcal{U}$ is \textbf{definable} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $\varphi(U) = \{a\}$. (In particular, any element of $A$ is definable over $A$; $x=a$ for $a \in A$).
 
-  \hypertarget{def:alg}An element $a \in \mathcal{U}$ is \textbf{algebraic} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $|\varphi(U)| < \omega$ and $a \in \phi(\mathcal{U})$.
+  \hypertarget{def:alg}An element $a \in \mathcal{U}$ is \textbf{algebraic} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $|\varphi(U)| < \omega$ and $a \in \varphi(\mathcal{U})$.
 
   The \textbf{definable closure} of $A$ is
   \begin{equation*}
@@ -1582,7 +1581,7 @@ From now on: $T$ is strongly minimal, \hyperlink{def:complete}{complete}, and ha
 \end{nthm}
 \begin{proof}
   Let $a,b \in \hyperlink{def:alg}{\acl}(B)$. Assume $b \notin \hyperlink{def:algnot}{\acl(a,B)}$ and $a \in \acl(b,B)$.
-  Let $\varphi(x,y)$ be an $L$-\hyperlink{def:form}{formula} such that for some $n$,
+  Let $\varphi(x,y)$ be an $L(B)$-\hyperlink{def:form}{formula} such that for some $n$,
   \begin{equation*}
     \varphi(a,b) \land \exists^{\leq n} x \; \varphi(x,b).
   \end{equation*}
