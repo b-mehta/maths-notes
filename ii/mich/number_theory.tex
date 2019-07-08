@@ -2741,11 +2741,11 @@ Their \hyperlink{def:cfn}{CF expansions} are computable and have nice properties
     ($\Leftarrow$) Suppose $a \theta^2 + b \theta + c= 0$ for $a, b, c \in \Z$, $a > 0$.
     Let $f(x, y) = a x^2 + b x y + c y^2$ (The \hyperlink{def:bqf}{BQF} is \hyperlink{def:definite}{indefinite} as $\theta$ real).
     \begin{gather*}
-        \theta = \frac{p_n \theta_{n+1} + p_{n+1}}{q_n \theta_{n+1} + q_{n+1}} \implies f_n(\theta_{n+1}, 1) = 0 \text{ where} \\
-        f_n(x, y) = f(p_n x + p_{n+1} y, q_n x + q_{n+1} y) = A_n x^2 + B_n x y + C_n y^2 \\
+        \theta = \frac{p_n \theta_{n+1} + p_{n-1}}{q_n \theta_{n+1} + q_{n-1}} \implies f_n(\theta_{n+1}, 1) = 0 \text{ where} \\
+        f_n(x, y) = f(p_n x + p_{n-1} y, q_n x + q_{n-1} y) = A_n x^2 + B_n x y + C_n y^2 \\
         \shortintertext{with}
         A_n = f_n(1, 0) = f(p_n, q_n) = f_{n+1}(0, 1) = C_{n+1} \\
-        \text{and } \hyperlink{def:disc}{\disc}(f_n) = \disc(f) \text{ as } \begin{vmatrix} p_n & q_n \\ p_{n-1} & q_{n-1} \end{vmatrix} = \pm 1
+        \text{and } \hyperlink{def:disc}{\disc}(f_n) = \disc(f) \text{ as } \begin{vmatrix} p_n & p_{n-1} \\ q_n & q_{n-1} \end{vmatrix} = \pm 1
     \end{gather*}
 
     \textbf{Claim:} $\exists$ constant $K$ such that $\abs{A_n} \leq K \ \forall n$.
