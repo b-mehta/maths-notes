@@ -1102,7 +1102,7 @@ Compare this with \cref{cor:2.2}.
       \begin{align*}
         G &= \sum_{\substack{e \mid P(z) \\ e<t}} g(e) \\
           &= \sum_{k \mid d} \sum_{\substack{e \mid P(z) \\ e < t \\ (d,e)=k}} g(e) \\
-          &= \sum_{k \mid d} \sum_{\substack{n \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{k}}} g(m) \\
+          &= \sum_{k \mid d} g(k) \sum_{\substack{m \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{k}}} g(m) \\
           &\geq \left(\sum_{k \mid d} g(k)\right) \left(\sum_{\substack{m \mid P(z) \\ (m,d) = 1 \\ m < \frac{t}{d}}} g(m)\right)
       \end{align*}
 
@@ -1265,7 +1265,7 @@ Recall that we defined
   \end{align*}
   and
   \begin{align*}
-    &(-1)^r \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \left(|A_d| - \sum_{\substack{p \in P \\ p < \lambda(d)}} S(A_{pd}, P; p)\right) \\
+    &(-1)^r \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \left(|A_d| - \sum_{\substack{p \in P \\ p < l(d)}} S(A_{pd}, P; p)\right) \\
     = & \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \mu(d) |A_d| + (-1)^{r+1} \sum_{\substack{e \mid P(z) \\ \omega(e) = r+1}} S(A_e, P; l(e)).
   \end{align*}
 \end{proof}
@@ -1284,7 +1284,7 @@ In particular, note that if $r$ is even
 \end{thm}
 Compare this to Eratosthenes sieve:
 \begin{align*}
-  S(A,P;z) + X W(z) + \bigO\left(\sum_{\substack{d \mid P(z)}} |R_d|\right)
+  S(A,P;z) = X W(z) + \bigO\left(\sum_{\substack{d \mid P(z)}} |R_d|\right)
 \end{align*}
 \begin{proof}
   Recall that from iterating Buchstab's formula, for any $r \geq 1$,
@@ -1311,7 +1311,7 @@ Compare this to Eratosthenes sieve:
   Error term:
   \begin{align*}
     &\ll X \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \frac{f(d)}{d} + \sum_{\substack{d \mid P(z) \\ \omega(d) \leq r}} |R_d| \\
-    &\leq \sum_{\substack{d \mid P(z) \\ d \leq z^r}} |R_d|
+    &\leq X \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \frac{f(d)}{d} + \sum_{\substack{d \mid P(z) \\ d \leq z^r}} |R_d|
   \end{align*}
   because $d \mid P(z) = \prod_{\substack{p \in P \\ p < z}} p$.
 
@@ -1330,7 +1330,7 @@ Compare this to Eratosthenes sieve:
   \end{align*}
   So if $r \geq 2 e |\log W(z)|$ then
   \begin{align*}
-    \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \frac{f(d)}{d}&\leq \left(\frac{e |\log W(z)|}{r}\right)^r \leq 2^r.
+    \sum_{\substack{d \mid P(z) \\ \omega(d) = r}} \frac{f(d)}{d}&\leq \left(\frac{e |\log W(z)|}{r}\right)^r \leq 2^{-r}.
   \end{align*}
 \end{proof}
 
@@ -2506,7 +2506,7 @@ Recall
   Note that
   \begin{align*}
     &\phantom{=}\Re(-3\frac{L'}{L}(1+\delta, \chi_0) - 4 \frac{L'}{L}(1+\delta+it,\chi) - \frac{L'}{L}(1+\delta+2it,\chi^2)) \\
-    &= \sum_{ \substack{n=1\\(n,q)=1}} \frac{\Lambda(n)}{n^{1+\delta}} \Re(3 + 4 \chi(n) n^{-it} + n^{-2it})
+    &= \sum_{ \substack{n=1\\(n,q)=1}} \frac{\Lambda(n)}{n^{1+\delta}} \Re(3 + 4 \chi(n) n^{-it} + \chi(n)^2 n^{-2it})
   \end{align*}
   and $\forall \theta$, $3 + 4 \cos \theta + \cos(2 \theta) \geq 0$. But the left hand side is $\Re(3 + 4 e^{i\theta} + e^{2 i \theta})$, i.e.\ $\forall z$, $|z| =1$, $\Re(3 +4z+z^2) \geq 0$.
   % it is a dir series with nn coeffs, so \geq 0
@@ -2702,7 +2702,7 @@ Recall that
   $L(s,\chi_1) L(s,\chi_2)$ has at most one real zero $\beta$ with $1 - \frac{c}{\log q} < \beta < 1$.
 \end{thm}
 \begin{proof}
-  Say $\beta_i$ is a real zero of $L(s_i, \chi_i)$ for $i=1,2$. Without loss of generality $\frac{5}{6} \beta_1 \leq \beta_2 < 1$. Fix $\delta \geq 0$.
+  Say $\beta_i$ is a real zero of $L(s_i, \chi_i)$ for $i=1,2$. Without loss of generality $\frac{5}{6} \leq \beta_1 \leq \beta_2 < 1$. Fix $\delta \geq 0$.
   \begin{enumerate}
     \item
       \begin{equation*}
@@ -2842,7 +2842,7 @@ Two applications of Siegel-Walfisz:
     \begin{proof}
       Let $x < p_{a,q}$, so $\psi(x;q,a) = 0$, so if $q \leq (\log x)^A$ then
       \begin{align*}
-        \frac{x}{\varphi(q)} \bigO_A(x \exp(-c \sqrt{\log x} )),
+        \frac{x}{\varphi(q)} = \bigO_A(x \exp(-c \sqrt{\log x} )),
       \end{align*}
       so $\exp(c \sqrt{\log x}) = \bigO_A(q)$, so $\log x \leq (\log q)^2 + \bigO_A(1)$, contradiction to $q \leq (\log x)^A$ i.e.\ for any $A$, if $q$ is large enough, $q \leq (\log p_{a,q})^A$.
     \end{proof}

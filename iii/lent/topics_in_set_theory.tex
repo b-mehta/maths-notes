@@ -1319,9 +1319,10 @@ Run the Condensation Lemma proof for $V_\kappa$ as $M$ and $L_\beta$ as $L_\kapp
 \begin{equation*}
   y \in L_\alpha = T \cong \mathcal{H}^{L_\beta}(\mathbb{N} \cup \{y\}) \preccurlyeq L_\beta.
 \end{equation*}
-Now $L_\kappa \models$ `$a$ is countable'. So if $L_\kappa \models 2^{\aleph_0} \leq \aleph_1$ then $L_\kappa \models \hyperlink{def:ch}{\text{CH}}$.
+Now $L_\kappa \models$ `$a$ is countable'.
+So $L_\kappa \models 2^{\aleph_0} \leq \aleph_1$, hence $L_\kappa \models \hyperlink{def:ch}{\textsf{CH}}$.
 \begin{thm}
-  $\cons(\hyperlink{def:axioms}{\textsf{ZFC}}+\hyperlink{def:ic}{\textsf{IC}}) \implies \cons(\textsf{ZFC}+\hyperlink{def:ch}{\text{CH}})$.
+  $\cons(\hyperlink{def:axioms}{\textsf{ZFC}}+\hyperlink{def:ic}{\textsf{IC}}) \implies \cons(\textsf{ZFC}+\hyperlink{def:ch}{\textsf{CH}})$.
 \end{thm}
 \begin{remark}\leavevmode
   \begin{enumerate}[(1)]
@@ -1362,7 +1363,7 @@ Clearly \textsf{ZFC}+GCH gives that every limit is a strong limit. So, \textsf{Z
   Towards a contradiction with G\"odel's Incompleteness Theorem, prove $M \models \cons(\textsf{ZFC})$.
   Consider $L \subseteq M$. Then by remark (3), $L \models \textsf{ZFC}$+GCH.
   By $\textsf{ZFC}\vdash \exists$ regular limit, we get $L \models \textsf{ZFC}+\text{GCH}+\exists \kappa$ regular limit. Thus, $L \models \textsf{ZFC}+\hyperlink{def:ic}{\textsf{IC}}$.
-  Then $L \models \exists \kappa (L_\kappa \models \textsf{ZFC})$, so $L \models \cons(\textsf{ZFC)})$ thus $M \models \cons(\textsf{ZFC})$ by absoluteness, a contradiction.
+  Then $L \models \exists \kappa (L_\kappa \models \textsf{ZFC})$, so $L \models \cons(\textsf{ZFC})$ thus $M \models \cons(\textsf{ZFC})$ by absoluteness, a contradiction.
 \end{proof}
 
 \subsection{The limitations of the method of inner models}
@@ -2089,7 +2090,7 @@ It still remains to prove the \hyperlink{thm:forcing}{Forcing Theorem}.
       The first half fails means:
       there is $(\pi_1,s_1) \in \tau_1$ such that
       \begin{equation*}
-        \mathcal{D}' \coloneqq \{p \leq p \mid q \leq s_1 \rightarrow \exists (\pi_2,s_2) \in \tau_2 \ (q \leq s_2 \land q \forces^* \pi_1 = \pi_2)\}
+        \mathcal{D}' \coloneqq \{q \leq p \mid q \leq s_1 \rightarrow \exists (\pi_2,s_2) \in \tau_2 \ (q \leq s_2 \land q \forces^* \pi_1 = \pi_2)\}
       \end{equation*}
       is not dense below $p$.
       Fix this $(\pi_1, s_1) \in \tau_1$ and fix $r \leq p$ such that $\mathcal{D}'$ has no element below $r$.
