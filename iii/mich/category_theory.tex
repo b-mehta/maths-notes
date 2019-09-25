@@ -124,7 +124,7 @@ As long as some examples make sense, it is not a point of concern that some exam
 \begin{ndef}[Category]\label{def:1.1}\index{category}\hypertarget{def:cat}
   A \named{category} $\mathscr{C}$ consists of
   \begin{enumerate}[label=(\alph*)]
-    \item \index{object}a collection $\mathscr{C}$ of \textbf{objects} $A,B,C,\dotsc$
+    \item \index{object}a collection $\ob \mathscr{C}$ of \textbf{objects} $A,B,C,\dotsc$
     \item \index{morphism}a collection $\mor \mathscr{C}$ of \textbf{morphisms} $f,g,h,\dotsc$
     \item two operations $\dom, \cod$ assigning to each $f \in \mor \mathscr{C}$ a pair of objects, its \named{domain} and \named{codomain}.
     We write $\begin{tikzcdi}A \rar{f} & B \end{tikzcdi}$ to mean `$f$ is a morphism and $\dom f = A$ and $\cod f = B$'.
@@ -218,7 +218,7 @@ As long as some examples make sense, it is not a point of concern that some exam
     \item A functor between posets is an order-preserving map.
     \item Let $G$ be a group. A functor $F: G \to \mathbf{Set}$ consists of a set $A = F*$ together with an action of $G$ on $A$, i.e.\ a permutation representation of $G$ (where we use $*$ to refer to the unique object of the group).
       Similarly a functor $G \to \mathbf{Mod}_K$ is a $K$-linear representation of $G$.
-    \item The construction of a fundamental group $\pi_1(X,x)$ of a space $X$ with basepoint $x$ is a functor $\mathbf{Top}_* \to \mathbf{Gp}$ where $\mathbf{Top}_*$ is the set of spaces with a chosen basepoint.
+    \item The construction of a fundamental group $\pi_1(X,x)$ of a space $X$ with basepoint $x$ is a functor $\mathbf{Top}_* \to \mathbf{Gp}$ where $\mathbf{Top}_*$ is the category of spaces with a chosen basepoint.
       Similarly, the fundamental groupoid is a functor $\mathbf{Top} \to \mathbf{Gpd}$ where $\mathbf{Gpd}$ is the category of groupoids and functors between them.
   \end{enumerate}
 \end{nexample}
