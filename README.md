@@ -3,6 +3,8 @@
 These are my notes for Part II and Part III of Mathematics at the University of Cambridge.
 There are many hyperlinks, marked in blue, to help both learning and revising a topic: I recommend using a PDF viewer with a back function (such as Skim) to make navigation more convenient.
 
+If you would like <img src="https://latex.codecogs.com/gif.latex?\LaTeX" title="\LaTeX" /> help - especially diagrams in Ti*k*Z - feel free to get in touch with me; especially if you're producing open-source notes.
+
 ## Part III notes
 ### Michaelmas
 - [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone)
