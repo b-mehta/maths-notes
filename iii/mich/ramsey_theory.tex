@@ -1,0 +1,247 @@
+\documentclass{article}
+
+% preamble
+\def\npart{III}
+\def\nyear{2019}
+\def\nterm{Michaelmas}
+\def\nlecturer{Professor I.\ Leader}
+\def\ncourse{Ramsey Theory}
+
+\def\draft{Incomplete}
+
+\usepackage{mathrsfs}
+\usepackage{imakeidx}
+\usepackage{marginnote}
+\usepackage{mathdots}
+\usepackage{tabularx}
+\usepackage{ifthen}
+
+\input{header}
+\swapnumbers
+\reversemarginpar
+
+\usetikzlibrary{positioning, decorations.pathmorphing, decorations.text, calc, backgrounds, fadings}
+\tikzset{node/.style = {circle,draw,inner sep=0.8mm}}
+
+\makeindex[intoc]
+
+\newcommand{\named}[1]{\textbf{#1}\index{#1}}
+\newcommand{\bonusnamed}[1]{\textbf{#1}\index{#1@*#1}}
+
+\setcounter{section}{-1}
+
+\newcommand{\red}[1]{\textcolor{bred}{#1}}
+\newcommand{\green}[1]{\textcolor{bgreen}{#1}}
+\newcommand{\blue}[1]{\textcolor{bblue}{#1}}
+\newcommand{\yellow}[1]{\textcolor{byellow}{#1}}
+\newcommand{\orange}[1]{\textcolor{borange}{#1}}
+\newcommand{\purple}[1]{\textcolor{bpurple}{#1}}
+
+% and here we go!
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\clearpage
+\section{Introduction}
+
+\newlec
+If you liked Graph Theory, you'll almost certainly like Ramsey Theory. If you didn't like Graph Theory, you probably won't like Ramsey Theory.
+Ramsey theory is an unusual part of maths, in that it's all about answering one question. The basic question is:
+\begin{quotation}
+    \textit{Can we find some order in enough disorder?}
+\end{quotation}
+
+As usual in discrete mathematics, the key ideas of the course are in the proofs rather than in the definitions.
+
+The course is structured into three sections.
+\begin{enumerate}[label=\bfseries Chapter \arabic*:, leftmargin=*]
+  \item Monochromatic systems (abstract and concrete)
+  \item Partition regular equations (concrete)
+  \item Infinite Ramsey Theory (abstract)
+\end{enumerate}
+There are not many prerequisites to this course, only basic concepts of topology (compact spaces).
+
+No single book covers all of the course, but there are two books which cover the relevant content:
+\begin{itemize}
+  \item Bollob\'as, \textit{Combinatorics}, C.U.P., 1986 (for chapter 3). An excellent survey of the material.
+  \item Graham, Rothschild, Spencer, \textit{Ramsey Theory}, Wiley, 1990 (for chapters 1,2).
+\end{itemize}
+
+As well as lots of nice proofs in the area, there are many open problems we will come across.
+
+\clearpage
+\section{Monochromatic systems}
+\subsection{Ramsey's Theorem}
+\hypertarget{not:ns}Write $\mathbb{N} = \{1, 2, 3, \dotsc\}$, and write $[n]$ for $\{1, \dotsc, n\}$.\index{natural numbers}
+\hypertarget{not:xr}For any set $X$, write \begin{equation*}X^{(r)} = \{A \subseteq X : \abs{A} = r\}.\end{equation*}
+
+Suppose we have the \hyperlink{not:ns}{natural numbers} listed, and each pair of naturals is connected by an edge coloured either \red{red} or \blue{blue}.
+\begin{center}
+  \begin{tikzpicture}
+    \begin{scope}[every node/.style={node, inner sep=0.4mm}]
+    \foreach \x in {1,...,5} {
+      \node [label=below:$\x$] (\x) at (\x,0) {};
+    }
+    \end{scope}
+    \draw [bred]  (1) to[bend left=40] (2);
+    \draw [bred]  (1) to[bend left=40] (3);
+    \draw [bred]  (3) to[bend left=40] (5);
+    \draw [bblue] (2) to[bend left=40] (3);
+    \draw [bblue] (2) to[bend left=40] (4);
+    \node at (6,0) {\ldots};
+  \end{tikzpicture}
+\end{center}
+\hypertarget{def:2colouring}Formally, we have a 2-colouring $c$ of $\hyperlink{not:ns}{\mathbb{N}}^{\hyperlink{not:xr}{(2)}}$, i.e.\ $c: \mathbb{N}^{(2)} \to \{\red{1},\blue{2}\}$.\index{colouring}
+Can we always find an infinite set $M$ that is \named{monochromatic}, i.e.\ $c$ is constant on $M^{(2)}$?
+
+\begin{eg}
+  \leavevmode
+  \begin{enumerate}[(i)]
+    \item Colour $ij$ \red{red} if $i+j$ even and \blue{blue} if it is odd.
+      Then we can find an $M$ that works, by using the evens.
+    \item Colour $ij$ \red{red} if $\max\{n : 2^n \mid i+j\}$ even, and \blue{blue} otherwise.
+
+      Again yes, we can use $M = \{4^0, 4^1, 4^2, \dotsc\}$ or $M = \{x : x \equiv 1 \pmod{4}\}$.
+    \item Colour $ij$ \red{red} if $i+j$ has an even number of (distinct) prime factors, and \blue{blue} if odd.
+      Now the answer is less clear...
+  \end{enumerate}
+\end{eg}
+It turns out that the answer is always yes.
+\begin{nthm}[Ramsey's Theorem]\index{Ramsey's theorem}\label{thm:ramsey}
+  Let $c$ be a 2-colouring of $\mathbb{N}^{(2)}$. Then $c$ has an infinite monochromatic set.
+\end{nthm}
+\begin{proof}\leavevmode
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.7, every node/.style={node, fill=white, inner sep=0.4mm}]
+    \coordinate  (a) at ( -7,  0) {};
+    \coordinate  (b) at ( -4,  1) {};
+    \coordinate  (c) at ( -1, -1) {};
+    \coordinate  (d) at (1.7,  0) {};
+
+    \foreach \theta in {38, 36, ..., -36}{
+      \pgfmathsetmacro\rand{rand}
+      \draw [bred]    (a) -- ++(\theta    +\rand*1.4   :  3+\rand*0.5);
+    }
+    \foreach \theta in {30, 28, ..., -28}{
+      \pgfmathsetmacro\rand{rand}
+      \draw [bblue]  (b) -- ++(\theta*1.1+\rand*1.3-15:  3+\rand*0.5);
+    }
+    \foreach \theta in {24, 22, ..., -22}{
+      \pgfmathsetmacro\rand{rand}
+      \draw [bred] (c) -- ++(\theta*1.4+\rand*1.2+20:2.5+\rand*0.5);
+    }
+    \foreach \theta in {14, 12, ..., -12}{
+      \pgfmathsetmacro\rand{rand}
+      \draw [bblue]   (d) -- ++(\theta*1.6+\rand*1.2+10:2.3+\rand*0.5);
+    }
+    \draw [bred]    (a) -- (b);
+    \draw [bblue]  (b) -- (c);
+    \draw [bred] (c) -- (d);
+
+    \draw plot [smooth cycle, tension=0.8, xshift=2.0cm, xscale=2.5, scale=3.0] coordinates {(-180:1.0) (-120:1.2) (-60:0.8) (0:0.9) (60:1.1) (120:1.3)};
+    \draw plot [smooth cycle, tension=0.8, xshift=2.8cm, xscale=2.0, scale=2.6] coordinates {(-180:1.0) (-120:1.2) (-60:0.7) (0:0.9) (60:0.9) (120:1.3)};
+    \draw plot [smooth cycle, tension=0.8, xshift=2.9cm, xscale=1.7, scale=1.8] coordinates {(-180:1.0) (-120:1.3) (-60:0.8) (0:0.9) (60:1.1) (120:1.2)};
+    \draw plot [smooth cycle, tension=0.8, xshift=3.9cm, xscale=1.2, scale=1.0] coordinates {(-180:0.9) (-120:0.9) (-60:0.8) (0:1.1) (60:1.4) (120:1.4)};
+    \node [label=left:$a_1$] at (a) {};
+    \node [label=below:$a_2$] at (b) {};
+    \node [label=below:$a_3$] at (c) {};
+    \node [label=below:$a_4$] at (d) {};
+  \end{tikzpicture}
+\end{center}
+% call the first blob $B_1$, the second $B_2$ and so on
+  Pick $a_1 \in \mathbb{N}$. There are infinitely many edges from $a$, so there is an infinite set $B_1 \subseteq \mathbb{N}-\{a_1\}$ such that all edges from $a_1$ to $B_1$ have the same colour, say $\red{C_1}$.
+
+  Pick $a_2 \in B_1$. There are infinitely maby edges from $a_2$ inside $B_1$, so there is an infinite set $B_2 \subset B_1 - \{a_2\}$ such that all edges from $a_2$ to $B_2$ have same colour, say $\blue{C_2}$.
+
+  Continue inductively. We obtain distinct points $a_1, a_2, \dotsc$ and colours $C_1, C_2, \dotsc$ such that $a_i a_j$ (for $i<j$) has colour $C_i$.
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{scope}[every node/.style={node, inner sep=0.4mm}]
+        \foreach \x in {1,...,5} {
+          \node [label=below:$a_\x$] (\x) at (\x,0) {};
+        }
+        \draw [bred] (1) to[bend left] (2);
+        \draw [bred] (1) to[bend left] (3);
+        \draw [bred] (1) to[bend left] (4);
+        \draw [bred] (1) to[bend left] (5);
+        \draw [bred] (3) to[bend left] (4);
+        \draw [bred] (3) to[bend left] (5);
+        \draw [bblue] (2) to[bend right] (3);
+        \draw [bblue] (2) to[bend right] (4);
+        \draw [bblue] (2) to[bend right] (5);
+        \draw [bblue] (4) to[bend right] (5);
+        % TODO: do this properly
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+
+  We must have $C_{i_1} = C_{i_2} = C_{i_3} = \dotsb$ for some $i_1 < i_2 < \dotsb$ (as there are only two colours), so $\{a_{i_1}, a_{i_2}, \dotsc\}$ is monochromatic.
+\end{proof}
+\begin{remark}\leavevmode
+  \begin{enumerate}[(i)]
+    \item This is called a two-pass proof.
+    \item In example 3, no explicit example is known.
+    \item What about a $k$-colouring? (i.e.\ $c: \mathbb{N}^{(2)} \to [k]$). The same proof would show there is an infinite monochromatic set.
+      Alternatively, we can deduce this from \nameref{thm:ramsey}, by `turquoise spectacles': view our colouring as a $2$-colouring by colours `1' and `2 or 3 or ... or $k$' and apply \nameref*{thm:ramsey} and induction.
+    \item Asking for an infinite monochromatic set is much more than asking for arbitrarily large finite monochromatic sets, e.g. in
+      \begin{center}
+        \begin{tikzpicture}[every node/.style={node, fill=white, inner sep=0.5mm}, scale=0.6]
+          \path[clip] (5,-7) rectangle (27,7);
+          \fill [white, scope fading=east] (10,-7) rectangle (27,7);
+          \begin{scope}[transparency group=knockout]
+            \foreach \n in {2,...,13} {
+              \foreach \m in {1,...,\n}{
+                \coordinate[xshift=1.77*\n cm] (\n\m) at (360/\n*\m+90: 1) {};
+              }
+            }
+            \foreach \a in {3,...,13} {
+              \pgfmathsetmacro\biggest{\a-1}
+              \foreach \b in {2,...,\biggest} {
+                \foreach \c in {1,...,\a} {
+                  \foreach \d in {1,...,\b} {
+                    \pgfmathsetmacro\adist{cos(360/\a*\c)}
+                    \pgfmathsetmacro\bdist{cos(360/\b*\d)}
+                    \pgfmathsetmacro\atop{\adist >  0.2?1:0}
+                    \pgfmathsetmacro\abot{\adist < -0.2?1:0}
+                    \pgfmathsetmacro\btop{\bdist >  0.2?1:0}
+                    \pgfmathsetmacro\bbot{\bdist < -0.2?1:0}
+                    \pgfmathsetmacro\top{\atop+\btop==2?1:0}
+                    \pgfmathsetmacro\bot{\abot+\bbot==2?1:0}
+                    \pgfmathsetmacro\importance{2/(\a*\b)}
+                    \begin{scope}[opacity=\importance]
+                    \ifthenelse{\top=1}
+                      {\draw [bblue] (\a\c) to [bend right] (\b\d)} {};
+                        {\ifthenelse{\bot=1}
+                          {\draw [bblue] (\a\c) to [bend left] (\b\d)}
+                            {\draw [bblue] (\a\c) to (\b\d)};
+                          };
+                      \end{scope}
+                    }
+                  }
+                }
+              }
+              \foreach \n in {2,...,13} {
+                \foreach \x in {1,...,\n}{
+                  \foreach \y in {1,...,\x} {
+                    \draw[bred, thick] (\n\x) -- (\n\y);
+                    \foreach \m in {1,...,\n}{
+                      \node at (\n\m) {};
+                    }
+                  }
+                }
+              }
+            \end{scope}
+          \end{tikzpicture}
+        \end{center}
+  we have no infinite red set, but arbitrarily large finite red sets.
+  \end{enumerate}
+\end{remark}
+\begin{eg}
+  Any sequence $x_1, x_2, \dotsc$ in $\mathbb{R}$ (or in any totally ordered set) has a monotone subsequence.
+  Indeed, 2-colour $\mathbb{N}^{(2)}$ by giving $ij$ (for $i<j$) colour \red{up} if $x_i < x_j$ and colour \blue{down} if $x_i \geq x_j$ and apply \nameref{thm:ramsey}.
+\end{eg}
+\printindex
+\end{document}

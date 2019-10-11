@@ -11,6 +11,7 @@ If you would like <img src="https://latex.codecogs.com/gif.latex?\LaTeX" title="
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader)
 - ~~[Introduction to Discrete Analysis](iii/mich/introduction_to_discrete_analysis.pdf) (2018, W. T. Gowers)~~ very incomplete.
 - [Model Theory](iii/mich/model_theory.pdf) (2018, S. Barbina)
+- [Ramsey Theory](iii/mich/ramsey_theory.pdf) (2019, I. Leader) up to lecture 1
 - [Topics in Ergodic Theory](iii/mich/topics_in_ergodic_theory.pdf) (2018, P. Varju) up to lecture 19, some parts in rough
 
 ### Lent
