@@ -1,0 +1,188 @@
+\documentclass{article}
+
+\def\npart{III}
+\def\nyear{2019}
+\def\nterm{Michaelmas}
+\def\nlecturer{Dr. S. Andres}
+\def\ncourse{Advanced Probability}
+\def\draft{Incomplete}
+
+% preamble
+\usepackage{imakeidx}
+\usepackage{marginnote}
+\usepackage{chngcntr}
+\usepackage{bbm}
+\usepackage{xfrac}
+
+\input{header}
+\makeindex[intoc]
+\reversemarginpar
+
+\newtheorem{nremark}[nthm]{Remark}
+
+\newcommand{\named}[1]{\textbf{#1}\index{#1}}
+
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\1}[1]{\mathbbm{1}_{#1}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+
+% and here we go!
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\clearpage
+\newlec
+\section{Conditional Expectations}
+\newlec
+Take a \named{probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, meaning $\mathcal{F}$ is a $\sigma$-algebra and $\mathbb{P}$ is a probability measure, with $\mathbb{P}(\Omega) = 1$.
+\hypertarget{def:as}We use the term `\named{almost surely}' (or a.s.) to mean almost everywhere.
+
+\hypertarget{def:e}Take $X$ to be a random variable, i.e.\ $X: \Omega \to \mathbb{R}$ which is $\mathcal{F}$-measurable and write
+\begin{equation*}
+  \mathbb{E}[X] = \int X\, d\mathbb{P}
+\end{equation*}
+for the \named{expectation} of $X$.
+We write also
+\begin{equation*}
+  \mathbb{E}[X \1A] = \int_A X \, d\mathbb{P}
+\end{equation*}
+for $A \in \mathcal{F}$.
+\begin{ndef}
+  Let $B \in \mathcal{F}$ with $\mathbb{P}[B] > 0$. We know
+  \begin{equation*}
+    \mathbb{P}[A | B] = \frac{\mathbb{P}[A \cap B]}{\mathbb{P}[B]},
+  \end{equation*}
+  the \named{conditional probability} of $A$ given $B$.
+  Similarly,
+  \begin{equation*}
+    \mathbb{E}[X | B] = \frac{\mathbb{E}[X \1B]}{\mathbb{P}[B]}
+  \end{equation*}
+  the \named{conditional expectation} of $X$ given $B$.
+\end{ndef}
+There is a significant restriction to this definition: that $\mathbb{P}[B] > 0$. By the end of this lecture, we will generalise this definition to any $\sigma$-algebra of events, rather than just one.
+
+\begin{aim}
+  Improve the prediction of $X$ if additional information (given as a sub-$\sigma$-algebra $\mathcal{G} \subseteq \mathcal{F}$) is available.
+\end{aim}
+
+\subsection{Discrete case}
+Take $B_1, B_2, \dotsc \in \mathcal{F}$ a disjoint decomposition of $\Omega$.
+We take
+\begin{equation*}
+  \mathcal{G} = \sigma(B_1, B_2, \dotsc) = \left\{\bigcup_{i \in J} B_i : J \subseteq \mathbb{N}\right\} \subseteq \F.
+\end{equation*}
+That is, the `extra information' of $\G$ is that we know which of the disjoint events $B_i$ we fall into.
+
+Then,
+\begin{equation*}
+  \E[X | \G] (\omega) \coloneqq \sum_{i : \Prob[B_i] > 0} \E[X | B_i] \1{B_i}(\omega)
+\end{equation*}
+is the conditional expectation of $X$ given $\G$.
+
+It is easy to see that $\E[X | \G]$ is a $\G$-measurable random variable, and
+\begin{equation*}
+  \E[\1{A} X] = \E[\1{A} \E[X|\G]] \quad \forall A \in \G
+.\end{equation*}
+
+\begin{eg}\leavevmode
+  \begin{enumerate}[(i)]
+    \item
+      Take now $\Omega = (0, 1]$, and $\F = \mathcal{B} (\Omega)$, and $\Prob$ to be Lebesgue measure.
+      Use $X$ as shown below, and use
+      \begin{equation*}
+        \G = \sigma\left(\left(\tfrac{k}{m}, \tfrac{k+1}m\right] : k = 0, \dotsc, m-1\right)
+      .\end{equation*}
+      In the picture, we take $m=8$, and the conditional expectation $\E(X | \G)$ is shown.
+      \begin{center}
+        \begin{tikzpicture}[scale=5]
+          \draw [->] (0,0) -- (0,0.7);
+          \draw [->] (0,0) -- (1.1,0);
+          \draw plot [smooth, tension=1] coordinates {(0,0.4) (0.3,0.6) (0.6,0.2) (1,0.3)};
+          \foreach \x in {0.125,0.25,...,1} {
+            \draw (\x,-0.02) -- (\x,0.02);
+          }
+          \node at (-0.07, 0.7) {$X$};
+          \node at (1, -0.07) {$1$};
+          \node at (1.14, -0.07) {$\Omega$};
+          \draw (0,0.49) -- (0.125,0.49);
+          \draw (0.125,0.59) -- (0.25,0.59);
+          \draw (0.25,0.585) -- (0.375,0.585);
+          \draw (0.375,0.42) -- (0.5,0.42);
+          \draw (0.5,0.225) -- (0.625,0.225);
+          \draw (0.625,0.182) -- (0.75,0.182);
+          \draw (0.75,0.195) -- (0.875,0.195);
+          \draw (0.875,0.255) -- (1,0.255);
+        \end{tikzpicture}
+      \end{center}
+    \item Take a random variable $Z: \Omega \to \{z_1, z_2, \dotsc\} \subseteq \mathbb{R}$, and use $\G = \sigma(Z) = \sigma(\{Z = z_i\} : i = 1,2, \dotsc)$.
+      Then,
+      \begin{align*}
+        \E[X | Z]  &\coloneqq \E[X | \sigma(Z)]  \\
+      &= \sum_{{i : \Prob[Z = z_i] > 0}} \E[X | Z=z_i] \1{\{Z=z_i\}}
+      .\end{align*}
+  \end{enumerate}
+\end{eg}
+This is not satisfactory quite yet: if $Z$ has an absolutely continuous distribution (eg $\mathcal{N}(0,1)$), i.e.\ $\mathcal{P}[Z =z] = 0$ for every $z$, then $\E[X | Z]$ is not defined yet!
+
+\subsection{General case}
+\begin{ndef}\label{def:1.2}
+  \hypertarget{def:eg}Let $X \in L^1 (\Omega, \F, \Prob)$, $\mathcal{G} \subseteq \mathcal{F}$ a $\sigma$-algebra. A random variable $Y$ is called (a version of) the \named{conditional expectation} of $X$ given $\G$ if
+  \begin{enumerate}[(i)]
+    \item $Y$ is $\G$-measurable
+    \item $\E[X \1A] = \E[Y \1A]$ for all $A \in \G$.
+  \end{enumerate}
+  We notate $Y = \E[X | \G]$.
+\end{ndef}
+\begin{nremark}\leavevmode
+  \begin{enumerate}[(a)]
+    \item We took $X \in L^1$, but this can be changed to $X \geq 0$ throughout.
+    \item If $\G = \sigma(\mathcal{C})$ for some $\mathcal{C} \subseteq \F$, it suffices to check (ii) for all $A \in \mathcal{C}$.
+    \item If $\G = \sigma(Z)$ where $Z$ is a random variable, we write $\E[X | Z] \coloneqq \hyperlink{def:eg}{\E[X | \sigma(Z)]}$. This is $\sigma(Z)$ measurable by (i), so it's of the form $f(Z)$ for some function $f$.
+      It's then common to define $\E[X | Z=z] = f(z)$.
+  \end{enumerate}
+\end{nremark}
+\begin{nthm}[Existence and uniqueness]
+  Let $X \in L^1(\Omega, \F, \Prob)$, and $\G \subseteq \F$ a $\sigma$-algebra.
+  \begin{enumerate}[(i)]
+    \item $\hyperlink{def:eg}{E[X | \G]}$ exists
+    \item Any two versions of $\E[X | \G]$ coincide $\Prob$-almost surely.
+  \end{enumerate}
+\end{nthm}
+\begin{proof}\leavevmode
+  \begin{enumerate}[(i)]
+    \item[(ii)] Uniqueness. Let $Y$ be as in \cref{def:1.2}, and let $Y'$ satisfy \cref*{def:1.2}(i) and (ii) for some $X' \in L^1$ with $X \leq X'$ almost surely.
+      Let $Z = (Y-Y') \1A$ with $A \coloneqq \{Y \geq Y'\} \in \G$.
+      \begin{equation*}
+        \E[Y \1A] = % def 1.2 ii)
+        E[X \1A] \leq % X \leq X' a.s.
+        \E[X' \1A] =
+        \E[Y' \1A] < \infty
+      \end{equation*}
+      and note that $\E[X' \1A] < \infty$, so $\E[Y' \1A] < \infty$.
+
+      By definition of $Z$, this means $\E[Z] \leq 0$. But $Z \geq 0$ almost surely, so $Z=0$ a.s.\ therefore $Y \leq Y'$ a.s.
+      (This shows monotonicity of conditional expectation.)
+      If $X = X'$, we can run the same argument to show that $Y = Y'$ almost surely (using $A = \{Y > Y'\}$ and $A = \{Y < Y'\}$, we see both sets are measure zero).
+    \item Existence. Step 1: Assume first $X \in L^2(\F)$. Since $L^2(\G)$ is a complete subspace of $L^2(\F)$, $X$ has an orthogonal projection $Y$ on $L^2(\G)$, i.e.\ there is $Y \in L^2(\G)$ such that $\E[(X-Y)Z] = 0$ for every $Z \in L^2(\G)$.
+      Choosing $Z = \1A$ for $A \in \G$ we get $\E[X \1A] = \E[Y \1A]$ so $Y$ satisfies the conditions of \cref{def:1.2}.
+
+      Step 2: Assume $X \geq 0$. Then $X_n = X \wedge n \in L^2(\F)$ and $0 \leq X_n \nearrow X$ as $n \to \infty$.
+      By Step 1, we can find $Y_n \in L^2(\G)$ such that $\E[X_n \1A] = \E[Y_n \1A]$ for all $A \in \G$ and $0 \leq Y_n \leq Y_{n+1}$ almost surely (from the proof of (ii)).
+      Let $Y_\infty = \lim_n Y_n \1{\Omega_0}$ with
+      \begin{equation*}
+        \Omega_0 = \{\omega \in \Omega : 0 \leq Y_n(\omega) \leq Y_{n+1}(\omega) \ \forall n\}.
+      \end{equation*}
+      Then $Y_\infty$ is a non-negative random variable, is $\G$-measurable as a limit of $\G$-measurable r.v.s and by monotone convergence $\E[X \1A] = \E[Y_\infty \1A]$ for every $A \in \G$.
+      Taking $A = \Omega$, $\E[Y_\infty] = \E[X] < \infty$, since $X \in L_1$.
+      So $Y_\infty < \infty$ almost surely and $Y \coloneqq Y_\infty \1{\{Y_\infty < \infty\}}$ satisfies \cref{def:1.2}(i) and (ii).
+
+      Step 3: For general $X \in L^1$, apply Step 2 on $X^+$ and $X^-$ to obtain $Y^+$ and $Y^-$. Then $Y = Y^+ - Y^-$ satisfies the conditions of \cref{def:1.2}. \qedhere
+  \end{enumerate}
+\end{proof}
+\printindex
+\end{document}

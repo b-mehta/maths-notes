@@ -7,6 +7,7 @@ If you would like <img src="https://latex.codecogs.com/gif.latex?\LaTeX" title="
 
 ## Part III notes
 ### Michaelmas
+- [Advanced Probability](iii/mich/advanced_probability.pdf) (2019, S. Andres)
 - [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone)
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader)
 - ~~[Introduction to Discrete Analysis](iii/mich/introduction_to_discrete_analysis.pdf) (2018, W. T. Gowers)~~ very incomplete.

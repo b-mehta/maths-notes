@@ -71,4 +71,6 @@ runFile loc =
 main :: IO ()
 main = do
   files <- getArgs
-  forM_ files runFile
+  if null files
+     then putStrLn "No files given."
+     else forM_ files runFile
