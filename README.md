@@ -7,7 +7,7 @@ If you would like <img src="https://latex.codecogs.com/gif.latex?\LaTeX" title="
 
 ## Part III notes
 ### Michaelmas
-- [Advanced Probability](iii/mich/advanced_probability.pdf) (2019, S. Andres)
+- [Advanced Probability](iii/mich/advanced_probability.pdf) (2019, S. Andres) up to lecture 1
 - [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone)
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader)
 - [Model Theory](iii/mich/model_theory.pdf) (2018, S. Barbina)

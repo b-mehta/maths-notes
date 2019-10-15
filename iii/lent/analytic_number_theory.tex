@@ -2366,9 +2366,9 @@ This is equivalent to showing that if $\chi \neq \chi_0$, then $L(1,\chi) \neq 0
 \end{thm}
 \begin{proof}
   \begin{align*}
-    \prod_\chi L(s,\chi) &= \exp(\sum_\chi \log L(s,\chi)) \\
+    \prod_\chi L(s,\chi) &= \exp\left(\sum_\chi \log L(s,\chi)\right) \\
                          &= \exp\left(\sum_\chi \sum_p \sum_{k \geq 1} \chi(p)^k \frac{p^{-ks}}{k}\right) \\
-                         &= \exp(\sum_\chi \sum_{n \geq 1} \frac{\chi(n) n^{-s} \Lambda(n)}{\log n}) \\
+                         &= \exp\left(\sum_\chi \sum_{n \geq 1} \frac{\chi(n) n^{-s} \Lambda(n)}{\log n}\right) \\
                          &= \exp\left(\sum_{n \geq 1} \frac{n^{-s} \Lambda(n)}{\log n} \sum_\chi \chi(n)\right)
   \end{align*}
   We know
