@@ -633,46 +633,52 @@ With any number of colours, we can find arbitrarily large monochromatic subgraph
 Where it makes sense to do so, we carry terminology over from graphs to \hyperlink{def:infGraph}{infinite graphs}.
 Suppose edges of $\hyperlink{def:kInf}{K_\infty}$ are coloured \red{red}/\green{green}. What can we find? By \nameref{thm:ramsey}, we can find a monochromatic $K_s$ for every finite $s = 1, 2, 3, \dotsc$. Note this doesn't immediately give a monochromatic $K_\infty$:
 \begin{center}
-    \begin{tikzpicture}[every node/.style=node, scale=0.6]
-        \begin{scope}
-            \path [scope fading=east] (8, -3) rectangle (25.5, 3);
-            \foreach \n in {2,...,9} {
-                \begin{scope}[xshift=3*\n cm]
-                    \foreach \m in {1,...,\n}{
-                        \node (\n\m) at (360/\n*\m+90: 1) {};
-                    }
-                    \foreach \x in {1,...,\n}{
-                        \foreach \y in {1,...,\x} {
-                            \draw[bred] (\n\x) -- (\n\y);
-                        }
-                    }
+  \begin{tikzpicture}[every node/.style={node, inner sep=0.5mm}, scale=0.6]
+    \path[clip] (5,-7) rectangle (27,7);
+    \fill [white, scope fading=east] (10,-7) rectangle (27,7);
+    \begin{scope}[transparency group=knockout]
+      \foreach \n in {2,...,13} {
+        \foreach \m in {1,...,\n}{
+          \coordinate[xshift=1.77*\n cm] (\n\m) at (360/\n*\m+90: 1) {};
+        }
+      }
+      \foreach \a in {3,...,13} {
+        \pgfmathsetmacro\biggest{\a-1}
+        \foreach \b in {2,...,\biggest} {
+          \foreach \c in {1,...,\a} {
+            \foreach \d in {1,...,\b} {
+              \pgfmathsetmacro\adist{cos(360/\a*\c)}
+              \pgfmathsetmacro\bdist{cos(360/\b*\d)}
+              \pgfmathsetmacro\atop{\adist >  0.2?1:0}
+              \pgfmathsetmacro\abot{\adist < -0.2?1:0}
+              \pgfmathsetmacro\btop{\bdist >  0.2?1:0}
+              \pgfmathsetmacro\bbot{\bdist < -0.2?1:0}
+              \pgfmathsetmacro\top{\atop+\btop==2?1:0}
+              \pgfmathsetmacro\bot{\abot+\bbot==2?1:0}
+              \pgfmathsetmacro\importance{2/(\a*\b)}
+              \begin{scope}[opacity=\importance]
+                \ifthenelse{\top=1}
+                {\draw [bgreen] (\a\c) to [bend right] (\b\d)}
+                  {\ifthenelse{\bot=1}
+                    {\draw [bgreen] (\a\c) to [bend left] (\b\d)}
+                      {\draw [bgreen] (\a\c) to (\b\d)};
+                    };
                 \end{scope}
+              }
             }
-            \begin{scope}[on background layer]
-                \foreach \a in {3,...,9} {
-                    \pgfmathsetmacro\biggest{\a-1}
-                    \foreach \b in {2,...,\biggest} {
-                        \foreach \c in {1,...,\a} {
-                            \foreach \d in {1,...,\b} {
-                                \pgfmathsetmacro\adist{cos(360/\a*\c)}
-                                \pgfmathsetmacro\bdist{cos(360/\b*\d)}
-                                \pgfmathsetmacro\atop{\adist>0.2?1:0}
-                                \pgfmathsetmacro\abot{\adist<-0.2?1:0}
-                                \pgfmathsetmacro\btop{\bdist>0.2?1:0}
-                                \pgfmathsetmacro\bbot{\bdist<-0.2?1:0}
-                                \pgfmathsetmacro\top{\atop+\btop==2?1:0}
-                                \pgfmathsetmacro\bot{\abot+\bbot==2?1:0}
-                                \ifthenelse{\top=1}{\draw [bgreen, opacity=0.1,path fading=east] (\a\c) to [bend right] (\b\d)}
-                                {
-                                    \ifthenelse{\bot=1}{\draw [bgreen, opacity=0.1,path fading=east] (\a\c) to [bend left] (\b\d)}
-                                    {\draw [bgreen, opacity=0.05,path fading=east] (\a\c) to (\b\d)};
-                                };
-                            }
-                        }
-                    }
-                }
-            \end{scope}
-        \end{scope}
+          }
+        }
+        \foreach \n in {2,...,13} {
+          \foreach \x in {1,...,\n}{
+            \foreach \y in {1,...,\x} {
+              \draw[bred] (\n\x) -- (\n\y);
+            }
+          }
+          \foreach \m in {1,...,\n}{
+            \node [fill=white] at (\n\m) {};
+          }
+        }
+      \end{scope}
     \end{tikzpicture}
 \end{center}
 
