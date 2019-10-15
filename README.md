@@ -11,7 +11,7 @@ If you would like <img src="https://latex.codecogs.com/gif.latex?\LaTeX" title="
 - [Category Theory](iii/mich/category_theory.pdf) (2018, P. T. Johnstone)
 - [Combinatorics](iii/mich/combinatorics.pdf) (2018, I. Leader)
 - [Model Theory](iii/mich/model_theory.pdf) (2018, S. Barbina)
-- [Ramsey Theory](iii/mich/ramsey_theory.pdf) (2019, I. Leader) up to lecture 1
+- [Ramsey Theory](iii/mich/ramsey_theory.pdf) (2019, I. Leader) up to lecture 2
 - [Topics in Ergodic Theory](iii/mich/topics_in_ergodic_theory.pdf) (2018, P. Varju) up to lecture 19, some parts in rough
 
 ### Lent
