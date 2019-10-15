@@ -243,5 +243,125 @@ It turns out that the answer is always yes.
   Any sequence $x_1, x_2, \dotsc$ in $\mathbb{R}$ (or in any totally ordered set) has a monotone subsequence.
   Indeed, 2-colour $\mathbb{N}^{(2)}$ by giving $ij$ (for $i<j$) colour \red{up} if $x_i < x_j$ and colour \blue{down} if $x_i \geq x_j$ and apply \nameref{thm:ramsey}.
 \end{eg}
+\newlec
+What if we 2-colour $\hyperlink{not:ns}{\mathbb{N}}^{\hyperlink{not:xr}{(r)}}$, for some $r=3, 4, \dotsc$? Do we always get an infinite monochromatic set?
+\begin{center}
+  \begin{tikzpicture}
+    \begin{scope}[every node/.style={node, inner sep=0.4mm}]
+    \foreach \x in {1,...,5} {
+      \node [label=below:$\x$] (\x) at (\x,0) {};
+    }
+    \end{scope}
+    \draw [bred]  (1) to[bend left=40] (2);
+    \draw [bred]  (1) to[bend left=40] (3);
+    \draw [bred]  (2) to[bend left=40] (3);
+    \draw [bred]  (1) to[bend right=40] (2);
+    \draw [bblue] (1) to[bend right=40] (4);
+    \draw [bblue] (2) to[bend right=40] (4);
+    \node at (6,0) {\ldots};
+  \end{tikzpicture}
+\end{center}
+For example, colour $ijk$ (for $i < j < k$) \red{red} if $i | j +k$, and \blue{blue} if not.
+In this case we can find a such a set, e.g. take $M = \{2^0, 2^1, 2^2, \dotsc\}$.
+
+Let's try to prove this in general.
+\begin{nthm}[Ramsey for $r$-sets]\label{thm:ramseyr}
+  Whenever $\hyperlink{not:ns}{\mathbb{N}}^{\hyperlink{not:xr}{(r)}}$ is 2-coloured, there is an infinite monochromatic set.
+\end{nthm}
+\begin{proof}
+  Induction on $r$. $r=1$ is easy, by pigeonhole. Alternatively, we could say $r=2$ is true by \cref{thm:ramsey}.
+
+  Given $r$ and a \hyperlink{def:2colouring}{2-colouring} $c: \mathbb{N}^{(r)} \to \{1,2\}$, pick $a_1 \in \mathbb{N}$. Induce a 2-colouring $c'$ of $(\mathbb{N}-\{a_1\})^{(r-1)}$ by
+  \begin{equation*}
+    c'(F) = c(F \cup \{a_1\})
+  \end{equation*}
+  for each $F \in (\mathbb{N} - \{a_1\})^{(r-1)}$.
+
+  By induction, there is an infinite monochromatic set $B_1$, for $c'$, i.e.\ $c(F \cup \{a_1\}) = c_1$, for each $F \in B_1^{(r-1)}$.
+  Repeat: choose $a_2 \in B_1$ and obtain an infinite set $B_2 \subset B_1 - \{a_2\}$ such that $c(F \cup \{a_2\}) = c_2$, for each $F \in B_2^{(r-1)}$.
+  Continue inductively, we obtain distinct $a_1, a_2, \dotsc \in \mathbb{N}$ and colours $c_1, c_2, \dotsc$ such that $c(a_{i_1}, \dotsc, a_{i_r}) = c_{i_1}$, for $i_1 < \dotsb < i_r$.
+
+  We must have $c_{i_1} = c_{i_2} = \dotsb$ for some sequence $i_1, i_2, \dotsc$ and so $\{a_{i_1}, a_{i_2}, \dotsc\}$ is monochromatic, as required.
+\end{proof}
+
+We saw that, given $(1, x_1), (2, x_2), (3, x_3) \in \mathbb{R}^2$ there is a subsequence for which the induced (piecewise-linear) function is monotone.
+We could actually insist that the induced function is convex ($\smile$) or concave ($\frown$).
+Indeed, 2-colour $\mathbb{N}^{(3)}$ by colouring $ijk$ according to whether $(i, x_i), (j, x_j), (k, x_k)$ are % draw these pics
+\begin{tikzpicture}[baseline=2pt, scale=0.2]
+  \node (A) at (0,0) {$\times$};
+  \node (B) at (2,1) {$\times$};
+  \node (C) at (4,0) {$\times$};
+\end{tikzpicture}
+or
+\begin{tikzpicture}[baseline=2pt, scale=0.2]
+  \node (A) at (0,1) {$\times$};
+  \node (B) at (2,0) {$\times$};
+  \node (C) at (4,1) {$\times$};
+\end{tikzpicture}
+and apply \cref{thm:ramseyr} for $r=3$.
+
+
+Rather unexpectedly, the infinite Ramsey implies the finite Ramsey.
+\begin{nthm}[Finite Ramsey]\label{thm:finiteramsey}
+  For any $m,r$ there is an $n$ such that whenever $\hyperlink{not:ns}{[n]}^{\hyperlink{not:xr}{(r)}}$ is \hyperlink{def:2colouring}{2-coloured}, there is a monochromatic $m$-set.
+\end{nthm}
+\begin{proof}
+  Suppose not: so for some fixed $m,r$ we have for \emph{each} $n$, a 2-colouring $c_n: [n]^{(r)} \to \{1,2\}$ with no monochromatic $m$-set.
+
+  We'll obtain a 2-colouring of $\mathbb{N}^{(r)}$ with no monochromatic $m$-set, contradicting \cref{thm:ramseyr}.
+  [We want to `put the $c_n$ together' - but can only do this if the $c_n$ are \emph{nested}, meaning $c_{n+1} | [n]^{(r)} = c_n$ for every $n$.]
+
+  There are only finitely many ways (2, in fact) to colour $[r]^{(r)}$, so infinitely many of the $c_n$ agree on $[r]^{(r)}$: say $c_n | [r]^{(r)} = d_r$ for every $n \in A_1$ ($A_1$ infinite, $d_r$ is a 2-colouring of $[r]^{(r)}$).
+
+  There are only finitely many ways to $2$-colour $[r+1]^{(r)}$, so infinitely many of the $c_n, n \in A_1$ agree on $[r+1]^{(r)}$, say $c_n | [r+1]^{(r)} = d_{r+1}$ for every $n \in A_2$.
+  (There is an infinite $A_2 \subseteq A_1$, $d_{r+1}$ is a 2-colouring of $[r+1]^{(r)}$).
+
+  Continue. We obtain $d_{r}, d_{r+1}, \dotsc$ (where $d_n: [n]^{(r)} \to \{1,2\}$) such that
+  \begin{itemize}
+    \item no $d_n$ has a mono $m$-set ($d_n = c_{n'} | [n]^{(r)}$ for some $n'$).
+    \item The $d_n$ are nested (because $A_2 \subset A_1$ etc.)
+  \end{itemize}
+  so can find $c: \mathbb{N}^{(r)}\to \{1,2\}$ by setting $c(F) = d_n(F)$ for any $n \geq \max F$.
+  Then $c$ has no monochromatic $m$-set, a contradiction.
+\end{proof}
+
+\begin{remark}\leavevmode
+  \begin{enumerate}[1.]
+    \item The proof gives absolutely no information about the least possible value of $n = n(m,r)$, but there are other proofs that do give bounds.
+    \item This proof is often called a `compactness' proof. We actually showed that the space of all infinite sequences from $\{1,2\}$ with the topology given by the metric
+      \begin{equation*}
+        d(f,g) = \frac{1}{\min\{n : f_n \neq g_n\}}
+      \end{equation*}
+      is compact. (This topology is also called the product topology.)
+  \end{enumerate}
+\end{remark}
+
+What about infinitely many colours? What if we have $c: \mathbb{N}^{(2)} \to X$ for some arbitrary set $X$.
+Do we get an infinite monochromatic set? Definitely not, we could just give every edge a different colour.
+Could it be that we can always find an infinite set on which $c$ is either constant or injective?
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{scope}[every node/.style={node, inner sep=0.4mm}]
+    \foreach \x in {1,...,8} {
+      \node (\x) at (\x,0) {};
+    }
+    \end{scope}
+    \foreach \x in {2,...,8} {
+      \draw [bred] (1) to[bend left=40] (\x);
+    }
+    \foreach \x in {3,...,8} {
+      \draw [bgreen] (2) to[bend left=40] (\x);
+    }
+    \foreach \x in {4,...,8} {
+      \draw [bblue] (3) to[bend right=40] (\x);
+    }
+    \foreach \x in {5,...,8} {
+      \draw [byellow] (4) to[bend right=40] (\x);
+    }
+    \node at (9,0) {\ldots};
+  \end{tikzpicture}
+\end{center}
+No.
 \printindex
 \end{document}
