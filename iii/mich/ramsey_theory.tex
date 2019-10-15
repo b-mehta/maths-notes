@@ -194,7 +194,7 @@ It turns out that the answer is always yes.
           \begin{scope}[transparency group=knockout]
             \foreach \n in {2,...,13} {
               \foreach \m in {1,...,\n}{
-                \coordinate[xshift=1.77*\n cm] (\n\m) at (360/\n*\m+90: 1) {};
+                \coordinate[xshift=1.77*\n cm] (\n-\m) at (360/\n*\m+90: 1) {};
               }
             }
             \foreach \a in {3,...,13} {
@@ -210,30 +210,30 @@ It turns out that the answer is always yes.
                     \pgfmathsetmacro\bbot{\bdist < -0.2?1:0}
                     \pgfmathsetmacro\top{\atop+\btop==2?1:0}
                     \pgfmathsetmacro\bot{\abot+\bbot==2?1:0}
-                    \pgfmathsetmacro\importance{1/(\a*\b)}
+                    \pgfmathsetmacro\importance{2/(\a*\b)}
                     \begin{scope}[opacity=\importance, every path/.style=bblue]
                       \ifthenelse{\top=1}
-                      {\draw (\a\c) to [bend right] (\b\d)} {};
+                      {\draw (\a-\c) to [bend right] (\b-\d)}
                       {\ifthenelse{\bot=1}
-                        {\draw (\a\c) to [bend left] (\b\d)}
-                          {\draw (\a\c) to (\b\d)};
+                        {\draw (\a-\c) to [bend left] (\b-\d)}
+                          {\draw (\a-\c) to (\b-\d)};
                         };
-                    \end{scope}
+                      \end{scope}
+                    }
                   }
                 }
               }
-            }
-            \foreach \n in {2,...,13} {
-              \foreach \x in {1,...,\n}{
-                \foreach \y in {1,...,\x} {
-                  \draw[bred, thick] (\n\x) -- (\n\y);
+              \foreach \n in {2,...,10} {
+                \foreach \x in {1,...,\n}{
+                  \foreach \y in {1,...,\x} {
+                    \draw [bred] (\n-\x) -- (\n-\y);
+                  }
+                }
+                \foreach \m in {1,...,\n}{
+                  \node at (\n-\m) {};
                 }
               }
-              \foreach \m in {1,...,\n}{
-                \node at (\n\m) {};
-              }
-            }
-          \end{scope}
+            \end{scope}
           \end{tikzpicture}
         \end{center}
   we have no infinite red set, but arbitrarily large finite red sets.

@@ -17,7 +17,7 @@ with open(input_file, 'r') as filename:
     for line in filename:
         lines.append(line)
 
-y = re.compile(r"\\hypertarget\{(\w*:\w*)\}")
+y = re.compile(r"\\(?:hypertarget|label)\{(\w*:\w*)\}")
 
 for (num,line) in enumerate(lines, 1):
     for i in y.findall(line):
