@@ -141,12 +141,12 @@ This is not satisfactory quite yet: if $Z$ has an absolutely continuous distribu
 \begin{nremark}\leavevmode
   \begin{enumerate}[(a)]
     \item We took $X \in L^1$, but this can be changed to $X \geq 0$ throughout.
-    \item If $\G = \sigma(\mathcal{C})$ for some $\mathcal{C} \subseteq \F$, it suffices to check (ii) for all $A \in \mathcal{C}$.
+    \item If $\G = \sigma(\mathcal{C})$ for some $\mathcal{C} \subseteq \F$ which is a \hypertarget{def:pisystem}{\named{$\pi$-system}} (i.e. stable under intersections), it suffices to check (ii) for all $A \in \mathcal{C}$.
     \item If $\G = \sigma(Z)$ where $Z$ is a random variable, we write $\E[X | Z] \coloneqq \hyperlink{def:eg}{\E[X | \sigma(Z)]}$. This is $\sigma(Z)$ measurable by (i), so it's of the form $f(Z)$ for some function $f$.
       It's then common to define $\E[X | Z=z] = f(z)$.
   \end{enumerate}
 \end{nremark}
-\begin{nthm}[Existence and uniqueness]
+\begin{nthm}[Existence and uniqueness]\label{thm:1.4}
   Let $X \in L^1(\Omega, \F, \Prob)$, and $\G \subseteq \F$ a $\sigma$-algebra.
   \begin{enumerate}[(i)]
     \item $\hyperlink{def:eg}{E[X | \G]}$ exists
@@ -184,5 +184,101 @@ This is not satisfactory quite yet: if $Z$ has an absolutely continuous distribu
       Step 3: For general $X \in L^1$, apply Step 2 on $X^+$ and $X^-$ to obtain $Y^+$ and $Y^-$. Then $Y = Y^+ - Y^-$ satisfies the conditions of \cref{def:1.2}. \qedhere
   \end{enumerate}
 \end{proof}
+\begin{eg}[Conditional density functions]
+  \newlec
+  Let $U$ and $V$ be random variables with a joint density function $f_{U,V}$ in $\mathbb{R}^2$. Then
+  \begin{equation*}
+    f_U(u) = \int_\mathbb{R} f_{U,V}(u,v) \,dv
+  \end{equation*}
+  is the density of $U$, and
+  \begin{equation*}
+    f_{V|U} (v | u) =
+    \begin{cases}
+      \frac{f_{U,V}(u,v)}{f_U(u)} & \text{if } f_U(u) > 0 \\
+      0 & \text{else}
+    \end{cases}
+  \end{equation*}
+  is the conditional density of $V$ given $U$.
+
+  Assume $X = h(V) \in L^1$. Then $\hyperlink{def:eg}{\E[X|U]} = g(U)$ with $g(u) = \int_\mathbb{R} h(v) f_{V|U} (v|u)  \,dv$.
+  Indeed, since every $A \in \sigma(U)$ takes the form $A = \{U \in B\}$ for some $B \in \mathcal{B}(\mathbb{R})$.
+  \begin{align*}
+    \E[X \1A] &= \int_{\mathbb{R}^2} h(v) \1B(u) f_{U,V} (u,v) \, du \, dv \\
+              &= \int_\mathbb{R} \underbrace{\left(\int_\mathbb{R} h(v) f_{V|U}(v|u) \,dv\right)}_{g(u)} f_U(u) \1B(u)\,du \\
+              &= \E[g(U) \1{\{U \in B\}}] = \E[g(U) \1A].
+  \end{align*}
+\end{eg}
+
+\subsection{Properties of conditional expectation}
+Let $X \in L^1$, $\G \subseteq \F$ $\sigma$-algebras.
+\begin{enumerate}[(i)]
+  \item $\E[\hyperlink{def:eg}{\E[X | \G]}] = \E[X]$ (proof: use $A = \Omega$ in \cref{def:1.2}(ii))
+  \item If $X$ is $\G$-measurable, then $\E[X | \G] = X$ a.s. (proof: $X$ satisfies the conditions of \cref*{def:1.2})
+  \item If $X$ is \hypertarget{def:indep}{independent} of $\G$ (i.e. $\Prob[A \cap B] = \Prob[A] \Prob[B]$ for all $A \in \G$ and $B \in \sigma(X)$) then $\E[X | G] = \E[X]$ a.s.
+    Proof: $\E[X]$ is constant and thus $\G$-measurable. For $A \in \G$
+    \begin{equation*}
+      \E[X \1A] = \E[X] \E[\1A] = \E[\E[X] \1A]
+    \end{equation*}
+    by independence then linearity.
+  \item If $X \geq 0$ almost surely then $\E[X|\G] \geq 0$ almost surely.
+    (proof: see \cref{thm:1.4}(ii)).
+  \item $\E[\alpha X + \beta Y | \G] = \alpha \E[X | \G] + \beta \E[Y | \G]$ almost surely for $Y \in L^1$ and $\alpha,\beta \in \mathbb{R}$.
+  \item If $0 \leq X_n \nearrow X$ almost surely, then $\E[X_n | \G] \nearrow \E[X | \G]$ almost surely.
+    Proof: $\E[X_n | \G] \nearrow Y$ almost surely for some $\G$-measurable $Y$. For every $A \in \G$,
+    \begin{equation*}
+      \E[X \1A] = \lim_n \E[X_n \1A] = \lim_n \E[\E[X_n | \G] \1A] = \E[Y \1A]
+    \end{equation*}
+    so $Y = \E[X | \G]$.
+  \item Fatou. If $X_n \geq 0$ almost surely $\forall n$, then
+    \begin{equation*}
+      \E[\liminf X_n | \G] \leq \liminf \E[X_n | \G].
+    \end{equation*}
+    (Proof as for $\E[\;]$).
+  \item Dominated convergence. If $X_n \to X$ almost surely, and $|X_n| \leq Y$ almost surely $\forall n$ for $Y \in L^1$ then $\E[X_n | \G] \to \E[X | \G]$ almost surely. Proof as for $\E[\;]$).
+  \item Jensen's inequality. If $c: \mathbb{R} \to (-\infty, \infty]$ convex, then $c(\E[X | \G]) \leq \E[c(X) | \G]$. Proof: $c$ can be written as
+    \begin{equation*}
+      c(x) = \sup_n (a_n x + b_n) \quad x \in \mathbb{R}
+    \end{equation*}
+    so
+    \begin{equation*}
+      \E[c(X) | \G] \geq a_n \E[X | \G] + b_n
+    \end{equation*}
+    for all $n$.
+    Taking $\sup_n$ on the right gives the claim.
+  \item $\E[\abs{\E[X|\G]}^p] \leq \E[|X|^p]$ for $1 \leq p < \infty$. Follows from (ix) and (ii).
+  \item Tower property: If $\mathcal{H} \subseteq \mathcal{G} \subseteq \mathcal{F}$ $\sigma$-algebras, then
+    \begin{equation*}
+    \E[\E[X|\G] | \mathcal{H}] = \E[X | \mathcal{H}]
+    \end{equation*}
+    almost surely.
+    Proof: Clearly $\E[\E[X|\G] | \mathcal{H}]$ is $\mathcal{H}$-measurable.
+    Take $A \in \mathcal{H}$, so $A \in \G$. Then
+    \begin{align*}
+      \E[X\1A] &= \E[\1A \E[X|\G]] \\
+               &= \E[\1A \E[\E[X|\G] | \mathcal{H}]].
+    \end{align*}
+  \item Let $Y \in L^1$ be $\G$-measurable, and such that $XY \in L^1$. Then
+    \begin{equation*}
+      \E[YX | \G] = Y \E[X | G]
+    \end{equation*}
+    almost surely. `$\G$-measurable random variables behave like constants'.
+
+    Proof: The right hand side of $\G$-measurable. If $Y = \1B$ for $B \in \G$. Then $\forall A \in \G$,
+    \begin{equation*}
+      \E[XY \1A] = \E[X \1{A\cap B}] = \E[(\E[X | \G] \1B) \1A]
+    .\end{equation*}
+    So the claim holds for simple random variables. For general $Y$, the statement follows by linearity, approximation, etc.
+  \item If $\sigma(X, \G)$ is \hyperlink{def:indep}{independent} of $\mathcal{H}$ then $\E[X | \sigma(\G,\mathcal{H})] = \E[X | \G]$ almost surely.
+    Proof: For $A \in \G$ and $B \in \mathcal{H}$,
+    \begin{align*}
+      \E[\E[X | \sigma(\G,\mathcal{H})] \1{A \cap B}] &= \E[X \1{A \cap B}] \\
+                                                      &= \E[X \1{A\cap B}] \\
+                                                      &= \E[X \1A] \Prob[B] \\
+                                                      &= \E[\E[X | \G] \1A] \Prob[B] \\
+                                                      &= \E[\E[X | \G] \1{A \cap B}]\\
+      \implies \E[(\E[X | \sigma(\G,\mathcal{H})] - \E[X | \G]) \1{A \cap B}] &= 0
+    \end{align*}
+    The set of such intersections $A \cap B$ is a \hyperlink{def:pisystem}{$\pi$-system} generating $\sigma(\G, \mathcal{H})$, and it is a standard result of measure theory that this implies $\E[X | \sigma(\G, \mathcal{H})] - \E[X | \G] = 0$ almost surely (see PM notes, Proposition 3.1.4).
+\end{enumerate}
 \printindex
 \end{document}
