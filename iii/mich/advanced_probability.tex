@@ -141,7 +141,7 @@ This is not satisfactory quite yet: if $Z$ has an absolutely continuous distribu
 \begin{nremark}\leavevmode
   \begin{enumerate}[(a)]
     \item We took $X \in L^1$, but this can be changed to $X \geq 0$ throughout.
-    \item If $\G = \sigma(\mathcal{C})$ for some $\mathcal{C} \subseteq \F$ which is a \hypertarget{def:pisystem}{\named{$\pi$-system}} (i.e. stable under intersections), it suffices to check (ii) for all $A \in \mathcal{C}$.
+    \item If $\G = \sigma(\mathcal{C})$ for some $\mathcal{C} \subseteq \F$ which is a \hypertarget{def:pisystem}{\textbf{$\pi$-system}}\index{$\pi$-system@pi system} (i.e. stable under intersections), it suffices to check (ii) for all $A \in \mathcal{C}$.
     \item If $\G = \sigma(Z)$ where $Z$ is a random variable, we write $\E[X | Z] \coloneqq \hyperlink{def:eg}{\E[X | \sigma(Z)]}$. This is $\sigma(Z)$ measurable by (i), so it's of the form $f(Z)$ for some function $f$.
       It's then common to define $\E[X | Z=z] = f(z)$.
   \end{enumerate}
@@ -214,7 +214,7 @@ Let $X \in L^1$, $\G \subseteq \F$ $\sigma$-algebras.
 \begin{enumerate}[(i)]
   \item $\E[\hyperlink{def:eg}{\E[X | \G]}] = \E[X]$ (proof: use $A = \Omega$ in \cref{def:1.2}(ii))
   \item If $X$ is $\G$-measurable, then $\E[X | \G] = X$ a.s. (proof: $X$ satisfies the conditions of \cref*{def:1.2})
-  \item If $X$ is \hypertarget{def:indep}{independent} of $\G$ (i.e. $\Prob[A \cap B] = \Prob[A] \Prob[B]$ for all $A \in \G$ and $B \in \sigma(X)$) then $\E[X | G] = \E[X]$ a.s.
+  \item If $X$ is \index{independent}\hypertarget{def:indep}{independent} of $\G$ (i.e. $\Prob[A \cap B] = \Prob[A] \Prob[B]$ for all $A \in \G$ and $B \in \sigma(X)$) then $\E[X | G] = \E[X]$ a.s.
     Proof: $\E[X]$ is constant and thus $\G$-measurable. For $A \in \G$
     \begin{equation*}
       \E[X \1A] = \E[X] \E[\1A] = \E[\E[X] \1A]
@@ -229,12 +229,12 @@ Let $X \in L^1$, $\G \subseteq \F$ $\sigma$-algebras.
       \E[X \1A] = \lim_n \E[X_n \1A] = \lim_n \E[\E[X_n | \G] \1A] = \E[Y \1A]
     \end{equation*}
     so $Y = \E[X | \G]$.
-  \item Fatou. If $X_n \geq 0$ almost surely $\forall n$, then
+  \item \index{conditional expectation properties!fatou}Fatou. If $X_n \geq 0$ almost surely $\forall n$, then
     \begin{equation*}
       \E[\liminf X_n | \G] \leq \liminf \E[X_n | \G].
     \end{equation*}
     (Proof as for $\E[\;]$).
-  \item Dominated convergence. If $X_n \to X$ almost surely, and $|X_n| \leq Y$ almost surely $\forall n$ for $Y \in L^1$ then $\E[X_n | \G] \to \E[X | \G]$ almost surely. Proof as for $\E[\;]$).
+  \item Dominated convergence. \index{conditional expectation properties!dominated convergence}If $X_n \to X$ almost surely, and $|X_n| \leq Y$ almost surely $\forall n$ for $Y \in L^1$ then $\E[X_n | \G] \to \E[X | \G]$ almost surely. Proof as for $\E[\;]$).
   \item Jensen's inequality. If $c: \mathbb{R} \to (-\infty, \infty]$ convex, then $c(\E[X | \G]) \leq \E[c(X) | \G]$. Proof: $c$ can be written as
     \begin{equation*}
       c(x) = \sup_n (a_n x + b_n) \quad x \in \mathbb{R}
@@ -280,5 +280,252 @@ Let $X \in L^1$, $\G \subseteq \F$ $\sigma$-algebras.
     \end{align*}
     The set of such intersections $A \cap B$ is a \hyperlink{def:pisystem}{$\pi$-system} generating $\sigma(\G, \mathcal{H})$, and it is a standard result of measure theory that this implies $\E[X | \sigma(\G, \mathcal{H})] - \E[X | \G] = 0$ almost surely (see PM notes, Proposition 3.1.4).
 \end{enumerate}
+\begin{nlemma}\label{lem:1.5}
+  \newlec
+  Let $X \in L^n$. Then
+  \begin{equation*}
+    \mathcal{C} = \{Y : Y = \hyperlink{def:eg}{\E[X \mid \G]} \text{ for some } \G \subseteq \F\}
+  \end{equation*}
+  is uniformly integrable, i.e.\
+  \begin{equation*}
+    \sup_{Y \in \mathcal{C}} \E[|Y| \1{\{|Y| \geq \lambda\}}] \xrightarrow{\lambda \to \infty} 0
+  .\end{equation*}
+\end{nlemma}
+\begin{proof}
+  For every $\epsilon> 0$ there is $\delta > 0$ such that $\E[|X| \1A] \leq \epsilon$ for every $A$ with $\Prob[A] \leq \delta$. (See PM Lemma 6.7.1).
+
+  Choose $\lambda$ such that $\E[|X|] \leq \lambda \delta$.
+  For $Y = \E[X \mid \G]$,
+  $|Y| \leq \E[|X| \mid \G]$, so $\E[|Y|] \leq \E[\E[|X| \mid \G] ] = \E[|X|] \leq \lambda \delta$.
+  Standard bounds give
+  \begin{equation*}
+    \Prob[|Y| \geq \lambda] \leq \frac{1}{\lambda} \E[|Y|] \leq \delta
+  .\end{equation*}
+  So
+  \begin{align*}
+    \E[|Y| \1{\{|Y| \geq \lambda\}}] & \leq \E[\E[|X| \mid \G] \1{\{|Y| \geq \lambda\}}] \\ % this event is in \G?
+                                     &= \E[\E[|X| \1{\{|Y| \geq \lambda\}} \mid \G]] \\
+                                     &= \E[|X| \1{\{|Y| \geq \lambda\}}] \leq \epsilon
+  \end{align*}
+  ($\lambda$ independent of $\G$).
+\end{proof}
+
+\section{Martingales in discrete time}
+\subsection{Definitions}
+Let $(\Omega, \F, \Prob)$ a probability space.
+\begin{ndef}\hypertarget{def:filtration}{}\hypertarget{def:stoch}{}
+  A \named{filtration} is a sequence of $\sigma$-algebras such that
+  \begin{equation*}
+    \F_n \subseteq \F_{m+n} \subseteq \F\quad \forall n
+  .\end{equation*}
+  Let $\F_\infty = \sigma(\F_n, n \geq 0)$, so $\F_\infty \subseteq \F$, but possibly $\F_\infty \neq \F$.
+  Usually $n$ represents time, and $\F_n$ represents the information available at time $n$.
+  A \named{stochastic process} in discrete time $(X_n)_{n \geq 0}$ (i.e. a sequence of random variables) has a \hypertarget{def:natfilt}{\named{natural filtration}} $(\F_n^X)_{n \geq 0}$ given by $\F_n^X = \sigma(X_0, \dotsc, X_n)$.
+\end{ndef}
+\begin{ndef}\hypertarget{def:adapted}
+  A \hyperlink{def:stoch}{stochastic process} $(X_n)_{n \geq 0}$ is \named{adapted} to a \hyperlink{def:filtration}{filtration} $(\F_n)_n$ if $X_n$ is $F_n$-measurable, for all $n$.
+\end{ndef}
+\begin{ndef}\hypertarget{def:martingale}
+  A \hyperlink{def:stoch}{stochastic process} $(X_n)_{n \geq 0}$ is a \named{martingale} (with respect to a \hyperlink{def:filtration}{filtration} $(\F_n)_{n \geq 0}$) if
+  \begin{enumerate}[(i)]
+    \item $X$ is \hyperlink{def:adapted}{adapted}
+    \item $X$ is integrable, i.e.\ each $\E[|X_n|] < \infty$.
+    \item $\E[X_{n+1} | \F_n] = X_n$ almost surely (martingale property).
+  \end{enumerate}
+  If the `$=$' in (iii) is replaced by `$\geq$' (respectively `$\leq$') $X$ is called a \named{submartingale} (resp. \named{supermartingale}).
+\end{ndef}
+\subsection{Optional stopping}
+\begin{ndef}\hypertarget{def:stopping}
+  A random time $\tau: \Omega \to \{0, 1, 2, \dotsc\} \cup \{+\infty\}$ is called a \named{stopping time} (with respect to a filtration $\F_n$) if
+  \begin{equation*}
+    \{\tau \leq n\} \in \F_n \quad \forall n \geq 0
+  \end{equation*}
+  (or equivalently $\{\tau = n\} \in \F_n \ \forall n$.)
+\end{ndef}
+\begin{eg}
+  Take $X$ \hyperlink{def:adapted}{adapted}, $A \in \mathcal{B}(\mathbb{R})$.
+  \begin{equation*}
+    \tau_A(\omega) = \inf\{n \geq 0 : X_n(\omega) \in A\}
+  \end{equation*}
+  the first hitting time of $A$ is a \hyperlink{def:stopping}{stopping time}.
+\end{eg}
+\hypertarget{def:ftau}We write
+\begin{equation*}
+  \F_\tau = \{A \in \F_\infty : A \cap \{\tau \leq n\} \in \F_n \ \forall n \geq 0\}.
+\end{equation*}
+\hypertarget{def:stoppedprocess}{}\hypertarget{def:xtau}Define also $X_\tau(\omega) = X_{\tau(\omega)}(\omega)$ whenever $\tau < \infty$.
+The \named{stopped process} $X^\tau$ is given by
+\begin{equation*}
+  X^\tau_n(\omega) = X_{\tau(\omega) \wedge n}(\omega).
+\end{equation*}
+
+\begin{nprop}
+  Take $\sigma,\tau$ \hyperlink{def:stopping}{stopping times}, $X$ \hyperlink{def:adapted}{adapted}.
+  \begin{enumerate}[(i)]
+    \item $\sigma \wedge \tau$ is a \hyperlink{def:stopping}{stopping time}
+    \item \hyperlink{def:ftau}{$F_\tau$} is a $\sigma$-algebra
+    \item If $\sigma \leq \tau$, $\F_\sigma \subseteq \F_\tau$.
+    \item $\hyperlink{def:xtau}{X_\tau} \1{\{\tau < \infty\}}$ is $\F_\tau$-measurable
+    \item \hyperlink{def:stoppedprocess}{$X^\tau$} is adapted
+    \item If $X$ is integrable, $X^\tau$ is integrable
+  \end{enumerate}
+\end{nprop}
+\begin{nthm}[Hunt's optional stopping theorem]
+  Let $X$ be a \hyperlink{def:martingale}{supermartingale}, $\sigma, \tau$ bounded \hyperlink{def:stopping}{stopping times} with $\sigma \leq \tau$. Then
+  \begin{equation*}
+    \E[X_\tau] \leq \E[X_\sigma]
+  .\end{equation*}
+\end{nthm}
+\begin{proof}
+  Let $n \geq 0$ be such that $\tau \leq n$.
+  \begin{equation}X_\tau = X_\sigma + \sum_{\sigma \leq k < \tau} (X_{k+1} - X_k) = X_\sigma + \sum_{k=0}^n (X_{k+1} - X_k) \1{\{\sigma \leq k < \tau\}}.\tag{2.1}\label{eq:2.1}\end{equation}
+  Now, we have
+  \begin{align*}
+    \E[(X_{k+1} - X_k) \1{\{\sigma \leq k < \tau\}}] &= \E[\E[(X_{k+1} - X_k) \1{\{\sigma \leq k\}} \1{\{\tau > k\}} | \F_k]] \\
+                                                     &= \E[\underbrace{\E[X_{k+1} - X_k | \F_k]}_{\leq 0} \1{\{\sigma \leq k < \tau\}}].
+  \end{align*}
+  But $X$ is a \hyperlink{def:martingale}{supermartingale}, so taking expectations in \eqref{eq:2.1} gives $\E[X_\tau] \leq \E[X_\sigma]$.
+\end{proof}
+\begin{remark}
+  The same proof shows that if $\sigma,\tau$ are bounded \hyperlink{def:stopping}{stopping times}, $X$ \hyperlink{def:martingale}{submartingale} then $\E[X_\sigma] \leq \E[X_\tau]$.
+  Similarly if $X$ is a martingale, we have equality.
+\end{remark}
+\begin{nthm}
+  Let $X$ be \hyperlink{def:adapted}{adapted}, integrable. The following are equivalent.
+  \begin{enumerate}[(i)]
+    \item $X$ is a \hyperlink{def:martingale}{supermartingale}
+    \item For any \hyperlink{def:stopping}{stopping times} $\sigma,\tau$ with $\tau$ bounded, $\E[X_\tau | F_\sigma] \leq X_{\sigma \wedge \tau}$ almost surely.
+    \item $X^\tau$ is a supermartingale for all stopping times $\tau$ (not necessarily bounded).
+    \item $\E[X_\tau] \leq \E[X_\sigma]$ for all $\sigma,\tau$ stopping times with $\sigma \leq \tau$.
+  \end{enumerate}
+\end{nthm}
+\begin{proof}
+  (i) $\implies$ (ii). For $\sigma \geq 0$ and $\tau < n$,
+  \begin{align*}
+    X_\tau &= X_{\sigma \wedge \tau} + \sum_{\sigma \leq k < \tau} (X_{k+1} - X_k)  \\
+           &= X_{\sigma \wedge \tau} + \sum_{k=0}^n (X_{k+1} - X_k) \1{\sigma \leq k < \tau}.
+  \end{align*}
+  and as in the last proof
+  \begin{equation*}
+    \E[(X_{k+1} - X_k) \1{\{\sigma \leq k < \tau\}} \1A] \leq 0 \quad \forall A \in F_\sigma
+  \end{equation*}
+  (note we have $A \cap \{\sigma \leq k\} \in \F_k$).
+  Multiplying the earlier equation with $\1A$ and taking expectations gives
+  \begin{equation*}
+    \E[X_\tau \1A] \leq \E[X_{\sigma \wedge \tau} \1A]
+  \end{equation*}
+  which implies (ii).
+
+  \newlec
+  Clearly (ii) $\Rightarrow$ (iii) and (ii) $\Rightarrow$ (iv) (take expectations).
+  Also clearly (iii) $\Rightarrow$ (i), by choosing $\tau$ deterministic and very large.
+  Remains to show (iv) $\Rightarrow$ (i).
+  Let $m \leq n$, $A \in \F_m$, $\tau \coloneqq m \1A + n \1{A^c} \leq n$.
+  \begin{equation*}
+    \E[X_n \1A] - \E[X_m \1A] = \E[X_n] - \E[X_n \1{A^c} + X_m \1A]
+  .\end{equation*}
+  Observe that the rightmost term is just $\E[X_\tau]$, so
+  \begin{equation*}
+    = \E[X_n] - \E[X_\tau] \leq 0
+  \end{equation*}
+  by (iv), since $\tau \leq n$.
+  Thus $\E[X_n \1A] \leq \E[X_m \1A]\ \forall A \in \F_m$, hence $\E[X_n | \F_m] \leq X_m$ hence $X$ is a supermartingale.
+\end{proof}
+\subsection{Doob's upcrossing inequality}
+Let $X = (X_n)_n$ be a \hyperlink{def:stoch}{stochastic process}. Fix an interval $[a,b]$.
+\begin{ndef}\label{def:2.8}\hypertarget{def:upcrossing}
+  We say that an \label{upcrossing} of $[a,b]$ occurs between times $m$ and $n$ if
+  \begin{enumerate}[(i)]
+    \item $X_m < a$ and $X_n > b$
+    \item $X_k \in [a,b]$ for every $k \in (m,n)$
+  \end{enumerate}
+  Write $U_N(a,b) \coloneqq$ number of upcrossings on $[0,N]$
+  Define also the monotone limit $U_\infty(a,b) \coloneqq \lim_{N \to \infty} U_N(a,b)$.
+\end{ndef}
+
+Consider the gambling strategy: wait until the process $X$ (say price of a share) drops below $a$. Buy a share and hold it until the price exceeds $b$; sell, wait until the price drops below $a$, and so on.
+
+Our wealth process is then given by
+\begin{equation*}
+  W_n = \sum_{k=1}^n c_k (X_k - X_{k-1})
+\end{equation*}
+with
+\begin{align*}
+  c_1 &= \1{\{X_0 < a\}} \\
+  c_n &= \1{\{c_{n-1} = 1\}} \1{\{X_{n-1} \leq b\}} + \1{\{c_{n-1} = 0\}} \1{\{X_{n-1} < a\}}
+.\end{align*}
+
+Each time there is an \hyperlink{def:upcrossing}{upcrossing}, we win at least $(b-a)$. Thus, at time $N$
+\begin{equation}
+  W_n \geq (b-a) U_n(a,b) - \underbrace{|a - X_N| \1{\{X_N < a\}}}_{|X_N - a|^-}. \tag{2.3} \label{eq:2.3}
+\end{equation}
+$|X_N - a|^-$ represents the maximum loss if invested at time $N$ and price $< a$.
+\begin{nthm}[Doob's upcrossing lemma]\label{thm:2.9}
+  Let $X$ be a \hyperlink{def:martingale}{supermartingale}. Then
+  \begin{equation*}
+    \E[U_\infty (a,b)] \leq \sup_{n \geq 0} \frac{\E[(X_n - a)^-]}{b-a}
+  .\end{equation*}
+\end{nthm}
+\begin{proof}
+  $c_n$ is $F_{m-1}$-measurable and non-negative.
+  Hence $(W_n)$ is a \hyperlink{def:martingale}{supermartingale} (easy exercise) with $W_0 = 0$.
+  Therefore $\E[W_N] \leq 0$ and taking expectations in \eqref{eq:2.3} gives
+  \begin{align*}
+    \E[U_N(a,b)] &\leq \frac{\E[(X_N-a)^-]}{b-a} \\
+    \E[U_\infty(a,b)] &\leq \sup_{n \geq 0} \frac{\E[(X_n-a)^-]}{b-a}
+  \end{align*}
+  by monotone convergence.
+\end{proof}
+\subsection{Doob's maximal inequalities}
+Ideal goal: exchange $\E$ and sup.
+\begin{equation*}
+  X_n^* \coloneqq \sup_{k \leq n} |X_k|
+.\end{equation*}
+\begin{nthm}[Doob's maximal inequality]\label{thm:2.10}
+  Let $X$ be a \hyperlink{def:martingale}{martingale} or non-negative \hyperlink{def:martingale}{submartingale}, then
+  \begin{equation*}
+    \Prob[X_n^* \geq \lambda] \leq \frac{1}{\lambda} \E[|X_n| \1{\{X_n^* \geq \lambda\}}] \leq \frac{1}{\lambda } \E[|X_n|] \quad \forall \lambda > 0
+  .\end{equation*}
+\end{nthm}
+\begin{proof}
+  $X$ martingale $\Rightarrow |X|$ non-negative submartingale. Without loss of generality, assume $X_n \geq 0$ for all $n$.
+  Let $\tau \coloneqq \inf\{k \geq 0 : X_k \geq \lambda\} \land n \leq n$, a \hyperlink{def:stopping}{stopping time}.
+  \begin{align*}
+    \E[X_n] \geq \E[X_\tau] &= \E[\underbrace{X_\tau}_{\geq \lambda} \1{\{X_n^* \geq \lambda\}}] + \E[\underbrace{X_\tau}_{X_n} \1{\{X_n^* < \lambda\}}] \\
+    &\geq \lambda \Prob[X_n^* \geq \lambda] + \E[X_n \1{\{X_n^* < \lambda\}}]
+  \end{align*}
+  hence
+  \begin{equation*}
+    \lambda \Prob[X_n^* \geq \lambda] \leq \E[X_n \1{\{X_n^* \geq \lambda\}}]
+  .\qedhere\end{equation*}
+\end{proof}
+\begin{nthm}[Doob's $L^p$ inequality]\label{thm:2.11}
+  Let $X$ be a \hyperlink{def:martingale}{martingale} or non-negative \hyperlink{def:martingale}{submartingale}. For all $p > 1$,
+  \begin{equation*}
+    \E[(X_n^*)^p] \leq (\frac{p}{p-1})^p \E[|X_n|^p]
+  .\end{equation*}
+\end{nthm}
+\begin{proof}
+  Again $X \geq 0$ without loss of generality. Fix $k < \infty$.
+  \begin{align*}
+    \int_0^k p \lambda^{p-1} \1{\{X_n^* \geq \lambda\}} d\lambda &= p \int_0^{k \land X_n^*} \lambda^{p-1} d\lambda  \\
+                                                                 &= (k \land X_n^*)^p
+  .\end{align*}
+  Then using Fubini,
+  \begin{align*}
+    \E[(k \land X_n^*)^p] &= \int_0^k p \lambda^{p-1} \Prob[X_n^* \geq \lambda] d \lambda \\
+                         &\leq \int_0^k p \lambda^{p-2} \E[X_n \1{\{X_n^* \geq \lambda\}}] d \lambda \\
+                         &= \frac{p}{p-1} \E\left[X_n \underbrace{\int_0^k (p-1) \lambda^{p-2} \1{\{X_n^* \geq \lambda\}} d \lambda}_{(k \land X_n^*)^{p-1}}\right] \\
+                         &= \frac{p}{p-1} \E\left[X_n (k \land X_n^*)^{p-1}\right] \\
+                         &\leq \frac{p}{p-1} \E\left[X_n^p\right]^{\frac{1}{p}} \E\left[(k \land X_n^*)^p\right]^{\frac{p-1}{p}} \tag{using H\"older} \\
+    \implies \E[(k \land X_n^*)^p]^{\frac{1}{p}} &\leq \frac{p}{p-1} \E[X_n^p]^{\frac{1}{p}}
+  \end{align*}
+  Finally, use monotone convergence as $k \to \infty$ to give the result.
+\end{proof}
+Let $X^* = \sup_{n \geq 0} |X_n|$. Taking $n \to \infty$ in \cref{thm:2.10} and \cref{thm:2.11} by monotone convergence, we get
+\begin{align*}
+  \Prob[X^* > \lambda] &\leq \frac{1}{\lambda} \sup_{n \geq 0} \E[|X_n|] \\
+  \E[(X^*)^p] &\leq \left(\frac{p}{p-1}\right) \sup_{n \geq 0} \E[|X_n|^p]
+.\end{align*}
 \printindex
 \end{document}
