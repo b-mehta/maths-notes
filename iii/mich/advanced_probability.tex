@@ -488,7 +488,7 @@ Ideal goal: exchange $\E$ and sup.
   .\end{equation*}
 \end{nthm}
 \begin{proof}
-  $X$ martingale $\Rightarrow |X|$ non-negative submartingale. Without loss of generality, assume $X_n \geq 0$ for all $n$.
+  $X$ \hyperlink{def:martingale}{martingale} $\Rightarrow |X|$ non-negative \hyperlink{def:martingale}{submartingale}. Without loss of generality, assume $X_n \geq 0$ for all $n$.
   Let $\tau \coloneqq \inf\{k \geq 0 : X_k \geq \lambda\} \land n \leq n$, a \hyperlink{def:stopping}{stopping time}.
   \begin{align*}
     \E[X_n] \geq \E[X_\tau] &= \E[\underbrace{X_\tau}_{\geq \lambda} \1{\{X_n^* \geq \lambda\}}] + \E[\underbrace{X_\tau}_{X_n} \1{\{X_n^* < \lambda\}}] \\
@@ -502,7 +502,7 @@ Ideal goal: exchange $\E$ and sup.
 \begin{nthm}[Doob's $L^p$ inequality]\label{thm:2.11}
   Let $X$ be a \hyperlink{def:martingale}{martingale} or non-negative \hyperlink{def:martingale}{submartingale}. For all $p > 1$,
   \begin{equation*}
-    \E[(X_n^*)^p] \leq (\frac{p}{p-1})^p \E[|X_n|^p]
+    \E[(X_n^*)^p] \leq \left(\frac{p}{p-1}\right)^p \E[|X_n|^p]
   .\end{equation*}
 \end{nthm}
 \begin{proof}
@@ -511,7 +511,7 @@ Ideal goal: exchange $\E$ and sup.
     \int_0^k p \lambda^{p-1} \1{\{X_n^* \geq \lambda\}} d\lambda &= p \int_0^{k \land X_n^*} \lambda^{p-1} d\lambda  \\
                                                                  &= (k \land X_n^*)^p
   .\end{align*}
-  Then using Fubini,
+  Then using Fubini and the maximal inequality,
   \begin{align*}
     \E[(k \land X_n^*)^p] &= \int_0^k p \lambda^{p-1} \Prob[X_n^* \geq \lambda] d \lambda \\
                          &\leq \int_0^k p \lambda^{p-2} \E[X_n \1{\{X_n^* \geq \lambda\}}] d \lambda \\
@@ -527,5 +527,126 @@ Let $X^* = \sup_{n \geq 0} |X_n|$. Taking $n \to \infty$ in \cref{thm:2.10} and 
   \Prob[X^* > \lambda] &\leq \frac{1}{\lambda} \sup_{n \geq 0} \E[|X_n|] \\
   \E[(X^*)^p] &\leq \left(\frac{p}{p-1}\right) \sup_{n \geq 0} \E[|X_n|^p]
 .\end{align*}
+\newlec
+\subsection{Doob's martingale convergence theorem}
+\begin{ndef}\hypertarget{def:lpbounded}
+  A stochastic process $(X_n)_{n \geq 0}$ is \index{$L^p$-bounded} if
+  \begin{equation*}
+    \sup_{n \geq 0} \E[|X_n|^p] < \infty
+  .\end{equation*}
+  \hypertarget{def:ui}$(X_n)_{n \geq 0}$ is called uniformly integrable (UI) if
+  \begin{equation*}
+    \sup_{n \geq 0} \E[|X_n| \1{\{|X_n| > \lambda\}}] \xrightarrow{\lambda \to \infty} 0.
+  .\end{equation*}
+\end{ndef}
+\begin{remark}
+  $X$ is \hyperlink{def:lpbounded}{$L^p$-bounded} for some $p > 1 \Rightarrow X$ \hyperlink{def:ui}{uniformly integrable}.
+  $X$ uniformly integrable $\Rightarrow X$ is $L^1$-bounded.
+\end{remark}
+\begin{nthm}[Almost sure martingale convergence theorem]\label{thm:2.13}
+  Let $(X_n)_{n \geq 0}$ be an \hyperlink{def:lpbounded}{$L^1$-bounded} \hyperlink{def:martingale}{supermartingale}. Then
+  \begin{equation*}
+    \exists X_\infty \coloneqq \lim_{n \to \infty} X_n
+  \end{equation*}
+  almost surely, and $X_\infty \in L^1(F_\infty)$.
+\end{nthm}
+\begin{proof}
+  By \nameref{thm:2.9}, for any $a < b$
+  \begin{equation*}
+  \E[U_\infty(a,b)] \leq \frac{a + \sup{n \geq 0} \E[|X_n|]}{b-a} < \infty
+  \end{equation*}
+  as $X$ is $L^1$-bounded.
+  Then,
+  \begin{equation}
+    \Prob[U_\infty(a,b) = \infty] =0. \label{eq:2.5} \tag{2.5}
+  \end{equation}
+  Define
+  \begin{align*}
+    \Lambda &\coloneqq \{\omega : X_n(\omega) \text{ does not converge to a limit in } [-\infty, \infty]\} \\
+            &= \{\omega : \limsup_n X_n(\omega) > \liminf_n X_n(\omega)\} \\
+            &= \bigcup_{\substack{a,b \in \mathbb{Q} \\ a<b}} \underbrace{\{\omega : \limsup_n X_n(\omega) > b > a > \liminf_n X_n(\omega)\}}_{\Lambda_{a,b}}
+  .\end{align*}
+  But $\Lambda_{a,b} \subseteq \{\omega : U_\infty(a,b)(\omega) = \infty\}$, so by \eqref{eq:2.5},
+  \begin{align*}
+    &\Prob[\Lambda_{a,b}] = 0  \quad \forall a,b
+    \implies &\Prob[\bigcup_{\substack{a,b \in \mathbb{Q} \\ a < b}} \Lambda_{a,b}] = 0 \\
+    \implies &\Prob[\Lambda] = 0
+  .\end{align*}
+  hence $X = \lim_{n \to \infty} X_n \in [-\infty, \infty]$ exists almost surely.
+  Now,
+  \begin{equation*}
+    \E[|X_\infty|] = \E[\liminf_n |X_n|] \leq \liminf \E[|X_n|] \leq \sup_{n \geq 0} \E[|X_n|] < \infty
+  \end{equation*}
+  hence $X_\infty \in L^1$.
+\end{proof}
+\begin{remark}
+  \cref{thm:2.13} implies that non-negative supermartingales always converge almost surely, because then $\E[|X_n|] = \E[X_n] \leq \E[X_0] < \infty$, so $X$ is $L^1$-bounded.
+\end{remark}
+\begin{nthm}[$L^1$ martingale convergence]\label{thm:2.14}
+  \begin{enumerate}[(i)]
+    \item Let $(X_n)$ be a \hyperlink{def:ui}{uniformly integrable} \hyperlink{def:martingale}{martingale}. Then
+      $\exists X_\infty \in L^1(\F_\infty)$ such that $X_n \to X_\infty$ almost surely and in $L^1$ and $X_n = \E[X_\infty | \F_n]$ almost surely for every $n$.
+    \item For any $Y \in L^1(\F_\infty)$, $X_n = \E[Y | \F_n]$ defines a uniformly integrable martingale with $X_n \to Y$ almost surely and in $L^1$.
+  \end{enumerate}
+\end{nthm}
+\begin{proof}
+  \begin{enumerate}[(i)]
+    \item By \cref{thm:2.13}, $X_n \to X_\infty \in L^1(\F_\infty)$ almost surely, so because $X$ is \hyperlink{def:ui}{uniformly integrable}, $X_n \to X_\infty$ in $L^1$.
+      For $m \geq n$,
+      \begin{align*}
+        \E[|X_n - \E[X_\infty | \F_n]|] &= \E[|\E[X_m - X_\infty | \F_n] |] \\
+                                        &\leq \E[|X_m - X_\infty|] \xrightarrow {m \to \infty} 0 \\
+        \implies X_n &= \E[X_\infty | \F_n]
+      .\end{align*}
+    \item $(X_n)$ is a martingale and \hyperlink{def:ui}{uniformly integrable} by \cref{lem:1.5}.
+      Hence $\exists X_\infty \in L^1(\F_\infty)$ with $X_n \to X_\infty$ almost surely and in $L^1$.
+      \begin{equation*}
+        \E[X_\infty \1A] = \lim_n \E[X_n \1A] = \E[Y \1A]
+      \end{equation*}
+      for each $A \in \F_n$ for $n \geq 0$.
+      $\bigcup \F_n$ is a $\pi$-system which generates $F_\infty$, so $X_\infty = Y$ almost surely. \qedhere
+  \end{enumerate}
+\end{proof}
+\begin{nthm}[$L^p$ martingale convergence theorem]\label{thm:2.15}\leavevmode
+  \begin{enumerate}[(i)]
+    \item Let $(X_n)$ be an \hyperlink{def:lpbounded}{$L^p$-bounded} \hyperlink{def:martingale}{martingale}, with $p > 1$.
+      Then $\exists X_\infty \in L^p(\F_\infty)$ such that
+      $X_n \to X_\infty$ \hyperlink{def:as}{almost surely} and in $L^p$ and $X_n = \E[X_\infty | \F_n]$ almost surely for all $n$.
+    \item For any $Y \in L^p(\F_\infty)$, $X_n = \E[Y | \F_n]$ defines an $L^p$-bounded martingale with $X_n \to Y$ almost surely and in $L^p$.
+  \end{enumerate}
+\end{nthm}
+\begin{proof}
+  \begin{enumerate}[(i)]
+    \item Again by \cref{thm:2.13}, $X_n \to X_\infty$ almost surely, and $X$ is $L^p$ bounded.
+      Doob's maximal inequality % TODO ref
+      gives
+      \begin{equation*}
+        \E[(X^*)^p)] \leq (\frac{p}{p-1})^p \sup_{n \geq 0} \E[|X_n|^p] < \infty.
+      .\end{equation*}
+      Recalling $X^* = \sup_{n \geq 0} |X_n|$, we have $|X_n - X_\infty|^p \leq (2 X^*)^p$, hence $X_n \to X_\infty$ in $L^p$ by dominated convergence.
+      $X_n = \E[X_\infty | \F_n]$, as in the $L^1$ case.
+    \item $(X_n)$ is a martingale and
+      \begin{equation*}
+        \E[|X_n|^p] = \E[|\E[Y | \F_n]|^p] \leq \E[|Y|^p] < \infty
+      \end{equation*}
+      hence $(X_n)$ is an $L^p$-bounded martingale, so by (i), $X_n \to X_\infty$ almost surely and in $L^p$ for some $X_\infty \in L^p$.
+      Identify $X_\infty = Y$ as in the $L^1$-case.
+  \end{enumerate}
+\end{proof}
+Let $(\hat{\F}_n)$ be a backward filtration, i.e.\ a sequence of $\sigma$-algebras such that
+\begin{equation*}
+  \F \supseteq \hat{\F}_n \supseteq \hat{\F}_{n+1} \quad \forall n \geq 0.
+.\end{equation*}
+Let $\hat{\F}_\infty = \bigcup_{n \geq 0} \hat{F}_n$. (Note the intersection of $\sigma$-algebras is a $\sigma$-algebra, so we don't need to add the $\sigma$ like for a usual \hyperlink{def:filtration}{filtration}.)
+\begin{nthm}[Backward martingale convergence]\label{thm:2.16}
+  For all $Y \in L^1(\F)$,
+  \begin{equation*}
+    \E[Y | \hat{\F}_n] \xrightarrow{n \to \infty} \E[Y | \hat{\F}_\infty]
+  \end{equation*}
+  almost surely and in $L^1$.
+\end{nthm}
+\begin{proof}
+  Let $X_n = \E[Y | \hat{\F}_n]$. For fixed $n \geq 0$, $(X_{n-k})_{0 \leq k \leq n}$ is a martingale with respect to $(\hat{\F}_{n-k})_{0 \leq k \leq n}$.
+\end{proof}
 \printindex
 \end{document}
