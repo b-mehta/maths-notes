@@ -187,55 +187,55 @@ It turns out that the answer is always yes.
     \item What about a $k$-colouring? (i.e.\ $c: \mathbb{N}^{(2)} \to [k]$). The same proof would show there is an infinite monochromatic set.
       Alternatively, we can deduce this from \nameref{thm:ramsey}, by `turquoise spectacles': view our colouring as a $2$-colouring by colours `1' and `2 or 3 or ... or $k$' and apply \nameref*{thm:ramsey} and induction.
     \item Asking for an infinite monochromatic set is much more than asking for arbitrarily large finite monochromatic sets, e.g. in
-      \begin{center}
-        \begin{tikzpicture}[every node/.style={node, fill=white, inner sep=0.5mm}, scale=0.6]
-          \path[clip] (5,-7) rectangle (27,7);
-          \fill [white, scope fading=east] (10,-7) rectangle (27,7);
-          \begin{scope}[transparency group=knockout]
-            \foreach \n in {2,...,13} {
-              \foreach \m in {1,...,\n}{
-                \coordinate[xshift=1.77*\n cm] (\n-\m) at (360/\n*\m+90: 1) {};
-              }
-            }
-            \foreach \a in {3,...,13} {
-              \pgfmathsetmacro\biggest{\a-1}
-              \foreach \b in {2,...,\biggest} {
-                \foreach \c in {1,...,\a} {
-                  \foreach \d in {1,...,\b} {
-                    \pgfmathsetmacro\adist{cos(360/\a*\c)}
-                    \pgfmathsetmacro\bdist{cos(360/\b*\d)}
-                    \pgfmathsetmacro\atop{\adist >  0.2?1:0}
-                    \pgfmathsetmacro\abot{\adist < -0.2?1:0}
-                    \pgfmathsetmacro\btop{\bdist >  0.2?1:0}
-                    \pgfmathsetmacro\bbot{\bdist < -0.2?1:0}
-                    \pgfmathsetmacro\top{\atop+\btop==2?1:0}
-                    \pgfmathsetmacro\bot{\abot+\bbot==2?1:0}
-                    \pgfmathsetmacro\importance{2/(\a*\b)}
-                    \begin{scope}[opacity=\importance, every path/.style=bblue]
-                      \ifthenelse{\top=1}
-                      {\draw (\a-\c) to [bend right] (\b-\d)}
-                      {\ifthenelse{\bot=1}
-                        {\draw (\a-\c) to [bend left] (\b-\d)}
-                          {\draw (\a-\c) to (\b-\d)};
-                        };
-                      \end{scope}
-                    }
-                  }
-                }
-              }
-              \foreach \n in {2,...,10} {
-                \foreach \x in {1,...,\n}{
-                  \foreach \y in {1,...,\x} {
-                    \draw [bred] (\n-\x) -- (\n-\y);
-                  }
-                }
-                \foreach \m in {1,...,\n}{
-                  \node at (\n-\m) {};
-                }
-              }
-            \end{scope}
-          \end{tikzpicture}
-        \end{center}
+      % \begin{center}
+      %   \begin{tikzpicture}[every node/.style={node, fill=white, inner sep=0.5mm}, scale=0.6]
+      %     \path[clip] (5,-7) rectangle (27,7);
+      %     \fill [white, scope fading=east] (10,-7) rectangle (27,7);
+      %     \begin{scope}[transparency group=knockout]
+      %       \foreach \n in {2,...,13} {
+      %         \foreach \m in {1,...,\n}{
+      %           \coordinate[xshift=1.77*\n cm] (\n-\m) at (360/\n*\m+90: 1) {};
+      %         }
+      %       }
+      %       \foreach \a in {3,...,13} {
+      %         \pgfmathsetmacro\biggest{\a-1}
+      %         \foreach \b in {2,...,\biggest} {
+      %           \foreach \c in {1,...,\a} {
+      %             \foreach \d in {1,...,\b} {
+      %               \pgfmathsetmacro\adist{cos(360/\a*\c)}
+      %               \pgfmathsetmacro\bdist{cos(360/\b*\d)}
+      %               \pgfmathsetmacro\atop{\adist >  0.2?1:0}
+      %               \pgfmathsetmacro\abot{\adist < -0.2?1:0}
+      %               \pgfmathsetmacro\btop{\bdist >  0.2?1:0}
+      %               \pgfmathsetmacro\bbot{\bdist < -0.2?1:0}
+      %               \pgfmathsetmacro\top{\atop+\btop==2?1:0}
+      %               \pgfmathsetmacro\bot{\abot+\bbot==2?1:0}
+      %               \pgfmathsetmacro\importance{2/(\a*\b)}
+      %               \begin{scope}[opacity=\importance, every path/.style=bblue]
+      %                 \ifthenelse{\top=1}
+      %                 {\draw (\a-\c) to [bend right] (\b-\d)}
+      %                 {\ifthenelse{\bot=1}
+      %                   {\draw (\a-\c) to [bend left] (\b-\d)}
+      %                     {\draw (\a-\c) to (\b-\d)};
+      %                   };
+      %                 \end{scope}
+      %               }
+      %             }
+      %           }
+      %         }
+      %         \foreach \n in {2,...,10} {
+      %           \foreach \x in {1,...,\n}{
+      %             \foreach \y in {1,...,\x} {
+      %               \draw [bred] (\n-\x) -- (\n-\y);
+      %             }
+      %           }
+      %           \foreach \m in {1,...,\n}{
+      %             \node at (\n-\m) {};
+      %           }
+      %         }
+      %       \end{scope}
+      %     \end{tikzpicture}
+      %   \end{center}
   we have no infinite red set, but arbitrarily large finite red sets.
   \end{enumerate}
 \end{remark}
@@ -363,5 +363,126 @@ Could it be that we can always find an infinite set on which $c$ is either const
   \end{tikzpicture}
 \end{center}
 No.
+
+\newlec
+\textbf{missing}
+
+\newlec
+Write $W(m,k)$ for least $n$ (if it exists) such that whenever $[n]$ is $k$-coloured, there is a monochromatic AP of length $m$.
+\begin{nprop}%prop 5
+  For every $k$, there is $n$ such that whenever $[n]$ is $k$-coloured, there is a monochromatic AP of length $3$.
+\end{nprop}
+\begin{remark}
+  Proposition 5 is included in Theorem 6.
+\end{remark}
+\begin{center}
+  \begin{tikzpicture}[every node/.style={node, inner sep=0.4mm}]
+    \node [fill=bred] (1) at (1,0) {};
+    \node [fill=bred] (2) at (4,0) {};
+    \node (3) at (7,0) {};
+    \node [fill=bblue] (4) at (5,0) {};
+    \node [fill=bblue] (5) at (6,0) {};
+    \draw [bred] (1) to[bend left=30] (2);
+    \draw [bred] (2) to[bend left=30] (3);
+    \draw [bblue] (4) to[bend left=50] (5);
+    \draw [bblue] (5) to[bend left=50] (3);
+  \end{tikzpicture}
+\end{center}
+\begin{proof}
+  Claim: For every $r \leq k$, there is $n$ such that whenever $[n]$ is $k$-coloured there is either
+  \begin{itemize}
+    \item a monochromatic AP of length $3$, or
+    \item $r$ colour-focused APs of length $2$
+  \end{itemize}
+
+  Once we have the claim, we are done: put $r=k$ and look at the colour of the focus.
+
+  Let's now prove the claim by induction on $r$. $r=1$ is easy, by taking $n=k+1$.
+  Given $n$ suitable for $r-1$, we'll show that $(k^{2n} + 1) 2n$ is suitable for $r$.
+
+  So, given a $k$-colouring of $[(k^{2n}+1) 2n]$ with no monochromatic AP of length $3$.
+
+  \begin{center}
+    \begin{tikzpicture}[scale=0.5]
+      \draw (0,1) rectangle (5,0);
+      \draw (5.5,1) rectangle (10.5,0);
+      \draw (11,1) rectangle (16,0);
+      \node at (17,0.5) {$\ldots$};
+      \node at (2.5,1.5) {$2n$};
+      \node at (8,1.5) {$2n$};
+      \node at (13.5,1.5) {$2n$};
+      \node [node, draw=none, inner sep=0.5mm, fill=bred] (1) at (0.5,0.5) {};
+      \node [node, draw=none, inner sep=0.5mm, fill=bred] (2) at (2,0.5) {};
+      \node [node, draw=none, inner sep=0.5mm, fill=bblue] (3) at (1.5,0.5) {};
+      \node [node, draw=none, inner sep=0.5mm, fill=bblue] (4) at (2.5,0.5) {};
+      \node [node, draw=none, inner sep=0.5mm, fill=byellow] (5) at (3.5,0.5) {};
+      % draw a pattern inside each block, with two colour-focused APs and the focus in yellow
+    \end{tikzpicture}
+  \end{center}
+  \begin{center}
+    \begin{tikzpicture}[scale=0.5]
+      \draw (0,1) rectangle (5,0);
+      \draw (9,1) rectangle (14,0);
+      \draw (18,1) rectangle (23,0);
+      % draw the same pattern inside the first two blocks, and show the three APs focused in the third
+    \end{tikzpicture}
+  \end{center}
+  Break up $[(k^{2n}+1)2n]$ into $k^{2n}+1$ blocks of length $2n$, called $B_1, B_2, \dotsc, B_{k^{2n}+1}$ where $B_i = [2n(i-1)+1, 2ni]$.
+  The number of patterns for a block is $k^{2n}$, as we have $k$ colours, so we must have two blocks $B_s, B_{s+t}$ identically coloured.
+
+  Now, $B_s$ contains $r-1$ colour-focused APs of length $2$ (by definition of $n$), together with their focus (as the length is $2n$): say we have
+  $\{a_1, a_1 + d_1\}, \{a_2, a_2 + d_2\}, \dotsc, \{a_{r-1}, a_{r-1} + d_{r-1}\}$ focused at $f$.
+  But then the $r-1$ APs $\{a_1, a_1 + d_1 + 2nt\}, \dotsc, \{a_{r-1}, a_{r-1}, d_{r-1} + 2nt\}$ are colour-focused at $f + 4nt$.
+  Also, $\{f, f+2nt\}$ is mono, of a different colour to those.
+  Thus have $r$ colour-focused APs of length $2$.
+\end{proof}
+\begin{remark}
+  \begin{enumerate}
+    \item The idea of looking at the number of ways to colour a block is called a \named{product argument}.
+      \item The proof shows
+        \begin{equation*}
+          W(3,k) \leq \underbrace{k^{k^{k^{\ddots^{k^{4k}}}}}}_{k}
+        .\end{equation*}
+  \end{enumerate}
+\end{remark}
+\begin{nthm}[van der Waerden's Theorem]% thm 6
+  For every $m,k$ there is $n$ such that whenever $[n]$ is $k$-coloured, there is a monochromatic AP of length $m$.
+\end{nthm}
+\begin{proof}
+  Induction on $m$. $m=1$ is immediate. Alternatively, $m=2$ is pigeonhole, or $m=3$ is Prop 5.
+  Given $m$, we may assume by induction that $W(m-1, k)$ exists for all $k$.
+
+  Claim: For every $r \leq k$, there is $n$ such that whenever $[n]$ is $k$-coloured, there is either
+  \begin{itemize}
+    \item a monochromatic AP of length $m$, or
+      \item $r$ colour-focused APs of length $m-1$
+  \end{itemize}
+  Once we have this claim, we are done: put $r=k$ and look at the focus.
+
+  Proof of claim: Induction on $r$: $r=1$ is easy by taking $n=W(m-1,k)$.
+  Given $n$ suitable for $r-1$, we'll show that $n' = 2n W(m-1, k^{2n})$ is suitable for $r$.
+
+  So, given a $k$-colouring of $[n']$ with no monochromatic AP of length $m$,
+
+  Break up $[n']$ into $W(m-1, k^{2n})$ blocks of length $2n$: call them $B_1, B_2, \dotsc, B_{W(m-1, k^{2n})}$.
+
+  Now, the number of patterns for a block is $k^{2n}$.
+  \begin{center}
+    \begin{tikzpicture}[scale=0.2]
+      \node [node, inner sep=0.5mm, draw=none, fill=bred]      (1) at (-12,0) {};
+      \node [node, inner sep=0.5mm, draw=none, fill=bred]      (2) at (-8,0) {};
+      \node [node, inner sep=0.5mm, draw=none, fill=bred]      (3) at (-4,0) {};
+      \node [node, inner sep=0.5mm, draw=none, fill=bblue]     (4) at (-3,0) {};
+      \node [node, inner sep=0.5mm, draw=none, fill=bblue]     (5) at (-2,0) {};
+      \node [node, inner sep=0.5mm, draw=none, fill=bblue]     (6) at (-1,0) {};
+      \node [node, inner sep=0.5mm, draw=none, fill=byellow]   (7) at (0,0) {};
+    \end{tikzpicture}
+  \end{center}
+  So, by definition of $W(m-1, k^{2n})$, there are blocks $B_s, B_{s+t}, B_{s+2t}, \dotsc, B_{s+(m-2) t}$ that are coloured identically.
+
+  Inside $B_s$, have $r-1$ colour-focused APs of length $m-1$ (by definition of $n$) say $A_1, \dotsc, A_{r-}$ where $A_i$ has first term $a_i$ and common difference $d_i$, focused at $f$, as the length is $2n$.
+  But now the APs $A_1', \dotsc, A_{r-1}'$, where $A_i'$ has first term $a_i$ and common difference $d_i + 2nt$ are colour-focused at $f+2nt(m-1)$.
+  Also, $\{f, f+2nt, f+4nt, \dotsc, f+2nt(m-2)\}$ is monochromatic, of a different colour to $A_1', \dotsc, A_{r-1}'$.
+\end{proof}
 \printindex
 \end{document}
