@@ -1744,33 +1744,33 @@ From now on: $T$ is strongly minimal, \hyperlink{def:complete}{complete}, and ha
     \begin{equation*}
       \lnot \varphi(b, \bar{a}) \land \neg \varphi(c, f(\bar{a})).
     \end{equation*}
-  \item $|\varphi(U, \bar{a})| \geq \omega$. Then $|\neg \varphi(\mathcal{U}, \bar{a})| < \omega$, and so
+  \item $|\varphi(U, \bar{a})| \geq \omega$. Then by strong minimality, $|\neg \varphi(\mathcal{U}, \bar{a})| < \omega$, and so
     \begin{equation*}
       \varphi(b, \bar{a}) \land \varphi(c, f(\bar{a})). \qedhere
     \end{equation*}
   \end{enumerate}
 \end{proof}
 \begin{ncor}\label{cor:8.12}
-  Every bijection between \hyperlink{def:indep}{independent} subsets of $\mathcal{U}$ is \hyperlink{def:upe}{elementary}.  \end{ncor}
+  Every bijection between \hyperlink{def:small}{small} \hyperlink{def:indep}{independent} subsets of $\mathcal{U}$ is \hyperlink{def:upe}{elementary}.  \end{ncor}
 \begin{proof}
-  Pick $A,B \subseteq C$ \hyperlink{def:indep}{independent} and let $f: A \to B$ be any bijection.
+  Pick $A,B \subseteq U$ \hyperlink{def:indep}{independent} and let $f: A \to B$ be any bijection.
   Let $\bar{a}$ enumerate $A$, write $f(a_i) = b_i$.
   Then $a_0 \notin \acl(\emptyset)$ and $b_0 \notin \acl(\emptyset)$ (otherwise $A,B$ not independent). By \cref{prop:8.11}, $\{\langle a_0, b_0 \rangle \}$ is an elementary map.
 
-  At stage $i+1$, $a_{i+1} \notin \acl(a_0, \dotsc, a_i)$ so use the same argument.
+  At stage $i+1$, $a_{i+1} \notin \acl(a_0, \dotsc, a_i)$ and $b_{i+1} \notin \acl(b_0, \dotsc, b_i)$ so use the same argument.
 \end{proof}
 
 \begin{nremark}\label{rem:8.13}
-If $\M \subseteq \U$, then by \cref{prop:7.13}, $\M$ is algebraically closed.
+If $\M \preccurlyeq \U$ is a model such that $\abs \M < \abs \U$, then by \cref{prop:7.13}, $\M$ is algebraically closed.
 \end{nremark}
 
 \begin{nthm}\label{thm:8.14}
-  Suppose that $\M, \N \subseteq \U$ are such that $\hyperlink{def:dim}{\dim}(M) = \dim(N)$, then $\M \hyperlink{def:iso}{\simeq} \N$.
+  Suppose that $\M, \N \preccurlyeq \U$ are such that $\hyperlink{def:dim}{\dim}(M) = \dim(N)$, then $\M \hyperlink{def:iso}{\simeq} \N$.
 \end{nthm}
 \begin{proof}
   Let $A,B$ be \hyperlink{def:basis}{bases} of $\M,\N$ respectively.
   Then a bijection $f: A \to B$ is \hyperlink{def:upe}{elementary} (by \cref{cor:8.12}).
-  Then there is $\alpha \in \hyperlink{def:aut}{\Aut}(\U)$ such that $f \subseteq \alpha$. Then by \cref{prop:7.14},
+  Then there is $\alpha \in \hyperlink{def:aut}{\Aut}(\U)$ such that $f \subseteq \alpha$ by homogeneity of the monster. Then by \cref{prop:7.14},
   \begin{equation*}
     \alpha(\M) = \alpha(\hyperlink{def:alg}{\acl}(\M)) = \acl(\alpha(A)) = \acl(B) = \N. \qedhere
   \end{equation*}
@@ -1781,9 +1781,182 @@ If $\M \subseteq \U$, then by \cref{prop:7.13}, $\M$ is algebraically closed.
 \begin{proof}
   If $A \subseteq \mathcal{U}$, then $|\hyperlink{def:alg}{\acl}(A)| \leq |L(A)| + \omega$ (there are at most $|L(A)| + \omega$ formulas, each element $m$ in $\acl(A)$ is one of finitely many solutions of one of those formulas).
   If $|\mathcal{M}| = \lambda$, then a \hyperlink{def:basis}{basis} of $\M$ must have cardinality $\lambda$.
+  By \cref{thm:8.14}, any two models with equal dimension are isomorphic.
 \end{proof}
 
 In \hyperlink{def:vsk}{$T_{VSK}$}, if $K$ is infinite countable, the vector space can have finite dimension (\hyperlink{def:wcat}{$\omega$-categoricity} fails). If $K$ is finite, the vector space must have dimension $\geq \omega$.
+
+\clearpage
+\section{Countable Models}
+\begin{displayquote}
+Any fool can realise a type but it takes a model theorist to omit one. ---  Gerald Sacks
+\end{displayquote}
+
+Let $T$ be a complete countable theory with a monster model $\U$.
+
+\begin{ndef} \label{def:9.1}
+\index{formula!isolate}
+An $L$-formula $\varphi(\bar{x})$ is said to \named{isolate} a type $p(\bar{x})$ in $L$ if
+\begin{enumerate}[label=(\roman*)]
+\item $\varphi(\bar{x}) \to p(\bar{x})$, i.e. $T \vdash \forall \bar{x} \left( \varphi(\bar x) \to \psi(\bar x) \right)$ for all $\psi(\bar x) \in p(\bar x)$, and
+\item $\varphi(\bar{x})$ is consistent.
+\end{enumerate}
+A set of formulas $\Delta$ with variables in $\bar{x}$ \named{isolates} $p(\bar x)$ if there is $\delta(\bar{x}) \in \Delta$ that isolates $p(\bar{x})$. 
+When $\Delta$ contains all formulas in $L(A)$ with free variables in $\bar{x}$, we say that $A$ \named{isolates} $p(\bar{x})$.
+If $A$ is clear from the context, we say that $p(\bar x)$ is \named{isolated} or \named{principal}. \index{type!isolated} \index{type!principal}
+A model $\M$ is said to \named{omit} $p(\bar x)$ if $p(\bar x)$ is not realized in $\M$. \index{model!omits}
+\end{ndef}
+
+\begin{nremark} \label{rem:9.2}
+If $\M$ is a model and $p(\bar x)$ is a type in $L(M)$, then $\M$ realises $p(\bar x)$ if and only if $\M$ isolates $p(\bar x)$.
+\end{nremark}
+
+\begin{proof}
+\begin{itemize}
+\item[$\Leftarrow$] Let $\varphi(\bar x)$ isolate $p(\bar x)$, so $\M \models \varphi(\bar a)$ for some $\bar{a}$, so $\bar{a} \models p(\bar x)$.
+\item[$\Rightarrow$] Let $\bar a \models p(\bar x)$. Then $\varphi(\bar x) \coloneqq (\bar x = \bar a)$ isolates $p(\bar x)$.
+\end{itemize}
+\end{proof}
+
+\begin{nlemma} \label{lemma:9.3}
+Let $\abs{L(A)} = \omega$. Let $p(\bar{x})$ be a type in $L(A)$ and suppose that $A$ does not isolate $p(\bar x)$. Let $\psi(z)$ be a consistent $L(A)$-formula in one free variable. Then there is $a \in U$ sucht that
+\begin{enumerate}[label=(\roman*)]
+\item $\U \models \psi(a)$,
+\item $A \cup \{a\}$ does not isolate $p(\bar x)$.
+\end{enumerate}
+\end{nlemma}
+\Cref{lemma:9.3} will be proven later.
+
+\begin{nthm}[Omitting Types] \label{thm:9.4}
+Let $\abs{L(A)} = \omega$ and let $p(\bar{x})$ be a consistent type in $L(A)$ with variables in $\bar{x}$, $\abs{\bar x} < \omega$. Then the following are equivalent:
+\begin{enumerate}[label=(\roman*)]
+\item all models $\M$ containing $A$ realise $p(\bar x)$, \label{it:thm:9.4a}
+\item $A$ isolates $p(\bar x)$. \label{it:thm:9.4b}
+\end{enumerate}
+\end{nthm}
+\begin{proof}
+\ref{it:thm:9.4b} implies \ref{it:thm:9.4a}: Let $\varphi(\bar x)$ be an $L(A)$-formula that isolates $p(\bar x)$. Then $\models \exists \bar{x} \; \varphi(\bar x)$, so if $\M$ contains $A$, then there is $\bar a \in M$ such that $\M \models \varphi(\bar{a})$ and $\bar{a}$ realizes $p(\bar{x})$.
+This follows from \cref{rem:9.2}.
+
+\ref{it:thm:9.4a} implies \ref{it:thm:9.4b}: Argue by contrapositon and assume $A$ does not isolate $p(\bar x)$. We build a chain $\left< A_i : i < \omega \right>$ such that
+\begin{enumerate}[label=(\roman*)]
+\item $A_0 = A$,
+\item $\abs{A_i} = \omega$ for all $i < \omega$,
+\item $A_i$ does not isolate $p(\bar{x})$ for any $i < \omega$.
+\end{enumerate}
+At stage $i+1$, enumerate all consistent $L(A_i)$-formulas with one free variable, say $\left< \psi_k(z) : k < \omega \right>$. For $k \in \omega$, we find $a_k^i \in U$ such that $\models \psi_k(a_k^i)$, and such that $A_i \cup \left\{ a_0^i, \dots, a_k^i\right\}$ does not isolate $p(\bar x)$. This is possible by \cref{lemma:9.3}. Let $A_{i+1} \coloneqq A_i \cup \left\{ a_k^i\ \middle|\ k < \omega \right\}$. Let $M \coloneqq \bigcup A_i$. We claim that
+\begin{enumerate}[label=(\alph*)]
+\item $\M \preccurlyeq \U$, \label{it:thm:9.4p1}
+\item $\M$ omits $p(\bar x)$. \label{it:thm:9.4p2}
+\end{enumerate}
+For \ref{it:thm:9.4p1}, use Tarski-Vaught Test (\cref{lem:3.8}): if $\psi(z)$ is a consistent $L(M)$-formula, then it has parameters in $A_i$ for some $i$, so by \cref{rem:9.2}, $\M$ contains a witness. Condition \ref{it:thm:9.4p2} is satisfied by construction: none of the $A_i$ isolates $p(\bar{x})$, so $\M$ does not isolate $p(\bar x)$, so since $\M$ is a model, by \cref{rem:9.2} it does not realise $p(\bar{x})$.
+\end{proof}
+
+\begin{remark}
+We need $\abs{L(A)} = \omega$. There are known counterexamples in the uncountable case.
+\end{remark}
+
+\begin{proof}[Proof of \cref{lemma:9.3}]
+Let $\psi(z)$ be a consistent $L(A)$-formula. We build a sequence $\left< \psi_i(z) : i < \omega \right>$ starting with $\psi_0 \coloneqq \psi$ such that
+\begin{enumerate}[label=(\roman*)]
+\item $\psi_i(z)$ is consistent,
+\item $\psi_{i+1}(z) \to \psi_i(z)$ for all $i < \omega$,
+\item a realisation of the type $\{ \psi_i(z) \mid i < \omega \}$ is the required solution of $\psi(z)$.
+\end{enumerate}
+Let $\left< \chi_i(\bar{x}, z) : i < \omega \right>$ be an enumeration of $L(A)$-formula with free variables in $\bar{x} \cup \{z\}$. At stage $i+1$, if $\chi_i(\bar{x}, z)$ is inconsistent, set $\psi_{i+1}(z) = \psi_i(z)$. If otherwise $\chi_i(\bar x, z)$ is consistent, let $\varphi(\bar x) \in p(\bar{x})$ such that
+\[
+\psi_i(z) \land \exists \bar{x} \left( \chi_i(\bar{x}, z) \land \neg \varphi(\bar{x}) \right)
+\]
+is consistent. Let $\psi_{i+1}(z)$ be this conjunction.
+These conditions guarantee that a realisation of the type $\{ \psi_i(z) \mid i < \omega \}$ does not isolate $p(\bar x)$.
+We must show that it is possible to find such $\varphi(\bar{x})$. If no such $\varphi(\bar{x})$ exists, then for all $\varphi(\bar{x}) \in p(\bar x)$,
+\[
+\chi_i(\bar{x}, z) \land \psi_i(z) \to \varphi(\bar x).
+\]
+But this implies that 
+\[
+\exists z \left( \chi_i(\bar{x}, z) \land \chi_i(z) \right) \to p(\bar{x}).
+\]
+This is an $L(A)$-formula which yields a contradiction to the assumption that $A$ does not isolate $p(\bar{x})$.
+\end{proof}
+\begin{ndef} \label{def:9.5}
+Let $\M$ be a model, $A \subseteq M$. Then
+\begin{enumerate}[label=(\roman*)]
+\item $\M$ is \named{prime over $A$}\index{model!prime} if for every $\N \supseteq A$ there is an elementary embedding $f: \M \to \N$ that fixes $A$ pointwise. If $A = \emptyset$, then $\M$ is a \named{prime model}.
+\item $\M$ is \named{atomic over $A$}\index{model!atomic} if for all $n \in \omega$ and $\bar a \in M^n$, the type $\hyperlink{def:tp}{\tp}(\bar a/A)$ is isolated. When $A = \emptyset$, then $\M$ is said to be \named{atomic}.
+\end{enumerate}
+\end{ndef}
+
+\begin{nfact} \label{fact:9.6}
+Let $\bar{a}, \bar{b} \in U^n$ and $A \subseteq U$. Suppose that $\hyperlink{def:tp}{\tp}(\bar{b}\bar{a}/A)$ is isolated, then $\tp(\bar b/A\bar{a})$ and $\tp(\bar{a}/A)$ are isolated.
+\end{nfact}
+\begin{proof}[Proof (sketch)]
+Let $p(\bar{x}, \bar{z}) = \tp(\bar{b}\bar{a}/A)$. Then $\tp(\bar{b}/A\bar{a}) = p(\bar{x},\bar{a})$ and $\tp(\bar{a}/A) = \left\{ \exists \bar{x} \; \varphi(\bar{x},\bar{z}) \ \middle|\ \varphi(\bar{x}, \bar{z}) \in p(\bar x, \bar z) \right\}$. Suppose $\varphi(\bar{x}, \bar{z})$ isolates $p(\bar{x},\bar{z})$. Then
+\begin{enumerate}[label=(\roman*)]
+\item $\varphi(\bar{x},\bar{a})$ isolates $\tp(\bar{b}/A\bar{a})$,
+\item $\exists \bar{x}\; \varphi(\bar{x},\bar{z})$ isolates $\tp(\bar{a}/A)$.
+\end{enumerate}
+\end{proof}
+\begin{nprop} \label{prop:9.7}
+If $\M$ is atomic over $A$ and $\bar{a} \in M^n$, then $\M$ is atomic over $A \cup \bar{a}$.
+\end{nprop}
+\begin{proof}
+Let $\bar{b} \in M^m$. Then $\tp(\bar{b}\bar{a}/A)$ is isolated, so $\tp(\bar{b}/A\bar{a})$ is isolated by \cref{fact:9.6}.
+\end{proof}
+
+\begin{nprop}[Extension Lemma] \label{prop:9.8}
+Let $f:\M \to \N$ be elementary and $\M$ atomic over $\dom(f)$. Then for every $b \in M$ there is $c \in N$ such that $f \cup \{ \langle b, c \rangle \}$ is elementary.
+\end{nprop}
+\begin{proof}
+Let $\bar{a}$ enumerate $\dom(f)$ and let $p(x, \bar{z}) = \tp(b\bar{a}/\emptyset)$. Let $\varphi(x, \bar{a})$ isolate $p(x, \bar{a})$. Then by elementarity, $\varphi(x, f(\bar a))$ isolates $p(x, f(\bar{a}))$. We can find $c \in N$ such that $\N \models \varphi(c, f(\bar a))$ and this $c$ is the required element.
+\end{proof}
+
+\begin{nprop} \label{prop:9.9}
+Any two countable atomic models are isomorphic.
+\end{nprop}
+\begin{proof}
+By a back-and-forth argument using \cref{prop:9.7,prop:9.8}.
+\end{proof}
+
+\begin{nthm} \label{thm:9.10}
+Let $\abs{L(A)} = \omega$. Then for any model $\M \supseteq A$, the following are equivalent:
+\begin{enumerate}[label=(\roman*)]
+\item $\M$ is countable and atomic over $A$, \label{it:thm:9.10a}
+\item $\M$ is prime over $A$. \label{it:thm:9.10b}
+\end{enumerate}
+\end{nthm}
+\begin{proof}
+\ref{it:thm:9.10a} implies \ref{it:thm:9.10b}: Let $\N \supseteq A$ be a model. Then $\id_A : \M \to \N$ is elementary and by \cref{prop:9.7,prop:9.8}, $\id_A$ can be extended to a elementary embedding $g:\M \to \N$.
+
+\ref{it:thm:9.10b} implies \ref{it:thm:9.10a}: By Downward Löwenheim-Skolem (\cref{thm:3.11DLS}), we know that there is a countable model that contains $A$. Then $\M$ embeds into this model and so $\abs{M} = \omega$.
+Suppose that $\M$ is not atomic over $A$, i.e.\@ that there is $\bar{b} \in M^n$ such that $\tp(\bar{b}/A)$ is not isolated. By the Omitting Type Theorem (\cref{thm:9.4}), there is a countable model $\N$ that omits $\tp(\bar{b}/A)$. But then $\M$ does not embed into $\N$, a contradiction to $\M$ being prime.
+\end{proof}
+
+\begin{ndef} \label{def:9.11} \index{$S_n(A)$}
+For $n \in \omega$, $A \subseteq U$, let $S_n(A)$ denote the collection of complete consistent types in $L(A)$ with $n$ free variables. When $A = \emptyset$, we write $S_n(T)$ for $S_n(\emptyset)$.
+\end{ndef}
+
+\begin{nthm}[Ryll--Nardzewski--Engeler--Svenonins] \label{thm:9.12}
+For a countable theory $T$, the following are equivalent:
+\begin{enumerate}[label=(\roman*)]
+\item $T$ is $\omega$-categorical, \label{it:thm:9.12a}
+\item for all $n$, every type $p(\bar x) \in S_n(T)$ is isolated, \label{it:thm:9.12b}
+\item for all $n$, $\abs{S_n(T)} < \omega$, \label{it:thm:9.12c}
+\item $\Aut(\U)$ has finitely many $n$-orbits (i.e., orbits when acting on $n$-tuples) for all $n \in \omega$. \label{it:thm:9.12d}
+\end{enumerate}
+\end{nthm}
+\begin{proof}
+\ref{it:thm:9.12b} implies \ref{it:thm:9.12c}: We have $U^n = \bigcup_{p(\bar x) \in S_n(T)} p(\U)$. But $p(\bar x) \in S_n(T)$ is isolated by a formula $\varphi_p(\bar x)$, say. And so $U^n = \bigcup_{p(\bar x) \in S_n(T)} \varphi_p(\U)$. By compactness, $U^n = \bigcup_{i=1}^k \varphi_{p_i}(\U)$ for $k$ finite and certain $p_1, \dots, p_k$. This implies that $\abs{S_n(T)} < \omega$.
+
+\ref{it:thm:9.12c} implies \ref{it:thm:9.12b}: Let $p(\bar x) \in S_n(T)$. If $\abs{S_n(T)} < \omega$, then $\U \setminus p(\U)$ is a union of finitely many type-definable sets, so there it is type-definable by $q(\bar x)$, not necessarily complete. By an argument similar to \cref{fact:7.2}, there are formulas $\varphi(\bar{x})$ and $\chi(\bar x)$ such that $\varphi(\U) = p(\U)$ and $\chi(\U) = \U \setminus p(\U)$. But then $\varphi(\bar{x})$ isolates $p(\bar x)$.
+
+\ref{it:thm:9.12c} and \ref{it:thm:9.12d} are equivalent: This follows from the fact that for $\bar{a}, \bar{b} \in U$, 
+\[
+\tp(\bar{a}) = \tp(\bar{b}) \iff O(\bar{a}/\emptyset) = O(\bar{b}/\emptyset).
+\]
+
+\ref{it:thm:9.12a} and \ref{it:thm:9.12b} are equivalent: This is an exercise. It follows from atomicity.
+\end{proof}
 
 \clearpage
 \section{Bonus Lecture: Existence of saturated models}
