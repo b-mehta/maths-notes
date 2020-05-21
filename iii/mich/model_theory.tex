@@ -1518,13 +1518,16 @@ This gives \hyperlink{def:qe}{quantifier elimination} for $T_{\text{rg}}$ and $T
   Therefore $a \in \mathcal{M}$.
 
   (iii) $\Rightarrow$ (i). Suppose $a \notin \acl(A)$, let $p(x) = \tp(a/A)$. Then for all $\varphi(x) \in p(x)$, $|\varphi(\mathcal{U})| \geq \omega$.
-  Then from the second examples sheet\footnote{
+  Then from the second examples sheet\footnote{Question 6 on examples sheet 2:
   Let $\mathcal{N}$ be saturated and let $p(x)$ be a type with parameters in $A \subseteq N$ such that $\abs A < \abs{N}$. Suppose $p(x)$ is closed under conjunction, i.e.\@ if $\varphi(x)$ and $\psi(x)$ are in $p(x)$, then also $\varphi(x) \land \psi(x)$. Then the following are equivalent:
   \begin{enumerate}[label=(\roman*)]
   \item $p(x)$ has finitely many realizations,
   \item $p(x)$ contains a formula with finitely many realizations.
   \end{enumerate}}, $|p(\mathcal{U})| \geq \omega$.
-  And we can show (examples 2 question 5) that $|p(\mathcal{U})| = |\mathcal{U}|$.
+  And we can show\footnote{Question 5 on example sheet 2: Let $\mathcal{N}$ be a saturated $L$-structure, and let $p(x)$ be a type (with one free variable) in $L(A)$, where $A \subseteq N$ and $\abs{A} < \abs{N}$. Let $p(\mathcal{N}) = \left\{ a\in N \ \middle|\ \mathcal{N} \models p(a) \right\}$. Then the following are equivalent: \begin{enumerate}[label=(\roman*)]
+  \item $p(\mathcal{N})$ is infinite,
+  \item $\abs{p(\mathcal{N})} = \abs{\mathcal{N}}$.
+\end{enumerate}} that $|p(\mathcal{U})| = |\mathcal{U}|$.
 
   Let $\mathcal{M} \supseteq A$, then $p(\mathcal{U}) \setminus \mathcal{M} \neq \emptyset$ by cardinality considerations.
   So there is $b \in p(\mathcal{U}) \setminus \mathcal{M}$.
@@ -1827,7 +1830,7 @@ Let $\abs{L(A)} = \omega$. Let $p(\bar{x})$ be a type in $L(A)$ and suppose that
 \end{nlemma}
 \Cref{lemma:9.3} will be proven later.
 
-\begin{nthm}[Omitting Types] \label{thm:9.4}
+\begin{nthm}[Omitting Types] \label{thm:9.4} \index{Omitting Types Theorem}\index{type!Omitting Types Theorem}
 Let $\abs{L(A)} = \omega$ and let $p(\bar{x})$ be a consistent type in $L(A)$ with variables in $\bar{x}$, $\abs{\bar x} < \omega$. Then the following are equivalent:
 \begin{enumerate}[label=(\roman*)]
 \item all models $\M$ containing $A$ realise $p(\bar x)$, \label{it:thm:9.4a}
