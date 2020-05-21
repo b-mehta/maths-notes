@@ -518,7 +518,7 @@ Let $p_0 \in I$ be any partial embedding. At stage $i+1$, let $p_i$ be given. Us
 \end{proof}
 
 \begin{nlemma}[Extension lemma for dense linear orders]\label{lem:4.4}
-  \index{extension lemma}Suppose $\mathcal{M} \hyperlink{def:models}{\models} \hyperlink{def:tlo}{T_{\text{lo}}}$, $\mathcal{N} \models \hyperlink{def:tlo}{T_{\text{dlo}}}$, let $p: \dom p \subseteq M \to N$ be a \hyperlink{def:pe}{finite partial embedding}.
+  \index{extension lemma}Suppose $\mathcal{M} \hyperlink{def:models}{\models} \hyperlink{def:tlo}{T_{\text{dlo}}}$, $\mathcal{N} \models \hyperlink{def:tlo}{T_{\text{dlo}}}$, let $p: \dom p \subseteq M \to N$ be a \hyperlink{def:pe}{finite partial embedding}.
   Then if $c \in M$, there is a finite partial embedding $\hat{p}$ such that $p \subseteq \hat{p}$ and $c \in \dom(\hat{p})$.
 \end{nlemma}
 \begin{proof}
@@ -870,7 +870,7 @@ If $\varphi = \exists y \; \psi(\bar x, y)$, define $A_\varphi$ as usual. Suppos
 \end{proof}
 
 \begin{ndef}[Finite intersection property] \label{def:5.8} \hypertarget{fip}
-A subset $S \subseteq 2^I$ has the \index{finite intersection property}\named{finite intersection property} of for all $n \in \omega$ and $A_1, \dots, A_n \in S$, it holds that,
+A subset $S \subseteq 2^I$ has the \index{finite intersection property}\named{finite intersection property} if for all $n \in \omega$ and $A_1, \dots, A_n \in S$, it holds that,
 \[
 \bigcap_{i=1}^n A_i \neq \emptyset.
 \] 
@@ -1143,7 +1143,7 @@ where $\langle a_i : i < |\mathcal{M}| \rangle$ enumerates $\mathcal{M}$. $p(x)$
   \end{equation*}
 
 \marginnote{\emph{Lecture 11}}
-  (ii) $\Rightarrow$ (iii) Let $p(\bar z)$ be as in (iii). Then by \cref{thm:5.16}, $p(\bar z)$ is realized by $\bar b$ in some $\mathcal M \succcurlyeq \mathcal N$ where $\abs{\bar b} = \abs{\bar z}$. Then $\id_A: \mathcal{N} \to \mathcal{M}$ is an elementary map. Idea: extend $\id_A$ to $f: \mathcal{N} \to \mathcal{N}$ such that $\bar b \in \dom f$. We build $f$ in staged using (ii). Let $f_0 \coloneqq \id_A$. At stage $i+1$, use (ii) to put $b_i$ in $\dom f_{i+1}$. At limit stages  $\mu < \lambda$, let $f_\mu = \bigcup_{i < \mu} f_i$. We get that $\bigcup_{i < \lambda}f_i $ is elementary and $\bar b \in \dom f$. Then $f(\bar f) \in N$ and $\mathcal{N} \models p(f(\bar b))$.
+  (ii) $\Rightarrow$ (iii) Let $p(\bar z)$ be as in (iii). Then by \cref{thm:5.16}, $p(\bar z)$ is realized by $\bar b$ in some $\mathcal M \succcurlyeq \mathcal N$ where $\abs{\bar b} = \abs{\bar z}$. Then $\id_A: \mathcal{M} \to \mathcal{N}$ is an elementary map. Idea: extend $\id_A$ to $f: \mathcal{M} \to \mathcal{N}$ such that $\bar b \in \dom f$. We build $f$ in stages using (ii). Let $f_0 \coloneqq \id_A$. At stage $i+1$, use (ii) to put $b_i$ in $\dom f_{i+1}$. At limit stages  $\mu < \lambda$, let $f_\mu = \bigcup_{i < \mu} f_i$. We get that $\bigcup_{i < \lambda}f_i $ is elementary and $\bar b \in \dom f$. Then $f(\bar b) \in N$ and $\mathcal{N} \models p(f(\bar b))$.
 
   (iii) $\Rightarrow$ (i) is trivial.
   % By Downward LS Theorem, there is $\mathcal{M} \preccurlyeq \mathcal{M}'$ such that $A \cup \{\bar{b}\} \subseteq M$, parameter set of the type.
