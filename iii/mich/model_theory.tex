@@ -1739,18 +1739,19 @@ From now on: $T$ is strongly minimal, \hyperlink{def:complete}{complete}, and ha
 \end{nprop}
 \begin{proof}
   Let $\bar{a}$ enumerate $\dom(f)$, let $\varphi(x, \bar{a})$ be a formula with parameters in $\bar{a}$.
-  Claim: $\varphi(b,\bar{a})) \leftrightarrow \varphi(c, f(\bar{a}))$. Cases:
+  The claim is that $\varphi(b,\bar{a})) \leftrightarrow \varphi(c, f(\bar{a}))$. We distinguish cases:
   \begin{enumerate}
   \item $|\varphi(\mathcal{U}, \bar{a})| < \omega$. Then $|\varphi(\mathcal{U}, f(\bar{a}))| < \omega$.
     Then $b \notin \varphi(\mathcal{U}, \bar{a})$ (because $b \notin \acl(\bar{a})$) and $c \notin \varphi(\mathcal{U}, f(\bar{a}))$.
-    Then
+    Then it holds in $\mathcal{U}$ that
     \begin{equation*}
       \lnot \varphi(b, \bar{a}) \land \neg \varphi(c, f(\bar{a})).
     \end{equation*}
   \item $|\varphi(U, \bar{a})| \geq \omega$. Then by strong minimality, $|\neg \varphi(\mathcal{U}, \bar{a})| < \omega$, and so
     \begin{equation*}
-      \varphi(b, \bar{a}) \land \varphi(c, f(\bar{a})). \qedhere
+      \varphi(b, \bar{a}) \land \varphi(c, f(\bar{a}))
     \end{equation*}
+    holds in $\mathcal{U}$. \qedhere
   \end{enumerate}
 \end{proof}
 \begin{ncor}\label{cor:8.12}
@@ -1798,7 +1799,7 @@ Any fool can realise a type but it takes a model theorist to omit one. ---  Gera
 Let $T$ be a complete countable theory with a monster model $\U$.
 
 \begin{ndef} \label{def:9.1}
-\index{formula!isolate}
+\index{formula!isolate} \hypertarget{def:isolate}
 An $L$-formula $\varphi(\bar{x})$ is said to \named{isolate} a type $p(\bar{x})$ in $L$ if
 \begin{enumerate}[label=(\roman*)]
 \item $\varphi(\bar{x}) \to p(\bar{x})$, i.e. $T \vdash \forall \bar{x} \left( \varphi(\bar x) \to \psi(\bar x) \right)$ for all $\psi(\bar x) \in p(\bar x)$, and
@@ -1811,7 +1812,7 @@ A model $\M$ is said to \named{omit} $p(\bar x)$ if $p(\bar x)$ is not realized 
 \end{ndef}
 
 \begin{nremark} \label{rem:9.2}
-If $\M$ is a model and $p(\bar x)$ is a type in $L(M)$, then $\M$ realises $p(\bar x)$ if and only if $\M$ isolates $p(\bar x)$.
+If $\M$ is a model and $p(\bar x)$ is a type in $L(M)$, then $\M$ realises $p(\bar x)$ if and only if $\M$ \hyperlink{def:isolate}{isolates} $p(\bar x)$.
 \end{nremark}
 
 \begin{proof}
@@ -1822,7 +1823,7 @@ If $\M$ is a model and $p(\bar x)$ is a type in $L(M)$, then $\M$ realises $p(\b
 \end{proof}
 
 \begin{nlemma} \label{lemma:9.3}
-Let $\abs{L(A)} = \omega$. Let $p(\bar{x})$ be a type in $L(A)$ and suppose that $A$ does not isolate $p(\bar x)$. Let $\psi(z)$ be a consistent $L(A)$-formula in one free variable. Then there is $a \in U$ sucht that
+Let $\abs{L(A)} = \omega$. Let $p(\bar{x})$ be a type in $L(A)$ and suppose that $A$ does not \hyperlink{def:isolate}{isolate} $p(\bar x)$. Let $\psi(z)$ be a consistent $L(A)$-formula in one free variable. Then there is $a \in U$ sucht that
 \begin{enumerate}[label=(\roman*)]
 \item $\U \models \psi(a)$,
 \item $A \cup \{a\}$ does not isolate $p(\bar x)$.
@@ -1834,7 +1835,7 @@ Let $\abs{L(A)} = \omega$. Let $p(\bar{x})$ be a type in $L(A)$ and suppose that
 Let $\abs{L(A)} = \omega$ and let $p(\bar{x})$ be a consistent type in $L(A)$ with variables in $\bar{x}$, $\abs{\bar x} < \omega$. Then the following are equivalent:
 \begin{enumerate}[label=(\roman*)]
 \item all models $\M$ containing $A$ realise $p(\bar x)$, \label{it:thm:9.4a}
-\item $A$ isolates $p(\bar x)$. \label{it:thm:9.4b}
+\item $A$ \hyperlink{def:isolate}{isolates} $p(\bar x)$. \label{it:thm:9.4b}
 \end{enumerate}
 \end{nthm}
 \begin{proof}
@@ -1845,7 +1846,7 @@ This follows from \cref{rem:9.2}.
 \begin{enumerate}[label=(\roman*)]
 \item $A_0 = A$,
 \item $\abs{A_i} = \omega$ for all $i < \omega$,
-\item $A_i$ does not isolate $p(\bar{x})$ for any $i < \omega$.
+\item $A_i$ does not \hyperlink{def:isolate}{isolate} $p(\bar{x})$ for any $i < \omega$.
 \end{enumerate}
 At stage $i+1$, enumerate all consistent $L(A_i)$-formulas with one free variable, say $\left< \psi_k(z) : k < \omega \right>$. For $k \in \omega$, we find $a_k^i \in U$ such that $\models \psi_k(a_k^i)$, and such that $A_i \cup \left\{ a_0^i, \dots, a_k^i\right\}$ does not isolate $p(\bar x)$. This is possible by \cref{lemma:9.3}. Let $A_{i+1} \coloneqq A_i \cup \left\{ a_k^i\ \middle|\ k < \omega \right\}$. Let $M \coloneqq \bigcup A_i$. We claim that
 \begin{enumerate}[label=(\alph*)]
@@ -1886,12 +1887,12 @@ This is an $L(A)$-formula which yields a contradiction to the assumption that $A
 Let $\M$ be a model, $A \subseteq M$. Then
 \begin{enumerate}[label=(\roman*)]
 \item $\M$ is \named{prime over $A$}\index{model!prime} if for every $\N \supseteq A$ there is an elementary embedding $f: \M \to \N$ that fixes $A$ pointwise. If $A = \emptyset$, then $\M$ is a \named{prime model}.
-\item $\M$ is \named{atomic over $A$}\index{model!atomic} if for all $n \in \omega$ and $\bar a \in M^n$, the type $\hyperlink{def:tp}{\tp}(\bar a/A)$ is isolated. When $A = \emptyset$, then $\M$ is said to be \named{atomic}.
+\item $\M$ is \named{atomic over $A$}\index{model!atomic} if for all $n \in \omega$ and $\bar a \in M^n$, the type $\hyperlink{def:tp}{\tp}(\bar a/A)$ is \hyperlink{def:isolate}{isolated}. When $A = \emptyset$, then $\M$ is said to be \named{atomic}.
 \end{enumerate}
 \end{ndef}
 
 \begin{nfact} \label{fact:9.6}
-Let $\bar{a}, \bar{b} \in U^n$ and $A \subseteq U$. Suppose that $\hyperlink{def:tp}{\tp}(\bar{b}\bar{a}/A)$ is isolated, then $\tp(\bar b/A\bar{a})$ and $\tp(\bar{a}/A)$ are isolated.
+Let $\bar{a}, \bar{b} \in U^n$ and $A \subseteq U$. Suppose that $\hyperlink{def:tp}{\tp}(\bar{b}\bar{a}/A)$ is \hyperlink{def:isolate}{isolated}, then $\tp(\bar b/A\bar{a})$ and $\tp(\bar{a}/A)$ are isolated.
 \end{nfact}
 \begin{proof}[Proof (sketch)]
 Let $p(\bar{x}, \bar{z}) = \tp(\bar{b}\bar{a}/A)$. Then $\tp(\bar{b}/A\bar{a}) = p(\bar{x},\bar{a})$ and $\tp(\bar{a}/A) = \left\{ \exists \bar{x} \; \varphi(\bar{x},\bar{z}) \ \middle|\ \varphi(\bar{x}, \bar{z}) \in p(\bar x, \bar z) \right\}$. Suppose $\varphi(\bar{x}, \bar{z})$ isolates $p(\bar{x},\bar{z})$. Then
@@ -1904,7 +1905,7 @@ Let $p(\bar{x}, \bar{z}) = \tp(\bar{b}\bar{a}/A)$. Then $\tp(\bar{b}/A\bar{a}) =
 If $\M$ is atomic over $A$ and $\bar{a} \in M^n$, then $\M$ is atomic over $A \cup \bar{a}$.
 \end{nprop}
 \begin{proof}
-Let $\bar{b} \in M^m$. Then $\tp(\bar{b}\bar{a}/A)$ is isolated, so $\tp(\bar{b}/A\bar{a})$ is isolated by \cref{fact:9.6}.
+Let $\bar{b} \in M^m$. Then $\tp(\bar{b}\bar{a}/A)$ is \hyperlink{def:isolate}{isolated}, so $\tp(\bar{b}/A\bar{a})$ is isolated by \cref{fact:9.6}.
 \end{proof}
 
 \begin{nprop}[Extension Lemma] \label{prop:9.8}
