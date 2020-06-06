@@ -168,8 +168,8 @@ Notation: we write $t(x_1, \dotsc, x_m)$ to mean that the variables appearing in
   If $\mathcal{M}$ is an \hyperlink{def:str}{$L$-structure}, to each \hyperlink{def:lterm}{$L$-term} $t(x_1, \dotsc, x_k)$ we assign a function
   a function $t^\mathcal{M}: M^k \to M$ defined as follows:
   \begin{enumerate}[label=(\roman*)]
-    \item If $t = x_i$, $t^\mathcal{M}[a_1, \dotsc, a_k] = a_i$
-    \item If $t = c$, $t^\mathcal{M}[a_1, \dotsc, a_k] = c^\mathcal{M}$.
+    \item If $t = x_i$, $t^\mathcal{M}(a_1, \dotsc, a_k) = a_i$
+    \item If $t = c$, $t^\mathcal{M}(a_1, \dotsc, a_k) = c^\mathcal{M}$.
     \item If $t = f(t_1(x_1, \dotsc, x_k), \dotsc, t_{m_f}(x_1, \dotsc, x_k))$, then
       \begin{equation*}
         t^\mathcal{M}(a_1, \dotsc, a_k) = f^\mathcal{M}(t_1^\mathcal{M}(a_1, \dotsc, a_k), \dotsc, t^\mathcal{M}_{m_f}(a_1, \dotsc, a_k)).
@@ -792,7 +792,7 @@ a \sim_U b \iff \{i \in I \mid a(i) = b(i)\} \in U.
 For every filter $U$, the relation $\sim_U$ is an equivalence relation.
 \end{nfact}
 \begin{proof}
-Reflexivity and symmetry are clear. Let $a \sim_U b$ and $b \sim_U c$. Furthermore let $A \coloneqq \{i \in I \mid a(i)=b(i) \}$ and similarly $B \coloneqq \{i \in I \mid b(i)=c(i) \}$. By assumption, $A, B \in U$. Then  $ A \cup B \subseteq \{i \in I \mid a(i) = c(i)\}$
+Reflexivity and symmetry are clear. Let $a \sim_U b$ and $b \sim_U c$. Furthermore let $A \coloneqq \{i \in I \mid a(i)=b(i) \}$ and similarly $B \coloneqq \{i \in I \mid b(i)=c(i) \}$. By assumption, $A, B \in U$. Then  $ A \cap B \subseteq \{i \in I \mid a(i) = c(i)\}$
 which implies $\{i \in I \mid a(i) = c(i)\} \in U$, so $a \sim_U c$.
 \end{proof}
 \begin{remark}
@@ -843,15 +843,15 @@ f^{X_U}(a_U^1, \dots, a_U^n) \coloneqq \left< f^{\mathcal{M}_i}(a^1(i), \dots, a
 \begin{nthm}[Łoś] \label{thm:5.7} \index{Łoś's theorem}
 Let $\left< \mathcal{M}_i \mid i \in I \right>$ as in \cref{def:5.3}, $U$ an ultrafilter. Then,
 \begin{enumerate}[label=(\roman*)]
-\item for all $L$-terms $t(x_1, \dots, x_n)$ and $a_U^1, \dots, a_U^n \in X_U$, \label{it:los1}
+\item for all \hyperlink{def:lterm}{$L$-terms} $t(x_1, \dots, x_n)$ and $a_U^1, \dots, a_U^n \in X_U$, \label{it:los1}
 \[
 t^{X_U}(a_U^1, \dots, a_U^n) = \left< t^{\mathcal{M}_i} (a^1(i), \dots, a^n(i)) \ \middle|\ i \in I \right>_U,
 \] 
-\item for all $L$-formulas $\varphi(x_1, \dots, x_n)$ and $a_U^1, \dots, a_U^n \in X_U$, \label{it:los2}
+\item for all \hyperlink{def:form}{$L$-formulas} $\varphi(x_1, \dots, x_n)$ and $a_U^1, \dots, a_U^n \in X_U$, \label{it:los2}
 \[
 X_U \models \varphi(a_U^1, \dots, a_U^n) \iff \left\{ i \in I \ \middle|\ \mathcal{M}_i \models \varphi(a^1(i), \dots,  a^n(i)) \right\} \in U,
 \] 
-\item for all $L$-sentences $\sigma$,  \label{it:los3}
+\item for all \hyperlink{def:sentence}{$L$-sentences} $\sigma$,  \label{it:los3}
 \[
 X_U \models \sigma \iff \{i \in I \mid \mathcal{M}_i \models \sigma \} \in U.
 \] 
@@ -1060,7 +1060,7 @@ where $\langle a_i : i < |\mathcal{M}| \rangle$ enumerates $\mathcal{M}$. $p(x)$
 \end{ndef}
 \begin{nremark}\label{rem:6.3}\leavevmode
   \begin{enumerate}[label=(\roman*)]
-    \item $\hyperlink{def:tp}{\tp_{\mathcal{M}}(\bar{b}/A)}$ is \hyperlink{def:complete}{complete}, i.e.\ for every $L(A)$-\hyperlink{def:form}{formula} $\varphi(\bar{x})$, either $\varphi(\bar{x}) \in \tp(\bar{b}/A)$ or $\lnot \varphi(x) \in \tp(\bar{b}/A)$.
+    \item $\hyperlink{def:tp}{\tp_{\mathcal{M}}(\bar{b}/A)}$ is \hyperlink{def:complete}{complete}, i.e.\ for every $L(A)$-\hyperlink{def:form}{formula} $\varphi(\bar{x})$, either $\varphi(\bar{x}) \in \tp(\bar{b}/A)$ or $\lnot \varphi(\bar x) \in \tp(\bar{b}/A)$.
     \item If $\hyperlink{def:elsubs}{\mathcal{M} \preccurlyeq \mathcal{N}}$, then for $A \subseteq M$, $\bar{b}$ a tuple:
       \begin{equation*}
         \tp_\mathcal{M}(\bar{b}/A)= \tp_\mathcal{N}(\bar{b}/A).
@@ -1196,10 +1196,10 @@ Countable models of $T_{\text{rg}}$ and $T_{\text{dlo}}$ are universal and homog
   Claim: $p(\bar{x})$ is finitely satisfiable in $\mathcal{N}$.
   Indeed, let $\{\varphi_1(\bar{x}), \dotsc, \varphi_n(\bar{x})\} \subseteq p(\bar{x})$, $\mathcal{M} \hyperlink{def:models}{\models} \exists \bar{x} \; \bigwedge _{i=1}^n \varphi_i(\bar{x})$, and so $\mathcal{N} \models \exists x \; \bigwedge \varphi_i(\bar{x})$ since $\mathcal{M} \equiv \mathcal{N}$.
 
-  Since $|\bar{x}| \leq |\mathcal{N}|$, $\mathcal{N}$ realizes $p(\bar{x})$ by saturation (\cref{thm:6.5}).
+  Since $|\bar{x}| \leq |\mathcal{N}|$, $\mathcal{N}$ realizes $p(\bar{x})$ by saturation (\cref{thm:6.5}), $\N \models p(\bar b)$ say. Then $a_i \mapsto b_i$ is an elementary embedding.
   \hyperlink{def:homogeneous}{Homogeneity} follows from \cref{cor:6.6} with $\mathcal{N} = \mathcal{M}$.
 
-  (ii) $\Rightarrow$ (i). We show that if $\mathcal{M} \equiv \mathcal{N}$, $b \in M$, $f: \mathcal{M} \to \mathcal{N}$ \hyperlink{def:elmap}{elementary} such that $|f| < |\mathcal{N}|$ then there is $\hat{f} \supseteq f$ elementary defined on $b$.
+  (ii) $\Rightarrow$ (i). We show that if $\mathcal{M} \equiv \mathcal{N}$, $b \in M$, $f: \mathcal{M} \to \mathcal{N}$ \hyperlink{def:elmap}{elementary} such that $|f| < |\mathcal{N}|$ then there is $\hat{f} \supseteq f$ elementary defined on $b$, cf.\@ \cref{thm:6.5}.
 
   By working in $\mathcal{M}' \preccurlyeq \mathcal{M}$ such that $\dom(f) \cup \{b\} \subseteq \mathcal{M}'$ if necessary (using \cref{thm:3.11DLS}), we may assume $|\mathcal{M}| \leq |\mathcal{N}|$.
   Since $\mathcal{M} \equiv \mathcal{N}$, by \hyperlink{def:univ}{universality} there is an \hyperlink{def:el}{elementary embedding} $\beta: \mathcal{M} \to \mathcal{N}$. Then $\beta(\mathcal{M}) \preccurlyeq \mathcal{N}$.
@@ -1255,8 +1255,8 @@ Countable models of $T_{\text{rg}}$ and $T_{\text{dlo}}$ are universal and homog
 \begin{nremark}\label{rem:6.12}
   If $\bar{a}$, $\bar{b}$ are tuples in $\mathcal{N}$ of the same length, and $A\subseteq N$, then the following are equivalent.
   \begin{enumerate}[label=(\roman*)]
-    \item $\hyperlink{def:tp}{\tp_{\mathcal{N}}(\bar{a}/A)}= \tp_{\mathcal{N}}(\bar{b}/A)$
-    \item $ \set{a_i\mapsto b_i|i < |\bar{a}|}\cup\text{id}_A $ is an \hyperlink{def:el}{elementary map} from $\mathcal{N}$ to $\mathcal{N}$
+    \item $\hyperlink{def:tp}{\tp_{\mathcal{N}}(\bar{a}/A)}= \tp_{\mathcal{N}}(\bar{b}/A)$,
+    \item $ \set{a_i\mapsto b_i|i < |\bar{a}|}\cup\text{id}_A $ is an \hyperlink{def:el}{elementary map} from $\mathcal{N}$ to $\mathcal{N}$.
   \end{enumerate}
 \end{nremark}
 \begin{nprop}\label{prop:6.13}
