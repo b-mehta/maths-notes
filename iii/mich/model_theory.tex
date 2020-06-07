@@ -264,7 +264,7 @@ Notation: $\varphi(x_1, \dotsc, x_k)$ means that the free variables in $\varphi$
 \end{nnotation}
 \begin{nprop}\label{prop:2.9}
   Let $\mathcal{M}, \mathcal{N}$ be \hyperlink{def:str}{$L$-structures}, let $\alpha: \mathcal{M} \to \mathcal{N}$ be an \hyperlink{def:embedding}{embedding}.
-  Let $\varphi(\bar{x})$ be \hyperlink{def:atomform}{atomic} and $\bar{a} \in M^{|\bar{x}|}$, then
+  Let $\varphi(\bar{x})$ be \hyperlink{def:atomform}{atomic} and $\bar{a} \in M^{\abs{\bar{x}}}$, then
   \begin{equation*}
     \mathcal{M} \hyperlink{def:models}{\models} \varphi(\bar{a}) \iff \mathcal{N} \models \varphi(\alpha(\bar{a})).
   \end{equation*}
@@ -335,7 +335,7 @@ Clearly if $\hyperlink{def:iso}{\mathcal{M} \simeq \mathcal{N}}$, then \hyperlin
 We'll see $(\mathbb{Q}, <) \equiv (\mathbb{R}, <)$ as \hyperlink{def:lgp}{$L_{\text{lo}}$}-\hyperlink{def:str}{structures}.
 \begin{ndef}[Elementary substructure]\label{def:3.4}\leavevmode
   \begin{enumerate}[label=(\roman*)]
-    \item \index{elementary embedding}\index{elementary map}\hypertarget{def:el}an \hyperlink{def:embedding}{embedding} $\beta: \mathcal{M} \to \mathcal{N}$ is \named{elementary} if for all \hyperlink{def:form}{formulas} $\varphi(\bar{x})$ and $\bar{a} \in M^{|\bar{x}|}$,
+    \item \index{elementary embedding}\index{elementary map}\hypertarget{def:el}an \hyperlink{def:embedding}{embedding} $\beta: \mathcal{M} \to \mathcal{N}$ is \named{elementary} if for all \hyperlink{def:form}{formulas} $\varphi(\bar{x})$ and $\bar{a} \in M^{\abs{\bar{x}}}$,
       \begin{equation*}
         \mathcal{M} \hyperlink{def:models}{\models} \varphi(\bar{a}) \iff \mathcal{N} \models \varphi(\beta(\bar{a})).
       \end{equation*}
@@ -392,7 +392,7 @@ We'll see $(\mathbb{Q}, <) \equiv (\mathbb{R}, <)$ as \hyperlink{def:lgp}{$L_{\t
       So we now have $\mathcal{M} \subseteq \mathcal{N}$, and the domain of $\mathcal{M}$ is $A$.
       It remains to verify elementarity.
       Let $\chi(\bar{x})$ be an \hyperlink{def:form}{$L$-formula}.
-      We show that for $\bar{a} \in A^{|\bar{x}|}$,
+      We show that for $\bar{a} \in A^{\abs{\bar{x}}}$,
       \begin{equation*}
         \mathcal{M} \models \chi(\bar{a}) \iff \mathcal{N} \models \chi(\bar{a}). \tag{$*$} \label{eq:4star}
       \end{equation*}
@@ -413,8 +413,8 @@ We'll see $(\mathbb{Q}, <) \equiv (\mathbb{R}, <)$ as \hyperlink{def:lgp}{$L_{\t
 \begin{nremark}\label{rem:3.9}
 %  Assume the set of variables is countably infinite. Then
 %  \begin{itemize}[label=--]
-%    \item \index{cardinal}\hypertarget{def:cardlang}the cardinality of the set of $L$-formulas is $|L| + \omega$. (We abuse notation and write $\omega$ for the ordinal and cardinal, and define the cardinality of $L$ as the number of symbols in it: $|\hyperlink{def:lgp}{L_{\text{gp}}}| = 3$, $|\hyperlink{def:lgp}{L_{\text{lo}}}| = 1$).
-%    \item if $A$ is a set of parameters in some structure, the cardinality of the set of $L(A)$-formulas is $|A| + |L| + \omega$.
+%    \item \index{cardinal}\hypertarget{def:cardlang}the cardinality of the set of $L$-formulas is $\abs{L} + \omega$. (We abuse notation and write $\omega$ for the ordinal and cardinal, and define the cardinality of $L$ as the number of symbols in it: $\abs{\hyperlink{def:lgp}{L_{\text{gp}}}} = 3$, $\abs{\hyperlink{def:lgp}{L_{\text{lo}}}} = 1$).
+%    \item if $A$ is a set of parameters in some structure, the cardinality of the set of $L(A)$-formulas is $\abs{A} + \abs{L} + \omega$.
 %  \end{itemize}
 	We define the \index{cardinal}\hypertarget{def:cardlang}cardinality $\abs{L}$ of the language $L$ to be
 	\[
@@ -436,32 +436,32 @@ We'll see $(\mathbb{Q}, <) \equiv (\mathbb{R}, <)$ as \hyperlink{def:lgp}{$L_{\t
 \end{ndef}
 
 \begin{nthm}[Downward L\"owenheim-Skolem]\label{thm:3.11DLS}
-  \index{Downward L\"owenheim-Skolem}Let $\mathcal{N}$ be an \hyperlink{def:str}{$L$-structure}, and $|N| \geq \hyperlink{def:cardlang}{|L|} + \omega$.
+  \index{Downward L\"owenheim-Skolem}Let $\mathcal{N}$ be an \hyperlink{def:str}{$L$-structure}, and $\abs{N} \geq \hyperlink{def:cardlang}{\abs{L}} + \omega$.
   Let $A \subseteq N$.
-  Then for any cardinal $\lambda$ such that $|L| + |A| + \omega \leq \lambda \leq |\mathcal{N}|$, there is \hyperlink{def:elsubs}{$\mathcal{M} \preccurlyeq \mathcal{N}$} such that
+  Then for any cardinal $\lambda$ such that $\abs{L} + \abs{A} + \omega \leq \lambda \leq \abs{\mathcal{N}}$, there is \hyperlink{def:elsubs}{$\mathcal{M} \preccurlyeq \mathcal{N}$} such that
   \begin{enumerate}[label=(\roman*)]
     \item $A \subseteq M$, and
-    \item $|\mathcal{M}| = \lambda$.
+    \item $\abs{\mathcal{M}} = \lambda$.
   \end{enumerate}
 \end{nthm}
-It helps to think about the case $|L| \leq \omega$, $|A| = \omega$ and $|N|$ is uncountable.
+It helps to think about the case $\abs{L} \leq \omega$, $\abs{A} = \omega$ and $\abs{N}$ is uncountable.
 For instance, think of $(\mathbb{C}, + , \cdot, -, ^{-1}, 0,1)$ as a field.
 Then $\mathbb{Q} \subseteq \mathbb{C}$: it is a subset and a substructure.
 In particular, the property of being algebraically closed is in the theory of $\mathbb{C}$.
 Thus \cref{thm:3.11DLS} gives a algebraically closed field, which is countable and contains $\mathbb{Q}$. A possibility is the algebraic closure of $\mathbb{Q}$.
 
 \begin{proof}
-  We inductively build a \hyperlink{def:chain}{chain} $\langle A_i  : i < \omega \rangle$, with $A_i \subseteq N$, such that $|A_i| = \lambda$.
+  We inductively build a \hyperlink{def:chain}{chain} $\langle A_i  : i < \omega \rangle$, with $A_i \subseteq N$, such that $\abs{A_i} = \lambda$.
   Our goal is to define $M = \bigcup_{i < \omega} A_i$.
 
-  Let $A_0 \subseteq N$ be such that $A \subseteq A_0$ and $|A_0| = \lambda$.
-  At stage $i+1$, assume that $A_i$ has been built, with $|A_i| = \lambda$.
-  Let $\langle \varphi_k(x) : k < \lambda  \rangle$ be an enumeration of those $\hyperlink{def:la}{L(A_i)}$-\hyperlink{def:form}{formulas} such that $\mathcal{N} \models \exists x \ \varphi_k(x)$. Observe there are no more than $\lambda$, since $\hyperlink{def:cardlang}{|L(A)|} = |L| + |A| + \omega \leq \lambda$.
+  Let $A_0 \subseteq N$ be such that $A \subseteq A_0$ and $\abs{A_0} = \lambda$.
+  At stage $i+1$, assume that $A_i$ has been built, with $\abs{A_i} = \lambda$.
+  Let $\langle \varphi_k(x) : k < \lambda  \rangle$ be an enumeration of those $\hyperlink{def:la}{L(A_i)}$-\hyperlink{def:form}{formulas} such that $\mathcal{N} \models \exists x \ \varphi_k(x)$. Observe there are no more than $\lambda$, since $\hyperlink{def:cardlang}{\abs{L(A)}} = \abs{L} + \abs{A} + \omega \leq \lambda$.
   Let $a_k$ be such that $\mathcal{N} \models \varphi_k(a_k)$ and let $A_{i+1} = A_i \cup \set{a_k : k < \lambda}$.
-  Then $|A_{i+1}| = \lambda$.
+  Then $\abs{A_{i+1}} = \lambda$.
 
   Now let $M = \bigcup_{i < \omega} A_i$.
-  We use the \nameref{lem:3.8} to show that $M$ is the domain of a \hyperlink{def:str}{structure} $\hyperlink{def:elsubs}{\mathcal{M} \preccurlyeq \mathcal{N}}$, and $|M| = \lambda$:
+  We use the \nameref{lem:3.8} to show that $M$ is the domain of a \hyperlink{def:str}{structure} $\hyperlink{def:elsubs}{\mathcal{M} \preccurlyeq \mathcal{N}}$, and $\abs{M} = \lambda$:
 
   Let $\mathcal{N} \models \exists x \; \psi(x,\bar{a})$, where $\bar{a}$ is a tuple in $M$.
   Then $\bar{a}$ is a \emph{finite} tuple, so there is an $i$ such that $\bar{a}$ is in $A_i$.
@@ -490,13 +490,13 @@ Thus \cref{thm:3.11DLS} gives a algebraically closed field, which is countable a
   \end{enumerate}
   $T_{\text{dlo}}$ is the \hyperlink{def:ltheory}{theory} that includes axioms (i) to (vi), $T_{\text{lo}}$ is the theory that includes axioms (i) to (iii) only.
 \end{ndef}
-Remark: (iv) and (v) imply that if $\mathcal{M} \hyperlink{def:models}{\models} T_{\text{dlo}}$ then $\hyperlink{def:cardlang}{|\mathcal{M}|} \geq \omega$.
+Remark: (iv) and (v) imply that if $\mathcal{M} \hyperlink{def:models}{\models} T_{\text{dlo}}$ then $\hyperlink{def:cardlang}{\abs{\mathcal{M}}} \geq \omega$.
 Any model of $T_{\text{dlo}}$ must be infinite.
 
 \begin{ndef}[(Finite) Partial embedding, partially isomorphic]\label{def:4.2}\hypertarget{def:pe}
   If $\mathcal{M}, \mathcal{N} \hyperlink{def:models}{\models} \hyperlink{def:tlo}{T_{\text{lo}}}$, then an injective map $p: A \subseteq M \to N$ is called a \named{partial embedding} if for all $a,b \in A$,
   \begin{equation*}\mathcal{M} \models a < b \iff \mathcal{N} \models p(a) < p(b).\end{equation*}
-  If $|\dom(p)| < \omega$, then $p$ is a \index{partial embedding!finite}\textbf{finite partial embedding}.
+  If $\abs{\dom(p)} < \omega$, then $p$ is a \index{partial embedding!finite}\textbf{finite partial embedding}.
   
   The structures $\mathcal{M}$ and $\mathcal{N}$ are said to be \index{partially isomorphic}\textbf{partially isomorphic} if there is a collection $I$ of partial embeddings such that
   \begin{enumerate}[label=(\roman*)]
@@ -552,7 +552,7 @@ Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
   \hyperlink{def:tlo}{$T_{\text{dlo}}$} is \hyperlink{def:wcat}{$\omega$-categorical}.
 \end{ncor}
 \begin{proof}
-  Say $\mathcal{M},\mathcal{N} \hyperlink{def:models}{\models} T_{\text{dlo}}$, and $|\mathcal{M}| = |\mathcal{N}| = \omega$.
+  Say $\mathcal{M},\mathcal{N} \hyperlink{def:models}{\models} T_{\text{dlo}}$, and $\abs{\mathcal{M}} = \abs{\mathcal{N}} = \omega$.
   Then $\emptyset$ (the empty map) is a \hyperlink{def:pe}{finite partial embedding}.
   By \cref{thm:4.5}, $\mathcal{M} \simeq \mathcal{N}$.
   Instead of the empty map, we can also use any $\{\langle a, b \rangle\}$ where $a \in \mathcal{M}, b \in \mathcal{N}$ as initial finite partial embedding.
@@ -564,7 +564,7 @@ Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
   Let $\mathcal{M} \hyperlink{def:models}{\models} T$ and $\varphi$ be an \hyperlink{def:sentence}{$L$-sentence}.
 
   If $\mathcal{M} \models \varphi$, suppose $\mathcal{N} \hyperlink{def:models}{\models T}$.
-  Then by \nameref{thm:3.11DLS}, there are $\hyperlink{def:elsubs}{\mathcal{M}' \preccurlyeq \mathcal{M}}$, $\mathcal{N}' \preccurlyeq \mathcal{N}$ such that $|\mathcal{M}'| = |\mathcal{N}'| = \omega$.
+  Then by \nameref{thm:3.11DLS}, there are $\hyperlink{def:elsubs}{\mathcal{M}' \preccurlyeq \mathcal{M}}$, $\mathcal{N}' \preccurlyeq \mathcal{N}$ such that $\abs{\mathcal{M}'} = \abs{\mathcal{N}'} = \omega$.
   By \hyperlink{def:wcat}{$\omega$-categoricity}, $\hyperlink{def:iso}{\mathcal{M}' \simeq \mathcal{N}'}$ , so in particular $\hyperlink{def:eleq}{\mathcal{M}' \equiv \mathcal{N}'}$ and so $\mathcal{N}' \models \varphi$.
 
   If $\mathcal{M} \models \lnot \varphi$, similar.
@@ -573,7 +573,7 @@ Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
   \hyperlink{def:tlo}{$T_{\text{dlo}}$} is \hyperlink{def:complete}{complete}.
 \end{ncor}
 \begin{ndef}[(Partial) elementary map]\label{def:4.10}\index{elementary map}\hypertarget{def:elmap}
-  If $\mathcal{M}$, $\mathcal{N}$ are \hyperlink{def:str}{$L$-structures}, an injective map $f$ such that $\dom f \subseteq M$ and $\img f \subseteq N$ is called a \textbf{(partial) elementary map} if for all \hyperlink{def:form}{$L$-formulae} $\varphi(\bar{x})$ and $\bar{a} \in (\dom f)^{|\bar{x}|}$, then
+  If $\mathcal{M}$, $\mathcal{N}$ are \hyperlink{def:str}{$L$-structures}, an injective map $f$ such that $\dom f \subseteq M$ and $\img f \subseteq N$ is called a \textbf{(partial) elementary map} if for all \hyperlink{def:form}{$L$-formulae} $\varphi(\bar{x})$ and $\bar{a} \in (\dom f)^{\abs{\bar{x}}}$, then
   \begin{equation*}
     \mathcal{M} \hyperlink{def:models}{\models} \varphi(\bar{a}) \iff \mathcal{N} \models \varphi(f(\bar{a})).
   \end{equation*}
@@ -583,7 +583,7 @@ Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
 \end{nremark}
 \begin{proof}\leavevmode
   \begin{itemize}
-    \item[$\Leftarrow$] Suppose $f$ is not \hyperlink{def:elmap}{elementary}. Then there are $\varphi(\bar{x})$ and $\bar{a} \in (\dom f)^{|\bar{x}|}$ such that
+    \item[$\Leftarrow$] Suppose $f$ is not \hyperlink{def:elmap}{elementary}. Then there are $\varphi(\bar{x})$ and $\bar{a} \in (\dom f)^{\abs{\bar{x}}}$ such that
       \begin{equation*}\mathcal{M} \hyperlink{def:models}{\models} \varphi(\bar{a}) \centernot\iff \mathcal{N} \models \varphi(f(\bar{a})).\end{equation*}
         Then $f|_{\bar{a}}$ is a finite restriction of $f$ that is not elementary.
 
@@ -598,7 +598,7 @@ Is $\hyperlink{def:tlo}{T_{\text{dlo}}}$ \hyperlink{def:complete}{complete}?
   By \cref{rem:4.11} and the proof of \cref{lem:4.3}, it suffices to consider $p$ finite.
   By \nameref{thm:3.11DLS}, we choose $\mathcal{M}', \mathcal{N}'$ such that
   \begin{enumerate}[label=(\roman*)]
-    \item $|\mathcal{M}'| = |\mathcal{N}'| = \omega$.
+    \item $\abs{\mathcal{M}'} = \abs{\mathcal{N}'} = \omega$.
     \item $\mathcal{M}' \preccurlyeq \mathcal{M}$, $\mathcal{N}' \preccurlyeq \mathcal{N}$
     \item $\dom(p) \subseteq \mathcal{M}', \img(p) \subseteq \mathcal{N}'$
   \end{enumerate}
@@ -708,7 +708,7 @@ Axiom $(r_n)$ effectively says that for disjoint subsets $(x_i)$ and $(y_i)$ eac
     \mathcal{M} \models R(a,b) \iff \mathcal{N} \models R(p(a), p(b))
   \end{equation*}
   for all $a,b$ in the domain.
-  Just as before, if $|\dom(p)| < \omega$ then $p$ is called a \textbf{finite partial embedding}\index{partial embedding!finite}.
+  Just as before, if $\abs{\dom(p)} < \omega$ then $p$ is called a \textbf{finite partial embedding}\index{partial embedding!finite}.
 \end{ndef}
 \begin{nlemma}[Extension lemma for random graphs]\label{lem:4.17}
   \index{Extension lemma}Let $\mathcal{M} \hyperlink{def:models}{\models} \hyperlink{def:gpe}{T_{\text{gph}}}$, $\mathcal{N} \models \hyperlink{def:gpe}{T_{\text{rg}}}$, let $p: A \subseteq M \to N$ be a \hyperlink{def:gpe}{finite partial embedding}, and let $c \in M$.
@@ -729,7 +729,7 @@ Axiom $(r_n)$ effectively says that for disjoint subsets $(x_i)$ and $(y_i)$ eac
   Then $\hat p \coloneqq p \cup \left< c,d \right>$ is the desired extension.
 \end{proof}
 \begin{nthm}\label{thm:4.18}
-  Let $\mathcal{M},\, \mathcal{N} \hyperlink{def:models}{\models} \hyperlink{def:gpe}{T_{\text{rg}}}$ and $|\mathcal{M}| = |\mathcal{N}| = \omega$, and $p: A \subset M \to N$ a \hyperlink{def:gpe}{finite partial embedding}.
+  Let $\mathcal{M},\, \mathcal{N} \hyperlink{def:models}{\models} \hyperlink{def:gpe}{T_{\text{rg}}}$ and $\abs{\mathcal{M}} = \abs{\mathcal{N}} = \omega$, and $p: A \subset M \to N$ a \hyperlink{def:gpe}{finite partial embedding}.
   Then $\mathcal{M} \hyperlink{def:iso}{\simeq} \mathcal{N}$, by an isomorphism that extends $p$.
 \end{nthm}
 \begin{proof}
@@ -944,6 +944,8 @@ Let $\varphi_1, \dots, \varphi_n \in T$. Then $\{\varphi_1, \dots, \varphi_n \} 
   Every \hyperlink{def:type}{finitely satisfiable} \hyperlink{def:type}{$L$-type} $p(\bar{x})$ is \hyperlink{def:type}{satisfiable}.
 \end{nthm}
 \begin{proof}
+  The idea is to turn the type $p(\bar{x})$ into a theory by substituting fresh constant symbols for the variables $\bar{x}$. After having done this, \cref{thm:5.11} can be applied.
+  
   Let $\bar{x} = \langle x_i : i < \lambda \rangle$, let $\langle c_i : i < \lambda \rangle$ be new constants (not in $L$).
   Expand $L$ to $L' = L \cup \{c_i : i < \lambda\}$.
   Then $p(\bar{c})$ is a \hyperlink{def:fs}{finitely satisfiable} \hyperlink{def:ltheory}{$L'$-theory} and \cref{thm:5.11} applied to $p(\bar{c})$ gives an $L'$-structure $\mathcal{M}'$ such that $\mathcal{M}' \models p(\bar{c})$.
@@ -953,12 +955,12 @@ Let $\varphi_1, \dots, \varphi_n \in T$. Then $\{\varphi_1, \dots, \varphi_n \} 
   Let $\mathcal{M}$ be a \hyperlink{def:str}{structure}, let $\bar{a} = \langle a_i : i < \lambda \rangle$ an enumeration of $\mathcal{M}$.
   Let
   \begin{equation*}q(\bar{x}) = \set{\varphi(\bar{x}) | \mathcal{M} \models \varphi(\bar{a})},\end{equation*}
-  where $|\bar{x}| < \lambda$.
+  where $\abs{\bar{x}} < \lambda$.
   Then $q(\bar{x})$ is \hyperlink{def:type}{satisfiable} in $\mathcal{N}$ iff there is $\beta: \mathcal{M} \to \mathcal{N}$ that is an \hyperlink{def:el}{elementary embedding}.
 \end{nlemma}
 \begin{proof}\leavevmode
   \begin{itemize}
-    \item[($\Rightarrow$)] If $q(\bar{x})$ is \hyperlink{def:type}{satisfiable} in $\mathcal{N}$, there is $\bar{b} \in N^{|\bar{x}|}$ such that
+    \item[($\Rightarrow$)] If $q(\bar{x})$ is \hyperlink{def:type}{satisfiable} in $\mathcal{N}$, there is $\bar{b} \in N^{\abs{\bar{x}}}$ such that
   \begin{equation*}
     \mathcal{N} \models \varphi(\bar{b}) \quad \forall \varphi(\bar{x}) \in q(\bar{x}).
   \end{equation*}
@@ -981,7 +983,7 @@ Then if $\mathcal{N} \hyperlink{def:models}{\models} \Th(\mathcal{M}_M)$, then $
   In particular, we can have $M = A$.
 
   \hypertarget{def:typeparam}Types of this kind are said to have \textbf{parameters in $A$} (or to be over $A$).
-  If $p(\bar{x})$ is a type over $M$, then there is $\bar{a}$, an enumeration of $M$, and a type $p'(\bar{x}, \bar{z})$ in $L$ where the $\bar{z}$ are new constants, $|\bar{z}| = |\bar{a}|$, and $p(\bar{x}) = p'(\bar{x}, \bar{a})$.
+  If $p(\bar{x})$ is a type over $M$, then there is $\bar{a}$, an enumeration of $M$, and a type $p'(\bar{x}, \bar{z})$ in $L$ where the $\bar{z}$ are new constants, $\abs{\bar{z}} = \abs{\bar{a}}$, and $p(\bar{x}) = p'(\bar{x}, \bar{a})$.
 \end{nremark}
 \begin{nthm}\label{thm:5.16}
   If $\mathcal{M}$ is a \hyperlink{def:str}{structure}, and $p(\bar{x})$ is a \hyperlink{def:type}{type} in $L(M)$ that is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{M}$, then $p(\bar{x})$ is \hyperlink{def:type}{satisfiable} in some $\mathcal{N}$ such that $\mathcal{M} \hyperlink{def:elsubs}{\preccurlyeq} \mathcal{N}$.
@@ -999,7 +1001,7 @@ Take the interval $(0,1) \subseteq \mathbb{Q}$ and let $\mathcal{M} = ((0,1), <)
 \begin{proof}[Proof of \cref{thm:5.16}]
   Let $\langle a_i : i < \lambda \rangle$ enumerate $\mathcal{M}$, let
   \begin{equation*}q(\bar{z}) \coloneqq \set{\varphi(\bar{z}) | \mathcal{M} \models \varphi(\bar{a})}\end{equation*}
-  where $|\bar{z}| = \lambda$ and the $z_i$ are new variables (so not among the $\bar{x}$).
+  where $\abs{\bar{z}} = \lambda$ and the $z_i$ are new variables (so not among the $\bar{x}$).
   Write $p(\bar{x})$ as $p'(\bar{x}, \bar{a})$ for some $p'(\bar{x}, \bar{z})$ (an $L$-\hyperlink{def:type}{type}).
 
   \textbf{Claim}: $p'(\bar{x},\bar{z}) \cup q(\bar{z})$ is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{M}$.
@@ -1007,15 +1009,15 @@ Take the interval $(0,1) \subseteq \mathbb{Q}$ and let $\mathcal{M} = ((0,1), <)
   \textbf{Proof:} $p'(\bar{x},\bar{a})$ is finitely satisfiable by hypothesis and $q(\bar{z})$ is \hyperlink{def:type}{realized} by $\bar{a}$.
 
   Then, by \nameref{thm:5.13}, $p'(\bar{x}, \bar{z}) \cup q(\bar{z})$ is satisfiable.
-  That is, there is $\mathcal{N}$ and $\bar{b} \in \mathcal{N}^{|\bar{z}|}$ and $\bar{c} \in \mathcal{N}^{|\bar{x}|}$ such that
+  That is, there is $\mathcal{N}$ and $\bar{b} \in \mathcal{N}^{\abs{\bar{z}}}$ and $\bar{c} \in \mathcal{N}^{\abs{\bar{x}}}$ such that
   \begin{equation*}
     \mathcal{N} \models p'(\bar{c}, \bar{b}) \cup q(\bar{b}).
   \end{equation*}
   In particular, $\mathcal{N} \models q(\bar{b})$, then by \cref{lem:5.14}, $\beta: a_i \mapsto b_i$ is an \hyperlink{def:el}{elementary embedding}.
 \end{proof}
 \begin{nthm}[Upward L\"owenheim-Skolem]\label{thm:5.17}
-  Let $\mathcal{M}$ be such that $|\mathcal{M}| \geq \omega$.
-  Then for any $\lambda \geq |\mathcal{M}| + |L|$, there is $\mathcal{N}$ such that \hyperlink{def:elsubs}{$\mathcal{M} \preccurlyeq \mathcal{N}$}, and $|\mathcal{N}| = \lambda$.
+  Let $\mathcal{M}$ be such that $\abs{\mathcal{M}} \geq \omega$.
+  Then for any $\lambda \geq \abs{\mathcal{M}} + \abs{L}$, there is $\mathcal{N}$ such that \hyperlink{def:elsubs}{$\mathcal{M} \preccurlyeq \mathcal{N}$}, and $\abs{\mathcal{N}} = \lambda$.
 \end{nthm}
 \begin{proof}
   Let $\bar{x} = \langle x_i : i < \lambda \rangle$ a tuple of distinct variables.
@@ -1024,8 +1026,8 @@ Take the interval $(0,1) \subseteq \mathbb{Q}$ and let $\mathcal{M} = ((0,1), <)
     p(\bar{x}) = \set{x_i \neq x_j | i < j < \lambda}.
   \end{equation*}
   Then $p(\bar{x})$ is \hyperlink{def:type}{finitely consistent} in $\mathcal{M}$.
-  By \cref{thm:5.16}, $p(\bar{x})$ is \hyperlink{def:type}{realized} in some $\mathcal{M} \preccurlyeq \mathcal{N}$, and $|\mathcal{N}| \geq \lambda$.
-  By \nameref{thm:3.11DLS}, we may assume $|\mathcal{N}| = \lambda$.
+  By \cref{thm:5.16}, $p(\bar{x})$ is \hyperlink{def:type}{realized} in some $\mathcal{M} \preccurlyeq \mathcal{N}$, and $\abs{\mathcal{N}} \geq \lambda$.
+  By \nameref{thm:3.11DLS}, we may assume $\abs{\mathcal{N}} = \lambda$.
 \end{proof}
 
 \clearpage
@@ -1034,21 +1036,21 @@ Take the interval $(0,1) \subseteq \mathbb{Q}$ and let $\mathcal{M} = ((0,1), <)
 Anything that might happen does happen.
 \end{quote}
 \begin{ndef}[Saturated]\label{def:6.1}\hypertarget{def:sat}
-  Let $\lambda$ be an infinite cardinal, let $|\mathcal{M}| \geq \omega$.
+  Let $\lambda$ be an infinite cardinal, let $\abs{\mathcal{M}} \geq \omega$.
   Then $\mathcal{M}$ is \textbf{$\lambda$-saturated} if $\mathcal{M}$ \hyperlink{def:type}{realizes} every \hyperlink{def:type}{type} $p(x)$ with one \hyperlink{def:free}{free variable} such that
   \begin{enumerate}[label=(\roman*)]
-    \item $p(x)$ has \hyperlink{def:typeparam}{parameters} in $A \subseteq M$ and $|A| < \lambda$.
+    \item $p(x)$ has \hyperlink{def:typeparam}{parameters} in $A \subseteq M$ and $\abs{A} < \lambda$.
     \item $p(x)$ is \hyperlink{def:type}{finitely consistent} in $\mathcal{M}$.
   \end{enumerate}
-  $\mathcal{M}$ is \named{saturated} if it is $|\mathcal{M}|$-saturated.
+  $\mathcal{M}$ is \named{saturated} if it is $\abs{\mathcal{M}}$-saturated.
 \end{ndef}
 
-Can $\mathcal{M}$ be \hyperlink{def:sat}{$\lambda$-saturated} if $\lambda > |\mathcal{M}|$? If so, $\mathcal{M}$ would satisfy \hyperlink{def:type}{finitely satisfiable types} in $L(M)$.
+Can $\mathcal{M}$ be \hyperlink{def:sat}{$\lambda$-saturated} if $\lambda > \abs{\mathcal{M}}$? If so, $\mathcal{M}$ would satisfy \hyperlink{def:type}{finitely satisfiable types} in $L(M)$.
 For example,
 \begin{equation*}
-    p(x) = \set{x \neq a_i | i < |\mathcal{M}|}
+    p(x) = \set{x \neq a_i \abs{ i < }\mathcal{M}|}
 \end{equation*}
-where $\langle a_i : i < |\mathcal{M}| \rangle$ enumerates $\mathcal{M}$. $p(x)$ is finitely satisfiable, but not satisfied in $\mathcal{M}$.
+where $\langle a_i : i < \abs{\mathcal{M}} \rangle$ enumerates $\mathcal{M}$. $p(x)$ is finitely satisfiable, but not satisfied in $\mathcal{M}$.
 
 \begin{ndef}[Type of tuple]\label{def:6.2}
   \hypertarget{def:tp}Let $\mathcal{M}$ be an \hyperlink{def:str}{$L$-structure}, $A \subseteq M$, $\bar{b}$ a tuple in $M$ (possibly infinite).
@@ -1094,16 +1096,16 @@ where $\langle a_i : i < |\mathcal{M}| \rangle$ enumerates $\mathcal{M}$. $p(x)$
   \end{enumerate}
 \end{nfact}
 \begin{nthm}\label{thm:6.5}
-  Let $\mathcal{N}$ be such that $|\mathcal{N}| \geq \lambda \geq |L|$. The following are equivalent:
+  Let $\mathcal{N}$ be such that $\abs{\mathcal{N}} \geq \lambda \geq \abs{L}$. The following are equivalent:
   \begin{enumerate}[label=(\roman*)]
     \item $\mathcal{N}$ is \hyperlink{def:sat}{$\lambda$-saturated}.
     \item if $b \in M$ and $f: \mathcal{M} \to \mathcal{N}$ \hyperlink{def:elmap}{partial elementary map} such that $\abs f < \lambda$, so in particular $\mathcal{M} \hyperlink{def:eleq}{\equiv} \mathcal{N}$, then there is a partial elementary $\hat{f} \supseteq f$ and such that $b \in \dom(\hat{f})$.
-    \item If $p(\bar{z})$ is an \hyperlink{def:typeparam}{$L(A)$-type} where $|\bar{z}| \leq \lambda$, $A \subseteq N$, $|A| < \lambda$ and $p(\bar{z})$ is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{N}$, then $p(\bar{z})$ is \hyperlink{def:type}{satisfiable} in $\mathcal{N}$.
+    \item If $p(\bar{z})$ is an \hyperlink{def:typeparam}{$L(A)$-type} where $\abs{\bar{z}} \leq \lambda$, $A \subseteq N$, $\abs{A} < \lambda$ and $p(\bar{z})$ is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{N}$, then $p(\bar{z})$ is \hyperlink{def:type}{satisfiable} in $\mathcal{N}$.
   \end{enumerate}
 \end{nthm}
 \begin{proof}
   (i) $\Rightarrow$ (ii). Let $f: \mathcal{M} \to \mathcal{N}$ be as in (ii), let $b \in M$.
-  Let $\bar{a}$ be an enumeration of $\dom(f)$, so $|\bar{a}| < \lambda$. Let $p(x, \bar{a}) \coloneqq \hyperlink{def:tp}{\tp_\mathcal{M}}(b/\bar{a}).$
+  Let $\bar{a}$ be an enumeration of $\dom(f)$, so $\abs{\bar{a}} < \lambda$. Let $p(x, \bar{a}) \coloneqq \hyperlink{def:tp}{\tp_\mathcal{M}}(b/\bar{a}).$
   \begin{center}
     \begin{tikzpicture}[scale=2]
       \draw [name path=M] (-1.5,0) circle [x radius=1cm, y radius=1.2cm];
@@ -1132,7 +1134,7 @@ where $\langle a_i : i < |\mathcal{M}| \rangle$ enumerates $\mathcal{M}$. $p(x)$
     \end{tikzpicture}
   \end{center}
   Then $p(x,\bar{a})$ is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{M}$, hence $\tp_\mathcal{N}(x/f(\bar{a}))$ is finitely satisfiable in $\mathcal{N}$ (by \cref{fact:6.4}(iv)).
-  Since $|f(\bar{a})| < \lambda$ and $\mathcal{N}$ is \hyperlink{def:sat}{$\lambda$-saturated}, $\tp(x/f(\bar{a}))$ is \hyperlink{def:type}{realized} in $\mathcal{N}$ by some $c$.
+  Since $\abs{f(\bar{a})} < \lambda$ and $\mathcal{N}$ is \hyperlink{def:sat}{$\lambda$-saturated}, $\tp(x/f(\bar{a}))$ is \hyperlink{def:type}{realized} in $\mathcal{N}$ by some $c$.
   Then $f \cup \{\langle b,c \rangle\}$ is the required extension of $f$:
   \begin{equation*}
     \mathcal{M} \models \varphi(b,\bar{a}) \iff \mathcal{N} \models \varphi(c, f(\bar{a})).
@@ -1144,7 +1146,7 @@ where $\langle a_i : i < |\mathcal{M}| \rangle$ enumerates $\mathcal{M}$. $p(x)$
   % By Downward LS Theorem, there is $\mathcal{M} \preccurlyeq \mathcal{M}'$ such that $A \cup \{\bar{b}\} \subseteq M$, parameter set of the type.
 \end{proof}
 \begin{ncor}\label{cor:6.6}
-  If $\mathcal{M}$ and $\mathcal{N}$ are \hyperlink{def:sat}{saturated} and $\mathcal{M} \hyperlink{def:eleq}{\equiv} \mathcal{N}$ and $|\mathcal{M}| = |\mathcal{N}|$ then any \hyperlink{def:elmap}{elementary} $f: \mathcal{M} \to \mathcal{N}$ such that $\abs f < \abs{\mathcal{M}}$ extends to an \hyperlink{def:iso}{isomorphism} (in particular \hyperlink{def:iso}{$\mathcal{M} \simeq \mathcal{N}$}).
+  If $\mathcal{M}$ and $\mathcal{N}$ are \hyperlink{def:sat}{saturated} and $\mathcal{M} \hyperlink{def:eleq}{\equiv} \mathcal{N}$ and $\abs{\mathcal{M}} = \abs{\mathcal{N}}$ then any \hyperlink{def:elmap}{elementary} $f: \mathcal{M} \to \mathcal{N}$ such that $\abs f < \abs{\mathcal{M}}$ extends to an \hyperlink{def:iso}{isomorphism} (in particular \hyperlink{def:iso}{$\mathcal{M} \simeq \mathcal{N}$}).
 \end{ncor}
 \begin{proof}
   Use \cref{thm:6.5}(ii) to extend $f: \mathcal{M} \to \mathcal{N}$ to an \hyperlink{def:iso}{isomorphism} by back-and-forth (take unions at limit stages).
@@ -1170,10 +1172,10 @@ Is $(\mathbb{R}, <)$ $\omega_1$-saturated? No, it does not realize
 \end{ndef}
 \begin{ndef}[Universality, homogeneity]\label{def:6.9}\leavevmode
   \begin{enumerate}[label=(\roman*)]
-    \item \hypertarget{def:univ}An \hyperlink{def:str}{$L$-structure} $\mathcal{N}$ is \index{universal}\textbf{$\lambda$-universal} if for every \hyperlink{def:eleq}{$\mathcal{M} \equiv \mathcal{N}$} such that $|\mathcal{M}| \leq \lambda$ there is an \hyperlink{def:el}{elementary embedding} $\beta: \mathcal{M} \to \mathcal{N}$. 
-    \item \hypertarget{def:homogeneous}$\mathcal{N}$ is \index{homogeneous}\textbf{$\lambda$-homogeneous} if every elementary map $f: \mathcal{N} \to \mathcal{N}$ such that $|f| < \lambda$ extends to an \hyperlink{def:iso}{isomorphism} of $\mathcal{N}$.
+    \item \hypertarget{def:univ}An \hyperlink{def:str}{$L$-structure} $\mathcal{N}$ is \index{universal}\textbf{$\lambda$-universal} if for every \hyperlink{def:eleq}{$\mathcal{M} \equiv \mathcal{N}$} such that $\abs{\mathcal{M}} \leq \lambda$ there is an \hyperlink{def:el}{elementary embedding} $\beta: \mathcal{M} \to \mathcal{N}$. 
+    \item \hypertarget{def:homogeneous}$\mathcal{N}$ is \index{homogeneous}\textbf{$\lambda$-homogeneous} if every elementary map $f: \mathcal{N} \to \mathcal{N}$ such that $\abs{f} < \lambda$ extends to an \hyperlink{def:iso}{isomorphism} of $\mathcal{N}$.
   \end{enumerate}
-  An $L$-structure $\mathcal{N}$ is said to be \textbf{homogeneous} if it is $\abs{\mathcal{N}}$-homogeneous. $\mathcal{N}$ is \textbf{universal} if it is $|\mathcal{N}|$-universal.
+  An $L$-structure $\mathcal{N}$ is said to be \textbf{homogeneous} if it is $\abs{\mathcal{N}}$-homogeneous. $\mathcal{N}$ is \textbf{universal} if it is $\abs{\mathcal{N}}$-universal.
 \end{ndef}
 \begin{remark}
 The difference between $\leq$ and $<$ in the assertions is crucial. Some authors refer to universality as $\lambda^+$-universality and to homogeneity as strong homogeneity.
@@ -1182,26 +1184,26 @@ Countable models of $T_{\text{rg}}$ and $T_{\text{dlo}}$ are universal and homog
 \end{remark}
 
 \begin{nthm}\label{thm:6.10}
-  Let $\mathcal{N}$ be such that $|\mathcal{N}| \geq \hyperlink{def:cardlang}{|L|}$. The following are equivalent
+  Let $\mathcal{N}$ be such that $\abs{\mathcal{N}} \geq \hyperlink{def:cardlang}{\abs{L}}$. The following are equivalent
   \begin{enumerate}[label=(\roman*)]
     \item $\mathcal{N}$ is \hyperlink{def:sat}{saturated},
     \item $\mathcal{N}$ is \hyperlink{def:univ}{universal} and \hyperlink{def:homogeneous}{homogeneous}.
   \end{enumerate}
 \end{nthm}
 \begin{proof}
-  (i) $\Rightarrow$ (ii). Assume $\mathcal{N}$ is \hyperlink{def:sat}{saturated}, and $\mathcal{M} \hyperlink{def:eleq}{\equiv} \mathcal{N}$ is such that $|\mathcal{M}| \leq |\mathcal{N}|$.
+  (i) $\Rightarrow$ (ii). Assume $\mathcal{N}$ is \hyperlink{def:sat}{saturated}, and $\mathcal{M} \hyperlink{def:eleq}{\equiv} \mathcal{N}$ is such that $\abs{\mathcal{M}} \leq \abs{\mathcal{N}}$.
   Then let $\bar{a}$ enumerate $\mathcal{M}$, let $p(\bar{x}) = \tp_\mathcal{M}(\bar{a}/\emptyset)$.
   Then $p(\bar{x})$ is \hyperlink{def:type}{finitely satisfiable} in $\mathcal{M}$.
 
   Claim: $p(\bar{x})$ is finitely satisfiable in $\mathcal{N}$.
   Indeed, let $\{\varphi_1(\bar{x}), \dotsc, \varphi_n(\bar{x})\} \subseteq p(\bar{x})$, $\mathcal{M} \hyperlink{def:models}{\models} \exists \bar{x} \; \bigwedge _{i=1}^n \varphi_i(\bar{x})$, and so $\mathcal{N} \models \exists x \; \bigwedge \varphi_i(\bar{x})$ since $\mathcal{M} \equiv \mathcal{N}$.
 
-  Since $|\bar{x}| \leq |\mathcal{N}|$, $\mathcal{N}$ realizes $p(\bar{x})$ by saturation (\cref{thm:6.5}), $\N \models p(\bar b)$ say. Then $a_i \mapsto b_i$ is an elementary embedding.
+  Since $\abs{\bar{x}} \leq \abs{\mathcal{N}}$, $\mathcal{N}$ realizes $p(\bar{x})$ by saturation (\cref{thm:6.5}), $\N \models p(\bar b)$ say. Then $a_i \mapsto b_i$ is an elementary embedding.
   \hyperlink{def:homogeneous}{Homogeneity} follows from \cref{cor:6.6} with $\mathcal{N} = \mathcal{M}$.
 
-  (ii) $\Rightarrow$ (i). We show that if $\mathcal{M} \equiv \mathcal{N}$, $b \in M$, $f: \mathcal{M} \to \mathcal{N}$ \hyperlink{def:elmap}{elementary} such that $|f| < |\mathcal{N}|$ then there is $\hat{f} \supseteq f$ elementary defined on $b$, cf.\@ \cref{thm:6.5}.
+  (ii) $\Rightarrow$ (i). We show that if $\mathcal{M} \equiv \mathcal{N}$, $b \in M$, $f: \mathcal{M} \to \mathcal{N}$ \hyperlink{def:elmap}{elementary} such that $\abs{f} < \abs{\mathcal{N}}$ then there is $\hat{f} \supseteq f$ elementary defined on $b$, cf.\@ \cref{thm:6.5}.
 
-  By working in $\mathcal{M}' \preccurlyeq \mathcal{M}$ such that $\dom(f) \cup \{b\} \subseteq \mathcal{M}'$ if necessary (using \cref{thm:3.11DLS}), we may assume $|\mathcal{M}| \leq |\mathcal{N}|$.
+  By working in $\mathcal{M}' \preccurlyeq \mathcal{M}$ such that $\dom(f) \cup \{b\} \subseteq \mathcal{M}'$ if necessary (using \cref{thm:3.11DLS}), we may assume $\abs{\mathcal{M}} \leq \abs{\mathcal{N}}$.
   Since $\mathcal{M} \equiv \mathcal{N}$, by \hyperlink{def:univ}{universality} there is an \hyperlink{def:el}{elementary embedding} $\beta: \mathcal{M} \to \mathcal{N}$. Then $\beta(\mathcal{M}) \preccurlyeq \mathcal{N}$.
 
   \begin{center}
@@ -1256,11 +1258,11 @@ Countable models of $T_{\text{rg}}$ and $T_{\text{dlo}}$ are universal and homog
   If $\bar{a}$, $\bar{b}$ are tuples in $\mathcal{N}$ of the same length, and $A\subseteq N$, then the following are equivalent.
   \begin{enumerate}[label=(\roman*)]
     \item $\hyperlink{def:tp}{\tp_{\mathcal{N}}(\bar{a}/A)}= \tp_{\mathcal{N}}(\bar{b}/A)$,
-    \item $ \set{a_i\mapsto b_i|i < |\bar{a}|}\cup\text{id}_A $ is an \hyperlink{def:el}{elementary map} from $\mathcal{N}$ to $\mathcal{N}$.
+    \item $ \set{a_i\mapsto b_i : i < \abs{\bar{a}}}\cup\text{id}_A $ is an \hyperlink{def:el}{elementary map} from $\mathcal{N}$ to $\mathcal{N}$.
   \end{enumerate}
 \end{nremark}
 \begin{nprop}\label{prop:6.13}
-  Let $ \mathcal{N} $ be \hyperlink{def:homogeneous}{$\lambda$-homogeneous}, $A\subseteq N$, with $|A|<\lambda$ and let $\bar{a}$ a tuple in $\mathcal{N}$ such that $|\bar{a}|<\lambda$.
+  Let $ \mathcal{N} $ be \hyperlink{def:homogeneous}{$\lambda$-homogeneous}, $A\subseteq N$, with $\abs{A}<\lambda$ and let $\bar{a}$ a tuple in $\mathcal{N}$ such that $\abs{\bar{a}}<\lambda$.
   Then
   \begin{equation*}\hyperlink{def:orbit}{O_{\mathcal{N}}(\bar{a}/A)}=\hyperlink{def:setdef}{p(\mathcal{N})}\end{equation*}
   where $p(\bar{x})=\hyperlink{def:tp}{\tp_{\mathcal{N}}(\bar{a}/A)}$.
@@ -1286,8 +1288,8 @@ Establishing the existence of the monster $\mathcal{U}$ requires set-theoretic a
     \item `$\varphi(\bar{x})$ \textbf{holds}' to mean that $\mathcal{U}\hyperlink{def:models}{\models}\forall \bar{x} \;\varphi(\bar{x})$,
     \item `$\varphi(\bar{x})$ is \named{consistent}' to mean $\mathcal{U}\models\exists\bar{x}\;\varphi(\bar{x})$,
     \item `the type $p(\bar{x})$ is \textbf{consistent}/\textbf{satisfiable}' to mean $\mathcal{U}\models\exists\bar{x}\;p(\bar{x})$, write $\mathcal{U} \models p(\bar a)$ if $\bar a$ witnesses $p(\bar x)$ in $\mathcal{U}$,
-    \item a cardinality $\lambda$ is \hypertarget{def:small}{\named{small}} if $\lambda< |U|$ (usually denote $|U|$ by $\kappa$,
-    \item a \textbf{model} is some $\mathcal{M}\preccurlyeq\mathcal{U}$ such that $|M|$ is small.
+    \item a cardinality $\lambda$ is \hypertarget{def:small}{\named{small}} if $\lambda< \abs{U}$ (usually denote $\abs{U}$ by $\kappa$,
+    \item a \textbf{model} is some $\mathcal{M}\preccurlyeq\mathcal{U}$ such that $\abs{M}$ is small.
   \end{itemize}
   We establish the following conventions:
   \begin{itemize}
@@ -1295,7 +1297,7 @@ Establishing the existence of the monster $\mathcal{U}$ requires set-theoretic a
     \item \hyperlink{def:form}{formulas} have parameters in $U$, unless specified otherwise,
     \item \hyperlink{def:type}{types} have parameters in small sets, otherwise they are \emph{global types} and not relevant in this course,
     \item \hyperlink{def:setdef}{definable sets} have the form $\varphi(U)$ for some $L(U)$-formula $\varphi(\bar{x})$,
-    \item \hyperlink{def:setdef}{type definable sets} have the form $p(U)$ for some type $ p(\bar{x},A)$ where $|A| < \kappa$,
+    \item \hyperlink{def:setdef}{type definable sets} have the form $p(U)$ for some type $ p(\bar{x},A)$ where $\abs{A} < \kappa$,
     \item Orbits and types of tuples are within $\mathcal{U}$, so $\tp(\bar{a}/A)$ means $\tp_{\mathcal{U}}(\bar{a}/A)$,
       \begin{equation*} O(\bar{a}/A)=O_{\mathcal{U}}(\bar{a}/A),
       \end{equation*}
@@ -1322,7 +1324,7 @@ Establishing the existence of the monster $\mathcal{U}$ requires set-theoretic a
   \begin{equation*} \bigwedge \varphi_i(\bar{x}) \to \lnot\left(\bigwedge \psi_i(\bar{x}) \right). \qedhere \end{equation*}
 \end{proof}
 \begin{nremark}\label{rem:7.3}
-  Let $ \varphi(\mathcal{U},\bar{b}) $ be such that $\varphi(\bar{x},\bar{z})$ is an \hyperlink{def:form}{$L$-formula}, $\bar{b}\in \mathcal{U}^{|\bar{z}|} $.
+  Let $ \varphi(\mathcal{U},\bar{b}) $ be such that $\varphi(\bar{x},\bar{z})$ is an \hyperlink{def:form}{$L$-formula}, $\bar{b}\in \mathcal{U}^{\abs{\bar{z}}} $.
   If $ \alpha\in\hyperlink{def:aut}{\Aut(\mathcal{U})} $, then
   \begin{align*}
     \alpha[\varphi(\mathcal{U},\bar{b})] &= \set{\alpha(\bar{a})|\varphi(\bar{a},\bar{b}), \bar{a} \in \mathcal{U}^{|\bar{x}|}}\\
@@ -1356,7 +1358,7 @@ Establishing the existence of the monster $\mathcal{U}$ requires set-theoretic a
 \begin{proof}
   (i) $\Rightarrow$ (ii) is clear by \cref{rem:7.3} since $\alpha \in \Aut(\mathcal{U}/A)$ fixes $\psi(\mathcal{U})$ setwise.
 
-  (ii) $\Rightarrow$ (i): Let $\varphi(\bar{x},\bar{z})$ be an \hyperlink{def:form}{$L$-formula} such that $\varphi(\mathcal{U},\bar{b})$ is \hyperlink{def:inv}{invariant} over $A$, for suitable $ \bar{b} \in U^{|\bar{z}|}$.
+  (ii) $\Rightarrow$ (i): Let $\varphi(\bar{x},\bar{z})$ be an \hyperlink{def:form}{$L$-formula} such that $\varphi(\mathcal{U},\bar{b})$ is \hyperlink{def:inv}{invariant} over $A$, for suitable $ \bar{b} \in U^{\abs{\bar{z}}}$.
 
   Let $q(\bar{z})$ be the \hyperlink{def:type}{type} $\tp(\bar{b}/A)$.
   If $ \bar{c}\hyperlink{def:models}{\models} q(\bar{z}) $, then there is $ \alpha\in\hyperlink{def:aut}{\Aut(\mathcal{U}/A)}$
@@ -1434,7 +1436,7 @@ Usually, quantifier elimination with additional assumptions is used to show that
   \begin{enumerate}[label=(\roman*)]
     \item $T$ has \hyperlink{def:qe}{quantifier elimination},
     \item every $p: \mathcal{U} \to \mathcal{U}$ \hyperlink{def:upe}{partial embedding} is \hyperlink{def:el}{elementary},
-    \item If $p: \mathcal{U} \to \mathcal{U}$ is partial embedding and $|\dom p| < |\mathcal{U}|$ and $b \in \mathcal{U}$, then there is a partial embedding $\hat{p} \supseteq p$ such that $b \in \dom \hat{p}$.
+    \item If $p: \mathcal{U} \to \mathcal{U}$ is partial embedding and $\abs{\dom p} < \abs{\mathcal{U}}$ and $b \in \mathcal{U}$, then there is a partial embedding $\hat{p} \supseteq p$ such that $b \in \dom \hat{p}$.
   \end{enumerate}
 \end{nthm}
 \begin{proof}
@@ -1445,7 +1447,7 @@ Usually, quantifier elimination with additional assumptions is used to show that
   By \hyperlink{def:homogeneous}{homogeneity} of $\mathcal{U}$, there is $\alpha \in \Aut(\mathcal{U})$ such that $p \subseteq \alpha$, and so $p \cup \{\langle b, \alpha(b) \rangle \}$ is the required extension of $p$.
 
   %(iii) $\Rightarrow$ (ii). Prove that if $p: \mathcal{U} \to \mathcal{U}$ is partial embedding, then any finite restriction $p_0$ of $p$ is an elementary map.
-  %Idea: Let $\mathcal{M} \supseteq \dom(p_0)$, $\mathcal{N} \supseteq \img(p_0)$ such that $|\mathcal{M}| = |\mathcal{N}|$, and extend $p_0$ to $\beta: \mathcal{M} \to \mathcal{N}$ by back-and-forth (use saturation of $\mathcal{U}$).
+  %Idea: Let $\mathcal{M} \supseteq \dom(p_0)$, $\mathcal{N} \supseteq \img(p_0)$ such that $\abs{\mathcal{M}} = \abs{\mathcal{N}}$, and extend $p_0$ to $\beta: \mathcal{M} \to \mathcal{N}$ by back-and-forth (use saturation of $\mathcal{U}$).
   (iii) $\Rightarrow$ (ii). Let $p: \mathcal{U} \to \mathcal{U}$ be a partial embedding.
   Consider $p_0 \subseteq p$, $p_0$ finite or small. Use property (iii) and saturation to extend $p_0$ to $\alpha \in \Aut(U)$ by back and forth.
   So $p_0$ is elementary. The assumption on smallness is needed for the back-and-forth argument.
@@ -1466,7 +1468,7 @@ This gives \hyperlink{def:qe}{quantifier elimination} for $T_{\text{rg}}$ and $T
 \begin{ndef}
   \hypertarget{def:def}An element $a \in \mathcal{U}$ is \textbf{definable} over a small set $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $\varphi(U) = \{a\}$. (In particular, any element of $A$ is definable over $A$; $x=a$ for $a \in A$).
 
-  \hypertarget{def:alg}An element $a \in \mathcal{U}$ is \textbf{algebraic} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $|\varphi(U)| < \omega$ and $a \in \varphi(\mathcal{U})$.
+  \hypertarget{def:alg}An element $a \in \mathcal{U}$ is \textbf{algebraic} over $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $\abs{\varphi(U)} < \omega$ and $a \in \varphi(\mathcal{U})$.
 
   The \textbf{definable closure} of $A$ is
   \begin{equation*}
@@ -1497,10 +1499,10 @@ This gives \hyperlink{def:qe}{quantifier elimination} for $T_{\text{rg}}$ and $T
   \end{enumerate}
 \end{nthm}
 \begin{proof}
-  (i) $\Rightarrow$ (ii). If $a \in \hyperlink{def:alg}{\acl}(A)$, then there is an \hyperlink{def:la}{$L(A)$}-\hyperlink{def:form}{formula} $\varphi(x)$ such that $\varphi(a)$ holds and $|\varphi(\U)| < \omega$.
+  (i) $\Rightarrow$ (ii). If $a \in \hyperlink{def:alg}{\acl}(A)$, then there is an \hyperlink{def:la}{$L(A)$}-\hyperlink{def:form}{formula} $\varphi(x)$ such that $\varphi(a)$ holds and $\abs{\varphi(\U)} < \omega$.
   But $\varphi(\U)$ is \hyperlink{def:inv}{invariant} over $A$, and so $O(a/A) \subseteq \varphi(\U)$, and so $\abs{O(a/A)} < \omega$.
 ´
-  (ii) $\Rightarrow$ (i). If $|\hyperlink{def:orbit}{O(a/A)}| < \omega$, then $O(a/A)$ is \hyperlink{def:def}{definable} by $\bigvee_{i=1}^n (x = a_i)$ where $O(a/A) = \{a_1, \dotsc, a_n\}$.
+  (ii) $\Rightarrow$ (i). If $\abs{\hyperlink{def:orbit}{O(a/A)}} < \omega$, then $O(a/A)$ is \hyperlink{def:def}{definable} by $\bigvee_{i=1}^n (x = a_i)$ where $O(a/A) = \{a_1, \dotsc, a_n\}$.
   Also $O(a/A)$ is \hyperlink{def:inv}{invariant} over $A$, so by \cref{prop:7.5}, there is an $L(A)$-formula $\varphi(x)$ that defines $O(a/A)$.
 
   (i) $\Rightarrow$ (iii). $a \in \acl(A)$, so there is $\varphi(x)$, an $L(A)$-formula such that there is $n \in \omega\setminus\{0\}$ with
@@ -1511,17 +1513,17 @@ This gives \hyperlink{def:qe}{quantifier elimination} for $T_{\text{rg}}$ and $T
   Then by \hyperlink{def:elmap}{elementarity}, $\varphi(a) \wedge \exists^{=n} x \; \varphi(x)$ holds in every $\mathcal{M} \supseteq A$, and the $n$ realizations of $\varphi(x)$ in $\mathcal{U}$ must coincide with the realizations in $\mathcal{M}$.
   Therefore $a \in \mathcal{M}$.
 
-  (iii) $\Rightarrow$ (i). Suppose $a \notin \acl(A)$, let $p(x) = \tp(a/A)$. Then for all $\varphi(x) \in p(x)$, $|\varphi(\mathcal{U})| \geq \omega$.
+  (iii) $\Rightarrow$ (i). Suppose $a \notin \acl(A)$, let $p(x) = \tp(a/A)$. Then for all $\varphi(x) \in p(x)$, $\abs{\varphi(\mathcal{U})} \geq \omega$.
   Then from the second examples sheet\footnote{Question 6 on examples sheet 2:
   Let $\mathcal{N}$ be saturated and let $p(x)$ be a type with parameters in $A \subseteq N$ such that $\abs A < \abs{N}$. Suppose $p(x)$ is closed under conjunction, i.e.\@ if $\varphi(x)$ and $\psi(x)$ are in $p(x)$, then also $\varphi(x) \land \psi(x)$. Then the following are equivalent:
   \begin{enumerate}[label=(\roman*)]
   \item $p(x)$ has finitely many realizations,
   \item $p(x)$ contains a formula with finitely many realizations.
-  \end{enumerate}}, $|p(\mathcal{U})| \geq \omega$.
+  \end{enumerate}}, $\abs{p(\mathcal{U})} \geq \omega$.
   And we can show\footnote{\label{question:ex2q5} Question 5 on examples sheet 2: Let $\mathcal{N}$ be a saturated $L$-structure, and let $p(x)$ be a type (with one free variable) in $L(A)$, where $A \subseteq N$ and $\abs{A} < \abs{N}$. Let $p(\mathcal{N}) = \left\{ a\in N \ \middle|\ \mathcal{N} \models p(a) \right\}$. Then the following are equivalent: \begin{enumerate}[label=(\roman*)]
   \item $p(\mathcal{N})$ is infinite,
   \item $\abs{p(\mathcal{N})} = \abs{\mathcal{N}}$.
-\end{enumerate}} that $|p(\mathcal{U})| = |\mathcal{U}|$.
+\end{enumerate}} that $\abs{p(\mathcal{U})} = \abs{\mathcal{U}}$.
 
   Let $\mathcal{M} \supseteq A$, then $p(\mathcal{U}) \setminus \mathcal{M} \neq \emptyset$ by cardinality considerations.
   So there is $b \in p(\mathcal{U}) \setminus \mathcal{M}$.
@@ -1661,9 +1663,9 @@ Let from now on $T$ be strongly minimal, \hyperlink{def:complete}{complete} such
   \begin{equation*}
     \psi(a,y) \coloneqq \varphi(a,y) \land \exists^{\leq n} x \; \varphi(x,y)
   \end{equation*}
-  is such that $|\psi(a,\mathcal{U})| \geq \omega$.
-  By question 5, examples sheet 2, cf.\@ \cref{question:ex2q5}, $|\psi(a,U)| = |\mathcal{U}|$.
-  By \hyperlink{def:minimal}{strong minimality}, $|\neg \psi(a,U)| < \omega$.
+  is such that $\abs{\psi(a,\mathcal{U})} \geq \omega$.
+  By question 5, examples sheet 2, cf.\@ \cref{question:ex2q5}, $\abs{\psi(a,U)} = \abs{\mathcal{U}}$.
+  By \hyperlink{def:minimal}{strong minimality}, $\abs{\neg \psi(a,U)} < \omega$.
   By cardinality considerations, if $\mathcal{M} \supseteq B$, then $\mathcal{M}$ contains $c$ such that $\psi(a,c)$.
   But then $a \in \acl(c,B)$, so $a \in \mathcal{M}$.
   Therefore $a$ is in all \hyperlink{def:model}{models} that contain $B$, so $a \in \acl(B)$ by \cref{thm:7.12}, a contradiction.
@@ -1701,29 +1703,29 @@ Let from now on $T$ be strongly minimal, \hyperlink{def:complete}{complete} such
   Let $C \subseteq \U$, then
   \begin{enumerate}[label=(\roman*)]
     \item every \hyperlink{def:indep}{independent} subset $B \subseteq C$ can be extended to a \hyperlink{def:basis}{basis},
-    \item if $A,B$ are bases of $C$, then $|A| = |B|$.
+    \item if $A,B$ are bases of $C$, then $\abs{A} = \abs{B}$.
   \end{enumerate}
 \end{nthm}
 \begin{proof}\leavevmode
   \begin{enumerate}[label=(\roman*)]
     \item If $\langle B_i : i < \lambda \rangle$ is a chain of \hyperlink{def:indep}{independent} sets containing $B$, then $\bigcup_{i < \lambda} B_i$ is independent (by \cref{prop:7.13}(i)).
       By Zorn's lemma, there is a maximal independent subset of $C$ that contains $B$. By \cref{cor:8.8}, that maximal subset is a \hyperlink{def:basis}{basis} of $C$.
-    \item Let $|B| \geq \omega$, assume (for contradiction) that $|A| < |B|$.
+    \item Let $\abs{B} \geq \omega$, assume (for contradiction) that $\abs{A} < \abs{B}$.
       Then $a \in A$ is also in $\hyperlink{def:alg}{\acl}(B)$.
       Let $D_a \subseteq B$ be finite such that $a \in \acl(D_a)$. Let $D = \bigcup_{a \in A} D_a$.
-      Then $A \subseteq \acl(D)$ and $C \subseteq \acl(D)$, but $|D| < |B|$ contradicting the independence of $B$.
+      Then $A \subseteq \acl(D)$ and $C \subseteq \acl(D)$, but $\abs{D} < \abs{B}$ contradicting the independence of $B$.
 
-      If $A$ and $B$ are finite, show that $|A| \leq |B|$  (and the converse symmetrically) by using: if there is $a \in A \setminus B$, then there is $b \in B \setminus A$ such that $\{b\} \cup \left( A \setminus \{a\} \right)$ is independent.
+      If $A$ and $B$ are finite, show that $\abs{A} \leq \abs{B}$  (and the converse symmetrically) by using: if there is $a \in A \setminus B$, then there is $b \in B \setminus A$ such that $\{b\} \cup \left( A \setminus \{a\} \right)$ is independent.
       This holds because if $a \in A \setminus B$, then since $a \in \acl(B)$, we have that $B \nsubseteq \acl(A \setminus \{a\})$ (otherwise $A$ is not independent).
       So let $b \in B \setminus \acl(A \setminus a)$.
       Then $\{b\} \cup (A \setminus a)$ is independent by \cref{lem:8.7}.
 
-      Use finite induction argument to get $|A| \leq |B|$. \qedhere
+      Use finite induction argument to get $\abs{A} \leq \abs{B}$. \qedhere
   \end{enumerate}
 \end{proof}
 \begin{ndef}[Dimension]\label{def:8.10}
   \hypertarget{def:dim}Let $C \subseteq \mathcal{U}$ be \hyperlink{def:alg}{algebraically closed}.
-  Then the \named{dimension} of $C$ is $\dim(C) = |A|$ where $A$ is any \hyperlink{def:basis}{basis} of $C$.
+  Then the \named{dimension} of $C$ is $\dim(C) = \abs{A}$ where $A$ is any \hyperlink{def:basis}{basis} of $C$.
 \end{ndef}
 
 \begin{nprop}\label{prop:8.11}
@@ -1735,13 +1737,13 @@ Let from now on $T$ be strongly minimal, \hyperlink{def:complete}{complete} such
   Let $\bar{a}$ enumerate $\dom(f)$, let $\varphi(x, \bar{a})$ be a formula with parameters in $\bar{a}$.
   The claim is that $\varphi(b,\bar{a})) \leftrightarrow \varphi(c, f(\bar{a}))$. We distinguish cases:
   \begin{enumerate}
-  \item $|\varphi(\mathcal{U}, \bar{a})| < \omega$. Then $|\varphi(\mathcal{U}, f(\bar{a}))| < \omega$.
+  \item $\abs{\varphi(\mathcal{U}, \bar{a})} < \omega$. Then $\abs{\varphi(\mathcal{U}, f(\bar{a}))} < \omega$.
     Then $b \notin \varphi(\mathcal{U}, \bar{a})$ (because $b \notin \acl(\bar{a})$) and $c \notin \varphi(\mathcal{U}, f(\bar{a}))$.
     Then it holds in $\mathcal{U}$ that
     \begin{equation*}
       \lnot \varphi(b, \bar{a}) \land \neg \varphi(c, f(\bar{a})).
     \end{equation*}
-  \item $|\varphi(U, \bar{a})| \geq \omega$. Then by strong minimality, $|\neg \varphi(\mathcal{U}, \bar{a})| < \omega$, and so
+  \item $\abs{\varphi(U, \bar{a})} \geq \omega$. Then by strong minimality, $\abs{\neg \varphi(\mathcal{U}, \bar{a})} < \omega$, and so
     \begin{equation*}
       \varphi(b, \bar{a}) \land \varphi(c, f(\bar{a}))
     \end{equation*}
@@ -1774,11 +1776,11 @@ If $\M \preccurlyeq \U$ is a model such that $\abs \M < \abs \U$, then by \cref{
   \end{equation*}
 \end{proof}
 \begin{ncor}\label{cor:8.15}
-  Let $T$ be \hyperlink{def:minimal}{strongly minimal}, let $\lambda > |L|$. Then $T$ is $\lambda$-\hyperlink{def:wcat}{categorical}.
+  Let $T$ be \hyperlink{def:minimal}{strongly minimal}, let $\lambda > \abs{L}$. Then $T$ is $\lambda$-\hyperlink{def:wcat}{categorical}.
 \end{ncor}
 \begin{proof}
-  If $A \subseteq \mathcal{U}$, then $|\hyperlink{def:alg}{\acl}(A)| \leq |L(A)| + \omega$ (there are at most $|L(A)| + \omega$ formulas, each element $m$ in $\acl(A)$ is one of finitely many solutions of one of those formulas).
-  If $|\mathcal{M}| = \lambda$, then a \hyperlink{def:basis}{basis} of $\M$ must have cardinality $\lambda$.
+  If $A \subseteq \mathcal{U}$, then $\abs{\hyperlink{def:alg}{\acl}(A)} \leq \abs{L(A)} + \omega$ (there are at most $\abs{L(A)} + \omega$ formulas, each element $m$ in $\acl(A)$ is one of finitely many solutions of one of those formulas).
+  If $\abs{\mathcal{M}} = \lambda$, then a \hyperlink{def:basis}{basis} of $\M$ must have cardinality $\lambda$.
   By \cref{thm:8.14}, any two models with equal dimension are isomorphic.
 \end{proof}
 
@@ -1967,9 +1969,9 @@ If $\mathcal{M}$ is \hyperlink{def:sat}{saturated}, then
 \end{itemize}
 If $\M$ is $\lambda$-\hyperlink{def:sat}{saturated}, then:
 \begin{itemize}
-  \item $\M$ is weakly $\lambda$-homogeneous, i.e.\ for all $f:\M \to \M$ (partial) \hyperlink{def:elmap}{elementary} such that $|f| < \lambda$, for every $b \in \M$, then $\exists \hat{f} \supseteq f$ elementary and such that $b \in \dom f$.
+  \item $\M$ is weakly $\lambda$-homogeneous, i.e.\ for all $f:\M \to \M$ (partial) \hyperlink{def:elmap}{elementary} such that $\abs{f} < \lambda$, for every $b \in \M$, then $\exists \hat{f} \supseteq f$ elementary and such that $b \in \dom f$.
 \end{itemize}
-Can prove: $\lambda$-homogeneous is equivalent to homogeneity when $|\M| = \lambda$.
+Can prove: $\lambda$-homogeneous is equivalent to homogeneity when $\abs{\M} = \lambda$.
 \begin{defi}[Cofinality]\hypertarget{def:cofinal}
   If $\alpha$ is a limit ordinal $\geq \omega$, $\operatorname{cof}(\alpha)$ (\bonusnamed{cofinality} of $\alpha$) is the least $\lambda$ such that there is $f: \lambda \to \alpha$ such that $\img(f)$ is unbounded in $\alpha$.
 \end{defi}
@@ -1993,8 +1995,8 @@ Are there any limit cardinals other than $\aleph_0$ that are \hyperlink{def:regu
   \end{align*}
 \end{defi}
 \begin{lemma}
-  If $\M$ is such that $|\M| \geq |L| + \omega$, let $\kappa > \aleph_0$.
-  Then there is $\M' \succcurlyeq \M$ such that for all $A \subseteq \M$ with $|A|< \kappa$, if $p(x) \in \hyperlink{def:s1}{S^\M_1}(A)$, then $p(x)$ is \hyperlink{def:type}{realized} in $\M'$, $|\M'| \leq |\M|^\kappa$.
+  If $\M$ is such that $\abs{\M} \geq \abs{L} + \omega$, let $\kappa > \aleph_0$.
+  Then there is $\M' \succcurlyeq \M$ such that for all $A \subseteq \M$ with $\abs{A}< \kappa$, if $p(x) \in \hyperlink{def:s1}{S^\M_1}(A)$, then $p(x)$ is \hyperlink{def:type}{realized} in $\M'$, $\abs{\M'} \leq \abs{\M}^\kappa$.
 \end{lemma}
 \begin{proof}
   First, note
@@ -2007,10 +2009,10 @@ Are there any limit cardinals other than $\aleph_0$ that are \hyperlink{def:regu
   \begin{itemize}
     \item $\M_0 = \M$
     \item $\M_\alpha = \bigcup_{\beta < \alpha} \M_\beta$ when $\alpha$ is a limit.
-  \item $\M_\alpha \preccurlyeq \M_{\alpha + 1}$ such that $\M_{\alpha+1}$ realizes $p_\alpha(x)$ and $|\M_{\alpha+1}| = |\M_\alpha|$.
-    Then $\bigcup_{\alpha < |\M|^\kappa} \M_\alpha$ realizes all types in $S_1^\M(A)$ and
+  \item $\M_\alpha \preccurlyeq \M_{\alpha + 1}$ such that $\M_{\alpha+1}$ realizes $p_\alpha(x)$ and $\abs{\M_{\alpha+1}} = \abs{\M_\alpha}$.
+    Then $\bigcup_{\alpha < \abs{\M}^\kappa} \M_\alpha$ realizes all types in $S_1^\M(A)$ and
     \begin{equation*}
-    \abs{\bigcup_{\alpha < |\M|^\kappa} \M_\alpha} \leq |\M|^\kappa. \qedhere
+    \abs{\bigcup_{\alpha < \abs{\M}^\kappa} \M_\alpha} \leq \abs{\M}^\kappa. \qedhere
     \end{equation*}
   \end{itemize}
 \end{proof}
@@ -2022,17 +2024,17 @@ Are there any limit cardinals other than $\aleph_0$ that are \hyperlink{def:regu
   \begin{itemize}
     \item $\N_0 = \M$
     \item take unions at limit stages
-    \item Given $\N_\alpha$, find $\N_{\alpha + 1} \succcurlyeq \N_\alpha$ such that all types in $S_1^{\N_\alpha}(A)$ with $|A| \leq \kappa$ are realized.
+    \item Given $\N_\alpha$, find $\N_{\alpha + 1} \succcurlyeq \N_\alpha$ such that all types in $S_1^{\N_\alpha}(A)$ with $\abs{A} \leq \kappa$ are realized.
   \end{itemize}
-  Moreover, $|\N_\alpha| \leq \abs{\M}^\kappa$ (follows from previous result).
-  Let $\N = \bigcup_{\alpha < \kappa^+} \N_\alpha$. Since $\kappa^+ \leq |\mathcal{M}|^\kappa$, $\N$ is the union of at most $|\M|^\kappa$ sets each of size at most $|\M|^\kappa$, hence $|\N| \leq |\M|^\kappa$.
+  Moreover, $\abs{\N_\alpha} \leq \abs{\M}^\kappa$ (follows from previous result).
+  Let $\N = \bigcup_{\alpha < \kappa^+} \N_\alpha$. Since $\kappa^+ \leq \abs{\mathcal{M}}^\kappa$, $\N$ is the union of at most $\abs{\M}^\kappa$ sets each of size at most $\abs{\M}^\kappa$, hence $\abs{\N} \leq \abs{\M}^\kappa$.
 
-  To see that $\N$ is $\kappa^+$ saturated, pick $A \subseteq \N$ such that $|A| \leq \kappa$.
+  To see that $\N$ is $\kappa^+$ saturated, pick $A \subseteq \N$ such that $\abs{A} \leq \kappa$.
   By the regularity of $\kappa^+$, there is $\alpha$ such that
   $A \subseteq \N_\alpha$, hence all types $/A$ with one free variable are realized in $\N$.
 \end{proof}
-Recap: For arbitrarily large $\kappa$, there is a $\kappa^+$ saturated $\N \succcurlyeq \M$ with $|\N| \leq |\M|^\kappa$.
-If $\kappa$, $|\M|$ are such that $|\M|\leq 2^\kappa$, then $|\M|^\kappa = 2^\kappa$ so you get a $\kappa^+$-saturated $\N \succcurlyeq \M$ such that $|\N| = 2^\kappa$.
+Recap: For arbitrarily large $\kappa$, there is a $\kappa^+$ saturated $\N \succcurlyeq \M$ with $\abs{\N} \leq \abs{\M}^\kappa$.
+If $\kappa$, $\abs{\M}$ are such that $\abs{\M}\leq 2^\kappa$, then $\abs{\M}^\kappa = 2^\kappa$ so you get a $\kappa^+$-saturated $\N \succcurlyeq \M$ such that $\abs{\N} = 2^\kappa$.
 So GCH implies saturated models exist.
 
 Alternatively, suppose there are arbitrarily large cardinals $\kappa$ such that
@@ -2043,26 +2045,26 @@ Alternatively, suppose there are arbitrarily large cardinals $\kappa$ such that
 Then the chain stabilises, giving the required structure. % this sentence is mine
 \begin{defi}
   Take $T$ a complete theory in a countable language, $\kappa \geq \aleph_0$ a cardinal.
-  Then $T$ is $\kappa$-\bonusnamed{stable} if for all $\mathcal{M} \models T$, $A \subseteq \mathcal{M}$, $|A| \leq \kappa$, $\forall n \leq \omega$,
+  Then $T$ is $\kappa$-\bonusnamed{stable} if for all $\mathcal{M} \models T$, $A \subseteq \mathcal{M}$, $\abs{A} \leq \kappa$, $\forall n \leq \omega$,
   we have
   \begin{equation*}
-    |S_n^\mathcal{M}(A)| \leq \kappa
+    \abs{S_n^\mathcal{M}(A)} \leq \kappa
   \end{equation*}
   where $S_n^\mathcal{M}(A)$ is the set of complete types with $n$ variables and parameters in $A$.
 \end{defi}
 \begin{thm}
-  Let $\kappa$ be a regular cardinal, and $T$ $\kappa$-stable. Then there is a $\mathcal{M} \models T$, $|\mathcal{M}| = \kappa$, $\M$ saturated.
+  Let $\kappa$ be a regular cardinal, and $T$ $\kappa$-stable. Then there is a $\mathcal{M} \models T$, $\abs{\mathcal{M}} = \kappa$, $\M$ saturated.
 \end{thm}
 \begin{proof}
-  We build an elementary chain $\langle \M_\alpha : \alpha < \kappa \rangle$ where $|\M_\alpha| < \kappa$ as follows:
+  We build an elementary chain $\langle \M_\alpha : \alpha < \kappa \rangle$ where $\abs{\M_\alpha} < \kappa$ as follows:
   \begin{itemize}
     \item $\M_0 \models T$
     \item unions at limit stages
-    \item given $\M_\alpha$, $|\M_\alpha|=\kappa \Rightarrow S^{\M_\alpha}_1(\M_\alpha) = \kappa$,
-      there is $\M_{\alpha+1} \succcurlyeq \M_\alpha$ that realizes all types in $S_1^{\M_\alpha}(\M_\alpha)$ and $|\M_{\alpha+1}| = |\M_\alpha|$.
+    \item given $\M_\alpha$, $\abs{\M_\alpha}=\kappa \Rightarrow S^{\M_\alpha}_1(\M_\alpha) = \kappa$,
+      there is $\M_{\alpha+1} \succcurlyeq \M_\alpha$ that realizes all types in $S_1^{\M_\alpha}(\M_\alpha)$ and $\abs{\M_{\alpha+1}} = \abs{\M_\alpha}$.
       Let $\bigcup_{\alpha < \kappa} \M_\alpha$, then $\abs{\bigcup \M_\alpha} = \kappa$ and $\bigcup \M_\alpha$ is $\kappa$-saturated by construction.
   \end{itemize}
-  Now, $\mathcal{M}$ $\kappa$-saturated, $\kappa$-strongly homogeneous, $|\M| \gg \kappa$.
+  Now, $\mathcal{M}$ $\kappa$-saturated, $\kappa$-strongly homogeneous, $\abs{\M} \gg \kappa$.
 \end{proof}
 
 \clearpage
@@ -2090,17 +2092,17 @@ Then the chain stabilises, giving the required structure. % this sentence is min
 \begin{nlemma}\label{lem:5.3x}
   Let $T$ be a \hyperlink{def:maximal}{maximal}, \hyperlink{def:fs}{finitely satisfiable} theory with the \hyperlink{def:wp}{witness property}.
   Then $T$ has a \hyperlink{def:model}{model}.
-  Moreover, if $\lambda$ is a cardinal and $|\hyperlink{def:lang}{\mathscr{C}}| \leq \lambda$, then $T$ has a model of size at most $\lambda$.
+  Moreover, if $\lambda$ is a cardinal and $\abs{\hyperlink{def:lang}{\mathscr{C}}} \leq \lambda$, then $T$ has a model of size at most $\lambda$.
 \end{nlemma}
 \begin{proof}
   Let $c,d \in \hyperlink{def:lang}{\mathscr{C}}$, define $c \sim d$ iff $c = d \in T$.
 
-  \textbf{Claim:} $\sim$ is an equivalence relation. \textbf{Proof:} For transitivity, let $c \sim d$ and $d \sim e$.
+  We claim that $\sim$ is an equivalence relation. For transitivity, let $c \sim d$ and $d \sim e$.
   Then $c = d \in T$ and $d = e \in T$, so $c = e \in T$ (by \cref{lem:5.2x}), and so $c \sim e$. Reflexivity follows from \hyperlink{def:maximal}{maximality}, and symmetry is immediate. $\blacksquare$
 
   \hypertarget{def:cstar}We denote $[c] \in \mathscr{C} / \sim$ by $c^*$.
   Now, define a \hyperlink{def:str}{structure} $\mathcal{M}$ whose domain is $\mathscr{C} / \sim\ = M$.
-  Clearly, $|M| \leq \lambda$ if $|\mathscr{C}| \leq \lambda$.
+  Clearly, $\abs{M} \leq \lambda$ if $\abs{\mathscr{C}} \leq \lambda$.
   We must define \hyperlink{def:str}{interpretations} in $\mathcal{M}$ for symbols of $L$.
   \begin{itemize}
     \item If $c \in \mathscr{C}$, then $c^\mathcal{M} = c^*$.
@@ -2137,7 +2139,7 @@ Then the chain stabilises, giving the required structure. % this sentence is min
     Then $t(c_1, \dotsc, c_n) = d \in T$. $\blacksquare$
   \end{itemize}
 
-  \textbf{Claim:} For all $L$-formulas $\varphi(\bar{x})$, and $\bar{c} \in \mathscr{C}^{|\bar{x}|}$,
+  \textbf{Claim:} For all $L$-formulas $\varphi(\bar{x})$, and $\bar{c} \in \mathscr{C}^{\abs{\bar{x}}}$,
   \begin{equation*}
     \mathcal{M} \models \varphi(\bar{c}) \iff \varphi(\bar{c}) \in T.
   \end{equation*}
@@ -2148,12 +2150,12 @@ Then the chain stabilises, giving the required structure. % this sentence is min
   Let $T$ be a \hyperlink{def:fs}{finitely satisfiable} \hyperlink{def:ltheory}{$L$-theory}.
   Then there are $L^* \supseteq L$ and a finitely satisfiable $L^*$-theory $T^* \supseteq T$ such that
   \begin{enumerate}[label=(\roman*)]
-    \item $|L^*| = |L| + \omega$.
+    \item $\abs{L^*} = \abs{L} + \omega$.
     \item any $L^*$-theory extending $T^*$ has the \hyperlink{def:wp}{witness property}.
   \end{enumerate}
 \end{nlemma}
 \begin{proof}
-  We define $\langle L_i : i < \omega \rangle$ a \hyperlink{def:chain}{chain} of \hyperlink{def:lang}{languages} containing $L$ and such that $|L_i| = |L| + \omega$, and $\langle T_i : i < \omega \rangle$ of \hyperlink{def:fs}{finitely satisfiable} \hyperlink{def:ltheory}{theories} such that $\forall i, T_i$ is an $L_i$-theory and $T_i \supseteq T$.
+  We define $\langle L_i : i < \omega \rangle$ a \hyperlink{def:chain}{chain} of \hyperlink{def:lang}{languages} containing $L$ and such that $\abs{L_i} = \abs{L} + \omega$, and $\langle T_i : i < \omega \rangle$ of \hyperlink{def:fs}{finitely satisfiable} \hyperlink{def:ltheory}{theories} such that $\forall i, T_i$ is an $L_i$-theory and $T_i \supseteq T$.
 
   Set $L_0 = L$ and $T_0 = T$. At stage $i+1$, $L_i$ and $T_i$ are given.
   List all \hyperlink{def:form}{$L_i$-formulas} $\varphi(x)$ (one \hyperlink{def:free}{free} variable) and let
@@ -2199,14 +2201,14 @@ Then the chain stabilises, giving the required structure. % this sentence is min
   \textbf{Claim:} the maximal element $T'$ of $I$ is the required extension of $T$ (check that for all \hyperlink{def:sentence}{$L$-sentences} $\sigma$, $\sigma \in T'$ or $\lnot \sigma \in T'$).
 \end{proof}
 \begin{nthm}[Compactness]\label{thm:5.6x}
-  \index{compactness}If $T$ is a \hyperlink{def:fs}{finitely satisfiable} \hyperlink{def:ltheory}{$L$-theory} and $\lambda \geq |L| + \omega$, then there is $\mathcal{M} \hyperlink{def:models}{\models} T$ such that $|\mathcal{M}| \leq \lambda$.
+  \index{compactness}If $T$ is a \hyperlink{def:fs}{finitely satisfiable} \hyperlink{def:ltheory}{$L$-theory} and $\lambda \geq \abs{L} + \omega$, then there is $\mathcal{M} \hyperlink{def:models}{\models} T$ such that $\abs{\mathcal{M}} \leq \lambda$.
 \end{nthm}
 \begin{proof}[Proof sketch]
   Extend $T$ to $T^*$, an $L^*$-theory that is \hyperlink{def:fs}{finitely satisfiable} and such that any $S \supseteq T^*$ has the \hyperlink{def:wp}{witness property} (by \cref{lem:5.4x}).
 
   By \cref{lem:5.5x}, there is $T' \supseteq T^*$, which is \hyperlink{def:maximal}{maximal} and \hyperlink{def:fs}{finitely satisfiable}.
   Then $T'$ has the \hyperlink{def:wp}{witness property}.
-  Then by \cref{lem:5.3x} there is $\mathcal{M} \models T'$ with $|\mathcal{M}| \leq \lambda$, and $\mathcal{M} \models T$.
+  Then by \cref{lem:5.3x} there is $\mathcal{M} \models T'$ with $\abs{\mathcal{M}} \leq \lambda$, and $\mathcal{M} \models T$.
 \end{proof}
 
 \printindex
