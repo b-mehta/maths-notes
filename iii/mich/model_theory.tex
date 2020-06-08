@@ -1048,7 +1048,7 @@ Anything that might happen does happen.
 Can $\mathcal{M}$ be \hyperlink{def:sat}{$\lambda$-saturated} if $\lambda > \abs{\mathcal{M}}$? If so, $\mathcal{M}$ would satisfy \hyperlink{def:type}{finitely satisfiable types} in $L(M)$.
 For example,
 \begin{equation*}
-    p(x) = \set{x \neq a_i \abs{ i < }\mathcal{M}|}
+    p(x) = \set{x \neq a_i : i < \abs{\mathcal{M}}}
 \end{equation*}
 where $\langle a_i : i < \abs{\mathcal{M}} \rangle$ enumerates $\mathcal{M}$. $p(x)$ is finitely satisfiable, but not satisfied in $\mathcal{M}$.
 
@@ -1236,7 +1236,7 @@ Countable models of $T_{\text{rg}}$ and $T_{\text{dlo}}$ are universal and homog
       \draw[->] (2.4,-0.2) to[bend left=20] node[midway, below=2] {$\scriptstyle f \circ \beta^{-1}$} (1.7, -0.8);
     \end{tikzpicture}
   \end{center}
-  Then the map $f \circ \beta^{-1}: \beta(\dom(f)) \to \img(f)$ is as composition of elementary maps elementary.
+  Then the map $f \circ \beta^{-1}: \beta(\dom(f)) \to \img(f)$ is as composite of elementary maps elementary.
   By \hyperlink{def:homogeneous}{homogeneity}, there is $\alpha \in \hyperlink{def:aut}{\Aut}(\mathcal{N})$ such that $f \circ \beta^{-1} \subseteq \alpha$.
   Then $f \cup \{\langle b, \alpha(\beta(b))\}$ is elementary (it is a restriction of $\alpha \circ \beta$).
 \end{proof}
