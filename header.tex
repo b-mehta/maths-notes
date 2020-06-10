@@ -32,8 +32,8 @@
   colorlinks=true,
   linkcolor=lblue,
   pdfauthor={\nauthor},
-  pdfsubject={Cambridge Maths Notes: Part \npart\ - \ncourse},
-  pdftitle={\ncourse - Part \npart},
+  pdfsubject={Cambridge Maths Notes: Part \npart \ -- \ncourse},
+  pdftitle={\ncourse \ -- Part \npart},
 pdfkeywords={Cambridge Mathematics Maths Math \npart\ \nterm\ \nyear\ \ncourse}]{hyperref}
 
 \usepackage[capitalise,nameinlink,noabbrev]{cleveref}
@@ -76,6 +76,9 @@ pdfkeywords={Cambridge Mathematics Maths Math \npart\ \nterm\ \nyear\ \ncourse}]
 \newtheorem{ncor}[nthm]{Corollary}
 \newtheorem{ndef}[nthm]{Definition}
 
+% cref names
+\crefname{nprop}{Proposition}{Propositions}
+
 % Special sets
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\N}{\mathbb{N}}
@@ -113,7 +116,7 @@ pdfkeywords={Cambridge Mathematics Maths Math \npart\ \nterm\ \nyear\ \ncourse}]
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyfoot[R]{\href{b-mehta.github.io/maths-notes}{\color{lblue}{Updated online}}}
+\fancyfoot[R]{\href{https://b-mehta.github.io/maths-notes}{\color{lblue}{Updated online}}}
 \fancyfoot[C]{\thepage}
 \ifdefined\draft
 \fancyfoot[L]{\emph{\draft}}
