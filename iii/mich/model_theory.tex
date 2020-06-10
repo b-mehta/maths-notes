@@ -516,12 +516,12 @@ Let $p_0 \in I$ be any partial embedding. At stage $i+1$, let $p_i$ be given. Us
 \end{proof}
 
 \begin{nlemma}[Extension lemma for dense linear orders]\label{lem:4.4}
-  \index{extension lemma}Suppose $\mathcal{M} \hyperlink{def:models}{\models} \hyperlink{def:tlo}{T_{\text{dlo}}}$, $\mathcal{N} \models \hyperlink{def:tlo}{T_{\text{dlo}}}$, let $p: \dom p \subseteq M \to N$ be a \hyperlink{def:pe}{finite partial embedding}.
+  \index{extension lemma}Suppose $\mathcal{M} \hyperlink{def:models}{\models} \hyperlink{def:tlo}{T_{\text{lo}}}$, $\mathcal{N} \models \hyperlink{def:tlo}{T_{\text{dlo}}}$, let $p: \dom p \subseteq M \to N$ be a \hyperlink{def:pe}{finite partial embedding}.
   Then if $c \in M$, there is a finite partial embedding $\hat{p}$ such that $p \subseteq \hat{p}$ and $c \in \dom(\hat{p})$.
 \end{nlemma}
 \begin{proof}
   Enumerate $\dom p = \left< a_i \mid i < n+1 \right>$ and let $c \in M$ such that $c \not\in \dom p$.
-  Split into three cases:
+  Distinguish three cases:
   \begin{enumerate}[label=\arabic*.]
     \item $c < a_0$. Use axiom~\ref{item:axnoend}, which asserts that there are no endpoints, to find $d \in N$ such that $d < p(a_0)$ and let $\hat p \coloneqq p \cup \{ \left< c,d \right> \}$.
     \item $a_i < c < a_{i+1}$ for some $a_i, a_{i+1} \in \dom(p)$.
@@ -535,7 +535,7 @@ Let $\mathcal{M}, \mathcal{N} \models T_{\text{dlo}}$ such that $\abs M = \abs N
 \end{nthm}
 
 \begin{proof}
-By \cref{lem:4.4}, the collection $I$ of finite partial embeddings satisfies  \cref{item:pi1,item:pi2} in \cref{def:4.2}. Since $\emptyset: \mathcal{M} \to \mathcal{N}$ is a finite partial embedding, $I \neq \emptyset$ and \cref{lem:4.3} applies. 
+By \cref{lem:4.4}, the collection $I$ of finite partial embeddings satisfies \ref{item:pi1} and \ref{item:pi2} in \cref{def:4.2}. Since $\emptyset: \mathcal{M} \to \mathcal{N}$ is a finite partial embedding, $I \neq \emptyset$ and \cref{lem:4.3} applies. 
 \end{proof}
 
 \begin{ndef}[Consistent, complete, $\vdash$]\label{def:4.5}
@@ -1463,7 +1463,7 @@ Usually, quantifier elimination with additional assumptions is used to show that
 
 This gives \hyperlink{def:qe}{quantifier elimination} for $T_{\text{rg}}$ and $T_{\text{dlo}}$.
 \begin{remark}
-  If $T$ has \hyperlink{def:qe}{quantifier elimination} and $\mathcal{M} \models T$, any \hyperlink{def:subs}{substructure} of $\mathcal{M}$ is an \hyperlink{def:elsubs}{elementary substructure} ($T$ is `model-complete'). Under certain conditions, model completeness implies completeness.
+  If $T$ has \hyperlink{def:qe}{quantifier elimination} and $\mathcal{M} \models T$, any \hyperlink{def:subs}{substructure} of $\mathcal{M}$ is an \hyperlink{def:elsubs}{elementary substructure} ($T$ is \named{model-complete}). Under certain conditions, model completeness implies completeness.
 \end{remark}
 \begin{ndef}
   \hypertarget{def:def}An element $a \in \mathcal{U}$ is \textbf{definable} over a small set $A \subseteq U$ if there is an $L(A)$-formula $\varphi(x)$ such that $\varphi(U) = \{a\}$. (In particular, any element of $A$ is definable over $A$; $x=a$ for $a \in A$).
