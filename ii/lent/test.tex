@@ -244,7 +244,7 @@ This is called Hilbert's `Nullstellensatz', and we will see it soon.
     \begin{equation*}
         Y_1 = Y_2 \cup Y_2',\quad Y_2 = Y_3 \cup Y_3',\quad \dotsc
     \end{equation*}
-    and so we get an infinite chain of affine varities $Y \supsetneq Y_1 \supsetneq Y_2 \supsetneq \dotsb$.
+    and so we get an infinite chain of affine varieties $Y \supsetneq Y_1 \supsetneq Y_2 \supsetneq \dotsb$.
     But each $Y_i = Z(I_i)$ for some ideals $I_i$.  Let
     \begin{equation*}
         W = \bigcap Y_i = Z\left(\sum I_i\right) = Z(I)
@@ -938,7 +938,7 @@ i.e.\ Zariski closed subvarieties of $\proj^n \longleftrightarrow$ homogeneous i
     \begin{equation*}
         \begin{tikzcd}
             \left\{\parbox{2cm}{\centering closed subvarieties of $\A^n$}\right\} \rar[leftrightarrow]&
-            \left\{\parbox{5.5cm}{\centering closed subvarities $\overline{Z}$ of $\proj^n$ such that no irreducible component of $\overline{Z}$ is contained in $\proj V \setminus \A^n = \proj H$ }\right\} \\
+            \left\{\parbox{5.5cm}{\centering closed subvarieties $\overline{Z}$ of $\proj^n$ such that no irreducible component of $\overline{Z}$ is contained in $\proj V \setminus \A^n = \proj H$ }\right\} \\
             Z \rar[mapsto] &\overline{Z} = \text{closure of } \iota(Z) \text{ in } \proj^n
         \end{tikzcd}
     \end{equation*}
@@ -948,7 +948,7 @@ i.e.\ Zariski closed subvarieties of $\proj^n \longleftrightarrow$ homogeneous i
     A projective variety is a closed subvariety of $\proj^n$, some $n$
 \end{defi}
 Recall an \hyperlink{def:affVar}{affine variety} is $k[X] = k[x_1, \dotsc, x_n]/I$, $I = \sqrt{I}$.
-\begin{defi}[Quasivarities]
+\begin{defi}[Quasivarieties]
     A \textbf{quasi-affine variety} is an open subvariety of an \hyperlink{def:affVar}{affine variety}.
     A \textbf{quasi-projective variety} is an open subvariety of a \hyperlink{def:projVar}{projective variety}.
 \end{defi}
@@ -1221,7 +1221,7 @@ Finally, note morphisms as above with $a_N = 1$, i.e.\ $f$ a monic polynomial, a
 
 % new lecture
 Suppose we have affine varieties $X$ and $Y$ with morphism $k[X] = k[Y][t]/f(t) \leftarrow k[Y]$.
-We noticed that if $f \in k[Y][t]$ is a monic polynomial, then the map of algebraic varities $X \xrightarrow{\varphi} Y$ is surjective with finite $\varphi^{-1}(y)$ $\forall y \in Y$.
+We noticed that if $f \in k[Y][t]$ is a monic polynomial, then the map of algebraic varieties $X \xrightarrow{\varphi} Y$ is surjective with finite $\varphi^{-1}(y)$ $\forall y \in Y$.
 
 \begin{defi}
     $B \subseteq A$ is an integral ring extension if $\forall a \in A$, $\exists$ a monic polynomial $f \in B[t]$ with $f(a) = 0$.
@@ -1260,7 +1260,7 @@ Notice, by the lemma (i) and (ii), this says that $k[x_1, \dotsc, x_d] \subseteq
     and indeed any projection onto a line other than the $x$ or $y$ axis will work.
 \end{eg}
 \begin{thm}
-    If $k = \overline{k}$, and $\varphi: X \to Y$ is a morphism of algebraic varities, and $X$, $Y$ irreducible.
+    If $k = \overline{k}$, and $\varphi: X \to Y$ is a morphism of algebraic varieties, and $X$, $Y$ irreducible.
     \begin{enumerate}[label=(\alph*)]
         \item $\overline{\varphi(X) = Y} \iff$ algebra homomorphism $k[Y] \to k[X]$ is injective.
         \item Suppose $\overline{\varphi(X) = Y}$. Then
@@ -1546,7 +1546,7 @@ If $X$, $Y$ curves, this can be proved directly, it states:
             \begin{equation*}
                 k \hookrightarrow k(Y) \hookrightarrow k(X)
             \end{equation*}
-            but $k \hookrightarrow k(Y)$ has transcedance dimension 1, and $k \hookrightarrow k(X)$ has transcedance dimension $1$, therefore $k(Y) \hookrightarrow k(X)$ has $\trdim = 0$, i.e. is an algebraic extension.
+            but $k \hookrightarrow k(Y)$ has transcendence dimension 1, and $k \hookrightarrow k(X)$ has transcendence dimension $1$, therefore $k(Y) \hookrightarrow k(X)$ has $\trdim = 0$, i.e. is an algebraic extension.
     \end{enumerate}
 \end{proof}
 \begin{eg}
