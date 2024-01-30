@@ -616,7 +616,7 @@ Append $0$ (resp, $1$) to the codeword for $\nu$ to give a codeword for $\mu_{m-
 \begin{remark}
     Not all \hyperlink{def:optCode}{optimal} codes are \hyperlink{def:huffmanCode}{Huffman}. For instance, take $m=4$, and probabilities $0.3, 0.3, 0.2, 0.2$. An optimal code is given by $00, 01, 10, 11$, but this is not Huffman.
 
-    But, the previous result says that if we have a prefix-free optimal code with word lengths $s_1, \dotsc, s_m$ and associated probabilites $p_1, \dotsc, p_m$, $\exists$ a Huffman code with these word lengths.
+    But, the previous result says that if we have a prefix-free optimal code with word lengths $s_1, \dotsc, s_m$ and associated probabilities $p_1, \dotsc, p_m$, $\exists$ a Huffman code with these word lengths.
 \end{remark}
 
 \begin{defi}[Joint entropy]\hypertarget{def:jointEntropy}
@@ -1972,7 +1972,7 @@ By convention, the empty wedge product is $v_0$.
 \subsubsection*{Algebraic aside}
 A \textbf{ring} $R$ is a set with two operations, $+$ and $\times$. $(R, +)$ is an additive group and $\times$ is distributive over addition i.e.\ $a(b+c)=ab+ac$. Think of $\Z$ or $\Z_{10}$.
 
-An \textbf{ideal} $I \unlhd R$ is an additive subgroup, closed under external mutliplication, i.e.\ if $a \in I$ and $r \in R$ then $ra \in I$. Think of $2\Z \unlhd Z$.
+An \textbf{ideal} $I \unlhd R$ is an additive subgroup, closed under external multiplication, i.e.\ if $a \in I$ and $r \in R$ then $ra \in I$. Think of $2\Z \unlhd Z$.
 \begin{nlemma}\label{lem:2.27}
     Let $I$ be an ideal in ring $R$ and let $q: R \to R/I$ be the quotient map.
     Then there is a bijection between the set of ideals $J \subseteq R$ containing $I$ and the set of ideals in $R/I$.
@@ -2304,7 +2304,7 @@ This determines $e$ and we decode as $r-e$.
                                &= \sum_{j=1}^\infty e(\alpha^j) X^j \\
         \implies w(X) &= \left(\sum_{j=1}^\infty e(\alpha^j) X^j \right) \sigma(X).
     \end{align*}
-    By defnition of $C$ we have $c(\alpha^j) = 0$ for $1 \leq i \leq \delta-1$ so for $1 \leq j \leq 2t$.
+    By definition of $C$ we have $c(\alpha^j) = 0$ for $1 \leq i \leq \delta-1$ so for $1 \leq j \leq 2t$.
     So $r(\alpha^j) = e(\alpha^j)$ for $1 \leq j \leq 2t$.  Thus
     \begin{equation*}
         \sigma(X) \sum_{j=1}^{2t} r(\alpha^j) X^j \equiv w(X) \pmod{X^{2t+1}}.
@@ -2326,7 +2326,7 @@ This determines $e$ and we decode as $r-e$.
 \end{proof}
 \subsection{Shift registers}
 \begin{defi}[General feedback shift register]\hypertarget{def:fsr}
-    A \textbf{general feedback shift register} is a fucntion $f:\F_2^d \to \F_2^d$ of the form
+    A \textbf{general feedback shift register} is a function $f:\F_2^d \to \F_2^d$ of the form
     \begin{equation*}
         f(x_0, \dotsc, x_{d-1}) = (x_1, \dotsc, x_{d-1}, c(x_0, \dotsc, x_{d-1}))
     \end{equation*}
