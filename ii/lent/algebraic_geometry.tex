@@ -245,7 +245,7 @@ This is called Hilbert's `Nullstellensatz', and we will see it soon.
     \begin{equation*}
         Y_1 = Y_2 \cup Y_2',\quad Y_2 = Y_3 \cup Y_3',\quad \dotsc
     \end{equation*}
-    and so we get an infinite chain of affine varities $Y \supsetneq Y_1 \supsetneq Y_2 \supsetneq \dotsb$.
+    and so we get an infinite chain of affine varieties $Y \supsetneq Y_1 \supsetneq Y_2 \supsetneq \dotsb$.
     But each $Y_i = Z(I_i)$ for some ideals $I_i$.  Let
     \begin{equation*}
         W = \bigcap Y_i = Z\left(\sum I_i\right) = Z(I)
@@ -939,7 +939,7 @@ i.e.\ Zariski closed subvarieties of $\proj^n \longleftrightarrow$ homogeneous i
     \begin{equation*}
         \begin{tikzcd}
             \left\{\parbox{2cm}{\centering closed subvarieties of $\A^n$}\right\} \rar[leftrightarrow]&
-            \left\{\parbox{5.5cm}{\centering closed subvarities $\overline{Z}$ of $\proj^n$ such that no \hyperlink{def:reducible}{irreducible} component of $\overline{Z}$ is contained in $\proj V \setminus \A^n = \proj H$ }\right\} \\
+            \left\{\parbox{5.5cm}{\centering closed subvarieties $\overline{Z}$ of $\proj^n$ such that no \hyperlink{def:reducible}{irreducible} component of $\overline{Z}$ is contained in $\proj V \setminus \A^n = \proj H$ }\right\} \\
             Z \rar[mapsto] &\overline{Z} = \text{closure of } \iota(Z) \text{ in } \proj^n
         \end{tikzcd}
     \end{equation*}
@@ -949,7 +949,7 @@ i.e.\ Zariski closed subvarieties of $\proj^n \longleftrightarrow$ homogeneous i
     A projective variety is a closed subvariety of $\proj^n$, some $n$
 \end{defi}
 Recall an \hyperlink{def:affVar}{affine variety} is $k[X] = k[x_1, \dotsc, x_n]/I$, $I = \sqrt{I}$.
-\begin{defi}[Quasivarities]
+\begin{defi}[Quasivarieties]
     A \textbf{quasi-affine variety} is an open subvariety of an \hyperlink{def:affVar}{affine variety}.
     A \textbf{quasi-projective variety} is an open subvariety of a \hyperlink{def:projVar}{projective variety}.
 \end{defi}
@@ -1153,8 +1153,8 @@ There are two other interesting notions of dimension:
     \end{enumerate}
 \end{eg}
 
-\begin{defi}[Transcendance dimension]\hypertarget{def:trdim}
-    Now we can define $\trdim X$, the \textbf{transcendance dimension} of extension $k \subseteq \hyperlink{def:k(x)}{k(X)}$.
+\begin{defi}[Transcendence dimension]\hypertarget{def:trdim}
+    Now we can define $\trdim X$, the \textbf{transcendence dimension} of extension $k \subseteq \hyperlink{def:k(x)}{k(X)}$.
 \end{defi}
 It is not hard to see $\hyperlink{def:trdim}{\trdim} k(x_1, \dotsc, x_n)/k = \trdim \A^n$ = n. Generally,
 \begin{thm}
@@ -1249,7 +1249,7 @@ Finally, note morphisms as above with $a_N = 1$, i.e.\ $f$ a monic polynomial, a
 % new lecture
 To recap:
 Suppose we have affine varieties $X$ and $Y$ with a morphism \begin{equation*}k[X] = k[Y][t]/f(t) \leftarrow k[Y].\end{equation*}
-We noticed that if $f \in k[Y][t]$ is a monic polynomial, then the map of algebraic varities $X \xrightarrow{\varphi} Y$ is surjective with finite $\varphi^{-1}(y)$ $\forall y \in Y$.
+We noticed that if $f \in k[Y][t]$ is a monic polynomial, then the map of algebraic varieties $X \xrightarrow{\varphi} Y$ is surjective with finite $\varphi^{-1}(y)$ $\forall y \in Y$.
 
 \begin{defi}[Integral extension]\hypertarget{def:intExt}
     $B \subseteq A$ is an \textbf{integral ring extension} if $\forall a \in A$, $\exists$ a monic polynomial $f \in B[t]$ with $f(a) = 0$.
@@ -1290,7 +1290,7 @@ Notice, by the lemma (i) and (ii), this says that $k[x_1, \dotsc, x_d] \subseteq
     and indeed any projection onto a line other than the $x$ or $y$ axis will work.
 \end{eg}
 \begin{thm}
-    If $k = \overline{k}$, and $\varphi: X \to Y$ is a morphism of algebraic varities, and $X$, $Y$ irreducible.
+    If $k = \overline{k}$, and $\varphi: X \to Y$ is a morphism of algebraic varieties, and $X$, $Y$ irreducible.
     \begin{enumerate}[label=(\alph*)]
         \item $\overline{\varphi(X) = Y} \iff$ algebra homomorphism $k[Y] \to k[X]$ is injective.
         \item Suppose $\overline{\varphi(X) = Y}$. Then
@@ -1335,7 +1335,7 @@ Noether normalisation restate: $A$ is a finitely generated algebra over a field 
     \item $x_1, \dotsc, x_n$ generate $A$
     \item for each $i > d$, $x_i$ satisfies a monic irreducible polynomial $F_i$ with coefficients in $k[x_1, \dotsc, x_{i-1}]$.
 \end{enumerate}
-Moreoever, if $k$ is perfect, then $F_i$ can be chosen to be separable.
+Moreover, if $k$ is perfect, then $F_i$ can be chosen to be separable.
 \begin{defi}[Perfect]
     A field $k$ is perfect if $\chara k = p > 0$ and $x \mapsto x^p$ is a surjection.
 \end{defi}
@@ -1511,7 +1511,7 @@ For example, in the circle, $\nu_{1, 0}(x-1) = 2$.
         =0 \quad \text{when } X = (x_{ij}) \tag{$*$} \label{eq:13star}
     \end{equation*}
     Now recall $X \text{adj}(X) = \det(X) I$ where $\text{adj}(X)$ is the matrix of determinants of minors.
-    Mulitply \eqref{eq:13star} by $\text{adj}(I-X)$, get $d m_i = 0$ for $i = 1, \dotsc, n$ where $d = \det(I-X) = 1+r$ with $r \in J$ by expanding out the determinant, use $J$ ideal i.e.\ $(1+r) M = 0$.
+    Multiply \eqref{eq:13star} by $\text{adj}(I-X)$, get $d m_i = 0$ for $i = 1, \dotsc, n$ where $d = \det(I-X) = 1+r$ with $r \in J$ by expanding out the determinant, use $J$ ideal i.e.\ $(1+r) M = 0$.
 
     (ii) is immediate from (i), by applying (i) to $M/N$.
 \end{proof}
@@ -1535,7 +1535,7 @@ say $\varphi_1$ equal to $\varphi_2$ if $\exists V \subseteq U_1 \cap U_2$ Zaris
 \end{remark}
 % ...
 \begin{proof}
-    $X$ is a curve, $\alpha$ defined on an open subset of $X$, so it is defined eexcept possibly at a finite set of points.
+    $X$ is a curve, $\alpha$ defined on an open subset of $X$, so it is defined except possibly at a finite set of points.
     SO it is enough to show $\alpha$ is defined at $p$.
     $Y$ is projective, $Y \subseteq \proj^m$ for some $m$, enough to prove this for $Y = \proj^m$. %(why?)
     \begin{equation*}
@@ -1578,7 +1578,7 @@ If $X$, $Y$ curves, this can be proved directly, it states:
             \begin{equation*}
                 k \hookrightarrow k(Y) \hookrightarrow k(X)
             \end{equation*}
-            but $k \hookrightarrow k(Y)$ has transcedance dimension 1, and $k \hookrightarrow k(X)$ has transcedance dimension $1$, therefore $k(Y) \hookrightarrow k(X)$ has $\trdim = 0$, i.e. is an algebraic extension.
+            but $k \hookrightarrow k(Y)$ has transcendence dimension 1, and $k \hookrightarrow k(X)$ has transcendence dimension $1$, therefore $k(Y) \hookrightarrow k(X)$ has $\trdim = 0$, i.e. is an algebraic extension.
     \end{enumerate}
 \end{proof}
 \begin{eg}
@@ -1619,7 +1619,7 @@ Take a ring $B$ and a subring $A \subseteq B$.
 \begin{ex}
     \leavevmode
     \begin{enumerate}[label=(\alph*)]
-        \item let $X$ be an affine algebraic vairety, $x \in X$ and consider the ring homomorphism $\text{ev}_x: k{X} \to k$ given by $f \mapsto f(x)$.
+        \item let $X$ be an affine algebraic variety, $x \in X$ and consider the ring homomorphism $\text{ev}_x: k{X} \to k$ given by $f \mapsto f(x)$.
             Show
             \begin{equation*}
                 \text{Hom}_{k[X]}(\Omega^1_{k[X]/k]}, k) \xrightarrow{\sim} \text{Der}(k[X], k) = T_x X
